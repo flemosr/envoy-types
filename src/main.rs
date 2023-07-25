@@ -1,8 +1,33 @@
 use glob::glob;
-use std::fs;
-use std::path::PathBuf;
+use std::{
+    fs::{self, File},
+    io::{self, Write},
+    path::PathBuf,
+};
 
-fn collect_protos(repo: &str, glob_patterns: Vec<&str>) {
+/// Generate an Apache-2.0 declaration, in the form of a Protocol Buffer
+/// comment, from the copyright `year` and the `name` of the copyright owner.
+///
+/// Text source: https://www.apache.org/licenses/LICENSE-2.0
+fn apache_v2(year: u32, owner: &str) -> String {
+    format!(
+        "// Copyright {year} {owner}\
+        \n//\
+        \n// Licensed under the Apache License, Version 2.0 (the \"License\");\
+        \n// you may not use this file except in compliance with the License.\
+        \n// You may obtain a copy of the License at\
+        \n// \
+        \n//     http://www.apache.org/licenses/LICENSE-2.0\
+        \n// \
+        \n// Unless required by applicable law or agreed to in writing, software\
+        \n// distributed under the License is distributed on an \"AS IS\" BASIS,\
+        \n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\
+        \n// See the License for the specific language governing permissions and\
+        \n// limitations under the License.\n\n"
+    )
+}
+
+fn collect_protos(repo: &str, glob_patterns: Vec<&str>, add_license: Option<&String>) {
     let out_dir = PathBuf::from("proto");
 
     let repo = PathBuf::from("submodules").join(repo);
@@ -30,7 +55,17 @@ fn collect_protos(repo: &str, glob_patterns: Vec<&str>) {
 
         fs::create_dir_all(target_name.parent().expect("target has parent"))
             .expect("can create parent dir");
-        fs::copy(proto, &target_name).expect("can copy proto to target");
+
+        if let Some(license) = add_license.as_ref() {
+            let mut target = File::create(&target_name).expect("can create new target");
+            let mut source = File::open(&proto).expect("can open the source");
+            target
+                .write_all(license.as_bytes())
+                .expect("can write the license");
+            io::copy(&mut source, &mut target).expect("can copy original proto contents");
+        } else {
+            fs::copy(proto, &target_name).expect("can copy proto to target");
+        }
 
         println!("Proto copied successfully.\n");
     }
@@ -44,10 +79,14 @@ fn main() {
     fs::remove_dir_all(&out_dir).expect("can remove proto dir");
     fs::create_dir(&out_dir).expect("can create proto dir");
 
+    let envoy_license = apache_v2(2023, "Envoy Project Authors");
     collect_protos(
         "data-plane-api",
         vec!["envoy/**/v3/*.proto", "envoy/annotations/*.proto"],
+        Some(&envoy_license),
     );
+
+    let xds_license = apache_v2(2023, "CNCF xDS API Working Group (xDS-WG) Authors");
     collect_protos(
         "xds",
         vec![
@@ -62,8 +101,17 @@ fn main() {
             "xds/type/matcher/v3/string.proto",
             "xds/type/matcher/v3/regex.proto",
         ],
+        Some(&xds_license),
     );
-    collect_protos("protoc-gen-validate", vec!["**/validate.proto"]);
+
+    let protoc_gen_validate_license = apache_v2(2023, "Buf Technologies, Inc.");
+    collect_protos(
+        "protoc-gen-validate",
+        vec!["**/validate.proto"],
+        Some(&protoc_gen_validate_license),
+    );
+
+    // Files from `googleapis` already have an Apache-2.0 declaration
     collect_protos(
         "googleapis",
         vec![
@@ -73,17 +121,30 @@ fn main() {
             "google/api/annotations.proto",
             "google/api/http.proto",
         ],
+        None,
     );
+
+    // Files from `opencensus-proto` already have an Apache-2.0 declaration
     collect_protos(
         "opencensus-proto",
         vec![
             "**/opencensus/proto/trace/v1/*.proto",
             "**/opencensus/proto/resource/v1/resource.proto",
         ],
+        None,
     );
+
+    // Files from `opentelemetry-proto` already have an Apache-2.0 declaration
     collect_protos(
         "opentelemetry-proto",
         vec!["**/opentelemetry/proto/common/v1/common.proto"],
+        None,
     );
-    collect_protos("client_model", vec!["io/prometheus/client/metrics.proto"]);
+
+    // Files from `client_model` already have an Apache-2.0 declaration
+    collect_protos(
+        "client_model",
+        vec!["io/prometheus/client/metrics.proto"],
+        None,
+    );
 }
