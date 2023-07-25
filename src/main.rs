@@ -37,29 +37,21 @@ fn collect_protos(repo: &str, glob_patterns: Vec<&str>) {
 }
 
 fn main() {
-    // let out_dir = PathBuf::from("proto");
-    // if !out_dir.is_dir() {
-    //     panic!("out_dir {:?} not found", out_dir);
-    // }
-    // fs::remove_dir_all(&out_dir).expect("can remove proto dir");
-    // fs::create_dir(&out_dir).expect("can create proto dir");
+    let out_dir = PathBuf::from("proto");
+    if !out_dir.is_dir() {
+        panic!("out_dir {:?} not found", out_dir);
+    }
+    fs::remove_dir_all(&out_dir).expect("can remove proto dir");
+    fs::create_dir(&out_dir).expect("can create proto dir");
 
     collect_protos(
         "data-plane-api",
-        vec![
-            "envoy/**/v3/*.proto",
-            "envoy/annotations/deprecation.proto",
-            "envoy/annotations/resource.proto",
-        ],
+        vec!["envoy/**/v3/*.proto", "envoy/annotations/*.proto"],
     );
     collect_protos(
         "xds",
         vec![
-            "udpa/annotations/status.proto",
-            "udpa/annotations/versioning.proto",
-            "udpa/annotations/migrate.proto",
-            "udpa/annotations/sensitive.proto",
-            "udpa/annotations/security.proto",
+            "udpa/annotations/*.proto",
             "xds/core/v3/context_params.proto",
             "xds/core/v3/extension.proto",
             "xds/core/v3/authority.proto",
@@ -85,8 +77,7 @@ fn main() {
     collect_protos(
         "opencensus-proto",
         vec![
-            "**/opencensus/proto/trace/v1/trace_config.proto",
-            "**/opencensus/proto/trace/v1/trace.proto",
+            "**/opencensus/proto/trace/v1/*.proto",
             "**/opencensus/proto/resource/v1/resource.proto",
         ],
     );
