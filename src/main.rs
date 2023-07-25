@@ -69,7 +69,7 @@ fn main() {
         vec![
             "google/api/expr/v1alpha1/checked.proto",
             "google/api/expr/v1alpha1/syntax.proto",
-            "google/rpc/status.proto",
+            "google/rpc/*.proto",
             "google/api/annotations.proto",
             "google/api/http.proto",
         ],
