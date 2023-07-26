@@ -1,5 +1,3 @@
 **/target
 **/.DS_Store
-**/generated/*
-!**/generated/.gitkeep
 **/.vscode
