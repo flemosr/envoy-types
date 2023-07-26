@@ -82,7 +82,11 @@ fn main() {
     let envoy_license = apache_v2(2023, "Envoy Project Authors");
     collect_protos(
         "data-plane-api",
-        vec!["envoy/**/v3/*.proto", "envoy/annotations/*.proto"],
+        vec![
+            "envoy/**/v3/*.proto", // Main protos
+            "envoy/annotations/*.proto",
+            "envoy/type/http_status.proto", // Optional proto
+        ],
         Some(&envoy_license),
     );
 
@@ -117,7 +121,8 @@ fn main() {
         vec![
             "google/api/expr/v1alpha1/checked.proto",
             "google/api/expr/v1alpha1/syntax.proto",
-            "google/rpc/*.proto",
+            "google/rpc/status.proto",
+            "google/rpc/code.proto", // Optional proto
             "google/api/annotations.proto",
             "google/api/http.proto",
         ],
