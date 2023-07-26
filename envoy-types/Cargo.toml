@@ -1,8 +1,17 @@
 [package]
-authors = ["Rafael Lemos <contact@flemosr.com"]
 name = "envoy-types"
-version = "0.1.0"
+authors = ["Rafael Lemos <contact@flemosr.com"]
+categories = ["web-programming", "network-programming"]
+description = """
+Collection of protobuf types to work with the Envoy Proxy through Rust services.
+"""
 edition = "2021"
+homepage = "https://github.com/flemosr/envoy-types"
+keywords = ["rpc", "grpc", "async", "envoy", "extauthz"]
+license = "Apache-2.0"
+readme = "../README.md"
+repository = "https://github.com/flemosr/envoy-types"
+version = "0.1.0"
 
 [dependencies]
 prost = { version = "0.11.9", default-features = false }

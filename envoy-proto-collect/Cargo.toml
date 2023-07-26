@@ -1,9 +1,10 @@
 [package]
-authors = ["Rafael Lemos <contact@flemosr.com"]
 name = "envoy-proto-collect"
-version = "0.1.0"
+authors = ["Rafael Lemos <contact@flemosr.com"]
 edition = "2021"
+license = "Apache-2.0"
 publish = false
+version = "0.1.0"
 
 [[bin]]
 name = "collect-protos"
