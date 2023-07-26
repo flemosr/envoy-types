@@ -28,7 +28,7 @@ fn apache_v2(year: u32, owner: &str) -> String {
 }
 
 fn collect_protos(repo: &str, glob_patterns: Vec<&str>, add_license: Option<&String>) {
-    let out_dir = PathBuf::from("proto");
+    let out_dir = PathBuf::from("../proto");
 
     let repo = PathBuf::from("submodules").join(repo);
     let mut source_protos: Vec<PathBuf> = Vec::new();
@@ -72,7 +72,7 @@ fn collect_protos(repo: &str, glob_patterns: Vec<&str>, add_license: Option<&Str
 }
 
 fn main() {
-    let out_dir = PathBuf::from("proto");
+    let out_dir = PathBuf::from("../proto");
     if !out_dir.is_dir() {
         panic!("out_dir {:?} not found", out_dir);
     }
