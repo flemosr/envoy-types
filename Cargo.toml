@@ -1,2 +1,2 @@
 [workspace]
-members = ["envoy-proto-collect", "envoy-types"]
+members = ["envoy-proto-collect", "envoy-types", "examples"]
