@@ -1,5 +1,5 @@
 use glob::glob;
-use std::path::PathBuf;
+use std::{path::PathBuf, process::Command};
 
 #[test]
 fn bootstrap() {
@@ -39,4 +39,14 @@ fn bootstrap() {
             ],
         )
         .unwrap();
+
+    let status = Command::new("git")
+        .arg("diff")
+        .arg("--exit-code")
+        .arg("--")
+        .arg(&out_dir)
+        .status()
+        .unwrap();
+
+    assert!(status.success(), "The generated files must be committed.");
 }
