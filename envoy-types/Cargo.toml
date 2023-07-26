@@ -1,0 +1,7 @@
+[package]
+authors = ["Rafael Lemos <contact@flemosr.com"]
+name = "envoy-types"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
