@@ -1,4 +1,4 @@
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Zstd {
@@ -25,7 +25,7 @@ pub struct Zstd {
     /// A dictionary for compression. Zstd offers dictionary compression, which greatly improves
     /// efficiency on small files and messages. Each dictionary will be generated with a dictionary ID
     /// that can be used to search the same dictionary during decompression.
-    /// Please refer to `zstd manual <<https://github.com/facebook/zstd/blob/dev/programs/zstd.1.md#dictionary-builder>`_>
+    /// Please refer to `zstd manual <<https://github.com/facebook/zstd/blob/dev/programs/zstd.1.md#dictionary-builder>`\_>
     /// to train a specific dictionary for compression.
     #[prost(message, optional, tag = "4")]
     pub dictionary: ::core::option::Option<

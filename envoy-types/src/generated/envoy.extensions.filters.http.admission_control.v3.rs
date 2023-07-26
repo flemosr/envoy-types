@@ -1,4 +1,4 @@
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AdmissionControl {
@@ -16,13 +16,14 @@ pub struct AdmissionControl {
     >,
     /// Rejection probability is defined by the formula::
     ///
-    ///      max(0, (rq_count -  rq_success_count / sr_threshold) / (rq_count + 1)) ^ (1 / aggression)
+    /// ```text
+    /// max(0, (rq_count -  rq_success_count / sr_threshold) / (rq_count + 1)) ^ (1 / aggression)
+    /// ```
     ///
     /// The aggression dictates how heavily the admission controller will throttle requests upon SR
     /// dropping at or below the threshold. A value of 1 will result in a linear increase in
     /// rejection probability as SR drops. Any values less than 1.0, will be set to 1.0. If the
-    /// message is unspecified, the aggression is 1.0. See `the admission control documentation
-    /// <<https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/admission_control_filter.html>`_>
+    /// message is unspecified, the aggression is 1.0. See `the admission control documentation <<https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/admission_control_filter.html>`\_>
     /// for a diagram illustrating this.
     #[prost(message, optional, tag = "4")]
     pub aggression: ::core::option::Option<
@@ -67,10 +68,12 @@ pub mod admission_control {
         ///
         /// .. note::
         ///
-        ///     The default HTTP codes considered successful by the admission controller are done so due
-        ///     to the unlikelihood that sending fewer requests would change their behavior (for example:
-        ///     redirects, unauthorized access, or bad requests won't be alleviated by sending less
-        ///     traffic).
+        /// ```text
+        /// The default HTTP codes considered successful by the admission controller are done so due
+        /// to the unlikelihood that sending fewer requests would change their behavior (for example:
+        /// redirects, unauthorized access, or bad requests won't be alleviated by sending less
+        /// traffic).
+        /// ```
         #[prost(message, optional, tag = "1")]
         pub http_criteria: ::core::option::Option<success_criteria::HttpCriteria>,
         /// GRPC status codes to consider as request successes. If unspecified, defaults to: Ok,
@@ -79,8 +82,10 @@ pub mod admission_control {
         ///
         /// .. note::
         ///
-        ///     The default gRPC codes that are considered successful by the admission controller are
-        ///     chosen because of the unlikelihood that sending fewer requests will change the behavior.
+        /// ```text
+        /// The default gRPC codes that are considered successful by the admission controller are
+        /// chosen because of the unlikelihood that sending fewer requests will change the behavior.
+        /// ```
         #[prost(message, optional, tag = "2")]
         pub grpc_criteria: ::core::option::Option<success_criteria::GrpcCriteria>,
     }
@@ -90,7 +95,7 @@ pub mod admission_control {
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct HttpCriteria {
             /// Status code ranges that constitute a successful request. Configurable codes are in the
-            /// range [100, 600).
+            /// range \[100, 600).
             #[prost(message, repeated, tag = "1")]
             pub http_success_status: ::prost::alloc::vec::Vec<
                 super::super::super::super::super::super::super::r#type::v3::Int32Range,

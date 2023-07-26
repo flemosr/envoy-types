@@ -1,9 +1,8 @@
-/// [#next-free-field: 18]
+/// \[\#next-free-field: 18\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TcpProxy {
-    /// The prefix to use when emitting :ref:`statistics
-    /// <config_network_filters_tcp_proxy_stats>`.
+    /// The prefix to use when emitting :ref:`statistics <config_network_filters_tcp_proxy_stats>`.
     #[prost(string, tag = "1")]
     pub stat_prefix: ::prost::alloc::string::String,
     /// The on demand policy for the upstream cluster.
@@ -15,7 +14,7 @@ pub struct TcpProxy {
     pub on_demand: ::core::option::Option<tcp_proxy::OnDemand>,
     /// Optional endpoint metadata match criteria. Only endpoints in the upstream
     /// cluster with metadata matching that set in metadata_match will be
-    /// considered. The filter name should be specified as ``envoy.lb``.
+    /// considered. The filter name should be specified as `envoy.lb`.
     #[prost(message, optional, tag = "9")]
     pub metadata_match: ::core::option::Option<
         super::super::super::super::super::config::core::v3::Metadata,
@@ -26,13 +25,13 @@ pub struct TcpProxy {
     /// to 0s, the timeout will be disabled.
     ///
     /// .. warning::
-    ///    Disabling this timeout has a highly likelihood of yielding connection leaks due to lost TCP
-    ///    FIN packets, etc.
+    /// Disabling this timeout has a highly likelihood of yielding connection leaks due to lost TCP
+    /// FIN packets, etc.
     #[prost(message, optional, tag = "8")]
     pub idle_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
-    /// \[#not-implemented-hide:\] The idle timeout for connections managed by the TCP proxy
+    /// \\[\#not-implemented-hide:\\] The idle timeout for connections managed by the TCP proxy
     /// filter. The idle timeout is defined as the period in which there is no
     /// active traffic. If not set, there is no idle timeout. When the idle timeout
     /// is reached the connection will be closed. The distinction between
@@ -42,7 +41,7 @@ pub struct TcpProxy {
     pub downstream_idle_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "4")]
     pub upstream_idle_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -69,7 +68,7 @@ pub struct TcpProxy {
     /// If set, this configures tunneling, e.g. configuration options to tunnel TCP payload over
     /// HTTP CONNECT. If this message is absent, the payload will be proxied upstream as per usual.
     /// It is possible to dynamically override this configuration and disable tunneling per connection,
-    /// by setting a per-connection filter state object for the key ``envoy.tcp_proxy.disable_tunneling``.
+    /// by setting a per-connection filter state object for the key `envoy.tcp_proxy.disable_tunneling`.
     #[prost(message, optional, tag = "12")]
     pub tunneling_config: ::core::option::Option<tcp_proxy::TunnelingConfig>,
     /// The maximum duration of a connection. The duration is defined as the period since a connection
@@ -81,10 +80,8 @@ pub struct TcpProxy {
     >,
     /// .. attention::
     /// This field is deprecated in favor of
-    /// :ref:`access_log_flush_interval
-    /// <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.access_log_flush_interval>`.
-    /// Note that if both this field and :ref:`access_log_flush_interval
-    /// <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.access_log_flush_interval>`
+    /// :ref:`access_log_flush_interval <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.access_log_flush_interval>`.
+    /// Note that if both this field and :ref:`access_log_flush_interval <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.access_log_flush_interval>`
     /// are specified, the former (deprecated field) is ignored.
     #[deprecated]
     #[prost(message, optional, tag = "15")]
@@ -93,10 +90,8 @@ pub struct TcpProxy {
     >,
     /// .. attention::
     /// This field is deprecated in favor of
-    /// :ref:`flush_access_log_on_connected
-    /// <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.flush_access_log_on_connected>`.
-    /// Note that if both this field and :ref:`flush_access_log_on_connected
-    /// <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.flush_access_log_on_connected>`
+    /// :ref:`flush_access_log_on_connected <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.flush_access_log_on_connected>`.
+    /// Note that if both this field and :ref:`flush_access_log_on_connected <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions.flush_access_log_on_connected>`
     /// are specified, the former (deprecated field) is ignored.
     #[deprecated]
     #[prost(bool, tag = "16")]
@@ -135,9 +130,8 @@ pub mod tcp_proxy {
             /// Optional endpoint metadata match criteria used by the subset load balancer. Only endpoints
             /// in the upstream cluster with metadata matching what is set in this field will be considered
             /// for load balancing. Note that this will be merged with what's provided in
-            /// :ref:`TcpProxy.metadata_match
-            /// <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.metadata_match>`, with values
-            /// here taking precedence. The filter name should be specified as ``envoy.lb``.
+            /// :ref:`TcpProxy.metadata_match <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.metadata_match>`, with values
+            /// here taking precedence. The filter name should be specified as `envoy.lb`.
             #[prost(message, optional, tag = "3")]
             pub metadata_match: ::core::option::Option<
                 super::super::super::super::super::super::super::config::core::v3::Metadata,
@@ -147,7 +141,7 @@ pub mod tcp_proxy {
     /// Configuration for tunneling TCP over other transports or application layers.
     /// Tunneling is supported over both HTTP/1.1 and HTTP/2. Upstream protocol is
     /// determined by the cluster configuration.
-    /// [#next-free-field: 7]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct TunnelingConfig {
@@ -158,16 +152,19 @@ pub mod tcp_proxy {
         ///
         /// .. code-block:: yaml
         ///
-        ///     tunneling_config:
-        ///       hostname: "%REQUESTED_SERVER_NAME%:443"
+        /// ```text
+        /// tunneling_config:
+        ///   hostname: "%REQUESTED_SERVER_NAME%:443"
+        /// ```
         ///
         /// Example: dynamically set hostname using dynamic metadata
         ///
         /// .. code-block:: yaml
         ///
-        ///     tunneling_config:
-        ///       hostname: "%DYNAMIC_METADATA(tunnel:address)%"
-        ///
+        /// ```text
+        /// tunneling_config:
+        ///   hostname: "%DYNAMIC_METADATA(tunnel:address)%"
+        /// ```
         #[prost(string, tag = "1")]
         pub hostname: ::prost::alloc::string::String,
         /// Use POST method instead of CONNECT method to tunnel the TCP stream.
@@ -179,22 +176,22 @@ pub mod tcp_proxy {
         /// Additional request headers to upstream proxy. This is mainly used to
         /// trigger upstream to convert POST requests back to CONNECT requests.
         ///
-        /// Neither ``:-prefixed`` pseudo-headers nor the Host: header can be overridden.
+        /// Neither `:-prefixed` pseudo-headers nor the Host: header can be overridden.
         #[prost(message, repeated, tag = "3")]
         pub headers_to_add: ::prost::alloc::vec::Vec<
             super::super::super::super::super::super::config::core::v3::HeaderValueOption,
         >,
         /// Save the response headers to the downstream info filter state for consumption
-        /// by the network filters. The filter state key is ``envoy.tcp_proxy.propagate_response_headers``.
+        /// by the network filters. The filter state key is `envoy.tcp_proxy.propagate_response_headers`.
         #[prost(bool, tag = "4")]
         pub propagate_response_headers: bool,
-        /// The path used with POST method. Default path is ``/``. If post path is specified and
+        /// The path used with POST method. Default path is `/`. If post path is specified and
         /// :ref:`use_post field <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TunnelingConfig.use_post>`
         /// isn't true, it will be rejected.
         #[prost(string, tag = "5")]
         pub post_path: ::prost::alloc::string::String,
         /// Save the response trailers to the downstream info filter state for consumption
-        /// by the network filters. The filter state key is ``envoy.tcp_proxy.propagate_response_trailers``.
+        /// by the network filters. The filter state key is `envoy.tcp_proxy.propagate_response_trailers`.
         #[prost(bool, tag = "6")]
         pub propagate_response_trailers: bool,
     }
@@ -212,12 +209,12 @@ pub mod tcp_proxy {
             super::super::super::super::super::super::config::core::v3::ConfigSource,
         >,
         /// xdstp:// resource locator for on-demand cluster collection.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(string, tag = "2")]
         pub resources_locator: ::prost::alloc::string::String,
         /// The timeout for on demand cluster lookup. If the CDS cannot return the required cluster,
         /// the downstream request will be closed with the error code detail NO_CLUSTER_FOUND.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "3")]
         pub timeout: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::Duration,

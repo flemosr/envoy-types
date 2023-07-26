@@ -1,4 +1,4 @@
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 /// An events envoy sends to the management server.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -32,7 +32,7 @@ pub mod stream_events_request {
         >,
     }
 }
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 /// The management server may send envoy a StreamEventsResponse to tell which events the server
 /// is interested in. In future, with aggregated event reporting service, this message will
 /// contain, for example, clusters the envoy should send events for, or event types the server
@@ -45,7 +45,7 @@ pub mod event_reporting_service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
-    /// [#not-implemented-hide:]
+    /// \[\#not-implemented-hide:\]
     /// Service for streaming different types of events from Envoy to a server. The examples of
     /// such events may be health check or outlier detection events.
     #[derive(Debug, Clone)]
@@ -178,7 +178,7 @@ pub mod event_reporting_service_server {
             tonic::Status,
         >;
     }
-    /// [#not-implemented-hide:]
+    /// \[\#not-implemented-hide:\]
     /// Service for streaming different types of events from Envoy to a server. The examples of
     /// such events may be health check or outlier detection events.
     #[derive(Debug)]

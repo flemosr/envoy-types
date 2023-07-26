@@ -18,7 +18,7 @@ pub struct OAuth2Credentials {
 }
 /// Nested message and enum types in `OAuth2Credentials`.
 pub mod o_auth2_credentials {
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CookieNames {
@@ -26,19 +26,19 @@ pub mod o_auth2_credentials {
         /// client and returns an authorization token back to the OAuth filter, no matter what format
         /// that token is, if :ref:`forward_bearer_token <envoy_v3_api_field_extensions.filters.http.oauth2.v3.OAuth2Config.forward_bearer_token>`
         /// is set to true the filter will send over the bearer token as a cookie with this name to the
-        /// upstream. Defaults to ``BearerToken``.
+        /// upstream. Defaults to `BearerToken`.
         #[prost(string, tag = "1")]
         pub bearer_token: ::prost::alloc::string::String,
-        /// Cookie name to hold OAuth HMAC value. Defaults to ``OauthHMAC``.
+        /// Cookie name to hold OAuth HMAC value. Defaults to `OauthHMAC`.
         #[prost(string, tag = "2")]
         pub oauth_hmac: ::prost::alloc::string::String,
-        /// Cookie name to hold OAuth expiry value. Defaults to ``OauthExpires``.
+        /// Cookie name to hold OAuth expiry value. Defaults to `OauthExpires`.
         #[prost(string, tag = "3")]
         pub oauth_expires: ::prost::alloc::string::String,
-        /// Cookie name to hold the id token. Defaults to ``IdToken``.
+        /// Cookie name to hold the id token. Defaults to `IdToken`.
         #[prost(string, tag = "4")]
         pub id_token: ::prost::alloc::string::String,
-        /// Cookie name to hold the refresh token. Defaults to ``RefreshToken``.
+        /// Cookie name to hold the refresh token. Defaults to `RefreshToken`.
         #[prost(string, tag = "5")]
         pub refresh_token: ::prost::alloc::string::String,
     }
@@ -55,7 +55,7 @@ pub mod o_auth2_credentials {
 }
 /// OAuth config
 ///
-/// [#next-free-field: 12]
+/// \[\#next-free-field: 12\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
@@ -104,7 +104,7 @@ pub struct OAuth2Config {
     /// RFC: <https://tools.ietf.org/html/rfc8707>
     #[prost(string, repeated, tag = "10")]
     pub resources: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// Defines how ``client_id`` and ``client_secret`` are sent in OAuth client to OAuth server requests.
+    /// Defines how `client_id` and `client_secret` are sent in OAuth client to OAuth server requests.
     /// RFC <https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1>
     #[prost(enumeration = "o_auth2_config::AuthType", tag = "11")]
     pub auth_type: i32,
@@ -124,10 +124,10 @@ pub mod o_auth2_config {
     )]
     #[repr(i32)]
     pub enum AuthType {
-        /// The ``client_id`` and ``client_secret`` will be sent in the URL encoded request body.
+        /// The `client_id` and `client_secret` will be sent in the URL encoded request body.
         /// This type should only be used when Auth server does not support Basic authentication.
         UrlEncodedBody = 0,
-        /// The ``client_id`` and ``client_secret`` will be sent using HTTP Basic authentication scheme.
+        /// The `client_id` and `client_secret` will be sent using HTTP Basic authentication scheme.
         BasicAuth = 1,
     }
     impl AuthType {

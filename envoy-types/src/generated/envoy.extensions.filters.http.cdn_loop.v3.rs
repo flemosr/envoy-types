@@ -1,5 +1,4 @@
-/// CDN-Loop Header filter config. See the :ref:`configuration overview
-/// <config_http_filters_cdn_loop>` for more information.
+/// CDN-Loop Header filter config. See the :ref:`configuration overview <config_http_filters_cdn_loop>` for more information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CdnLoopConfig {

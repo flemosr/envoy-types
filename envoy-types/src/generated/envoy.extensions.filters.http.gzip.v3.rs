@@ -1,4 +1,4 @@
-/// [#next-free-field: 12]
+/// \[\#next-free-field: 12\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Gzip {
@@ -32,7 +32,7 @@ pub struct Gzip {
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Set of configuration parameters common for all compression filters. You can define
-    /// ``content_length``, ``content_type`` and other parameters in this field.
+    /// `content_length`, `content_type` and other parameters in this field.
     #[prost(message, optional, tag = "10")]
     pub compressor: ::core::option::Option<super::super::compressor::v3::Compressor>,
     /// Value for Zlib's next output buffer. If not set, defaults to 4096.

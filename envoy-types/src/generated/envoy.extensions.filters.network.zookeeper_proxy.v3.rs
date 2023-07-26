@@ -1,12 +1,11 @@
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ZooKeeperProxy {
-    /// The human readable prefix to use when emitting :ref:`statistics
-    /// <config_network_filters_zookeeper_proxy_stats>`.
+    /// The human readable prefix to use when emitting :ref:`statistics <config_network_filters_zookeeper_proxy_stats>`.
     #[prost(string, tag = "1")]
     pub stat_prefix: ::prost::alloc::string::String,
-    /// \[#not-implemented-hide:\] The optional path to use for writing ZooKeeper access logs.
+    /// \\[\#not-implemented-hide:\\] The optional path to use for writing ZooKeeper access logs.
     /// If the access log field is empty, access logs will not be written.
     #[prost(string, tag = "2")]
     pub access_log: ::prost::alloc::string::String,
@@ -48,7 +47,6 @@ pub struct LatencyThresholdOverride {
     /// The ZooKeeper opcodes. Can be found as part of the ZooKeeper source code:
     ///
     /// <https://github.com/apache/zookeeper/blob/master/zookeeper-server/src/main/java/org/apache/zookeeper/ZooDefs.java>
-    ///
     #[prost(enumeration = "latency_threshold_override::Opcode", tag = "1")]
     pub opcode: i32,
     /// The latency threshold override of certain opcode.

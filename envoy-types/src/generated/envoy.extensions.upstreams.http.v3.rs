@@ -1,7 +1,7 @@
 /// HttpProtocolOptions specifies Http upstream protocol options. This object
 /// is used in
 /// :ref:`typed_extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`,
-/// keyed by the name ``envoy.extensions.upstreams.http.v3.HttpProtocolOptions``.
+/// keyed by the name `envoy.extensions.upstreams.http.v3.HttpProtocolOptions`.
 ///
 /// This controls what protocol(s) should be used for upstream and how said protocol(s) are configured.
 ///
@@ -10,36 +10,36 @@
 ///
 /// .. code::
 ///
-///    clusters:
-///      - name: some_service
-///        connect_timeout: 5s
-///        upstream_http_protocol_options:
-///          auto_sni: true
-///        common_http_protocol_options:
-///          idle_timeout: 1s
-///        http2_protocol_options:
-///          max_concurrent_streams: 100
-///         .... [further cluster config]
+/// clusters:
+/// - name: some_service
+/// connect_timeout: 5s
+/// upstream_http_protocol_options:
+/// auto_sni: true
+/// common_http_protocol_options:
+/// idle_timeout: 1s
+/// http2_protocol_options:
+/// max_concurrent_streams: 100
+/// .... \[further cluster config\]
 ///
 /// Would now look like this:
 ///
 /// .. code::
 ///
-///    clusters:
-///      - name: some_service
-///        connect_timeout: 5s
-///        typed_extension_protocol_options:
-///          envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
-///            "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
-///            upstream_http_protocol_options:
-///              auto_sni: true
-///            common_http_protocol_options:
-///              idle_timeout: 1s
-///            explicit_http_config:
-///              http2_protocol_options:
-///                max_concurrent_streams: 100
-///         .... [further cluster config]
-/// [#next-free-field: 8]
+/// clusters:
+/// - name: some_service
+/// connect_timeout: 5s
+/// typed_extension_protocol_options:
+/// envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+/// "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+/// upstream_http_protocol_options:
+/// auto_sni: true
+/// common_http_protocol_options:
+/// idle_timeout: 1s
+/// explicit_http_config:
+/// http2_protocol_options:
+/// max_concurrent_streams: 100
+/// .... \[further cluster config\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpProtocolOptions {
@@ -54,7 +54,7 @@ pub struct HttpProtocolOptions {
         super::super::super::super::config::core::v3::UpstreamHttpProtocolOptions,
     >,
     /// .. note::
-    ///    Upstream HTTP filters are currently in alpha.
+    /// Upstream HTTP filters are currently in alpha.
     ///
     /// Optional HTTP filters for the upstream filter chain.
     ///
@@ -64,7 +64,7 @@ pub struct HttpProtocolOptions {
     /// If using upstream filters, please be aware that local errors sent by
     /// upstream filters will not trigger retries, and local errors sent by
     /// upstream filters will count as a final response if hedging is configured.
-    /// [#extension-category: envoy.filters.http.upstream]
+    /// \[\#extension-category: envoy.filters.http.upstream\]
     #[prost(message, repeated, tag = "6")]
     pub http_filters: ::prost::alloc::vec::Vec<
         super::super::super::filters::network::http_connection_manager::v3::HttpFilter,
@@ -72,11 +72,11 @@ pub struct HttpProtocolOptions {
     /// Configuration options for Unified Header Validation (UHV).
     /// UHV is an extensible mechanism for checking validity of HTTP responses.
     ///
-    /// [#comment:TODO(yanavlasov): Make it a link to the default header validator doc when it becomes visible.]
-    /// Leaving this field unspecified, selects the default header validator ``envoy.http.header_validators.envoy_default``.
+    /// \[\#comment:TODO(yanavlasov): Make it a link to the default header validator doc when it becomes visible.\]
+    /// Leaving this field unspecified, selects the default header validator `envoy.http.header_validators.envoy_default`.
     ///
-    /// \[#not-implemented-hide:\]
-    /// [#extension-category: envoy.http.header_validators]
+    /// \\[\#not-implemented-hide:\\]
+    /// \[\#extension-category: envoy.http.header_validators\]
     #[prost(message, optional, tag = "7")]
     pub header_validation_config: ::core::option::Option<
         super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -113,8 +113,8 @@ pub mod http_protocol_options {
                 super::super::super::super::super::super::config::core::v3::Http2ProtocolOptions,
             ),
             /// .. warning::
-            ///    QUIC upstream support is currently not ready for internet use.
-            ///    Please see :ref:`here <arch_overview_http3>` for details.
+            /// QUIC upstream support is currently not ready for internet use.
+            /// Please see :ref:`here <arch_overview_http3>` for details.
             #[prost(message, tag = "3")]
             Http3ProtocolOptions(
                 super::super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
@@ -138,8 +138,8 @@ pub mod http_protocol_options {
             super::super::super::super::super::config::core::v3::Http2ProtocolOptions,
         >,
         /// .. warning::
-        ///    QUIC upstream support is currently not ready for internet use.
-        ///    Please see :ref:`here <arch_overview_http3>` for details.
+        /// QUIC upstream support is currently not ready for internet use.
+        /// Please see :ref:`here <arch_overview_http3>` for details.
         #[prost(message, optional, tag = "3")]
         pub http3_protocol_options: ::core::option::Option<
             super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
@@ -147,9 +147,9 @@ pub mod http_protocol_options {
     }
     /// If this is used, the cluster can use either HTTP/1 or HTTP/2, and will use whichever
     /// protocol is negotiated by ALPN with the upstream.
-    /// Clusters configured with ``AutoHttpConfig`` will use the highest available
+    /// Clusters configured with `AutoHttpConfig` will use the highest available
     /// protocol; HTTP/2 if supported, otherwise HTTP/1.
-    /// If the upstream does not support ALPN, ``AutoHttpConfig`` will fail over to HTTP/1.
+    /// If the upstream does not support ALPN, `AutoHttpConfig` will fail over to HTTP/1.
     /// This can only be used with transport sockets which support ALPN. Using a
     /// transport socket which does not support ALPN will result in configuration
     /// failure. The transport layer may be configured with custom ALPN, but the default ALPN
@@ -172,8 +172,8 @@ pub mod http_protocol_options {
         /// when HTTP/3 will be used, and when Envoy will fail over to TCP.
         ///
         /// .. warning::
-        ///    QUIC upstream support is currently not ready for internet use.
-        ///    Please see :ref:`here <arch_overview_http3>` for details.
+        /// QUIC upstream support is currently not ready for internet use.
+        /// Please see :ref:`here <arch_overview_http3>` for details.
         #[prost(message, optional, tag = "3")]
         pub http3_protocol_options: ::core::option::Option<
             super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
@@ -184,7 +184,7 @@ pub mod http_protocol_options {
         /// advertise supporting it.
         ///
         /// .. note::
-        ///    This is required when HTTP/3 is enabled.
+        /// This is required when HTTP/3 is enabled.
         #[prost(message, optional, tag = "4")]
         pub alternate_protocols_cache_options: ::core::option::Option<
             super::super::super::super::super::config::core::v3::AlternateProtocolsCacheOptions,
@@ -194,8 +194,8 @@ pub mod http_protocol_options {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum UpstreamProtocolOptions {
-        /// To explicitly configure either HTTP/1 or HTTP/2 (but not both!) use ``explicit_http_config``.
-        /// If the ``explicit_http_config`` is empty, HTTP/1.1 is used.
+        /// To explicitly configure either HTTP/1 or HTTP/2 (but not both!) use `explicit_http_config`.
+        /// If the `explicit_http_config` is empty, HTTP/1.1 is used.
         #[prost(message, tag = "3")]
         ExplicitHttpConfig(ExplicitHttpConfig),
         /// This allows switching on protocol based on what protocol the downstream

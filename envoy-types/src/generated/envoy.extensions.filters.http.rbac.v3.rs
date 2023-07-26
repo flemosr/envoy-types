@@ -1,5 +1,5 @@
 /// RBAC filter config.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rbac {

@@ -35,7 +35,7 @@ pub mod gradient_controller_config {
         >,
     }
     /// Parameters controlling the periodic minRTT recalculation.
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MinimumRttCalculationParams {
@@ -90,7 +90,7 @@ pub struct AdaptiveConcurrency {
     /// Defaults to 503 (Service Unavailable).
     ///
     /// .. note::
-    ///    If this is set to < 400, 503 will be used instead.
+    /// If this is set to \< 400, 503 will be used instead.
     #[prost(message, optional, tag = "3")]
     pub concurrency_limit_exceeded_status: ::core::option::Option<
         super::super::super::super::super::r#type::v3::HttpStatus,

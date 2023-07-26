@@ -1,4 +1,4 @@
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Compressor {
@@ -26,8 +26,10 @@ pub struct Compressor {
     ///
     /// .. attention::
     ///
-    ///     To avoid interfering with other compression filters in the same chain use this option in
-    ///     the filter closest to the upstream.
+    /// ```text
+    /// To avoid interfering with other compression filters in the same chain use this option in
+    /// the filter closest to the upstream.
+    /// ```
     #[deprecated]
     #[prost(bool, tag = "4")]
     pub remove_accept_encoding_header: bool,
@@ -42,7 +44,7 @@ pub struct Compressor {
     /// A compressor library to use for compression. Currently only
     /// :ref:`envoy.compression.gzip.compressor<envoy_v3_api_msg_extensions.compression.gzip.compressor.v3.Gzip>`
     /// is included in Envoy.
-    /// [#extension-category: envoy.compression.compressor]
+    /// \[\#extension-category: envoy.compression.compressor\]
     #[prost(message, optional, tag = "6")]
     pub compressor_library: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -56,14 +58,16 @@ pub struct Compressor {
     ///
     /// .. attention::
     ///
-    ///     If the field is not empty then the duplicate deprecated fields of the ``Compressor`` message,
-    ///     such as ``content_length``, ``content_type``, ``disable_on_etag_header``,
-    ///     ``remove_accept_encoding_header`` and ``runtime_enabled``, are ignored.
+    /// ```text
+    /// If the field is not empty then the duplicate deprecated fields of the ``Compressor`` message,
+    /// such as ``content_length``, ``content_type``, ``disable_on_etag_header``,
+    /// ``remove_accept_encoding_header`` and ``runtime_enabled``, are ignored.
     ///
-    ///     Also all the statistics related to response compression will be rooted in
-    ///     ``<stat_prefix>.compressor.<compressor_library.name>.<compressor_library_stat_prefix>.response.*``
-    ///     instead of
-    ///     ``<stat_prefix>.compressor.<compressor_library.name>.<compressor_library_stat_prefix>.*``.
+    /// Also all the statistics related to response compression will be rooted in
+    /// ``<stat_prefix>.compressor.<compressor_library.name>.<compressor_library_stat_prefix>.response.*``
+    /// instead of
+    /// ``<stat_prefix>.compressor.<compressor_library.name>.<compressor_library_stat_prefix>.*``.
+    /// ```
     #[prost(message, optional, tag = "8")]
     pub response_direction_config: ::core::option::Option<
         compressor::ResponseDirectionConfig,
@@ -122,8 +126,10 @@ pub mod compressor {
         ///
         /// .. attention::
         ///
-        ///     To avoid interfering with other compression filters in the same chain use this option in
-        ///     the filter closest to the upstream.
+        /// ```text
+        /// To avoid interfering with other compression filters in the same chain use this option in
+        /// the filter closest to the upstream.
+        /// ```
         #[prost(bool, tag = "3")]
         pub remove_accept_encoding_header: bool,
     }

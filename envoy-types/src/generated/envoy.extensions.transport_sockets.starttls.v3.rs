@@ -1,5 +1,6 @@
 /// Configuration for a downstream StartTls transport socket.
 /// StartTls transport socket wraps two sockets:
+///
 /// * raw_buffer socket which is used at the beginning of the session
 /// * TLS socket used when a protocol negotiates a switch to encrypted traffic.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -18,6 +19,7 @@ pub struct StartTlsConfig {
 }
 /// Configuration for an upstream StartTls transport socket.
 /// StartTls transport socket wraps two sockets:
+///
 /// * raw_buffer socket which is used at the beginning of the session
 /// * TLS socket used when a protocol negotiates a switch to encrypted traffic.
 #[allow(clippy::derive_partial_eq_without_eq)]

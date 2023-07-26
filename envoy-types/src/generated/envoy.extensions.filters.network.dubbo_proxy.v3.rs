@@ -1,4 +1,4 @@
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteConfiguration {
@@ -6,14 +6,14 @@ pub struct RouteConfiguration {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// The interface name of the service. Wildcard interface are supported in the suffix or prefix form.
-    /// e.g. ``*.methods.add`` will match ``com.dev.methods.add``, ``com.prod.methods.add``, etc.
-    /// ``com.dev.methods.*`` will match ``com.dev.methods.add``, ``com.dev.methods.update``, etc.
-    /// Special wildcard ``*`` matching any interface.
+    /// e.g. `*.methods.add` will match `com.dev.methods.add`, `com.prod.methods.add`, etc.
+    /// `com.dev.methods.*` will match `com.dev.methods.add`, `com.dev.methods.update`, etc.
+    /// Special wildcard `*` matching any interface.
     ///
     /// .. note::
     ///
-    ///   The wildcard will not match the empty string.
-    ///   e.g. ``*.methods.add`` will match ``com.dev.methods.add`` but not ``.methods.add``.
+    /// The wildcard will not match the empty string.
+    /// e.g. `*.methods.add` will match `com.dev.methods.add` but not `.methods.add`.
     #[prost(string, tag = "2")]
     pub interface: ::prost::alloc::string::String,
     /// Which group does the interface belong to.
@@ -57,7 +57,7 @@ pub struct RouteMatch {
 pub struct RouteAction {
     /// Optional endpoint metadata match criteria used by the subset load balancer. Only endpoints in
     /// the upstream cluster with metadata matching what is set in this field will be considered for
-    /// load balancing. The filter name should be specified as ``envoy.lb``.
+    /// load balancing. The filter name should be specified as `envoy.lb`.
     #[prost(message, optional, tag = "3")]
     pub metadata_match: ::core::option::Option<
         super::super::super::super::super::config::core::v3::Metadata,
@@ -131,8 +131,8 @@ pub mod method_match {
             ///
             /// Examples:
             ///
-            /// * For range [-10,0), route will match for header value -1, but not for 0,
-            ///    "somestring", 10.9, "-1somestring"
+            /// * For range \[-10,0), route will match for header value -1, but not for 0,
+            ///   "somestring", 10.9, "-1somestring"
             #[prost(message, tag = "4")]
             RangeMatch(
                 super::super::super::super::super::super::super::r#type::v3::Int64Range,
@@ -154,7 +154,7 @@ pub struct MultipleRouteConfiguration {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Drds {
     /// Configuration source specifier.
-    /// In case of ``api_config_source`` only aggregated ``api_type`` is supported.
+    /// In case of `api_config_source` only aggregated `api_type` is supported.
     #[prost(message, optional, tag = "1")]
     pub config_source: ::core::option::Option<
         super::super::super::super::super::config::core::v3::ConfigSource,
@@ -165,7 +165,7 @@ pub struct Drds {
     #[prost(string, tag = "2")]
     pub route_config_name: ::prost::alloc::string::String,
 }
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DubboProxy {
@@ -182,14 +182,14 @@ pub struct DubboProxy {
     ///
     /// .. note::
     ///
-    ///    This field is deprecated. Please use ``drds`` or ``multiple_route_config`` first.
+    /// This field is deprecated. Please use `drds` or `multiple_route_config` first.
     #[deprecated]
     #[prost(message, repeated, tag = "4")]
     pub route_config: ::prost::alloc::vec::Vec<RouteConfiguration>,
     /// A list of individual Dubbo filters that make up the filter chain for requests made to the
     /// Dubbo proxy. Order matters as the filters are processed sequentially. For backwards
     /// compatibility, if no dubbo_filters are specified, a default Dubbo router filter
-    /// (``envoy.filters.dubbo.router``) is used.
+    /// (`envoy.filters.dubbo.router`) is used.
     #[prost(message, repeated, tag = "5")]
     pub dubbo_filters: ::prost::alloc::vec::Vec<DubboFilter>,
     #[prost(oneof = "dubbo_proxy::RouteSpecifier", tags = "6, 7")]
@@ -200,7 +200,7 @@ pub mod dubbo_proxy {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum RouteSpecifier {
-        /// Use xDS to fetch the route configuration. It is invalid to define both ``route_config`` and ``drds``.
+        /// Use xDS to fetch the route configuration. It is invalid to define both `route_config` and `drds`.
         #[prost(message, tag = "6")]
         Drds(super::Drds),
         #[prost(message, tag = "7")]

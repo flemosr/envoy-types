@@ -38,7 +38,7 @@ pub mod trace_config {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProbabilitySampler {
-    /// The desired probability of sampling. Must be within [0.0, 1.0].
+    /// The desired probability of sampling. Must be within \[0.0, 1.0\].
     #[prost(double, tag = "1")]
     pub sampling_probability: f64,
 }
@@ -52,9 +52,10 @@ pub struct ConstantSampler {
 /// Nested message and enum types in `ConstantSampler`.
 pub mod constant_sampler {
     /// How spans should be sampled:
-    /// - Always off
-    /// - Always on
-    /// - Always follow the parent Span's decision (off if no parent).
+    ///
+    /// * Always off
+    /// * Always on
+    /// * Always follow the parent Span's decision (off if no parent).
     #[derive(
         Clone,
         Copy,
@@ -247,8 +248,8 @@ pub mod span {
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Entry {
             /// The key must begin with a lowercase letter, and can only contain
-            /// lowercase letters 'a'-'z', digits '0'-'9', underscores '_', dashes
-            /// '-', asterisks '*', and forward slashes '/'.
+            /// lowercase letters 'a'-'z', digits '0'-'9', underscores '\_', dashes
+            /// '-', asterisks '\*', and forward slashes '/'.
             #[prost(string, tag = "1")]
             pub key: ::prost::alloc::string::String,
             /// The value is opaque string up to 256 characters printable ASCII
@@ -266,10 +267,12 @@ pub mod span {
         /// or the Boolean values `true` or `false`. Note, global attributes like
         /// server name can be set as tags using resource API. Examples of attributes:
         ///
-        ///      "/http/user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
-        ///      "/http/server_latency": 300
-        ///      "abc.com/myattribute": true
-        ///      "abc.com/score": 10.239
+        /// ```text
+        /// "/http/user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
+        /// "/http/server_latency": 300
+        /// "abc.com/myattribute": true
+        /// "abc.com/score": 10.239
+        /// ```
         #[prost(map = "string, message", tag = "1")]
         pub attribute_map: ::std::collections::HashMap<
             ::prost::alloc::string::String,

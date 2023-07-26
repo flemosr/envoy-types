@@ -13,8 +13,7 @@ pub struct CircuitBreakers {
     /// Optional per-host limits which apply to each individual host in a cluster.
     ///
     /// .. note::
-    ///   currently only the :ref:`max_connections
-    ///   <envoy_v3_api_field_config.cluster.v3.CircuitBreakers.Thresholds.max_connections>` field is supported for per-host limits.
+    /// currently only the :ref:`max_connections <envoy_v3_api_field_config.cluster.v3.CircuitBreakers.Thresholds.max_connections>` field is supported for per-host limits.
     ///
     /// If multiple per-host :ref:`Thresholds<envoy_v3_api_msg_config.cluster.v3.CircuitBreakers.Thresholds>`
     /// are defined with the same :ref:`RoutingPriority<envoy_v3_api_enum_config.core.v3.RoutingPriority>`,
@@ -28,7 +27,7 @@ pub struct CircuitBreakers {
 pub mod circuit_breakers {
     /// A Thresholds defines CircuitBreaker settings for a
     /// :ref:`RoutingPriority<envoy_v3_api_enum_config.core.v3.RoutingPriority>`.
-    /// [#next-free-field: 9]
+    /// \[\#next-free-field: 9\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Thresholds {
@@ -70,8 +69,10 @@ pub mod circuit_breakers {
         ///
         /// .. note::
         ///
-        ///     If this field is set, the retry budget will override any configured retry circuit
-        ///     breaker.
+        /// ```text
+        /// If this field is set, the retry budget will override any configured retry circuit
+        /// breaker.
+        /// ```
         #[prost(message, optional, tag = "8")]
         pub retry_budget: ::core::option::Option<thresholds::RetryBudget>,
         /// If track_remaining is true, then stats will be published that expose
@@ -80,8 +81,10 @@ pub mod circuit_breakers {
         ///
         /// .. note::
         ///
-        ///     If a retry budget is used in lieu of the max_retries circuit breaker,
-        ///     the remaining retry resources remaining will not be tracked.
+        /// ```text
+        /// If a retry budget is used in lieu of the max_retries circuit breaker,
+        /// the remaining retry resources remaining will not be tracked.
+        /// ```
         #[prost(bool, tag = "6")]
         pub track_remaining: bool,
         /// The maximum number of connection pools per cluster that Envoy will concurrently support at
@@ -127,8 +130,7 @@ pub struct Filter {
     pub name: ::prost::alloc::string::String,
     /// Filter specific configuration which depends on the filter being
     /// instantiated. See the supported filters for further documentation.
-    /// Note that Envoy's :ref:`downstream network
-    /// filters <config_network_filters>` are not valid upstream filters.
+    /// Note that Envoy's :ref:`downstream network filters <config_network_filters>` are not valid upstream filters.
     #[prost(message, optional, tag = "2")]
     pub typed_config: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,
@@ -136,7 +138,7 @@ pub struct Filter {
 }
 /// See the :ref:`architecture overview <arch_overview_outlier_detection>` for
 /// more information on outlier detection.
-/// [#next-free-field: 23]
+/// \[\#next-free-field: 23\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutlierDetection {
@@ -271,8 +273,8 @@ pub struct OutlierDetection {
     /// failure percentage statistics. This setting can be used to disable ejection or to ramp it up
     /// slowly. Defaults to 0.
     ///
-    /// [#next-major-version: setting this without setting failure_percentage_threshold should be
-    /// invalid in v4.]
+    /// \[\#next-major-version: setting this without setting failure_percentage_threshold should be
+    /// invalid in v4.\]
     #[prost(message, optional, tag = "17")]
     pub enforcing_failure_percentage: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -315,8 +317,8 @@ pub struct OutlierDetection {
         super::super::super::super::google::protobuf::Duration,
     >,
 }
-/// Cluster list collections. Entries are ``Cluster`` resources or references.
-/// \[#not-implemented-hide:\]
+/// Cluster list collections. Entries are `Cluster` resources or references.
+/// \\[\#not-implemented-hide:\\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterCollection {
@@ -326,12 +328,12 @@ pub struct ClusterCollection {
     >,
 }
 /// Configuration for a single upstream cluster.
-/// [#next-free-field: 57]
+/// \[\#next-free-field: 57\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Cluster {
     /// Configuration to use different transport sockets for different endpoints.
-    /// The entry of ``envoy.transport_socket_match`` in the
+    /// The entry of `envoy.transport_socket_match` in the
     /// :ref:`LbEndpoint.Metadata <envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`
     /// is used to match against the transport sockets as they appear in the list. The first
     /// :ref:`match <envoy_v3_api_msg_config.cluster.v3.Cluster.TransportSocketMatch>` is used.
@@ -339,28 +341,29 @@ pub struct Cluster {
     ///
     /// .. code-block:: yaml
     ///
-    ///   transport_socket_matches:
-    ///   - name: "enableMTLS"
-    ///     match:
-    ///       acceptMTLS: true
-    ///     transport_socket:
-    ///       name: envoy.transport_sockets.tls
-    ///       config: { ... } # tls socket configuration
-    ///   - name: "defaultToPlaintext"
-    ///     match: {}
-    ///     transport_socket:
-    ///       name: envoy.transport_sockets.raw_buffer
+    /// transport_socket_matches:
     ///
-    /// Connections to the endpoints whose metadata value under ``envoy.transport_socket_match``
+    /// * name: "enableMTLS"
+    ///   match:
+    ///   acceptMTLS: true
+    ///   transport_socket:
+    ///   name: envoy.transport_sockets.tls
+    ///   config: { ... } # tls socket configuration
+    /// * name: "defaultToPlaintext"
+    ///   match: {}
+    ///   transport_socket:
+    ///   name: envoy.transport_sockets.raw_buffer
+    ///
+    /// Connections to the endpoints whose metadata value under `envoy.transport_socket_match`
     /// having "acceptMTLS"/"true" key/value pair use the "enableMTLS" socket configuration.
     ///
     /// If a :ref:`socket match <envoy_v3_api_msg_config.cluster.v3.Cluster.TransportSocketMatch>` with empty match
     /// criteria is provided, that always match any endpoint. For example, the "defaultToPlaintext"
     /// socket match in case above.
     ///
-    /// If an endpoint metadata's value under ``envoy.transport_socket_match`` does not match any
-    /// ``TransportSocketMatch``, socket configuration fallbacks to use the ``tls_context`` or
-    /// ``transport_socket`` specified in this cluster.
+    /// If an endpoint metadata's value under `envoy.transport_socket_match` does not match any
+    /// `TransportSocketMatch`, socket configuration fallbacks to use the `tls_context` or
+    /// `transport_socket` specified in this cluster.
     ///
     /// This field allows gradual and flexible transport socket configuration changes.
     ///
@@ -371,31 +374,30 @@ pub struct Cluster {
     ///
     /// Then the xDS server can configure the CDS to a client, Envoy A, to send mutual TLS
     /// traffic for endpoints with "acceptMTLS": "true", by adding a corresponding
-    /// ``TransportSocketMatch`` in this field. Other client Envoys receive CDS without
-    /// ``transport_socket_match`` set, and still send plain text traffic to the same cluster.
+    /// `TransportSocketMatch` in this field. Other client Envoys receive CDS without
+    /// `transport_socket_match` set, and still send plain text traffic to the same cluster.
     ///
     /// This field can be used to specify custom transport socket configurations for health
     /// checks by adding matching key/value pairs in a health check's
     /// :ref:`transport socket match criteria <envoy_v3_api_field_config.core.v3.HealthCheck.transport_socket_match_criteria>` field.
     ///
-    /// [#comment:TODO(incfly): add a detailed architecture doc on intended usage.]
+    /// \[\#comment:TODO(incfly): add a detailed architecture doc on intended usage.\]
     #[prost(message, repeated, tag = "43")]
     pub transport_socket_matches: ::prost::alloc::vec::Vec<
         cluster::TransportSocketMatch,
     >,
     /// Supplies the name of the cluster which must be unique across all clusters.
     /// The cluster name is used when emitting
-    /// :ref:`statistics <config_cluster_manager_cluster_stats>` if :ref:`alt_stat_name
-    /// <envoy_v3_api_field_config.cluster.v3.Cluster.alt_stat_name>` is not provided.
-    /// Any ``:`` in the cluster name will be converted to ``_`` when emitting statistics.
+    /// :ref:`statistics <config_cluster_manager_cluster_stats>` if :ref:`alt_stat_name <envoy_v3_api_field_config.cluster.v3.Cluster.alt_stat_name>` is not provided.
+    /// Any `:` in the cluster name will be converted to `_` when emitting statistics.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// An optional alternative to the cluster name to be used for observability. This name is used
     /// emitting stats for the cluster and access logging the cluster name. This will appear as
     /// additional information in configuration dumps of a cluster's current status as
     /// :ref:`observability_name <envoy_v3_api_field_admin.v3.ClusterStatus.observability_name>`
-    /// and as an additional tag "upstream_cluster.name" while tracing. Note: Any ``:`` in the name
-    /// will be converted to ``_`` when emitting statistics. This should not be confused with
+    /// and as an additional tag "upstream_cluster.name" while tracing. Note: Any `:` in the name
+    /// will be converted to `_` when emitting statistics. This should not be confused with
     /// :ref:`Router Filter Header <config_http_filters_router_x-envoy-upstream-alt-stat-name>`.
     #[prost(string, tag = "28")]
     pub alt_stat_name: ::prost::alloc::string::String,
@@ -422,13 +424,12 @@ pub struct Cluster {
     /// :ref:`STATIC<envoy_v3_api_enum_value_config.cluster.v3.Cluster.DiscoveryType.STATIC>`,
     /// :ref:`STRICT_DNS<envoy_v3_api_enum_value_config.cluster.v3.Cluster.DiscoveryType.STRICT_DNS>`
     /// or :ref:`LOGICAL_DNS<envoy_v3_api_enum_value_config.cluster.v3.Cluster.DiscoveryType.LOGICAL_DNS>` clusters.
-    /// This field supersedes the ``hosts`` field in the v2 API.
+    /// This field supersedes the `hosts` field in the v2 API.
     ///
     /// .. attention::
     ///
-    ///    Setting this allows non-EDS cluster types to contain embedded EDS equivalent
-    ///    :ref:`endpoint assignments<envoy_v3_api_msg_config.endpoint.v3.ClusterLoadAssignment>`.
-    ///
+    /// Setting this allows non-EDS cluster types to contain embedded EDS equivalent
+    /// :ref:`endpoint assignments<envoy_v3_api_msg_config.endpoint.v3.ClusterLoadAssignment>`.
     #[prost(message, optional, tag = "33")]
     pub load_assignment: ::core::option::Option<
         super::super::endpoint::v3::ClusterLoadAssignment,
@@ -445,7 +446,7 @@ pub struct Cluster {
     /// parameter to 1 will effectively disable keep alive.
     ///
     /// .. attention::
-    ///    This field has been deprecated in favor of the :ref:`max_requests_per_connection <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_requests_per_connection>` field.
+    /// This field has been deprecated in favor of the :ref:`max_requests_per_connection <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_requests_per_connection>` field.
     #[deprecated]
     #[prost(message, optional, tag = "9")]
     pub max_requests_per_connection: ::core::option::Option<
@@ -461,8 +462,7 @@ pub struct Cluster {
     /// in the :ref:`http_protocol_options <envoy_v3_api_msg_extensions.upstreams.http.v3.HttpProtocolOptions>` message.
     /// upstream_http_protocol_options can be set via the cluster's
     /// :ref:`extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`.
-    /// See :ref:`upstream_http_protocol_options
-    /// <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
+    /// See :ref:`upstream_http_protocol_options <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
     /// for example usage.
     #[deprecated]
     #[prost(message, optional, tag = "46")]
@@ -476,8 +476,7 @@ pub struct Cluster {
     /// in the :ref:`http_protocol_options <envoy_v3_api_msg_extensions.upstreams.http.v3.HttpProtocolOptions>` message.
     /// common_http_protocol_options can be set via the cluster's
     /// :ref:`extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`.
-    /// See :ref:`upstream_http_protocol_options
-    /// <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
+    /// See :ref:`upstream_http_protocol_options <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
     /// for example usage.
     #[deprecated]
     #[prost(message, optional, tag = "29")]
@@ -489,8 +488,7 @@ pub struct Cluster {
     /// :ref:`http_protocol_options <envoy_v3_api_msg_extensions.upstreams.http.v3.HttpProtocolOptions>` message.
     /// http_protocol_options can be set via the cluster's
     /// :ref:`extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`.
-    /// See :ref:`upstream_http_protocol_options
-    /// <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
+    /// See :ref:`upstream_http_protocol_options <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
     /// for example usage.
     #[deprecated]
     #[prost(message, optional, tag = "13")]
@@ -501,14 +499,13 @@ pub struct Cluster {
     /// set so that Envoy will assume that the upstream supports HTTP/2 when
     /// making new HTTP connection pool connections. Currently, Envoy only
     /// supports prior knowledge for upstream connections. Even if TLS is used
-    /// with ALPN, ``http2_protocol_options`` must be specified. As an aside this allows HTTP/2
+    /// with ALPN, `http2_protocol_options` must be specified. As an aside this allows HTTP/2
     /// connections to happen over plain text.
     /// This has been deprecated in favor of http2_protocol_options fields in the
     /// :ref:`http_protocol_options <envoy_v3_api_msg_extensions.upstreams.http.v3.HttpProtocolOptions>`
     /// message. http2_protocol_options can be set via the cluster's
     /// :ref:`extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`.
-    /// See :ref:`upstream_http_protocol_options
-    /// <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
+    /// See :ref:`upstream_http_protocol_options <envoy_v3_api_field_extensions.upstreams.http.v3.HttpProtocolOptions.upstream_http_protocol_options>`
     /// for example usage.
     #[deprecated]
     #[prost(message, optional, tag = "14")]
@@ -519,7 +516,7 @@ pub struct Cluster {
     /// for upstream connections. The key should match the extension filter name, such as
     /// "envoy.filters.network.thrift_proxy". See the extension's documentation for details on
     /// specific options.
-    /// [#next-major-version: make this a list of typed extensions.]
+    /// \[\#next-major-version: make this a list of typed extensions.\]
     #[prost(map = "string, message", tag = "36")]
     pub typed_extension_protocol_options: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -568,13 +565,13 @@ pub struct Cluster {
     /// :ref:`STRICT_DNS<envoy_v3_api_enum_value_config.cluster.v3.Cluster.DiscoveryType.STRICT_DNS>`
     /// and :ref:`LOGICAL_DNS<envoy_v3_api_enum_value_config.cluster.v3.Cluster.DiscoveryType.LOGICAL_DNS>`
     /// this setting is ignored.
-    /// This field is deprecated in favor of ``dns_resolution_config``
+    /// This field is deprecated in favor of `dns_resolution_config`
     /// which aggregates all of the DNS resolver configuration in a single message.
     #[deprecated]
     #[prost(message, repeated, tag = "18")]
     pub dns_resolvers: ::prost::alloc::vec::Vec<super::super::core::v3::Address>,
     /// Always use TCP queries instead of UDP queries for DNS lookups.
-    /// This field is deprecated in favor of ``dns_resolution_config``
+    /// This field is deprecated in favor of `dns_resolution_config`
     /// which aggregates all of the DNS resolver configuration in a single message.
     #[deprecated]
     #[prost(bool, tag = "45")]
@@ -591,13 +588,13 @@ pub struct Cluster {
     /// or any other DNS resolver types and the related parameters.
     /// For example, an object of
     /// :ref:`CaresDnsResolverConfig <envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
-    /// can be packed into this ``typed_dns_resolver_config``. This configuration replaces the
+    /// can be packed into this `typed_dns_resolver_config`. This configuration replaces the
     /// :ref:`dns_resolution_config <envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolution_config>`
     /// configuration.
-    /// During the transition period when both ``dns_resolution_config`` and ``typed_dns_resolver_config`` exists,
-    /// when ``typed_dns_resolver_config`` is in place, Envoy will use it and ignore ``dns_resolution_config``.
-    /// When ``typed_dns_resolver_config`` is missing, the default behavior is in place.
-    /// [#extension-category: envoy.network.dns_resolver]
+    /// During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
+    /// when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
+    /// When `typed_dns_resolver_config` is missing, the default behavior is in place.
+    /// \[\#extension-category: envoy.network.dns_resolver\]
     #[prost(message, optional, tag = "55")]
     pub typed_dns_resolver_config: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -646,8 +643,8 @@ pub struct Cluster {
     #[prost(message, optional, tag = "27")]
     pub common_lb_config: ::core::option::Option<cluster::CommonLbConfig>,
     /// Optional custom transport socket implementation to use for upstream connections.
-    /// To setup TLS, set a transport socket with name ``envoy.transport_sockets.tls`` and
-    /// :ref:`UpstreamTlsContexts <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.UpstreamTlsContext>` in the ``typed_config``.
+    /// To setup TLS, set a transport socket with name `envoy.transport_sockets.tls` and
+    /// :ref:`UpstreamTlsContexts <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.UpstreamTlsContext>` in the `typed_config`.
     /// If no transport socket configuration is specified, new connections
     /// will be set up with plaintext.
     #[prost(message, optional, tag = "24")]
@@ -658,13 +655,12 @@ pub struct Cluster {
     /// cluster. It can be used for stats, logging, and varying filter behavior.
     /// Fields should use reverse DNS notation to denote which entity within Envoy
     /// will need the information. For instance, if the metadata is intended for
-    /// the Router filter, the filter name should be specified as ``envoy.filters.http.router``.
+    /// the Router filter, the filter name should be specified as `envoy.filters.http.router`.
     #[prost(message, optional, tag = "25")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
     /// Determines how Envoy selects the protocol used to speak to upstream hosts.
     /// This has been deprecated in favor of setting explicit protocol selection
-    /// in the :ref:`http_protocol_options
-    /// <envoy_v3_api_msg_extensions.upstreams.http.v3.HttpProtocolOptions>` message.
+    /// in the :ref:`http_protocol_options <envoy_v3_api_msg_extensions.upstreams.http.v3.HttpProtocolOptions>` message.
     /// http_protocol_options can be set via the cluster's
     /// :ref:`extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`.
     #[deprecated]
@@ -678,14 +674,14 @@ pub struct Cluster {
     ///
     /// .. note::
     ///
-    ///    This is currently only supported for connections created by tcp_proxy.
+    /// This is currently only supported for connections created by tcp_proxy.
     ///
     /// .. note::
     ///
-    ///    The current implementation of this feature closes all connections immediately when
-    ///    the unhealthy status is detected. If there are a large number of connections open
-    ///    to an upstream host that becomes unhealthy, Envoy may spend a substantial amount of
-    ///    time exclusively closing these connections, and not processing any other traffic.
+    /// The current implementation of this feature closes all connections immediately when
+    /// the unhealthy status is detected. If there are a large number of connections open
+    /// to an upstream host that becomes unhealthy, Envoy may spend a substantial amount of
+    /// time exclusively closing these connections, and not processing any other traffic.
     #[prost(bool, tag = "31")]
     pub close_connections_on_host_health_failure: bool,
     /// If set to true, Envoy will ignore the health value of a host when processing its removal
@@ -702,7 +698,7 @@ pub struct Cluster {
     /// :ref:`lb_policy<envoy_v3_api_field_config.cluster.v3.Cluster.lb_policy>`.
     #[prost(message, optional, tag = "41")]
     pub load_balancing_policy: ::core::option::Option<LoadBalancingPolicy>,
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     /// If present, tells the client where to send load reports via LRS. If not present, the
     /// client will fall back to a client-side default, which may be either (a) don't send any
     /// load reports or (b) send load reports for all clusters to a single default server
@@ -713,21 +709,20 @@ pub struct Cluster {
     /// multiple clusters onto a single stream. Either way, the client must make sure to send
     /// the data for any given cluster on no more than one stream.
     ///
-    /// [#next-major-version: In the v3 API, we should consider restructuring this somehow,
+    /// \[\#next-major-version: In the v3 API, we should consider restructuring this somehow,
     /// maybe by allowing LRS to go on the ADS stream, or maybe by moving some of the negotiation
-    /// from the LRS stream here.]
+    /// from the LRS stream here.\]
     #[prost(message, optional, tag = "42")]
     pub lrs_server: ::core::option::Option<super::super::core::v3::ConfigSource>,
-    /// If track_timeout_budgets is true, the :ref:`timeout budget histograms
-    /// <config_cluster_manager_cluster_stats_timeout_budgets>` will be published for each
+    /// If track_timeout_budgets is true, the :ref:`timeout budget histograms <config_cluster_manager_cluster_stats_timeout_budgets>` will be published for each
     /// request. These show what percentage of a request's per try and global timeout was used. A value
     /// of 0 would indicate that none of the timeout was used or that the timeout was infinite. A value
     /// of 100 would indicate that the request took the entirety of the timeout given to it.
     ///
     /// .. attention::
     ///
-    ///    This field has been deprecated in favor of ``timeout_budgets``, part of
-    ///    :ref:`track_cluster_stats <envoy_v3_api_field_config.cluster.v3.Cluster.track_cluster_stats>`.
+    /// This field has been deprecated in favor of `timeout_budgets`, part of
+    /// :ref:`track_cluster_stats <envoy_v3_api_field_config.cluster.v3.Cluster.track_cluster_stats>`.
     #[deprecated]
     #[prost(bool, tag = "47")]
     pub track_timeout_budgets: bool,
@@ -737,7 +732,7 @@ pub struct Cluster {
     /// TCP upstreams.
     ///
     /// For HTTP traffic, Envoy will generally take downstream HTTP and send it upstream as upstream
-    /// HTTP, using the http connection pool and the codec from ``http2_protocol_options``
+    /// HTTP, using the http connection pool and the codec from `http2_protocol_options`
     ///
     /// For routes where CONNECT termination is configured, Envoy will take downstream CONNECT
     /// requests and forward the CONNECT payload upstream over raw TCP using the tcp connection pool.
@@ -748,7 +743,7 @@ pub struct Cluster {
     /// If users desire custom connection pool or upstream behavior, for example terminating
     /// CONNECT only if a custom filter indicates it is appropriate, the custom factories
     /// can be registered and configured here.
-    /// [#extension-category: envoy.upstreams]
+    /// \[\#extension-category: envoy.upstreams\]
     #[prost(message, optional, tag = "48")]
     pub upstream_config: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -759,7 +754,7 @@ pub struct Cluster {
     /// Preconnect configuration for this cluster.
     #[prost(message, optional, tag = "50")]
     pub preconnect_policy: ::core::option::Option<cluster::PreconnectPolicy>,
-    /// If ``connection_pool_per_downstream_connection`` is true, the cluster will use a separate
+    /// If `connection_pool_per_downstream_connection` is true, the cluster will use a separate
     /// connection pool for every downstream connection
     #[prost(bool, tag = "51")]
     pub connection_pool_per_downstream_connection: bool,
@@ -789,14 +784,14 @@ pub mod cluster {
         /// Optional endpoint metadata match criteria.
         /// The connection to the endpoint with metadata matching what is set in this field
         /// will use the transport socket configuration specified here.
-        /// The endpoint's metadata entry in ``envoy.transport_socket_match`` is used to match
+        /// The endpoint's metadata entry in `envoy.transport_socket_match` is used to match
         /// against the values specified in this field.
         #[prost(message, optional, tag = "2")]
         pub r#match: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Struct,
         >,
         /// The configuration of the transport socket.
-        /// [#extension-category: envoy.transport_sockets.upstream]
+        /// \[\#extension-category: envoy.transport_sockets.upstream\]
         #[prost(message, optional, tag = "3")]
         pub transport_socket: ::core::option::Option<
             super::super::super::core::v3::TransportSocket,
@@ -811,7 +806,7 @@ pub mod cluster {
         pub name: ::prost::alloc::string::String,
         /// Cluster specific configuration which depends on the cluster being instantiated.
         /// See the supported cluster for further documentation.
-        /// [#extension-category: envoy.clusters]
+        /// \[\#extension-category: envoy.clusters\]
         #[prost(message, optional, tag = "2")]
         pub typed_config: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Any,
@@ -834,7 +829,7 @@ pub mod cluster {
     }
     /// Optionally divide the endpoints in this cluster into subsets defined by
     /// endpoint metadata and selected by route and weighted cluster metadata.
-    /// [#next-free-field: 9]
+    /// \[\#next-free-field: 9\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct LbSubsetConfig {
@@ -847,7 +842,7 @@ pub mod cluster {
         /// fallback_policy is
         /// :ref:`DEFAULT_SUBSET<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetFallbackPolicy.DEFAULT_SUBSET>`.
         /// Each field in default_subset is
-        /// compared to the matching LbEndpoint.Metadata under the ``envoy.lb``
+        /// compared to the matching LbEndpoint.Metadata under the `envoy.lb`
         /// namespace. It is valid for no hosts to match, in which case the behavior
         /// is the same as a fallback_policy of
         /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetFallbackPolicy.NO_FALLBACK>`.
@@ -856,15 +851,15 @@ pub mod cluster {
             super::super::super::super::super::google::protobuf::Struct,
         >,
         /// For each entry, LbEndpoint.Metadata's
-        /// ``envoy.lb`` namespace is traversed and a subset is created for each unique
+        /// `envoy.lb` namespace is traversed and a subset is created for each unique
         /// combination of key and value. For example:
         ///
         /// .. code-block:: json
         ///
-        ///    { "subset_selectors": [
-        ///        { "keys": [ "version" ] },
-        ///        { "keys": [ "stage", "hardware_type" ] }
-        ///    ]}
+        /// { "subset_selectors": \[
+        /// { "keys": \[ "version" \] },
+        /// { "keys": \[ "stage", "hardware_type" \] }
+        /// \]}
         ///
         /// A subset is matched when the metadata from the selected route and
         /// weighted cluster contains the same keys and values as the subset's
@@ -931,7 +926,7 @@ pub mod cluster {
             ///
             /// If a match is found to a host, that host will be used regardless of priority levels.
             ///
-            /// When this mode is enabled, configurations that contain more than one host with the same metadata value for the single key in ``keys``
+            /// When this mode is enabled, configurations that contain more than one host with the same metadata value for the single key in `keys`
             /// will use only one of the hosts with the given key; no requests will be routed to the others. The cluster gauge
             /// :ref:`lb_subsets_single_host_per_subset_duplicate<config_cluster_manager_cluster_stats_subset_lb>` indicates how many duplicates are
             /// present in the current configuration.
@@ -952,7 +947,7 @@ pub mod cluster {
             /// For any other fallback policy the parameter is not used and should not be set.
             /// Only values also present in
             /// :ref:`keys<envoy_v3_api_field_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector.keys>` are allowed, but
-            /// ``fallback_keys_subset`` cannot be equal to ``keys``.
+            /// `fallback_keys_subset` cannot be equal to `keys`.
             #[prost(string, repeated, tag = "3")]
             pub fallback_keys_subset: ::prost::alloc::vec::Vec<
                 ::prost::alloc::string::String,
@@ -1077,12 +1072,12 @@ pub mod cluster {
         pub enum LbSubsetMetadataFallbackPolicy {
             /// No fallback. Route metadata will be used as-is.
             MetadataNoFallback = 0,
-            /// A special metadata key ``fallback_list`` will be used to provide variants of metadata to try.
-            /// Value of ``fallback_list`` key has to be a list. Every list element has to be a struct - it will
+            /// A special metadata key `fallback_list` will be used to provide variants of metadata to try.
+            /// Value of `fallback_list` key has to be a list. Every list element has to be a struct - it will
             /// be merged with route metadata, overriding keys that appear in both places.
-            /// ``fallback_list`` entries will be used in order until a host is found.
+            /// `fallback_list` entries will be used in order until a host is found.
             ///
-            /// ``fallback_list`` key itself is removed from metadata before subset load balancing is performed.
+            /// `fallback_list` key itself is removed from metadata before subset load balancing is performed.
             ///
             /// Example:
             ///
@@ -1090,30 +1085,30 @@ pub mod cluster {
             ///
             /// .. code-block:: yaml
             ///
-            ///    version: 1.0
-            ///    fallback_list:
-            ///      - version: 2.0
-            ///        hardware: c64
-            ///      - hardware: c32
-            ///      - version: 3.0
+            /// version: 1.0
+            /// fallback_list:
+            /// - version: 2.0
+            /// hardware: c64
+            /// - hardware: c32
+            /// - version: 3.0
             ///
             /// at first, metadata:
             ///
             /// .. code-block:: json
             ///
-            ///    {"version": "2.0", "hardware": "c64"}
+            /// {"version": "2.0", "hardware": "c64"}
             ///
             /// will be used for load balancing. If no host is found, metadata:
             ///
             /// .. code-block:: json
             ///
-            ///    {"version": "1.0", "hardware": "c32"}
+            /// {"version": "1.0", "hardware": "c32"}
             ///
             /// is next to try. If it still results in no host, finally metadata:
             ///
             /// .. code-block:: json
             ///
-            ///    {"version": "3.0"}
+            /// {"version": "3.0"}
             ///
             /// is used.
             FallbackList = 1,
@@ -1159,8 +1154,8 @@ pub mod cluster {
         /// By tuning the parameter, is possible to achieve polynomial or exponential shape of ramp-up curve.
         ///
         /// During slow start window, effective weight of an endpoint would be scaled with time factor and aggression:
-        /// ``new_weight = weight * max(min_weight_percent, time_factor ^ (1 / aggression))``,
-        /// where ``time_factor=(time_since_start_seconds / slow_start_time_seconds)``.
+        /// `new_weight = weight * max(min_weight_percent, time_factor ^ (1 / aggression))`,
+        /// where `time_factor=(time_since_start_seconds / slow_start_time_seconds)`.
         ///
         /// As time progresses, more and more traffic would be sent to endpoint, which is in slow start window.
         /// Once host exits slow start, time_factor and aggression no longer affect its weight.
@@ -1198,18 +1193,18 @@ pub mod cluster {
         /// The following formula is used to calculate the dynamic weights when hosts have different load
         /// balancing weights:
         ///
-        /// ``weight = load_balancing_weight / (active_requests + 1)^active_request_bias``
+        /// `weight = load_balancing_weight / (active_requests + 1)^active_request_bias`
         ///
         /// The larger the active request bias is, the more aggressively active requests will lower the
         /// effective weight when all host weights are not equal.
         ///
-        /// ``active_request_bias`` must be greater than or equal to 0.0.
+        /// `active_request_bias` must be greater than or equal to 0.0.
         ///
-        /// When ``active_request_bias == 0.0`` the Least Request Load Balancer doesn't consider the number
+        /// When `active_request_bias == 0.0` the Least Request Load Balancer doesn't consider the number
         /// of active requests at the time it picks a host and behaves like the Round Robin Load
         /// Balancer.
         ///
-        /// When ``active_request_bias > 0.0`` the Least Request Load Balancer scales the load balancing
+        /// When `active_request_bias > 0.0` the Least Request Load Balancer scales the load balancing
         /// weight by the number of active requests at the time it does a pick.
         ///
         /// The value is cached for performance reasons and refreshed whenever one of the Load Balancer's
@@ -1217,7 +1212,7 @@ pub mod cluster {
         /// weight change.
         ///
         /// .. note::
-        ///    This setting only takes effect if all host weights are not equal.
+        /// This setting only takes effect if all host weights are not equal.
         #[prost(message, optional, tag = "2")]
         pub active_request_bias: ::core::option::Option<
             super::super::super::core::v3::RuntimeDouble,
@@ -1268,9 +1263,9 @@ pub mod cluster {
         )]
         #[repr(i32)]
         pub enum HashFunction {
-            /// Use `xxHash <<https://github.com/Cyan4973/xxHash>`_,> this is the default hash function.
+            /// Use `xxHash <<https://github.com/Cyan4973/xxHash>`\_,> this is the default hash function.
             XxHash = 0,
-            /// Use `MurmurHash2 <<https://sites.google.com/site/murmurhash/>`_,> this is compatible with
+            /// Use `MurmurHash2 <<https://sites.google.com/site/murmurhash/>`\_,> this is compatible with
             /// std:hash<string> in GNU libstdc++ 3.4.20 or above. This is typically the case when compiled
             /// on Linux and not macOS.
             MurmurHash2 = 1,
@@ -1313,7 +1308,7 @@ pub mod cluster {
     /// Specific configuration for the
     /// :ref:`Original Destination <arch_overview_load_balancing_types_original_destination>`
     /// load balancing policy.
-    /// [#extension: envoy.clusters.original_dst]
+    /// \[\#extension: envoy.clusters.original_dst\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct OriginalDstLbConfig {
@@ -1322,13 +1317,13 @@ pub mod cluster {
         ///
         /// .. attention::
         ///
-        ///    This header isn't sanitized by default, so enabling this feature allows HTTP clients to
-        ///    route traffic to arbitrary hosts and/or ports, which may have serious security
-        ///    consequences.
+        /// This header isn't sanitized by default, so enabling this feature allows HTTP clients to
+        /// route traffic to arbitrary hosts and/or ports, which may have serious security
+        /// consequences.
         ///
         /// .. note::
         ///
-        ///    If the header appears multiple times only the first value is used.
+        /// If the header appears multiple times only the first value is used.
         #[prost(bool, tag = "1")]
         pub use_http_header: bool,
         /// The http header to override destination address if :ref:`use_http_header <envoy_v3_api_field_config.cluster.v3.Cluster.OriginalDstLbConfig.use_http_header>`.
@@ -1343,7 +1338,7 @@ pub mod cluster {
         >,
     }
     /// Common configuration for all load balancer implementations.
-    /// [#next-free-field: 9]
+    /// \[\#next-free-field: 9\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CommonLbConfig {
@@ -1352,7 +1347,7 @@ pub mod cluster {
         /// To disable panic mode, set to 0%.
         ///
         /// .. note::
-        ///    The specified percent will be truncated to the nearest 1%.
+        /// The specified percent will be truncated to the nearest 1%.
         #[prost(message, optional, tag = "1")]
         pub healthy_panic_threshold: ::core::option::Option<
             super::super::super::super::r#type::v3::Percent,
@@ -1380,7 +1375,7 @@ pub mod cluster {
         /// This will have no effect unless active health checking is also configured.
         #[prost(bool, tag = "5")]
         pub ignore_new_hosts_until_first_hc: bool,
-        /// If set to ``true``, the cluster manager will drain all existing
+        /// If set to `true`, the cluster manager will drain all existing
         /// connections to upstream hosts whenever hosts are added or removed from the cluster.
         #[prost(bool, tag = "6")]
         pub close_connections_on_host_set_change: bool,
@@ -1393,7 +1388,7 @@ pub mod cluster {
         /// :ref:`host overrides <arch_overview_load_balancing_override_host>`, which is used by some
         /// filters to modify the load balancing decision.
         ///
-        /// If this is unset then [UNKNOWN, HEALTHY, DEGRADED] will be applied by default. If this is
+        /// If this is unset then \[UNKNOWN, HEALTHY, DEGRADED\] will be applied by default. If this is
         /// set with an empty set of statuses then host overrides will be ignored by the load balancing.
         #[prost(message, optional, tag = "8")]
         pub override_host_status: ::core::option::Option<
@@ -1406,13 +1401,13 @@ pub mod cluster {
     }
     /// Nested message and enum types in `CommonLbConfig`.
     pub mod common_lb_config {
-        /// Configuration for :ref:`zone aware routing
-        /// <arch_overview_load_balancing_zone_aware_routing>`.
+        /// Configuration for :ref:`zone aware routing <arch_overview_load_balancing_zone_aware_routing>`.
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct ZoneAwareLbConfig {
             /// Configures percentage of requests that will be considered for zone aware routing
             /// if zone aware routing is configured. If not specified, the default is 100%.
+            ///
             /// * :ref:`runtime values <config_cluster_manager_cluster_runtime_zone_routing>`.
             /// * :ref:`Zone aware routing support <arch_overview_load_balancing_zone_aware_routing>`.
             #[prost(message, optional, tag = "1")]
@@ -1422,21 +1417,20 @@ pub mod cluster {
             /// Configures minimum upstream cluster size required for zone aware routing
             /// If upstream cluster size is less than specified, zone aware routing is not performed
             /// even if zone aware routing is configured. If not specified, the default is 6.
+            ///
             /// * :ref:`runtime values <config_cluster_manager_cluster_runtime_zone_routing>`.
             /// * :ref:`Zone aware routing support <arch_overview_load_balancing_zone_aware_routing>`.
             #[prost(message, optional, tag = "2")]
             pub min_cluster_size: ::core::option::Option<
                 super::super::super::super::super::super::google::protobuf::UInt64Value,
             >,
-            /// If set to true, Envoy will not consider any hosts when the cluster is in :ref:`panic
-            /// mode<arch_overview_load_balancing_panic_threshold>`. Instead, the cluster will fail all
+            /// If set to true, Envoy will not consider any hosts when the cluster is in :ref:`panic mode<arch_overview_load_balancing_panic_threshold>`. Instead, the cluster will fail all
             /// requests as if all hosts are unhealthy. This can help avoid potentially overwhelming a
             /// failing service.
             #[prost(bool, tag = "3")]
             pub fail_traffic_on_panic: bool,
         }
-        /// Configuration for :ref:`locality weighted load balancing
-        /// <arch_overview_load_balancing_locality_weighted_lb>`
+        /// Configuration for :ref:`locality weighted load balancing <arch_overview_load_balancing_locality_weighted_lb>`
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct LocalityWeightedLbConfig {}
@@ -1444,7 +1438,7 @@ pub mod cluster {
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct ConsistentHashingLbConfig {
-            /// If set to ``true``, the cluster will use hostname instead of the resolved
+            /// If set to `true`, the cluster will use hostname instead of the resolved
             /// address as the key to consistently hash to an upstream host. Only valid for StrictDNS clusters with hostnames which resolve to a single IP address.
             #[prost(bool, tag = "1")]
             pub use_hostname_for_hashing: bool,
@@ -1456,7 +1450,7 @@ pub mod cluster {
             /// Applies to both Ring Hash and Maglev load balancers.
             ///
             /// This is implemented based on the method described in the paper <https://arxiv.org/abs/1608.01350.> For the specified
-            /// ``hash_balance_factor``, requests to any upstream host are capped at ``hash_balance_factor/100`` times the average number of requests
+            /// `hash_balance_factor`, requests to any upstream host are capped at `hash_balance_factor/100` times the average number of requests
             /// across the cluster. When a request arrives for an upstream host that is currently serving at its max capacity, linear probing
             /// is used to identify an eligible host. Further, the linear probe is implemented using a random jump in hosts ring/table to identify
             /// the eligible host (this technique is as described in the paper <https://arxiv.org/abs/1908.08762> - the random jump avoids the
@@ -1464,7 +1458,7 @@ pub mod cluster {
             ///
             /// If weights are specified on the hosts, they are respected.
             ///
-            /// This is an O(N) algorithm, unlike other load balancers. Using a lower ``hash_balance_factor`` results in more hosts
+            /// This is an O(N) algorithm, unlike other load balancers. Using a lower `hash_balance_factor` results in more hosts
             /// being probed, so use a higher value if you require better performance.
             #[prost(message, optional, tag = "2")]
             pub hash_balance_factor: ::core::option::Option<
@@ -1533,7 +1527,7 @@ pub mod cluster {
         /// Indicates how many streams (rounded up) can be anticipated across a cluster for each
         /// stream, useful for low QPS services. This is currently supported for a subset of
         /// deterministic non-hash-based load-balancing algorithms (weighted round robin, random).
-        /// Unlike ``per_upstream_preconnect_ratio`` this preconnects across the upstream instances in a
+        /// Unlike `per_upstream_preconnect_ratio` this preconnects across the upstream instances in a
         /// cluster, doing best effort predictions of what upstream would be picked next and
         /// pre-establishing a connection.
         ///
@@ -1575,19 +1569,16 @@ pub mod cluster {
         /// Refer to the :ref:`static discovery type<arch_overview_service_discovery_types_static>`
         /// for an explanation.
         Static = 0,
-        /// Refer to the :ref:`strict DNS discovery
-        /// type<arch_overview_service_discovery_types_strict_dns>`
+        /// Refer to the :ref:`strict DNS discovery type<arch_overview_service_discovery_types_strict_dns>`
         /// for an explanation.
         StrictDns = 1,
-        /// Refer to the :ref:`logical DNS discovery
-        /// type<arch_overview_service_discovery_types_logical_dns>`
+        /// Refer to the :ref:`logical DNS discovery type<arch_overview_service_discovery_types_logical_dns>`
         /// for an explanation.
         LogicalDns = 2,
         /// Refer to the :ref:`service discovery type<arch_overview_service_discovery_types_eds>`
         /// for an explanation.
         Eds = 3,
-        /// Refer to the :ref:`original destination discovery
-        /// type<arch_overview_service_discovery_types_original_destination>`
+        /// Refer to the :ref:`original destination discovery type<arch_overview_service_discovery_types_original_destination>`
         /// for an explanation.
         OriginalDst = 4,
     }
@@ -1632,20 +1623,16 @@ pub mod cluster {
     )]
     #[repr(i32)]
     pub enum LbPolicy {
-        /// Refer to the :ref:`round robin load balancing
-        /// policy<arch_overview_load_balancing_types_round_robin>`
+        /// Refer to the :ref:`round robin load balancing policy<arch_overview_load_balancing_types_round_robin>`
         /// for an explanation.
         RoundRobin = 0,
-        /// Refer to the :ref:`least request load balancing
-        /// policy<arch_overview_load_balancing_types_least_request>`
+        /// Refer to the :ref:`least request load balancing policy<arch_overview_load_balancing_types_least_request>`
         /// for an explanation.
         LeastRequest = 1,
-        /// Refer to the :ref:`ring hash load balancing
-        /// policy<arch_overview_load_balancing_types_ring_hash>`
+        /// Refer to the :ref:`ring hash load balancing policy<arch_overview_load_balancing_types_ring_hash>`
         /// for an explanation.
         RingHash = 2,
-        /// Refer to the :ref:`random load balancing
-        /// policy<arch_overview_load_balancing_types_random>`
+        /// Refer to the :ref:`random load balancing policy<arch_overview_load_balancing_types_random>`
         /// for an explanation.
         Random = 3,
         /// Refer to the :ref:`Maglev load balancing policy<arch_overview_load_balancing_types_maglev>`
@@ -1655,10 +1642,8 @@ pub mod cluster {
         /// specific load balancer. Consult the configured cluster's documentation for whether to set
         /// this option or not.
         ClusterProvided = 6,
-        /// Use the new :ref:`load_balancing_policy
-        /// <envoy_v3_api_field_config.cluster.v3.Cluster.load_balancing_policy>` field to determine the LB policy.
-        /// This has been deprecated in favor of using the :ref:`load_balancing_policy
-        /// <envoy_v3_api_field_config.cluster.v3.Cluster.load_balancing_policy>` field without
+        /// Use the new :ref:`load_balancing_policy <envoy_v3_api_field_config.cluster.v3.Cluster.load_balancing_policy>` field to determine the LB policy.
+        /// This has been deprecated in favor of using the :ref:`load_balancing_policy <envoy_v3_api_field_config.cluster.v3.Cluster.load_balancing_policy>` field without
         /// setting any value in :ref:`lb_policy<envoy_v3_api_field_config.cluster.v3.Cluster.lb_policy>`.
         LoadBalancingPolicyConfig = 7,
     }
@@ -1712,7 +1697,7 @@ pub mod cluster {
     /// :ref:`LOGICAL_DNS<envoy_v3_api_enum_value_config.cluster.v3.Cluster.DiscoveryType.LOGICAL_DNS>`,
     /// this setting is
     /// ignored.
-    /// [#next-major-version: deprecate AUTO in favor of a V6_PREFERRED option.]
+    /// \[\#next-major-version: deprecate AUTO in favor of a V6_PREFERRED option.\]
     #[derive(
         Clone,
         Copy,
@@ -1874,7 +1859,7 @@ pub mod load_balancing_policy {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Policy {
-        /// [#extension-category: envoy.load_balancing_policies]
+        /// \[\#extension-category: envoy.load_balancing_policies\]
         #[prost(message, optional, tag = "4")]
         pub typed_extension_config: ::core::option::Option<
             super::super::super::core::v3::TypedExtensionConfig,
@@ -1896,15 +1881,13 @@ pub struct UpstreamConnectionOptions {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TrackClusterStats {
-    /// If timeout_budgets is true, the :ref:`timeout budget histograms
-    /// <config_cluster_manager_cluster_stats_timeout_budgets>` will be published for each
+    /// If timeout_budgets is true, the :ref:`timeout budget histograms <config_cluster_manager_cluster_stats_timeout_budgets>` will be published for each
     /// request. These show what percentage of a request's per try and global timeout was used. A value
     /// of 0 would indicate that none of the timeout was used or that the timeout was infinite. A value
     /// of 100 would indicate that the request took the entirety of the timeout given to it.
     #[prost(bool, tag = "1")]
     pub timeout_budgets: bool,
-    /// If request_response_sizes is true, then the :ref:`histograms
-    /// <config_cluster_manager_cluster_stats_request_response_sizes>`  tracking header and body sizes
+    /// If request_response_sizes is true, then the :ref:`histograms <config_cluster_manager_cluster_stats_request_response_sizes>`  tracking header and body sizes
     /// of requests and responses will be published.
     #[prost(bool, tag = "2")]
     pub request_response_sizes: bool,

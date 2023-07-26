@@ -1,26 +1,29 @@
-/// MetadataKey provides a general interface using ``key`` and ``path`` to retrieve value from
+/// MetadataKey provides a general interface using `key` and `path` to retrieve value from
 /// :ref:`Metadata <envoy_v3_api_msg_config.core.v3.Metadata>`.
 ///
 /// For example, for the following Metadata:
 ///
 /// .. code-block:: yaml
 ///
-///     filter_metadata:
-///       envoy.xxx:
-///         prop:
-///           foo: bar
-///           xyz:
-///             hello: envoy
+/// ```text
+/// filter_metadata:
+///   envoy.xxx:
+///     prop:
+///       foo: bar
+///       xyz:
+///         hello: envoy
+/// ```
 ///
 /// The following MetadataKey will retrieve a string value "bar" from the Metadata.
 ///
 /// .. code-block:: yaml
 ///
-///     key: envoy.xxx
-///     path:
-///     - key: prop
-///     - key: foo
-///
+/// ```text
+/// key: envoy.xxx
+/// path:
+/// - key: prop
+/// - key: foo
+/// ```
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MetadataKey {
@@ -29,7 +32,7 @@ pub struct MetadataKey {
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
     /// The path to retrieve the Value from the Struct. It can be a prefix or a full path,
-    /// e.g. ``[prop, xyz]`` for a struct or ``[prop, foo]`` for a string in the example,
+    /// e.g. `[prop, xyz]` for a struct or `[prop, foo]` for a string in the example,
     /// which depends on the particular scenario.
     ///
     /// Note: Due to that only the key type segment is supported, the path can not specify a list
@@ -79,8 +82,7 @@ pub mod metadata_kind {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Cluster {}
-    /// Represents metadata from :ref:`the upstream
-    /// host<envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`.
+    /// Represents metadata from :ref:`the upstream host<envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Host {}

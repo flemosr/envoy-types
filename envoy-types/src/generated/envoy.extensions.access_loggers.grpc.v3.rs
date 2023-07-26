@@ -1,35 +1,31 @@
-/// Configuration for the built-in ``envoy.access_loggers.http_grpc``
+/// Configuration for the built-in `envoy.access_loggers.http_grpc`
 /// :ref:`AccessLog <envoy_v3_api_msg_config.accesslog.v3.AccessLog>`. This configuration will
-/// populate :ref:`StreamAccessLogsMessage.http_logs
-/// <envoy_v3_api_field_service.accesslog.v3.StreamAccessLogsMessage.http_logs>`.
-/// [#extension: envoy.access_loggers.http_grpc]
+/// populate :ref:`StreamAccessLogsMessage.http_logs <envoy_v3_api_field_service.accesslog.v3.StreamAccessLogsMessage.http_logs>`.
+/// \[\#extension: envoy.access_loggers.http_grpc\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpGrpcAccessLogConfig {
     #[prost(message, optional, tag = "1")]
     pub common_config: ::core::option::Option<CommonGrpcAccessLogConfig>,
-    /// Additional request headers to log in :ref:`HTTPRequestProperties.request_headers
-    /// <envoy_v3_api_field_data.accesslog.v3.HTTPRequestProperties.request_headers>`.
+    /// Additional request headers to log in :ref:`HTTPRequestProperties.request_headers <envoy_v3_api_field_data.accesslog.v3.HTTPRequestProperties.request_headers>`.
     #[prost(string, repeated, tag = "2")]
     pub additional_request_headers_to_log: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
-    /// Additional response headers to log in :ref:`HTTPResponseProperties.response_headers
-    /// <envoy_v3_api_field_data.accesslog.v3.HTTPResponseProperties.response_headers>`.
+    /// Additional response headers to log in :ref:`HTTPResponseProperties.response_headers <envoy_v3_api_field_data.accesslog.v3.HTTPResponseProperties.response_headers>`.
     #[prost(string, repeated, tag = "3")]
     pub additional_response_headers_to_log: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
-    /// Additional response trailers to log in :ref:`HTTPResponseProperties.response_trailers
-    /// <envoy_v3_api_field_data.accesslog.v3.HTTPResponseProperties.response_trailers>`.
+    /// Additional response trailers to log in :ref:`HTTPResponseProperties.response_trailers <envoy_v3_api_field_data.accesslog.v3.HTTPResponseProperties.response_trailers>`.
     #[prost(string, repeated, tag = "4")]
     pub additional_response_trailers_to_log: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
 }
-/// Configuration for the built-in ``envoy.access_loggers.tcp_grpc`` type. This configuration will
-/// populate ``StreamAccessLogsMessage.tcp_logs``.
-/// [#extension: envoy.access_loggers.tcp_grpc]
+/// Configuration for the built-in `envoy.access_loggers.tcp_grpc` type. This configuration will
+/// populate `StreamAccessLogsMessage.tcp_logs`.
+/// \[\#extension: envoy.access_loggers.tcp_grpc\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TcpGrpcAccessLogConfig {
@@ -37,12 +33,11 @@ pub struct TcpGrpcAccessLogConfig {
     pub common_config: ::core::option::Option<CommonGrpcAccessLogConfig>,
 }
 /// Common configuration for gRPC access logs.
-/// [#next-free-field: 9]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommonGrpcAccessLogConfig {
-    /// The friendly name of the access log to be returned in :ref:`StreamAccessLogsMessage.Identifier
-    /// <envoy_v3_api_msg_service.accesslog.v3.StreamAccessLogsMessage.Identifier>`. This allows the
+    /// The friendly name of the access log to be returned in :ref:`StreamAccessLogsMessage.Identifier <envoy_v3_api_msg_service.accesslog.v3.StreamAccessLogsMessage.Identifier>`. This allows the
     /// access log server to differentiate between different access logs coming from the same Envoy.
     #[prost(string, tag = "1")]
     pub log_name: ::prost::alloc::string::String,
@@ -72,9 +67,8 @@ pub struct CommonGrpcAccessLogConfig {
     pub buffer_size_bytes: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Additional filter state objects to log in :ref:`filter_state_objects
-    /// <envoy_v3_api_field_data.accesslog.v3.AccessLogCommon.filter_state_objects>`.
-    /// Logger will call ``FilterState::Object::serializeAsProto`` to serialize the filter state object.
+    /// Additional filter state objects to log in :ref:`filter_state_objects <envoy_v3_api_field_data.accesslog.v3.AccessLogCommon.filter_state_objects>`.
+    /// Logger will call `FilterState::Object::serializeAsProto` to serialize the filter state object.
     #[prost(string, repeated, tag = "5")]
     pub filter_state_objects_to_log: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,

@@ -1,5 +1,4 @@
-/// Configuration for the wrr_locality LB policy. See the :ref:`load balancing architecture overview
-/// <arch_overview_load_balancing_types>` for more information.
+/// Configuration for the wrr_locality LB policy. See the :ref:`load balancing architecture overview <arch_overview_load_balancing_types>` for more information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WrrLocality {

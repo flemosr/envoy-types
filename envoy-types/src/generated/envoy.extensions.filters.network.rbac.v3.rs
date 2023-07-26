@@ -2,7 +2,7 @@
 ///
 /// Header should not be used in rules/shadow_rules in RBAC network filter as
 /// this information is only available in :ref:`RBAC http filter <config_http_filters_rbac>`.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rbac {

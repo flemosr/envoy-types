@@ -1,5 +1,5 @@
 /// Bootstrap :ref:`configuration overview <config_overview_bootstrap>`.
-/// [#next-free-field: 38]
+/// \[\#next-free-field: 38\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bootstrap {
@@ -14,31 +14,32 @@ pub struct Bootstrap {
     /// encoding set as the context parameter value, with the exception of
     /// metadata, which will be flattened (see example below). The supported field
     /// names are:
-    /// - "cluster"
-    /// - "id"
-    /// - "locality.region"
-    /// - "locality.sub_zone"
-    /// - "locality.zone"
-    /// - "metadata"
-    /// - "user_agent_build_version.metadata"
-    /// - "user_agent_build_version.version"
-    /// - "user_agent_name"
-    /// - "user_agent_version"
+    ///
+    /// * "cluster"
+    /// * "id"
+    /// * "locality.region"
+    /// * "locality.sub_zone"
+    /// * "locality.zone"
+    /// * "metadata"
+    /// * "user_agent_build_version.metadata"
+    /// * "user_agent_build_version.version"
+    /// * "user_agent_name"
+    /// * "user_agent_version"
     ///
     /// The node context parameters act as a base layer dictionary for the context
     /// parameters (i.e. more specific resource specific context parameters will
     /// override). Field names will be prefixed with “udpa.node.” when included in
     /// context parameters.
     ///
-    /// For example, if node_context_params is ``["user_agent_name", "metadata"]``,
+    /// For example, if node_context_params is `["user_agent_name", "metadata"]`,
     /// the implied context parameters might be::
     ///
-    ///    node.user_agent_name: "envoy"
-    ///    node.metadata.foo: "{\"bar\": \"baz\"}"
-    ///    node.metadata.some: "42"
-    ///    node.metadata.thing: "\"thing\""
+    /// node.user_agent_name: "envoy"
+    /// node.metadata.foo: "{"bar": "baz"}"
+    /// node.metadata.some: "42"
+    /// node.metadata.thing: ""thing""
     ///
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(string, repeated, tag = "26")]
     pub node_context_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Statically specified resources.
@@ -67,7 +68,7 @@ pub struct Bootstrap {
     /// Optional duration between flushes to configured stats sinks. For
     /// performance reasons Envoy latches counters and only flushes counters and
     /// gauges at a periodic interval. If not specified the default is 5000ms (5
-    /// seconds). Only one of ``stats_flush_interval`` or ``stats_flush_on_admin``
+    /// seconds). Only one of `stats_flush_interval` or `stats_flush_on_admin`
     /// can be set.
     /// Duration must be at least 1ms and at most 5 min.
     #[prost(message, optional, tag = "7")]
@@ -76,20 +77,19 @@ pub struct Bootstrap {
     >,
     /// Optional watchdog configuration.
     /// This is for a single watchdog configuration for the entire system.
-    /// Deprecated in favor of ``watchdogs`` which has finer granularity.
+    /// Deprecated in favor of `watchdogs` which has finer granularity.
     #[deprecated]
     #[prost(message, optional, tag = "8")]
     pub watchdog: ::core::option::Option<Watchdog>,
     /// Optional watchdogs configuration.
     /// This is used for specifying different watchdogs for the different subsystems.
-    /// [#extension-category: envoy.guarddog_actions]
+    /// \[\#extension-category: envoy.guarddog_actions\]
     #[prost(message, optional, tag = "27")]
     pub watchdogs: ::core::option::Option<Watchdogs>,
     /// Configuration for an external tracing provider.
     ///
     /// .. attention::
-    ///   This field has been deprecated in favor of :ref:`HttpConnectionManager.Tracing.provider
-    ///   <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.provider>`.
+    /// This field has been deprecated in favor of :ref:`HttpConnectionManager.Tracing.provider <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.provider>`.
     #[deprecated]
     #[prost(message, optional, tag = "9")]
     pub tracing: ::core::option::Option<super::super::trace::v3::Tracing>,
@@ -125,8 +125,7 @@ pub struct Bootstrap {
     /// extensions which are not upstream.
     #[prost(string, tag = "18")]
     pub header_prefix: ::prost::alloc::string::String,
-    /// Optional proxy version which will be used to set the value of :ref:`server.version statistic
-    /// <server_statistics>` if specified. Envoy will not process this value, it will be sent as is to
+    /// Optional proxy version which will be used to set the value of :ref:`server.version statistic <server_statistics>` if specified. Envoy will not process this value, it will be sent as is to
     /// :ref:`stats sinks <envoy_v3_api_msg_config.metrics.v3.StatsSink>`.
     #[prost(message, optional, tag = "19")]
     pub stats_server_version_override: ::core::option::Option<
@@ -137,7 +136,7 @@ pub struct Bootstrap {
     /// when :ref:`dns_resolvers <envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolvers>` and
     /// :ref:`use_tcp_for_dns_lookups <envoy_v3_api_field_config.cluster.v3.Cluster.use_tcp_for_dns_lookups>` are
     /// specified.
-    /// This field is deprecated in favor of ``dns_resolution_config``
+    /// This field is deprecated in favor of `dns_resolution_config`
     /// which aggregates all of the DNS resolver configuration in a single message.
     #[deprecated]
     #[prost(bool, tag = "20")]
@@ -157,20 +156,20 @@ pub struct Bootstrap {
     /// or any other DNS resolver types and the related parameters.
     /// For example, an object of
     /// :ref:`CaresDnsResolverConfig <envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
-    /// can be packed into this ``typed_dns_resolver_config``. This configuration replaces the
+    /// can be packed into this `typed_dns_resolver_config`. This configuration replaces the
     /// :ref:`dns_resolution_config <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.dns_resolution_config>`
     /// configuration.
-    /// During the transition period when both ``dns_resolution_config`` and ``typed_dns_resolver_config`` exists,
-    /// when ``typed_dns_resolver_config`` is in place, Envoy will use it and ignore ``dns_resolution_config``.
-    /// When ``typed_dns_resolver_config`` is missing, the default behavior is in place.
-    /// [#extension-category: envoy.network.dns_resolver]
+    /// During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
+    /// when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
+    /// When `typed_dns_resolver_config` is missing, the default behavior is in place.
+    /// \[\#extension-category: envoy.network.dns_resolver\]
     #[prost(message, optional, tag = "31")]
     pub typed_dns_resolver_config: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
     >,
     /// Specifies optional bootstrap extensions to be instantiated at startup time.
     /// Each item contains extension specific configuration.
-    /// [#extension-category: envoy.bootstrap]
+    /// \[\#extension-category: envoy.bootstrap\]
     #[prost(message, repeated, tag = "21")]
     pub bootstrap_extensions: ::prost::alloc::vec::Vec<
         super::super::core::v3::TypedExtensionConfig,
@@ -182,25 +181,26 @@ pub struct Bootstrap {
     /// Configuration sources that will participate in
     /// xdstp:// URL authority resolution. The algorithm is as
     /// follows:
+    ///
     /// 1. The authority field is taken from the xdstp:// URL, call
-    ///     this ``resource_authority``.
-    /// 2. ``resource_authority`` is compared against the authorities in any peer
-    ///     ``ConfigSource``. The peer ``ConfigSource`` is the configuration source
-    ///     message which would have been used unconditionally for resolution
-    ///     with opaque resource names. If there is a match with an authority, the
-    ///     peer ``ConfigSource`` message is used.
-    /// 3. ``resource_authority`` is compared sequentially with the authorities in
-    ///     each configuration source in ``config_sources``. The first ``ConfigSource``
-    ///     to match wins.
-    /// 4. As a fallback, if no configuration source matches, then
-    ///     ``default_config_source`` is used.
-    /// 5. If ``default_config_source`` is not specified, resolution fails.
-    /// \[#not-implemented-hide:\]
+    ///    this `resource_authority`.
+    /// 1. `resource_authority` is compared against the authorities in any peer
+    ///    `ConfigSource`. The peer `ConfigSource` is the configuration source
+    ///    message which would have been used unconditionally for resolution
+    ///    with opaque resource names. If there is a match with an authority, the
+    ///    peer `ConfigSource` message is used.
+    /// 1. `resource_authority` is compared sequentially with the authorities in
+    ///    each configuration source in `config_sources`. The first `ConfigSource`
+    ///    to match wins.
+    /// 1. As a fallback, if no configuration source matches, then
+    ///    `default_config_source` is used.
+    /// 1. If `default_config_source` is not specified, resolution fails.
+    ///    \\[\#not-implemented-hide:\\]
     #[prost(message, repeated, tag = "22")]
     pub config_sources: ::prost::alloc::vec::Vec<super::super::core::v3::ConfigSource>,
     /// Default configuration source for xdstp:// URLs if all
     /// other resolution fails.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "23")]
     pub default_config_source: ::core::option::Option<
         super::super::core::v3::ConfigSource,
@@ -210,10 +210,9 @@ pub struct Bootstrap {
     #[prost(string, tag = "24")]
     pub default_socket_interface: ::prost::alloc::string::String,
     /// Global map of CertificateProvider instances. These instances are referred to by name in the
-    /// :ref:`CommonTlsContext.CertificateProviderInstance.instance_name
-    /// <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProviderInstance.instance_name>`
+    /// :ref:`CommonTlsContext.CertificateProviderInstance.instance_name <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProviderInstance.instance_name>`
     /// field.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(map = "string, message", tag = "25")]
     pub certificate_provider_instances: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -232,7 +231,7 @@ pub struct Bootstrap {
     pub perf_tracing_file_path: ::prost::alloc::string::String,
     /// Optional overriding of default regex engine.
     /// If the value is not specified, Google RE2 will be used by default.
-    /// [#extension-category: envoy.regex_engines]
+    /// \[\#extension-category: envoy.regex_engines\]
     #[prost(message, optional, tag = "34")]
     pub default_regex_engine: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -241,7 +240,7 @@ pub struct Bootstrap {
     /// fetch and load events during xDS processing.
     /// If a value is not specified, no XdsResourcesDelegate will be used.
     /// TODO(abeyad): Add public-facing documentation.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "35")]
     pub xds_delegate_extension: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -252,15 +251,17 @@ pub struct Bootstrap {
     ///
     /// .. note::
     ///
-    ///     There are no in-repo extensions currently, and the :repo:`XdsConfigTracker <envoy/config/xds_config_tracker.h>`
-    ///     interface should be implemented before using.
-    ///     See :repo:`xds_config_tracker_integration_test <test/integration/xds_config_tracker_integration_test.cc>`
-    ///     for an example usage of the interface.
+    /// ```text
+    /// There are no in-repo extensions currently, and the :repo:`XdsConfigTracker <envoy/config/xds_config_tracker.h>`
+    /// interface should be implemented before using.
+    /// See :repo:`xds_config_tracker_integration_test <test/integration/xds_config_tracker_integration_test.cc>`
+    /// for an example usage of the interface.
+    /// ```
     #[prost(message, optional, tag = "36")]
     pub xds_config_tracker_extension: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
     >,
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     /// This controls the type of listener manager configured for Envoy. Currently
     /// Envoy only supports ListenerManager for this field and Envoy Mobile
     /// supports ApiListenerManager.
@@ -282,8 +283,7 @@ pub mod bootstrap {
         pub listeners: ::prost::alloc::vec::Vec<
             super::super::super::listener::v3::Listener,
         >,
-        /// If a network based configuration source is specified for :ref:`cds_config
-        /// <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.DynamicResources.cds_config>`, it's necessary
+        /// If a network based configuration source is specified for :ref:`cds_config <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.DynamicResources.cds_config>`, it's necessary
         /// to have some initial cluster definitions available to allow Envoy to know
         /// how to speak to the management server. These cluster definitions may not
         /// use :ref:`EDS <arch_overview_dynamic_config_eds>` (i.e. they should be static
@@ -292,14 +292,13 @@ pub mod bootstrap {
         pub clusters: ::prost::alloc::vec::Vec<
             super::super::super::cluster::v3::Cluster,
         >,
-        /// These static secrets can be used by :ref:`SdsSecretConfig
-        /// <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.SdsSecretConfig>`
+        /// These static secrets can be used by :ref:`SdsSecretConfig <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.SdsSecretConfig>`
         #[prost(message, repeated, tag = "3")]
         pub secrets: ::prost::alloc::vec::Vec<
             super::super::super::super::extensions::transport_sockets::tls::v3::Secret,
         >,
     }
-    /// [#next-free-field: 7]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicResources {
@@ -310,7 +309,7 @@ pub mod bootstrap {
             super::super::super::core::v3::ConfigSource,
         >,
         /// xdstp:// resource locator for listener collection.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(string, tag = "5")]
         pub lds_resources_locator: ::prost::alloc::string::String,
         /// All post-bootstrap :ref:`Cluster <envoy_v3_api_msg_config.cluster.v3.Cluster>` definitions are
@@ -321,13 +320,11 @@ pub mod bootstrap {
             super::super::super::core::v3::ConfigSource,
         >,
         /// xdstp:// resource locator for cluster collection.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(string, tag = "6")]
         pub cds_resources_locator: ::prost::alloc::string::String,
         /// A single :ref:`ADS <config_overview_ads>` source may be optionally
-        /// specified. This must have :ref:`api_type
-        /// <envoy_v3_api_field_config.core.v3.ApiConfigSource.api_type>` :ref:`GRPC
-        /// <envoy_v3_api_enum_value_config.core.v3.ApiConfigSource.ApiType.GRPC>`. Only
+        /// specified. This must have :ref:`api_type <envoy_v3_api_field_config.core.v3.ApiConfigSource.api_type>` :ref:`GRPC <envoy_v3_api_enum_value_config.core.v3.ApiConfigSource.ApiType.GRPC>`. Only
         /// :ref:`ConfigSources <envoy_v3_api_msg_config.core.v3.ConfigSource>` that have
         /// the :ref:`ads <envoy_v3_api_field_config.core.v3.ConfigSource.ads>` field set will be
         /// streamed on the ADS channel.
@@ -340,15 +337,14 @@ pub mod bootstrap {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum StatsFlush {
         /// Flush stats to sinks only when queried for on the admin interface. If set,
-        /// a flush timer is not created. Only one of ``stats_flush_on_admin`` or
-        /// ``stats_flush_interval`` can be set.
+        /// a flush timer is not created. Only one of `stats_flush_on_admin` or
+        /// `stats_flush_interval` can be set.
         #[prost(bool, tag = "29")]
         StatsFlushOnAdmin(bool),
     }
 }
-/// Administration interface :ref:`operations documentation
-/// <operations_admin_interface>`.
-/// [#next-free-field: 7]
+/// Administration interface :ref:`operations documentation <operations_admin_interface>`.
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Admin {
@@ -359,7 +355,7 @@ pub struct Admin {
     /// The path to write the access log for the administration server. If no
     /// access log is desired specify ‘/dev/null’. This is only required if
     /// :ref:`address <envoy_v3_api_field_config.bootstrap.v3.Admin.address>` is set.
-    /// Deprecated in favor of ``access_log`` which offers more options.
+    /// Deprecated in favor of `access_log` which offers more options.
     #[deprecated]
     #[prost(string, tag = "1")]
     pub access_log_path: ::prost::alloc::string::String,
@@ -385,14 +381,9 @@ pub struct Admin {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterManager {
     /// Name of the local cluster (i.e., the cluster that owns the Envoy running
-    /// this configuration). In order to enable :ref:`zone aware routing
-    /// <arch_overview_load_balancing_zone_aware_routing>` this option must be set.
-    /// If ``local_cluster_name`` is defined then :ref:`clusters
-    /// <envoy_v3_api_msg_config.cluster.v3.Cluster>` must be defined in the :ref:`Bootstrap
-    /// static cluster resources
-    /// <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.StaticResources.clusters>`. This is unrelated to
-    /// the :option:`--service-cluster` option which does not `affect zone aware
-    /// routing <<https://github.com/envoyproxy/envoy/issues/774>`_.>
+    /// this configuration). In order to enable :ref:`zone aware routing <arch_overview_load_balancing_zone_aware_routing>` this option must be set.
+    /// If `local_cluster_name` is defined then :ref:`clusters <envoy_v3_api_msg_config.cluster.v3.Cluster>` must be defined in the :ref:`Bootstrap static cluster resources <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.StaticResources.clusters>`. This is unrelated to
+    /// the :option:`--service-cluster` option which does not `affect zone aware routing <<https://github.com/envoyproxy/envoy/issues/774>`\_.>
     #[prost(string, tag = "1")]
     pub local_cluster_name: ::prost::alloc::string::String,
     /// Optional global configuration for outlier detection.
@@ -403,9 +394,7 @@ pub struct ClusterManager {
     #[prost(message, optional, tag = "3")]
     pub upstream_bind_config: ::core::option::Option<super::super::core::v3::BindConfig>,
     /// A management server endpoint to stream load stats to via
-    /// ``StreamLoadStats``. This must have :ref:`api_type
-    /// <envoy_v3_api_field_config.core.v3.ApiConfigSource.api_type>` :ref:`GRPC
-    /// <envoy_v3_api_enum_value_config.core.v3.ApiConfigSource.ApiType.GRPC>`.
+    /// `StreamLoadStats`. This must have :ref:`api_type <envoy_v3_api_field_config.core.v3.ApiConfigSource.api_type>` :ref:`GRPC <envoy_v3_api_enum_value_config.core.v3.ApiConfigSource.ApiType.GRPC>`.
     #[prost(message, optional, tag = "4")]
     pub load_stats_config: ::core::option::Option<
         super::super::core::v3::ApiConfigSource,
@@ -419,7 +408,7 @@ pub mod cluster_manager {
         /// Specifies the path to the outlier event log.
         #[prost(string, tag = "1")]
         pub event_log_path: ::prost::alloc::string::String,
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         /// The gRPC service for the outlier detection event service.
         /// If empty, outlier detection events won't be sent to a remote endpoint.
         #[prost(message, optional, tag = "2")]
@@ -444,22 +433,22 @@ pub struct Watchdogs {
 /// Envoy process watchdog configuration. When configured, this monitors for
 /// nonresponsive threads and kills the process after the configured thresholds.
 /// See the :ref:`watchdog documentation <operations_performance_watchdog>` for more information.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Watchdog {
     /// Register actions that will fire on given WatchDog events.
-    /// See ``WatchDogAction`` for priority of events.
+    /// See `WatchDogAction` for priority of events.
     #[prost(message, repeated, tag = "7")]
     pub actions: ::prost::alloc::vec::Vec<watchdog::WatchdogAction>,
     /// The duration after which Envoy counts a nonresponsive thread in the
-    /// ``watchdog_miss`` statistic. If not specified the default is 200ms.
+    /// `watchdog_miss` statistic. If not specified the default is 200ms.
     #[prost(message, optional, tag = "1")]
     pub miss_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// The duration after which Envoy counts a nonresponsive thread in the
-    /// ``watchdog_mega_miss`` statistic. If not specified the default is
+    /// `watchdog_mega_miss` statistic. If not specified the default is
     /// 1000ms.
     #[prost(message, optional, tag = "2")]
     pub megamiss_timeout: ::core::option::Option<
@@ -472,7 +461,7 @@ pub struct Watchdog {
     pub kill_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
-    /// Defines the maximum jitter used to adjust the ``kill_timeout`` if ``kill_timeout`` is
+    /// Defines the maximum jitter used to adjust the `kill_timeout` if `kill_timeout` is
     /// enabled. Enabling this feature would help to reduce risk of synchronized
     /// watchdog kill events across proxies due to external triggers. Set to 0 to
     /// disable. If not specified the default is 0 (disabled).
@@ -480,7 +469,7 @@ pub struct Watchdog {
     pub max_kill_timeout_jitter: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
-    /// If ``max(2, ceil(registered_threads * Fraction(*multikill_threshold*)))``
+    /// If `max(2, ceil(registered_threads * Fraction(*multikill_threshold*)))`
     /// threads have been nonresponsive for at least this duration kill the entire
     /// Envoy process. Set to 0 to disable this behavior. If not specified the
     /// default is 0 (disabled).
@@ -488,8 +477,8 @@ pub struct Watchdog {
     pub multikill_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
-    /// Sets the threshold for ``multikill_timeout`` in terms of the percentage of
-    /// nonresponsive threads required for the ``multikill_timeout``.
+    /// Sets the threshold for `multikill_timeout` in terms of the percentage of
+    /// nonresponsive threads required for the `multikill_timeout`.
     /// If not specified the default is 0.
     #[prost(message, optional, tag = "5")]
     pub multikill_threshold: ::core::option::Option<
@@ -569,14 +558,14 @@ pub mod watchdog {
 /// If using an unsafe action that could get stuck or deadlock, it important to
 /// have an out of band system to terminate the process.
 ///
-/// The interface for the extension is ``Envoy::Server::Configuration::FatalAction``.
-/// ``FatalAction`` extensions live in the ``envoy.extensions.fatal_actions`` API
+/// The interface for the extension is `Envoy::Server::Configuration::FatalAction`.
+/// `FatalAction` extensions live in the `envoy.extensions.fatal_actions` API
 /// namespace.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FatalAction {
     /// Extension specific configuration for the action. It's expected to conform
-    /// to the ``Envoy::Server::Configuration::FatalAction`` interface.
+    /// to the `Envoy::Server::Configuration::FatalAction` interface.
     #[prost(message, optional, tag = "1")]
     pub config: ::core::option::Option<super::super::core::v3::TypedExtensionConfig>,
 }
@@ -605,16 +594,14 @@ pub struct Runtime {
     /// configuration. See below for exactly how the override directory is used.
     #[prost(string, tag = "3")]
     pub override_subdirectory: ::prost::alloc::string::String,
-    /// Static base runtime. This will be :ref:`overridden
-    /// <config_runtime_layering>` by other runtime layers, e.g.
-    /// disk or admin. This follows the :ref:`runtime protobuf JSON representation
-    /// encoding <config_runtime_proto_json>`.
+    /// Static base runtime. This will be :ref:`overridden <config_runtime_layering>` by other runtime layers, e.g.
+    /// disk or admin. This follows the :ref:`runtime protobuf JSON representation encoding <config_runtime_proto_json>`.
     #[prost(message, optional, tag = "4")]
     pub base: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
     >,
 }
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RuntimeLayer {
@@ -635,8 +622,7 @@ pub mod runtime_layer {
         /// symbolic link. An atomic link swap is used when a new tree should be
         /// switched to. This parameter specifies the path to the symbolic link.
         /// Envoy will watch the location for changes and reload the file system tree
-        /// when they happen. See documentation on runtime :ref:`atomicity
-        /// <config_runtime_atomicity>` for further details on how reloads are
+        /// when they happen. See documentation on runtime :ref:`atomicity <config_runtime_atomicity>` for further details on how reloads are
         /// treated.
         #[prost(string, tag = "1")]
         pub symlink_root: ::prost::alloc::string::String,
@@ -658,7 +644,7 @@ pub mod runtime_layer {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RtdsLayer {
-        /// Resource to subscribe to at ``rtds_config`` for the RTDS layer.
+        /// Resource to subscribe to at `rtds_config` for the RTDS layer.
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
         /// RTDS configuration source.
@@ -671,8 +657,7 @@ pub mod runtime_layer {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum LayerSpecifier {
         /// :ref:`Static runtime <config_runtime_bootstrap>` layer.
-        /// This follows the :ref:`runtime protobuf JSON representation encoding
-        /// <config_runtime_proto_json>`. Unlike static xDS resources, this static
+        /// This follows the :ref:`runtime protobuf JSON representation encoding <config_runtime_proto_json>`. Unlike static xDS resources, this static
         /// layer is overridable by later layers in the runtime virtual filesystem.
         #[prost(message, tag = "2")]
         StaticLayer(super::super::super::super::super::google::protobuf::Struct),
@@ -705,14 +690,14 @@ pub struct LayeredRuntime {
 ///
 /// .. code-block:: text
 ///
-///    foo: bar
-///    foo: eep
+/// foo: bar
+/// foo: eep
 ///
 /// Then they will eventually be folded into:
 ///
 /// .. code-block:: text
 ///
-///    foo: bar, eep
+/// foo: bar, eep
 ///
 /// Inline headers provide O(1) search performance, but each inline header imposes
 /// an additional memory overhead on all instances of the corresponding type of

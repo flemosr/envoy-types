@@ -9,9 +9,8 @@ pub struct DnsCacheCircuitBreakers {
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
-/// Configuration for the dynamic forward proxy DNS cache. See the :ref:`architecture overview
-/// <arch_overview_http_dynamic_forward_proxy>` for more information.
-/// [#next-free-field: 15]
+/// Configuration for the dynamic forward proxy DNS cache. See the :ref:`architecture overview <arch_overview_http_dynamic_forward_proxy>` for more information.
+/// \[\#next-free-field: 15\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DnsCacheConfig {
@@ -24,12 +23,12 @@ pub struct DnsCacheConfig {
     pub name: ::prost::alloc::string::String,
     /// The DNS lookup family to use during resolution.
     ///
-    /// [#comment:TODO(mattklein123): Figure out how to support IPv4/IPv6 "happy eyeballs" mode. The
+    /// \[\#comment:TODO(mattklein123): Figure out how to support IPv4/IPv6 "happy eyeballs" mode. The
     /// way this might work is a new lookup family which returns both IPv4 and IPv6 addresses, and
     /// then configures a host to have a primary and fall back address. With this, we could very
     /// likely build a "happy eyeballs" connection pool which would race the primary / fall back
     /// address and return the one that wins. This same method could potentially also be used for
-    /// QUIC to TCP fall back.]
+    /// QUIC to TCP fall back.\]
     #[prost(
         enumeration = "super::super::super::super::config::cluster::v3::cluster::DnsLookupFamily",
         tag = "2"
@@ -40,14 +39,14 @@ pub struct DnsCacheConfig {
     /// The refresh rate is rounded to the closest millisecond, and must be at least 1ms.
     ///
     /// Once a host has been resolved, the refresh rate will be the DNS TTL, capped
-    /// at a minimum of ``dns_min_refresh_rate``.
+    /// at a minimum of `dns_min_refresh_rate`.
     #[prost(message, optional, tag = "3")]
     pub dns_refresh_rate: ::core::option::Option<
         super::super::super::super::super::google::protobuf::Duration,
     >,
-    /// The minimum rate that DNS resolution will occur. Per ``dns_refresh_rate``, once a host is
-    /// resolved, the DNS TTL will be used, with a minimum set by ``dns_min_refresh_rate``.
-    /// ``dns_min_refresh_rate`` defaults to 5s and must also be >= 5s.
+    /// The minimum rate that DNS resolution will occur. Per `dns_refresh_rate`, once a host is
+    /// resolved, the DNS TTL will be used, with a minimum set by `dns_min_refresh_rate`.
+    /// `dns_min_refresh_rate` defaults to 5s and must also be >= 5s.
     #[prost(message, optional, tag = "14")]
     pub dns_min_refresh_rate: ::core::option::Option<
         super::super::super::super::super::google::protobuf::Duration,
@@ -57,13 +56,13 @@ pub struct DnsCacheConfig {
     ///
     /// .. note:
     ///
-    ///    The TTL is only checked at the time of DNS refresh, as specified by ``dns_refresh_rate``. This
-    ///    means that if the configured TTL is shorter than the refresh rate the host may not be removed
-    ///    immediately.
+    /// The TTL is only checked at the time of DNS refresh, as specified by `dns_refresh_rate`. This
+    /// means that if the configured TTL is shorter than the refresh rate the host may not be removed
+    /// immediately.
     ///
-    ///   .. note:
+    /// .. note:
     ///
-    ///    The TTL has no relation to DNS TTL and is only used to control Envoy's resource usage.
+    /// The TTL has no relation to DNS TTL and is only used to control Envoy's resource usage.
     #[prost(message, optional, tag = "4")]
     pub host_ttl: ::core::option::Option<
         super::super::super::super::super::google::protobuf::Duration,
@@ -72,9 +71,9 @@ pub struct DnsCacheConfig {
     ///
     /// .. note:
     ///
-    ///    The implementation is approximate and enforced independently on each worker thread, thus
-    ///    it is possible for the maximum hosts in the cache to go slightly above the configured
-    ///    value depending on timing. This is similar to how other circuit breakers work.
+    /// The implementation is approximate and enforced independently on each worker thread, thus
+    /// it is possible for the maximum hosts in the cache to go slightly above the configured
+    /// value depending on timing. This is similar to how other circuit breakers work.
     #[prost(message, optional, tag = "5")]
     pub max_hosts: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
@@ -91,7 +90,7 @@ pub struct DnsCacheConfig {
     #[prost(message, optional, tag = "7")]
     pub dns_cache_circuit_breaker: ::core::option::Option<DnsCacheCircuitBreakers>,
     /// Always use TCP queries instead of UDP queries for DNS lookups.
-    /// This field is deprecated in favor of ``dns_resolution_config``
+    /// This field is deprecated in favor of `dns_resolution_config`
     /// which aggregates all of the DNS resolver configuration in a single message.
     #[deprecated]
     #[prost(bool, tag = "8")]
@@ -108,13 +107,13 @@ pub struct DnsCacheConfig {
     /// or any other DNS resolver types and the related parameters.
     /// For example, an object of
     /// :ref:`CaresDnsResolverConfig <envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
-    /// can be packed into this ``typed_dns_resolver_config``. This configuration replaces the
+    /// can be packed into this `typed_dns_resolver_config`. This configuration replaces the
     /// :ref:`dns_resolution_config <envoy_v3_api_field_extensions.common.dynamic_forward_proxy.v3.DnsCacheConfig.dns_resolution_config>`
     /// configuration.
-    /// During the transition period when both ``dns_resolution_config`` and ``typed_dns_resolver_config`` exists,
-    /// when ``typed_dns_resolver_config`` is in place, Envoy will use it and ignore ``dns_resolution_config``.
-    /// When ``typed_dns_resolver_config`` is missing, the default behavior is in place.
-    /// [#extension-category: envoy.network.dns_resolver]
+    /// During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
+    /// when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
+    /// When `typed_dns_resolver_config` is missing, the default behavior is in place.
+    /// \[\#extension-category: envoy.network.dns_resolver\]
     #[prost(message, optional, tag = "12")]
     pub typed_dns_resolver_config: ::core::option::Option<
         super::super::super::super::config::core::v3::TypedExtensionConfig,

@@ -11,9 +11,8 @@ pub struct RegexMatcher {
 }
 /// Nested message and enum types in `RegexMatcher`.
 pub mod regex_matcher {
-    /// Google's `RE2 <<https://github.com/google/re2>`_> regex engine. The regex
-    /// string must adhere to the documented `syntax
-    /// <<https://github.com/google/re2/wiki/Syntax>`_.> The engine is designed to
+    /// Google's `RE2 <<https://github.com/google/re2>`\_> regex engine. The regex
+    /// string must adhere to the documented `syntax <<https://github.com/google/re2/wiki/Syntax>`\_.> The engine is designed to
     /// complete execution in linear time as well as limit the amount of memory
     /// used.
     ///
@@ -41,7 +40,7 @@ pub mod regex_matcher {
     }
 }
 /// Specifies the way to match a string.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StringMatcher {
@@ -171,7 +170,7 @@ pub mod matcher {
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct SinglePredicate {
                 /// Protocol-specific specification of input field to match on.
-                /// [#extension-category: envoy.matching.common_inputs]
+                /// \[\#extension-category: envoy.matching.common_inputs\]
                 #[prost(message, optional, tag = "1")]
                 pub input: ::core::option::Option<
                     super::super::super::super::super::super::core::v3::TypedExtensionConfig,
@@ -188,7 +187,7 @@ pub mod matcher {
                     #[prost(message, tag = "2")]
                     ValueMatch(super::super::super::super::StringMatcher),
                     /// Extension for custom matching logic.
-                    /// [#extension-category: envoy.matching.input_matchers]
+                    /// \[\#extension-category: envoy.matching.input_matchers\]
                     #[prost(message, tag = "3")]
                     CustomMatch(
                         super::super::super::super::super::super::super::core::v3::TypedExtensionConfig,

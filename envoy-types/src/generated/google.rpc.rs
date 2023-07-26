@@ -9,12 +9,12 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Status {
     /// The status code, which should be an enum value of
-    /// \[google.rpc.Code][google.rpc.Code\].
+    /// \\[google.rpc.Code\]\[google.rpc.Code\\].
     #[prost(int32, tag = "1")]
     pub code: i32,
     /// A developer-facing error message, which should be in English. Any
     /// user-facing error message should be localized and sent in the
-    /// \[google.rpc.Status.details][google.rpc.Status.details\] field, or localized
+    /// \\[google.rpc.Status.details\]\[google.rpc.Status.details\\] field, or localized
     /// by the client.
     #[prost(string, tag = "2")]
     pub message: ::prost::alloc::string::String,
@@ -24,7 +24,6 @@ pub struct Status {
     pub details: ::prost::alloc::vec::Vec<super::protobuf::Any>,
 }
 /// The canonical error codes for gRPC APIs.
-///
 ///
 /// Sometimes multiple error codes may apply.  Services should return
 /// the most specific error code that applies.  For example, prefer
@@ -107,15 +106,15 @@ pub enum Code {
     ///
     /// Service implementors can use the following guidelines to decide
     /// between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`:
-    ///   (a) Use `UNAVAILABLE` if the client can retry just the failing call.
-    ///   (b) Use `ABORTED` if the client should retry at a higher level. For
-    ///       example, when a client-specified test-and-set fails, indicating the
-    ///       client should restart a read-modify-write sequence.
-    ///   (c) Use `FAILED_PRECONDITION` if the client should not retry until
-    ///       the system state has been explicitly fixed. For example, if an "rmdir"
-    ///       fails because the directory is non-empty, `FAILED_PRECONDITION`
-    ///       should be returned since the client should not retry unless
-    ///       the files are deleted from the directory.
+    /// (a) Use `UNAVAILABLE` if the client can retry just the failing call.
+    /// (b) Use `ABORTED` if the client should retry at a higher level. For
+    /// example, when a client-specified test-and-set fails, indicating the
+    /// client should restart a read-modify-write sequence.
+    /// (c) Use `FAILED_PRECONDITION` if the client should not retry until
+    /// the system state has been explicitly fixed. For example, if an "rmdir"
+    /// fails because the directory is non-empty, `FAILED_PRECONDITION`
+    /// should be returned since the client should not retry unless
+    /// the files are deleted from the directory.
     ///
     /// HTTP Mapping: 400 Bad Request
     FailedPrecondition = 9,
@@ -133,7 +132,7 @@ pub enum Code {
     /// Unlike `INVALID_ARGUMENT`, this error indicates a problem that may
     /// be fixed if the system state changes. For example, a 32-bit file
     /// system will generate `INVALID_ARGUMENT` if asked to read at an
-    /// offset that is not in the range \[0,2^32-1\], but it will generate
+    /// offset that is not in the range \\[0,2^32-1\\], but it will generate
     /// `OUT_OF_RANGE` if asked to read from an offset past the current
     /// file size.
     ///

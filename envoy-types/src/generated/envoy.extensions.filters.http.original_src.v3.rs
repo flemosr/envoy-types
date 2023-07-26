@@ -1,7 +1,7 @@
 /// The Original Src filter binds upstream connections to the original source address determined
 /// for the request. This address could come from something like the Proxy Protocol filter, or it
 /// could come from trusted http headers.
-/// [#extension: envoy.filters.http.original_src]
+/// \[\#extension: envoy.filters.http.original_src\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OriginalSrc {

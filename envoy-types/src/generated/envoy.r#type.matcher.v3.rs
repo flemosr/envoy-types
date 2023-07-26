@@ -11,18 +11,18 @@ pub struct RegexMatcher {
 }
 /// Nested message and enum types in `RegexMatcher`.
 pub mod regex_matcher {
-    /// Google's `RE2 <<https://github.com/google/re2>`_> regex engine. The regex string must adhere to
-    /// the documented `syntax <<https://github.com/google/re2/wiki/Syntax>`_.> The engine is designed
+    /// Google's `RE2 <<https://github.com/google/re2>`\_> regex engine. The regex string must adhere to
+    /// the documented `syntax <<https://github.com/google/re2/wiki/Syntax>`\_.> The engine is designed
     /// to complete execution in linear time as well as limit the amount of memory used.
     ///
-    /// Envoy supports program size checking via runtime. The runtime keys ``re2.max_program_size.error_level``
-    /// and ``re2.max_program_size.warn_level`` can be set to integers as the maximum program size or
+    /// Envoy supports program size checking via runtime. The runtime keys `re2.max_program_size.error_level`
+    /// and `re2.max_program_size.warn_level` can be set to integers as the maximum program size or
     /// complexity that a compiled regex can have before an exception is thrown or a warning is
-    /// logged, respectively. ``re2.max_program_size.error_level`` defaults to 100, and
-    /// ``re2.max_program_size.warn_level`` has no default if unset (will not check/log a warning).
+    /// logged, respectively. `re2.max_program_size.error_level` defaults to 100, and
+    /// `re2.max_program_size.warn_level` has no default if unset (will not check/log a warning).
     ///
-    /// Envoy emits two stats for tracking the program size of regexes: the histogram ``re2.program_size``,
-    /// which records the program size, and the counter ``re2.exceeded_warn_level``, which is incremented
+    /// Envoy emits two stats for tracking the program size of regexes: the histogram `re2.program_size`,
+    /// which records the program size, and the counter `re2.exceeded_warn_level`, which is incremented
     /// each time the program size exceeds the warn level threshold.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -37,9 +37,8 @@ pub mod regex_matcher {
         ///
         /// .. note::
         ///
-        ///   Although this field is deprecated, the program size will still be checked against the
-        ///   global ``re2.max_program_size.error_level`` runtime value.
-        ///
+        /// Although this field is deprecated, the program size will still be checked against the
+        /// global `re2.max_program_size.error_level` runtime value.
         #[deprecated]
         #[prost(message, optional, tag = "1")]
         pub max_program_size: ::core::option::Option<
@@ -74,22 +73,21 @@ pub struct RegexMatchAndSubstitute {
     /// subject string during a substitution operation to produce a new string.
     /// Capture groups in the pattern can be referenced in the substitution
     /// string. Note, however, that the syntax for referring to capture groups is
-    /// defined by the chosen regular expression engine. Google's `RE2
-    /// <<https://github.com/google/re2>`_> regular expression engine uses a
+    /// defined by the chosen regular expression engine. Google's `RE2 <<https://github.com/google/re2>`\_> regular expression engine uses a
     /// backslash followed by the capture group number to denote a numbered
-    /// capture group. E.g., ``\1`` refers to capture group 1, and ``\2`` refers
+    /// capture group. E.g., `\1` refers to capture group 1, and `\2` refers
     /// to capture group 2.
     #[prost(string, tag = "2")]
     pub substitution: ::prost::alloc::string::String,
 }
 /// Specifies the way to match a string.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StringMatcher {
     /// If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. This
     /// has no effect for the safe_regex match.
-    /// For example, the matcher ``data`` will match both input string ``Data`` and ``data`` if set to true.
+    /// For example, the matcher `data` will match both input string `Data` and `data` if set to true.
     #[prost(bool, tag = "6")]
     pub ignore_case: bool,
     #[prost(oneof = "string_matcher::MatchPattern", tags = "1, 2, 3, 5, 7")]
@@ -104,7 +102,7 @@ pub mod string_matcher {
         ///
         /// Examples:
         ///
-        /// * ``abc`` only matches the value ``abc``.
+        /// * `abc` only matches the value `abc`.
         #[prost(string, tag = "1")]
         Exact(::prost::alloc::string::String),
         /// The input string must have the prefix specified here.
@@ -112,7 +110,7 @@ pub mod string_matcher {
         ///
         /// Examples:
         ///
-        /// * ``abc`` matches the value ``abc.xyz``
+        /// * `abc` matches the value `abc.xyz`
         #[prost(string, tag = "2")]
         Prefix(::prost::alloc::string::String),
         /// The input string must have the suffix specified here.
@@ -120,7 +118,7 @@ pub mod string_matcher {
         ///
         /// Examples:
         ///
-        /// * ``abc`` matches the value ``xyz.abc``
+        /// * `abc` matches the value `xyz.abc`
         #[prost(string, tag = "3")]
         Suffix(::prost::alloc::string::String),
         /// The input string must match the regular expression specified here.
@@ -131,7 +129,7 @@ pub mod string_matcher {
         ///
         /// Examples:
         ///
-        /// * ``abc`` matches the value ``xyz.abc.def``
+        /// * `abc` matches the value `xyz.abc.def`
         #[prost(string, tag = "7")]
         Contains(::prost::alloc::string::String),
     }
@@ -156,7 +154,7 @@ pub mod double_matcher {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum MatchPattern {
         /// If specified, the input double value must be in the range specified here.
-        /// Note: The range is using half-open interval semantics [start, end).
+        /// Note: The range is using half-open interval semantics \[start, end).
         #[prost(message, tag = "1")]
         Range(super::super::super::v3::DoubleRange),
         /// If specified, the input double value must be equal to the value specified here.
@@ -166,7 +164,7 @@ pub mod double_matcher {
 }
 /// Specifies the way to match a ProtobufWkt::Value. Primitive values and ListValue are supported.
 /// StructValue is not supported and is always not matched.
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValueMatcher {
@@ -227,7 +225,7 @@ pub mod list_matcher {
         OneOf(::prost::alloc::boxed::Box<super::ValueMatcher>),
     }
 }
-/// [#next-major-version: MetadataMatcher should use StructMatcher]
+/// \[\#next-major-version: MetadataMatcher should use StructMatcher\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MetadataMatcher {
@@ -298,64 +296,70 @@ pub mod path_matcher {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Rule {
-        /// The ``path`` must match the URL path portion of the :path header. The query and fragment
+        /// The `path` must match the URL path portion of the :path header. The query and fragment
         /// string (if present) are removed in the URL path portion.
-        /// For example, the path ``/data`` will match the ``:path`` header ``/data#fragment?param=value``.
+        /// For example, the path `/data` will match the `:path` header `/data#fragment?param=value`.
         #[prost(message, tag = "1")]
         Path(super::StringMatcher),
     }
 }
 /// StructMatcher provides a general interface to check if a given value is matched in
-/// google.protobuf.Struct. It uses ``path`` to retrieve the value
+/// google.protobuf.Struct. It uses `path` to retrieve the value
 /// from the struct and then check if it's matched to the specified value.
 ///
 /// For example, for the following Struct:
 ///
 /// .. code-block:: yaml
 ///
-///         fields:
-///           a:
-///             struct_value:
-///               fields:
-///                 b:
-///                   struct_value:
-///                     fields:
-///                       c:
-///                         string_value: pro
-///                 t:
-///                   list_value:
-///                     values:
-///                       - string_value: m
-///                       - string_value: n
+/// ```text
+///     fields:
+///       a:
+///         struct_value:
+///           fields:
+///             b:
+///               struct_value:
+///                 fields:
+///                   c:
+///                     string_value: pro
+///             t:
+///               list_value:
+///                 values:
+///                   - string_value: m
+///                   - string_value: n
+/// ```
 ///
-/// The following MetadataMatcher is matched as the path [a, b, c] will retrieve a string value "pro"
+/// The following MetadataMatcher is matched as the path \[a, b, c\] will retrieve a string value "pro"
 /// from the Metadata which is matched to the specified prefix match.
 ///
 /// .. code-block:: yaml
 ///
-///     path:
-///     - key: a
-///     - key: b
-///     - key: c
-///     value:
-///       string_match:
-///         prefix: pr
+/// ```text
+/// path:
+/// - key: a
+/// - key: b
+/// - key: c
+/// value:
+///   string_match:
+///     prefix: pr
+/// ```
 ///
 /// The following StructMatcher is matched as the code will match one of the string values in the
-/// list at the path [a, t].
+/// list at the path \[a, t\].
 ///
 /// .. code-block:: yaml
 ///
-///     path:
-///     - key: a
-///     - key: t
-///     value:
-///       list_match:
-///         one_of:
-///           string_match:
-///             exact: m
+/// ```text
+/// path:
+/// - key: a
+/// - key: t
+/// value:
+///   list_match:
+///     one_of:
+///       string_match:
+///         exact: m
+/// ```
 ///
-/// An example use of StructMatcher is to match metadata in envoy.v*.core.Node.
+/// An example use of StructMatcher is to match metadata in envoy.v\*.core.Node.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StructMatcher {
@@ -402,8 +406,8 @@ pub struct NodeMatcher {
 /// The resulting input string will be all headers for the given key joined by a comma,
 /// e.g. if the request contains two 'foo' headers with value 'bar' and 'baz', the input
 /// string will be 'bar,baz'.
-/// [#comment:TODO(snowp): Link to unified matching docs.]
-/// [#extension: envoy.matching.inputs.request_headers]
+/// \[\#comment:TODO(snowp): Link to unified matching docs.\]
+/// \[\#extension: envoy.matching.inputs.request_headers\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpRequestHeaderMatchInput {
@@ -415,8 +419,8 @@ pub struct HttpRequestHeaderMatchInput {
 /// The resulting input string will be all headers for the given key joined by a comma,
 /// e.g. if the request contains two 'foo' headers with value 'bar' and 'baz', the input
 /// string will be 'bar,baz'.
-/// [#comment:TODO(snowp): Link to unified matching docs.]
-/// [#extension: envoy.matching.inputs.request_trailers]
+/// \[\#comment:TODO(snowp): Link to unified matching docs.\]
+/// \[\#extension: envoy.matching.inputs.request_trailers\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpRequestTrailerMatchInput {
@@ -428,8 +432,8 @@ pub struct HttpRequestTrailerMatchInput {
 /// The resulting input string will be all headers for the given key joined by a comma,
 /// e.g. if the response contains two 'foo' headers with value 'bar' and 'baz', the input
 /// string will be 'bar,baz'.
-/// [#comment:TODO(snowp): Link to unified matching docs.]
-/// [#extension: envoy.matching.inputs.response_headers]
+/// \[\#comment:TODO(snowp): Link to unified matching docs.\]
+/// \[\#extension: envoy.matching.inputs.response_headers\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpResponseHeaderMatchInput {
@@ -441,8 +445,8 @@ pub struct HttpResponseHeaderMatchInput {
 /// The resulting input string will be all headers for the given key joined by a comma,
 /// e.g. if the request contains two 'foo' headers with value 'bar' and 'baz', the input
 /// string will be 'bar,baz'.
-/// [#comment:TODO(snowp): Link to unified matching docs.]
-/// [#extension: envoy.matching.inputs.response_trailers]
+/// \[\#comment:TODO(snowp): Link to unified matching docs.\]
+/// \[\#extension: envoy.matching.inputs.response_trailers\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpResponseTrailerMatchInput {
@@ -453,7 +457,7 @@ pub struct HttpResponseTrailerMatchInput {
 /// Match input indicates that matching should be done on a specific query parameter.
 /// The resulting input string will be the first query parameter for the value
 /// 'query_param'.
-/// [#extension: envoy.matching.inputs.query_params]
+/// \[\#extension: envoy.matching.inputs.query_params\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpRequestQueryParamMatchInput {

@@ -4,7 +4,7 @@ pub struct StatefulSession {
     /// Specific implementation of session state. This session state will be used to store and
     /// get address of the upstream host to which the session is assigned.
     ///
-    /// [#extension-category: envoy.http.stateful_session]
+    /// \[\#extension-category: envoy.http.stateful_session\]
     #[prost(message, optional, tag = "1")]
     pub session_state: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,

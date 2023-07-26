@@ -1,13 +1,13 @@
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SinkConfig {
     /// If set to true, counters will be emitted as deltas, and the OTLP message will have
-    /// ``AGGREGATION_TEMPORALITY_DELTA`` set as AggregationTemporality.
+    /// `AGGREGATION_TEMPORALITY_DELTA` set as AggregationTemporality.
     #[prost(bool, tag = "2")]
     pub report_counters_as_deltas: bool,
     /// If set to true, histograms will be emitted as deltas, and the OTLP message will have
-    /// ``AGGREGATION_TEMPORALITY_DELTA`` set as AggregationTemporality.
+    /// `AGGREGATION_TEMPORALITY_DELTA` set as AggregationTemporality.
     #[prost(bool, tag = "3")]
     pub report_histograms_as_deltas: bool,
     /// If set to true, metrics will have their tags emitted as OTLP attributes, which may

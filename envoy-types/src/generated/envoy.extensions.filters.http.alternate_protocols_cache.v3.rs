@@ -1,5 +1,5 @@
 /// Configuration for the alternate protocols cache HTTP filter.
-/// [#extension: envoy.filters.http.alternate_protocols_cache]
+/// \[\#extension: envoy.filters.http.alternate_protocols_cache\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilterConfig {

@@ -4,7 +4,7 @@ pub struct Geoip {
     /// If set, the :ref:`xff_num_trusted_hops <envoy_v3_api_field_extensions.filters.http.geoip.v3.Geoip.XffConfig.xff_num_trusted_hops>` field will be used to determine
     /// trusted client address from `x-forwarded-for` header.
     /// Otherwise, the immediate downstream connection source address will be used.
-    /// [#next-free-field: 2]
+    /// \[\#next-free-field: 2\]
     #[prost(message, optional, tag = "1")]
     pub xff_config: ::core::option::Option<geoip::XffConfig>,
     /// Configuration for geolocation headers to add to request.
@@ -20,7 +20,7 @@ pub struct Geoip {
 pub mod geoip {
     /// The set of geolocation headers to add to request. If any of the configured headers is present
     /// in the incoming request, it will be overridden by Geoip filter.
-    /// [#next-free-field: 10]
+    /// \[\#next-free-field: 10\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GeolocationHeadersToAdd {

@@ -4,10 +4,8 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Body {
     /// Specifies whether body data has been truncated to fit within the specified
-    /// :ref:`max_buffered_rx_bytes
-    /// <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_rx_bytes>` and
-    /// :ref:`max_buffered_tx_bytes
-    /// <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_tx_bytes>` settings.
+    /// :ref:`max_buffered_rx_bytes <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_rx_bytes>` and
+    /// :ref:`max_buffered_tx_bytes <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_tx_bytes>` settings.
     #[prost(bool, tag = "3")]
     pub truncated: bool,
     #[prost(oneof = "body::BodyType", tags = "1, 2")]
@@ -19,11 +17,10 @@ pub mod body {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum BodyType {
         /// Body data as bytes. By default, tap body data will be present in this field, as the proto
-        /// ``bytes`` type can contain any valid byte.
+        /// `bytes` type can contain any valid byte.
         #[prost(bytes, tag = "1")]
         AsBytes(::prost::alloc::vec::Vec<u8>),
-        /// Body data as string. This field is only used when the :ref:`JSON_BODY_AS_STRING
-        /// <envoy_v3_api_enum_value_config.tap.v3.OutputSink.Format.JSON_BODY_AS_STRING>` sink
+        /// Body data as string. This field is only used when the :ref:`JSON_BODY_AS_STRING <envoy_v3_api_enum_value_config.tap.v3.OutputSink.Format.JSON_BODY_AS_STRING>` sink
         /// format type is selected. See the documentation for that option for why this is useful.
         #[prost(string, tag = "2")]
         AsString(::prost::alloc::string::String),
@@ -62,7 +59,7 @@ pub mod http_buffered_trace {
     }
 }
 /// A streamed HTTP trace segment. Multiple segments make up a full trace.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpStreamedTraceSegment {
@@ -171,7 +168,7 @@ pub mod socket_event {
     }
 }
 /// Sequence of read/write events that constitute a buffered trace on a socket.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketBufferedTrace {
@@ -185,12 +182,10 @@ pub struct SocketBufferedTrace {
     /// Sequence of observed events.
     #[prost(message, repeated, tag = "3")]
     pub events: ::prost::alloc::vec::Vec<SocketEvent>,
-    /// Set to true if read events were truncated due to the :ref:`max_buffered_rx_bytes
-    /// <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_rx_bytes>` setting.
+    /// Set to true if read events were truncated due to the :ref:`max_buffered_rx_bytes <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_rx_bytes>` setting.
     #[prost(bool, tag = "4")]
     pub read_truncated: bool,
-    /// Set to true if write events were truncated due to the :ref:`max_buffered_tx_bytes
-    /// <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_tx_bytes>` setting.
+    /// Set to true if write events were truncated due to the :ref:`max_buffered_tx_bytes <envoy_v3_api_field_config.tap.v3.OutputConfig.max_buffered_tx_bytes>` setting.
     #[prost(bool, tag = "5")]
     pub write_truncated: bool,
 }

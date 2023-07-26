@@ -13,7 +13,7 @@ pub struct ClientStatusRequest {
     pub node: ::core::option::Option<super::super::super::config::core::v3::Node>,
 }
 /// Detailed config (per xDS) with status.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PerXdsConfig {
@@ -26,9 +26,8 @@ pub struct PerXdsConfig {
     /// is, xDS clients should always dump the most recent accepted xDS config.
     ///
     /// .. attention::
-    ///    This field is deprecated. Use :ref:`ClientResourceStatus
-    ///    <envoy_v3_api_enum_admin.v3.ClientResourceStatus>` for per-resource
-    ///    config status instead.
+    /// This field is deprecated. Use :ref:`ClientResourceStatus <envoy_v3_api_enum_admin.v3.ClientResourceStatus>` for per-resource
+    /// config status instead.
     #[deprecated]
     #[prost(enumeration = "ClientConfigStatus", tag = "7")]
     pub client_status: i32,
@@ -74,7 +73,7 @@ pub mod client_config {
     /// GenericXdsConfig is used to specify the config status and the dump
     /// of any xDS resource identified by their type URL. It is the generalized
     /// version of the now deprecated ListenersConfigDump, ClustersConfigDump etc
-    /// [#next-free-field: 10]
+    /// \[\#next-free-field: 10\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GenericXdsConfig {
@@ -115,7 +114,7 @@ pub mod client_config {
         /// this particular resource along with the reason and timestamp. For
         /// successfully updated or acknowledged resource, this field should
         /// be empty.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "8")]
         pub error_state: ::core::option::Option<
             super::super::super::super::admin::v3::UpdateFailureState,

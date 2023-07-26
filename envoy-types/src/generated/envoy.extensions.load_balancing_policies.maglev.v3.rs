@@ -1,6 +1,5 @@
 /// This configuration allows the built-in Maglev LB policy to be configured via the LB policy
-/// extension point. See the :ref:`load balancing architecture overview
-/// <arch_overview_load_balancing_types>` and :ref:`Maglev<arch_overview_load_balancing_types_maglev>` for more information.
+/// extension point. See the :ref:`load balancing architecture overview <arch_overview_load_balancing_types>` and :ref:`Maglev<arch_overview_load_balancing_types_maglev>` for more information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Maglev {

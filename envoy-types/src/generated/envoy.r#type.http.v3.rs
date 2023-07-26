@@ -19,19 +19,16 @@ pub mod path_transformation {
         /// Should text be normalized according to RFC 3986? This typically is used for path headers
         /// before any processing of requests by HTTP filters or routing. This applies percent-encoded
         /// normalization and path segment normalization. Fails on characters disallowed in URLs
-        /// (e.g. NULLs). See `Normalization and Comparison
-        /// <<https://tools.ietf.org/html/rfc3986#section-6>`_> for details of normalization. Note that
-        /// this options does not perform `case normalization
-        /// <<https://tools.ietf.org/html/rfc3986#section-6.2.2.1>`_>
+        /// (e.g. NULLs). See `Normalization and Comparison <<https://tools.ietf.org/html/rfc3986#section-6>`\_> for details of normalization. Note that
+        /// this options does not perform `case normalization <<https://tools.ietf.org/html/rfc3986#section-6.2.2.1>`\_>
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct NormalizePathRfc3986 {}
         /// Determines if adjacent slashes are merged into one. A common use case is for a request path
-        /// header. Using this option in ``:ref: PathNormalizationOptions
-        /// <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.PathNormalizationOptions>``
-        /// will allow incoming requests with path ``//dir///file`` to match against route with ``prefix``
-        /// match set to ``/dir``. When using for header transformations, note that slash merging is not
-        /// part of `HTTP spec <<https://tools.ietf.org/html/rfc3986>`_> and is provided for convenience.
+        /// header. Using this option in `:ref: PathNormalizationOptions <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.PathNormalizationOptions>`
+        /// will allow incoming requests with path `//dir///file` to match against route with `prefix`
+        /// match set to `/dir`. When using for header transformations, note that slash merging is not
+        /// part of `HTTP spec <<https://tools.ietf.org/html/rfc3986>`\_> and is provided for convenience.
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct MergeSlashes {}

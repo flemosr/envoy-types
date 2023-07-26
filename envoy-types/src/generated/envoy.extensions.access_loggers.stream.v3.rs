@@ -1,6 +1,6 @@
 /// Custom configuration for an :ref:`AccessLog <envoy_v3_api_msg_config.accesslog.v3.AccessLog>`
 /// that writes log entries directly to the operating system's standard output.
-/// [#extension: envoy.access_loggers.stdout]
+/// \[\#extension: envoy.access_loggers.stdout\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StdoutAccessLog {
@@ -22,7 +22,7 @@ pub mod stdout_access_log {
 }
 /// Custom configuration for an :ref:`AccessLog <envoy_v3_api_msg_config.accesslog.v3.AccessLog>`
 /// that writes log entries directly to the operating system's standard error.
-/// [#extension: envoy.access_loggers.stderr]
+/// \[\#extension: envoy.access_loggers.stderr\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StderrAccessLog {

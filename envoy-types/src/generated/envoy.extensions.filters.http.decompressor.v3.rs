@@ -4,7 +4,7 @@ pub struct Decompressor {
     /// A decompressor library to use for both request and response decompression. Currently only
     /// :ref:`envoy.compression.gzip.compressor<envoy_v3_api_msg_extensions.compression.gzip.decompressor.v3.Gzip>`
     /// is included in Envoy.
-    /// [#extension-category: envoy.compression.decompressor]
+    /// \[\#extension-category: envoy.compression.decompressor\]
     #[prost(message, optional, tag = "1")]
     pub decompressor_library: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -32,7 +32,7 @@ pub mod decompressor {
         pub enabled: ::core::option::Option<
             super::super::super::super::super::super::config::core::v3::RuntimeFeatureFlag,
         >,
-        /// If set to true, will decompress response even if a ``no-transform`` cache control header is set.
+        /// If set to true, will decompress response even if a `no-transform` cache control header is set.
         #[prost(bool, tag = "2")]
         pub ignore_no_transform_header: bool,
     }

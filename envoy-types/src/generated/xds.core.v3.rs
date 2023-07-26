@@ -4,7 +4,7 @@
 /// prefixed and some of these are documented below:
 ///
 /// `xds.resource.listening_address`: The value is "IP:port" (e.g. "10.1.1.3:8080") which is
-///    the listening address of a Listener. Used in a Listener resource query.
+/// the listening address of a Listener. Used in a Listener resource query.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ContextParams {
@@ -26,8 +26,7 @@ pub struct TypedExtensionConfig {
     /// the extension. In the case that the type URL is *xds.type.v3.TypedStruct*
     /// (or, for historical reasons, *udpa.type.v1.TypedStruct*), the inner type
     /// URL of *TypedStruct* will be utilized. See the
-    /// :ref:`extension configuration overview
-    /// <config_overview_extension_configuration>` for further details.
+    /// :ref:`extension configuration overview <config_overview_extension_configuration>` for further details.
     #[prost(message, optional, tag = "2")]
     pub typed_config: ::core::option::Option<super::super::super::google::protobuf::Any>,
 }
@@ -43,18 +42,17 @@ pub struct Authority {
 ///
 /// Resource locators have a canonical xdstp:// URI representation:
 ///
-///    xdstp://{authority}/{type_url}/{id}?{context_params}{#directive,*}
+/// xdstp://{authority}/{type_url}/{id}?{context_params}{#directive,\*}
 ///
 /// where context_params take the form of URI query parameters.
 ///
 /// Resource locators have a similar canonical http:// URI representation:
 ///
-///    <http://{authority}/{type_url}/{id}?{context_params}{#directive,*}>
+/// <http://{authority}/{type_url}/{id}?{context_params}{#directive,\*}>
 ///
 /// Resource locators also have a simplified file:// URI representation:
 ///
-///    file:///{id}{#directive,*}
-///
+/// file:///{id}{#directive,\*}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResourceLocator {
@@ -63,7 +61,7 @@ pub struct ResourceLocator {
     pub scheme: i32,
     /// Opaque identifier for the resource. Any '/' will not be escaped during URI
     /// encoding and will form part of the URI path. This may end
-    /// with ‘*’ for glob collection references.
+    /// with ‘\*’ for glob collection references.
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
     /// Logical authority for resource (not necessarily transport network address).
@@ -105,8 +103,8 @@ pub mod resource_locator {
     ///
     /// Percent encoding applies to the URI encoding of the directive value.
     /// Multiple directives are comma-separated, so the reserved characters that
-    /// require percent encoding in a directive value are [',', '#', '[', ']',
-    /// '%']. These are the RFC3986 fragment reserved characters with the addition
+    /// require percent encoding in a directive value are \[',', '#', '\[', '\]',
+    /// '%'\]. These are the RFC3986 fragment reserved characters with the addition
     /// of the xDS scheme specific ','. See
     /// <https://tools.ietf.org/html/rfc3986#page-49> for further details on URI ABNF
     /// and reserved characters.
@@ -124,7 +122,7 @@ pub mod resource_locator {
             /// An alternative resource locator for fallback if the resource is
             /// unavailable. For example, take the resource locator:
             ///
-            ///    xdstp://foo/some-type/some-route-table#alt=xdstp://bar/some-type/another-route-table
+            /// xdstp://foo/some-type/some-route-table#alt=xdstp://bar/some-type/another-route-table
             ///
             /// If the data-plane load balancer is unable to reach `foo` to fetch the
             /// resource, it will fallback to `bar`. Alternative resources do not need
@@ -196,10 +194,9 @@ pub mod resource_locator {
 ///
 /// .. code-block:: proto
 ///
-///    message <T>Collection {
-///      repeated CollectionEntry resources = 1;
-///    }
-///
+/// message <T>Collection {
+/// repeated CollectionEntry resources = 1;
+/// }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CollectionEntry {
@@ -213,7 +210,7 @@ pub mod collection_entry {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct InlineEntry {
         /// Optional name to describe the inlined resource. Resource names must match
-        /// ``\[a-zA-Z0-9_-\./\]+`` (TODO(htuch): turn this into a PGV constraint once
+        /// `\[a-zA-Z0-9_-\./\]+` (TODO(htuch): turn this into a PGV constraint once
         /// finalized, probably should be a RFC3986 pchar). This name allows
         /// reference via the #entry directive in ResourceLocator.
         #[prost(string, tag = "1")]

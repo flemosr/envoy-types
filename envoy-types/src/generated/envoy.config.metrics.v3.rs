@@ -10,7 +10,7 @@ pub struct StatsSink {
     pub name: ::prost::alloc::string::String,
     /// Stats sink specific configuration which depends on the sink being instantiated. See
     /// :ref:`StatsdSink <envoy_v3_api_msg_config.metrics.v3.StatsdSink>` for an example.
-    /// [#extension-category: envoy.stats_sinks]
+    /// \[\#extension-category: envoy.stats_sinks\]
     #[prost(oneof = "stats_sink::ConfigType", tags = "3")]
     pub config_type: ::core::option::Option<stats_sink::ConfigType>,
 }
@@ -18,7 +18,7 @@ pub struct StatsSink {
 pub mod stats_sink {
     /// Stats sink specific configuration which depends on the sink being instantiated. See
     /// :ref:`StatsdSink <envoy_v3_api_msg_config.metrics.v3.StatsdSink>` for an example.
-    /// [#extension-category: envoy.stats_sinks]
+    /// \[\#extension-category: envoy.stats_sinks\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ConfigType {
@@ -38,14 +38,13 @@ pub struct StatsConfig {
     #[prost(message, repeated, tag = "1")]
     pub stats_tags: ::prost::alloc::vec::Vec<TagSpecifier>,
     /// Use all default tag regexes specified in Envoy. These can be combined with
-    /// custom tags specified in :ref:`stats_tags
-    /// <envoy_v3_api_field_config.metrics.v3.StatsConfig.stats_tags>`. They will be processed before
+    /// custom tags specified in :ref:`stats_tags <envoy_v3_api_field_config.metrics.v3.StatsConfig.stats_tags>`. They will be processed before
     /// the custom tags.
     ///
     /// .. note::
     ///
-    ///    If any default tags are specified twice, the config will be considered
-    ///    invalid.
+    /// If any default tags are specified twice, the config will be considered
+    /// invalid.
     ///
     /// See :repo:`well_known_names.h <source/common/config/well_known_names.h>` for a list of the
     /// default tags in Envoy.
@@ -60,38 +59,40 @@ pub struct StatsConfig {
     /// performance for Envoys running especially large configs.
     ///
     /// .. warning::
-    ///    Excluding stats may affect Envoy's behavior in undocumented ways. See
-    ///    `issue #8771 <<https://github.com/envoyproxy/envoy/issues/8771>`_> for more information.
-    ///    If any unexpected behavior changes are observed, please open a new issue immediately.
+    /// Excluding stats may affect Envoy's behavior in undocumented ways. See
+    /// `issue #8771 <<https://github.com/envoyproxy/envoy/issues/8771>`\_> for more information.
+    /// If any unexpected behavior changes are observed, please open a new issue immediately.
     #[prost(message, optional, tag = "3")]
     pub stats_matcher: ::core::option::Option<StatsMatcher>,
     /// Defines rules for setting the histogram buckets. Rules are evaluated in order, and the first
     /// match is applied. If no match is found (or if no rules are set), the following default buckets
     /// are used:
     ///
-    ///    .. code-block:: json
+    /// .. code-block:: json
     ///
-    ///      [
-    ///        0.5,
-    ///        1,
-    ///        5,
-    ///        10,
-    ///        25,
-    ///        50,
-    ///        100,
-    ///        250,
-    ///        500,
-    ///        1000,
-    ///        2500,
-    ///        5000,
-    ///        10000,
-    ///        30000,
-    ///        60000,
-    ///        300000,
-    ///        600000,
-    ///        1800000,
-    ///        3600000
-    ///      ]
+    /// ```text
+    /// [
+    ///    0.5,
+    ///    1,
+    ///    5,
+    ///    10,
+    ///    25,
+    ///    50,
+    ///    100,
+    ///    250,
+    ///    500,
+    ///    1000,
+    ///    2500,
+    ///    5000,
+    ///    10000,
+    ///    30000,
+    ///    60000,
+    ///    300000,
+    ///    600000,
+    ///    1800000,
+    ///    3600000
+    /// ]
+    /// ```
     #[prost(message, repeated, tag = "4")]
     pub histogram_bucket_settings: ::prost::alloc::vec::Vec<HistogramBucketSettings>,
 }
@@ -102,18 +103,16 @@ pub struct StatsConfig {
 ///
 /// However, StatsMatcher can be used to limit the creation of families of stats in order to
 /// conserve memory. Stats can either be disabled entirely, or they can be
-/// limited by either an exclusion or an inclusion list of :ref:`StringMatcher
-/// <envoy_v3_api_msg_type.matcher.v3.StringMatcher>` protos:
+/// limited by either an exclusion or an inclusion list of :ref:`StringMatcher <envoy_v3_api_msg_type.matcher.v3.StringMatcher>` protos:
 ///
-/// * If ``reject_all`` is set to `true`, no stats will be instantiated. If ``reject_all`` is set to
-///    `false`, all stats will be instantiated.
+/// * If `reject_all` is set to `true`, no stats will be instantiated. If `reject_all` is set to
+///   `false`, all stats will be instantiated.
 ///
 /// * If an exclusion list is supplied, any stat name matching *any* of the StringMatchers in the
-///    list will not instantiate.
+///   list will not instantiate.
 ///
 /// * If an inclusion list is supplied, no stats will instantiate, except those matching *any* of
-///    the StringMatchers in the list.
-///
+///   the StringMatchers in the list.
 ///
 /// A StringMatcher can be used to match against an exact string, a suffix / prefix, or a regex.
 /// **NB:** For performance reasons, it is highly recommended to use a prefix- or suffix-based
@@ -123,47 +122,46 @@ pub struct StatsConfig {
 ///
 /// .. code-block:: json
 ///
-///    {
-///      "statsMatcher": {
-///        "rejectAll": "true"
-///      }
-///    }
+/// {
+/// "statsMatcher": {
+/// "rejectAll": "true"
+/// }
+/// }
 ///
 /// Example 2. Excluding all cluster-specific stats, but not cluster-manager stats:
 ///
 /// .. code-block:: json
 ///
-///    {
-///      "statsMatcher": {
-///        "exclusionList": {
-///          "patterns": [
-///            {
-///              "prefix": "cluster."
-///            }
-///          ]
-///        }
-///      }
-///    }
+/// {
+/// "statsMatcher": {
+/// "exclusionList": {
+/// "patterns": \[
+/// {
+/// "prefix": "cluster."
+/// }
+/// \]
+/// }
+/// }
+/// }
 ///
 /// Example 3. Including only manager-related stats:
 ///
 /// .. code-block:: json
 ///
-///    {
-///      "statsMatcher": {
-///        "inclusionList": {
-///          "patterns": [
-///            {
-///              "prefix": "cluster_manager."
-///            },
-///            {
-///              "prefix": "listener_manager."
-///            }
-///          ]
-///        }
-///      }
-///    }
-///
+/// {
+/// "statsMatcher": {
+/// "inclusionList": {
+/// "patterns": \[
+/// {
+/// "prefix": "cluster_manager."
+/// },
+/// {
+/// "prefix": "listener_manager."
+/// }
+/// \]
+/// }
+/// }
+/// }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatsMatcher {
@@ -175,7 +173,7 @@ pub mod stats_matcher {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum StatsMatcher {
-        /// If ``reject_all`` is true, then all stats are disabled. If ``reject_all`` is false, then all
+        /// If `reject_all` is true, then all stats are disabled. If `reject_all` is false, then all
         /// stats are enabled.
         #[prost(bool, tag = "1")]
         RejectAll(bool),
@@ -202,20 +200,18 @@ pub mod stats_matcher {
 pub struct TagSpecifier {
     /// Attaches an identifier to the tag values to identify the tag being in the
     /// sink. Envoy has a set of default names and regexes to extract dynamic
-    /// portions of existing stats, which can be found in :repo:`well_known_names.h
-    /// <source/common/config/well_known_names.h>` in the Envoy repository. If a :ref:`tag_name
-    /// <envoy_v3_api_field_config.metrics.v3.TagSpecifier.tag_name>` is provided in the config and
+    /// portions of existing stats, which can be found in :repo:`well_known_names.h <source/common/config/well_known_names.h>` in the Envoy repository. If a :ref:`tag_name <envoy_v3_api_field_config.metrics.v3.TagSpecifier.tag_name>` is provided in the config and
     /// neither :ref:`regex <envoy_v3_api_field_config.metrics.v3.TagSpecifier.regex>` or
     /// :ref:`fixed_value <envoy_v3_api_field_config.metrics.v3.TagSpecifier.fixed_value>` were specified,
     /// Envoy will attempt to find that name in its set of defaults and use the accompanying regex.
     ///
     /// .. note::
     ///
-    ///    A stat name may be spelled in such a way that it matches two different
-    ///    tag extractors for the same tag name. In that case, all but one of the
-    ///    tag values will be dropped. It is not specified which tag value will be
-    ///    retained. The extraction will only occur for one of the extractors, and
-    ///    only the matched extraction will be removed from the tag name.
+    /// A stat name may be spelled in such a way that it matches two different
+    /// tag extractors for the same tag name. In that case, all but one of the
+    /// tag values will be dropped. It is not specified which tag value will be
+    /// retained. The extraction will only occur for one of the extractors, and
+    /// only the matched extraction will be removed from the tag name.
     #[prost(string, tag = "1")]
     pub tag_name: ::prost::alloc::string::String,
     #[prost(oneof = "tag_specifier::TagValue", tags = "2, 3")]
@@ -236,53 +232,53 @@ pub mod tag_specifier {
         /// group is provided, the first will also be used to set the value of the tag.
         /// All other capture groups will be ignored.
         ///
-        /// Example 1. a stat name ``cluster.foo_cluster.upstream_rq_timeout`` and
+        /// Example 1. a stat name `cluster.foo_cluster.upstream_rq_timeout` and
         /// one tag specifier:
         ///
         /// .. code-block:: json
         ///
-        ///    {
-        ///      "tag_name": "envoy.cluster_name",
-        ///      "regex": "^cluster\\.((.+?)\\.)"
-        ///    }
+        /// {
+        /// "tag_name": "envoy.cluster_name",
+        /// "regex": "^cluster\\.((.+?)\\.)"
+        /// }
         ///
-        /// Note that the regex will remove ``foo_cluster.`` making the tag extracted
-        /// name ``cluster.upstream_rq_timeout`` and the tag value for
-        /// ``envoy.cluster_name`` will be ``foo_cluster`` (note: there will be no
-        /// ``.`` character because of the second capture group).
+        /// Note that the regex will remove `foo_cluster.` making the tag extracted
+        /// name `cluster.upstream_rq_timeout` and the tag value for
+        /// `envoy.cluster_name` will be `foo_cluster` (note: there will be no
+        /// `.` character because of the second capture group).
         ///
         /// Example 2. a stat name
-        /// ``http.connection_manager_1.user_agent.ios.downstream_cx_total`` and two
+        /// `http.connection_manager_1.user_agent.ios.downstream_cx_total` and two
         /// tag specifiers:
         ///
         /// .. code-block:: json
         ///
-        ///    [
-        ///      {
-        ///        "tag_name": "envoy.http_user_agent",
-        ///        "regex": "^http(?=\\.).*?\\.user_agent\\.((.+?)\\.)\\w+?$"
-        ///      },
-        ///      {
-        ///        "tag_name": "envoy.http_conn_manager_prefix",
-        ///        "regex": "^http\\.((.*?)\\.)"
-        ///      }
-        ///    ]
+        /// \[
+        /// {
+        /// "tag_name": "envoy.http_user_agent",
+        /// "regex": "^http(?=\\.).*?\\.user_agent\\.((.+?)\\.)\\w+?$"
+        /// },
+        /// {
+        /// "tag_name": "envoy.http_conn_manager_prefix",
+        /// "regex": "^http\\.((.*?)\\.)"
+        /// }
+        /// \]
         ///
         /// The two regexes of the specifiers will be processed from the elaborated
         /// stat name.
         ///
-        /// The first regex will save ``ios.`` as the tag value for ``envoy.http_user_agent``. It will
+        /// The first regex will save `ios.` as the tag value for `envoy.http_user_agent`. It will
         /// leave it in the name for potential matching with additional tag specifiers. After all tag
         /// specifiers are processed the tags will be removed from the name.
         ///
-        /// The second regex will populate tag ``envoy.http_conn_manager_prefix`` with value
-        /// ``connection_manager_1.``, based on the original stat name.
+        /// The second regex will populate tag `envoy.http_conn_manager_prefix` with value
+        /// `connection_manager_1.`, based on the original stat name.
         ///
         /// As a final step, the matched tags are removed, leaving
-        /// ``http.user_agent.downstream_cx_total`` as the tag extracted name.
+        /// `http.user_agent.downstream_cx_total` as the tag extracted name.
         #[prost(string, tag = "2")]
         Regex(::prost::alloc::string::String),
-        /// Specifies a fixed tag value for the ``tag_name``.
+        /// Specifies a fixed tag value for the `tag_name`.
         #[prost(string, tag = "3")]
         FixedValue(::prost::alloc::string::String),
     }
@@ -292,7 +288,7 @@ pub mod tag_specifier {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HistogramBucketSettings {
     /// The stats that this rule applies to. The match is applied to the original stat name
-    /// before tag-extraction, for example ``cluster.exampleclustername.upstream_cx_length_ms``.
+    /// before tag-extraction, for example `cluster.exampleclustername.upstream_cx_length_ms`.
     #[prost(message, optional, tag = "1")]
     pub r#match: ::core::option::Option<
         super::super::super::r#type::matcher::v3::StringMatcher,
@@ -302,9 +298,9 @@ pub struct HistogramBucketSettings {
     #[prost(double, repeated, packed = "false", tag = "2")]
     pub buckets: ::prost::alloc::vec::Vec<f64>,
 }
-/// Stats configuration proto schema for built-in ``envoy.stat_sinks.statsd`` sink. This sink does not support
+/// Stats configuration proto schema for built-in `envoy.stat_sinks.statsd` sink. This sink does not support
 /// tagged metrics.
-/// [#extension: envoy.stat_sinks.statsd]
+/// \[\#extension: envoy.stat_sinks.statsd\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatsdSink {
@@ -314,16 +310,16 @@ pub struct StatsdSink {
     ///
     /// .. code-block:: json
     ///
-    ///    {
-    ///      "prefix" : "envoy-prod"
-    ///    }
+    /// {
+    /// "prefix" : "envoy-prod"
+    /// }
     ///
     /// will change emitted stats to
     ///
     /// .. code-block:: cpp
     ///
-    ///    envoy-prod.test_counter:1|c
-    ///    envoy-prod.test_timer:5|ms
+    /// envoy-prod.test_counter:1|c
+    /// envoy-prod.test_timer:5|ms
     ///
     /// Note that the default prefix, "envoy", will be used if a prefix is not
     /// specified.
@@ -332,8 +328,8 @@ pub struct StatsdSink {
     ///
     /// .. code-block:: cpp
     ///
-    ///    envoy.test_counter:1|c
-    ///    envoy.test_timer:5|ms
+    /// envoy.test_counter:1|c
+    /// envoy.test_timer:5|ms
     #[prost(string, tag = "3")]
     pub prefix: ::prost::alloc::string::String,
     #[prost(oneof = "statsd_sink::StatsdSpecifier", tags = "1, 2")]
@@ -344,28 +340,25 @@ pub mod statsd_sink {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum StatsdSpecifier {
-        /// The UDP address of a running `statsd <<https://github.com/etsy/statsd>`_>
+        /// The UDP address of a running `statsd <<https://github.com/etsy/statsd>`\_>
         /// compliant listener. If specified, statistics will be flushed to this
         /// address.
         #[prost(message, tag = "1")]
         Address(super::super::super::core::v3::Address),
-        /// The name of a cluster that is running a TCP `statsd
-        /// <<https://github.com/etsy/statsd>`_> compliant listener. If specified,
+        /// The name of a cluster that is running a TCP `statsd <<https://github.com/etsy/statsd>`\_> compliant listener. If specified,
         /// Envoy will connect to this cluster to flush statistics.
         #[prost(string, tag = "2")]
         TcpClusterName(::prost::alloc::string::String),
     }
 }
-/// Stats configuration proto schema for built-in ``envoy.stat_sinks.dog_statsd`` sink.
-/// The sink emits stats with `DogStatsD <<https://docs.datadoghq.com/guides/dogstatsd/>`_>
-/// compatible tags. Tags are configurable via :ref:`StatsConfig
-/// <envoy_v3_api_msg_config.metrics.v3.StatsConfig>`.
-/// [#extension: envoy.stat_sinks.dog_statsd]
+/// Stats configuration proto schema for built-in `envoy.stat_sinks.dog_statsd` sink.
+/// The sink emits stats with `DogStatsD <<https://docs.datadoghq.com/guides/dogstatsd/>`\_>
+/// compatible tags. Tags are configurable via :ref:`StatsConfig <envoy_v3_api_msg_config.metrics.v3.StatsConfig>`.
+/// \[\#extension: envoy.stat_sinks.dog_statsd\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DogStatsdSink {
-    /// Optional custom metric name prefix. See :ref:`StatsdSink's prefix field
-    /// <envoy_v3_api_field_config.metrics.v3.StatsdSink.prefix>` for more details.
+    /// Optional custom metric name prefix. See :ref:`StatsdSink's prefix field <envoy_v3_api_field_config.metrics.v3.StatsdSink.prefix>` for more details.
     #[prost(string, tag = "3")]
     pub prefix: ::prost::alloc::string::String,
     /// Optional max datagram size to use when sending UDP messages. By default Envoy
@@ -394,16 +387,14 @@ pub mod dog_statsd_sink {
         Address(super::super::super::core::v3::Address),
     }
 }
-/// Stats configuration proto schema for built-in ``envoy.stat_sinks.hystrix`` sink.
-/// The sink emits stats in `text/event-stream
-/// <<https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events>`_>
-/// formatted stream for use by `Hystrix dashboard
-/// <<https://github.com/Netflix-Skunkworks/hystrix-dashboard/wiki>`_.>
+/// Stats configuration proto schema for built-in `envoy.stat_sinks.hystrix` sink.
+/// The sink emits stats in `text/event-stream <<https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events>`\_>
+/// formatted stream for use by `Hystrix dashboard <<https://github.com/Netflix-Skunkworks/hystrix-dashboard/wiki>`\_.>
 ///
 /// Note that only a single HystrixSink should be configured.
 ///
 /// Streaming is started through an admin endpoint :http:get:`/hystrix_event_stream`.
-/// [#extension: envoy.stat_sinks.hystrix]
+/// \[\#extension: envoy.stat_sinks.hystrix\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HystrixSink {
@@ -414,29 +405,29 @@ pub struct HystrixSink {
     /// in the process). The sink then outputs the aggregate statistics across the
     /// current rolling window to the event stream(s).
     ///
-    /// ``rolling_window(ms)`` = ``stats_flush_interval(ms)`` * ``num_of_buckets``
+    /// `rolling_window(ms)` = `stats_flush_interval(ms)` * `num_of_buckets`
     ///
-    /// More detailed explanation can be found in `Hystrix wiki
-    /// <<https://github.com/Netflix/Hystrix/wiki/Metrics-and-Monitoring#hystrixrollingnumber>`_.>
+    /// More detailed explanation can be found in `Hystrix wiki <<https://github.com/Netflix/Hystrix/wiki/Metrics-and-Monitoring#hystrixrollingnumber>`\_.>
     #[prost(int64, tag = "1")]
     pub num_buckets: i64,
 }
-/// Metrics Service is configured as a built-in ``envoy.stat_sinks.metrics_service`` :ref:`StatsSink
-/// <envoy_v3_api_msg_config.metrics.v3.StatsSink>`. This opaque configuration will be used to create
+/// Metrics Service is configured as a built-in `envoy.stat_sinks.metrics_service` :ref:`StatsSink <envoy_v3_api_msg_config.metrics.v3.StatsSink>`. This opaque configuration will be used to create
 /// Metrics Service.
 ///
 /// Example:
 ///
 /// .. code-block:: yaml
 ///
-///      stats_sinks:
-///        - name: envoy.stat_sinks.metrics_service
-///          typed_config:
-///            "@type": type.googleapis.com/envoy.config.metrics.v3.MetricsServiceConfig
-///            transport_api_version: V3
+/// ```text
+/// stats_sinks:
+///    - name: envoy.stat_sinks.metrics_service
+///      typed_config:
+///        "@type": type.googleapis.com/envoy.config.metrics.v3.MetricsServiceConfig
+///        transport_api_version: V3
+/// ```
 ///
-/// [#extension: envoy.stat_sinks.metrics_service]
-/// [#next-free-field: 6]
+/// \[\#extension: envoy.stat_sinks.metrics_service\]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MetricsServiceConfig {

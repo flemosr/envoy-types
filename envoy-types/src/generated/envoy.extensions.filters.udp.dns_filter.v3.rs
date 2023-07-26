@@ -50,7 +50,7 @@ pub mod dns_filter_config {
     /// and forwarding configuration for Envoy to make DNS requests to other
     /// resolvers
     ///
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ClientContextConfig {
@@ -70,7 +70,7 @@ pub mod dns_filter_config {
         /// Control planes that need to simultaneously support Envoy 1.18.x and
         /// Envoy 1.19.x should avoid Envoy 1.19.0 and 1.19.1.
         ///
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[deprecated]
         #[prost(message, repeated, tag = "2")]
         pub upstream_resolvers: ::prost::alloc::vec::Vec<
@@ -88,13 +88,13 @@ pub mod dns_filter_config {
         /// or any other DNS resolver types and the related parameters.
         /// For example, an object of
         /// :ref:`CaresDnsResolverConfig <envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
-        /// can be packed into this ``typed_dns_resolver_config``. This configuration replaces the
+        /// can be packed into this `typed_dns_resolver_config`. This configuration replaces the
         /// :ref:`dns_resolution_config <envoy_v3_api_field_extensions.filters.udp.dns_filter.v3.DnsFilterConfig.ClientContextConfig.dns_resolution_config>`
         /// configuration.
-        /// During the transition period when both ``dns_resolution_config`` and ``typed_dns_resolver_config`` exists,
-        /// when ``typed_dns_resolver_config`` is in place, Envoy will use it and ignore ``dns_resolution_config``.
-        /// When ``typed_dns_resolver_config`` is missing, the default behavior is in place.
-        /// [#extension-category: envoy.network.dns_resolver]
+        /// During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
+        /// when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
+        /// When `typed_dns_resolver_config` is missing, the default behavior is in place.
+        /// \[\#extension-category: envoy.network.dns_resolver\]
         #[prost(message, optional, tag = "4")]
         pub typed_dns_resolver_config: ::core::option::Option<
             super::super::super::super::super::super::config::core::v3::TypedExtensionConfig,

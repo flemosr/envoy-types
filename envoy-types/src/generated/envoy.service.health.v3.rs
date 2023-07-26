@@ -141,7 +141,7 @@ pub struct LocalityEndpoints {
 /// health checks to support statistics reporting, logging and debugging by the
 /// Envoy instance (outside of HDS). For maximum usefulness, it should match the
 /// same cluster structure as that provided by EDS.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterHealthCheck {
@@ -178,7 +178,7 @@ pub struct HealthCheckSpecifier {
         super::super::super::super::google::protobuf::Duration,
     >,
 }
-/// \[#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
+/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -265,39 +265,39 @@ pub mod health_discovery_service_client {
             self
         }
         /// 1. Envoy starts up and if its can_healthcheck option in the static
-        ///    bootstrap config is enabled, sends HealthCheckRequest to the management
-        ///    server. It supplies its capabilities (which protocol it can health check
-        ///    with, what zone it resides in, etc.).
-        /// 2. In response to (1), the management server designates this Envoy as a
-        ///    healthchecker to health check a subset of all upstream hosts for a given
-        ///    cluster (for example upstream Host 1 and Host 2). It streams
-        ///    HealthCheckSpecifier messages with cluster related configuration for all
-        ///    clusters this Envoy is designated to health check. Subsequent
-        ///    HealthCheckSpecifier message will be sent on changes to:
-        ///    a. Endpoints to health checks
-        ///    b. Per cluster configuration change
-        /// 3. Envoy creates a health probe based on the HealthCheck config and sends
-        ///    it to endpoint(ip:port) of Host 1 and 2. Based on the HealthCheck
-        ///    configuration Envoy waits upon the arrival of the probe response and
-        ///    looks at the content of the response to decide whether the endpoint is
-        ///    healthy or not. If a response hasn't been received within the timeout
-        ///    interval, the endpoint health status is considered TIMEOUT.
-        /// 4. Envoy reports results back in an EndpointHealthResponse message.
-        ///    Envoy streams responses as often as the interval configured by the
-        ///    management server in HealthCheckSpecifier.
-        /// 5. The management Server collects health statuses for all endpoints in the
-        ///    cluster (for all clusters) and uses this information to construct
-        ///    EndpointDiscoveryResponse messages.
-        /// 6. Once Envoy has a list of upstream endpoints to send traffic to, it load
-        ///    balances traffic to them without additional health checking. It may
-        ///    use inline healthcheck (i.e. consider endpoint UNHEALTHY if connection
-        ///    failed to a particular endpoint to account for health status propagation
-        ///    delay between HDS and EDS).
-        /// By default, can_healthcheck is true. If can_healthcheck is false, Cluster
-        /// configuration may not contain HealthCheck message.
-        /// TODO(htuch): How is can_healthcheck communicated to CDS to ensure the above
-        /// invariant?
-        /// TODO(htuch): Add @amb67's diagram.
+        ///   bootstrap config is enabled, sends HealthCheckRequest to the management
+        ///   server. It supplies its capabilities (which protocol it can health check
+        ///   with, what zone it resides in, etc.).
+        /// 1. In response to (1), the management server designates this Envoy as a
+        ///   healthchecker to health check a subset of all upstream hosts for a given
+        ///   cluster (for example upstream Host 1 and Host 2). It streams
+        ///   HealthCheckSpecifier messages with cluster related configuration for all
+        ///   clusters this Envoy is designated to health check. Subsequent
+        ///   HealthCheckSpecifier message will be sent on changes to:
+        ///   a. Endpoints to health checks
+        ///   b. Per cluster configuration change
+        /// 1. Envoy creates a health probe based on the HealthCheck config and sends
+        ///   it to endpoint(ip:port) of Host 1 and 2. Based on the HealthCheck
+        ///   configuration Envoy waits upon the arrival of the probe response and
+        ///   looks at the content of the response to decide whether the endpoint is
+        ///   healthy or not. If a response hasn't been received within the timeout
+        ///   interval, the endpoint health status is considered TIMEOUT.
+        /// 1. Envoy reports results back in an EndpointHealthResponse message.
+        ///   Envoy streams responses as often as the interval configured by the
+        ///   management server in HealthCheckSpecifier.
+        /// 1. The management Server collects health statuses for all endpoints in the
+        ///   cluster (for all clusters) and uses this information to construct
+        ///   EndpointDiscoveryResponse messages.
+        /// 1. Once Envoy has a list of upstream endpoints to send traffic to, it load
+        ///   balances traffic to them without additional health checking. It may
+        ///   use inline healthcheck (i.e. consider endpoint UNHEALTHY if connection
+        ///   failed to a particular endpoint to account for health status propagation
+        ///   delay between HDS and EDS).
+        ///   By default, can_healthcheck is true. If can_healthcheck is false, Cluster
+        ///   configuration may not contain HealthCheck message.
+        ///   TODO(htuch): How is can_healthcheck communicated to CDS to ensure the above
+        ///   invariant?
+        ///   TODO(htuch): Add @amb67's diagram.
         pub async fn stream_health_check(
             &mut self,
             request: impl tonic::IntoStreamingRequest<
@@ -381,39 +381,39 @@ pub mod health_discovery_service_server {
             + Send
             + 'static;
         /// 1. Envoy starts up and if its can_healthcheck option in the static
-        ///    bootstrap config is enabled, sends HealthCheckRequest to the management
-        ///    server. It supplies its capabilities (which protocol it can health check
-        ///    with, what zone it resides in, etc.).
-        /// 2. In response to (1), the management server designates this Envoy as a
-        ///    healthchecker to health check a subset of all upstream hosts for a given
-        ///    cluster (for example upstream Host 1 and Host 2). It streams
-        ///    HealthCheckSpecifier messages with cluster related configuration for all
-        ///    clusters this Envoy is designated to health check. Subsequent
-        ///    HealthCheckSpecifier message will be sent on changes to:
-        ///    a. Endpoints to health checks
-        ///    b. Per cluster configuration change
-        /// 3. Envoy creates a health probe based on the HealthCheck config and sends
-        ///    it to endpoint(ip:port) of Host 1 and 2. Based on the HealthCheck
-        ///    configuration Envoy waits upon the arrival of the probe response and
-        ///    looks at the content of the response to decide whether the endpoint is
-        ///    healthy or not. If a response hasn't been received within the timeout
-        ///    interval, the endpoint health status is considered TIMEOUT.
-        /// 4. Envoy reports results back in an EndpointHealthResponse message.
-        ///    Envoy streams responses as often as the interval configured by the
-        ///    management server in HealthCheckSpecifier.
-        /// 5. The management Server collects health statuses for all endpoints in the
-        ///    cluster (for all clusters) and uses this information to construct
-        ///    EndpointDiscoveryResponse messages.
-        /// 6. Once Envoy has a list of upstream endpoints to send traffic to, it load
-        ///    balances traffic to them without additional health checking. It may
-        ///    use inline healthcheck (i.e. consider endpoint UNHEALTHY if connection
-        ///    failed to a particular endpoint to account for health status propagation
-        ///    delay between HDS and EDS).
-        /// By default, can_healthcheck is true. If can_healthcheck is false, Cluster
-        /// configuration may not contain HealthCheck message.
-        /// TODO(htuch): How is can_healthcheck communicated to CDS to ensure the above
-        /// invariant?
-        /// TODO(htuch): Add @amb67's diagram.
+        ///   bootstrap config is enabled, sends HealthCheckRequest to the management
+        ///   server. It supplies its capabilities (which protocol it can health check
+        ///   with, what zone it resides in, etc.).
+        /// 1. In response to (1), the management server designates this Envoy as a
+        ///   healthchecker to health check a subset of all upstream hosts for a given
+        ///   cluster (for example upstream Host 1 and Host 2). It streams
+        ///   HealthCheckSpecifier messages with cluster related configuration for all
+        ///   clusters this Envoy is designated to health check. Subsequent
+        ///   HealthCheckSpecifier message will be sent on changes to:
+        ///   a. Endpoints to health checks
+        ///   b. Per cluster configuration change
+        /// 1. Envoy creates a health probe based on the HealthCheck config and sends
+        ///   it to endpoint(ip:port) of Host 1 and 2. Based on the HealthCheck
+        ///   configuration Envoy waits upon the arrival of the probe response and
+        ///   looks at the content of the response to decide whether the endpoint is
+        ///   healthy or not. If a response hasn't been received within the timeout
+        ///   interval, the endpoint health status is considered TIMEOUT.
+        /// 1. Envoy reports results back in an EndpointHealthResponse message.
+        ///   Envoy streams responses as often as the interval configured by the
+        ///   management server in HealthCheckSpecifier.
+        /// 1. The management Server collects health statuses for all endpoints in the
+        ///   cluster (for all clusters) and uses this information to construct
+        ///   EndpointDiscoveryResponse messages.
+        /// 1. Once Envoy has a list of upstream endpoints to send traffic to, it load
+        ///   balances traffic to them without additional health checking. It may
+        ///   use inline healthcheck (i.e. consider endpoint UNHEALTHY if connection
+        ///   failed to a particular endpoint to account for health status propagation
+        ///   delay between HDS and EDS).
+        ///   By default, can_healthcheck is true. If can_healthcheck is false, Cluster
+        ///   configuration may not contain HealthCheck message.
+        ///   TODO(htuch): How is can_healthcheck communicated to CDS to ensure the above
+        ///   invariant?
+        ///   TODO(htuch): Add @amb67's diagram.
         async fn stream_health_check(
             &self,
             request: tonic::Request<

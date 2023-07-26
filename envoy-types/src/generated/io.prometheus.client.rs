@@ -71,11 +71,11 @@ pub struct Histogram {
     pub created_timestamp: ::core::option::Option<
         super::super::super::google::protobuf::Timestamp,
     >,
-    /// schema defines the bucket schema. Currently, valid numbers are -4 <= n <= 8.
+    /// schema defines the bucket schema. Currently, valid numbers are -4 \<= n \<= 8.
     /// They are all for base-2 bucket schemas, where 1 is a bucket boundary in each case, and
     /// then each power of two is divided into 2^n logarithmic buckets.
     /// Or in other words, each bucket boundary is the previous boundary times 2^(2^-n).
-    /// In the future, more bucket schemas may be added using numbers < -4 or > 8.
+    /// In the future, more bucket schemas may be added using numbers \< -4 or > 8.
     #[prost(sint32, optional, tag = "5")]
     pub schema: ::core::option::Option<i32>,
     /// Breadth of the zero bucket.

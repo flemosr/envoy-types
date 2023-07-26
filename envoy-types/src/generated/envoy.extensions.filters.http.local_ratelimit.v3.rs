@@ -1,4 +1,4 @@
-/// [#next-free-field: 14]
+/// \[\#next-free-field: 14\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalRateLimit {
@@ -10,7 +10,7 @@ pub struct LocalRateLimit {
     /// Defaults to 429 (TooManyRequests).
     ///
     /// .. note::
-    ///    If this is set to < 400, 429 will be used instead.
+    /// If this is set to \< 400, 429 will be used instead.
     #[prost(message, optional, tag = "2")]
     pub status: ::core::option::Option<
         super::super::super::super::super::r#type::v3::HttpStatus,
@@ -21,17 +21,16 @@ pub struct LocalRateLimit {
     /// rate limit status.
     ///
     /// .. note::
-    ///    It's fine for the token bucket to be unset for the global configuration since the rate limit
-    ///    can be applied at a the virtual host or route level. Thus, the token bucket must be set
-    ///    for the per route configuration otherwise the config will be rejected.
+    /// It's fine for the token bucket to be unset for the global configuration since the rate limit
+    /// can be applied at a the virtual host or route level. Thus, the token bucket must be set
+    /// for the per route configuration otherwise the config will be rejected.
     ///
     /// .. note::
-    ///    When using per route configuration, the bucket becomes unique to that route.
+    /// When using per route configuration, the bucket becomes unique to that route.
     ///
     /// .. note::
-    ///    In the current implementation the token bucket's :ref:`fill_interval
-    ///    <envoy_v3_api_field_type.v3.TokenBucket.fill_interval>` must be >= 50ms to avoid too aggressive
-    ///    refills.
+    /// In the current implementation the token bucket's :ref:`fill_interval <envoy_v3_api_field_type.v3.TokenBucket.fill_interval>` must be >= 50ms to avoid too aggressive
+    /// refills.
     #[prost(message, optional, tag = "3")]
     pub token_bucket: ::core::option::Option<
         super::super::super::super::super::r#type::v3::TokenBucket,
@@ -73,12 +72,11 @@ pub struct LocalRateLimit {
     ///
     /// .. note::
     ///
-    ///    In the current implementation the descriptor's token bucket :ref:`fill_interval
-    ///    <envoy_v3_api_field_type.v3.TokenBucket.fill_interval>` must be a multiple
-    ///    global :ref:`token bucket's<envoy_v3_api_field_extensions.filters.http.local_ratelimit.v3.LocalRateLimit.token_bucket>` fill interval.
+    /// In the current implementation the descriptor's token bucket :ref:`fill_interval <envoy_v3_api_field_type.v3.TokenBucket.fill_interval>` must be a multiple
+    /// global :ref:`token bucket's<envoy_v3_api_field_extensions.filters.http.local_ratelimit.v3.LocalRateLimit.token_bucket>` fill interval.
     ///
-    ///    The descriptors must match verbatim for rate limiting to apply. There is no partial
-    ///    match by a subset of descriptor entries in the current implementation.
+    /// The descriptors must match verbatim for rate limiting to apply. There is no partial
+    /// match by a subset of descriptor entries in the current implementation.
     #[prost(message, repeated, tag = "8")]
     pub descriptors: ::prost::alloc::vec::Vec<
         super::super::super::super::common::ratelimit::v3::LocalRateLimitDescriptor,
@@ -88,7 +86,7 @@ pub struct LocalRateLimit {
     ///
     /// .. note::
     ///
-    ///   The filter supports a range of 0 - 10 inclusively for stage numbers.
+    /// The filter supports a range of 0 - 10 inclusively for stage numbers.
     #[prost(uint32, tag = "9")]
     pub stage: u32,
     /// Specifies the scope of the rate limiter's token bucket.

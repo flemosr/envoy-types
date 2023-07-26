@@ -593,7 +593,7 @@ pub struct StringRules {
     /// strict header validation.
     /// By default, this is true, and HTTP header validations are RFC-compliant.
     /// Setting to false will enable a looser validations that only disallows
-    /// \r\n\0 characters, which can be used to bypass header matching rules.
+    /// \\r\n\0 characters, which can be used to bypass header matching rules.
     #[prost(bool, optional, tag = "25", default = "true")]
     pub strict: ::core::option::Option<bool>,
     /// IgnoreEmpty specifies that the validation rules of this field should be

@@ -2,7 +2,7 @@
 /// gRPC Authorization API defined by
 /// :ref:`CheckRequest <envoy_v3_api_msg_service.auth.v3.CheckRequest>`.
 /// A failed check will cause this filter to close the TCP connection.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {

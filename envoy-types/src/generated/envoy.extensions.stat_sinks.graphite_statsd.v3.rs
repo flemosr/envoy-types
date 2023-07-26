@@ -1,8 +1,7 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GraphiteStatsdSink {
-    /// Optional custom metric name prefix. See :ref:`StatsdSink's prefix field
-    /// <envoy_v3_api_field_config.metrics.v3.StatsdSink.prefix>` for more details.
+    /// Optional custom metric name prefix. See :ref:`StatsdSink's prefix field <envoy_v3_api_field_config.metrics.v3.StatsdSink.prefix>` for more details.
     #[prost(string, tag = "3")]
     pub prefix: ::prost::alloc::string::String,
     /// Optional max datagram size to use when sending UDP messages. By default Envoy

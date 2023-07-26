@@ -5,22 +5,22 @@
 ///
 /// .. code-block:: json
 ///
-///   {
-///     "description": "support tcp keep alive",
-///     "state": 0,
-///     "level": 1,
-///     "name": 9,
-///     "int_value": 1,
-///   }
+/// {
+/// "description": "support tcp keep alive",
+/// "state": 0,
+/// "level": 1,
+/// "name": 9,
+/// "int_value": 1,
+/// }
 ///
 /// 1 means SOL_SOCKET and 9 means SO_KEEPALIVE on Linux.
-/// With the above configuration, `TCP Keep-Alives <<https://www.freesoft.org/CIE/RFC/1122/114.htm>`_>
+/// With the above configuration, `TCP Keep-Alives <<https://www.freesoft.org/CIE/RFC/1122/114.htm>`\_>
 /// can be enabled in socket with Linux, which can be used in
 /// :ref:`listener's<envoy_v3_api_field_config.listener.v3.Listener.socket_options>` or
 /// :ref:`admin's <envoy_v3_api_field_config.bootstrap.v3.Admin.socket_options>` socket_options etc.
 ///
 /// It should be noted that the name or level may have different values on different platforms.
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketOption {
@@ -116,7 +116,7 @@ pub struct Pipe {
     pub mode: u32,
 }
 /// The address represents an envoy internal listener.
-/// [#comment: TODO(asraa): When address available, remove workaround from test/server/server_fuzz_test.cc:30.]
+/// \[\#comment: TODO(asraa): When address available, remove workaround from test/server/server_fuzz_test.cc:30.\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EnvoyInternalAddress {
@@ -141,22 +141,21 @@ pub mod envoy_internal_address {
         ServerListenerName(::prost::alloc::string::String),
     }
 }
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketAddress {
     #[prost(enumeration = "socket_address::Protocol", tag = "1")]
     pub protocol: i32,
     /// The address for this socket. :ref:`Listeners <config_listeners>` will bind
-    /// to the address. An empty address is not allowed. Specify ``0.0.0.0`` or ``::``
-    /// to bind to any address. [#comment:TODO(zuercher) reinstate when implemented:
+    /// to the address. An empty address is not allowed. Specify `0.0.0.0` or `::`
+    /// to bind to any address. \[\#comment:TODO(zuercher) reinstate when implemented:
     /// It is possible to distinguish a Listener address via the prefix/suffix matching
-    /// in :ref:`FilterChainMatch <envoy_v3_api_msg_config.listener.v3.FilterChainMatch>`.] When used
+    /// in :ref:`FilterChainMatch <envoy_v3_api_msg_config.listener.v3.FilterChainMatch>`.\] When used
     /// within an upstream :ref:`BindConfig <envoy_v3_api_msg_config.core.v3.BindConfig>`, the address
-    /// controls the source address of outbound connections. For :ref:`clusters
-    /// <envoy_v3_api_msg_config.cluster.v3.Cluster>`, the cluster type determines whether the
-    /// address must be an IP (``STATIC`` or ``EDS`` clusters) or a hostname resolved by DNS
-    /// (``STRICT_DNS`` or ``LOGICAL_DNS`` clusters). Address resolution can be customized
+    /// controls the source address of outbound connections. For :ref:`clusters <envoy_v3_api_msg_config.cluster.v3.Cluster>`, the cluster type determines whether the
+    /// address must be an IP (`STATIC` or `EDS` clusters) or a hostname resolved by DNS
+    /// (`STRICT_DNS` or `LOGICAL_DNS` clusters). Address resolution can be customized
     /// via :ref:`resolver_name <envoy_v3_api_field_config.core.v3.SocketAddress.resolver_name>`.
     #[prost(string, tag = "2")]
     pub address: ::prost::alloc::string::String,
@@ -164,13 +163,12 @@ pub struct SocketAddress {
     /// this is empty, a context dependent default applies. If the address is a concrete
     /// IP address, no resolution will occur. If address is a hostname this
     /// should be set for resolution other than DNS. Specifying a custom resolver with
-    /// ``STRICT_DNS`` or ``LOGICAL_DNS`` will generate an error at runtime.
+    /// `STRICT_DNS` or `LOGICAL_DNS` will generate an error at runtime.
     #[prost(string, tag = "5")]
     pub resolver_name: ::prost::alloc::string::String,
-    /// When binding to an IPv6 address above, this enables `IPv4 compatibility
-    /// <<https://tools.ietf.org/html/rfc3493#page-11>`_.> Binding to ``::`` will
+    /// When binding to an IPv6 address above, this enables `IPv4 compatibility <<https://tools.ietf.org/html/rfc3493#page-11>`\_.> Binding to `::` will
     /// allow both IPv4 and IPv6 connections, with peer IPv4 addresses mapped into
-    /// IPv6 space as ``::FFFF:<IPv4-address>``.
+    /// IPv6 space as `::FFFF:<IPv4-address>`.
     #[prost(bool, tag = "6")]
     pub ipv4_compat: bool,
     #[prost(oneof = "socket_address::PortSpecifier", tags = "3, 4")]
@@ -219,8 +217,7 @@ pub mod socket_address {
     pub enum PortSpecifier {
         #[prost(uint32, tag = "3")]
         PortValue(u32),
-        /// This is only valid if :ref:`resolver_name
-        /// <envoy_v3_api_field_config.core.v3.SocketAddress.resolver_name>` is specified below and the
+        /// This is only valid if :ref:`resolver_name <envoy_v3_api_field_config.core.v3.SocketAddress.resolver_name>` is specified below and the
         /// named resolver is capable of named port resolution.
         #[prost(string, tag = "4")]
         NamedPort(::prost::alloc::string::String),
@@ -266,18 +263,17 @@ pub struct ExtraSourceAddress {
     #[prost(message, optional, tag = "2")]
     pub socket_options: ::core::option::Option<SocketOptionsOverride>,
 }
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BindConfig {
     /// The address to bind to when creating a socket.
     #[prost(message, optional, tag = "1")]
     pub source_address: ::core::option::Option<SocketAddress>,
-    /// Whether to set the ``IP_FREEBIND`` option when creating the socket. When this
-    /// flag is set to true, allows the :ref:`source_address
-    /// <envoy_v3_api_field_config.core.v3.BindConfig.source_address>` to be an IP address
+    /// Whether to set the `IP_FREEBIND` option when creating the socket. When this
+    /// flag is set to true, allows the :ref:`source_address <envoy_v3_api_field_config.core.v3.BindConfig.source_address>` to be an IP address
     /// that is not configured on the system running Envoy. When this flag is set
-    /// to false, the option ``IP_FREEBIND`` is disabled on the socket. When this
+    /// to false, the option `IP_FREEBIND` is disabled on the socket. When this
     /// flag is not set (default), the socket is not modified, i.e. the option is
     /// neither enabled nor disabled.
     #[prost(message, optional, tag = "2")]
@@ -322,18 +318,17 @@ pub mod address {
         SocketAddress(super::SocketAddress),
         #[prost(message, tag = "2")]
         Pipe(super::Pipe),
-        /// Specifies a user-space address handled by :ref:`internal listeners
-        /// <envoy_v3_api_field_config.listener.v3.Listener.internal_listener>`.
+        /// Specifies a user-space address handled by :ref:`internal listeners <envoy_v3_api_field_config.listener.v3.Listener.internal_listener>`.
         #[prost(message, tag = "3")]
         EnvoyInternalAddress(super::EnvoyInternalAddress),
     }
 }
 /// CidrRange specifies an IP Address and a prefix length to construct
-/// the subnet mask for a `CIDR <<https://tools.ietf.org/html/rfc4632>`_> range.
+/// the subnet mask for a `CIDR <<https://tools.ietf.org/html/rfc4632>`\_> range.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CidrRange {
-    /// IPv4 or IPv6 address, e.g. ``192.0.0.0`` or ``2001:db8::``.
+    /// IPv4 or IPv6 address, e.g. `192.0.0.0` or `2001:db8::`.
     #[prost(string, tag = "1")]
     pub address_prefix: ::prost::alloc::string::String,
     /// Length of prefix, e.g. 0, 32. Defaults to 0 when unset.
@@ -347,17 +342,14 @@ pub struct CidrRange {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BackoffStrategy {
     /// The base interval to be used for the next back off computation. It should
-    /// be greater than zero and less than or equal to :ref:`max_interval
-    /// <envoy_v3_api_field_config.core.v3.BackoffStrategy.max_interval>`.
+    /// be greater than zero and less than or equal to :ref:`max_interval <envoy_v3_api_field_config.core.v3.BackoffStrategy.max_interval>`.
     #[prost(message, optional, tag = "1")]
     pub base_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Specifies the maximum interval between retries. This parameter is optional,
-    /// but must be greater than or equal to the :ref:`base_interval
-    /// <envoy_v3_api_field_config.core.v3.BackoffStrategy.base_interval>` if set. The default
-    /// is 10 times the :ref:`base_interval
-    /// <envoy_v3_api_field_config.core.v3.BackoffStrategy.base_interval>`.
+    /// but must be greater than or equal to the :ref:`base_interval <envoy_v3_api_field_config.core.v3.BackoffStrategy.base_interval>` if set. The default
+    /// is 10 times the :ref:`base_interval <envoy_v3_api_field_config.core.v3.BackoffStrategy.base_interval>`.
     #[prost(message, optional, tag = "2")]
     pub max_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
@@ -373,8 +365,9 @@ pub struct HttpUri {
     ///
     /// .. code-block:: yaml
     ///
-    ///     uri: <https://www.googleapis.com/oauth2/v1/certs>
-    ///
+    /// ```text
+    /// uri: <https://www.googleapis.com/oauth2/v1/certs>
+    /// ```
     #[prost(string, tag = "1")]
     pub uri: ::prost::alloc::string::String,
     /// Sets the maximum duration in milliseconds that a response can take to arrive upon request.
@@ -382,19 +375,17 @@ pub struct HttpUri {
     pub timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
-    /// Specify how ``uri`` is to be fetched. Today, this requires an explicit
+    /// Specify how `uri` is to be fetched. Today, this requires an explicit
     /// cluster, but in the future we may support dynamic cluster creation or
-    /// inline DNS resolution. See `issue
-    /// <<https://github.com/envoyproxy/envoy/issues/1606>`_.>
+    /// inline DNS resolution. See `issue <<https://github.com/envoyproxy/envoy/issues/1606>`\_.>
     #[prost(oneof = "http_uri::HttpUpstreamType", tags = "2")]
     pub http_upstream_type: ::core::option::Option<http_uri::HttpUpstreamType>,
 }
 /// Nested message and enum types in `HttpUri`.
 pub mod http_uri {
-    /// Specify how ``uri`` is to be fetched. Today, this requires an explicit
+    /// Specify how `uri` is to be fetched. Today, this requires an explicit
     /// cluster, but in the future we may support dynamic cluster creation or
-    /// inline DNS resolution. See `issue
-    /// <<https://github.com/envoyproxy/envoy/issues/1606>`_.>
+    /// inline DNS resolution. See `issue <<https://github.com/envoyproxy/envoy/issues/1606>`\_.>
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum HttpUpstreamType {
@@ -405,8 +396,9 @@ pub mod http_uri {
         ///
         /// .. code-block:: yaml
         ///
-        ///     cluster: jwks_cluster
-        ///
+        /// ```text
+        /// cluster: jwks_cluster
+        /// ```
         #[prost(string, tag = "2")]
         Cluster(::prost::alloc::string::String),
     }
@@ -422,9 +414,8 @@ pub struct Locality {
     /// should be set if discovery service routing is used and the discovery
     /// service exposes :ref:`zone data <envoy_v3_api_field_config.endpoint.v3.LocalityLbEndpoints.locality>`,
     /// either in this message or via :option:`--service-zone`. The meaning of zone
-    /// is context dependent, e.g. `Availability Zone (AZ)
-    /// <<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html>`_>
-    /// on AWS, `Zone <<https://cloud.google.com/compute/docs/regions-zones/>`_> on
+    /// is context dependent, e.g. `Availability Zone (AZ) <<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html>`\_>
+    /// on AWS, `Zone <<https://cloud.google.com/compute/docs/regions-zones/>`\_> on
     /// GCP, etc.
     #[prost(string, tag = "2")]
     pub zone: ::prost::alloc::string::String,
@@ -452,7 +443,7 @@ pub struct BuildVersion {
     >,
 }
 /// Version and identification for an Envoy extension.
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Extension {
@@ -464,12 +455,12 @@ pub struct Extension {
     /// Extension category names use reverse DNS notation. For instance "envoy.filters.listener"
     /// for Envoy's built-in listener filters or "com.acme.filters.http" for HTTP filters from
     /// acme.com vendor.
-    /// [#comment:TODO(yanavlasov): Link to the doc with existing envoy category names.]
+    /// \[\#comment:TODO(yanavlasov): Link to the doc with existing envoy category names.\]
     #[prost(string, tag = "2")]
     pub category: ::prost::alloc::string::String,
-    /// \[#not-implemented-hide:\] Type descriptor of extension configuration proto.
-    /// [#comment:TODO(yanavlasov): Link to the doc with existing configuration protos.]
-    /// [#comment:TODO(yanavlasov): Add tests when PR #9391 lands.]
+    /// \\[\#not-implemented-hide:\\] Type descriptor of extension configuration proto.
+    /// \[\#comment:TODO(yanavlasov): Link to the doc with existing configuration protos.\]
+    /// \[\#comment:TODO(yanavlasov): Add tests when PR #9391 lands.\]
     #[deprecated]
     #[prost(string, tag = "3")]
     pub type_descriptor: ::prost::alloc::string::String,
@@ -488,29 +479,23 @@ pub struct Extension {
 /// Identifies a specific Envoy instance. The node identifier is presented to the
 /// management server, which may use this identifier to distinguish per Envoy
 /// configuration for serving.
-/// [#next-free-field: 13]
+/// \[\#next-free-field: 13\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Node {
     /// An opaque node identifier for the Envoy node. This also provides the local
     /// service node name. It should be set if any of the following features are
-    /// used: :ref:`statsd <arch_overview_statistics>`, :ref:`CDS
-    /// <config_cluster_manager_cds>`, and :ref:`HTTP tracing
-    /// <arch_overview_tracing>`, either in this message or via
+    /// used: :ref:`statsd <arch_overview_statistics>`, :ref:`CDS <config_cluster_manager_cds>`, and :ref:`HTTP tracing <arch_overview_tracing>`, either in this message or via
     /// :option:`--service-node`.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
     /// Defines the local service cluster name where Envoy is running. Though
     /// optional, it should be set if any of the following features are used:
-    /// :ref:`statsd <arch_overview_statistics>`, :ref:`health check cluster
-    /// verification
-    /// <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.service_name_matcher>`,
+    /// :ref:`statsd <arch_overview_statistics>`, :ref:`health check cluster verification <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.service_name_matcher>`,
     /// :ref:`runtime override directory <envoy_v3_api_msg_config.bootstrap.v3.Runtime>`,
-    /// :ref:`user agent addition
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.add_user_agent>`,
+    /// :ref:`user agent addition <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.add_user_agent>`,
     /// :ref:`HTTP global rate limiting <config_http_filters_rate_limit>`,
-    /// :ref:`CDS <config_cluster_manager_cds>`, and :ref:`HTTP tracing
-    /// <arch_overview_tracing>`, either in this message or via
+    /// :ref:`CDS <config_cluster_manager_cds>`, and :ref:`HTTP tracing <arch_overview_tracing>`, either in this message or via
     /// :option:`--service-cluster`.
     #[prost(string, tag = "2")]
     pub cluster: ::prost::alloc::string::String,
@@ -542,7 +527,7 @@ pub struct Node {
     pub extensions: ::prost::alloc::vec::Vec<Extension>,
     /// Client feature support list. These are well known features described
     /// in the Envoy API repository for a given major version of an API. Client features
-    /// use reverse DNS naming scheme, for example ``com.acme.feature``.
+    /// use reverse DNS naming scheme, for example `com.acme.feature`.
     /// See :ref:`the list of features <client_features>` that xDS client may
     /// support.
     #[prost(string, repeated, tag = "10")]
@@ -550,7 +535,7 @@ pub struct Node {
     /// Known listening ports on the node as a generic hint to the management server
     /// for filtering :ref:`listeners <config_listeners>` to be returned. For example,
     /// if there is a listener bound to port 80, the list can optionally contain the
-    /// SocketAddress ``(0.0.0.0,80)``. The field is optional and just a hint.
+    /// SocketAddress `(0.0.0.0,80)`. The field is optional and just a hint.
     #[deprecated]
     #[prost(message, repeated, tag = "11")]
     pub listening_addresses: ::prost::alloc::vec::Vec<Address>,
@@ -589,30 +574,30 @@ pub mod node {
 /// object to match against. There are some well defined metadata used today for
 /// this purpose:
 ///
-/// * ``{"envoy.lb": {"canary": <bool> }}`` This indicates the canary status of an
-///    endpoint and is also used during header processing
-///    (x-envoy-upstream-canary) and for stats purposes.
-/// [#next-major-version: move to type/metadata/v2]
+/// * `{"envoy.lb": {"canary": <bool> }}` This indicates the canary status of an
+///   endpoint and is also used during header processing
+///   (x-envoy-upstream-canary) and for stats purposes.
+///   \[\#next-major-version: move to type/metadata/v2\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Metadata {
-    /// Key is the reverse DNS filter name, e.g. com.acme.widget. The ``envoy.*``
+    /// Key is the reverse DNS filter name, e.g. com.acme.widget. The `envoy.*`
     /// namespace is reserved for Envoy's built-in filters.
-    /// If both ``filter_metadata`` and
+    /// If both `filter_metadata` and
     /// :ref:`typed_filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.typed_filter_metadata>`
     /// fields are present in the metadata with same keys,
-    /// only ``typed_filter_metadata`` field will be parsed.
+    /// only `typed_filter_metadata` field will be parsed.
     #[prost(map = "string, message", tag = "1")]
     pub filter_metadata: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         super::super::super::super::google::protobuf::Struct,
     >,
-    /// Key is the reverse DNS filter name, e.g. com.acme.widget. The ``envoy.*``
+    /// Key is the reverse DNS filter name, e.g. com.acme.widget. The `envoy.*`
     /// namespace is reserved for Envoy's built-in filters.
     /// The value is encoded as google.protobuf.Any.
     /// If both :ref:`filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.filter_metadata>`
-    /// and ``typed_filter_metadata`` fields are present in the metadata with same keys,
-    /// only ``typed_filter_metadata`` field will be parsed.
+    /// and `typed_filter_metadata` fields are present in the metadata with same keys,
+    /// only `typed_filter_metadata` field will be parsed.
     #[prost(map = "string, message", tag = "2")]
     pub typed_filter_metadata: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -663,7 +648,7 @@ pub struct RuntimeFeatureFlag {
     >,
     /// Runtime key to get value for comparison. This value is used if defined. The boolean value must
     /// be represented via its
-    /// `canonical JSON encoding <<https://developers.google.com/protocol-buffers/docs/proto3#json>`_.>
+    /// `canonical JSON encoding <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_.>
     #[prost(string, tag = "2")]
     pub runtime_key: ::prost::alloc::string::String,
 }
@@ -689,7 +674,7 @@ pub struct HeaderValue {
     ///
     /// The same :ref:`format specifier <config_access_log_format>` as used for
     /// :ref:`HTTP access logging <config_access_log>` applies here, however
-    /// unknown header values are replaced with the empty string instead of ``-``.
+    /// unknown header values are replaced with the empty string instead of `-`.
     #[prost(string, tag = "2")]
     pub value: ::prost::alloc::string::String,
 }
@@ -706,9 +691,9 @@ pub struct HeaderValueOption {
     /// :ref:`append_action <envoy_v3_api_field_config.core.v3.HeaderValueOption.append_action>` as replacement.
     ///
     /// .. note::
-    ///    The :ref:`external authorization service <envoy_v3_api_msg_service.auth.v3.CheckResponse>` and
-    ///    :ref:`external processor service <envoy_v3_api_msg_service.ext_proc.v3.ProcessingResponse>` have
-    ///    default value (``false``) for this field.
+    /// The :ref:`external authorization service <envoy_v3_api_msg_service.auth.v3.CheckResponse>` and
+    /// :ref:`external processor service <envoy_v3_api_msg_service.ext_proc.v3.ProcessingResponse>` have
+    /// default value (`false`) for this field.
     #[deprecated]
     #[prost(message, optional, tag = "2")]
     pub append: ::core::option::Option<
@@ -716,8 +701,7 @@ pub struct HeaderValueOption {
     >,
     /// Describes the action taken to append/overwrite the given value for an existing header
     /// or to only add this header if it's absent.
-    /// Value defaults to :ref:`APPEND_IF_EXISTS_OR_ADD
-    /// <envoy_v3_api_enum_value_config.core.v3.HeaderValueOption.HeaderAppendAction.APPEND_IF_EXISTS_OR_ADD>`.
+    /// Value defaults to :ref:`APPEND_IF_EXISTS_OR_ADD <envoy_v3_api_enum_value_config.core.v3.HeaderValueOption.HeaderAppendAction.APPEND_IF_EXISTS_OR_ADD>`.
     #[prost(enumeration = "header_value_option::HeaderAppendAction", tag = "3")]
     pub append_action: i32,
     /// Is the header value allowed to be empty? If false (default), custom headers with empty values are dropped,
@@ -902,11 +886,11 @@ pub mod transport_socket {
 ///
 /// .. note::
 ///
-///    Parsing of the runtime key's data is implemented such that it may be represented as a
-///    :ref:`FractionalPercent <envoy_v3_api_msg_type.v3.FractionalPercent>` proto represented as JSON/YAML
-///    and may also be represented as an integer with the assumption that the value is an integral
-///    percentage out of 100. For instance, a runtime key lookup returning the value "42" would parse
-///    as a ``FractionalPercent`` whose numerator is 42 and denominator is HUNDRED.
+/// Parsing of the runtime key's data is implemented such that it may be represented as a
+/// :ref:`FractionalPercent <envoy_v3_api_msg_type.v3.FractionalPercent>` proto represented as JSON/YAML
+/// and may also be represented as an integer with the assumption that the value is an integral
+/// percentage out of 100. For instance, a runtime key lookup returning the value "42" would parse
+/// as a `FractionalPercent` whose numerator is 42 and denominator is HUNDRED.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RuntimeFractionalPercent {
@@ -929,8 +913,7 @@ pub struct ControlPlane {
     #[prost(string, tag = "1")]
     pub identifier: ::prost::alloc::string::String,
 }
-/// Envoy supports :ref:`upstream priority routing
-/// <arch_overview_http_routing_priority>` both at the route and the virtual
+/// Envoy supports :ref:`upstream priority routing <arch_overview_http_routing_priority>` both at the route and the virtual
 /// cluster level. The current priority implementation uses different connection
 /// pool and circuit breaking settings for each priority level. This means that
 /// even for HTTP/2 requests, two physical connections will be used to an
@@ -1046,9 +1029,8 @@ impl TrafficDirection {
         }
     }
 }
-/// gRPC service configuration. This is used by :ref:`ApiConfigSource
-/// <envoy_v3_api_msg_config.core.v3.ApiConfigSource>` and filter configurations.
-/// [#next-free-field: 6]
+/// gRPC service configuration. This is used by :ref:`ApiConfigSource <envoy_v3_api_msg_config.core.v3.ApiConfigSource>` and filter configurations.
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcService {
@@ -1059,10 +1041,9 @@ pub struct GrpcService {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Additional metadata to include in streams initiated to the GrpcService. This can be used for
-    /// scenarios in which additional ad hoc authorization headers (e.g. ``x-foo-bar: baz-key``) are to
+    /// scenarios in which additional ad hoc authorization headers (e.g. `x-foo-bar: baz-key`) are to
     /// be injected. For more information, including details on header value syntax, see the
-    /// documentation on :ref:`custom request headers
-    /// <config_http_conn_man_headers_custom_request_headers>`.
+    /// documentation on :ref:`custom request headers <config_http_conn_man_headers_custom_request_headers>`.
     #[prost(message, repeated, tag = "5")]
     pub initial_metadata: ::prost::alloc::vec::Vec<HeaderValue>,
     #[prost(oneof = "grpc_service::TargetSpecifier", tags = "1, 2")]
@@ -1074,11 +1055,10 @@ pub mod grpc_service {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct EnvoyGrpc {
         /// The name of the upstream gRPC cluster. SSL credentials will be supplied
-        /// in the :ref:`Cluster <envoy_v3_api_msg_config.cluster.v3.Cluster>` :ref:`transport_socket
-        /// <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket>`.
+        /// in the :ref:`Cluster <envoy_v3_api_msg_config.cluster.v3.Cluster>` :ref:`transport_socket <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket>`.
         #[prost(string, tag = "1")]
         pub cluster_name: ::prost::alloc::string::String,
-        /// The ``:authority`` header in the grpc request. If this field is not set, the authority header value will be ``cluster_name``.
+        /// The `:authority` header in the grpc request. If this field is not set, the authority header value will be `cluster_name`.
         /// Note that this authority does not override the SNI. The SNI is provided by the transport socket of the cluster.
         #[prost(string, tag = "2")]
         pub authority: ::prost::alloc::string::String,
@@ -1089,30 +1069,30 @@ pub mod grpc_service {
         #[prost(message, optional, tag = "3")]
         pub retry_policy: ::core::option::Option<super::RetryPolicy>,
     }
-    /// [#next-free-field: 9]
+    /// \[\#next-free-field: 9\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GoogleGrpc {
-        /// The target URI when using the `Google C++ gRPC client
-        /// <<https://github.com/grpc/grpc>`_.> SSL credentials will be supplied in
+        /// The target URI when using the `Google C++ gRPC client <<https://github.com/grpc/grpc>`\_.> SSL credentials will be supplied in
         /// :ref:`channel_credentials <envoy_v3_api_field_config.core.v3.GrpcService.GoogleGrpc.channel_credentials>`.
         #[prost(string, tag = "1")]
         pub target_uri: ::prost::alloc::string::String,
         #[prost(message, optional, tag = "2")]
         pub channel_credentials: ::core::option::Option<google_grpc::ChannelCredentials>,
-        /// A set of call credentials that can be composed with `channel credentials
-        /// <<https://grpc.io/docs/guides/auth.html#credential-types>`_.>
+        /// A set of call credentials that can be composed with `channel credentials <<https://grpc.io/docs/guides/auth.html#credential-types>`\_.>
         #[prost(message, repeated, tag = "3")]
         pub call_credentials: ::prost::alloc::vec::Vec<google_grpc::CallCredentials>,
         /// The human readable prefix to use when emitting statistics for the gRPC
         /// service.
         ///
         /// .. csv-table::
-        ///     :header: Name, Type, Description
-        ///     :widths: 1, 1, 2
+        /// :header: Name, Type, Description
+        /// :widths: 1, 1, 2
         ///
-        ///     streams_total, Counter, Total number of streams opened
-        ///     streams_closed_<gRPC status code>, Counter, Total streams closed with <gRPC status code>
+        /// ```text
+        /// streams_total, Counter, Total number of streams opened
+        /// streams_closed_<gRPC status code>, Counter, Total streams closed with <gRPC status code>
+        /// ```
         #[prost(string, tag = "4")]
         pub stat_prefix: ::prost::alloc::string::String,
         /// The name of the Google gRPC credentials factory to use. This must have been registered with
@@ -1186,7 +1166,7 @@ pub mod grpc_service {
                 LocalCredentials(super::GoogleLocalCredentials),
             }
         }
-        /// [#next-free-field: 8]
+        /// \[\#next-free-field: 8\]
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct CallCredentials {
@@ -1221,7 +1201,7 @@ pub mod grpc_service {
             pub struct MetadataCredentialsFromPlugin {
                 #[prost(string, tag = "1")]
                 pub name: ::prost::alloc::string::String,
-                /// [#extension-category: envoy.grpc_credentials]
+                /// \[\#extension-category: envoy.grpc_credentials\]
                 #[prost(
                     oneof = "metadata_credentials_from_plugin::ConfigType",
                     tags = "3"
@@ -1232,7 +1212,7 @@ pub mod grpc_service {
             }
             /// Nested message and enum types in `MetadataCredentialsFromPlugin`.
             pub mod metadata_credentials_from_plugin {
-                /// [#extension-category: envoy.grpc_credentials]
+                /// \[\#extension-category: envoy.grpc_credentials\]
                 #[allow(clippy::derive_partial_eq_without_eq)]
                 #[derive(Clone, PartialEq, ::prost::Oneof)]
                 pub enum ConfigType {
@@ -1246,13 +1226,13 @@ pub mod grpc_service {
             /// fetch security token from an OAuth 2.0 authorization server.
             /// See <https://tools.ietf.org/html/draft-ietf-oauth-token-exchange-16> and
             /// <https://github.com/grpc/grpc/pull/19587.>
-            /// [#next-free-field: 10]
+            /// \[\#next-free-field: 10\]
             #[allow(clippy::derive_partial_eq_without_eq)]
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct StsService {
                 /// URI of the token exchange service that handles token exchange requests.
-                /// [#comment:TODO(asraa): Add URI validation when implemented. Tracked by
-                /// <https://github.com/bufbuild/protoc-gen-validate/issues/303]>
+                /// \[\#comment:TODO(asraa): Add URI validation when implemented. Tracked by
+                /// <https://github.com/bufbuild/protoc-gen-validate/issues/303\]>
                 #[prost(string, tag = "1")]
                 pub token_exchange_service_uri: ::prost::alloc::string::String,
                 /// Location of the target service or resource where the client
@@ -1367,14 +1347,14 @@ pub mod grpc_service {
         /// documentation for discussion on gRPC client selection.
         #[prost(message, tag = "1")]
         EnvoyGrpc(EnvoyGrpc),
-        /// `Google C++ gRPC client <<https://github.com/grpc/grpc>`_>
+        /// `Google C++ gRPC client <<https://github.com/grpc/grpc>`\_>
         /// See the :ref:`gRPC services overview <arch_overview_grpc_services>`
         /// documentation for discussion on gRPC client selection.
         #[prost(message, tag = "2")]
         GoogleGrpc(GoogleGrpc),
     }
 }
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 /// Configuration of the event reporting service endpoint.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1395,7 +1375,7 @@ pub mod event_service_config {
     }
 }
 /// Message type for extension configuration.
-/// [#next-major-version: revisit all existing typed_config that doesn't use this wrapper.].
+/// \[\#next-major-version: revisit all existing typed_config that doesn't use this wrapper.\].
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TypedExtensionConfig {
@@ -1404,11 +1384,10 @@ pub struct TypedExtensionConfig {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// The typed config for the extension. The type URL will be used to identify
-    /// the extension. In the case that the type URL is ``xds.type.v3.TypedStruct``
-    /// (or, for historical reasons, ``udpa.type.v1.TypedStruct``), the inner type
-    /// URL of ``TypedStruct`` will be utilized. See the
-    /// :ref:`extension configuration overview
-    /// <config_overview_extension_configuration>` for further details.
+    /// the extension. In the case that the type URL is `xds.type.v3.TypedStruct`
+    /// (or, for historical reasons, `udpa.type.v1.TypedStruct`), the inner type
+    /// URL of `TypedStruct` will be utilized. See the
+    /// :ref:`extension configuration overview <config_overview_extension_configuration>` for further details.
     #[prost(message, optional, tag = "2")]
     pub typed_config: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,
@@ -1421,7 +1400,7 @@ pub struct HealthStatusSet {
     #[prost(enumeration = "HealthStatus", repeated, packed = "false", tag = "1")]
     pub statuses: ::prost::alloc::vec::Vec<i32>,
 }
-/// [#next-free-field: 26]
+/// \[\#next-free-field: 26\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheck {
@@ -1450,15 +1429,15 @@ pub struct HealthCheck {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// An optional jitter amount as a percentage of interval_ms. If specified,
-    /// during every interval Envoy will add ``interval_ms`` *
-    /// ``interval_jitter_percent`` / 100 to the wait time.
+    /// during every interval Envoy will add `interval_ms` *
+    /// `interval_jitter_percent` / 100 to the wait time.
     ///
     /// If interval_jitter_ms and interval_jitter_percent are both set, both of
     /// them will be used to increase the wait time.
     #[prost(uint32, tag = "18")]
     pub interval_jitter_percent: u32,
     /// The number of unhealthy health checks required before a host is marked
-    /// unhealthy. Note that for ``http`` health checking if a host responds with a code not in
+    /// unhealthy. Note that for `http` health checking if a host responds with a code not in
     /// :ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`
     /// or :ref:`retriable_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.retriable_statuses>`,
     /// this threshold is ignored and the host is considered immediately unhealthy.
@@ -1473,7 +1452,7 @@ pub struct HealthCheck {
     pub healthy_threshold: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// \[#not-implemented-hide:\] Non-serving port for health checking.
+    /// \\[\#not-implemented-hide:\\] Non-serving port for health checking.
     #[prost(message, optional, tag = "6")]
     pub alt_port: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -1500,7 +1479,7 @@ pub struct HealthCheck {
     /// (including new hosts) when the cluster has received no traffic.
     ///
     /// This is useful for when we want to send frequent health checks with
-    /// ``no_traffic_interval`` but then revert to lower frequency ``no_traffic_healthy_interval`` once
+    /// `no_traffic_interval` but then revert to lower frequency `no_traffic_healthy_interval` once
     /// a host in the cluster is marked as healthy.
     ///
     /// Once a cluster has been used for traffic routing, Envoy will shift back to using the
@@ -1551,10 +1530,10 @@ pub struct HealthCheck {
     #[prost(string, tag = "17")]
     pub event_log_path: ::prost::alloc::string::String,
     /// A list of event log sinks to process the health check event.
-    /// [#extension-category: envoy.health_check.event_sinks]
+    /// \[\#extension-category: envoy.health_check.event_sinks\]
     #[prost(message, repeated, tag = "25")]
     pub event_logger: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     /// The gRPC service for the health check event service.
     /// If empty, health check events won't be sent to a remote endpoint.
     #[prost(message, optional, tag = "22")]
@@ -1573,22 +1552,23 @@ pub struct HealthCheck {
     ///
     /// .. code-block:: yaml
     ///
-    ///   transport_socket_match_criteria:
-    ///     useMTLS: true
+    /// transport_socket_match_criteria:
+    /// useMTLS: true
     ///
     /// Will match the following :ref:`cluster socket match <envoy_v3_api_msg_config.cluster.v3.Cluster.TransportSocketMatch>`
     ///
     /// .. code-block:: yaml
     ///
-    ///   transport_socket_matches:
-    ///   - name: "useMTLS"
-    ///     match:
-    ///       useMTLS: true
-    ///     transport_socket:
-    ///       name: envoy.transport_sockets.tls
-    ///       config: { ... } # tls socket configuration
+    /// transport_socket_matches:
     ///
-    /// If this field is set, then for health checks it will supersede an entry of ``envoy.transport_socket`` in the
+    /// * name: "useMTLS"
+    ///   match:
+    ///   useMTLS: true
+    ///   transport_socket:
+    ///   name: envoy.transport_sockets.tls
+    ///   config: { ... } # tls socket configuration
+    ///
+    /// If this field is set, then for health checks it will supersede an entry of `envoy.transport_socket` in the
     /// :ref:`LbEndpoint.Metadata <envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`.
     /// This allows using different transport socket capabilities for health checking versus proxying to the
     /// endpoint.
@@ -1626,7 +1606,7 @@ pub mod health_check {
             Binary(::prost::alloc::vec::Vec<u8>),
         }
     }
-    /// [#next-free-field: 15]
+    /// \[\#next-free-field: 15\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct HttpHealthCheck {
@@ -1637,21 +1617,21 @@ pub mod health_check {
         #[prost(string, tag = "1")]
         pub host: ::prost::alloc::string::String,
         /// Specifies the HTTP path that will be requested during health checking. For example
-        /// ``/healthcheck``.
+        /// `/healthcheck`.
         #[prost(string, tag = "2")]
         pub path: ::prost::alloc::string::String,
-        /// \[#not-implemented-hide:\] HTTP specific payload.
+        /// \\[\#not-implemented-hide:\\] HTTP specific payload.
         #[prost(message, optional, tag = "3")]
         pub send: ::core::option::Option<Payload>,
-        /// Specifies a list of HTTP expected responses to match in the first ``response_buffer_size`` bytes of the response body.
+        /// Specifies a list of HTTP expected responses to match in the first `response_buffer_size` bytes of the response body.
         /// If it is set, both the expected response check and status code determine the health check.
         /// When checking the response, “fuzzy” matching is performed such that each payload block must be found,
         /// and in the order specified, but not necessarily contiguous.
         ///
         /// .. note::
         ///
-        ///    It is recommended to set ``response_buffer_size`` based on the total Payload size for efficiency.
-        ///    The default buffer size is 1024 bytes when it is not set.
+        /// It is recommended to set `response_buffer_size` based on the total Payload size for efficiency.
+        /// The default buffer size is 1024 bytes when it is not set.
         #[prost(message, repeated, tag = "4")]
         pub receive: ::prost::alloc::vec::Vec<Payload>,
         /// Specifies the size of response buffer in bytes that is used to Payload match.
@@ -1662,8 +1642,7 @@ pub mod health_check {
         >,
         /// Specifies a list of HTTP headers that should be added to each request that is sent to the
         /// health checked cluster. For more information, including details on header value syntax, see
-        /// the documentation on :ref:`custom request headers
-        /// <config_http_conn_man_headers_custom_request_headers>`.
+        /// the documentation on :ref:`custom request headers <config_http_conn_man_headers_custom_request_headers>`.
         #[prost(message, repeated, tag = "6")]
         pub request_headers_to_add: ::prost::alloc::vec::Vec<super::HeaderValueOption>,
         /// Specifies a list of HTTP headers that should be removed from each request that is sent to the
@@ -1675,7 +1654,7 @@ pub mod health_check {
         /// Specifies a list of HTTP response statuses considered healthy. If provided, replaces default
         /// 200-only policy - 200 must be included explicitly as needed. Ranges follow half-open
         /// semantics of :ref:`Int64Range <envoy_v3_api_msg_type.v3.Int64Range>`. The start and end of each
-        /// range are required. Only statuses in the range [100, 600) are allowed.
+        /// range are required. Only statuses in the range \[100, 600) are allowed.
         #[prost(message, repeated, tag = "9")]
         pub expected_statuses: ::prost::alloc::vec::Vec<
             super::super::super::super::r#type::v3::Int64Range,
@@ -1684,7 +1663,7 @@ pub mod health_check {
         /// will count towards the configured :ref:`unhealthy_threshold <envoy_v3_api_field_config.core.v3.HealthCheck.unhealthy_threshold>`,
         /// but will not result in the host being considered immediately unhealthy. Ranges follow half-open semantics of
         /// :ref:`Int64Range <envoy_v3_api_msg_type.v3.Int64Range>`. The start and end of each range are required.
-        /// Only statuses in the range [100, 600) are allowed. The :ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`
+        /// Only statuses in the range \[100, 600) are allowed. The :ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`
         /// field takes precedence for any range overlaps with this field i.e. if status code 200 is both retriable and expected, a 200 response will
         /// be considered a successful health check. By default all responses not in
         /// :ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>` will result in
@@ -1701,9 +1680,7 @@ pub mod health_check {
         )]
         pub codec_client_type: i32,
         /// An optional service name parameter which is used to validate the identity of
-        /// the health checked cluster using a :ref:`StringMatcher
-        /// <envoy_v3_api_msg_type.matcher.v3.StringMatcher>`. See the :ref:`architecture overview
-        /// <arch_overview_health_checking_identity>` for more information.
+        /// the health checked cluster using a :ref:`StringMatcher <envoy_v3_api_msg_type.matcher.v3.StringMatcher>`. See the :ref:`architecture overview <arch_overview_health_checking_identity>` for more information.
         #[prost(message, optional, tag = "11")]
         pub service_name_matcher: ::core::option::Option<
             super::super::super::super::r#type::matcher::v3::StringMatcher,
@@ -1730,25 +1707,22 @@ pub mod health_check {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RedisHealthCheck {
-        /// If set, optionally perform ``EXISTS <key>`` instead of ``PING``. A return value
+        /// If set, optionally perform `EXISTS <key>` instead of `PING`. A return value
         /// from Redis of 0 (does not exist) is considered a passing healthcheck. A return value other
         /// than 0 is considered a failure. This allows the user to mark a Redis instance for maintenance
         /// by setting the specified key to any value and waiting for traffic to drain.
         #[prost(string, tag = "1")]
         pub key: ::prost::alloc::string::String,
     }
-    /// `grpc.health.v1.Health
-    /// <<https://github.com/grpc/grpc/blob/master/src/proto/grpc/health/v1/health.proto>`_-based>
-    /// healthcheck. See `gRPC doc <<https://github.com/grpc/grpc/blob/master/doc/health-checking.md>`_>
+    /// `grpc.health.v1.Health <<https://github.com/grpc/grpc/blob/master/src/proto/grpc/health/v1/health.proto>`*-based>
+    /// healthcheck. See `gRPC doc <<https://github.com/grpc/grpc/blob/master/doc/health-checking.md>`*>
     /// for details.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GrpcHealthCheck {
         /// An optional service name parameter which will be sent to gRPC service in
-        /// `grpc.health.v1.HealthCheckRequest
-        /// <<https://github.com/grpc/grpc/blob/master/src/proto/grpc/health/v1/health.proto#L20>`_.>
-        /// message. See `gRPC health-checking overview
-        /// <<https://github.com/grpc/grpc/blob/master/doc/health-checking.md>`_> for more information.
+        /// `grpc.health.v1.HealthCheckRequest <<https://github.com/grpc/grpc/blob/master/src/proto/grpc/health/v1/health.proto#L20>`*.>
+        /// message. See `gRPC health-checking overview <<https://github.com/grpc/grpc/blob/master/doc/health-checking.md>`*> for more information.
         #[prost(string, tag = "1")]
         pub service_name: ::prost::alloc::string::String,
         /// The value of the :authority header in the gRPC health check request. If
@@ -1759,8 +1733,7 @@ pub mod health_check {
         pub authority: ::prost::alloc::string::String,
         /// Specifies a list of key-value pairs that should be added to the metadata of each GRPC call
         /// that is sent to the health checked cluster. For more information, including details on header value syntax,
-        /// see the documentation on :ref:`custom request headers
-        /// <config_http_conn_man_headers_custom_request_headers>`.
+        /// see the documentation on :ref:`custom request headers <config_http_conn_man_headers_custom_request_headers>`.
         #[prost(message, repeated, tag = "3")]
         pub initial_metadata: ::prost::alloc::vec::Vec<super::HeaderValueOption>,
     }
@@ -1773,7 +1746,7 @@ pub mod health_check {
         pub name: ::prost::alloc::string::String,
         /// A custom health checker specific configuration which depends on the custom health checker
         /// being instantiated. See :api:`envoy/config/health_checker` for reference.
-        /// [#extension-category: envoy.health_checkers]
+        /// \[\#extension-category: envoy.health_checkers\]
         #[prost(oneof = "custom_health_check::ConfigType", tags = "3")]
         pub config_type: ::core::option::Option<custom_health_check::ConfigType>,
     }
@@ -1781,7 +1754,7 @@ pub mod health_check {
     pub mod custom_health_check {
         /// A custom health checker specific configuration which depends on the custom health checker
         /// being instantiated. See :api:`envoy/config/health_checker` for reference.
-        /// [#extension-category: envoy.health_checkers]
+        /// \[\#extension-category: envoy.health_checkers\]
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum ConfigType {
@@ -1797,8 +1770,7 @@ pub mod health_check {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct TlsOptions {
         /// Specifies the ALPN protocols for health check connections. This is useful if the
-        /// corresponding upstream is using ALPN-based :ref:`FilterChainMatch
-        /// <envoy_v3_api_msg_config.listener.v3.FilterChainMatch>` along with different protocols for health checks
+        /// corresponding upstream is using ALPN-based :ref:`FilterChainMatch <envoy_v3_api_msg_config.listener.v3.FilterChainMatch>` along with different protocols for health checks
         /// versus data connections. If empty, no ALPN protocols will be set on health check connections.
         #[prost(string, repeated, tag = "1")]
         pub alpn_protocols: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -1824,20 +1796,20 @@ pub mod health_check {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum HealthStatus {
-    /// The health status is not known. This is interpreted by Envoy as ``HEALTHY``.
+    /// The health status is not known. This is interpreted by Envoy as `HEALTHY`.
     Unknown = 0,
     /// Healthy.
     Healthy = 1,
     /// Unhealthy.
     Unhealthy = 2,
     /// Connection draining in progress. E.g.,
-    /// `<<https://aws.amazon.com/blogs/aws/elb-connection-draining-remove-instances-from-service-with-care/>`_>
+    /// `<<https://aws.amazon.com/blogs/aws/elb-connection-draining-remove-instances-from-service-with-care/>`\_>
     /// or
-    /// `<<https://cloud.google.com/compute/docs/load-balancing/enabling-connection-draining>`_.>
-    /// This is interpreted by Envoy as ``UNHEALTHY``.
+    /// `<<https://cloud.google.com/compute/docs/load-balancing/enabling-connection-draining>`\_.>
+    /// This is interpreted by Envoy as `UNHEALTHY`.
     Draining = 3,
     /// Health check timed out. This is part of HDS and is interpreted by Envoy as
-    /// ``UNHEALTHY``.
+    /// `UNHEALTHY`.
     Timeout = 4,
     /// Degraded.
     Degraded = 5,
@@ -1881,8 +1853,7 @@ pub struct ProxyProtocolPassThroughTlVs {
     )]
     pub match_type: i32,
     /// The TLV types that are applied based on match_type.
-    /// TLV type is defined as uint8_t in proxy protocol. See `the spec
-    /// <<https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>`_> for details.
+    /// TLV type is defined as uint8_t in proxy protocol. See `the spec <<https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>`\_> for details.
     #[prost(uint32, repeated, packed = "false", tag = "2")]
     pub tlv_type: ::prost::alloc::vec::Vec<u32>,
 }
@@ -1981,7 +1952,7 @@ pub mod proxy_protocol_config {
 }
 /// API configuration source. This identifies the API type and cluster that Envoy
 /// will use to fetch an xDS API.
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiConfigSource {
@@ -1989,7 +1960,7 @@ pub struct ApiConfigSource {
     #[prost(enumeration = "api_config_source::ApiType", tag = "1")]
     pub api_type: i32,
     /// API version for xDS transport protocol. This describes the xDS gRPC/REST
-    /// endpoint and version of \[Delta\]DiscoveryRequest/Response used on the wire.
+    /// endpoint and version of \\[Delta\\]DiscoveryRequest/Response used on the wire.
     #[prost(enumeration = "ApiVersion", tag = "8")]
     pub transport_api_version: i32,
     /// Cluster names should be used only with REST. If > 1
@@ -1998,8 +1969,8 @@ pub struct ApiConfigSource {
     ///
     /// .. note::
     ///
-    ///   The cluster with name ``cluster_name`` must be statically defined and its
-    ///   type must not be ``EDS``.
+    /// The cluster with name `cluster_name` must be statically defined and its
+    /// type must not be `EDS`.
     #[prost(string, repeated, tag = "2")]
     pub cluster_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Multiple gRPC services be provided for GRPC. If > 1 cluster is defined,
@@ -2026,11 +1997,11 @@ pub struct ApiConfigSource {
     /// A list of config validators that will be executed when a new update is
     /// received from the ApiConfigSource. Note that each validator handles a
     /// specific xDS service type, and only the validators corresponding to the
-    /// type url (in ``:ref: DiscoveryResponse`` or ``:ref: DeltaDiscoveryResponse``)
+    /// type url (in `:ref: DiscoveryResponse` or `:ref: DeltaDiscoveryResponse`)
     /// will be invoked.
     /// If the validator returns false or throws an exception, the config will be rejected by
     /// the client, and a NACK will be sent.
-    /// [#extension-category: envoy.config.validators]
+    /// \[\#extension-category: envoy.config.validators\]
     #[prost(message, repeated, tag = "9")]
     pub config_validators: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
 }
@@ -2053,8 +2024,7 @@ pub mod api_config_source {
         /// Ideally this would be 'reserved 0' but one can't reserve the default
         /// value. Instead we throw an exception if this is ever used.
         DeprecatedAndUnavailableDoNotUse = 0,
-        /// REST-JSON v2 API. The `canonical JSON encoding
-        /// <<https://developers.google.com/protocol-buffers/docs/proto3#json>`_> for
+        /// REST-JSON v2 API. The `canonical JSON encoding <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_> for
         /// the v2 protos is used.
         Rest = 1,
         /// SotW gRPC service.
@@ -2065,11 +2035,11 @@ pub mod api_config_source {
         DeltaGrpc = 3,
         /// SotW xDS gRPC with ADS. All resources which resolve to this configuration source will be
         /// multiplexed on a single connection to an ADS endpoint.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         AggregatedGrpc = 5,
         /// Delta xDS gRPC with ADS. All resources which resolve to this configuration source will be
         /// multiplexed on a single connection to an ADS endpoint.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         AggregatedDeltaGrpc = 6,
     }
     impl ApiType {
@@ -2111,7 +2081,7 @@ pub mod api_config_source {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AggregatedConfigSource {}
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 /// Self-referencing config source options. This is currently empty, but when
 /// set in :ref:`ConfigSource <envoy_v3_api_msg_config.core.v3.ConfigSource>` can be used to
 /// specify that other data can be obtained from the same server.
@@ -2119,7 +2089,7 @@ pub struct AggregatedConfigSource {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SelfConfigSource {
     /// API version for xDS transport protocol. This describes the xDS gRPC/REST
-    /// endpoint and version of \[Delta\]DiscoveryRequest/Response used on the wire.
+    /// endpoint and version of \\[Delta\\]DiscoveryRequest/Response used on the wire.
     #[prost(enumeration = "ApiVersion", tag = "1")]
     pub transport_api_version: i32,
 }
@@ -2150,55 +2120,52 @@ pub struct PathConfigSource {
     ///
     /// .. note::
     ///
-    ///   The path to the source must exist at config load time.
+    /// The path to the source must exist at config load time.
     ///
     /// .. note::
     ///
-    ///    If ``watched_directory`` is *not* configured, Envoy will watch the file path for *moves*.
-    ///    This is because in general only moves are atomic. The same method of swapping files as is
-    ///    demonstrated in the :ref:`runtime documentation <config_runtime_symbolic_link_swap>` can be
-    ///    used here also. If ``watched_directory`` is configured, no watch will be placed directly on
-    ///    this path. Instead, the configured ``watched_directory`` will be used to trigger reloads of
-    ///    this path. This is required in certain deployment scenarios. See below for more information.
+    /// If `watched_directory` is *not* configured, Envoy will watch the file path for *moves*.
+    /// This is because in general only moves are atomic. The same method of swapping files as is
+    /// demonstrated in the :ref:`runtime documentation <config_runtime_symbolic_link_swap>` can be
+    /// used here also. If `watched_directory` is configured, no watch will be placed directly on
+    /// this path. Instead, the configured `watched_directory` will be used to trigger reloads of
+    /// this path. This is required in certain deployment scenarios. See below for more information.
     #[prost(string, tag = "1")]
     pub path: ::prost::alloc::string::String,
     /// If configured, this directory will be watched for *moves*. When an entry in this directory is
-    /// moved to, the ``path`` will be reloaded. This is required in certain deployment scenarios.
+    /// moved to, the `path` will be reloaded. This is required in certain deployment scenarios.
     ///
     /// Specifically, if trying to load an xDS resource using a
-    /// `Kubernetes ConfigMap <<https://kubernetes.io/docs/concepts/configuration/configmap/>`_,> the
+    /// `Kubernetes ConfigMap <<https://kubernetes.io/docs/concepts/configuration/configmap/>`\_,> the
     /// following configuration might be used:
+    ///
     /// 1. Store xds.yaml inside a ConfigMap.
-    /// 2. Mount the ConfigMap to ``/config_map/xds``
-    /// 3. Configure path ``/config_map/xds/xds.yaml``
-    /// 4. Configure watched directory ``/config_map/xds``
+    /// 1. Mount the ConfigMap to `/config_map/xds`
+    /// 1. Configure path `/config_map/xds/xds.yaml`
+    /// 1. Configure watched directory `/config_map/xds`
     ///
     /// The above configuration will ensure that Envoy watches the owning directory for moves which is
     /// required due to how Kubernetes manages ConfigMap symbolic links during atomic updates.
     #[prost(message, optional, tag = "2")]
     pub watched_directory: ::core::option::Option<WatchedDirectory>,
 }
-/// Configuration for :ref:`listeners <config_listeners>`, :ref:`clusters
-/// <config_cluster_manager>`, :ref:`routes
-/// <envoy_v3_api_msg_config.route.v3.RouteConfiguration>`, :ref:`endpoints
-/// <arch_overview_service_discovery>` etc. may either be sourced from the
+/// Configuration for :ref:`listeners <config_listeners>`, :ref:`clusters <config_cluster_manager>`, :ref:`routes <envoy_v3_api_msg_config.route.v3.RouteConfiguration>`, :ref:`endpoints <arch_overview_service_discovery>` etc. may either be sourced from the
 /// filesystem or from an xDS API source. Filesystem configs are watched with
 /// inotify for updates.
-/// [#next-free-field: 9]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConfigSource {
     /// Authorities that this config source may be used for. An authority specified in a xdstp:// URL
-    /// is resolved to a ``ConfigSource`` prior to configuration fetch. This field provides the
+    /// is resolved to a `ConfigSource` prior to configuration fetch. This field provides the
     /// association between authority name and configuration source.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, repeated, tag = "7")]
     pub authorities: ::prost::alloc::vec::Vec<
         super::super::super::super::xds::core::v3::Authority,
     >,
     /// When this timeout is specified, Envoy will wait no longer than the specified time for first
-    /// config response on this xDS subscription during the :ref:`initialization process
-    /// <arch_overview_initialization>`. After reaching the timeout, Envoy will move to the next
+    /// config response on this xDS subscription during the :ref:`initialization process <arch_overview_initialization>`. After reaching the timeout, Envoy will move to the next
     /// initialization phase, even if the first config is not delivered yet. The timer is activated
     /// when the xDS API subscription starts, and is disarmed on first config update or on error. 0
     /// means no timeout - Envoy will wait indefinitely for the first xDS config (unless another
@@ -2222,7 +2189,7 @@ pub mod config_source {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ConfigSourceSpecifier {
-        /// Deprecated in favor of ``path_config_source``. Use that field instead.
+        /// Deprecated in favor of `path_config_source`. Use that field instead.
         #[prost(string, tag = "1")]
         Path(::prost::alloc::string::String),
         /// Local filesystem path configuration source.
@@ -2235,7 +2202,7 @@ pub mod config_source {
         /// source in the bootstrap configuration is used.
         #[prost(message, tag = "3")]
         Ads(super::AggregatedConfigSource),
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         /// When set, the client will access the resources from the same server it got the
         /// ConfigSource from, although not necessarily from the same stream. This is similar to the
         /// :ref:`ads<envoy_v3_api_field.ConfigSource.ads>` field, except that the client may use a
@@ -2243,9 +2210,9 @@ pub mod config_source {
         /// like LRS that cannot be sent on an ADS stream. It can also be used to link from (e.g.)
         /// LDS to RDS on the same server without requiring the management server to know its name
         /// or required credentials.
-        /// [#next-major-version: In xDS v3, consider replacing the ads field with this one, since
+        /// \[\#next-major-version: In xDS v3, consider replacing the ads field with this one, since
         /// this field can implicitly mean to use the same stream in the case where the ConfigSource
-        /// is provided via ADS and the specified data can also be obtained via ADS.]
+        /// is provided via ADS and the specified data can also be obtained via ADS.\]
         #[prost(message, tag = "5")]
         Self_(super::SelfConfigSource),
     }
@@ -2268,7 +2235,7 @@ pub struct ExtensionConfigSource {
     pub config_source: ::core::option::Option<ConfigSource>,
     /// Optional default configuration to use as the initial configuration if
     /// there is a failure to receive the initial extension configuration or if
-    /// ``apply_default_config_without_warming`` flag is set.
+    /// `apply_default_config_without_warming` flag is set.
     #[prost(message, optional, tag = "2")]
     pub default_config: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,
@@ -2319,7 +2286,7 @@ impl ApiVersion {
         }
     }
 }
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TcpProtocolOptions {}
@@ -2350,7 +2317,7 @@ pub struct QuicKeepAliveSettings {
     >,
 }
 /// QUIC protocol options which apply to both downstream and upstream connections.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuicProtocolOptions {
@@ -2360,8 +2327,7 @@ pub struct QuicProtocolOptions {
     pub max_concurrent_streams: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// `Initial stream-level flow-control receive window
-    /// <<https://tools.ietf.org/html/draft-ietf-quic-transport-34#section-4.1>`_> size. Valid values range from
+    /// `Initial stream-level flow-control receive window <<https://tools.ietf.org/html/draft-ietf-quic-transport-34#section-4.1>`\_> size. Valid values range from
     /// 1 to 16777216 (2^24, maximum supported by QUICHE) and defaults to 65536 (2^16).
     ///
     /// NOTE: 16384 (2^14) is the minimum window size supported in Google QUIC. If configured smaller than it, we will use 16384 instead.
@@ -2374,9 +2340,9 @@ pub struct QuicProtocolOptions {
     pub initial_stream_window_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Similar to ``initial_stream_window_size``, but for connection-level
+    /// Similar to `initial_stream_window_size`, but for connection-level
     /// flow-control. Valid values rage from 1 to 25165824 (24MB, maximum supported by QUICHE) and defaults to 65536 (2^16).
-    /// window. Currently, this has the same minimum/default as ``initial_stream_window_size``.
+    /// window. Currently, this has the same minimum/default as `initial_stream_window_size`.
     ///
     /// NOTE: 16384 (2^14) is the minimum window size supported in Google QUIC. We only support increasing the default
     /// window size now, so it's also the minimum.
@@ -2400,7 +2366,7 @@ pub struct QuicProtocolOptions {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpstreamHttpProtocolOptions {
-    /// Set transport socket `SNI <<https://en.wikipedia.org/wiki/Server_Name_Indication>`_> for new
+    /// Set transport socket `SNI <<https://en.wikipedia.org/wiki/Server_Name_Indication>`\_> for new
     /// upstream connections based on the downstream HTTP host/authority header or any other arbitrary
     /// header when :ref:`override_auto_sni_header <envoy_v3_api_field_config.core.v3.UpstreamHttpProtocolOptions.override_auto_sni_header>`
     /// is set, as seen by the :ref:`router filter <config_http_filters_router>`.
@@ -2410,7 +2376,7 @@ pub struct UpstreamHttpProtocolOptions {
     /// Automatic validate upstream presented certificate for new upstream connections based on the
     /// downstream HTTP host/authority header or any other arbitrary header when :ref:`override_auto_sni_header <envoy_v3_api_field_config.core.v3.UpstreamHttpProtocolOptions.override_auto_sni_header>`
     /// is set, as seen by the :ref:`router filter <config_http_filters_router>`.
-    /// This field is intended to be set with ``auto_sni`` field.
+    /// This field is intended to be set with `auto_sni` field.
     /// Does nothing if a filter before the http router filter sets the corresponding metadata.
     #[prost(bool, tag = "2")]
     pub auto_san_validation: bool,
@@ -2419,7 +2385,7 @@ pub struct UpstreamHttpProtocolOptions {
     /// :ref:`router filter <config_http_filters_router>`.
     /// If unset, host/authority header will be used for populating the SNI. If the specified header
     /// is not found or the value is empty, host/authority header will be used instead.
-    /// This field is intended to be set with ``auto_sni`` and/or ``auto_san_validation`` fields.
+    /// This field is intended to be set with `auto_sni` and/or `auto_san_validation` fields.
     /// If none of these fields are set then setting this would be a no-op.
     /// Does nothing if a filter before the http router filter sets the corresponding metadata.
     #[prost(string, tag = "3")]
@@ -2429,7 +2395,7 @@ pub struct UpstreamHttpProtocolOptions {
 /// make an HTTP connection to an origin server. See <https://tools.ietf.org/html/rfc7838> for
 /// HTTP Alternative Services and <https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-svcb-https-04>
 /// for the "HTTPS" DNS resource record.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AlternateProtocolsCacheOptions {
@@ -2444,9 +2410,9 @@ pub struct AlternateProtocolsCacheOptions {
     ///
     /// .. note:
     ///
-    ///    The implementation is approximate and enforced independently on each worker thread, thus
-    ///    it is possible for the maximum entries in the cache to go slightly above the configured
-    ///    value depending on timing. This is similar to how other circuit breakers work.
+    /// The implementation is approximate and enforced independently on each worker thread, thus
+    /// it is possible for the maximum entries in the cache to go slightly above the configured
+    /// value depending on timing. This is similar to how other circuit breakers work.
     #[prost(message, optional, tag = "2")]
     pub max_entries: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -2464,14 +2430,14 @@ pub struct AlternateProtocolsCacheOptions {
         alternate_protocols_cache_options::AlternateProtocolsCacheEntry,
     >,
     /// Optional list of hostnames suffixes for which Alt-Svc entries can be shared. For example, if
-    /// this list contained the value ``.c.example.com``, then an Alt-Svc entry for ``foo.c.example.com``
-    /// could be shared with ``bar.c.example.com`` but would not be shared with ``baz.example.com``. On
-    /// the other hand, if the list contained the value ``.example.com`` then all three hosts could share
-    /// Alt-Svc entries. Each entry must start with ``.``. If a hostname matches multiple suffixes, the
+    /// this list contained the value `.c.example.com`, then an Alt-Svc entry for `foo.c.example.com`
+    /// could be shared with `bar.c.example.com` but would not be shared with `baz.example.com`. On
+    /// the other hand, if the list contained the value `.example.com` then all three hosts could share
+    /// Alt-Svc entries. Each entry must start with `.`. If a hostname matches multiple suffixes, the
     /// first listed suffix will be used.
     ///
     /// Since lookup in this list is O(n), it is recommended that the number of suffixes be limited.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(string, repeated, tag = "5")]
     pub canonical_suffixes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
@@ -2497,7 +2463,7 @@ pub mod alternate_protocols_cache_options {
         pub port: u32,
     }
 }
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpProtocolOptions {
@@ -2505,14 +2471,13 @@ pub struct HttpProtocolOptions {
     /// period in which there are no active requests. When the
     /// idle timeout is reached the connection will be closed. If the connection is an HTTP/2
     /// downstream connection a drain sequence will occur prior to closing the connection, see
-    /// :ref:`drain_timeout
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
+    /// :ref:`drain_timeout <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
     /// Note that request based timeouts mean that HTTP/2 PINGs will not keep the connection alive.
     /// If not specified, this defaults to 1 hour. To disable idle timeouts explicitly set this to 0.
     ///
     /// .. warning::
-    ///    Disabling this timeout has a highly likelihood of yielding connection leaks due to lost TCP
-    ///    FIN packets, etc.
+    /// Disabling this timeout has a highly likelihood of yielding connection leaks due to lost TCP
+    /// FIN packets, etc.
     ///
     /// If the :ref:`overload action <config_overload_manager_overload_actions>` "envoy.overload_actions.reduce_timeouts"
     /// is configured, this timeout is scaled for downstream connections according to the value for
@@ -2525,8 +2490,7 @@ pub struct HttpProtocolOptions {
     /// was established. If not set, there is no max duration. When max_connection_duration is reached
     /// and if there are no active streams, the connection will be closed. If the connection is a
     /// downstream connection and there are any active streams, the drain sequence will kick-in,
-    /// and the connection will be force-closed after the drain period. See :ref:`drain_timeout
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
+    /// and the connection will be force-closed after the drain period. See :ref:`drain_timeout <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
     #[prost(message, optional, tag = "3")]
     pub max_connection_duration: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
@@ -2568,7 +2532,7 @@ pub mod http_protocol_options {
     /// Action to take when Envoy receives client request with header names containing underscore
     /// characters.
     /// Underscore character is allowed in header names by the RFC-7230 and this behavior is implemented
-    /// as a security measure due to systems that treat '_' and '-' as interchangeable. Envoy by default allows client request headers with underscore
+    /// as a security measure due to systems that treat '\_' and '-' as interchangeable. Envoy by default allows client request headers with underscore
     /// characters.
     #[derive(
         Clone,
@@ -2617,14 +2581,14 @@ pub mod http_protocol_options {
         }
     }
 }
-/// [#next-free-field: 11]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http1ProtocolOptions {
     /// Handle HTTP requests with absolute URLs in the requests. These requests
     /// are generally sent by clients to forward/explicit proxies. This allows clients to configure
     /// envoy as their HTTP proxy. In Unix, for example, this is typically done by setting the
-    /// ``http_proxy`` environment variable.
+    /// `http_proxy` environment variable.
     #[prost(message, optional, tag = "1")]
     pub allow_absolute_url: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
@@ -2632,12 +2596,12 @@ pub struct Http1ProtocolOptions {
     /// Handle incoming HTTP/1.0 and HTTP 0.9 requests.
     /// This is off by default, and not fully standards compliant. There is support for pre-HTTP/1.1
     /// style connect logic, dechunking, and handling lack of client host iff
-    /// ``default_host_for_http_10`` is configured.
+    /// `default_host_for_http_10` is configured.
     #[prost(bool, tag = "2")]
     pub accept_http_10: bool,
-    /// A default host for HTTP/1.0 requests. This is highly suggested if ``accept_http_10`` is true as
+    /// A default host for HTTP/1.0 requests. This is highly suggested if `accept_http_10` is true as
     /// Envoy does not otherwise support HTTP/1.0 without a Host header.
-    /// This is a no-op if ``accept_http_10`` is not true.
+    /// This is a no-op if `accept_http_10` is not true.
     #[prost(string, tag = "3")]
     pub default_host_for_http_10: ::prost::alloc::string::String,
     /// Describes how the keys for response headers should be formatted. By default, all header keys
@@ -2650,32 +2614,32 @@ pub struct Http1ProtocolOptions {
     ///
     /// .. attention::
     ///
-    ///    Note that this only happens when Envoy is chunk encoding which occurs when:
-    ///    - The request is HTTP/1.1.
-    ///    - Is neither a HEAD only request nor a HTTP Upgrade.
-    ///    - Not a response to a HEAD request.
-    ///    - The content length header is not present.
+    /// Note that this only happens when Envoy is chunk encoding which occurs when:
+    ///
+    /// * The request is HTTP/1.1.
+    /// * Is neither a HEAD only request nor a HTTP Upgrade.
+    /// * Not a response to a HEAD request.
+    /// * The content length header is not present.
     #[prost(bool, tag = "5")]
     pub enable_trailers: bool,
-    /// Allows Envoy to process requests/responses with both ``Content-Length`` and ``Transfer-Encoding``
+    /// Allows Envoy to process requests/responses with both `Content-Length` and `Transfer-Encoding`
     /// headers set. By default such messages are rejected, but if option is enabled - Envoy will
     /// remove Content-Length header and process message.
-    /// See `RFC7230, sec. 3.3.3 <<https://tools.ietf.org/html/rfc7230#section-3.3.3>`_> for details.
+    /// See `RFC7230, sec. 3.3.3 <<https://tools.ietf.org/html/rfc7230#section-3.3.3>`\_> for details.
     ///
     /// .. attention::
-    ///    Enabling this option might lead to request smuggling vulnerability, especially if traffic
-    ///    is proxied via multiple layers of proxies.
-    /// [#comment:TODO: This field is ignored when the
+    /// Enabling this option might lead to request smuggling vulnerability, especially if traffic
+    /// is proxied via multiple layers of proxies.
+    /// \[\#comment:TODO: This field is ignored when the
     /// :ref:`header validation configuration <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.typed_header_validation_config>`
-    /// is present.]
+    /// is present.\]
     #[prost(bool, tag = "6")]
     pub allow_chunked_length: bool,
     /// Allows invalid HTTP messaging. When this option is false, then Envoy will terminate
     /// HTTP/1.1 connections upon receiving an invalid HTTP message. However,
     /// when this option is true, then Envoy will leave the HTTP/1.1 connection
     /// open where possible.
-    /// If set, this overrides any HCM :ref:`stream_error_on_invalid_http_messaging
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`.
+    /// If set, this overrides any HCM :ref:`stream_error_on_invalid_http_messaging <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`.
     #[prost(message, optional, tag = "7")]
     pub override_stream_error_on_invalid_http_message: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
@@ -2687,7 +2651,7 @@ pub struct Http1ProtocolOptions {
     /// (from first line or :path header).
     #[prost(bool, tag = "8")]
     pub send_fully_qualified_url: bool,
-    /// \[#not-implemented-hide:\] Hiding so that field can be removed after BalsaParser is rolled out.
+    /// \\[\#not-implemented-hide:\\] Hiding so that field can be removed after BalsaParser is rolled out.
     /// If set, force HTTP/1 parser: BalsaParser if true, http-parser if false.
     /// If unset, HTTP/1 parser is selected based on
     /// envoy.reloadable_features.http1_use_balsa_parser.
@@ -2696,7 +2660,7 @@ pub struct Http1ProtocolOptions {
     pub use_balsa_parser: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \[#not-implemented-hide:\] Hiding so that field can be removed.
+    /// \\[\#not-implemented-hide:\\] Hiding so that field can be removed.
     /// If true, and BalsaParser is used (either `use_balsa_parser` above is true,
     /// or `envoy.reloadable_features.http1_use_balsa_parser` is true and
     /// `use_balsa_parser` is unset), then every non-empty method with only valid
@@ -2704,15 +2668,14 @@ pub struct Http1ProtocolOptions {
     /// rejected.
     /// Once UHV is enabled, this field should be removed, and BalsaParser should
     /// allow any method. UHV validates the method, rejecting empty string or
-    /// invalid characters, and provides :ref:`restrict_http_methods
-    /// <envoy_v3_api_field_extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.restrict_http_methods>`
+    /// invalid characters, and provides :ref:`restrict_http_methods <envoy_v3_api_field_extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.restrict_http_methods>`
     /// to reject custom methods.
     #[prost(bool, tag = "10")]
     pub allow_custom_methods: bool,
 }
 /// Nested message and enum types in `Http1ProtocolOptions`.
 pub mod http1_protocol_options {
-    /// [#next-free-field: 9]
+    /// \[\#next-free-field: 9\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct HeaderKeyFormat {
@@ -2736,7 +2699,7 @@ pub mod http1_protocol_options {
             ProperCaseWords(ProperCaseWords),
             /// Configuration for stateful formatter extensions that allow using received headers to
             /// affect the output of encoding headers. E.g., preserving case during proxying.
-            /// [#extension-category: envoy.http.stateful_header_formatters]
+            /// \[\#extension-category: envoy.http.stateful_header_formatters\]
             #[prost(message, tag = "8")]
             StatefulFormatter(super::super::TypedExtensionConfig),
         }
@@ -2778,11 +2741,11 @@ pub struct KeepaliveSettings {
         super::super::super::super::google::protobuf::Duration,
     >,
 }
-/// [#next-free-field: 17]
+/// \[\#next-free-field: 17\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http2ProtocolOptions {
-    /// `Maximum table size <<https://httpwg.org/specs/rfc7541.html#rfc.section.4.2>`_>
+    /// `Maximum table size <<https://httpwg.org/specs/rfc7541.html#rfc.section.4.2>`\_>
     /// (in octets) that the encoder is permitted to use for the dynamic HPACK table. Valid values
     /// range from 0 to 4294967295 (2^32 - 1) and defaults to 4096. 0 effectively disables header
     /// compression.
@@ -2790,7 +2753,7 @@ pub struct Http2ProtocolOptions {
     pub hpack_table_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// `Maximum concurrent streams <<https://httpwg.org/specs/rfc7540.html#rfc.section.5.1.2>`_>
+    /// `Maximum concurrent streams <<https://httpwg.org/specs/rfc7540.html#rfc.section.5.1.2>`\_>
     /// allowed for peer on one HTTP/2 connection. Valid values range from 1 to 2147483647 (2^31 - 1)
     /// and defaults to 2147483647.
     ///
@@ -2805,8 +2768,7 @@ pub struct Http2ProtocolOptions {
     pub max_concurrent_streams: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// `Initial stream-level flow-control window
-    /// <<https://httpwg.org/specs/rfc7540.html#rfc.section.6.9.2>`_> size. Valid values range from 65535
+    /// `Initial stream-level flow-control window <<https://httpwg.org/specs/rfc7540.html#rfc.section.6.9.2>`\_> size. Valid values range from 65535
     /// (2^16 - 1, HTTP/2 default) to 2147483647 (2^31 - 1, HTTP/2 maximum) and defaults to 268435456
     /// (256 * 1024 * 1024).
     ///
@@ -2820,8 +2782,8 @@ pub struct Http2ProtocolOptions {
     pub initial_stream_window_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Similar to ``initial_stream_window_size``, but for connection-level flow-control
-    /// window. Currently, this has the same minimum/maximum/default as ``initial_stream_window_size``.
+    /// Similar to `initial_stream_window_size`, but for connection-level flow-control
+    /// window. Currently, this has the same minimum/maximum/default as `initial_stream_window_size`.
     #[prost(message, optional, tag = "4")]
     pub initial_connection_window_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -2829,7 +2791,7 @@ pub struct Http2ProtocolOptions {
     /// Allows proxying Websocket and other upgrades over H2 connect.
     #[prost(bool, tag = "5")]
     pub allow_connect: bool,
-    /// \[#not-implemented-hide:\] Hiding until envoy has full metadata support.
+    /// \\[\#not-implemented-hide:\\] Hiding until envoy has full metadata support.
     /// Still under implementation. DO NOT USE.
     ///
     /// Allows metadata. See [metadata
@@ -2839,7 +2801,7 @@ pub struct Http2ProtocolOptions {
     pub allow_metadata: bool,
     /// Limit the number of pending outbound downstream frames of all types (frames that are waiting to
     /// be written into the socket). Exceeding this limit triggers flood mitigation and connection is
-    /// terminated. The ``http2.outbound_flood`` stat tracks the number of terminated connections due
+    /// terminated. The `http2.outbound_flood` stat tracks the number of terminated connections due
     /// to flood mitigation. The default limit is 10000.
     #[prost(message, optional, tag = "7")]
     pub max_outbound_frames: ::core::option::Option<
@@ -2848,7 +2810,7 @@ pub struct Http2ProtocolOptions {
     /// Limit the number of pending outbound downstream frames of types PING, SETTINGS and RST_STREAM,
     /// preventing high memory utilization when receiving continuous stream of these frames. Exceeding
     /// this limit triggers flood mitigation and connection is terminated. The
-    /// ``http2.outbound_control_flood`` stat tracks the number of terminated connections due to flood
+    /// `http2.outbound_control_flood` stat tracks the number of terminated connections due to flood
     /// mitigation. The default limit is 1000.
     #[prost(message, optional, tag = "8")]
     pub max_outbound_control_frames: ::core::option::Option<
@@ -2856,7 +2818,7 @@ pub struct Http2ProtocolOptions {
     >,
     /// Limit the number of consecutive inbound frames of types HEADERS, CONTINUATION and DATA with an
     /// empty payload and no end stream flag. Those frames have no legitimate use and are abusive, but
-    /// might be a result of a broken HTTP/2 implementation. The `http2.inbound_empty_frames_flood``
+    /// might be a result of a broken HTTP/2 implementation. The \`http2.inbound_empty_frames_flood\``
     /// stat tracks the number of connections terminated due to flood mitigation.
     /// Setting this to 0 will terminate connection upon receiving first frame with an empty payload
     /// and no end stream flag. The default limit is 1.
@@ -2868,12 +2830,12 @@ pub struct Http2ProtocolOptions {
     /// of PRIORITY frames received over the lifetime of connection exceeds the value calculated
     /// using this formula::
     ///
-    ///    ``max_inbound_priority_frames_per_stream`` * (1 + ``opened_streams``)
+    /// `max_inbound_priority_frames_per_stream` * (1 + `opened_streams`)
     ///
-    /// the connection is terminated. For downstream connections the ``opened_streams`` is incremented when
+    /// the connection is terminated. For downstream connections the `opened_streams` is incremented when
     /// Envoy receives complete response headers from the upstream server. For upstream connection the
-    /// ``opened_streams`` is incremented when Envoy send the HEADERS frame for a new stream. The
-    /// ``http2.inbound_priority_frames_flood`` stat tracks
+    /// `opened_streams` is incremented when Envoy send the HEADERS frame for a new stream. The
+    /// `http2.inbound_priority_frames_flood` stat tracks
     /// the number of connections terminated due to flood mitigation. The default limit is 100.
     #[prost(message, optional, tag = "10")]
     pub max_inbound_priority_frames_per_stream: ::core::option::Option<
@@ -2883,13 +2845,13 @@ pub struct Http2ProtocolOptions {
     /// of WINDOW_UPDATE frames received over the lifetime of connection exceeds the value calculated
     /// using this formula::
     ///
-    ///    5 + 2 * (``opened_streams`` +
-    ///             ``max_inbound_window_update_frames_per_data_frame_sent`` * ``outbound_data_frames``)
+    /// 5 + 2 * (`opened_streams` +
+    /// `max_inbound_window_update_frames_per_data_frame_sent` * `outbound_data_frames`)
     ///
-    /// the connection is terminated. For downstream connections the ``opened_streams`` is incremented when
+    /// the connection is terminated. For downstream connections the `opened_streams` is incremented when
     /// Envoy receives complete response headers from the upstream server. For upstream connections the
-    /// ``opened_streams`` is incremented when Envoy sends the HEADERS frame for a new stream. The
-    /// ``http2.inbound_priority_frames_flood`` stat tracks the number of connections terminated due to
+    /// `opened_streams` is incremented when Envoy sends the HEADERS frame for a new stream. The
+    /// `http2.inbound_priority_frames_flood` stat tracks the number of connections terminated due to
     /// flood mitigation. The default max_inbound_window_update_frames_per_data_frame_sent value is 10.
     /// Setting this to 1 should be enough to support HTTP/2 implementations with basic flow control,
     /// but more complex implementations that try to estimate available bandwidth require at least 2.
@@ -2901,14 +2863,12 @@ pub struct Http2ProtocolOptions {
     /// the whole HTTP/2 connection is terminated upon receiving invalid HEADERS frame. However,
     /// when this option is enabled, only the offending stream is terminated.
     ///
-    /// This is overridden by HCM :ref:`stream_error_on_invalid_http_messaging
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`
+    /// This is overridden by HCM :ref:`stream_error_on_invalid_http_messaging <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`
     /// iff present.
     ///
-    /// This is deprecated in favor of :ref:`override_stream_error_on_invalid_http_message
-    /// <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.override_stream_error_on_invalid_http_message>`
+    /// This is deprecated in favor of :ref:`override_stream_error_on_invalid_http_message <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.override_stream_error_on_invalid_http_message>`
     ///
-    /// See `RFC7540, sec. 8.1 <<https://tools.ietf.org/html/rfc7540#section-8.1>`_> for details.
+    /// See `RFC7540, sec. 8.1 <<https://tools.ietf.org/html/rfc7540#section-8.1>`\_> for details.
     #[deprecated]
     #[prost(bool, tag = "12")]
     pub stream_error_on_invalid_http_messaging: bool,
@@ -2916,39 +2876,37 @@ pub struct Http2ProtocolOptions {
     /// the whole HTTP/2 connection is terminated upon receiving invalid HEADERS frame. However,
     /// when this option is enabled, only the offending stream is terminated.
     ///
-    /// This overrides any HCM :ref:`stream_error_on_invalid_http_messaging
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`
+    /// This overrides any HCM :ref:`stream_error_on_invalid_http_messaging <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`
     ///
-    /// See `RFC7540, sec. 8.1 <<https://tools.ietf.org/html/rfc7540#section-8.1>`_> for details.
+    /// See `RFC7540, sec. 8.1 <<https://tools.ietf.org/html/rfc7540#section-8.1>`\_> for details.
     #[prost(message, optional, tag = "14")]
     pub override_stream_error_on_invalid_http_message: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     /// Specifies SETTINGS frame parameters to be sent to the peer, with two exceptions:
     ///
     /// 1. SETTINGS_ENABLE_PUSH (0x2) is not configurable as HTTP/2 server push is not supported by
-    /// Envoy.
+    ///    Envoy.
     ///
-    /// 2. SETTINGS_ENABLE_CONNECT_PROTOCOL (0x8) is only configurable through the named field
-    /// 'allow_connect'.
+    /// 1. SETTINGS_ENABLE_CONNECT_PROTOCOL (0x8) is only configurable through the named field
+    ///    'allow_connect'.
     ///
     /// Note that custom parameters specified through this field can not also be set in the
     /// corresponding named parameters:
     ///
     /// .. code-block:: text
     ///
-    ///    ID    Field Name
-    ///    ----------------
-    ///    0x1   hpack_table_size
-    ///    0x3   max_concurrent_streams
-    ///    0x4   initial_stream_window_size
+    /// ## ID    Field Name
+    ///
+    /// 0x1   hpack_table_size
+    /// 0x3   max_concurrent_streams
+    /// 0x4   initial_stream_window_size
     ///
     /// Collisions will trigger config validation failure on load/update. Likewise, inconsistencies
     /// between custom parameters with the same identifier will trigger a failure.
     ///
-    /// See `IANA HTTP/2 Settings
-    /// <<https://www.iana.org/assignments/http2-parameters/http2-parameters.xhtml#settings>`_> for
+    /// See `IANA HTTP/2 Settings <<https://www.iana.org/assignments/http2-parameters/http2-parameters.xhtml#settings>`\_> for
     /// standardized identifiers.
     #[prost(message, repeated, tag = "13")]
     pub custom_settings_parameters: ::prost::alloc::vec::Vec<
@@ -2958,7 +2916,7 @@ pub struct Http2ProtocolOptions {
     /// does not respond within the configured timeout, the connection will be aborted.
     #[prost(message, optional, tag = "15")]
     pub connection_keepalive: ::core::option::Option<KeepaliveSettings>,
-    /// \[#not-implemented-hide:\] Hiding so that the field can be removed after oghttp2 is rolled out.
+    /// \\[\#not-implemented-hide:\\] Hiding so that the field can be removed after oghttp2 is rolled out.
     /// If set, force use of a particular HTTP/2 codec: oghttp2 if true, nghttp2 if false.
     /// If unset, HTTP/2 codec is selected based on envoy.reloadable_features.http2_use_oghttp2.
     #[prost(message, optional, tag = "16")]
@@ -2969,7 +2927,7 @@ pub struct Http2ProtocolOptions {
 /// Nested message and enum types in `Http2ProtocolOptions`.
 pub mod http2_protocol_options {
     /// Defines a parameter to be sent in the SETTINGS frame.
-    /// See `RFC7540, sec. 6.5.1 <<https://tools.ietf.org/html/rfc7540#section-6.5.1>`_> for details.
+    /// See `RFC7540, sec. 6.5.1 <<https://tools.ietf.org/html/rfc7540#section-6.5.1>`\_> for details.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SettingsParameter {
@@ -2985,7 +2943,7 @@ pub mod http2_protocol_options {
         >,
     }
 }
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcProtocolOptions {
@@ -2993,7 +2951,7 @@ pub struct GrpcProtocolOptions {
     pub http2_protocol_options: ::core::option::Option<Http2ProtocolOptions>,
 }
 /// A message which allows using HTTP/3.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http3ProtocolOptions {
@@ -3003,17 +2961,14 @@ pub struct Http3ProtocolOptions {
     /// the whole HTTP/3 connection is terminated upon receiving invalid HEADERS frame. However,
     /// when this option is enabled, only the offending stream is terminated.
     ///
-    /// If set, this overrides any HCM :ref:`stream_error_on_invalid_http_messaging
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`.
+    /// If set, this overrides any HCM :ref:`stream_error_on_invalid_http_messaging <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_error_on_invalid_http_message>`.
     #[prost(message, optional, tag = "2")]
     pub override_stream_error_on_invalid_http_message: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
     /// Allows proxying Websocket and other upgrades over HTTP/3 CONNECT using
-    /// the header mechanisms from the `HTTP/2 extended connect RFC
-    /// <<https://datatracker.ietf.org/doc/html/rfc8441>`_>
-    /// and settings `proposed for HTTP/3
-    /// <<https://datatracker.ietf.org/doc/draft-ietf-httpbis-h3-websockets/>`_>
+    /// the header mechanisms from the `HTTP/2 extended connect RFC <<https://datatracker.ietf.org/doc/html/rfc8441>`\_>
+    /// and settings `proposed for HTTP/3 <<https://datatracker.ietf.org/doc/draft-ietf-httpbis-h3-websockets/>`\_>
     /// Note that HTTP/3 CONNECT is not yet an RFC.
     #[prost(bool, tag = "5")]
     pub allow_extended_connect: bool,
@@ -3073,7 +3028,7 @@ pub struct UdpSocketConfig {
         super::super::super::super::google::protobuf::UInt64Value,
     >,
     /// Configures whether Generic Receive Offload (GRO)
-    /// <<https://en.wikipedia.org/wiki/Large_receive_offload>_> is preferred when reading from the
+    /// <<https://en.wikipedia.org/wiki/Large_receive_offload>\_> is preferred when reading from the
     /// UDP socket. The default is context dependent and is documented where UdpSocketConfig is used.
     /// This option affects performance but not functionality. If GRO is not supported by the operating
     /// system, non-GRO receive will be used.
@@ -3104,31 +3059,30 @@ pub mod grpc_method_list {
 }
 /// Configuration to use multiple :ref:`command operators <config_access_log_command_operators>`
 /// to generate a new string in either plain text or JSON format.
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SubstitutionFormatString {
     /// If set to true, when command operators are evaluated to null,
     ///
-    /// * for ``text_format``, the output of the empty operator is changed from ``-`` to an
-    ///    empty string, so that empty values are omitted entirely.
-    /// * for ``json_format`` the keys with null values are omitted in the output structure.
+    /// * for `text_format`, the output of the empty operator is changed from `-` to an
+    ///   empty string, so that empty values are omitted entirely.
+    /// * for `json_format` the keys with null values are omitted in the output structure.
     #[prost(bool, tag = "3")]
     pub omit_empty_values: bool,
-    /// Specify a ``content_type`` field.
-    /// If this field is not set then ``text/plain`` is used for ``text_format`` and
-    /// ``application/json`` is used for ``json_format``.
+    /// Specify a `content_type` field.
+    /// If this field is not set then `text/plain` is used for `text_format` and
+    /// `application/json` is used for `json_format`.
     ///
     /// .. validated-code-block:: yaml
-    ///    :type-name: envoy.config.core.v3.SubstitutionFormatString
+    /// :type-name: envoy.config.core.v3.SubstitutionFormatString
     ///
-    ///    content_type: "text/html; charset=UTF-8"
-    ///
+    /// content_type: "text/html; charset=UTF-8"
     #[prost(string, tag = "4")]
     pub content_type: ::prost::alloc::string::String,
     /// Specifies a collection of Formatter plugins that can be called from the access log configuration.
     /// See the formatters extensions documentation for details.
-    /// [#extension-category: envoy.formatter]
+    /// \[\#extension-category: envoy.formatter\]
     #[prost(message, repeated, tag = "6")]
     pub formatters: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
     #[prost(oneof = "substitution_format_string::Format", tags = "1, 2, 5")]
@@ -3142,18 +3096,18 @@ pub mod substitution_format_string {
         /// Specify a format with command operators to form a text string.
         /// Its details is described in :ref:`format string<config_access_log_format_strings>`.
         ///
-        /// For example, setting ``text_format`` like below,
+        /// For example, setting `text_format` like below,
         ///
         /// .. validated-code-block:: yaml
-        ///    :type-name: envoy.config.core.v3.SubstitutionFormatString
+        /// :type-name: envoy.config.core.v3.SubstitutionFormatString
         ///
-        ///    text_format: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
+        /// text_format: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
         ///
         /// generates plain text similar to:
         ///
         /// .. code-block:: text
         ///
-        ///    upstream connect error:503:path=/foo
+        /// upstream connect error:503:path=/foo
         ///
         /// Deprecated in favor of :ref:`text_format_source <envoy_v3_api_field_config.core.v3.SubstitutionFormatString.text_format_source>`. To migrate text format strings, use the :ref:`inline_string <envoy_v3_api_field_config.core.v3.DataSource.inline_string>` field.
         #[prost(string, tag = "1")]
@@ -3165,40 +3119,38 @@ pub mod substitution_format_string {
         /// See the documentation for a specific command operator for details.
         ///
         /// .. validated-code-block:: yaml
-        ///    :type-name: envoy.config.core.v3.SubstitutionFormatString
+        /// :type-name: envoy.config.core.v3.SubstitutionFormatString
         ///
-        ///    json_format:
-        ///      status: "%RESPONSE_CODE%"
-        ///      message: "%LOCAL_REPLY_BODY%"
+        /// json_format:
+        /// status: "%RESPONSE_CODE%"
+        /// message: "%LOCAL_REPLY_BODY%"
         ///
         /// The following JSON object would be created:
         ///
         /// .. code-block:: json
         ///
-        ///   {
-        ///     "status": 500,
-        ///     "message": "My error message"
-        ///   }
-        ///
+        /// {
+        /// "status": 500,
+        /// "message": "My error message"
+        /// }
         #[prost(message, tag = "2")]
         JsonFormat(super::super::super::super::super::google::protobuf::Struct),
         /// Specify a format with command operators to form a text string.
         /// Its details is described in :ref:`format string<config_access_log_format_strings>`.
         ///
-        /// For example, setting ``text_format`` like below,
+        /// For example, setting `text_format` like below,
         ///
         /// .. validated-code-block:: yaml
-        ///    :type-name: envoy.config.core.v3.SubstitutionFormatString
+        /// :type-name: envoy.config.core.v3.SubstitutionFormatString
         ///
-        ///    text_format_source:
-        ///      inline_string: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
+        /// text_format_source:
+        /// inline_string: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
         ///
         /// generates plain text similar to:
         ///
         /// .. code-block:: text
         ///
-        ///    upstream connect error:503:path=/foo
-        ///
+        /// upstream connect error:503:path=/foo
         #[prost(message, tag = "5")]
         TextFormatSource(super::DataSource),
     }

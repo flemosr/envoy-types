@@ -1,7 +1,7 @@
 /// Custom configuration for an :ref:`AccessLog <envoy_v3_api_msg_config.accesslog.v3.AccessLog>`
-/// that writes log entries directly to a file. Configures the built-in ``envoy.access_loggers.file``
+/// that writes log entries directly to a file. Configures the built-in `envoy.access_loggers.file`
 /// AccessLog.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FileAccessLog {

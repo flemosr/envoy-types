@@ -14,7 +14,7 @@
 ///
 /// See the :ref:`load balancing architecture overview<arch_overview_load_balancing_types>` for more information.
 ///
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientSideWeightedRoundRobin {

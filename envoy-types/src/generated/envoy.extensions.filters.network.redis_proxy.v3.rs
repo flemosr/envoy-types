@@ -1,4 +1,4 @@
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RedisProxy {
@@ -21,28 +21,27 @@ pub struct RedisProxy {
     ///
     /// .. code-block:: yaml
     ///
-    ///     prefix_routes:
-    ///       routes:
-    ///         - prefix: "ab"
-    ///           cluster: "cluster_a"
-    ///         - prefix: "abc"
-    ///           cluster: "cluster_b"
+    /// ```text
+    /// prefix_routes:
+    ///   routes:
+    ///     - prefix: "ab"
+    ///       cluster: "cluster_a"
+    ///     - prefix: "abc"
+    ///       cluster: "cluster_b"
+    /// ```
     ///
     /// When using the above routes, the following prefixes would be sent to:
     ///
-    /// * ``get abc:users`` would retrieve the key 'abc:users' from cluster_b.
-    /// * ``get ab:users`` would retrieve the key 'ab:users' from cluster_a.
-    /// * ``get z:users`` would return a NoUpstreamHost error. A :ref:`catch-all
-    ///    route<envoy_v3_api_field_extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.catch_all_route>`
-    ///    would have retrieved the key from that cluster instead.
+    /// * `get abc:users` would retrieve the key 'abc:users' from cluster_b.
+    /// * `get ab:users` would retrieve the key 'ab:users' from cluster_a.
+    /// * `get z:users` would return a NoUpstreamHost error. A :ref:`catch-all route<envoy_v3_api_field_extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.catch_all_route>`
+    ///   would have retrieved the key from that cluster instead.
     ///
-    /// See the :ref:`configuration section
-    /// <arch_overview_redis_configuration>` of the architecture overview for recommendations on
+    /// See the :ref:`configuration section <arch_overview_redis_configuration>` of the architecture overview for recommendations on
     /// configuring the backing clusters.
     #[prost(message, optional, tag = "5")]
     pub prefix_routes: ::core::option::Option<redis_proxy::PrefixRoutes>,
-    /// Authenticate Redis client connections locally by forcing downstream clients to issue a `Redis
-    /// AUTH command <<https://redis.io/commands/auth>`_> with this password before enabling any other
+    /// Authenticate Redis client connections locally by forcing downstream clients to issue a `Redis AUTH command <<https://redis.io/commands/auth>`\_> with this password before enabling any other
     /// command. If an AUTH command's password matches this password, an "OK" response will be returned
     /// to the client. If the AUTH command password does not match this password, then an "ERR invalid
     /// password" error will be returned. If any other command is received before AUTH when this
@@ -51,15 +50,13 @@ pub struct RedisProxy {
     /// AUTH, but no password is set" error will be returned.
     ///
     /// .. attention::
-    ///    This field is deprecated. Use :ref:`downstream_auth_passwords
-    ///    <envoy_v3_api_field_extensions.filters.network.redis_proxy.v3.RedisProxy.downstream_auth_passwords>`.
+    /// This field is deprecated. Use :ref:`downstream_auth_passwords <envoy_v3_api_field_extensions.filters.network.redis_proxy.v3.RedisProxy.downstream_auth_passwords>`.
     #[deprecated]
     #[prost(message, optional, tag = "6")]
     pub downstream_auth_password: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
-    /// Authenticate Redis client connections locally by forcing downstream clients to issue a `Redis
-    /// AUTH command <<https://redis.io/commands/auth>`_> with one of these passwords before enabling any other
+    /// Authenticate Redis client connections locally by forcing downstream clients to issue a `Redis AUTH command <<https://redis.io/commands/auth>`\_> with one of these passwords before enabling any other
     /// command. If an AUTH command's password matches one of these passwords, an "OK" response will be returned
     /// to the client. If the AUTH command password does not match, then an "ERR invalid
     /// password" error will be returned. If any other command is received before AUTH when the
@@ -71,40 +68,41 @@ pub struct RedisProxy {
         super::super::super::super::super::config::core::v3::DataSource,
     >,
     /// List of faults to inject. Faults currently come in two flavors:
-    /// - Delay, which delays a request.
-    /// - Error, which responds to a request with an error. Errors can also have delays attached.
+    ///
+    /// * Delay, which delays a request.
+    /// * Error, which responds to a request with an error. Errors can also have delays attached.
     ///
     /// Example:
     ///
     /// .. code-block:: yaml
     ///
-    ///     faults:
-    ///     - fault_type: ERROR
-    ///       fault_enabled:
-    ///         default_value:
-    ///           numerator: 10
-    ///           denominator: HUNDRED
-    ///         runtime_key: "bogus_key"
-    ///         commands:
-    ///         - GET
-    ///       - fault_type: DELAY
-    ///         fault_enabled:
-    ///           default_value:
-    ///             numerator: 10
-    ///             denominator: HUNDRED
-    ///           runtime_key: "bogus_key"
-    ///         delay: 2s
+    /// ```text
+    /// faults:
+    /// - fault_type: ERROR
+    ///   fault_enabled:
+    ///     default_value:
+    ///       numerator: 10
+    ///       denominator: HUNDRED
+    ///     runtime_key: "bogus_key"
+    ///     commands:
+    ///     - GET
+    ///   - fault_type: DELAY
+    ///     fault_enabled:
+    ///       default_value:
+    ///         numerator: 10
+    ///         denominator: HUNDRED
+    ///       runtime_key: "bogus_key"
+    ///     delay: 2s
+    /// ```
     ///
-    /// See the :ref:`fault injection section
-    /// <config_network_filters_redis_proxy_fault_injection>` for more information on how to configure this.
+    /// See the :ref:`fault injection section <config_network_filters_redis_proxy_fault_injection>` for more information on how to configure this.
     #[prost(message, repeated, tag = "8")]
     pub faults: ::prost::alloc::vec::Vec<redis_proxy::RedisFault>,
     /// If a username is provided an ACL style AUTH command will be required with a username and password.
-    /// Authenticate Redis client connections locally by forcing downstream clients to issue a `Redis
-    /// AUTH command <<https://redis.io/commands/auth>`_> with this username and the ``downstream_auth_password``
+    /// Authenticate Redis client connections locally by forcing downstream clients to issue a `Redis AUTH command <<https://redis.io/commands/auth>`\_> with this username and the `downstream_auth_password`
     /// before enabling any other command. If an AUTH command's username and password matches this username
-    /// and the ``downstream_auth_password`` , an "OK" response will be returned to the client. If the AUTH
-    /// command username or password does not match this username or the ``downstream_auth_password``, then an
+    /// and the `downstream_auth_password` , an "OK" response will be returned to the client. If the AUTH
+    /// command username or password does not match this username or the `downstream_auth_password`, then an
     /// "WRONGPASS invalid username-password pair" error will be returned. If any other command is received before AUTH when this
     /// password is set, then a "NOAUTH Authentication required." error response will be sent to the
     /// client. If an AUTH command is received when the password is not set, then an "ERR Client sent
@@ -117,7 +115,7 @@ pub struct RedisProxy {
 /// Nested message and enum types in `RedisProxy`.
 pub mod redis_proxy {
     /// Redis connection pool settings.
-    /// [#next-free-field: 11]
+    /// \[\#next-free-field: 11\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ConnPoolSettings {
@@ -134,8 +132,7 @@ pub mod redis_proxy {
         /// Use hash tagging on every redis key to guarantee that keys with the same hash tag will be
         /// forwarded to the same upstream. The hash key used for determining the upstream in a
         /// consistent hash ring configuration will be computed from the hash tagged key instead of the
-        /// whole key. The algorithm used to compute the hash tag is identical to the `redis-cluster
-        /// implementation <<https://redis.io/topics/cluster-spec#keys-hash-tags>`_.>
+        /// whole key. The algorithm used to compute the hash tag is identical to the `redis-cluster implementation <<https://redis.io/topics/cluster-spec#keys-hash-tags>`\_.>
         ///
         /// Examples:
         ///
@@ -143,14 +140,13 @@ pub mod redis_proxy {
         /// * '{user1000}.following' and '{user1001}.following' **might** be sent to the same upstream
         #[prost(bool, tag = "2")]
         pub enable_hashtagging: bool,
-        /// Accept `moved and ask redirection
-        /// <<https://redis.io/topics/cluster-spec#redirection-and-resharding>`_> errors from upstream
+        /// Accept `moved and ask redirection <<https://redis.io/topics/cluster-spec#redirection-and-resharding>`\_> errors from upstream
         /// redis servers, and retry commands to the specified target server. The target server does not
         /// need to be known to the cluster manager. If the command cannot be redirected, then the
         /// original error is passed downstream unchanged. By default, this support is not enabled.
         #[prost(bool, tag = "3")]
         pub enable_redirection: bool,
-        /// If ``enable_redirection`` is set to true this option configures the DNS cache that the
+        /// If `enable_redirection` is set to true this option configures the DNS cache that the
         /// connection pool will use to resolve hostnames that are returned with MOVED and ASK responses.
         /// If no configuration is provided, DNS lookups will not be performed (and thus the MOVED/ASK errors
         /// will be propagated verbatim to the user).
@@ -168,21 +164,21 @@ pub mod redis_proxy {
         #[prost(uint32, tag = "4")]
         pub max_buffer_size_before_flush: u32,
         /// The encoded request buffer is flushed N milliseconds after the first request has been
-        /// encoded, unless the buffer size has already exceeded ``max_buffer_size_before_flush``.
-        /// If ``max_buffer_size_before_flush`` is not set, this flush timer is not used. Otherwise,
+        /// encoded, unless the buffer size has already exceeded `max_buffer_size_before_flush`.
+        /// If `max_buffer_size_before_flush` is not set, this flush timer is not used. Otherwise,
         /// the timer should be set according to the number of clients, overall request rate and
         /// desired maximum latency for a single command. For example, if there are many requests
         /// being batched together at a high rate, the buffer will likely be filled before the timer
         /// fires. Alternatively, if the request rate is lower the buffer will not be filled as often
         /// before the timer fires.
-        /// If ``max_buffer_size_before_flush`` is set, but ``buffer_flush_timeout`` is not, the latter
+        /// If `max_buffer_size_before_flush` is set, but `buffer_flush_timeout` is not, the latter
         /// defaults to 3ms.
         #[prost(message, optional, tag = "5")]
         pub buffer_flush_timeout: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
-        /// ``max_upstream_unknown_connections`` controls how many upstream connections to unknown hosts
-        /// can be created at any given time by any given worker thread (see ``enable_redirection`` for
+        /// `max_upstream_unknown_connections` controls how many upstream connections to unknown hosts
+        /// can be created at any given time by any given worker thread (see `enable_redirection` for
         /// more details). If the host is unknown and a connection cannot be created due to enforcing
         /// this limit, then redirection will fail and the original redirection error will be passed
         /// downstream unchanged. This limit defaults to 100.
@@ -279,7 +275,7 @@ pub mod redis_proxy {
     }
     /// Nested message and enum types in `PrefixRoutes`.
     pub mod prefix_routes {
-        /// [#next-free-field: 6]
+        /// \[\#next-free-field: 6\]
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Route {
@@ -407,18 +403,18 @@ pub mod redis_proxy {
 }
 /// RedisProtocolOptions specifies Redis upstream protocol options. This object is used in
 /// :ref:`typed_extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`,
-/// keyed by the name ``envoy.filters.network.redis_proxy``.
+/// keyed by the name `envoy.filters.network.redis_proxy`.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RedisProtocolOptions {
-    /// Upstream server password as defined by the ``requirepass`` directive
-    /// `<<https://redis.io/topics/config>`_> in the server's configuration file.
+    /// Upstream server password as defined by the `requirepass` directive
+    /// `<<https://redis.io/topics/config>`\_> in the server's configuration file.
     #[prost(message, optional, tag = "1")]
     pub auth_password: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
-    /// Upstream server username as defined by the ``user`` directive
-    /// `<<https://redis.io/topics/acl>`_> in the server's configuration file.
+    /// Upstream server username as defined by the `user` directive
+    /// `<<https://redis.io/topics/acl>`\_> in the server's configuration file.
     #[prost(message, optional, tag = "2")]
     pub auth_username: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,

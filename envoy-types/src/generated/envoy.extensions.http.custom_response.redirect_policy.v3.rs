@@ -1,6 +1,6 @@
 /// Custom response policy to internally redirect the original response to a different
 /// upstream.
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RedirectPolicy {
@@ -27,7 +27,7 @@ pub struct RedirectPolicy {
     >,
     /// Custom action to modify request headers before selection of the
     /// redirected route.
-    /// [#comment: TODO(pradeepcrao) add an extension category.]
+    /// \[\#comment: TODO(pradeepcrao) add an extension category.\]
     #[prost(message, optional, tag = "6")]
     pub modify_request_headers_action: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -50,8 +50,9 @@ pub mod redirect_policy {
         ///
         /// .. code-block:: yaml
         ///
-        ///     uri: <https://www.mydomain.com/path/to/404.txt>
-        ///
+        /// ```text
+        /// uri: <https://www.mydomain.com/path/to/404.txt>
+        /// ```
         #[prost(string, tag = "1")]
         Uri(::prost::alloc::string::String),
         /// Specify elements of the redirect url individually.
@@ -59,8 +60,9 @@ pub mod redirect_policy {
         /// `status_code` instead.
         /// The following fields in `redirect_action` are currently not supported,
         /// and specifying them will cause the config to be rejected:
-        /// - `prefix_rewrite`
-        /// - `regex_rewrite`
+        ///
+        /// * `prefix_rewrite`
+        /// * `regex_rewrite`
         #[prost(message, tag = "2")]
         RedirectAction(
             super::super::super::super::super::super::config::route::v3::RedirectAction,

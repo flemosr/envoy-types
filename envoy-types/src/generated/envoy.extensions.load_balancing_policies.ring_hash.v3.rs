@@ -1,7 +1,6 @@
 /// This configuration allows the built-in RING_HASH LB policy to be configured via the LB policy
-/// extension point. See the :ref:`load balancing architecture overview
-/// <arch_overview_load_balancing_types>` for more information.
-/// [#next-free-field: 8]
+/// extension point. See the :ref:`load balancing architecture overview <arch_overview_load_balancing_types>` for more information.
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RingHash {
@@ -28,8 +27,7 @@ pub struct RingHash {
     /// address as the key to consistently hash to an upstream host. Only valid for StrictDNS clusters with hostnames which resolve to a single IP address.
     ///
     /// ..note::
-    ///    This is deprecated and please use :ref:`consistent_hashing_lb_config
-    ///    <envoy_v3_api_field_extensions.load_balancing_policies.ring_hash.v3.RingHash.consistent_hashing_lb_config>` instead.
+    /// This is deprecated and please use :ref:`consistent_hashing_lb_config <envoy_v3_api_field_extensions.load_balancing_policies.ring_hash.v3.RingHash.consistent_hashing_lb_config>` instead.
     #[deprecated]
     #[prost(bool, tag = "4")]
     pub use_hostname_for_hashing: bool,
@@ -51,8 +49,7 @@ pub struct RingHash {
     /// being probed, so use a higher value if you require better performance.
     ///
     /// ..note::
-    ///    This is deprecated and please use :ref:`consistent_hashing_lb_config
-    ///    <envoy_v3_api_field_extensions.load_balancing_policies.ring_hash.v3.RingHash.consistent_hashing_lb_config>` instead.
+    /// This is deprecated and please use :ref:`consistent_hashing_lb_config <envoy_v3_api_field_extensions.load_balancing_policies.ring_hash.v3.RingHash.consistent_hashing_lb_config>` instead.
     #[deprecated]
     #[prost(message, optional, tag = "5")]
     pub hash_balance_factor: ::core::option::Option<
@@ -87,9 +84,9 @@ pub mod ring_hash {
     pub enum HashFunction {
         /// Currently defaults to XX_HASH.
         DefaultHash = 0,
-        /// Use `xxHash <<https://github.com/Cyan4973/xxHash>`_.>
+        /// Use `xxHash <<https://github.com/Cyan4973/xxHash>`\_.>
         XxHash = 1,
-        /// Use `MurmurHash2 <<https://sites.google.com/site/murmurhash/>`_,> this is compatible with
+        /// Use `MurmurHash2 <<https://sites.google.com/site/murmurhash/>`\_,> this is compatible with
         /// std:hash<string> in GNU libstdc++ 3.4.20 or above. This is typically the case when compiled
         /// on Linux and not macOS.
         MurmurHash2 = 2,

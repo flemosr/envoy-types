@@ -17,7 +17,7 @@ pub struct LoadStatsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LoadStatsResponse {
     /// Clusters to report stats for.
-    /// Not populated if ``send_all_clusters`` is true.
+    /// Not populated if `send_all_clusters` is true.
     #[prost(string, repeated, tag = "1")]
     pub clusters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// If true, the client should send all clusters it knows about.
@@ -28,16 +28,16 @@ pub struct LoadStatsResponse {
     /// The minimum interval of time to collect stats over. This is only a minimum for two reasons:
     ///
     /// 1. There may be some delay from when the timer fires until stats sampling occurs.
-    /// 2. For clusters that were already feature in the previous ``LoadStatsResponse``, any traffic
-    ///     that is observed in between the corresponding previous ``LoadStatsRequest`` and this
-    ///     ``LoadStatsResponse`` will also be accumulated and billed to the cluster. This avoids a period
-    ///     of inobservability that might otherwise exists between the messages. New clusters are not
-    ///     subject to this consideration.
+    /// 1. For clusters that were already feature in the previous `LoadStatsResponse`, any traffic
+    ///    that is observed in between the corresponding previous `LoadStatsRequest` and this
+    ///    `LoadStatsResponse` will also be accumulated and billed to the cluster. This avoids a period
+    ///    of inobservability that might otherwise exists between the messages. New clusters are not
+    ///    subject to this consideration.
     #[prost(message, optional, tag = "2")]
     pub load_reporting_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
-    /// Set to ``true`` if the management server supports endpoint granularity
+    /// Set to `true` if the management server supports endpoint granularity
     /// report.
     #[prost(bool, tag = "3")]
     pub report_endpoint_granularity: bool,
@@ -119,31 +119,32 @@ pub mod load_reporting_service_client {
         /// Advanced API to allow for multi-dimensional load balancing by remote
         /// server. For receiving LB assignments, the steps are:
         /// 1, The management server is configured with per cluster/zone/load metric
-        ///    capacity configuration. The capacity configuration definition is
-        ///    outside of the scope of this document.
+        /// capacity configuration. The capacity configuration definition is
+        /// outside of the scope of this document.
         /// 2. Envoy issues a standard {Stream,Fetch}Endpoints request for the clusters
-        ///    to balance.
+        /// to balance.
         ///
         /// Independently, Envoy will initiate a StreamLoadStats bidi stream with a
         /// management server:
+        ///
         /// 1. Once a connection establishes, the management server publishes a
-        ///    LoadStatsResponse for all clusters it is interested in learning load
-        ///    stats about.
-        /// 2. For each cluster, Envoy load balances incoming traffic to upstream hosts
-        ///    based on per-zone weights and/or per-instance weights (if specified)
-        ///    based on intra-zone LbPolicy. This information comes from the above
-        ///    {Stream,Fetch}Endpoints.
-        /// 3. When upstream hosts reply, they optionally add header <define header
-        ///    name> with ASCII representation of EndpointLoadMetricStats.
-        /// 4. Envoy aggregates load reports over the period of time given to it in
-        ///    LoadStatsResponse.load_reporting_interval. This includes aggregation
-        ///    stats Envoy maintains by itself (total_requests, rpc_errors etc.) as
-        ///    well as load metrics from upstream hosts.
-        /// 5. When the timer of load_reporting_interval expires, Envoy sends new
-        ///    LoadStatsRequest filled with load reports for each cluster.
-        /// 6. The management server uses the load reports from all reported Envoys
-        ///    from around the world, computes global assignment and prepares traffic
-        ///    assignment destined for each zone Envoys are located in. Goto 2.
+        ///   LoadStatsResponse for all clusters it is interested in learning load
+        ///   stats about.
+        /// 1. For each cluster, Envoy load balances incoming traffic to upstream hosts
+        ///   based on per-zone weights and/or per-instance weights (if specified)
+        ///   based on intra-zone LbPolicy. This information comes from the above
+        ///   {Stream,Fetch}Endpoints.
+        /// 1. When upstream hosts reply, they optionally add header <define header
+        ///   name> with ASCII representation of EndpointLoadMetricStats.
+        /// 1. Envoy aggregates load reports over the period of time given to it in
+        ///   LoadStatsResponse.load_reporting_interval. This includes aggregation
+        ///   stats Envoy maintains by itself (total_requests, rpc_errors etc.) as
+        ///   well as load metrics from upstream hosts.
+        /// 1. When the timer of load_reporting_interval expires, Envoy sends new
+        ///   LoadStatsRequest filled with load reports for each cluster.
+        /// 1. The management server uses the load reports from all reported Envoys
+        ///   from around the world, computes global assignment and prepares traffic
+        ///   assignment destined for each zone Envoys are located in. Goto 2.
         pub async fn stream_load_stats(
             &mut self,
             request: impl tonic::IntoStreamingRequest<Message = super::LoadStatsRequest>,
@@ -192,31 +193,32 @@ pub mod load_reporting_service_server {
         /// Advanced API to allow for multi-dimensional load balancing by remote
         /// server. For receiving LB assignments, the steps are:
         /// 1, The management server is configured with per cluster/zone/load metric
-        ///    capacity configuration. The capacity configuration definition is
-        ///    outside of the scope of this document.
+        /// capacity configuration. The capacity configuration definition is
+        /// outside of the scope of this document.
         /// 2. Envoy issues a standard {Stream,Fetch}Endpoints request for the clusters
-        ///    to balance.
+        /// to balance.
         ///
         /// Independently, Envoy will initiate a StreamLoadStats bidi stream with a
         /// management server:
+        ///
         /// 1. Once a connection establishes, the management server publishes a
-        ///    LoadStatsResponse for all clusters it is interested in learning load
-        ///    stats about.
-        /// 2. For each cluster, Envoy load balances incoming traffic to upstream hosts
-        ///    based on per-zone weights and/or per-instance weights (if specified)
-        ///    based on intra-zone LbPolicy. This information comes from the above
-        ///    {Stream,Fetch}Endpoints.
-        /// 3. When upstream hosts reply, they optionally add header <define header
-        ///    name> with ASCII representation of EndpointLoadMetricStats.
-        /// 4. Envoy aggregates load reports over the period of time given to it in
-        ///    LoadStatsResponse.load_reporting_interval. This includes aggregation
-        ///    stats Envoy maintains by itself (total_requests, rpc_errors etc.) as
-        ///    well as load metrics from upstream hosts.
-        /// 5. When the timer of load_reporting_interval expires, Envoy sends new
-        ///    LoadStatsRequest filled with load reports for each cluster.
-        /// 6. The management server uses the load reports from all reported Envoys
-        ///    from around the world, computes global assignment and prepares traffic
-        ///    assignment destined for each zone Envoys are located in. Goto 2.
+        ///   LoadStatsResponse for all clusters it is interested in learning load
+        ///   stats about.
+        /// 1. For each cluster, Envoy load balances incoming traffic to upstream hosts
+        ///   based on per-zone weights and/or per-instance weights (if specified)
+        ///   based on intra-zone LbPolicy. This information comes from the above
+        ///   {Stream,Fetch}Endpoints.
+        /// 1. When upstream hosts reply, they optionally add header <define header
+        ///   name> with ASCII representation of EndpointLoadMetricStats.
+        /// 1. Envoy aggregates load reports over the period of time given to it in
+        ///   LoadStatsResponse.load_reporting_interval. This includes aggregation
+        ///   stats Envoy maintains by itself (total_requests, rpc_errors etc.) as
+        ///   well as load metrics from upstream hosts.
+        /// 1. When the timer of load_reporting_interval expires, Envoy sends new
+        ///   LoadStatsRequest filled with load reports for each cluster.
+        /// 1. The management server uses the load reports from all reported Envoys
+        ///   from around the world, computes global assignment and prepares traffic
+        ///   assignment destined for each zone Envoys are located in. Goto 2.
         async fn stream_load_stats(
             &self,
             request: tonic::Request<tonic::Streaming<super::LoadStatsRequest>>,

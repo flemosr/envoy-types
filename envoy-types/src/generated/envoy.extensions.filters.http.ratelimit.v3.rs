@@ -1,4 +1,4 @@
-/// [#next-free-field: 12]
+/// \[\#next-free-field: 12\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimit {
@@ -10,14 +10,14 @@ pub struct RateLimit {
     ///
     /// .. note::
     ///
-    ///   The filter supports a range of 0 - 10 inclusively for stage numbers.
+    /// The filter supports a range of 0 - 10 inclusively for stage numbers.
     #[prost(uint32, tag = "2")]
     pub stage: u32,
     /// The type of requests the filter should apply to. The supported
-    /// types are ``internal``, ``external`` or ``both``. A request is considered internal if
+    /// types are `internal`, `external` or `both`. A request is considered internal if
     /// :ref:`x-envoy-internal<config_http_conn_man_headers_x-envoy-internal>` is set to true. If
     /// :ref:`x-envoy-internal<config_http_conn_man_headers_x-envoy-internal>` is not set or false, a
-    /// request is considered external. The filter defaults to ``both``, and it will apply to all request
+    /// request is considered external. The filter defaults to `both`, and it will apply to all request
     /// types.
     #[prost(string, tag = "3")]
     pub request_type: ::prost::alloc::string::String,
@@ -32,8 +32,8 @@ pub struct RateLimit {
     /// communication failure between rate limiting service and the proxy.
     #[prost(bool, tag = "5")]
     pub failure_mode_deny: bool,
-    /// Specifies whether a ``RESOURCE_EXHAUSTED`` gRPC code must be returned instead
-    /// of the default ``UNAVAILABLE`` gRPC code for a rate limited gRPC call. The
+    /// Specifies whether a `RESOURCE_EXHAUSTED` gRPC code must be returned instead
+    /// of the default `UNAVAILABLE` gRPC code for a rate limited gRPC call. The
     /// HTTP code will be 200 for a gRPC response.
     #[prost(bool, tag = "6")]
     pub rate_limited_as_resource_exhausted: bool,
@@ -46,29 +46,29 @@ pub struct RateLimit {
     >,
     /// Defines the standard version to use for X-RateLimit headers emitted by the filter:
     ///
-    /// * ``X-RateLimit-Limit`` - indicates the request-quota associated to the
-    ///    client in the current time-window followed by the description of the
-    ///    quota policy. The values are returned by the rate limiting service in
-    ///    :ref:`current_limit<envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.DescriptorStatus.current_limit>`
-    ///    field. Example: ``10, 10;w=1;name="per-ip", 1000;w=3600``.
-    /// * ``X-RateLimit-Remaining`` - indicates the remaining requests in the
-    ///    current time-window. The values are returned by the rate limiting service
-    ///    in :ref:`limit_remaining<envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.DescriptorStatus.limit_remaining>`
-    ///    field.
-    /// * ``X-RateLimit-Reset`` - indicates the number of seconds until reset of
-    ///    the current time-window. The values are returned by the rate limiting service
-    ///    in :ref:`duration_until_reset<envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.DescriptorStatus.duration_until_reset>`
-    ///    field.
+    /// * `X-RateLimit-Limit` - indicates the request-quota associated to the
+    ///   client in the current time-window followed by the description of the
+    ///   quota policy. The values are returned by the rate limiting service in
+    ///   :ref:`current_limit<envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.DescriptorStatus.current_limit>`
+    ///   field. Example: `10, 10;w=1;name="per-ip", 1000;w=3600`.
+    /// * `X-RateLimit-Remaining` - indicates the remaining requests in the
+    ///   current time-window. The values are returned by the rate limiting service
+    ///   in :ref:`limit_remaining<envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.DescriptorStatus.limit_remaining>`
+    ///   field.
+    /// * `X-RateLimit-Reset` - indicates the number of seconds until reset of
+    ///   the current time-window. The values are returned by the rate limiting service
+    ///   in :ref:`duration_until_reset<envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.DescriptorStatus.duration_until_reset>`
+    ///   field.
     ///
     /// In case rate limiting policy specifies more then one time window, the values
     /// above represent the window that is closest to reaching its limit.
     ///
     /// For more information about the headers specification see selected version of
-    /// the `draft RFC <<https://tools.ietf.org/id/draft-polli-ratelimit-headers-03.html>`_.>
+    /// the `draft RFC <<https://tools.ietf.org/id/draft-polli-ratelimit-headers-03.html>`\_.>
     ///
     /// Disabled by default.
     ///
-    /// [#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.XRateLimitHeadersRFCVersion instead.]
+    /// \[\#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.XRateLimitHeadersRFCVersion instead.\]
     #[prost(enumeration = "rate_limit::XRateLimitHeadersRfcVersion", tag = "8")]
     pub enable_x_ratelimit_headers: i32,
     /// Disables emitting the :ref:`x-envoy-ratelimited<config_http_filters_router_x-envoy-ratelimited>` header
@@ -81,7 +81,7 @@ pub struct RateLimit {
     /// Defaults to 429 (TooManyRequests).
     ///
     /// .. note::
-    ///    If this is set to < 400, 429 will be used instead.
+    /// If this is set to \< 400, 429 will be used instead.
     #[prost(message, optional, tag = "10")]
     pub rate_limited_status: ::core::option::Option<
         super::super::super::super::super::r#type::v3::HttpStatus,
@@ -97,7 +97,7 @@ pub struct RateLimit {
 pub mod rate_limit {
     /// Defines the version of the standard to use for X-RateLimit headers.
     ///
-    /// [#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.XRateLimitHeadersRFCVersion instead.]
+    /// \[\#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.XRateLimitHeadersRFCVersion instead.\]
     #[derive(
         Clone,
         Copy,
@@ -113,7 +113,7 @@ pub mod rate_limit {
     pub enum XRateLimitHeadersRfcVersion {
         /// X-RateLimit headers disabled.
         Off = 0,
-        /// Use `draft RFC Version 03 <<https://tools.ietf.org/id/draft-polli-ratelimit-headers-03.html>`_.>
+        /// Use `draft RFC Version 03 <<https://tools.ietf.org/id/draft-polli-ratelimit-headers-03.html>`\_.>
         DraftVersion03 = 1,
     }
     impl XRateLimitHeadersRfcVersion {
@@ -139,7 +139,7 @@ pub mod rate_limit {
 }
 /// Global rate limiting :ref:`architecture overview <arch_overview_global_rate_limit>`.
 /// Also applies to Local rate limiting :ref:`using descriptors <config_http_filters_local_rate_limit_descriptors>`.
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitConfig {
@@ -149,7 +149,7 @@ pub struct RateLimitConfig {
     ///
     /// .. note::
     ///
-    ///    The filter supports a range of 0 - 10 inclusively for stage numbers.
+    /// The filter supports a range of 0 - 10 inclusively for stage numbers.
     #[prost(uint32, tag = "1")]
     pub stage: u32,
     /// The key to be set in runtime to disable this rate limit configuration.
@@ -159,20 +159,18 @@ pub struct RateLimitConfig {
     /// Order matters as the actions are processed sequentially and the descriptor
     /// is composed by appending descriptor entries in that sequence. If an action
     /// cannot append a descriptor entry, no descriptor is generated for the
-    /// configuration. See :ref:`composing actions
-    /// <config_http_filters_rate_limit_composing_actions>` for additional documentation.
+    /// configuration. See :ref:`composing actions <config_http_filters_rate_limit_composing_actions>` for additional documentation.
     #[prost(message, repeated, tag = "3")]
     pub actions: ::prost::alloc::vec::Vec<rate_limit_config::Action>,
     /// An optional limit override to be appended to the descriptor produced by this
     /// rate limit configuration. If the override value is invalid or cannot be resolved
-    /// from metadata, no override is provided. See :ref:`rate limit override
-    /// <config_http_filters_rate_limit_rate_limit_override>` for more information.
+    /// from metadata, no override is provided. See :ref:`rate limit override <config_http_filters_rate_limit_rate_limit_override>` for more information.
     #[prost(message, optional, tag = "4")]
     pub limit: ::core::option::Option<rate_limit_config::Override>,
 }
 /// Nested message and enum types in `RateLimitConfig`.
 pub mod rate_limit_config {
-    /// [#next-free-field: 10]
+    /// \[\#next-free-field: 10\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Action {
@@ -185,7 +183,7 @@ pub mod rate_limit_config {
         ///
         /// .. code-block:: cpp
         ///
-        ///    ("source_cluster", "<local service cluster>")
+        /// ("source_cluster", "<local service cluster>")
         ///
         /// <local service cluster> is derived from the :option:`--service-cluster` option.
         #[allow(clippy::derive_partial_eq_without_eq)]
@@ -195,27 +193,27 @@ pub mod rate_limit_config {
         ///
         /// .. code-block:: cpp
         ///
-        ///    ("destination_cluster", "<routed target cluster>")
+        /// ("destination_cluster", "<routed target cluster>")
         ///
         /// Once a request matches against a route table rule, a routed cluster is determined by one of
         /// the following :ref:`route table configuration <envoy_v3_api_msg_config.route.v3.RouteConfiguration>`
         /// settings:
         ///
         /// * :ref:`cluster <envoy_v3_api_field_config.route.v3.RouteAction.cluster>` indicates the upstream cluster
-        ///    to route to.
+        ///   to route to.
         /// * :ref:`weighted_clusters <envoy_v3_api_field_config.route.v3.RouteAction.weighted_clusters>`
-        ///    chooses a cluster randomly from a set of clusters with attributed weight.
+        ///   chooses a cluster randomly from a set of clusters with attributed weight.
         /// * :ref:`cluster_header <envoy_v3_api_field_config.route.v3.RouteAction.cluster_header>` indicates which
-        ///    header in the request contains the target cluster.
+        ///   header in the request contains the target cluster.
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct DestinationCluster {}
         /// The following descriptor entry is appended when a header contains a key that matches the
-        /// ``header_name``:
+        /// `header_name`:
         ///
         /// .. code-block:: cpp
         ///
-        ///    ("<descriptor_key>", "<header_value_queried_from_header>")
+        /// ("\<descriptor_key>", "\<header_value_queried_from_header>")
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct RequestHeaders {
@@ -238,7 +236,7 @@ pub mod rate_limit_config {
         ///
         /// .. code-block:: cpp
         ///
-        ///    ("remote_address", "<trusted address from x-forwarded-for>")
+        /// ("remote_address", "<trusted address from x-forwarded-for>")
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct RemoteAddress {}
@@ -246,7 +244,7 @@ pub mod rate_limit_config {
         ///
         /// .. code-block:: cpp
         ///
-        ///    ("generic_key", "<descriptor_value>")
+        /// ("generic_key", "\<descriptor_value>")
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct GenericKey {
@@ -262,7 +260,7 @@ pub mod rate_limit_config {
         ///
         /// .. code-block:: cpp
         ///
-        ///    ("header_match", "<descriptor_value>")
+        /// ("header_match", "\<descriptor_value>")
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct HeaderValueMatch {
@@ -289,8 +287,8 @@ pub mod rate_limit_config {
         ///
         /// .. code-block:: cpp
         ///
-        ///    ("<descriptor_key>", "<value_queried_from_metadata>")
-        /// [#next-free-field: 6]
+        /// ("\<descriptor_key>", "\<value_queried_from_metadata>")
+        /// \[\#next-free-field: 6\]
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct MetaData {
@@ -303,8 +301,8 @@ pub mod rate_limit_config {
             pub metadata_key: ::core::option::Option<
                 super::super::super::super::super::super::super::r#type::metadata::v3::MetadataKey,
             >,
-            /// An optional value to use if ``metadata_key`` is empty. If not set and
-            /// no value is present under the metadata_key then ``skip_if_absent`` is followed to
+            /// An optional value to use if `metadata_key` is empty. If not set and
+            /// no value is present under the metadata_key then `skip_if_absent` is followed to
             /// skip calling the rate limiting service or skip the descriptor.
             #[prost(string, tag = "3")]
             pub default_value: ::prost::alloc::string::String,
@@ -312,7 +310,7 @@ pub mod rate_limit_config {
             #[prost(enumeration = "meta_data::Source", tag = "4")]
             pub source: i32,
             /// If set to true, Envoy skips the descriptor while calling rate limiting service
-            /// when ``metadata_key`` is empty and ``default_value`` is not set. By default it skips calling the
+            /// when `metadata_key` is empty and `default_value` is not set. By default it skips calling the
             /// rate limiting service in that case.
             #[prost(bool, tag = "5")]
             pub skip_if_absent: bool,
@@ -383,7 +381,7 @@ pub mod rate_limit_config {
             #[prost(message, tag = "8")]
             Metadata(MetaData),
             /// Rate limit descriptor extension. See the rate limit descriptor extensions documentation.
-            /// [#extension-category: envoy.rate_limit_descriptors]
+            /// \[\#extension-category: envoy.rate_limit_descriptors\]
             #[prost(message, tag = "9")]
             Extension(
                 super::super::super::super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -404,8 +402,7 @@ pub mod rate_limit_config {
         pub struct DynamicMetadata {
             /// Metadata struct that defines the key and path to retrieve the struct value.
             /// The value must be a struct containing an integer "requests_per_unit" property
-            /// and a "unit" property with a value parseable to :ref:`RateLimitUnit
-            /// enum <envoy_v3_api_enum_type.v3.RateLimitUnit>`
+            /// and a "unit" property with a value parseable to :ref:`RateLimitUnit enum <envoy_v3_api_enum_type.v3.RateLimitUnit>`
             #[prost(message, optional, tag = "1")]
             pub metadata_key: ::core::option::Option<
                 super::super::super::super::super::super::super::r#type::metadata::v3::MetadataKey,
@@ -424,17 +421,17 @@ pub mod rate_limit_config {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitPerRoute {
     /// Specifies if the rate limit filter should include the virtual host rate limits.
-    /// [#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.VhRateLimitsOptions instead.]
+    /// \[\#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.VhRateLimitsOptions instead.\]
     #[prost(enumeration = "rate_limit_per_route::VhRateLimitsOptions", tag = "1")]
     pub vh_rate_limits: i32,
     /// Specifies if the rate limit filter should include the lower levels (route level, virtual host level or cluster weight level) rate limits override options.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(enumeration = "rate_limit_per_route::OverrideOptions", tag = "2")]
     pub override_option: i32,
     /// Rate limit configuration. If not set, uses the
     /// :ref:`VirtualHost.rate_limits<envoy_v3_api_field_config.route.v3.VirtualHost.rate_limits>` or
     /// :ref:`RouteAction.rate_limits<envoy_v3_api_field_config.route.v3.RouteAction.rate_limits>` fields instead.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, repeated, tag = "3")]
     pub rate_limits: ::prost::alloc::vec::Vec<RateLimitConfig>,
     /// Overrides the domain. If not set, uses the filter-level domain instead.
@@ -443,7 +440,7 @@ pub struct RateLimitPerRoute {
 }
 /// Nested message and enum types in `RateLimitPerRoute`.
 pub mod rate_limit_per_route {
-    /// [#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.VhRateLimitsOptions instead.]
+    /// \[\#next-major-version: unify with local ratelimit, should use common.ratelimit.v3.VhRateLimitsOptions instead.\]
     #[derive(
         Clone,
         Copy,
@@ -487,7 +484,7 @@ pub mod rate_limit_per_route {
         }
     }
     /// The override option determines how the filter handles the cases where there is an override config at a more specific level than this one (from least to most specific: virtual host, route, cluster weight).
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[derive(
         Clone,
         Copy,

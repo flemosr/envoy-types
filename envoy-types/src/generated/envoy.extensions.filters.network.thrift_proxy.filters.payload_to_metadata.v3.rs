@@ -7,7 +7,7 @@ pub struct PayloadToMetadata {
 }
 /// Nested message and enum types in `PayloadToMetadata`.
 pub mod payload_to_metadata {
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct KeyValuePair {
@@ -47,7 +47,7 @@ pub mod payload_to_metadata {
         }
     }
     /// A Rule defines what metadata to apply when a field is present or missing.
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Rule {

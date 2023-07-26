@@ -7,14 +7,14 @@ pub struct ResourceMonitor {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// Configuration for the resource monitor being instantiated.
-    /// [#extension-category: envoy.resource_monitors]
+    /// \[\#extension-category: envoy.resource_monitors\]
     #[prost(oneof = "resource_monitor::ConfigType", tags = "3")]
     pub config_type: ::core::option::Option<resource_monitor::ConfigType>,
 }
 /// Nested message and enum types in `ResourceMonitor`.
 pub mod resource_monitor {
     /// Configuration for the resource monitor being instantiated.
-    /// [#extension-category: envoy.resource_monitors]
+    /// \[\#extension-category: envoy.resource_monitors\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ConfigType {
@@ -35,7 +35,7 @@ pub struct ThresholdTrigger {
 pub struct ScaledTrigger {
     /// If the resource pressure is greater than this value, the trigger will be in the
     /// :ref:`scaling <arch_overview_overload_manager-triggers-state>` state with value
-    /// ``(pressure - scaling_threshold) / (saturation_threshold - scaling_threshold)``.
+    /// `(pressure - scaling_threshold) / (saturation_threshold - scaling_threshold)`.
     #[prost(double, tag = "1")]
     pub scaling_threshold: f64,
     /// If the resource pressure is greater than this value, the trigger will enter saturation.
@@ -116,13 +116,11 @@ pub mod scale_timers_overload_action_config {
         /// Unsupported value; users must explicitly specify the timer they want scaled.
         Unspecified = 0,
         /// Adjusts the idle timer for downstream HTTP connections that takes effect when there are no active streams.
-        /// This affects the value of :ref:`HttpConnectionManager.common_http_protocol_options.idle_timeout
-        /// <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.idle_timeout>`
+        /// This affects the value of :ref:`HttpConnectionManager.common_http_protocol_options.idle_timeout <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.idle_timeout>`
         HttpDownstreamConnectionIdle = 1,
         /// Adjusts the idle timer for HTTP streams initiated by downstream clients.
         /// This affects the value of :ref:`RouteAction.idle_timeout <envoy_v3_api_field_config.route.v3.RouteAction.idle_timeout>` and
-        /// :ref:`HttpConnectionManager.stream_idle_timeout
-        /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_idle_timeout>`
+        /// :ref:`HttpConnectionManager.stream_idle_timeout <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_idle_timeout>`
         HttpDownstreamStreamIdle = 2,
         /// Adjusts the timer for how long downstream clients have to finish transport-level negotiations
         /// before the connection is closed.
@@ -171,8 +169,7 @@ pub struct OverloadAction {
     /// state of all triggers, which can be scalar values between 0 and 1 or
     /// saturated. Listeners are notified when the overload action changes state.
     /// An overload manager action can only have one trigger for a given resource
-    /// e.g. :ref:`Trigger.name
-    /// <envoy_v3_api_field_config.overload.v3.Trigger.name>` must be unique
+    /// e.g. :ref:`Trigger.name <envoy_v3_api_field_config.overload.v3.Trigger.name>` must be unique
     /// in this list.
     #[prost(message, repeated, tag = "2")]
     pub triggers: ::prost::alloc::vec::Vec<Trigger>,
@@ -197,8 +194,7 @@ pub struct LoadShedPoint {
     /// A set of triggers for this LoadShedPoint. The LoadShedPoint will use the
     /// the maximum state of all triggers, which can be scalar values between 0 and
     /// 1 or saturated. A LoadShedPoint can only have one trigger for a given
-    /// resource e.g. :ref:`Trigger.name
-    /// <envoy_v3_api_field_config.overload.v3.Trigger.name>` must be unique in
+    /// resource e.g. :ref:`Trigger.name <envoy_v3_api_field_config.overload.v3.Trigger.name>` must be unique in
     /// this list.
     #[prost(message, repeated, tag = "2")]
     pub triggers: ::prost::alloc::vec::Vec<Trigger>,
@@ -212,10 +208,10 @@ pub struct BufferFactoryConfig {
     ///
     /// Envoy has 8 power of two buckets starting with the provided exponent below.
     /// Concretely the 1st bucket contains accounts for streams that use
-    /// [2^minimum_account_to_track_power_of_two,
+    /// \[2^minimum_account_to_track_power_of_two,
     /// 2^(minimum_account_to_track_power_of_two + 1)) bytes.
     /// With the 8th bucket tracking accounts
-    /// >= 128 * 2^minimum_account_to_track_power_of_two.
+    /// \>= 128 * 2^minimum_account_to_track_power_of_two.
     ///
     /// The maximum value is 56, since we're using uint64_t for bytes counting,
     /// and that's the last value that would use the 8 buckets. In practice,
@@ -225,7 +221,7 @@ pub struct BufferFactoryConfig {
     #[prost(uint32, tag = "1")]
     pub minimum_account_to_track_power_of_two: u32,
 }
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OverloadManager {

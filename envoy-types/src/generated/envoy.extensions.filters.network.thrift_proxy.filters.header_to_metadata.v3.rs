@@ -7,7 +7,7 @@ pub struct HeaderToMetadata {
 }
 /// Nested message and enum types in `HeaderToMetadata`.
 pub mod header_to_metadata {
-    /// [#next-free-field: 7]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct KeyValuePair {
@@ -92,8 +92,7 @@ pub mod header_to_metadata {
     pub enum ValueType {
         String = 0,
         Number = 1,
-        /// The value is a serialized `protobuf.Value
-        /// <<https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/struct.proto#L62>`_.>
+        /// The value is a serialized `protobuf.Value <<https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/struct.proto#L62>`\_.>
         ProtobufValue = 2,
     }
     impl ValueType {
@@ -134,7 +133,7 @@ pub mod header_to_metadata {
     pub enum ValueEncode {
         /// The value is not encoded.
         None = 0,
-        /// The value is encoded in `Base64 <<https://tools.ietf.org/html/rfc4648#section-4>`_.>
+        /// The value is encoded in `Base64 <<https://tools.ietf.org/html/rfc4648#section-4>`\_.>
         /// Note: this is mostly used for STRING and PROTOBUF_VALUE to escape the
         /// non-ASCII characters in the header.
         Base64 = 1,

@@ -3,16 +3,16 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CapabilityRestrictionConfig {
     /// The Proxy-Wasm capabilities which will be allowed. Capabilities are mapped by
-    /// name. The ``SanitizationConfig`` which each capability maps to is currently unimplemented and ignored,
+    /// name. The `SanitizationConfig` which each capability maps to is currently unimplemented and ignored,
     /// and so should be left empty.
     ///
     /// The capability names are given in the
-    /// `Proxy-Wasm ABI <<https://github.com/proxy-wasm/spec/tree/master/abi-versions/vNEXT>`_.>
+    /// `Proxy-Wasm ABI <<https://github.com/proxy-wasm/spec/tree/master/abi-versions/vNEXT>`*.>
     /// Additionally, the following WASI capabilities from
-    /// `this list <<https://github.com/WebAssembly/WASI/blob/master/phases/snapshot/docs.md#modules>`_>
+    /// `this list <<https://github.com/WebAssembly/WASI/blob/master/phases/snapshot/docs.md#modules>`*>
     /// are implemented and can be allowed:
-    /// ``fd_write``, ``fd_read``, ``fd_seek``, ``fd_close``, ``fd_fdstat_get``, ``environ_get``, ``environ_sizes_get``,
-    /// ``args_get``, ``args_sizes_get``, ``proc_exit``, ``clock_time_get``, ``random_get``.
+    /// `fd_write`, `fd_read`, `fd_seek`, `fd_close`, `fd_fdstat_get`, `environ_get`, `environ_sizes_get`,
+    /// `args_get`, `args_sizes_get`, `proc_exit`, `clock_time_get`, `random_get`.
     #[prost(map = "string, message", tag = "1")]
     pub allowed_capabilities: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -26,15 +26,15 @@ pub struct CapabilityRestrictionConfig {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SanitizationConfig {}
 /// Configuration for a Wasm VM.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VmConfig {
     /// An ID which will be used along with a hash of the wasm code (or the name of the registered Null
     /// VM plugin) to determine which VM will be used for the plugin. All plugins which use the same
-    /// ``vm_id`` and code will use the same VM. May be left blank. Sharing a VM between plugins can
+    /// `vm_id` and code will use the same VM. May be left blank. Sharing a VM between plugins can
     /// reduce memory utilization and make sharing of data easier which may have security implications.
-    /// [#comment: TODO: add ref for details.]
+    /// \[\#comment: TODO: add ref for details.\]
     #[prost(string, tag = "1")]
     pub vm_id: ::prost::alloc::string::String,
     /// The Wasm runtime type, defaults to the first available Wasm engine used at Envoy build-time.
@@ -42,31 +42,31 @@ pub struct VmConfig {
     /// Available Wasm runtime types are registered as extensions. The following runtimes are included
     /// in Envoy code base:
     ///
-    /// .. _extension_envoy.wasm.runtime.null:
+    /// .. \_extension_envoy.wasm.runtime.null:
     ///
     /// **envoy.wasm.runtime.null**: Null sandbox, the Wasm module must be compiled and linked into the
-    /// Envoy binary. The registered name is given in the ``code`` field as ``inline_string``.
+    /// Envoy binary. The registered name is given in the `code` field as `inline_string`.
     ///
-    /// .. _extension_envoy.wasm.runtime.v8:
+    /// .. \_extension_envoy.wasm.runtime.v8:
     ///
-    /// **envoy.wasm.runtime.v8**: `V8 <<https://v8.dev/>`_-based> WebAssembly runtime.
+    /// **envoy.wasm.runtime.v8**: `V8 <<https://v8.dev/>`\_-based> WebAssembly runtime.
     ///
-    /// .. _extension_envoy.wasm.runtime.wamr:
+    /// .. \_extension_envoy.wasm.runtime.wamr:
     ///
-    /// **envoy.wasm.runtime.wamr**: `WAMR <<https://github.com/bytecodealliance/wasm-micro-runtime/>`_-based> WebAssembly runtime.
+    /// **envoy.wasm.runtime.wamr**: `WAMR <<https://github.com/bytecodealliance/wasm-micro-runtime/>`\_-based> WebAssembly runtime.
     /// This runtime is not enabled in the official build.
     ///
-    /// .. _extension_envoy.wasm.runtime.wavm:
+    /// .. \_extension_envoy.wasm.runtime.wavm:
     ///
-    /// **envoy.wasm.runtime.wavm**: `WAVM <<https://wavm.github.io/>`_-based> WebAssembly runtime.
+    /// **envoy.wasm.runtime.wavm**: `WAVM <<https://wavm.github.io/>`\_-based> WebAssembly runtime.
     /// This runtime is not enabled in the official build.
     ///
-    /// .. _extension_envoy.wasm.runtime.wasmtime:
+    /// .. \_extension_envoy.wasm.runtime.wasmtime:
     ///
-    /// **envoy.wasm.runtime.wasmtime**: `Wasmtime <<https://wasmtime.dev/>`_-based> WebAssembly runtime.
+    /// **envoy.wasm.runtime.wasmtime**: `Wasmtime <<https://wasmtime.dev/>`\_-based> WebAssembly runtime.
     /// This runtime is not enabled in the official build.
     ///
-    /// [#extension-category: envoy.wasm.runtime]
+    /// \[\#extension-category: envoy.wasm.runtime\]
     #[prost(string, tag = "2")]
     pub runtime: ::prost::alloc::string::String,
     /// The Wasm code that Envoy will execute.
@@ -75,9 +75,9 @@ pub struct VmConfig {
         super::super::super::config::core::v3::AsyncDataSource,
     >,
     /// The Wasm configuration used in initialization of a new VM
-    /// (proxy_on_start). ``google.protobuf.Struct`` is serialized as JSON before
-    /// passing it to the plugin. ``google.protobuf.BytesValue`` and
-    /// ``google.protobuf.StringValue`` are passed directly without the wrapper.
+    /// (proxy_on_start). `google.protobuf.Struct` is serialized as JSON before
+    /// passing it to the plugin. `google.protobuf.BytesValue` and
+    /// `google.protobuf.StringValue` are passed directly without the wrapper.
     #[prost(message, optional, tag = "4")]
     pub configuration: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,
@@ -93,7 +93,7 @@ pub struct VmConfig {
     #[prost(bool, tag = "6")]
     pub nack_on_code_cache_miss: bool,
     /// Specifies environment variables to be injected to this VM which will be available through
-    /// WASI's ``environ_get`` and ``environ_get_sizes`` system calls. Note that these functions are mostly implicitly
+    /// WASI's `environ_get` and `environ_get_sizes` system calls. Note that these functions are mostly implicitly
     /// called in your language's standard library, so you do not need to call them directly and you can access to env
     /// vars just like when you do on native platforms.
     /// Warning: Envoy rejects the configuration if there's conflict of key space.
@@ -115,25 +115,25 @@ pub struct EnvironmentVariables {
     >,
 }
 /// Base Configuration for Wasm Plugins e.g. filters and services.
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PluginConfig {
     /// A unique name for a filters/services in a VM for use in identifying the filter/service if
-    /// multiple filters/services are handled by the same ``vm_id`` and ``root_id`` and for
+    /// multiple filters/services are handled by the same `vm_id` and `root_id` and for
     /// logging/debugging.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// A unique ID for a set of filters/services in a VM which will share a RootContext and Contexts
     /// if applicable (e.g. an Wasm HttpFilter and an Wasm AccessLog). If left blank, all
-    /// filters/services with a blank root_id with the same ``vm_id`` will share Context(s).
+    /// filters/services with a blank root_id with the same `vm_id` will share Context(s).
     #[prost(string, tag = "2")]
     pub root_id: ::prost::alloc::string::String,
     /// Filter/service configuration used to configure or reconfigure a plugin
-    /// (``proxy_on_configure``).
-    /// ``google.protobuf.Struct`` is serialized as JSON before
-    /// passing it to the plugin. ``google.protobuf.BytesValue`` and
-    /// ``google.protobuf.StringValue`` are passed directly without the wrapper.
+    /// (`proxy_on_configure`).
+    /// `google.protobuf.Struct` is serialized as JSON before
+    /// passing it to the plugin. `google.protobuf.BytesValue` and
+    /// `google.protobuf.StringValue` are passed directly without the wrapper.
     #[prost(message, optional, tag = "4")]
     pub configuration: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,
@@ -165,8 +165,7 @@ pub mod plugin_config {
         VmConfig(super::VmConfig),
     }
 }
-/// WasmService is configured as a built-in ``envoy.wasm_service`` :ref:`WasmService
-/// <config_wasm_service>` This opaque configuration will be used to create a Wasm Service.
+/// WasmService is configured as a built-in `envoy.wasm_service` :ref:`WasmService <config_wasm_service>` This opaque configuration will be used to create a Wasm Service.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WasmService {

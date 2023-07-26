@@ -2,8 +2,8 @@
 ///
 /// By default this cache uses a least-recently-used eviction strategy.
 ///
-/// For implementation details, see `DESIGN.md <<https://github.com/envoyproxy/envoy/blob/main/source/extensions/http/cache/file_system_http_cache/DESIGN.md>`_.>
-/// [#next-free-field: 11]
+/// For implementation details, see `DESIGN.md <<https://github.com/envoyproxy/envoy/blob/main/source/extensions/http/cache/file_system_http_cache/DESIGN.md>`\_.>
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FileSystemHttpCacheConfig {
@@ -17,8 +17,8 @@ pub struct FileSystemHttpCacheConfig {
     /// This also doubles as the unique identifier for a cache, so a cache can be shared
     /// between different routes, or separate paths can be used to specify separate caches.
     ///
-    /// If the same ``cache_path`` is used in more than one ``CacheConfig``, the rest of the
-    /// ``FileSystemHttpCacheConfig`` must also match, and will refer to the same cache
+    /// If the same `cache_path` is used in more than one `CacheConfig`, the rest of the
+    /// `FileSystemHttpCacheConfig` must also match, and will refer to the same cache
     /// instance.
     #[prost(string, tag = "2")]
     pub cache_path: ::prost::alloc::string::String,
@@ -39,7 +39,7 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// If unset there is no limit.
     ///
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "4")]
     pub max_individual_cache_entry_size_bytes: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt64Value,
@@ -55,15 +55,15 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// Setting this can help with performance in file systems where a large number of inodes
     /// in a single branch degrades performance. The optimal value in that case would be
-    /// ``sqrt(expected_cache_entry_count)``.
+    /// `sqrt(expected_cache_entry_count)`.
     ///
     /// On file systems that perform well with many inodes, the default value of 1 should be used.
     ///
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(uint32, tag = "6")]
     pub cache_subdivisions: u32,
     /// The amount of the maximum cache size or count to evict when cache eviction is
-    /// triggered. For example, if ``max_cache_size_bytes`` is 10000000 and ``evict_fraction``
+    /// triggered. For example, if `max_cache_size_bytes` is 10000000 and `evict_fraction`
     /// is 0.2, then when the cache exceeds 10MB, entries will be evicted until the cache size is
     /// less than or equal to 8MB.
     ///
@@ -73,7 +73,7 @@ pub struct FileSystemHttpCacheConfig {
     /// Evicting a larger fraction will mean the eviction thread will run less often (sparing
     /// CPU load) at the cost of more cache misses due to the extra evicted entries.
     ///
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(float, tag = "7")]
     pub evict_fraction: f32,
     /// The longest amount of time to wait before running a cache eviction pass. An eviction
@@ -88,7 +88,7 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// If unset, there will be no eviction passes except those triggered by cache limits.
     ///
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "8")]
     pub max_eviction_period: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -98,14 +98,14 @@ pub struct FileSystemHttpCacheConfig {
     /// occurred more recently than this period when another would be triggered, that new
     /// pass is cancelled.
     ///
-    /// This means the cache can potentially grow beyond ``max_cache_size_bytes`` by as much as
+    /// This means the cache can potentially grow beyond `max_cache_size_bytes` by as much as
     /// can be written within the duration specified.
     ///
-    /// Generally you would use *either* ``min_eviction_period`` *or* ``evict_fraction`` to
+    /// Generally you would use *either* `min_eviction_period` *or* `evict_fraction` to
     /// reduce churn. Both together will work but since they're both aiming for the same goal,
     /// it's simpler not to.
     ///
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "9")]
     pub min_eviction_period: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -115,7 +115,7 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// If false, and the cache path does not exist, the config is rejected.
     ///
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(bool, tag = "10")]
     pub create_cache_path: bool,
 }

@@ -1,6 +1,5 @@
 /// This configuration allows the built-in LEAST_REQUEST LB policy to be configured via the LB policy
-/// extension point. See the :ref:`load balancing architecture overview
-/// <arch_overview_load_balancing_types>` for more information.
+/// extension point. See the :ref:`load balancing architecture overview <arch_overview_load_balancing_types>` for more information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LeastRequest {
@@ -32,7 +31,7 @@ pub struct LeastRequest {
     /// weight change.
     ///
     /// .. note::
-    ///    This setting only takes effect if all host weights are not equal.
+    /// This setting only takes effect if all host weights are not equal.
     #[prost(message, optional, tag = "2")]
     pub active_request_bias: ::core::option::Option<
         super::super::super::super::config::core::v3::RuntimeDouble,

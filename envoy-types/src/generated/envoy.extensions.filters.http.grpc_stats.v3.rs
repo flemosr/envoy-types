@@ -1,5 +1,5 @@
 /// gRPC statistics filter configuration
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilterConfig {
@@ -8,16 +8,13 @@ pub struct FilterConfig {
     #[prost(bool, tag = "1")]
     pub emit_filter_state: bool,
     /// If true, the filter will gather a histogram for the request time of the upstream.
-    /// It works with :ref:`stats_for_all_methods
-    /// <envoy_v3_api_field_extensions.filters.http.grpc_stats.v3.FilterConfig.stats_for_all_methods>`
-    /// and :ref:`individual_method_stats_allowlist
-    /// <envoy_v3_api_field_extensions.filters.http.grpc_stats.v3.FilterConfig.individual_method_stats_allowlist>` the same way
+    /// It works with :ref:`stats_for_all_methods <envoy_v3_api_field_extensions.filters.http.grpc_stats.v3.FilterConfig.stats_for_all_methods>`
+    /// and :ref:`individual_method_stats_allowlist <envoy_v3_api_field_extensions.filters.http.grpc_stats.v3.FilterConfig.individual_method_stats_allowlist>` the same way
     /// request_message_count and response_message_count works.
     #[prost(bool, tag = "4")]
     pub enable_upstream_stats: bool,
     /// If true, the filter will replace dots in the grpc_service_name with underscores before emitting
-    /// the metrics. Only works when :ref:`stats_for_all_methods
-    /// <envoy_v3_api_field_extensions.filters.http.grpc_stats.v3.FilterConfig.stats_for_all_methods>`
+    /// the metrics. Only works when :ref:`stats_for_all_methods <envoy_v3_api_field_extensions.filters.http.grpc_stats.v3.FilterConfig.stats_for_all_methods>`
     /// is set to true. It could cause metrics to be merged if the edited service name conflicts with
     /// an existing service. For example there are both service "foo.bar" & "foo_bar" running.
     /// This config can fix incorrect gRPC metrics with dots because the existing stats tag extractor
@@ -36,7 +33,7 @@ pub mod filter_config {
     pub enum PerMethodStatSpecifier {
         /// If set, specifies an allowlist of service/methods that will have individual stats
         /// emitted for them. Any call that does not match the allowlist will be counted
-        /// in a stat with no method specifier: ``cluster.<name>.grpc.*``.
+        /// in a stat with no method specifier: `cluster.<name>.grpc.*`.
         #[prost(message, tag = "2")]
         IndividualMethodStatsAllowlist(
             super::super::super::super::super::super::config::core::v3::GrpcMethodList,
@@ -44,19 +41,19 @@ pub mod filter_config {
         /// If set to true, emit stats for all service/method names.
         ///
         /// If set to false, emit stats for all service/message types to the same stats without including
-        /// the service/method in the name, with prefix ``cluster.<name>.grpc``. This can be useful if
+        /// the service/method in the name, with prefix `cluster.<name>.grpc`. This can be useful if
         /// service/method granularity is not needed, or if each cluster only receives a single method.
         ///
         /// .. attention::
-        ///    This option is only safe if all clients are trusted. If this option is enabled
-        ///    with untrusted clients, the clients could cause unbounded growth in the number of stats in
-        ///    Envoy, using unbounded memory and potentially slowing down stats pipelines.
+        /// This option is only safe if all clients are trusted. If this option is enabled
+        /// with untrusted clients, the clients could cause unbounded growth in the number of stats in
+        /// Envoy, using unbounded memory and potentially slowing down stats pipelines.
         ///
         /// .. attention::
-        ///    If neither ``individual_method_stats_allowlist`` nor ``stats_for_all_methods`` is set, the
-        ///    behavior will default to ``stats_for_all_methods=false``. This default value is changed due
-        ///    to the previous value being deprecated. This behavior can be changed with runtime override
-        ///    ``envoy.deprecated_features.grpc_stats_filter_enable_stats_for_all_methods_by_default``.
+        /// If neither `individual_method_stats_allowlist` nor `stats_for_all_methods` is set, the
+        /// behavior will default to `stats_for_all_methods=false`. This default value is changed due
+        /// to the previous value being deprecated. This behavior can be changed with runtime override
+        /// `envoy.deprecated_features.grpc_stats_filter_enable_stats_for_all_methods_by_default`.
         #[prost(message, tag = "3")]
         StatsForAllMethods(
             super::super::super::super::super::super::super::google::protobuf::BoolValue,

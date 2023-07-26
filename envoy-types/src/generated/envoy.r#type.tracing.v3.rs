@@ -1,5 +1,5 @@
 /// Describes custom tags for the active span.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CustomTag {
@@ -49,7 +49,7 @@ pub mod custom_tag {
     /// Metadata type custom tag using
     /// :ref:`MetadataKey <envoy_v3_api_msg_type.metadata.v3.MetadataKey>` to retrieve the protobuf value
     /// from :ref:`Metadata <envoy_v3_api_msg_config.core.v3.Metadata>`, and populate the tag value with
-    /// `the canonical JSON <<https://developers.google.com/protocol-buffers/docs/proto3#json>`_>
+    /// `the canonical JSON <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_>
     /// representation of it.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]

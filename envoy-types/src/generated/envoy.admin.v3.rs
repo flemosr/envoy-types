@@ -1,4 +1,4 @@
-/// Proto representation of certificate details. Admin endpoint uses this wrapper for ``/certs`` to
+/// Proto representation of certificate details. Admin endpoint uses this wrapper for `/certs` to
 /// display certificate information. See :ref:`/certs <operations_admin_interface_certs>` for more
 /// information.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -18,7 +18,7 @@ pub struct Certificate {
     #[prost(message, repeated, tag = "2")]
     pub cert_chain: ::prost::alloc::vec::Vec<CertificateDetails>,
 }
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CertificateDetails {
@@ -139,7 +139,7 @@ pub mod simple_metric {
         }
     }
 }
-/// Admin endpoint uses this wrapper for ``/clusters`` to display cluster status information.
+/// Admin endpoint uses this wrapper for `/clusters` to display cluster status information.
 /// See :ref:`/clusters <operations_admin_interface_clusters>` for more information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -149,7 +149,7 @@ pub struct Clusters {
     pub cluster_statuses: ::prost::alloc::vec::Vec<ClusterStatus>,
 }
 /// Details an individual cluster's current status.
-/// [#next-free-field: 9]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterStatus {
@@ -162,20 +162,20 @@ pub struct ClusterStatus {
     /// The success rate threshold used in the last interval.
     /// If
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``false``, all errors: externally and locally generated were used to calculate the threshold.
+    /// is `false`, all errors: externally and locally generated were used to calculate the threshold.
     /// If
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``true``, only externally generated errors were used to calculate the threshold.
+    /// is `true`, only externally generated errors were used to calculate the threshold.
     /// The threshold is used to eject hosts based on their success rate. See
     /// :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for details.
     ///
     /// Note: this field may be omitted in any of the three following cases:
     ///
     /// 1. There were not enough hosts with enough request volume to proceed with success rate based
-    ///     outlier ejection.
-    /// 2. The threshold is computed to be < 0 because a negative value implies that there was no
-    ///     threshold for that interval.
-    /// 3. Outlier detection is not enabled for this cluster.
+    ///    outlier ejection.
+    /// 1. The threshold is computed to be \< 0 because a negative value implies that there was no
+    ///    threshold for that interval.
+    /// 1. Outlier detection is not enabled for this cluster.
     #[prost(message, optional, tag = "3")]
     pub success_rate_ejection_threshold: ::core::option::Option<
         super::super::r#type::v3::Percent,
@@ -187,17 +187,17 @@ pub struct ClusterStatus {
     /// taken into account and externally originated errors were treated as success.
     /// This field should be interpreted only when
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``true``. The threshold is used to eject hosts based on their success rate.
+    /// is `true`. The threshold is used to eject hosts based on their success rate.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     /// details.
     ///
     /// Note: this field may be omitted in any of the three following cases:
     ///
     /// 1. There were not enough hosts with enough request volume to proceed with success rate based
-    ///     outlier ejection.
-    /// 2. The threshold is computed to be < 0 because a negative value implies that there was no
-    ///     threshold for that interval.
-    /// 3. Outlier detection is not enabled for this cluster.
+    ///    outlier ejection.
+    /// 1. The threshold is computed to be \< 0 because a negative value implies that there was no
+    ///    threshold for that interval.
+    /// 1. Outlier detection is not enabled for this cluster.
     #[prost(message, optional, tag = "5")]
     pub local_origin_success_rate_ejection_threshold: ::core::option::Option<
         super::super::r#type::v3::Percent,
@@ -215,7 +215,7 @@ pub struct ClusterStatus {
     pub eds_service_name: ::prost::alloc::string::String,
 }
 /// Current state of a particular host.
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HostStatus {
@@ -231,10 +231,10 @@ pub struct HostStatus {
     /// Request success rate for this host over the last calculated interval.
     /// If
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``false``, all errors: externally and locally generated were used in success rate
+    /// is `false`, all errors: externally and locally generated were used in success rate
     /// calculation. If
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``true``, only externally generated errors were used in success rate calculation.
+    /// is `true`, only externally generated errors were used in success rate calculation.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     /// details.
     ///
@@ -257,7 +257,7 @@ pub struct HostStatus {
     /// errors were treated as success.
     /// This field should be interpreted only when
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``true``.
+    /// is `true`.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     /// details.
     ///
@@ -273,7 +273,7 @@ pub struct HostStatus {
     pub locality: ::core::option::Option<super::super::config::core::v3::Locality>,
 }
 /// Health status for a host.
-/// [#next-free-field: 9]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HostHealthStatus {
@@ -302,7 +302,7 @@ pub struct HostHealthStatus {
     pub active_hc_timeout: bool,
     /// Health status as reported by EDS. Note: only HEALTHY and UNHEALTHY are currently supported
     /// here.
-    /// [#comment:TODO(mrice32): pipe through remaining EDS health status possibilities.]
+    /// \[\#comment:TODO(mrice32): pipe through remaining EDS health status possibilities.\]
     #[prost(enumeration = "super::super::config::core::v3::HealthStatus", tag = "3")]
     pub eds_health_status: i32,
 }
@@ -324,7 +324,7 @@ pub struct UpdateFailureState {
     #[prost(string, tag = "3")]
     pub details: ::prost::alloc::string::String,
     /// This is the version of the rejected resource.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(string, tag = "4")]
     pub version_info: ::prost::alloc::string::String,
 }
@@ -388,7 +388,7 @@ pub mod listeners_config_dump {
         >,
     }
     /// Describes a dynamically loaded listener via the LDS API.
-    /// [#next-free-field: 7]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicListener {
@@ -412,13 +412,13 @@ pub mod listeners_config_dump {
         #[prost(message, optional, tag = "4")]
         pub draining_state: ::core::option::Option<DynamicListenerState>,
         /// Set if the last update failed, cleared after the next successful update.
-        /// The ``error_state`` field contains the rejected version of this particular
+        /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
         #[prost(message, optional, tag = "5")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
@@ -470,7 +470,7 @@ pub mod clusters_config_dump {
         >,
     }
     /// Describes a dynamically loaded cluster via the CDS API.
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicCluster {
@@ -491,14 +491,14 @@ pub mod clusters_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// Set if the last update failed, cleared after the next successful update.
-        /// The ``error_state`` field contains the rejected version of this particular
+        /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -538,7 +538,7 @@ pub mod routes_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicRouteConfig {
@@ -558,14 +558,14 @@ pub mod routes_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// Set if the last update failed, cleared after the next successful update.
-        /// The ``error_state`` field contains the rejected version of this particular
+        /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -607,7 +607,7 @@ pub mod scoped_routes_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
-    /// [#next-free-field: 7]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicScopedRouteConfigs {
@@ -630,14 +630,14 @@ pub mod scoped_routes_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// Set if the last update failed, cleared after the next successful update.
-        /// The ``error_state`` field contains the rejected version of this particular
+        /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "5")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
@@ -669,17 +669,17 @@ pub mod endpoints_config_dump {
         pub endpoint_config: ::core::option::Option<
             super::super::super::super::google::protobuf::Any,
         >,
-        /// \[#not-implemented-hide:\] The timestamp when the Endpoint was last updated.
+        /// \\[\#not-implemented-hide:\\] The timestamp when the Endpoint was last updated.
         #[prost(message, optional, tag = "2")]
         pub last_updated: ::core::option::Option<
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicEndpointConfig {
-        /// \[#not-implemented-hide:\] This is the per-resource version information. This version is currently taken from the
+        /// \\[\#not-implemented-hide:\\] This is the per-resource version information. This version is currently taken from the
         /// :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
         /// the endpoint configuration was loaded.
         #[prost(string, tag = "1")]
@@ -689,20 +689,20 @@ pub mod endpoints_config_dump {
         pub endpoint_config: ::core::option::Option<
             super::super::super::super::google::protobuf::Any,
         >,
-        /// \[#not-implemented-hide:\] The timestamp when the Endpoint was last updated.
+        /// \\[\#not-implemented-hide:\\] The timestamp when the Endpoint was last updated.
         #[prost(message, optional, tag = "3")]
         pub last_updated: ::core::option::Option<
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// Set if the last update failed, cleared after the next successful update.
-        /// The ``error_state`` field contains the rejected version of this particular
+        /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -720,13 +720,12 @@ pub struct EcdsConfigDump {
 }
 /// Nested message and enum types in `EcdsConfigDump`.
 pub mod ecds_config_dump {
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct EcdsFilterConfig {
         /// This is the per-resource version information. This version is currently
-        /// taken from the :ref:`version_info
-        /// <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>`
+        /// taken from the :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>`
         /// field at the time that the ECDS filter was loaded.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
@@ -741,14 +740,14 @@ pub mod ecds_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// Set if the last update failed, cleared after the next successful update.
-        /// The ``error_state`` field contains the rejected version of this
+        /// The `error_state` field contains the rejected version of this
         /// particular resource along with the reason and timestamp. For successfully
         /// updated or acknowledged resource, this field should be empty.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -767,8 +766,7 @@ pub enum ClientResourceStatus {
     /// This resource has been requested by the client but has either not been
     /// delivered by the server or was previously delivered by the server and then
     /// subsequently removed from resources provided by the server. For more
-    /// information, please refer to the :ref:`"Knowing When a Requested Resource
-    /// Does Not Exist" <xds_protocol_resource_not_existed>` section.
+    /// information, please refer to the :ref:`"Knowing When a Requested Resource Does Not Exist" <xds_protocol_resource_not_existed>` section.
     DoesNotExist = 2,
     /// Client received this resource and replied with ACK.
     Acked = 3,
@@ -812,17 +810,17 @@ pub struct ConfigDump {
     /// The following configurations are currently supported and will be dumped in the order given
     /// below:
     ///
-    /// * ``bootstrap``: :ref:`BootstrapConfigDump <envoy_v3_api_msg_admin.v3.BootstrapConfigDump>`
-    /// * ``clusters``: :ref:`ClustersConfigDump <envoy_v3_api_msg_admin.v3.ClustersConfigDump>`
-    /// * ``ecds_filter_http``: :ref:`EcdsConfigDump <envoy_v3_api_msg_admin.v3.EcdsConfigDump>`
-    /// * ``ecds_filter_tcp_listener``: :ref:`EcdsConfigDump <envoy_v3_api_msg_admin.v3.EcdsConfigDump>`
-    /// * ``endpoints``:  :ref:`EndpointsConfigDump <envoy_v3_api_msg_admin.v3.EndpointsConfigDump>`
-    /// * ``listeners``: :ref:`ListenersConfigDump <envoy_v3_api_msg_admin.v3.ListenersConfigDump>`
-    /// * ``scoped_routes``: :ref:`ScopedRoutesConfigDump <envoy_v3_api_msg_admin.v3.ScopedRoutesConfigDump>`
-    /// * ``routes``:  :ref:`RoutesConfigDump <envoy_v3_api_msg_admin.v3.RoutesConfigDump>`
-    /// * ``secrets``:  :ref:`SecretsConfigDump <envoy_v3_api_msg_admin.v3.SecretsConfigDump>`
+    /// * `bootstrap`: :ref:`BootstrapConfigDump <envoy_v3_api_msg_admin.v3.BootstrapConfigDump>`
+    /// * `clusters`: :ref:`ClustersConfigDump <envoy_v3_api_msg_admin.v3.ClustersConfigDump>`
+    /// * `ecds_filter_http`: :ref:`EcdsConfigDump <envoy_v3_api_msg_admin.v3.EcdsConfigDump>`
+    /// * `ecds_filter_tcp_listener`: :ref:`EcdsConfigDump <envoy_v3_api_msg_admin.v3.EcdsConfigDump>`
+    /// * `endpoints`:  :ref:`EndpointsConfigDump <envoy_v3_api_msg_admin.v3.EndpointsConfigDump>`
+    /// * `listeners`: :ref:`ListenersConfigDump <envoy_v3_api_msg_admin.v3.ListenersConfigDump>`
+    /// * `scoped_routes`: :ref:`ScopedRoutesConfigDump <envoy_v3_api_msg_admin.v3.ScopedRoutesConfigDump>`
+    /// * `routes`:  :ref:`RoutesConfigDump <envoy_v3_api_msg_admin.v3.RoutesConfigDump>`
+    /// * `secrets`:  :ref:`SecretsConfigDump <envoy_v3_api_msg_admin.v3.SecretsConfigDump>`
     ///
-    /// EDS Configuration will only be dumped by using parameter ``?include_eds``
+    /// EDS Configuration will only be dumped by using parameter `?include_eds`
     ///
     /// Currently ECDS is supported in HTTP and listener filters. Note, ECDS configuration for
     /// either HTTP or listener filter will only be dumped if it is actually configured.
@@ -830,8 +828,7 @@ pub struct ConfigDump {
     /// You can filter output with the resource and mask query parameters.
     /// See :ref:`/config_dump?resource={} <operations_admin_interface_config_dump_by_resource>`,
     /// :ref:`/config_dump?mask={} <operations_admin_interface_config_dump_by_mask>`,
-    /// or :ref:`/config_dump?resource={},mask={}
-    /// <operations_admin_interface_config_dump_by_resource_and_mask>` for more information.
+    /// or :ref:`/config_dump?resource={},mask={} <operations_admin_interface_config_dump_by_resource_and_mask>` for more information.
     #[prost(message, repeated, tag = "1")]
     pub configs: ::prost::alloc::vec::Vec<super::super::super::google::protobuf::Any>,
 }
@@ -875,7 +872,7 @@ pub struct SecretsConfigDump {
 /// Nested message and enum types in `SecretsConfigDump`.
 pub mod secrets_config_dump {
     /// DynamicSecret contains secret information fetched via SDS.
-    /// [#next-free-field: 7]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicSecret {
@@ -891,7 +888,7 @@ pub mod secrets_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// The actual secret information.
-        /// Security sensitive information is redacted (replaced with "\[redacted\]") for
+        /// Security sensitive information is redacted (replaced with "\\[redacted\\]") for
         /// private keys and passwords in TLS certificates.
         #[prost(message, optional, tag = "4")]
         pub secret: ::core::option::Option<
@@ -901,11 +898,11 @@ pub mod secrets_config_dump {
         /// The *error_state* field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "5")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
@@ -922,7 +919,7 @@ pub mod secrets_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// The actual secret information.
-        /// Security sensitive information is redacted (replaced with "\[redacted\]") for
+        /// Security sensitive information is redacted (replaced with "\\[redacted\\]") for
         /// private keys and passwords in TLS certificates.
         #[prost(message, optional, tag = "3")]
         pub secret: ::core::option::Option<
@@ -958,7 +955,7 @@ pub mod unready_targets_dumps {
         pub target_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
 }
-/// Admin endpoint uses this wrapper for ``/listeners`` to display listener status information.
+/// Admin endpoint uses this wrapper for `/listeners` to display listener status information.
 /// See :ref:`/listeners <operations_admin_interface_listeners>` for more information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -988,43 +985,43 @@ pub struct ListenerStatus {
 /// Proto representation of the internal memory consumption of an Envoy instance. These represent
 /// values extracted from an internal TCMalloc instance. For more information, see the section of the
 /// docs entitled ["Generic Tcmalloc Status"](<https://gperftools.github.io/gperftools/tcmalloc.html>).
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Memory {
     /// The number of bytes allocated by the heap for Envoy. This is an alias for
-    /// ``generic.current_allocated_bytes``.
+    /// `generic.current_allocated_bytes`.
     #[prost(uint64, tag = "1")]
     pub allocated: u64,
     /// The number of bytes reserved by the heap but not necessarily allocated. This is an alias for
-    /// ``generic.heap_size``.
+    /// `generic.heap_size`.
     #[prost(uint64, tag = "2")]
     pub heap_size: u64,
     /// The number of bytes in free, unmapped pages in the page heap. These bytes always count towards
     /// virtual memory usage, and depending on the OS, typically do not count towards physical memory
-    /// usage. This is an alias for ``tcmalloc.pageheap_unmapped_bytes``.
+    /// usage. This is an alias for `tcmalloc.pageheap_unmapped_bytes`.
     #[prost(uint64, tag = "3")]
     pub pageheap_unmapped: u64,
     /// The number of bytes in free, mapped pages in the page heap. These bytes always count towards
     /// virtual memory usage, and unless the underlying memory is swapped out by the OS, they also
-    /// count towards physical memory usage. This is an alias for ``tcmalloc.pageheap_free_bytes``.
+    /// count towards physical memory usage. This is an alias for `tcmalloc.pageheap_free_bytes`.
     #[prost(uint64, tag = "4")]
     pub pageheap_free: u64,
     /// The amount of memory used by the TCMalloc thread caches (for small objects). This is an alias
-    /// for ``tcmalloc.current_total_thread_cache_bytes``.
+    /// for `tcmalloc.current_total_thread_cache_bytes`.
     #[prost(uint64, tag = "5")]
     pub total_thread_cache: u64,
     /// The number of bytes of the physical memory usage by the allocator. This is an alias for
-    /// ``generic.total_physical_bytes``.
+    /// `generic.total_physical_bytes`.
     #[prost(uint64, tag = "6")]
     pub total_physical_bytes: u64,
 }
 /// Proto representation of the statistics collected upon absl::Mutex contention, if Envoy is run
-/// under :option:`--enable-mutex-tracing`. For more information, see the ``absl::Mutex``
+/// under :option:`--enable-mutex-tracing`. For more information, see the `absl::Mutex`
 /// \[docs\](<https://abseil.io/about/design/mutex#extra-features>).
 ///
-/// *NB*: The wait cycles below are measured by ``absl::base_internal::CycleClock``, and may not
-/// correspond to core clock frequency. For more information, see the ``CycleClock``
+/// *NB*: The wait cycles below are measured by `absl::base_internal::CycleClock`, and may not
+/// correspond to core clock frequency. For more information, see the `CycleClock`
 /// \[docs\](<https://github.com/abseil/abseil-cpp/blob/master/absl/base/internal/cycleclock.h>).
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1041,7 +1038,7 @@ pub struct MutexStats {
 }
 /// Proto representation of the value returned by /server_info, containing
 /// server version/server status information.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ServerInfo {
@@ -1120,7 +1117,7 @@ pub mod server_info {
         }
     }
 }
-/// [#next-free-field: 39]
+/// \[\#next-free-field: 39\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommandLineOptions {

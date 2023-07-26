@@ -1,9 +1,9 @@
-/// Configuration to instantiate or select a singleton ``AsyncFileManager``.
+/// Configuration to instantiate or select a singleton `AsyncFileManager`.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AsyncFileManagerConfig {
     /// An optional identifier for the manager. An empty string is a valid identifier
-    /// for a common, default ``AsyncFileManager``.
+    /// for a common, default `AsyncFileManager`.
     ///
     /// Reusing the same id with different configurations in the same envoy instance
     /// is an error.

@@ -1,6 +1,6 @@
 /// Configuration for FixedServerPreferredAddressConfig.
 ///
-/// [#comment:TODO(danzh2010): discuss with API shepherds before removing WiP status.]
+/// \[\#comment:TODO(danzh2010): discuss with API shepherds before removing WiP status.\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FixedServerPreferredAddressConfig {

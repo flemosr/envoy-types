@@ -1,4 +1,4 @@
-/// [#next-free-field: 12]
+/// \[\#next-free-field: 12\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutlierDetectionEvent {
@@ -18,19 +18,19 @@ pub struct OutlierDetectionEvent {
     /// The :ref:`cluster <envoy_v3_api_msg_config.cluster.v3.Cluster>` that owns the ejected host.
     #[prost(string, tag = "4")]
     pub cluster_name: ::prost::alloc::string::String,
-    /// The URL of the ejected host. E.g., ``tcp://1.2.3.4:80``.
+    /// The URL of the ejected host. E.g., `tcp://1.2.3.4:80`.
     #[prost(string, tag = "5")]
     pub upstream_url: ::prost::alloc::string::String,
     /// The action that took place.
     #[prost(enumeration = "Action", tag = "6")]
     pub action: i32,
-    /// If ``action`` is ``eject``, specifies the number of times the host has been ejected (local to
+    /// If `action` is `eject`, specifies the number of times the host has been ejected (local to
     /// that Envoy and gets reset if the host gets removed from the upstream cluster for any reason and
     /// then re-added).
     #[prost(uint32, tag = "7")]
     pub num_ejections: u32,
-    /// If ``action`` is ``eject``, specifies if the ejection was enforced. ``true`` means the host was
-    /// ejected. ``false`` means the event was logged but the host was not actually ejected.
+    /// If `action` is `eject`, specifies if the ejection was enforced. `true` means the host was
+    /// ejected. `false` means the event was logged but the host was not actually ejected.
     #[prost(bool, tag = "8")]
     pub enforced: bool,
     #[prost(oneof = "outlier_detection_event::Event", tags = "9, 10, 11")]
@@ -80,7 +80,7 @@ pub enum OutlierEjectionType {
     /// In case upstream host returns certain number of consecutive 5xx.
     /// If
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``false``, all type of errors are treated as HTTP 5xx errors.
+    /// is `false`, all type of errors are treated as HTTP 5xx errors.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     /// details.
     Consecutive5xx = 0,
@@ -91,21 +91,21 @@ pub enum OutlierEjectionType {
     /// in the cluster.
     /// If
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is ``false``, all errors (externally and locally generated) are used to calculate success rate
+    /// is `false`, all errors (externally and locally generated) are used to calculate success rate
     /// statistics. See :ref:`Cluster outlier detection <arch_overview_outlier_detection>`
     /// documentation for details.
     SuccessRate = 2,
     /// Consecutive local origin failures: Connection failures, resets, timeouts, etc
     /// This type of ejection happens only when
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is set to ``true``.
+    /// is set to `true`.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     ConsecutiveLocalOriginFailure = 3,
     /// Runs over aggregated success rate statistics for local origin failures
     /// for all hosts in the cluster and selects hosts for which success rate deviates from other
     /// hosts in the cluster. This type of ejection happens only when
     /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is set to ``true``.
+    /// is set to `true`.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     SuccessRateLocalOrigin = 4,
     /// Runs over aggregated success rate statistics from every host in cluster and selects hosts for

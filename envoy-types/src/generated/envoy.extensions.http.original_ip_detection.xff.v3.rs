@@ -1,7 +1,7 @@
 /// This extension allows for the original downstream remote IP to be detected
 /// by reading the :ref:`config_http_conn_man_headers_x-forwarded-for` header.
 ///
-/// [#extension: envoy.http.original_ip_detection.xff]
+/// \[\#extension: envoy.http.original_ip_detection.xff\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct XffConfig {

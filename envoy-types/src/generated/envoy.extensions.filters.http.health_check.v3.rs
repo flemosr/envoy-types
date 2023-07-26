@@ -1,4 +1,4 @@
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheck {
@@ -19,8 +19,10 @@ pub struct HealthCheck {
     ///
     /// .. note::
     ///
-    ///     This value is interpreted as an integer by truncating, so 12.50% will be calculated
-    ///     as if it were 12%.
+    /// ```text
+    /// This value is interpreted as an integer by truncating, so 12.50% will be calculated
+    /// as if it were 12%.
+    /// ```
     #[prost(map = "string, message", tag = "4")]
     pub cluster_min_healthy_percentages: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -28,7 +30,7 @@ pub struct HealthCheck {
     >,
     /// Specifies a set of health check request headers to match on. The health check filter will
     /// check a request’s headers against all the specified headers. To specify the health check
-    /// endpoint, set the ``:path`` header to match on.
+    /// endpoint, set the `:path` header to match on.
     #[prost(message, repeated, tag = "5")]
     pub headers: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::route::v3::HeaderMatcher,

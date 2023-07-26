@@ -1,6 +1,6 @@
 /// Tap configuration.
 ///
-/// [#comment:TODO(mattklein123): Rate limiting]
+/// \[\#comment:TODO(mattklein123): Rate limiting\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TapConfig {
@@ -25,14 +25,13 @@ pub struct TapConfig {
     /// a tap will occur and the data will be written to the configured output.
     #[prost(message, optional, tag = "2")]
     pub output_config: ::core::option::Option<OutputConfig>,
-    /// \[#not-implemented-hide:\] Specify if Tap matching is enabled. The % of requests\connections for
+    /// \\[\#not-implemented-hide:\\] Specify if Tap matching is enabled. The % of requests\connections for
     /// which the tap matching is enabled. When not enabled, the request\connection will not be
     /// recorded.
     ///
     /// .. note::
     ///
-    ///    This field defaults to 100/:ref:`HUNDRED
-    ///    <envoy_v3_api_enum_type.v3.FractionalPercent.DenominatorType>`.
+    /// This field defaults to 100/:ref:`HUNDRED <envoy_v3_api_enum_type.v3.FractionalPercent.DenominatorType>`.
     #[prost(message, optional, tag = "3")]
     pub tap_enabled: ::core::option::Option<
         super::super::core::v3::RuntimeFractionalPercent,
@@ -40,7 +39,7 @@ pub struct TapConfig {
 }
 /// Tap match configuration. This is a recursive structure which allows complex nested match
 /// configurations to be built using various logical operators.
-/// [#next-free-field: 11]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MatchPredicate {
@@ -109,9 +108,9 @@ pub struct HttpHeadersMatch {
 ///
 /// .. attention::
 ///
-///    Searching for patterns in HTTP body is potentially cpu intensive. For each specified pattern, http body is scanned byte by byte to find a match.
-///    If multiple patterns are specified, the process is repeated for each pattern. If location of a pattern is known, ``bytes_limit`` should be specified
-///    to scan only part of the http body.
+/// Searching for patterns in HTTP body is potentially cpu intensive. For each specified pattern, http body is scanned byte by byte to find a match.
+/// If multiple patterns are specified, the process is repeated for each pattern. If location of a pattern is known, `bytes_limit` should be specified
+/// to scan only part of the http body.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpGenericBodyMatch {
@@ -153,32 +152,28 @@ pub struct OutputConfig {
     #[prost(message, repeated, tag = "1")]
     pub sinks: ::prost::alloc::vec::Vec<OutputSink>,
     /// For buffered tapping, the maximum amount of received body that will be buffered prior to
-    /// truncation. If truncation occurs, the :ref:`truncated
-    /// <envoy_v3_api_field_data.tap.v3.Body.truncated>` field will be set. If not specified, the
+    /// truncation. If truncation occurs, the :ref:`truncated <envoy_v3_api_field_data.tap.v3.Body.truncated>` field will be set. If not specified, the
     /// default is 1KiB.
     #[prost(message, optional, tag = "2")]
     pub max_buffered_rx_bytes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// For buffered tapping, the maximum amount of transmitted body that will be buffered prior to
-    /// truncation. If truncation occurs, the :ref:`truncated
-    /// <envoy_v3_api_field_data.tap.v3.Body.truncated>` field will be set. If not specified, the
+    /// truncation. If truncation occurs, the :ref:`truncated <envoy_v3_api_field_data.tap.v3.Body.truncated>` field will be set. If not specified, the
     /// default is 1KiB.
     #[prost(message, optional, tag = "3")]
     pub max_buffered_tx_bytes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Indicates whether taps produce a single buffered message per tap, or multiple streamed
-    /// messages per tap in the emitted :ref:`TraceWrapper
-    /// <envoy_v3_api_msg_data.tap.v3.TraceWrapper>` messages. Note that streamed tapping does not
+    /// messages per tap in the emitted :ref:`TraceWrapper <envoy_v3_api_msg_data.tap.v3.TraceWrapper>` messages. Note that streamed tapping does not
     /// mean that no buffering takes place. Buffering may be required if data is processed before a
-    /// match can be determined. See the HTTP tap filter :ref:`streaming
-    /// <config_http_filters_tap_streaming>` documentation for more information.
+    /// match can be determined. See the HTTP tap filter :ref:`streaming <config_http_filters_tap_streaming>` documentation for more information.
     #[prost(bool, tag = "4")]
     pub streaming: bool,
 }
 /// Tap output sink configuration.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutputSink {
@@ -190,8 +185,7 @@ pub struct OutputSink {
 }
 /// Nested message and enum types in `OutputSink`.
 pub mod output_sink {
-    /// Output format. All output is in the form of one or more :ref:`TraceWrapper
-    /// <envoy_v3_api_msg_data.tap.v3.TraceWrapper>` messages. This enumeration indicates
+    /// Output format. All output is in the form of one or more :ref:`TraceWrapper <envoy_v3_api_msg_data.tap.v3.TraceWrapper>` messages. This enumeration indicates
     /// how those messages are written. Note that not all sinks support all output formats. See
     /// individual sink documentation for more information.
     #[derive(
@@ -208,16 +202,12 @@ pub mod output_sink {
     #[repr(i32)]
     pub enum Format {
         /// Each message will be written as JSON. Any :ref:`body <envoy_v3_api_msg_data.tap.v3.Body>`
-        /// data will be present in the :ref:`as_bytes
-        /// <envoy_v3_api_field_data.tap.v3.Body.as_bytes>` field. This means that body data will be
-        /// base64 encoded as per the `proto3 JSON mappings
-        /// <<https://developers.google.com/protocol-buffers/docs/proto3#json>`_.>
+        /// data will be present in the :ref:`as_bytes <envoy_v3_api_field_data.tap.v3.Body.as_bytes>` field. This means that body data will be
+        /// base64 encoded as per the `proto3 JSON mappings <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_.>
         JsonBodyAsBytes = 0,
         /// Each message will be written as JSON. Any :ref:`body <envoy_v3_api_msg_data.tap.v3.Body>`
-        /// data will be present in the :ref:`as_string
-        /// <envoy_v3_api_field_data.tap.v3.Body.as_string>` field. This means that body data will be
-        /// string encoded as per the `proto3 JSON mappings
-        /// <<https://developers.google.com/protocol-buffers/docs/proto3#json>`_.> This format type is
+        /// data will be present in the :ref:`as_string <envoy_v3_api_field_data.tap.v3.Body.as_string>` field. This means that body data will be
+        /// string encoded as per the `proto3 JSON mappings <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_.> This format type is
         /// useful when it is known that that body is human readable (e.g., JSON over HTTP) and the
         /// user wishes to view it directly without being forced to base64 decode the body.
         JsonBodyAsString = 1,
@@ -227,8 +217,7 @@ pub mod output_sink {
         /// this output format makes consumption simpler.
         ProtoBinary = 2,
         /// Messages are written as a sequence tuples, where each tuple is the message length encoded
-        /// as a `protobuf 32-bit varint
-        /// <<https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.io.coded_stream>`_>
+        /// as a `protobuf 32-bit varint <<https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.io.coded_stream>`\_>
         /// followed by the binary message. The messages can be read back using the language specific
         /// protobuf coded stream implementation to obtain the message length and the message.
         ProtoBinaryLengthDelimited = 3,
@@ -268,28 +257,28 @@ pub mod output_sink {
         ///
         /// .. attention::
         ///
-        ///    It is only allowed to specify the streaming admin output sink if the tap is being
-        ///    configured from the :http:post:`/tap` admin endpoint. Thus, if an extension has
-        ///    been configured to receive tap configuration from some other source (e.g., static
-        ///    file, XDS, etc.) configuring the streaming admin output type will fail.
+        /// It is only allowed to specify the streaming admin output sink if the tap is being
+        /// configured from the :http:post:`/tap` admin endpoint. Thus, if an extension has
+        /// been configured to receive tap configuration from some other source (e.g., static
+        /// file, XDS, etc.) configuring the streaming admin output type will fail.
         #[prost(message, tag = "2")]
         StreamingAdmin(super::StreamingAdminSink),
         /// Tap output will be written to a file per tap sink.
         #[prost(message, tag = "3")]
         FilePerTap(super::FilePerTapSink),
-        /// \[#not-implemented-hide:\]
+        /// \\[\#not-implemented-hide:\\]
         /// GrpcService to stream data to. The format argument must be PROTO_BINARY.
-        /// [#comment: TODO(samflattery): remove cleanup in uber_per_filter.cc once implemented]
+        /// \[\#comment: TODO(samflattery): remove cleanup in uber_per_filter.cc once implemented\]
         #[prost(message, tag = "4")]
         StreamingGrpc(super::StreamingGrpcSink),
         /// Tap output will be buffered in a single block before flushing to the :http:post:`/tap` admin endpoint
         ///
         /// .. attention::
         ///
-        ///    It is only allowed to specify the buffered admin output sink if the tap is being
-        ///    configured from the :http:post:`/tap` admin endpoint. Thus, if an extension has
-        ///    been configured to receive tap configuration from some other source (e.g., static
-        ///    file, XDS, etc.) configuring the buffered admin output type will fail.
+        /// It is only allowed to specify the buffered admin output sink if the tap is being
+        /// configured from the :http:post:`/tap` admin endpoint. Thus, if an extension has
+        /// been configured to receive tap configuration from some other source (e.g., static
+        /// file, XDS, etc.) configuring the buffered admin output type will fail.
         #[prost(message, tag = "5")]
         BufferedAdmin(super::BufferedAdminSink),
     }
@@ -301,7 +290,7 @@ pub struct StreamingAdminSink {}
 /// BufferedAdminSink configures a tap output to collect traces without returning them until
 /// one of multiple criteria are satisfied.
 /// Similar to StreamingAdminSink, it is only allowed to specify the buffered admin output
-/// sink if the tap is being configured from the ``/tap`` admin endpoint.
+/// sink if the tap is being configured from the `/tap` admin endpoint.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BufferedAdminSink {
@@ -323,13 +312,13 @@ pub struct BufferedAdminSink {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilePerTapSink {
-    /// Path prefix. The output file will be of the form <path_prefix>_<id>.pb, where <id> is an
+    /// Path prefix. The output file will be of the form \<path_prefix>\_<id>.pb, where <id> is an
     /// identifier distinguishing the recorded trace for stream instances (the Envoy
     /// connection ID, HTTP stream ID, etc.).
     #[prost(string, tag = "1")]
     pub path_prefix: ::prost::alloc::string::String,
 }
-/// \[#not-implemented-hide:\] Streaming gRPC sink configuration sends the taps to an external gRPC
+/// \\[\#not-implemented-hide:\\] Streaming gRPC sink configuration sends the taps to an external gRPC
 /// server.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

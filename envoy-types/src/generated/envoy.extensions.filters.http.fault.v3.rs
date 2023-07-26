@@ -1,4 +1,4 @@
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FaultAbort {
@@ -33,7 +33,7 @@ pub mod fault_abort {
         HeaderAbort(HeaderAbort),
     }
 }
-/// [#next-free-field: 17]
+/// \[\#next-free-field: 17\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpFault {
@@ -44,7 +44,7 @@ pub struct HttpFault {
         super::super::super::common::fault::v3::FaultDelay,
     >,
     /// If specified, the filter will abort requests based on the values in
-    /// the object. At least ``abort`` or ``delay`` must be specified.
+    /// the object. At least `abort` or `delay` must be specified.
     #[prost(message, optional, tag = "2")]
     pub abort: ::core::option::Option<FaultAbort>,
     /// Specifies the name of the (destination) upstream cluster that the
@@ -55,21 +55,18 @@ pub struct HttpFault {
     /// Specifies a set of headers that the filter should match on. The fault
     /// injection filter can be applied selectively to requests that match a set of
     /// headers specified in the fault filter config. The chances of actual fault
-    /// injection further depend on the value of the :ref:`percentage
-    /// <envoy_v3_api_field_extensions.filters.http.fault.v3.FaultAbort.percentage>` field.
+    /// injection further depend on the value of the :ref:`percentage <envoy_v3_api_field_extensions.filters.http.fault.v3.FaultAbort.percentage>` field.
     /// The filter will check the request's headers against all the specified
     /// headers in the filter config. A match will happen if all the headers in the
     /// config are present in the request with the same values (or based on
-    /// presence if the ``value`` field is not in the config).
+    /// presence if the `value` field is not in the config).
     #[prost(message, repeated, tag = "4")]
     pub headers: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::route::v3::HeaderMatcher,
     >,
     /// Faults are injected for the specified list of downstream hosts. If this
     /// setting is not set, faults are injected for all downstream nodes.
-    /// Downstream node name is taken from :ref:`the HTTP
-    /// x-envoy-downstream-service-node
-    /// <config_http_conn_man_headers_downstream-service-node>` header and compared
+    /// Downstream node name is taken from :ref:`the HTTP x-envoy-downstream-service-node <config_http_conn_man_headers_downstream-service-node>` header and compared
     /// against downstream_nodes list.
     #[prost(string, repeated, tag = "5")]
     pub downstream_nodes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -77,25 +74,23 @@ pub struct HttpFault {
     /// filter. Note that because this setting can be overridden at the route level, it's possible
     /// for the number of active faults to be greater than this value (if injected via a different
     /// route). If not specified, defaults to unlimited. This setting can be overridden via
-    /// ``runtime <config_http_filters_fault_injection_runtime>`` and any faults that are not injected
-    /// due to overflow will be indicated via the ``faults_overflow
-    /// <config_http_filters_fault_injection_stats>`` stat.
+    /// `runtime <config_http_filters_fault_injection_runtime>` and any faults that are not injected
+    /// due to overflow will be indicated via the `faults_overflow <config_http_filters_fault_injection_stats>` stat.
     ///
     /// .. attention::
-    ///    Like other :ref:`circuit breakers <arch_overview_circuit_break>` in Envoy, this is a fuzzy
-    ///    limit. It's possible for the number of active faults to rise slightly above the configured
-    ///    amount due to the implementation details.
+    /// Like other :ref:`circuit breakers <arch_overview_circuit_break>` in Envoy, this is a fuzzy
+    /// limit. It's possible for the number of active faults to rise slightly above the configured
+    /// amount due to the implementation details.
     #[prost(message, optional, tag = "6")]
     pub max_active_faults: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// The response rate limit to be applied to the response body of the stream. When configured,
-    /// the percentage can be overridden by the :ref:`fault.http.rate_limit.response_percent
-    /// <config_http_filters_fault_injection_runtime>` runtime key.
+    /// the percentage can be overridden by the :ref:`fault.http.rate_limit.response_percent <config_http_filters_fault_injection_runtime>` runtime key.
     ///
     /// .. attention::
-    ///   This is a per-stream limit versus a connection level limit. This means that concurrent streams
-    ///   will each get an independent limit.
+    /// This is a per-stream limit versus a connection level limit. This means that concurrent streams
+    /// will each get an independent limit.
     #[prost(message, optional, tag = "7")]
     pub response_rate_limit: ::core::option::Option<
         super::super::super::common::fault::v3::FaultRateLimit,
@@ -136,8 +131,7 @@ pub struct HttpFault {
     pub disable_downstream_cluster_stats: bool,
     /// When an abort or delay fault is executed, the metadata struct provided here will be added to the
     /// request's dynamic metadata under the namespace corresponding to the name of the fault filter.
-    /// This data can be logged as part of Access Logs using the :ref:`command operator
-    /// <config_access_log_command_operators>` %DYNAMIC_METADATA(NAMESPACE)%, where NAMESPACE is the name of
+    /// This data can be logged as part of Access Logs using the :ref:`command operator <config_access_log_command_operators>` %DYNAMIC_METADATA(NAMESPACE)%, where NAMESPACE is the name of
     /// the fault filter.
     #[prost(message, optional, tag = "16")]
     pub filter_metadata: ::core::option::Option<

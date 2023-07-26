@@ -22,12 +22,12 @@ pub mod rate_limit_quota_usage_reports {
     /// The usage report for a bucket.
     ///
     /// .. note::
-    ///    Note that the first report sent for a ``BucketId`` indicates to the RLQS server that
-    ///    the RLQS client is subscribing for the future assignments for this ``BucketId``.
+    /// Note that the first report sent for a `BucketId` indicates to the RLQS server that
+    /// the RLQS client is subscribing for the future assignments for this `BucketId`.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct BucketQuotaUsage {
-        /// ``BucketId`` for which request quota usage is reported.
+        /// `BucketId` for which request quota usage is reported.
         #[prost(message, optional, tag = "1")]
         pub bucket_id: ::core::option::Option<super::BucketId>,
         /// Time elapsed since the last report.
@@ -58,7 +58,7 @@ pub mod rate_limit_quota_response {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct BucketAction {
-        /// ``BucketId`` for which request the action is applied.
+        /// `BucketId` for which request the action is applied.
         #[prost(message, optional, tag = "1")]
         pub bucket_id: ::core::option::Option<super::BucketId>,
         #[prost(oneof = "bucket_action::BucketAction", tags = "2, 3")]
@@ -67,22 +67,19 @@ pub mod rate_limit_quota_response {
     /// Nested message and enum types in `BucketAction`.
     pub mod bucket_action {
         /// Quota assignment for the bucket. Configures the rate limiting strategy and the duration
-        /// for the given :ref:`bucket_id
-        /// <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.bucket_id>`.
+        /// for the given :ref:`bucket_id <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.bucket_id>`.
         ///
         /// **Applying the first assignment to the bucket**
         ///
-        /// Once the data plane receives the ``QuotaAssignmentAction``, it must send the current usage
+        /// Once the data plane receives the `QuotaAssignmentAction`, it must send the current usage
         /// report for the bucket, and start rate limiting requests matched into the bucket
-        /// using the strategy configured in the :ref:`rate_limit_strategy
-        /// <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction.rate_limit_strategy>`
-        /// field. The assignment becomes bucket's ``active`` assignment.
+        /// using the strategy configured in the :ref:`rate_limit_strategy <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction.rate_limit_strategy>`
+        /// field. The assignment becomes bucket's `active` assignment.
         ///
         /// **Expiring the assignment**
         ///
-        /// The duration of the assignment defined in the :ref:`assignment_time_to_live
-        /// <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction.assignment_time_to_live>`
-        /// field. When the duration runs off, the assignment is ``expired``, and no longer ``active``.
+        /// The duration of the assignment defined in the :ref:`assignment_time_to_live <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction.assignment_time_to_live>`
+        /// field. When the duration runs off, the assignment is `expired`, and no longer `active`.
         /// The data plane should stop applying the rate limiting strategy to the bucket, and transition
         /// the bucket to the "expired assignment" state. This activates the behavior configured in the
         /// :ref:`expired_assignment_behavior <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.expired_assignment_behavior>`
@@ -90,39 +87,33 @@ pub mod rate_limit_quota_response {
         ///
         /// **Replacing the assignment**
         ///
-        /// * If the rate limiting strategy is different from bucket's ``active`` assignment, or
-        ///    the current bucket assignment is ``expired``, the data plane must immediately
-        ///    end the current assignment, report the bucket usage, and apply the new assignment.
-        ///    The new assignment becomes bucket's ``active`` assignment.
-        /// * If the rate limiting strategy is the same as the bucket's ``active`` (not ``expired``)
-        ///    assignment, the data plane should extend the duration of the ``active`` assignment
-        ///    for the duration of the new assignment provided in the :ref:`assignment_time_to_live
-        ///    <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction.assignment_time_to_live>`
-        ///    field. The ``active`` assignment is considered unchanged.
+        /// * If the rate limiting strategy is different from bucket's `active` assignment, or
+        ///   the current bucket assignment is `expired`, the data plane must immediately
+        ///   end the current assignment, report the bucket usage, and apply the new assignment.
+        ///   The new assignment becomes bucket's `active` assignment.
+        /// * If the rate limiting strategy is the same as the bucket's `active` (not `expired`)
+        ///   assignment, the data plane should extend the duration of the `active` assignment
+        ///   for the duration of the new assignment provided in the :ref:`assignment_time_to_live <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction.assignment_time_to_live>`
+        ///   field. The `active` assignment is considered unchanged.
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct QuotaAssignmentAction {
-            /// A duration after which the assignment is be considered ``expired``. The process of the
-            /// expiration is described :ref:`above
-            /// <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`.
+            /// A duration after which the assignment is be considered `expired`. The process of the
+            /// expiration is described :ref:`above <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`.
             ///
             /// * If unset, the assignment has no expiration date.
-            /// * If set to ``0``, the assignment expires immediately, forcing the client into the
-            ///    :ref:`"expired assignment"
-            ///    <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.expired_assignment_behavior_timeout>`
-            ///    state. This may be used by the RLQS server in cases when it needs clients to proactively
-            ///    fall back to the pre-configured :ref:`ExpiredAssignmentBehavior
-            ///    <envoy_v3_api_msg_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior>`,
-            ///    f.e. before the server going into restart.
+            /// * If set to `0`, the assignment expires immediately, forcing the client into the
+            ///   :ref:`"expired assignment" <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.expired_assignment_behavior_timeout>`
+            ///   state. This may be used by the RLQS server in cases when it needs clients to proactively
+            ///   fall back to the pre-configured :ref:`ExpiredAssignmentBehavior <envoy_v3_api_msg_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior>`,
+            ///   f.e. before the server going into restart.
             ///
             /// .. attention::
-            ///    Note that :ref:`expiring
-            ///    <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`
-            ///    the assignment is not the same as :ref:`abandoning
-            ///    <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
-            ///    the assignment. While expiring the assignment just transitions the bucket to
-            ///    the "expired assignment" state; abandoning the assignment completely erases
-            ///    the bucket from the data plane memory, and stops the usage reports.
+            /// Note that :ref:`expiring <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`
+            /// the assignment is not the same as :ref:`abandoning <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
+            /// the assignment. While expiring the assignment just transitions the bucket to
+            /// the "expired assignment" state; abandoning the assignment completely erases
+            /// the bucket from the data plane memory, and stops the usage reports.
             #[prost(message, optional, tag = "2")]
             pub assignment_time_to_live: ::core::option::Option<
                 super::super::super::super::super::super::google::protobuf::Duration,
@@ -135,8 +126,7 @@ pub mod rate_limit_quota_response {
             >,
         }
         /// Abandon action for the bucket. Indicates that the RLQS server will no longer be
-        /// sending updates for the given :ref:`bucket_id
-        /// <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.bucket_id>`.
+        /// sending updates for the given :ref:`bucket_id <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.bucket_id>`.
         ///
         /// If no requests are reported for a bucket, after some time the server considers the bucket
         /// inactive. The server stops tracking the bucket, and instructs the the data plane to abandon
@@ -153,17 +143,14 @@ pub mod rate_limit_quota_response {
         /// If a new request is matched into a bucket previously abandoned, the data plane must behave
         /// as if it has never tracked the bucket, and it's the first request matched into it:
         ///
-        /// 1. The process of :ref:`subscription and reporting
-        ///     <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.reporting_interval>`
-        ///     starts from the beginning.
+        /// 1. The process of :ref:`subscription and reporting <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.reporting_interval>`
+        ///    starts from the beginning.
         ///
-        /// 2. The bucket transitions to the :ref:`"no assignment"
-        ///     <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.no_assignment_behavior>`
-        ///     state.
+        /// 1. The bucket transitions to the :ref:`"no assignment" <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.no_assignment_behavior>`
+        ///    state.
         ///
-        /// 3. Once the new assignment is received, it's applied per
-        ///     "Applying the first assignment to the bucket" section of the :ref:`QuotaAssignmentAction
-        ///     <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`.
+        /// 1. Once the new assignment is received, it's applied per
+        ///    "Applying the first assignment to the bucket" section of the :ref:`QuotaAssignmentAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`.
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct AbandonAction {}
@@ -174,16 +161,14 @@ pub mod rate_limit_quota_response {
             ///
             /// Commands the data plane to apply a rate limiting strategy to the bucket.
             /// The process of applying and expiring the rate limiting strategy is detailed in the
-            /// :ref:`QuotaAssignmentAction
-            /// <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`
+            /// :ref:`QuotaAssignmentAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`
             /// message.
             #[prost(message, tag = "2")]
             QuotaAssignmentAction(QuotaAssignmentAction),
             /// Abandon the bucket.
             ///
             /// Commands the data plane to abandon the bucket.
-            /// The process of abandoning the bucket is described in the :ref:`AbandonAction
-            /// <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
+            /// The process of abandoning the bucket is described in the :ref:`AbandonAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
             /// message.
             #[prost(message, tag = "3")]
             AbandonAction(AbandonAction),
@@ -193,23 +178,23 @@ pub mod rate_limit_quota_response {
 /// The identifier for the bucket. Used to match the bucket between the control plane (RLQS server),
 /// and the data plane (RLQS client), f.e.:
 ///
-/// * the data plane sends a usage report for requests matched into the bucket with ``BucketId``
-///    to the control plane
-/// * the control plane sends an assignment for the bucket with ``BucketId`` to the data plane
-///    Bucket ID.
+/// * the data plane sends a usage report for requests matched into the bucket with `BucketId`
+///   to the control plane
+/// * the control plane sends an assignment for the bucket with `BucketId` to the data plane
+///   Bucket ID.
 ///
 /// Example:
 ///
 /// .. validated-code-block:: yaml
-///    :type-name: envoy.service.rate_limit_quota.v3.BucketId
+/// :type-name: envoy.service.rate_limit_quota.v3.BucketId
 ///
-///    bucket:
-///      name: my_bucket
-///      env: staging
+/// bucket:
+/// name: my_bucket
+/// env: staging
 ///
 /// .. note::
-///    The order of ``BucketId`` keys do not matter. Buckets ``{ a: 'A', b: 'B' }`` and
-///    ``{ b: 'B', a: 'A' }`` are identical.
+/// The order of `BucketId` keys do not matter. Buckets `{ a: 'A', b: 'B' }` and
+/// `{ b: 'B', a: 'A' }` are identical.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BucketId {

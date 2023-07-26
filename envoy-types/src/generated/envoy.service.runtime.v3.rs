@@ -1,4 +1,4 @@
-/// \[#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
+/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221>
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

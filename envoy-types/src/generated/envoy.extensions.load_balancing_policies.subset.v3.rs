@@ -1,6 +1,6 @@
 /// Optionally divide the endpoints in this cluster into subsets defined by
 /// endpoint metadata and selected by route and weighted cluster metadata.
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Subset {
@@ -13,7 +13,7 @@ pub struct Subset {
     /// fallback_policy is
     /// :ref:`DEFAULT_SUBSET<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetFallbackPolicy.DEFAULT_SUBSET>`.
     /// Each field in default_subset is
-    /// compared to the matching LbEndpoint.Metadata under the ``envoy.lb``
+    /// compared to the matching LbEndpoint.Metadata under the `envoy.lb`
     /// namespace. It is valid for no hosts to match, in which case the behavior
     /// is the same as a fallback_policy of
     /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetFallbackPolicy.NO_FALLBACK>`.
@@ -22,15 +22,15 @@ pub struct Subset {
         super::super::super::super::super::google::protobuf::Struct,
     >,
     /// For each entry, LbEndpoint.Metadata's
-    /// ``envoy.lb`` namespace is traversed and a subset is created for each unique
+    /// `envoy.lb` namespace is traversed and a subset is created for each unique
     /// combination of key and value. For example:
     ///
     /// .. code-block:: json
     ///
-    ///    { "subset_selectors": [
-    ///        { "keys": [ "version" ] },
-    ///        { "keys": [ "stage", "hardware_type" ] }
-    ///    ]}
+    /// { "subset_selectors": \[
+    /// { "keys": \[ "version" \] },
+    /// { "keys": \[ "stage", "hardware_type" \] }
+    /// \]}
     ///
     /// A subset is matched when the metadata from the selected route and
     /// weighted cluster contains the same keys and values as the subset's
@@ -74,8 +74,7 @@ pub struct Subset {
     /// fails to select a host, this policy decides if and how the process is repeated using another metadata.
     ///
     /// The value defaults to
-    /// :ref:`METADATA_NO_FALLBACK
-    /// <envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.subset.LbSubsetMetadataFallbackPolicy.METADATA_NO_FALLBACK>`.
+    /// :ref:`METADATA_NO_FALLBACK <envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.subset.LbSubsetMetadataFallbackPolicy.METADATA_NO_FALLBACK>`.
     #[prost(enumeration = "subset::LbSubsetMetadataFallbackPolicy", tag = "8")]
     pub metadata_fallback_policy: i32,
     /// The child LB policy to create for endpoint-picking within the chosen subset.
@@ -98,7 +97,7 @@ pub mod subset {
         ///
         /// If a match is found to a host, that host will be used regardless of priority levels.
         ///
-        /// When this mode is enabled, configurations that contain more than one host with the same metadata value for the single key in ``keys``
+        /// When this mode is enabled, configurations that contain more than one host with the same metadata value for the single key in `keys`
         /// will use only one of the hosts with the given key; no requests will be routed to the others. The cluster gauge
         /// :ref:`lb_subsets_single_host_per_subset_duplicate<config_cluster_manager_cluster_stats_subset_lb>` indicates how many duplicates are
         /// present in the current configuration.
@@ -119,7 +118,7 @@ pub mod subset {
         /// For any other fallback policy the parameter is not used and should not be set.
         /// Only values also present in
         /// :ref:`keys<envoy_v3_api_field_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector.keys>` are allowed, but
-        /// ``fallback_keys_subset`` cannot be equal to ``keys``.
+        /// `fallback_keys_subset` cannot be equal to `keys`.
         #[prost(string, repeated, tag = "3")]
         pub fallback_keys_subset: ::prost::alloc::vec::Vec<
             ::prost::alloc::string::String,
@@ -244,12 +243,12 @@ pub mod subset {
     pub enum LbSubsetMetadataFallbackPolicy {
         /// No fallback. Route metadata will be used as-is.
         MetadataNoFallback = 0,
-        /// A special metadata key ``fallback_list`` will be used to provide variants of metadata to try.
-        /// Value of ``fallback_list`` key has to be a list. Every list element has to be a struct - it will
+        /// A special metadata key `fallback_list` will be used to provide variants of metadata to try.
+        /// Value of `fallback_list` key has to be a list. Every list element has to be a struct - it will
         /// be merged with route metadata, overriding keys that appear in both places.
-        /// ``fallback_list`` entries will be used in order until a host is found.
+        /// `fallback_list` entries will be used in order until a host is found.
         ///
-        /// ``fallback_list`` key itself is removed from metadata before subset load balancing is performed.
+        /// `fallback_list` key itself is removed from metadata before subset load balancing is performed.
         ///
         /// Example:
         ///
@@ -257,30 +256,30 @@ pub mod subset {
         ///
         /// .. code-block:: yaml
         ///
-        ///    version: 1.0
-        ///    fallback_list:
-        ///      - version: 2.0
-        ///        hardware: c64
-        ///      - hardware: c32
-        ///      - version: 3.0
+        /// version: 1.0
+        /// fallback_list:
+        /// - version: 2.0
+        /// hardware: c64
+        /// - hardware: c32
+        /// - version: 3.0
         ///
         /// at first, metadata:
         ///
         /// .. code-block:: json
         ///
-        ///    {"version": "2.0", "hardware": "c64"}
+        /// {"version": "2.0", "hardware": "c64"}
         ///
         /// will be used for load balancing. If no host is found, metadata:
         ///
         /// .. code-block:: json
         ///
-        ///    {"version": "1.0", "hardware": "c32"}
+        /// {"version": "1.0", "hardware": "c32"}
         ///
         /// is next to try. If it still results in no host, finally metadata:
         ///
         /// .. code-block:: json
         ///
-        ///    {"version": "3.0"}
+        /// {"version": "3.0"}
         ///
         /// is used.
         FallbackList = 1,

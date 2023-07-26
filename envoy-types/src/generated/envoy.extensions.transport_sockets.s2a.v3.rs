@@ -1,4 +1,4 @@
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 /// Configuration for S2A transport socket. This allows Envoy clients to
 /// configure how to offload mTLS handshakes to the S2A service.
 /// <https://github.com/google/s2a-go#readme>

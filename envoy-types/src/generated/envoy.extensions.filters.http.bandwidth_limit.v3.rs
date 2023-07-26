@@ -1,4 +1,4 @@
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BandwidthLimit {
@@ -12,13 +12,12 @@ pub struct BandwidthLimit {
     /// The limit supplied in KiB/s.
     ///
     /// .. note::
-    ///    It's fine for the limit to be unset for the global configuration since the bandwidth limit
-    ///    can be applied at a the virtual host or route level. Thus, the limit must be set for the
-    ///    per route configuration otherwise the config will be rejected.
+    /// It's fine for the limit to be unset for the global configuration since the bandwidth limit
+    /// can be applied at a the virtual host or route level. Thus, the limit must be set for the
+    /// per route configuration otherwise the config will be rejected.
     ///
     /// .. note::
-    ///    When using per route configuration, the limit becomes unique to that route.
-    ///
+    /// When using per route configuration, the limit becomes unique to that route.
     #[prost(message, optional, tag = "3")]
     pub limit_kbps: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt64Value,
@@ -39,14 +38,14 @@ pub struct BandwidthLimit {
     ///
     /// .. note::
     ///
-    ///    If set true, the following 4 trailers will be added, prefixed by ``response_trailer_prefix``:
-    ///    * bandwidth-request-delay-ms: delay time in milliseconds it took for the request stream transfer including request body transfer time and the time added by the filter.
-    ///    * bandwidth-response-delay-ms: delay time in milliseconds it took for the response stream transfer including response body transfer time and the time added by the filter.
-    ///    * bandwidth-request-filter-delay-ms: delay time in milliseconds in request stream transfer added by the filter.
-    ///    * bandwidth-response-filter-delay-ms: delay time in milliseconds that added by the filter.
-    ///    If :ref:`enable_mode <envoy_v3_api_field_extensions.filters.http.bandwidth_limit.v3.BandwidthLimit.enable_mode>` is ``DISABLED`` or ``REQUEST``, the trailers will not be set.
-    ///    If both the request and response delay time is 0, the trailers will not be set.
+    /// If set true, the following 4 trailers will be added, prefixed by `response_trailer_prefix`:
     ///
+    /// * bandwidth-request-delay-ms: delay time in milliseconds it took for the request stream transfer including request body transfer time and the time added by the filter.
+    /// * bandwidth-response-delay-ms: delay time in milliseconds it took for the response stream transfer including response body transfer time and the time added by the filter.
+    /// * bandwidth-request-filter-delay-ms: delay time in milliseconds in request stream transfer added by the filter.
+    /// * bandwidth-response-filter-delay-ms: delay time in milliseconds that added by the filter.
+    ///   If :ref:`enable_mode <envoy_v3_api_field_extensions.filters.http.bandwidth_limit.v3.BandwidthLimit.enable_mode>` is `DISABLED` or `REQUEST`, the trailers will not be set.
+    ///   If both the request and response delay time is 0, the trailers will not be set.
     #[prost(bool, tag = "6")]
     pub enable_response_trailers: bool,
     /// Optional The prefix for the response trailers.

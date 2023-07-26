@@ -3,8 +3,7 @@
 pub struct RouteConfiguration {
     /// The name of the route configuration. This name is used in asynchronous route discovery.
     /// For example, it might match
-    /// :ref:`route_config_name
-    /// <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.Trds.route_config_name>` in
+    /// :ref:`route_config_name <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.Trds.route_config_name>` in
     /// :ref:`envoy_v3_api_msg_extensions.filters.network.thrift_proxy.v3.Trds`.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
@@ -18,11 +17,9 @@ pub struct RouteConfiguration {
     /// load. If set to false and a route refers to a non-existent cluster, the
     /// route table will load and the router filter will return a INTERNAL_ERROR
     /// if the route is selected at runtime. This setting defaults to true if the route table
-    /// is statically defined via the :ref:`route_config
-    /// <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.ThriftProxy.route_config>`
+    /// is statically defined via the :ref:`route_config <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.ThriftProxy.route_config>`
     /// option. This setting default to false if the route table is loaded dynamically via the
-    /// :ref:`trds
-    /// <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.ThriftProxy.trds>`
+    /// :ref:`trds <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.ThriftProxy.trds>`
     /// option. Users may wish to override the default behavior in certain cases (for example when
     /// using CDS with a static route table).
     #[prost(message, optional, tag = "3")]
@@ -43,18 +40,14 @@ pub struct Route {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteMatch {
-    /// Inverts whatever matching is done in the :ref:`method_name
-    /// <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.method_name>` or
-    /// :ref:`service_name
-    /// <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.service_name>` fields.
+    /// Inverts whatever matching is done in the :ref:`method_name <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.method_name>` or
+    /// :ref:`service_name <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.service_name>` fields.
     /// Cannot be combined with wildcard matching as that would result in routes never being matched.
     ///
     /// .. note::
     ///
-    ///    This does not invert matching done as part of the :ref:`headers field
-    ///    <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.headers>` field. To
-    ///    invert header matching, see :ref:`invert_match
-    ///    <envoy_v3_api_field_config.route.v3.HeaderMatcher.invert_match>`.
+    /// This does not invert matching done as part of the :ref:`headers field <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.headers>` field. To
+    /// invert header matching, see :ref:`invert_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.invert_match>`.
     #[prost(bool, tag = "3")]
     pub invert: bool,
     /// Specifies a set of headers that the route should match on. The router will check the request’s
@@ -85,14 +78,13 @@ pub mod route_match {
         ServiceName(::prost::alloc::string::String),
     }
 }
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteAction {
     /// Optional endpoint metadata match criteria used by the subset load balancer. Only endpoints in
     /// the upstream cluster with metadata matching what is set in this field will be considered.
-    /// Note that this will be merged with what's provided in :ref:`WeightedCluster.metadata_match
-    /// <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.WeightedCluster.ClusterWeight.metadata_match>`,
+    /// Note that this will be merged with what's provided in :ref:`WeightedCluster.metadata_match <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.WeightedCluster.ClusterWeight.metadata_match>`,
     /// with values there taking precedence. Keys and values should be provided under the "envoy.lb"
     /// metadata key.
     #[prost(message, optional, tag = "3")]
@@ -127,7 +119,7 @@ pub mod route_action {
     ///
     /// .. note::
     ///
-    ///    Shadowing will not be triggered if the primary cluster does not exist.
+    /// Shadowing will not be triggered if the primary cluster does not exist.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RequestMirrorPolicy {
@@ -138,8 +130,8 @@ pub mod route_action {
         pub cluster: ::prost::alloc::string::String,
         /// If not specified, all requests to the target cluster will be mirrored.
         ///
-        /// For some fraction N/D, a random number in the range [0,D) is selected. If the
-        /// number is <= the value of the numerator N, or if the key is not present, the default
+        /// For some fraction N/D, a random number in the range \[0,D) is selected. If the
+        /// number is \<= the value of the numerator N, or if the key is not present, the default
         /// value, the request will be mirrored.
         #[prost(message, optional, tag = "2")]
         pub runtime_fraction: ::core::option::Option<
@@ -194,8 +186,7 @@ pub mod weighted_cluster {
         >,
         /// Optional endpoint metadata match criteria used by the subset load balancer. Only endpoints in
         /// the upstream cluster with metadata matching what is set in this field, combined with what's
-        /// provided in :ref:`RouteAction's metadata_match
-        /// <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteAction.metadata_match>`,
+        /// provided in :ref:`RouteAction's metadata_match <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteAction.metadata_match>`,
         /// will be considered. Values here will take precedence. Keys and values should be provided
         /// under the "envoy.lb" metadata key.
         #[prost(message, optional, tag = "3")]
@@ -208,7 +199,7 @@ pub mod weighted_cluster {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Trds {
     /// Configuration source specifier.
-    /// In case of ``api_config_source`` only aggregated ``api_type`` is supported.
+    /// In case of `api_config_source` only aggregated `api_type` is supported.
     #[prost(message, optional, tag = "1")]
     pub config_source: ::core::option::Option<
         super::super::super::super::super::config::core::v3::ConfigSource,
@@ -219,7 +210,7 @@ pub struct Trds {
     #[prost(string, tag = "2")]
     pub route_config_name: ::prost::alloc::string::String,
 }
-/// [#next-free-field: 11]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ThriftProxy {
@@ -235,17 +226,17 @@ pub struct ThriftProxy {
     #[prost(string, tag = "1")]
     pub stat_prefix: ::prost::alloc::string::String,
     /// The route table for the connection manager is static and is specified in this property.
-    /// It is invalid to define both ``route_config`` and ``trds``.
+    /// It is invalid to define both `route_config` and `trds`.
     #[prost(message, optional, tag = "4")]
     pub route_config: ::core::option::Option<RouteConfiguration>,
-    /// Use xDS to fetch the route configuration. It is invalid to define both ``route_config`` and ``trds``.
+    /// Use xDS to fetch the route configuration. It is invalid to define both `route_config` and `trds`.
     #[prost(message, optional, tag = "8")]
     pub trds: ::core::option::Option<Trds>,
     /// A list of individual Thrift filters that make up the filter chain for requests made to the
     /// Thrift proxy. Order matters as the filters are processed sequentially. For backwards
     /// compatibility, if no thrift_filters are specified, a default Thrift router filter
-    /// (``envoy.filters.thrift.router``) is used.
-    /// [#extension-category: envoy.thrift_proxy.filters]
+    /// (`envoy.filters.thrift.router`) is used.
+    /// \[\#extension-category: envoy.thrift_proxy.filters\]
     #[prost(message, repeated, tag = "5")]
     pub thrift_filters: ::prost::alloc::vec::Vec<ThriftFilter>,
     /// If set to true, Envoy will try to skip decode data after metadata in the Thrift message.
@@ -280,7 +271,8 @@ pub struct ThriftFilter {
     /// The name of the filter to instantiate. The name must match a supported
     /// filter. The built-in filters are:
     ///
-    /// [#comment:TODO(zuercher): Auto generate the following list]
+    /// \[\#comment:TODO(zuercher): Auto generate the following list\]
+    ///
     /// * :ref:`envoy.filters.thrift.router <config_thrift_filters_router>`
     /// * :ref:`envoy.filters.thrift.rate_limit <config_thrift_filters_rate_limit>`
     #[prost(string, tag = "1")]
@@ -306,7 +298,7 @@ pub mod thrift_filter {
 /// ThriftProtocolOptions specifies Thrift upstream protocol options. This object is used in
 /// in
 /// :ref:`typed_extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`,
-/// keyed by the name ``envoy.filters.network.thrift_proxy``.
+/// keyed by the name `envoy.filters.network.thrift_proxy`.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ThriftProtocolOptions {

@@ -9,7 +9,7 @@ pub struct Thrift {
     /// :ref:`AUTO_TRANSPORT<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.TransportType.AUTO_TRANSPORT>`
     /// is not supported, and we don't honor :ref:`ThriftProtocolOptions<envoy_v3_api_msg_extensions.filters.network.thrift_proxy.v3.ThriftProtocolOptions>`
     /// since it's possible to set to :ref:`AUTO_TRANSPORT<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.TransportType.AUTO_TRANSPORT>`.
-    /// [#extension-category: envoy.filters.network]
+    /// \[\#extension-category: envoy.filters.network\]
     #[prost(
         enumeration = "super::super::super::filters::network::thrift_proxy::v3::TransportType",
         tag = "2"

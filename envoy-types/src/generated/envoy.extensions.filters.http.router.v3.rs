@@ -1,4 +1,4 @@
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Router {
@@ -25,10 +25,9 @@ pub struct Router {
     /// Additional upstream access log options.
     #[prost(message, optional, tag = "9")]
     pub upstream_log_options: ::core::option::Option<router::UpstreamAccessLogOptions>,
-    /// Do not add any additional ``x-envoy-`` headers to requests or responses. This
-    /// only affects the :ref:`router filter generated x-envoy- headers
-    /// <config_http_filters_router_headers_set>`, other Envoy filters and the HTTP
-    /// connection manager may continue to set ``x-envoy-`` headers.
+    /// Do not add any additional `x-envoy-` headers to requests or responses. This
+    /// only affects the :ref:`router filter generated x-envoy- headers <config_http_filters_router_headers_set>`, other Envoy filters and the HTTP
+    /// connection manager may continue to set `x-envoy-` headers.
     #[prost(bool, tag = "4")]
     pub suppress_envoy_headers: bool,
     /// Specifies a list of HTTP headers to strictly validate. Envoy will reject a
@@ -65,7 +64,7 @@ pub struct Router {
     #[prost(bool, tag = "7")]
     pub suppress_grpc_request_failure_code_stats: bool,
     /// .. note::
-    ///    Upstream HTTP filters are currently in alpha.
+    /// Upstream HTTP filters are currently in alpha.
     ///
     /// Optional HTTP filters for the upstream filter chain.
     ///
@@ -77,7 +76,7 @@ pub struct Router {
     /// If using upstream filters, please be aware that local errors sent by
     /// upstream filters will not trigger retries, and local errors sent by
     /// upstream filters will count as a final response if hedging is configured.
-    /// [#extension-category: envoy.filters.http.upstream]
+    /// \[\#extension-category: envoy.filters.http.upstream\]
     #[prost(message, repeated, tag = "8")]
     pub upstream_http_filters: ::prost::alloc::vec::Vec<
         super::super::super::network::http_connection_manager::v3::HttpFilter,

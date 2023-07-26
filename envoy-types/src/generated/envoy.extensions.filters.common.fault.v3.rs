@@ -1,6 +1,6 @@
 /// Delay specification is used to inject latency into the
 /// HTTP/Mongo operation.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FaultDelay {

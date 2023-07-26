@@ -1,4 +1,4 @@
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimit {
@@ -13,7 +13,7 @@ pub struct RateLimit {
     ///
     /// .. note::
     ///
-    ///   The filter supports a range of 0 - 10 inclusively for stage numbers.
+    /// The filter supports a range of 0 - 10 inclusively for stage numbers.
     #[prost(uint32, tag = "2")]
     pub stage: u32,
     /// The timeout in milliseconds for the rate limit service RPC. If not

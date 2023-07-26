@@ -4,8 +4,8 @@ pub struct IpTagging {
     /// The type of request the filter should apply to.
     #[prost(enumeration = "ip_tagging::RequestType", tag = "1")]
     pub request_type: i32,
-    /// [#comment:TODO(ccaraman): Extend functionality to load IP tags from file system.
-    /// Tracked by issue <https://github.com/envoyproxy/envoy/issues/2695]>
+    /// \[\#comment:TODO(ccaraman): Extend functionality to load IP tags from file system.
+    /// Tracked by issue <https://github.com/envoyproxy/envoy/issues/2695\]>
     /// The set of IP tags for the filter.
     #[prost(message, repeated, tag = "4")]
     pub ip_tags: ::prost::alloc::vec::Vec<ip_tagging::IpTag>,

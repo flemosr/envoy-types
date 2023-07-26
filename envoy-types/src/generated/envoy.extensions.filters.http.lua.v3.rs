@@ -14,23 +14,21 @@ pub struct Lua {
     #[deprecated]
     #[prost(string, tag = "1")]
     pub inline_code: ::prost::alloc::string::String,
-    /// Map of named Lua source codes that can be referenced in :ref:`LuaPerRoute
-    /// <envoy_v3_api_msg_extensions.filters.http.lua.v3.LuaPerRoute>`. The Lua source codes can be
+    /// Map of named Lua source codes that can be referenced in :ref:`LuaPerRoute <envoy_v3_api_msg_extensions.filters.http.lua.v3.LuaPerRoute>`. The Lua source codes can be
     /// loaded from inline string or local files.
     ///
     /// Example:
     ///
     /// .. code-block:: yaml
     ///
-    ///    source_codes:
-    ///      hello.lua:
-    ///        inline_string: |
-    ///          function envoy_on_response(response_handle)
-    ///            -- Do something.
-    ///          end
-    ///      world.lua:
-    ///        filename: /etc/lua/world.lua
-    ///
+    /// source_codes:
+    /// hello.lua:
+    /// inline_string: |
+    /// function envoy_on_response(response_handle)
+    /// -- Do something.
+    /// end
+    /// world.lua:
+    /// filename: /etc/lua/world.lua
     #[prost(map = "string, message", tag = "2")]
     pub source_codes: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -50,16 +48,15 @@ pub struct Lua {
     ///
     /// .. code-block:: yaml
     ///
-    ///    http_filters:
-    ///      - name: envoy.filters.http.lua
-    ///        typed_config:
-    ///          "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
-    ///          stat_prefix: foo_script # This emits lua.foo_script.errors etc.
-    ///      - name: envoy.filters.http.lua
-    ///        typed_config:
-    ///          "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
-    ///          stat_prefix: bar_script # This emits lua.bar_script.errors etc.
-    ///
+    /// http_filters:
+    /// - name: envoy.filters.http.lua
+    /// typed_config:
+    /// "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
+    /// stat_prefix: foo_script # This emits lua.foo_script.errors etc.
+    /// - name: envoy.filters.http.lua
+    /// typed_config:
+    /// "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
+    /// stat_prefix: bar_script # This emits lua.bar_script.errors etc.
     #[prost(string, tag = "4")]
     pub stat_prefix: ::prost::alloc::string::String,
 }

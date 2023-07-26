@@ -6,7 +6,7 @@ pub struct Route {
     pub cluster: ::prost::alloc::string::String,
 }
 /// Configuration for the UDP proxy filter.
-/// [#next-free-field: 11]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UdpProxyConfig {
@@ -20,7 +20,7 @@ pub struct UdpProxyConfig {
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
     /// Use the remote downstream IP address as the sender IP address when sending packets to upstream hosts.
-    /// This option requires Envoy to be run with the ``CAP_NET_ADMIN`` capability on Linux.
+    /// This option requires Envoy to be run with the `CAP_NET_ADMIN` capability on Linux.
     /// And the IPv6 stack must be enabled on Linux kernel.
     /// This option does not preserve the remote downstream port.
     /// If this option is enabled, the IP address of sent datagrams will be changed to the remote downstream IP address.

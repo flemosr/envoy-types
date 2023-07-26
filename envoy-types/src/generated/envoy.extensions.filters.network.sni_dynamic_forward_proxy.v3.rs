@@ -3,14 +3,12 @@
 /// more information. Note this filter must be configured along with
 /// :ref:`TLS inspector listener filter <config_listener_filters_tls_inspector>`
 /// to work.
-/// [#extension: envoy.filters.network.sni_dynamic_forward_proxy]
+/// \[\#extension: envoy.filters.network.sni_dynamic_forward_proxy\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilterConfig {
     /// The DNS cache configuration that the filter will attach to. Note this
-    /// configuration must match that of associated :ref:`dynamic forward proxy
-    /// cluster configuration
-    /// <envoy_v3_api_field_extensions.clusters.dynamic_forward_proxy.v3.ClusterConfig.dns_cache_config>`.
+    /// configuration must match that of associated :ref:`dynamic forward proxy cluster configuration <envoy_v3_api_field_extensions.clusters.dynamic_forward_proxy.v3.ClusterConfig.dns_cache_config>`.
     #[prost(message, optional, tag = "1")]
     pub dns_cache_config: ::core::option::Option<
         super::super::super::super::common::dynamic_forward_proxy::v3::DnsCacheConfig,

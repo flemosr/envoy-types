@@ -30,7 +30,7 @@ pub struct ResourceName {
 }
 /// A DiscoveryRequest requests a set of versioned resources of the same type for
 /// a given Envoy node on some API.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DiscoveryRequest {
@@ -54,13 +54,13 @@ pub struct DiscoveryRequest {
     /// which will be explicitly enumerated in resource_names.
     #[prost(string, repeated, tag = "3")]
     pub resource_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// \[#not-implemented-hide:\]
-    /// Alternative to ``resource_names`` field that allows specifying dynamic
+    /// \\[\#not-implemented-hide:\\]
+    /// Alternative to `resource_names` field that allows specifying dynamic
     /// parameters along with each resource name. Clients that populate this
     /// field must be able to handle responses from the server where resources
     /// are wrapped in a Resource message.
     /// Note that it is legal for a request to have some resources listed
-    /// in ``resource_names`` and others in ``resource_locators``.
+    /// in `resource_names` and others in `resource_locators`.
     #[prost(message, repeated, tag = "7")]
     pub resource_locators: ::prost::alloc::vec::Vec<ResourceLocator>,
     /// Type of the resource that is being requested, e.g.
@@ -77,7 +77,7 @@ pub struct DiscoveryRequest {
     #[prost(string, tag = "5")]
     pub response_nonce: ::prost::alloc::string::String,
     /// This is populated when the previous :ref:`DiscoveryResponse <envoy_v3_api_msg_service.discovery.v3.DiscoveryResponse>`
-    /// failed to update configuration. The ``message`` field in ``error_details`` provides the Envoy
+    /// failed to update configuration. The `message` field in `error_details` provides the Envoy
     /// internal exception related to the failure. It is only intended for consumption during manual
     /// debugging, the string provided is not guaranteed to be stable across Envoy versions.
     #[prost(message, optional, tag = "6")]
@@ -85,7 +85,7 @@ pub struct DiscoveryRequest {
         super::super::super::super::google::rpc::Status,
     >,
 }
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DiscoveryResponse {
@@ -97,20 +97,20 @@ pub struct DiscoveryResponse {
     pub resources: ::prost::alloc::vec::Vec<
         super::super::super::super::google::protobuf::Any,
     >,
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     /// Canary is used to support two Envoy command line flags:
     ///
     /// * --terminate-on-canary-transition-failure. When set, Envoy is able to
-    ///    terminate if it detects that configuration is stuck at canary. Consider
-    ///    this example sequence of updates:
-    ///    - Management server applies a canary config successfully.
-    ///    - Management server rolls back to a production config.
-    ///    - Envoy rejects the new production config.
-    ///    Since there is no sensible way to continue receiving configuration
-    ///    updates, Envoy will then terminate and apply production config from a
-    ///    clean slate.
+    ///   terminate if it detects that configuration is stuck at canary. Consider
+    ///   this example sequence of updates:
+    ///   * Management server applies a canary config successfully.
+    ///   * Management server rolls back to a production config.
+    ///   * Envoy rejects the new production config.
+    ///     Since there is no sensible way to continue receiving configuration
+    ///     updates, Envoy will then terminate and apply production config from a
+    ///     clean slate.
     /// * --dry-run-canary. When set, a canary response will never be applied, only
-    ///    validated via a dry run.
+    ///   validated via a dry run.
     #[prost(bool, tag = "3")]
     pub canary: bool,
     /// Type URL for resources. Identifies the xDS API when muxing over ADS.
@@ -151,9 +151,9 @@ pub struct DiscoveryResponse {
 /// debugging purposes only.
 ///
 /// DeltaDiscoveryRequest plays two independent roles. Any DeltaDiscoveryRequest
-/// can be either or both of: \[1\] informing the server of what resources the
+/// can be either or both of: \\[1\\] informing the server of what resources the
 /// client has gained/lost interest in (using resource_names_subscribe and
-/// resource_names_unsubscribe), or \[2\] (N)ACKing an earlier resource update from
+/// resource_names_unsubscribe), or \\[2\\] (N)ACKing an earlier resource update from
 /// the server (using response_nonce, with presence of error_detail making it a NACK).
 /// Additionally, the first message (for a given type_url) of a reconnected gRPC stream
 /// has a third role: informing the server of the resources (and their versions)
@@ -165,7 +165,7 @@ pub struct DiscoveryResponse {
 /// In particular, initial_resource_versions being sent at the "start" of every
 /// gRPC stream actually entails a message for each type_url, each with its own
 /// initial_resource_versions.
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeltaDiscoveryRequest {
@@ -173,9 +173,9 @@ pub struct DeltaDiscoveryRequest {
     #[prost(message, optional, tag = "1")]
     pub node: ::core::option::Option<super::super::super::config::core::v3::Node>,
     /// Type of the resource that is being requested, e.g.
-    /// ``type.googleapis.com/envoy.api.v2.ClusterLoadAssignment``. This does not need to be set if
-    /// resources are only referenced via ``xds_resource_subscribe`` and
-    /// ``xds_resources_unsubscribe``.
+    /// `type.googleapis.com/envoy.api.v2.ClusterLoadAssignment`. This does not need to be set if
+    /// resources are only referenced via `xds_resource_subscribe` and
+    /// `xds_resources_unsubscribe`.
     #[prost(string, tag = "2")]
     pub type_url: ::prost::alloc::string::String,
     /// DeltaDiscoveryRequests allow the client to add or remove individual
@@ -208,24 +208,24 @@ pub struct DeltaDiscoveryRequest {
     pub resource_names_unsubscribe: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
-    /// \[#not-implemented-hide:\]
-    /// Alternative to ``resource_names_subscribe`` field that allows specifying dynamic parameters
+    /// \\[\#not-implemented-hide:\\]
+    /// Alternative to `resource_names_subscribe` field that allows specifying dynamic parameters
     /// along with each resource name.
     /// Note that it is legal for a request to have some resources listed
-    /// in ``resource_names_subscribe`` and others in ``resource_locators_subscribe``.
+    /// in `resource_names_subscribe` and others in `resource_locators_subscribe`.
     #[prost(message, repeated, tag = "8")]
     pub resource_locators_subscribe: ::prost::alloc::vec::Vec<ResourceLocator>,
-    /// \[#not-implemented-hide:\]
-    /// Alternative to ``resource_names_unsubscribe`` field that allows specifying dynamic parameters
+    /// \\[\#not-implemented-hide:\\]
+    /// Alternative to `resource_names_unsubscribe` field that allows specifying dynamic parameters
     /// along with each resource name.
     /// Note that it is legal for a request to have some resources listed
-    /// in ``resource_names_unsubscribe`` and others in ``resource_locators_unsubscribe``.
+    /// in `resource_names_unsubscribe` and others in `resource_locators_unsubscribe`.
     #[prost(message, repeated, tag = "9")]
     pub resource_locators_unsubscribe: ::prost::alloc::vec::Vec<ResourceLocator>,
     /// Informs the server of the versions of the resources the xDS client knows of, to enable the
     /// client to continue the same logical xDS session even in the face of gRPC stream reconnection.
-    /// It will not be populated: \[1\] in the very first stream of a session, since the client will
-    /// not yet have any resources,  \[2\] in any message after the first in a stream (for a given
+    /// It will not be populated: \\[1\\] in the very first stream of a session, since the client will
+    /// not yet have any resources,  \\[2\\] in any message after the first in a stream (for a given
     /// type_url), since the server will already be correctly tracking the client's state.
     /// (In ADS, the first message *of each type_url* of a reconnected stream populates this map.)
     /// The map's keys are names of xDS resources known to the xDS client.
@@ -242,14 +242,14 @@ pub struct DeltaDiscoveryRequest {
     #[prost(string, tag = "6")]
     pub response_nonce: ::prost::alloc::string::String,
     /// This is populated when the previous :ref:`DiscoveryResponse <envoy_v3_api_msg_service.discovery.v3.DiscoveryResponse>`
-    /// failed to update configuration. The ``message`` field in ``error_details``
+    /// failed to update configuration. The `message` field in `error_details`
     /// provides the Envoy internal exception related to the failure.
     #[prost(message, optional, tag = "7")]
     pub error_detail: ::core::option::Option<
         super::super::super::super::google::rpc::Status,
     >,
 }
-/// [#next-free-field: 9]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeltaDiscoveryResponse {
@@ -277,7 +277,7 @@ pub struct DeltaDiscoveryResponse {
     /// reference a DeltaDiscoveryResponse when (N)ACKing. The nonce is required.
     #[prost(string, tag = "5")]
     pub nonce: ::prost::alloc::string::String,
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     /// The control plane instance that sent the response.
     #[prost(message, optional, tag = "7")]
     pub control_plane: ::core::option::Option<
@@ -351,18 +351,18 @@ pub mod dynamic_parameter_constraints {
         NotConstraints(::prost::alloc::boxed::Box<super::DynamicParameterConstraints>),
     }
 }
-/// [#next-free-field: 10]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Resource {
     /// The resource's name, to distinguish it from others of the same type of resource.
-    /// Only one of ``name`` or ``resource_name`` may be set.
+    /// Only one of `name` or `resource_name` may be set.
     #[prost(string, tag = "3")]
     pub name: ::prost::alloc::string::String,
-    /// Alternative to the ``name`` field, to be used when the server supports
+    /// Alternative to the `name` field, to be used when the server supports
     /// multiple variants of the named resource that are differentiated by
     /// dynamic parameter constraints.
-    /// Only one of ``name`` or ``resource_name`` may be set.
+    /// Only one of `name` or `resource_name` may be set.
     #[prost(message, optional, tag = "8")]
     pub resource_name: ::core::option::Option<ResourceName>,
     /// The aliases are a list of other names that this resource can go by.
@@ -395,7 +395,7 @@ pub struct Resource {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Cache control properties for the resource.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "7")]
     pub cache_control: ::core::option::Option<resource::CacheControl>,
     /// The Metadata field can be used to provide additional information for the resource.
@@ -408,7 +408,7 @@ pub struct Resource {
 /// Nested message and enum types in `Resource`.
 pub mod resource {
     /// Cache control properties for the resource.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CacheControl {
@@ -419,7 +419,7 @@ pub mod resource {
         pub do_not_cache: bool,
     }
 }
-/// \[#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
+/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221>
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

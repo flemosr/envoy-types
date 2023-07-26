@@ -1,4 +1,4 @@
-/// \[#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
+/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -198,11 +198,9 @@ pub mod virtual_host_discovery_service_client {
     /// during the processing of an HTTP request if a route for the request cannot be resolved. The
     /// :ref:`resource_names_subscribe <envoy_v3_api_field_service.discovery.v3.DeltaDiscoveryRequest.resource_names_subscribe>`
     /// field contains a list of virtual host names or aliases to track. The contents of an alias would
-    /// be the contents of a ``host`` or ``authority`` header used to make an http request. An xDS server
-    /// will match an alias to a virtual host based on the content of :ref:`domains'
-    /// <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The ``resource_names_unsubscribe`` field
-    /// contains a list of virtual host names that have been :ref:`unsubscribed
-    /// <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
+    /// be the contents of a `host` or `authority` header used to make an http request. An xDS server
+    /// will match an alias to a virtual host based on the content of :ref:`domains' <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The `resource_names_unsubscribe` field
+    /// contains a list of virtual host names that have been :ref:`unsubscribed <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
     #[derive(Debug, Clone)]
     pub struct VirtualHostDiscoveryServiceClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -678,11 +676,9 @@ pub mod virtual_host_discovery_service_server {
     /// during the processing of an HTTP request if a route for the request cannot be resolved. The
     /// :ref:`resource_names_subscribe <envoy_v3_api_field_service.discovery.v3.DeltaDiscoveryRequest.resource_names_subscribe>`
     /// field contains a list of virtual host names or aliases to track. The contents of an alias would
-    /// be the contents of a ``host`` or ``authority`` header used to make an http request. An xDS server
-    /// will match an alias to a virtual host based on the content of :ref:`domains'
-    /// <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The ``resource_names_unsubscribe`` field
-    /// contains a list of virtual host names that have been :ref:`unsubscribed
-    /// <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
+    /// be the contents of a `host` or `authority` header used to make an http request. An xDS server
+    /// will match an alias to a virtual host based on the content of :ref:`domains' <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The `resource_names_unsubscribe` field
+    /// contains a list of virtual host names that have been :ref:`unsubscribed <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
     #[derive(Debug)]
     pub struct VirtualHostDiscoveryServiceServer<T: VirtualHostDiscoveryService> {
         inner: _Inner<T>,
@@ -859,7 +855,7 @@ pub mod virtual_host_discovery_service_server {
         const NAME: &'static str = "envoy.service.route.v3.VirtualHostDiscoveryService";
     }
 }
-/// \[#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
+/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

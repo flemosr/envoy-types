@@ -25,7 +25,7 @@ pub struct RateLimitRequest {
     pub hits_addend: u32,
 }
 /// A response from a ShouldRateLimit call.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitResponse {
@@ -55,9 +55,9 @@ pub struct RateLimitResponse {
     /// filter. This metadata lives in a namespace specified by the canonical name of extension filter
     /// that requires it:
     ///
-    /// - :ref:`envoy.filters.http.ratelimit <config_http_filters_ratelimit_dynamic_metadata>` for HTTP filter.
-    /// - :ref:`envoy.filters.network.ratelimit <config_network_filters_ratelimit_dynamic_metadata>` for network filter.
-    /// - :ref:`envoy.filters.thrift.rate_limit <config_thrift_filters_rate_limit_dynamic_metadata>` for Thrift filter.
+    /// * :ref:`envoy.filters.http.ratelimit <config_http_filters_ratelimit_dynamic_metadata>` for HTTP filter.
+    /// * :ref:`envoy.filters.network.ratelimit <config_network_filters_ratelimit_dynamic_metadata>` for network filter.
+    /// * :ref:`envoy.filters.thrift.rate_limit <config_thrift_filters_rate_limit_dynamic_metadata>` for Thrift filter.
     #[prost(message, optional, tag = "6")]
     pub dynamic_metadata: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
@@ -72,7 +72,7 @@ pub struct RateLimitResponse {
     ///
     /// If there is not sufficient quota and the cached entry exists for a RLS descriptor set is out-of-quota but not expired,
     /// the request will be treated as OVER_LIMIT.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "7")]
     pub quota: ::core::option::Option<rate_limit_response::Quota>,
 }
@@ -95,7 +95,7 @@ pub mod rate_limit_response {
     /// Nested message and enum types in `RateLimit`.
     pub mod rate_limit {
         /// Identifies the unit of of time for rate limit.
-        /// [#comment: replace by envoy/type/v3/ratelimit_unit.proto in v4]
+        /// \[\#comment: replace by envoy/type/v3/ratelimit_unit.proto in v4\]
         #[derive(
             Clone,
             Copy,
@@ -164,7 +164,7 @@ pub mod rate_limit_response {
     /// When quota expires due to timeout, a new RLS request will also be made.
     /// The implementation may choose to preemptively query the rate limit server for more quota on or
     /// before expiration or before the available quota runs out.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Quota {
@@ -173,7 +173,7 @@ pub mod rate_limit_response {
         pub requests: u32,
         /// The unique id that is associated with each Quota either at individual descriptor level or whole descriptor set level.
         ///
-        /// For a matching policy with boolean logic, for example, match: "request.headers\['environment'\] == 'staging' || request.headers\['environment'\] == 'dev'"),
+        /// For a matching policy with boolean logic, for example, match: "request.headers\\['environment'\\] == 'staging' || request.headers\\['environment'\\] == 'dev'"),
         /// the request_headers action produces a distinct list of descriptors for each possible value of the ‘environment’ header even though the granted quota is same.
         /// Thus, the client will use this id information (returned from RLS server) to correctly correlate the multiple descriptors/descriptor sets that have been granted with same quota (i.e., share the same quota among multiple descriptors or descriptor sets.)
         ///
@@ -195,7 +195,7 @@ pub mod rate_limit_response {
             ),
         }
     }
-    /// [#next-free-field: 6]
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DescriptorStatus {
@@ -221,22 +221,23 @@ pub mod rate_limit_response {
         /// all matching descriptors.
         ///
         /// If there is not sufficient quota, there are three cases:
+        ///
         /// 1. A cached entry exists for a RLS descriptor that is out-of-quota, but not expired.
-        ///     In this case, the request will be treated as OVER_LIMIT.
-        /// 2. Some RLS descriptors have a cached entry that has valid quota but some RLS descriptors
-        ///     have no cached entry. This will trigger a new RLS request.
-        ///     When the result is returned, a single unit will be consumed from the quota for all
-        ///     matching descriptors.
-        ///     If the server did not provide a quota, such as the quota message is empty for some of
-        ///     the descriptors, then the request admission is determined by the
-        ///     :ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
-        /// 3. All RLS descriptors lack a cached entry, this will trigger a new RLS request,
-        ///     When the result is returned, a single unit will be consumed from the quota for all
-        ///     matching descriptors.
-        ///     If the server did not provide a quota, such as the quota message is empty for some of
-        ///     the descriptors, then the request admission is determined by the
-        ///     :ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
-        /// \[#not-implemented-hide:\]
+        ///    In this case, the request will be treated as OVER_LIMIT.
+        /// 1. Some RLS descriptors have a cached entry that has valid quota but some RLS descriptors
+        ///    have no cached entry. This will trigger a new RLS request.
+        ///    When the result is returned, a single unit will be consumed from the quota for all
+        ///    matching descriptors.
+        ///    If the server did not provide a quota, such as the quota message is empty for some of
+        ///    the descriptors, then the request admission is determined by the
+        ///    :ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
+        /// 1. All RLS descriptors lack a cached entry, this will trigger a new RLS request,
+        ///    When the result is returned, a single unit will be consumed from the quota for all
+        ///    matching descriptors.
+        ///    If the server did not provide a quota, such as the quota message is empty for some of
+        ///    the descriptors, then the request admission is determined by the
+        ///    :ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
+        ///    \\[\#not-implemented-hide:\\]
         #[prost(message, optional, tag = "5")]
         pub quota: ::core::option::Option<Quota>,
     }

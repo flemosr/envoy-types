@@ -8,14 +8,14 @@ pub struct AccessLog {
     #[prost(message, optional, tag = "2")]
     pub filter: ::core::option::Option<AccessLogFilter>,
     /// Custom configuration that must be set according to the access logger extension being instantiated.
-    /// [#extension-category: envoy.access_loggers]
+    /// \[\#extension-category: envoy.access_loggers\]
     #[prost(oneof = "access_log::ConfigType", tags = "4")]
     pub config_type: ::core::option::Option<access_log::ConfigType>,
 }
 /// Nested message and enum types in `AccessLog`.
 pub mod access_log {
     /// Custom configuration that must be set according to the access logger extension being instantiated.
-    /// [#extension-category: envoy.access_loggers]
+    /// \[\#extension-category: envoy.access_loggers\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ConfigType {
@@ -23,7 +23,7 @@ pub mod access_log {
         TypedConfig(super::super::super::super::super::google::protobuf::Any),
     }
 }
-/// [#next-free-field: 14]
+/// \[\#next-free-field: 14\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccessLogFilter {
@@ -69,7 +69,7 @@ pub mod access_log_filter {
         #[prost(message, tag = "10")]
         GrpcStatusFilter(super::GrpcStatusFilter),
         /// Extension filter.
-        /// [#extension-category: envoy.access_loggers.extension_filters]
+        /// \[\#extension-category: envoy.access_loggers.extension_filters\]
         #[prost(message, tag = "11")]
         ExtensionFilter(super::ExtensionFilter),
         /// Metadata Filter
@@ -108,9 +108,11 @@ pub mod comparison_filter {
     pub enum Op {
         /// =
         Eq = 0,
-        /// >=
+        ///
+        /// >
+        /// > =
         Ge = 1,
-        /// <=
+        /// \<=
         Le = 2,
     }
     impl Op {
@@ -170,7 +172,7 @@ pub struct TraceableFilter {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RuntimeFilter {
     /// Runtime key to get an optional overridden numerator for use in the
-    /// ``percent_sampled`` field. If found in runtime, this value will replace the
+    /// `percent_sampled` field. If found in runtime, this value will replace the
     /// default numerator.
     #[prost(string, tag = "1")]
     pub runtime_key: ::prost::alloc::string::String,
@@ -186,12 +188,10 @@ pub struct RuntimeFilter {
     /// is present, the filter will consistently sample across multiple hosts based
     /// on the runtime key value and the value extracted from
     /// :ref:`x-request-id<config_http_conn_man_headers_x-request-id>`. If it is
-    /// missing, or ``use_independent_randomness`` is set to true, the filter will
+    /// missing, or `use_independent_randomness` is set to true, the filter will
     /// randomly sample based on the runtime key value alone.
-    /// ``use_independent_randomness`` can be used for logging kill switches within
-    /// complex nested :ref:`AndFilter
-    /// <envoy_v3_api_msg_config.accesslog.v3.AndFilter>` and :ref:`OrFilter
-    /// <envoy_v3_api_msg_config.accesslog.v3.OrFilter>` blocks that are easier to
+    /// `use_independent_randomness` can be used for logging kill switches within
+    /// complex nested :ref:`AndFilter <envoy_v3_api_msg_config.accesslog.v3.AndFilter>` and :ref:`OrFilter <envoy_v3_api_msg_config.accesslog.v3.OrFilter>` blocks that are easier to
     /// reason about from a probability perspective (i.e., setting to true will
     /// cause the filter to behave like an independent random variable when
     /// composed within logical operator filters).

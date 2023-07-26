@@ -1,5 +1,5 @@
 /// An internal redirect predicate that accepts only explicitly allowed target routes.
-/// [#extension: envoy.internal_redirect_predicates.allow_listed_routes]
+/// \[\#extension: envoy.internal_redirect_predicates.allow_listed_routes\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllowListedRoutesConfig {

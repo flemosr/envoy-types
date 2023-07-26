@@ -1,4 +1,4 @@
-/// [#extension: envoy.key_value.file_based]
+/// \[\#extension: envoy.key_value.file_based\]
 /// This is configuration to flush a key value store out to disk.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

@@ -69,7 +69,7 @@ pub mod matcher {
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct SinglePredicate {
                 /// Protocol-specific specification of input field to match on.
-                /// [#extension-category: envoy.matching.common_inputs]
+                /// \[\#extension-category: envoy.matching.common_inputs\]
                 #[prost(message, optional, tag = "1")]
                 pub input: ::core::option::Option<
                     super::super::super::super::super::super::core::v3::TypedExtensionConfig,
@@ -88,7 +88,7 @@ pub mod matcher {
                         super::super::super::super::super::super::super::super::r#type::matcher::v3::StringMatcher,
                     ),
                     /// Extension for custom matching logic.
-                    /// [#extension-category: envoy.matching.input_matchers]
+                    /// \[\#extension-category: envoy.matching.input_matchers\]
                     #[prost(message, tag = "3")]
                     CustomMatch(
                         super::super::super::super::super::super::super::core::v3::TypedExtensionConfig,
@@ -188,7 +188,7 @@ pub mod matcher {
 }
 /// Match configuration. This is a recursive structure which allows complex nested match
 /// configurations to be built using various logical operators.
-/// [#next-free-field: 11]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MatchPredicate {
@@ -257,9 +257,9 @@ pub struct HttpHeadersMatch {
 ///
 /// .. attention::
 ///
-///    Searching for patterns in HTTP body is potentially cpu intensive. For each specified pattern, http body is scanned byte by byte to find a match.
-///    If multiple patterns are specified, the process is repeated for each pattern. If location of a pattern is known, ``bytes_limit`` should be specified
-///    to scan only part of the http body.
+/// Searching for patterns in HTTP body is potentially cpu intensive. For each specified pattern, http body is scanned byte by byte to find a match.
+/// If multiple patterns are specified, the process is repeated for each pattern. If location of a pattern is known, `bytes_limit` should be specified
+/// to scan only part of the http body.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpGenericBodyMatch {

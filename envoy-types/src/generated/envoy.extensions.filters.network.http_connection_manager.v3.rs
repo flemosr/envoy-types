@@ -1,4 +1,4 @@
-/// [#next-free-field: 57]
+/// \[\#next-free-field: 57\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpConnectionManager {
@@ -23,8 +23,7 @@ pub struct HttpConnectionManager {
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
     /// Presence of the object defines whether the connection manager
-    /// emits :ref:`tracing <arch_overview_tracing>` data to the :ref:`configured tracing provider
-    /// <envoy_v3_api_msg_config.trace.v3.Tracing>`.
+    /// emits :ref:`tracing <arch_overview_tracing>` data to the :ref:`configured tracing provider <envoy_v3_api_msg_config.trace.v3.Tracing>`.
     #[prost(message, optional, tag = "7")]
     pub tracing: ::core::option::Option<http_connection_manager::Tracing>,
     /// Additional settings for HTTP requests handled by the connection manager. These will be
@@ -34,10 +33,11 @@ pub struct HttpConnectionManager {
         super::super::super::super::super::config::core::v3::HttpProtocolOptions,
     >,
     /// Additional HTTP/1 settings that are passed to the HTTP/1 codec.
-    /// [#comment:TODO: The following fields are ignored when the
+    /// \[\#comment:TODO: The following fields are ignored when the
     /// :ref:`header validation configuration <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.typed_header_validation_config>`
     /// is present:
-    /// 1. :ref:`allow_chunked_length <envoy_v3_api_field_config.core.v3.Http1ProtocolOptions.allow_chunked_length>`]
+    ///
+    /// 1. :ref:`allow_chunked_length <envoy_v3_api_field_config.core.v3.Http1ProtocolOptions.allow_chunked_length>`\]
     #[prost(message, optional, tag = "8")]
     pub http_protocol_options: ::core::option::Option<
         super::super::super::super::super::config::core::v3::Http1ProtocolOptions,
@@ -48,13 +48,13 @@ pub struct HttpConnectionManager {
         super::super::super::super::super::config::core::v3::Http2ProtocolOptions,
     >,
     /// Additional HTTP/3 settings that are passed directly to the HTTP/3 codec.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(message, optional, tag = "44")]
     pub http3_protocol_options: ::core::option::Option<
         super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
     >,
     /// An optional override that the connection manager will write to the server
-    /// header in responses. If not set, the default is ``envoy``.
+    /// header in responses. If not set, the default is `envoy`.
     #[prost(string, tag = "10")]
     pub server_name: ::prost::alloc::string::String,
     /// Defines the action to be applied to the Server header on the response path.
@@ -86,11 +86,9 @@ pub struct HttpConnectionManager {
     /// introducing robustness to TCP connections that terminate without a FIN.
     ///
     /// This idle timeout applies to new streams and is overridable by the
-    /// :ref:`route-level idle_timeout
-    /// <envoy_v3_api_field_config.route.v3.RouteAction.idle_timeout>`. Even on a stream in
+    /// :ref:`route-level idle_timeout <envoy_v3_api_field_config.route.v3.RouteAction.idle_timeout>`. Even on a stream in
     /// which the override applies, prior to receipt of the initial request
-    /// headers, the :ref:`stream_idle_timeout
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_idle_timeout>`
+    /// headers, the :ref:`stream_idle_timeout <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_idle_timeout>`
     /// applies. Each time an encode/decode event for headers or data is processed
     /// for the stream, the timer will be reset. If the timeout fires, the stream
     /// is terminated with a 408 Request Timeout error code if no upstream response
@@ -102,8 +100,7 @@ pub struct HttpConnectionManager {
     /// a peer that does not release enough window to completely write the stream, even though all
     /// data has been proxied within available flow control windows. If the timeout is hit in this
     /// case, the :ref:`tx_flush_timeout <config_http_conn_man_stats_per_codec>` counter will be
-    /// incremented. Note that :ref:`max_stream_duration
-    /// <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_stream_duration>` does not apply to
+    /// incremented. Note that :ref:`max_stream_duration <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_stream_duration>` does not apply to
     /// this corner case.
     ///
     /// If the :ref:`overload action <config_overload_manager_overload_actions>` "envoy.overload_actions.reduce_timeouts"
@@ -159,7 +156,7 @@ pub struct HttpConnectionManager {
     /// is pending a flush of the write buffer. However, any progress made writing data to the socket
     /// will restart the timer associated with this timeout. This means that the total grace period for
     /// a socket in this state will be
-    /// <total_time_waiting_for_write_buffer_flushes>+<delayed_close_timeout>.
+    /// \<total_time_waiting_for_write_buffer_flushes>+\<delayed_close_timeout>.
     ///
     /// Delaying Envoy's connection close and giving the peer the opportunity to initiate the close
     /// sequence mitigates a race condition that exists when downstream clients do not drain/process
@@ -172,14 +169,14 @@ pub struct HttpConnectionManager {
     /// The default timeout is 1000 ms if this option is not specified.
     ///
     /// .. NOTE::
-    ///     To be useful in avoiding the race condition described above, this timeout must be set
-    ///     to *at least* <max round trip time expected between clients and Envoy>+<100ms to account for
-    ///     a reasonable "worst" case processing time for a full iteration of Envoy's event loop>.
+    /// To be useful in avoiding the race condition described above, this timeout must be set
+    /// to *at least* <max round trip time expected between clients and Envoy>+\<100ms to account for
+    /// a reasonable "worst" case processing time for a full iteration of Envoy's event loop>.
     ///
     /// .. WARNING::
-    ///     A value of 0 will completely disable delayed close processing. When disabled, the downstream
-    ///     connection's socket will be closed immediately after the write flush is completed or will
-    ///     never close if the write flush does not complete.
+    /// A value of 0 will completely disable delayed close processing. When disabled, the downstream
+    /// connection's socket will be closed immediately after the write flush is completed or will
+    /// never close if the write flush does not complete.
     #[prost(message, optional, tag = "26")]
     pub delayed_close_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -192,10 +189,8 @@ pub struct HttpConnectionManager {
     >,
     /// .. attention::
     /// This field is deprecated in favor of
-    /// :ref:`access_log_flush_interval
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.access_log_flush_interval>`.
-    /// Note that if both this field and :ref:`access_log_flush_interval
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.access_log_flush_interval>`
+    /// :ref:`access_log_flush_interval <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.access_log_flush_interval>`.
+    /// Note that if both this field and :ref:`access_log_flush_interval <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.access_log_flush_interval>`
     /// are specified, the former (deprecated field) is ignored.
     #[deprecated]
     #[prost(message, optional, tag = "54")]
@@ -204,10 +199,8 @@ pub struct HttpConnectionManager {
     >,
     /// .. attention::
     /// This field is deprecated in favor of
-    /// :ref:`flush_access_log_on_new_request
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.flush_access_log_on_new_request>`.
-    /// Note that if both this field and :ref:`flush_access_log_on_new_request
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.flush_access_log_on_new_request>`
+    /// :ref:`flush_access_log_on_new_request <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.flush_access_log_on_new_request>`.
+    /// Note that if both this field and :ref:`flush_access_log_on_new_request <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.flush_access_log_on_new_request>`
     /// are specified, the former (deprecated field) is ignored.
     #[deprecated]
     #[prost(bool, tag = "55")]
@@ -246,12 +239,10 @@ pub struct HttpConnectionManager {
     /// fallback to using the remote address.
     ///
     /// .. WARNING::
-    ///     Extensions cannot be used in conjunction with :ref:`use_remote_address
-    ///     <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.use_remote_address>`
-    ///     nor :ref:`xff_num_trusted_hops
-    ///     <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.xff_num_trusted_hops>`.
+    /// Extensions cannot be used in conjunction with :ref:`use_remote_address <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.use_remote_address>`
+    /// nor :ref:`xff_num_trusted_hops <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.xff_num_trusted_hops>`.
     ///
-    /// [#extension-category: envoy.http.original_ip_detection]
+    /// \[\#extension-category: envoy.http.original_ip_detection\]
     #[prost(message, repeated, tag = "46")]
     pub original_ip_detection_extensions: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -262,7 +253,7 @@ pub struct HttpConnectionManager {
     /// Each extension will be applied in the order they are configured.
     /// If the same header is mutated by multiple extensions, then the last extension will win.
     ///
-    /// [#extension-category: envoy.http.early_header_mutation]
+    /// \[\#extension-category: envoy.http.early_header_mutation\]
     #[prost(message, repeated, tag = "52")]
     pub early_header_mutation_extensions: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -278,10 +269,9 @@ pub struct HttpConnectionManager {
     /// If set, Envoy will not append the remote address to the
     /// :ref:`config_http_conn_man_headers_x-forwarded-for` HTTP header. This may be used in
     /// conjunction with HTTP filters that explicitly manipulate XFF after the HTTP connection manager
-    /// has mutated the request headers. While :ref:`use_remote_address
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.use_remote_address>`
+    /// has mutated the request headers. While :ref:`use_remote_address <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.use_remote_address>`
     /// will also suppress XFF addition, it has consequences for logging and other
-    /// Envoy uses of the remote address, so ``skip_xff_append`` should be used
+    /// Envoy uses of the remote address, so `skip_xff_append` should be used
     /// when only an elision of XFF addition is intended.
     #[prost(bool, tag = "21")]
     pub skip_xff_append: bool,
@@ -289,16 +279,14 @@ pub struct HttpConnectionManager {
     /// empty, no via header will be appended.
     #[prost(string, tag = "22")]
     pub via: ::prost::alloc::string::String,
-    /// Whether the connection manager will generate the :ref:`x-request-id
-    /// <config_http_conn_man_headers_x-request-id>` header if it does not exist. This defaults to
+    /// Whether the connection manager will generate the :ref:`x-request-id <config_http_conn_man_headers_x-request-id>` header if it does not exist. This defaults to
     /// true. Generating a random UUID4 is expensive so in high throughput scenarios where this feature
     /// is not desired it can be disabled.
     #[prost(message, optional, tag = "15")]
     pub generate_request_id: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// Whether the connection manager will keep the :ref:`x-request-id
-    /// <config_http_conn_man_headers_x-request-id>` header if passed for a request that is edge
+    /// Whether the connection manager will keep the :ref:`x-request-id <config_http_conn_man_headers_x-request-id>` header if passed for a request that is edge
     /// (Edge request is the request from external clients to front Envoy) and not reset it, which
     /// is the current Envoy behaviour. This defaults to false.
     #[prost(bool, tag = "32")]
@@ -315,12 +303,11 @@ pub struct HttpConnectionManager {
         tag = "16"
     )]
     pub forward_client_cert_details: i32,
-    /// This field is valid only when :ref:`forward_client_cert_details
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.forward_client_cert_details>`
+    /// This field is valid only when :ref:`forward_client_cert_details <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.forward_client_cert_details>`
     /// is APPEND_FORWARD or SANITIZE_SET and the client connection is mTLS. It specifies the fields in
     /// the client certificate to be forwarded. Note that in the
-    /// :ref:`config_http_conn_man_headers_x-forwarded-client-cert` header, ``Hash`` is always set, and
-    /// ``By`` is always set when the client certificate presents the URI type Subject Alternative Name
+    /// :ref:`config_http_conn_man_headers_x-forwarded-client-cert` header, `Hash` is always set, and
+    /// `By` is always set when the client certificate presents the URI type Subject Alternative Name
     /// value.
     #[prost(message, optional, tag = "17")]
     pub set_current_client_cert_details: ::core::option::Option<
@@ -333,18 +320,15 @@ pub struct HttpConnectionManager {
     #[prost(bool, tag = "18")]
     pub proxy_100_continue: bool,
     /// If
-    /// :ref:`use_remote_address
-    /// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.use_remote_address>`
+    /// :ref:`use_remote_address <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.use_remote_address>`
     /// is true and represent_ipv4_remote_address_as_ipv4_mapped_ipv6 is true and the remote address is
-    /// an IPv4 address, the address will be mapped to IPv6 before it is appended to ``x-forwarded-for``.
+    /// an IPv4 address, the address will be mapped to IPv6 before it is appended to `x-forwarded-for`.
     /// This is useful for testing compatibility of upstream services that parse the header value. For
-    /// example, 50.0.0.1 is represented as ::FFFF:50.0.0.1. See `IPv4-Mapped IPv6 Addresses
-    /// <<https://tools.ietf.org/html/rfc4291#section-2.5.5.2>`_> for details. This will also affect the
+    /// example, 50.0.0.1 is represented as ::FFFF:50.0.0.1. See `IPv4-Mapped IPv6 Addresses <<https://tools.ietf.org/html/rfc4291#section-2.5.5.2>`\_> for details. This will also affect the
     /// :ref:`config_http_conn_man_headers_x-envoy-external-address` header. See
-    /// :ref:`http_connection_manager.represent_ipv4_remote_address_as_ipv4_mapped_ipv6
-    /// <config_http_conn_man_runtime_represent_ipv4_remote_address_as_ipv4_mapped_ipv6>` for runtime
+    /// :ref:`http_connection_manager.represent_ipv4_remote_address_as_ipv4_mapped_ipv6 <config_http_conn_man_runtime_represent_ipv4_remote_address_as_ipv4_mapped_ipv6>` for runtime
     /// control.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(bool, tag = "20")]
     pub represent_ipv4_remote_address_as_ipv4_mapped_ipv6: bool,
     #[prost(message, repeated, tag = "23")]
@@ -352,31 +336,31 @@ pub struct HttpConnectionManager {
         http_connection_manager::UpgradeConfig,
     >,
     /// Should paths be normalized according to RFC 3986 before any processing of
-    /// requests by HTTP filters or routing? This affects the upstream ``:path`` header
+    /// requests by HTTP filters or routing? This affects the upstream `:path` header
     /// as well. For paths that fail this check, Envoy will respond with 400 to
     /// paths that are malformed. This defaults to false currently but will default
     /// true in the future. When not specified, this value may be overridden by the
     /// runtime variable
     /// :ref:`http_connection_manager.normalize_path<config_http_conn_man_runtime_normalize_path>`.
-    /// See `Normalization and Comparison <<https://tools.ietf.org/html/rfc3986#section-6>`_>
+    /// See `Normalization and Comparison <<https://tools.ietf.org/html/rfc3986#section-6>`\_>
     /// for details of normalization.
     /// Note that Envoy does not perform
-    /// `case normalization <<https://tools.ietf.org/html/rfc3986#section-6.2.2.1>`_>
-    /// [#comment:TODO: This field is ignored when the
+    /// `case normalization <<https://tools.ietf.org/html/rfc3986#section-6.2.2.1>`\_>
+    /// \[\#comment:TODO: This field is ignored when the
     /// :ref:`header validation configuration <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.typed_header_validation_config>`
-    /// is present.]
+    /// is present.\]
     #[prost(message, optional, tag = "30")]
     pub normalize_path: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
     /// Determines if adjacent slashes in the path are merged into one before any processing of
-    /// requests by HTTP filters or routing. This affects the upstream ``:path`` header as well. Without
-    /// setting this option, incoming requests with path ``//dir///file`` will not match against route
-    /// with ``prefix`` match set to ``/dir``. Defaults to ``false``. Note that slash merging is not part of
-    /// `HTTP spec <<https://tools.ietf.org/html/rfc3986>`_> and is provided for convenience.
-    /// [#comment:TODO: This field is ignored when the
+    /// requests by HTTP filters or routing. This affects the upstream `:path` header as well. Without
+    /// setting this option, incoming requests with path `//dir///file` will not match against route
+    /// with `prefix` match set to `/dir`. Defaults to `false`. Note that slash merging is not part of
+    /// `HTTP spec <<https://tools.ietf.org/html/rfc3986>`\_> and is provided for convenience.
+    /// \[\#comment:TODO: This field is ignored when the
     /// :ref:`header validation configuration <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.typed_header_validation_config>`
-    /// is present.]
+    /// is present.\]
     #[prost(bool, tag = "33")]
     pub merge_slashes: bool,
     /// Action to take when request URL path contains escaped slash sequences (%2F, %2f, %5C and %5c).
@@ -384,9 +368,9 @@ pub struct HttpConnectionManager {
     /// runtime variable.
     /// The :ref:`http_connection_manager.path_with_escaped_slashes_action_sampling<config_http_conn_man_runtime_path_with_escaped_slashes_action_enabled>` runtime
     /// variable can be used to apply the action to a portion of all requests.
-    /// [#comment:TODO: This field is ignored when the
+    /// \[\#comment:TODO: This field is ignored when the
     /// :ref:`header validation configuration <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.typed_header_validation_config>`
-    /// is present.]
+    /// is present.\]
     #[prost(
         enumeration = "http_connection_manager::PathWithEscapedSlashesAction",
         tag = "45"
@@ -401,13 +385,13 @@ pub struct HttpConnectionManager {
     /// the following configuration can be used:
     ///
     /// .. validated-code-block:: yaml
-    ///    :type-name: envoy.extensions.filters.network.http_connection_manager.v3.RequestIDExtension
+    /// :type-name: envoy.extensions.filters.network.http_connection_manager.v3.RequestIDExtension
     ///
-    ///    typed_config:
-    ///      "@type": type.googleapis.com/envoy.extensions.request_id.uuid.v3.UuidRequestIdConfig
-    ///      pack_trace_reason: false
+    /// typed_config:
+    /// "@type": type.googleapis.com/envoy.extensions.request_id.uuid.v3.UuidRequestIdConfig
+    /// pack_trace_reason: false
     ///
-    /// [#extension-category: envoy.request_id]
+    /// \[\#extension-category: envoy.request_id\]
     #[prost(message, optional, tag = "36")]
     pub request_id_extension: ::core::option::Option<RequestIdExtension>,
     /// The configuration to customize local reply returned by Envoy. It can customize status code,
@@ -420,10 +404,10 @@ pub struct HttpConnectionManager {
     /// local port. This affects the upstream host header unless the method is
     /// CONNECT in which case if no filter adds a port the original port will be restored before headers are
     /// sent upstream.
-    /// Without setting this option, incoming requests with host ``example:443`` will not match against
-    /// route with :ref:`domains<envoy_v3_api_field_config.route.v3.VirtualHost.domains>` match set to ``example``. Defaults to ``false``. Note that port removal is not part
-    /// of `HTTP spec <<https://tools.ietf.org/html/rfc3986>`_> and is provided for convenience.
-    /// Only one of ``strip_matching_host_port`` or ``strip_any_host_port`` can be set.
+    /// Without setting this option, incoming requests with host `example:443` will not match against
+    /// route with :ref:`domains<envoy_v3_api_field_config.route.v3.VirtualHost.domains>` match set to `example`. Defaults to `false`. Note that port removal is not part
+    /// of `HTTP spec <<https://tools.ietf.org/html/rfc3986>`\_> and is provided for convenience.
+    /// Only one of `strip_matching_host_port` or `strip_any_host_port` can be set.
     #[prost(bool, tag = "39")]
     pub strip_matching_host_port: bool,
     /// Governs Envoy's behavior when receiving invalid HTTP from downstream.
@@ -436,23 +420,19 @@ pub struct HttpConnectionManager {
     /// company-internal mesh) and false when receiving untrusted traffic (edge deployments).
     ///
     /// If different behaviors for invalid_http_message for HTTP/1 and HTTP/2 are
-    /// desired, one should use the new HTTP/1 option :ref:`override_stream_error_on_invalid_http_message
-    /// <envoy_v3_api_field_config.core.v3.Http1ProtocolOptions.override_stream_error_on_invalid_http_message>` or the new HTTP/2 option
-    /// :ref:`override_stream_error_on_invalid_http_message
-    /// <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.override_stream_error_on_invalid_http_message>`
-    /// ``not`` the deprecated but similarly named :ref:`stream_error_on_invalid_http_messaging
-    /// <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.stream_error_on_invalid_http_messaging>`
+    /// desired, one should use the new HTTP/1 option :ref:`override_stream_error_on_invalid_http_message <envoy_v3_api_field_config.core.v3.Http1ProtocolOptions.override_stream_error_on_invalid_http_message>` or the new HTTP/2 option
+    /// :ref:`override_stream_error_on_invalid_http_message <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.override_stream_error_on_invalid_http_message>`
+    /// `not` the deprecated but similarly named :ref:`stream_error_on_invalid_http_messaging <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.stream_error_on_invalid_http_messaging>`
     #[prost(message, optional, tag = "40")]
     pub stream_error_on_invalid_http_message: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \[#not-implemented-hide:\] Path normalization configuration. This includes
+    /// \\[\#not-implemented-hide:\\] Path normalization configuration. This includes
     /// configurations for transformations (e.g. RFC 3986 normalization or merge
     /// adjacent slashes) and the policy to apply them. The policy determines
-    /// whether transformations affect the forwarded ``:path`` header. RFC 3986 path
+    /// whether transformations affect the forwarded `:path` header. RFC 3986 path
     /// normalization is enabled by default and the default policy is that the
-    /// normalized header will be forwarded. See :ref:`PathNormalizationOptions
-    /// <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.PathNormalizationOptions>`
+    /// normalized header will be forwarded. See :ref:`PathNormalizationOptions <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.PathNormalizationOptions>`
     /// for details.
     #[prost(message, optional, tag = "43")]
     pub path_normalization_options: ::core::option::Option<
@@ -461,11 +441,11 @@ pub struct HttpConnectionManager {
     /// Determines if trailing dot of the host should be removed from host/authority header before any
     /// processing of request by HTTP filters or routing.
     /// This affects the upstream host header.
-    /// Without setting this option, incoming requests with host ``example.com.`` will not match against
-    /// route with :ref:`domains<envoy_v3_api_field_config.route.v3.VirtualHost.domains>` match set to ``example.com``. Defaults to ``false``.
+    /// Without setting this option, incoming requests with host `example.com.` will not match against
+    /// route with :ref:`domains<envoy_v3_api_field_config.route.v3.VirtualHost.domains>` match set to `example.com`. Defaults to `false`.
     /// When the incoming request contains a host/authority header that includes a port number,
     /// setting this option will strip a trailing dot, if present, from the host section,
-    /// leaving the port as is (e.g. host value ``example.com.:443`` will be updated to ``example.com:443``).
+    /// leaving the port as is (e.g. host value `example.com.:443` will be updated to `example.com:443`).
     #[prost(bool, tag = "47")]
     pub strip_trailing_host_dot: bool,
     /// Proxy-Status HTTP response header configuration.
@@ -479,24 +459,24 @@ pub struct HttpConnectionManager {
     /// UHV is an extensible mechanism for checking validity of HTTP requests as well as providing
     /// normalization for request attributes, such as URI path.
     /// If the typed_header_validation_config is present it overrides the following options:
-    /// ``normalize_path``, ``merge_slashes``, ``path_with_escaped_slashes_action``
-    /// ``http_protocol_options.allow_chunked_length``, ``common_http_protocol_options.headers_with_underscores_action``.
+    /// `normalize_path`, `merge_slashes`, `path_with_escaped_slashes_action`
+    /// `http_protocol_options.allow_chunked_length`, `common_http_protocol_options.headers_with_underscores_action`.
     ///
     /// The default UHV checks the following:
     ///
-    /// #. HTTP/1 header map validity according to `RFC 7230 section 3.2<<https://datatracker.ietf.org/doc/html/rfc7230#section-3.2>`_>
-    /// #. Syntax of HTTP/1 request target URI and response status
-    /// #. HTTP/2 header map validity according to `RFC 7540 section 8.1.2<<https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2`_>
-    /// #. Syntax of HTTP/2 pseudo headers
-    /// #. HTTP/3 header map validity according to `RFC 9114 section 4.3 <<https://www.rfc-editor.org/rfc/rfc9114.html>`_>
-    /// #. Syntax of HTTP/3 pseudo headers
-    /// #. Syntax of ``Content-Length`` and ``Transfer-Encoding``
-    /// #. Validation of HTTP/1 requests with both ``Content-Length`` and ``Transfer-Encoding`` headers
-    /// #. Normalization of the URI path according to `Normalization and Comparison <<https://datatracker.ietf.org/doc/html/rfc3986#section-6>`_>
-    ///     without `case normalization <<https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.2.1>`_>
+    /// \#. HTTP/1 header map validity according to `RFC 7230 section 3.2<<https://datatracker.ietf.org/doc/html/rfc7230#section-3.2>`\_>
+    /// \#. Syntax of HTTP/1 request target URI and response status
+    /// \#. HTTP/2 header map validity according to `RFC 7540 section 8.1.2<<https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2`\_>
+    /// \#. Syntax of HTTP/2 pseudo headers
+    /// \#. HTTP/3 header map validity according to `RFC 9114 section 4.3 <<https://www.rfc-editor.org/rfc/rfc9114.html>`\_>
+    /// \#. Syntax of HTTP/3 pseudo headers
+    /// \#. Syntax of `Content-Length` and `Transfer-Encoding`
+    /// \#. Validation of HTTP/1 requests with both `Content-Length` and `Transfer-Encoding` headers
+    /// \#. Normalization of the URI path according to `Normalization and Comparison <<https://datatracker.ietf.org/doc/html/rfc3986#section-6>`\_>
+    /// without `case normalization <<https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.2.1>`\_>
     ///
-    /// \[#not-implemented-hide:\]
-    /// [#extension-category: envoy.http.header_validators]
+    /// \\[\#not-implemented-hide:\\]
+    /// \[\#extension-category: envoy.http.header_validators\]
     #[prost(message, optional, tag = "50")]
     pub typed_header_validation_config: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -519,15 +499,14 @@ pub struct HttpConnectionManager {
 }
 /// Nested message and enum types in `HttpConnectionManager`.
 pub mod http_connection_manager {
-    /// [#next-free-field: 10]
+    /// \[\#next-free-field: 10\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Tracing {
         /// Target percentage of requests managed by this HTTP connection manager that will be force
         /// traced if the :ref:`x-client-trace-id <config_http_conn_man_headers_x-client-trace-id>`
         /// header is set. This field is a direct analog for the runtime variable
-        /// 'tracing.client_enabled' in the :ref:`HTTP Connection Manager
-        /// <config_http_conn_man_runtime>`.
+        /// 'tracing.client_enabled' in the :ref:`HTTP Connection Manager <config_http_conn_man_runtime>`.
         /// Default: 100%
         #[prost(message, optional, tag = "3")]
         pub client_sampling: ::core::option::Option<
@@ -574,12 +553,12 @@ pub mod http_connection_manager {
         /// If not specified, no tracing will be performed.
         ///
         /// .. attention::
-        ///    Please be aware that ``envoy.tracers.opencensus`` provider can only be configured once
-        ///    in Envoy lifetime.
-        ///    Any attempts to reconfigure it or to use different configurations for different HCM filters
-        ///    will be rejected.
-        ///    Such a constraint is inherent to OpenCensus itself. It cannot be overcome without changes
-        ///    on OpenCensus side.
+        /// Please be aware that `envoy.tracers.opencensus` provider can only be configured once
+        /// in Envoy lifetime.
+        /// Any attempts to reconfigure it or to use different configurations for different HCM filters
+        /// will be rejected.
+        /// Such a constraint is inherent to OpenCensus itself. It cannot be overcome without changes
+        /// on OpenCensus side.
         #[prost(message, optional, tag = "9")]
         pub provider: ::core::option::Option<
             super::super::super::super::super::super::config::trace::v3::tracing::Http,
@@ -639,7 +618,7 @@ pub mod http_connection_manager {
             super::super::super::super::super::super::config::core::v3::CidrRange,
         >,
     }
-    /// [#next-free-field: 7]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SetCurrentClientCertDetails {
@@ -673,19 +652,21 @@ pub mod http_connection_manager {
     ///
     /// .. warning::
     ///
-    ///     The current implementation of upgrade headers does not handle
-    ///     multi-valued upgrade headers. Support for multi-valued headers may be
-    ///     added in the future if needed.
+    /// ```text
+    /// The current implementation of upgrade headers does not handle
+    /// multi-valued upgrade headers. Support for multi-valued headers may be
+    /// added in the future if needed.
+    /// ```
     ///
     /// .. warning::
-    ///     The current implementation of upgrade headers does not work with HTTP/2
-    ///     upstreams.
+    /// The current implementation of upgrade headers does not work with HTTP/2
+    /// upstreams.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct UpgradeConfig {
         /// The case-insensitive name of this upgrade, e.g. "websocket".
         /// For each upgrade type present in upgrade_configs, requests with
-        /// Upgrade: \[upgrade_type\]
+        /// Upgrade: \\[upgrade_type\\]
         /// will be proxied upstream.
         #[prost(string, tag = "1")]
         pub upgrade_type: ::prost::alloc::string::String,
@@ -695,30 +676,26 @@ pub mod http_connection_manager {
         #[prost(message, repeated, tag = "2")]
         pub filters: ::prost::alloc::vec::Vec<super::HttpFilter>,
         /// Determines if upgrades are enabled or disabled by default. Defaults to true.
-        /// This can be overridden on a per-route basis with :ref:`cluster
-        /// <envoy_v3_api_field_config.route.v3.RouteAction.upgrade_configs>` as documented in the
+        /// This can be overridden on a per-route basis with :ref:`cluster <envoy_v3_api_field_config.route.v3.RouteAction.upgrade_configs>` as documented in the
         /// :ref:`upgrade documentation <arch_overview_upgrades>`.
         #[prost(message, optional, tag = "3")]
         pub enabled: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::BoolValue,
         >,
     }
-    /// \[#not-implemented-hide:\] Transformations that apply to path headers. Transformations are applied
+    /// \\[\#not-implemented-hide:\\] Transformations that apply to path headers. Transformations are applied
     /// before any processing of requests by HTTP filters, routing, and matching. Only the normalized
     /// path will be visible internally if a transformation is enabled. Any path rewrites that the
-    /// router performs (e.g. :ref:`regex_rewrite
-    /// <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>` or :ref:`prefix_rewrite
-    /// <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`) will apply to the ``:path`` header
+    /// router performs (e.g. :ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>` or :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`) will apply to the `:path` header
     /// destined for the upstream.
     ///
-    /// Note: access logging and tracing will show the original ``:path`` header.
+    /// Note: access logging and tracing will show the original `:path` header.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct PathNormalizationOptions {
-        /// \[#not-implemented-hide:\] Normalization applies internally before any processing of requests by
-        /// HTTP filters, routing, and matching *and* will affect the forwarded ``:path`` header. Defaults
-        /// to :ref:`NormalizePathRFC3986
-        /// <envoy_v3_api_msg_type.http.v3.PathTransformation.Operation.NormalizePathRFC3986>`. When not
+        /// \\[\#not-implemented-hide:\\] Normalization applies internally before any processing of requests by
+        /// HTTP filters, routing, and matching *and* will affect the forwarded `:path` header. Defaults
+        /// to :ref:`NormalizePathRFC3986 <envoy_v3_api_msg_type.http.v3.PathTransformation.Operation.NormalizePathRFC3986>`. When not
         /// specified, this value may be overridden by the runtime variable
         /// :ref:`http_connection_manager.normalize_path<config_http_conn_man_runtime_normalize_path>`.
         /// Envoy will respond with 400 to paths that are malformed (e.g. for paths that fail RFC 3986
@@ -727,9 +704,9 @@ pub mod http_connection_manager {
         pub forwarding_transformation: ::core::option::Option<
             super::super::super::super::super::super::r#type::http::v3::PathTransformation,
         >,
-        /// \[#not-implemented-hide:\] Normalization only applies internally before any processing of
+        /// \\[\#not-implemented-hide:\\] Normalization only applies internally before any processing of
         /// requests by HTTP filters, routing, and matching. These will be applied after full
-        /// transformation is applied. The ``:path`` header before this transformation will be restored in
+        /// transformation is applied. The `:path` header before this transformation will be restored in
         /// the router filter and sent upstream unless it was mutated by a filter. Defaults to no
         /// transformations.
         /// Multiple actions can be applied in the same Transformation, forming a sequential
@@ -746,39 +723,39 @@ pub mod http_connection_manager {
     ///
     /// See the [Proxy-Status
     /// RFC](<https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-proxy-status-08>).
-    /// [#comment:TODO: Update this with the non-draft URL when finalized.]
+    /// \[\#comment:TODO: Update this with the non-draft URL when finalized.\]
     ///
     /// The Proxy-Status header is a string of the form:
     ///
-    ///    "<server_name>; error=<error_type>; details=<details>"
-    /// [#next-free-field: 7]
+    /// "\<server_name>; error=\<error_type>; details=<details>"
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ProxyStatusConfig {
         /// If true, the details field of the Proxy-Status header is not populated with stream_info.response_code_details.
-        /// This value defaults to ``false``, i.e. the ``details`` field is populated by default.
+        /// This value defaults to `false`, i.e. the `details` field is populated by default.
         #[prost(bool, tag = "1")]
         pub remove_details: bool,
         /// If true, the details field of the Proxy-Status header will not contain
-        /// connection termination details. This value defaults to ``false``, i.e. the
-        /// ``details`` field will contain connection termination details by default.
+        /// connection termination details. This value defaults to `false`, i.e. the
+        /// `details` field will contain connection termination details by default.
         #[prost(bool, tag = "2")]
         pub remove_connection_termination_details: bool,
         /// If true, the details field of the Proxy-Status header will not contain an
-        /// enumeration of the Envoy ResponseFlags. This value defaults to ``false``,
-        /// i.e. the ``details`` field will contain a list of ResponseFlags by default.
+        /// enumeration of the Envoy ResponseFlags. This value defaults to `false`,
+        /// i.e. the `details` field will contain a list of ResponseFlags by default.
         #[prost(bool, tag = "3")]
         pub remove_response_flags: bool,
         /// If true, overwrites the existing Status header with the response code
         /// recommended by the Proxy-Status spec.
-        /// This value defaults to ``false``, i.e. the HTTP response code is not
+        /// This value defaults to `false`, i.e. the HTTP response code is not
         /// overwritten.
         #[prost(bool, tag = "4")]
         pub set_recommended_response_code: bool,
         /// The name of the proxy as it appears at the start of the Proxy-Status
         /// header.
         ///
-        /// If neither of these values are set, this value defaults to ``server_name``,
+        /// If neither of these values are set, this value defaults to `server_name`,
         /// which itself defaults to "envoy".
         #[prost(oneof = "proxy_status_config::ProxyName", tags = "5, 6")]
         pub proxy_name: ::core::option::Option<proxy_status_config::ProxyName>,
@@ -788,16 +765,16 @@ pub mod http_connection_manager {
         /// The name of the proxy as it appears at the start of the Proxy-Status
         /// header.
         ///
-        /// If neither of these values are set, this value defaults to ``server_name``,
+        /// If neither of these values are set, this value defaults to `server_name`,
         /// which itself defaults to "envoy".
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum ProxyName {
-            /// If ``use_node_id`` is set, Proxy-Status headers will use the Envoy's node
+            /// If `use_node_id` is set, Proxy-Status headers will use the Envoy's node
             /// ID as the name of the proxy.
             #[prost(bool, tag = "5")]
             UseNodeId(bool),
-            /// If ``literal_proxy_name`` is set, Proxy-Status headers will use this
+            /// If `literal_proxy_name` is set, Proxy-Status headers will use this
             /// value as the name of the proxy.
             #[prost(string, tag = "6")]
             LiteralProxyName(::prost::alloc::string::String),
@@ -854,7 +831,7 @@ pub mod http_connection_manager {
         /// (Envoy does not require HTTP/2 to take place over TLS or to use ALPN.
         /// Prior knowledge is allowed).
         Http2 = 2,
-        /// \[#not-implemented-hide:\] QUIC implementation is not production ready yet. Use this enum with
+        /// \\[\#not-implemented-hide:\\] QUIC implementation is not production ready yet. Use this enum with
         /// caution to prevent accidental execution of QUIC code. I.e. `!= HTTP2` is no longer sufficient
         /// to distinguish HTTP1 and HTTP2 traffic.
         Http3 = 3,
@@ -1078,10 +1055,10 @@ pub mod http_connection_manager {
         /// of request by HTTP filters or routing.
         /// This affects the upstream host header unless the method is CONNECT in
         /// which case if no filter adds a port the original port will be restored before headers are sent upstream.
-        /// Without setting this option, incoming requests with host ``example:443`` will not match against
-        /// route with :ref:`domains<envoy_v3_api_field_config.route.v3.VirtualHost.domains>` match set to ``example``. Defaults to ``false``. Note that port removal is not part
-        /// of `HTTP spec <<https://tools.ietf.org/html/rfc3986>`_> and is provided for convenience.
-        /// Only one of ``strip_matching_host_port`` or ``strip_any_host_port`` can be set.
+        /// Without setting this option, incoming requests with host `example:443` will not match against
+        /// route with :ref:`domains<envoy_v3_api_field_config.route.v3.VirtualHost.domains>` match set to `example`. Defaults to `false`. Note that port removal is not part
+        /// of `HTTP spec <<https://tools.ietf.org/html/rfc3986>`\_> and is provided for convenience.
+        /// Only one of `strip_matching_host_port` or `strip_any_host_port` can be set.
         #[prost(bool, tag = "42")]
         StripAnyHostPort(bool),
     }
@@ -1097,48 +1074,47 @@ pub struct LocalReplyConfig {
     /// The configuration to form response body from the :ref:`command operators <config_access_log_command_operators>`
     /// and to specify response content type as one of: plain/text or application/json.
     ///
-    /// Example one: "plain/text" ``body_format``.
+    /// Example one: "plain/text" `body_format`.
     ///
     /// .. validated-code-block:: yaml
-    ///    :type-name: envoy.config.core.v3.SubstitutionFormatString
+    /// :type-name: envoy.config.core.v3.SubstitutionFormatString
     ///
-    ///    text_format: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
+    /// text_format: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
     ///
     /// The following response body in "plain/text" format will be generated for a request with
     /// local reply body of "upstream connection error", response_code=503 and path=/foo.
     ///
     /// .. code-block:: text
     ///
-    ///    upstream connect error:503:path=/foo
+    /// upstream connect error:503:path=/foo
     ///
-    /// Example two: "application/json" ``body_format``.
+    /// Example two: "application/json" `body_format`.
     ///
     /// .. validated-code-block:: yaml
-    ///    :type-name: envoy.config.core.v3.SubstitutionFormatString
+    /// :type-name: envoy.config.core.v3.SubstitutionFormatString
     ///
-    ///    json_format:
-    ///      status: "%RESPONSE_CODE%"
-    ///      message: "%LOCAL_REPLY_BODY%"
-    ///      path: "%REQ(:path)%"
+    /// json_format:
+    /// status: "%RESPONSE_CODE%"
+    /// message: "%LOCAL_REPLY_BODY%"
+    /// path: "%REQ(:path)%"
     ///
     /// The following response body in "application/json" format would be generated for a request with
     /// local reply body of "upstream connection error", response_code=503 and path=/foo.
     ///
     /// .. code-block:: json
     ///
-    ///   {
-    ///     "status": 503,
-    ///     "message": "upstream connection error",
-    ///     "path": "/foo"
-    ///   }
-    ///
+    /// {
+    /// "status": 503,
+    /// "message": "upstream connection error",
+    /// "path": "/foo"
+    /// }
     #[prost(message, optional, tag = "2")]
     pub body_format: ::core::option::Option<
         super::super::super::super::super::config::core::v3::SubstitutionFormatString,
     >,
 }
 /// The configuration to filter and change local response.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResponseMapper {
@@ -1152,13 +1128,13 @@ pub struct ResponseMapper {
     pub status_code: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// The new local reply body text if specified. It will be used in the ``%LOCAL_REPLY_BODY%``
-    /// command operator in the ``body_format``.
+    /// The new local reply body text if specified. It will be used in the `%LOCAL_REPLY_BODY%`
+    /// command operator in the `body_format`.
     #[prost(message, optional, tag = "3")]
     pub body: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
-    /// A per mapper ``body_format`` to override the :ref:`body_format <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.LocalReplyConfig.body_format>`.
+    /// A per mapper `body_format` to override the :ref:`body_format <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.LocalReplyConfig.body_format>`.
     /// It will be used when this mapper is matched.
     #[prost(message, optional, tag = "4")]
     pub body_format_override: ::core::option::Option<
@@ -1195,7 +1171,7 @@ pub struct ScopedRouteConfigurationsList {
         super::super::super::super::super::config::route::v3::ScopedRouteConfiguration,
     >,
 }
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScopedRoutes {
@@ -1251,18 +1227,20 @@ pub mod scoped_routes {
             ///
             /// .. code::
             ///
-            ///               <0> <1>   <-- index
-            ///     X-Header: a=b;c=d
-            ///     |         || |
-            ///     |         || \----> <element_separator>
-            ///     |         ||
-            ///     |         |\----> <element.separator>
-            ///     |         |
-            ///     |         \----> <element.key>
-            ///     |
-            ///     \----> <name>
+            /// ```text
+            ///           <0> <1>   <-- index
+            /// X-Header: a=b;c=d
+            /// |         || |
+            /// |         || \----> <element_separator>
+            /// |         ||
+            /// |         |\----> <element.separator>
+            /// |         |
+            /// |         \----> <element.key>
+            /// |
+            /// \----> <name>
             ///
-            ///     Each 'a=b' key-value pair constitutes an 'element' of the header field.
+            /// Each 'a=b' key-value pair constitutes an 'element' of the header field.
+            /// ```
             #[allow(clippy::derive_partial_eq_without_eq)]
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct HeaderValueExtractor {
@@ -1270,7 +1248,7 @@ pub mod scoped_routes {
                 ///
                 /// .. note::
                 ///
-                ///    If the header appears multiple times only the first value is used.
+                /// If the header appears multiple times only the first value is used.
                 #[prost(string, tag = "1")]
                 pub name: ::prost::alloc::string::String,
                 /// The element separator (e.g., ';' separates 'a;b;c;d').
@@ -1351,11 +1329,11 @@ pub struct ScopedRds {
         super::super::super::super::super::config::core::v3::ConfigSource,
     >,
     /// xdstp:// resource locator for scoped RDS collection.
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     #[prost(string, tag = "2")]
     pub srds_resources_locator: ::prost::alloc::string::String,
 }
-/// [#next-free-field: 7]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpFilter {
@@ -1381,7 +1359,7 @@ pub mod http_filter {
         /// To support configuring a :ref:`match tree <arch_overview_matching_api>`, use an
         /// :ref:`ExtensionWithMatcher <envoy_v3_api_msg_extensions.common.matching.v3.ExtensionWithMatcher>`
         /// with the desired HTTP filter.
-        /// [#extension-category: envoy.filters.http]
+        /// \[\#extension-category: envoy.filters.http\]
         #[prost(message, tag = "4")]
         TypedConfig(
             super::super::super::super::super::super::super::google::protobuf::Any,
@@ -1409,9 +1387,9 @@ pub struct RequestIdExtension {
         super::super::super::super::super::super::google::protobuf::Any,
     >,
 }
-/// [#protodoc-title: Envoy Mobile HTTP connection manager]
+/// \[\#protodoc-title: Envoy Mobile HTTP connection manager\]
 /// HTTP connection manager for use in Envoy mobile.
-/// [#extension: envoy.filters.network.envoy_mobile_http_connection_manager]
+/// \[\#extension: envoy.filters.network.envoy_mobile_http_connection_manager\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EnvoyMobileHttpConnectionManager {

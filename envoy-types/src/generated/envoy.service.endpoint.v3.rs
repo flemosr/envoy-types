@@ -1,4 +1,4 @@
-/// \[#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
+/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -517,7 +517,7 @@ pub mod endpoint_discovery_service_server {
         const NAME: &'static str = "envoy.service.endpoint.v3.EndpointDiscoveryService";
     }
 }
-/// \[#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
+/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

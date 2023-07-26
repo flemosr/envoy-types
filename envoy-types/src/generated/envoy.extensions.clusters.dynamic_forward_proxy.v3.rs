@@ -1,12 +1,10 @@
-/// Configuration for the dynamic forward proxy cluster. See the :ref:`architecture overview
-/// <arch_overview_http_dynamic_forward_proxy>` for more information.
-/// [#extension: envoy.clusters.dynamic_forward_proxy]
+/// Configuration for the dynamic forward proxy cluster. See the :ref:`architecture overview <arch_overview_http_dynamic_forward_proxy>` for more information.
+/// \[\#extension: envoy.clusters.dynamic_forward_proxy\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterConfig {
     /// If true allow the cluster configuration to disable the auto_sni and auto_san_validation options
-    /// in the :ref:`cluster's upstream_http_protocol_options
-    /// <envoy_v3_api_field_config.cluster.v3.Cluster.upstream_http_protocol_options>`
+    /// in the :ref:`cluster's upstream_http_protocol_options <envoy_v3_api_field_config.cluster.v3.Cluster.upstream_http_protocol_options>`
     #[prost(bool, tag = "2")]
     pub allow_insecure_cluster_options: bool,
     /// If true allow HTTP/2 and HTTP/3 connections to be reused for requests to different
@@ -18,15 +16,13 @@ pub struct ClusterConfig {
     /// bar.example.com if that also resolved to 1.2.3.4.
     ///
     /// .. note::
-    ///    By design, this feature will maximize reuse of connections. This means that instead
-    ///    opening a new connection when an existing connection reaches the maximum number of
-    ///    concurrent streams, requests will instead be sent to the existing connection.
+    /// By design, this feature will maximize reuse of connections. This means that instead
+    /// opening a new connection when an existing connection reaches the maximum number of
+    /// concurrent streams, requests will instead be sent to the existing connection.
     ///
     /// .. note::
-    ///    The coalesced connections might be to upstreams that would not be otherwise
-    ///    selected by Envoy. See the section `Connection Reuse in RFC 7540
-    ///    <<https://datatracker.ietf.org/doc/html/rfc7540#section-9.1.1>`_>
-    ///
+    /// The coalesced connections might be to upstreams that would not be otherwise
+    /// selected by Envoy. See the section `Connection Reuse in RFC 7540 <<https://datatracker.ietf.org/doc/html/rfc7540#section-9.1.1>`\_>
     #[prost(bool, tag = "3")]
     pub allow_coalesced_connections: bool,
     #[prost(oneof = "cluster_config::ClusterImplementationSpecifier", tags = "1, 4")]
@@ -40,8 +36,7 @@ pub mod cluster_config {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ClusterImplementationSpecifier {
         /// The DNS cache configuration that the cluster will attach to. Note this configuration must
-        /// match that of associated :ref:`dynamic forward proxy HTTP filter configuration
-        /// <envoy_v3_api_field_extensions.filters.http.dynamic_forward_proxy.v3.FilterConfig.dns_cache_config>`.
+        /// match that of associated :ref:`dynamic forward proxy HTTP filter configuration <envoy_v3_api_field_extensions.filters.http.dynamic_forward_proxy.v3.FilterConfig.dns_cache_config>`.
         #[prost(message, tag = "1")]
         DnsCacheConfig(
             super::super::super::super::common::dynamic_forward_proxy::v3::DnsCacheConfig,
@@ -55,10 +50,9 @@ pub mod cluster_config {
         /// Compared to the dns_cache_config, it has the following advantages:
         ///
         /// 1. sub clusters will be created with the STRICT_DNS DiscoveryType,
-        ///     so that Envoy will use all of the IPs resolved from the host.
+        ///    so that Envoy will use all of the IPs resolved from the host.
         ///
-        /// 2. each sub cluster is full featured cluster, with lb_policy and health check and etc enabled.
-        ///
+        /// 1. each sub cluster is full featured cluster, with lb_policy and health check and etc enabled.
         #[prost(message, tag = "4")]
         SubClustersConfig(super::SubClustersConfig),
     }

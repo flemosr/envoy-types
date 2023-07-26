@@ -1,4 +1,4 @@
-/// \[#not-implemented-hide:\] Stream message for the Tap API. Envoy will open a stream to the server
+/// \\[\#not-implemented-hide:\\] Stream message for the Tap API. Envoy will open a stream to the server
 /// and stream taps without ever expecting a response.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -25,13 +25,12 @@ pub mod stream_taps_request {
         pub node: ::core::option::Option<
             super::super::super::super::config::core::v3::Node,
         >,
-        /// The opaque identifier that was set in the :ref:`output config
-        /// <envoy_v3_api_field_config.tap.v3.StreamingGrpcSink.tap_id>`.
+        /// The opaque identifier that was set in the :ref:`output config <envoy_v3_api_field_config.tap.v3.StreamingGrpcSink.tap_id>`.
         #[prost(string, tag = "2")]
         pub tap_id: ::prost::alloc::string::String,
     }
 }
-/// \[#not-implemented-hide:\]
+/// \\[\#not-implemented-hide:\\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StreamTapsResponse {}
@@ -40,7 +39,7 @@ pub mod tap_sink_service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
-    /// [#not-implemented-hide:] A tap service to receive incoming taps. Envoy will call
+    /// \[\#not-implemented-hide:\] A tap service to receive incoming taps. Envoy will call
     /// StreamTaps to deliver captured taps to the server
     #[derive(Debug, Clone)]
     pub struct TapSinkServiceClient<T> {
@@ -161,7 +160,7 @@ pub mod tap_sink_service_server {
             tonic::Status,
         >;
     }
-    /// [#not-implemented-hide:] A tap service to receive incoming taps. Envoy will call
+    /// \[\#not-implemented-hide:\] A tap service to receive incoming taps. Envoy will call
     /// StreamTaps to deliver captured taps to the server
     #[derive(Debug)]
     pub struct TapSinkServiceServer<T: TapSinkService> {

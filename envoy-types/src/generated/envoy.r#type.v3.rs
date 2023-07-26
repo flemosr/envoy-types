@@ -1,4 +1,4 @@
-/// Identifies a percentage, in the range [0.0, 100.0].
+/// Identifies a percentage, in the range \[0.0, 100.0\].
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Percent {
@@ -92,7 +92,7 @@ pub struct SemanticVersion {
 pub enum CodecClientType {
     Http1 = 0,
     Http2 = 1,
-    /// \[#not-implemented-hide:\] QUIC implementation is not production ready yet. Use this enum with
+    /// \\[\#not-implemented-hide:\\] QUIC implementation is not production ready yet. Use this enum with
     /// caution to prevent accidental execution of QUIC code. I.e. `!= HTTP2` is no longer sufficient
     /// to distinguish HTTP1 and HTTP2 traffic.
     Http3 = 2,
@@ -119,7 +119,7 @@ impl CodecClientType {
         }
     }
 }
-/// Specifies the int64 start and end of the range using half-open interval semantics [start,
+/// Specifies the int64 start and end of the range using half-open interval semantics \[start,
 /// end).
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -131,7 +131,7 @@ pub struct Int64Range {
     #[prost(int64, tag = "2")]
     pub end: i64,
 }
-/// Specifies the int32 start and end of the range using half-open interval semantics [start,
+/// Specifies the int32 start and end of the range using half-open interval semantics \[start,
 /// end).
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -143,7 +143,7 @@ pub struct Int32Range {
     #[prost(int32, tag = "2")]
     pub end: i32,
 }
-/// Specifies the double start and end of the range using half-open interval semantics [start,
+/// Specifies the double start and end of the range using half-open interval semantics \[start,
 /// end).
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -219,8 +219,8 @@ pub struct TokenBucket {
         super::super::super::google::protobuf::UInt32Value,
     >,
     /// The fill interval that tokens are added to the bucket. During each fill interval
-    /// ``tokens_per_fill`` are added to the bucket. The bucket will never contain more than
-    /// ``max_tokens`` tokens.
+    /// `tokens_per_fill` are added to the bucket. The bucket will never contain more than
+    /// `max_tokens` tokens.
     #[prost(message, optional, tag = "3")]
     pub fill_interval: ::core::option::Option<
         super::super::super::google::protobuf::Duration,
@@ -442,33 +442,30 @@ pub mod rate_limit_strategy {
     /// Allows to specify the desired requests per second (RPS, QPS), requests per minute (QPM, RPM),
     /// etc., without specifying a rate limiting algorithm implementation.
     ///
-    /// ``RequestsPerTimeUnit`` strategy does not demand any specific rate limiting algorithm to be
+    /// `RequestsPerTimeUnit` strategy does not demand any specific rate limiting algorithm to be
     /// used (in contrast to the :ref:`TokenBucket <envoy_v3_api_msg_type.v3.TokenBucket>`,
     /// for example). It implies that the implementation details of rate limiting algorithm are
     /// irrelevant as long as the configured number of "requests per time unit" is achieved.
     ///
-    /// Note that the ``TokenBucket`` is still a valid implementation of the ``RequestsPerTimeUnit``
+    /// Note that the `TokenBucket` is still a valid implementation of the `RequestsPerTimeUnit`
     /// strategy, and may be chosen to enforce the rate limit. However, there's no guarantee it will be
-    /// the ``TokenBucket`` in particular, and not the Leaky Bucket, the Sliding Window, or any other
+    /// the `TokenBucket` in particular, and not the Leaky Bucket, the Sliding Window, or any other
     /// rate limiting algorithm that fulfills the requirements.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RequestsPerTimeUnit {
-        /// The desired number of requests per :ref:`time_unit
-        /// <envoy_v3_api_field_type.v3.RateLimitStrategy.RequestsPerTimeUnit.time_unit>` to allow.
-        /// If set to ``0``, deny all (equivalent to ``BlanketRule.DENY_ALL``).
+        /// The desired number of requests per :ref:`time_unit <envoy_v3_api_field_type.v3.RateLimitStrategy.RequestsPerTimeUnit.time_unit>` to allow.
+        /// If set to `0`, deny all (equivalent to `BlanketRule.DENY_ALL`).
         ///
         /// .. note::
-        ///    Note that the algorithm implementation determines the course of action for the requests
-        ///    over the limit. As long as the ``requests_per_time_unit`` converges on the desired value,
-        ///    it's allowed to treat this field as a soft-limit: allow bursts, redistribute the allowance
-        ///    over time, etc.
-        ///
+        /// Note that the algorithm implementation determines the course of action for the requests
+        /// over the limit. As long as the `requests_per_time_unit` converges on the desired value,
+        /// it's allowed to treat this field as a soft-limit: allow bursts, redistribute the allowance
+        /// over time, etc.
         #[prost(uint64, tag = "1")]
         pub requests_per_time_unit: u64,
-        /// The unit of time. Ignored when :ref:`requests_per_time_unit
-        /// <envoy_v3_api_field_type.v3.RateLimitStrategy.RequestsPerTimeUnit.requests_per_time_unit>`
-        /// is ``0`` (deny all).
+        /// The unit of time. Ignored when :ref:`requests_per_time_unit <envoy_v3_api_field_type.v3.RateLimitStrategy.RequestsPerTimeUnit.requests_per_time_unit>`
+        /// is `0` (deny all).
         #[prost(enumeration = "super::RateLimitUnit", tag = "2")]
         pub time_unit: i32,
     }
@@ -517,8 +514,7 @@ pub mod rate_limit_strategy {
         #[prost(enumeration = "BlanketRule", tag = "1")]
         BlanketRule(i32),
         /// Best-effort limit of the number of requests per time unit, f.e. requests per second.
-        /// Does not prescribe any specific rate limiting algorithm, see :ref:`RequestsPerTimeUnit
-        /// <envoy_v3_api_msg_type.v3.RateLimitStrategy.RequestsPerTimeUnit>` for details.
+        /// Does not prescribe any specific rate limiting algorithm, see :ref:`RequestsPerTimeUnit <envoy_v3_api_msg_type.v3.RateLimitStrategy.RequestsPerTimeUnit>` for details.
         #[prost(message, tag = "2")]
         RequestsPerTimeUnit(RequestsPerTimeUnit),
         /// Limit the requests by consuming tokens from the Token Bucket.

@@ -1,15 +1,14 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AwsIamConfig {
-    /// The `service namespace
-    /// <<https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces>`_>
+    /// The `service namespace <<https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces>`\_>
     /// of the Grpc endpoint.
     ///
     /// Example: appmesh
     #[prost(string, tag = "1")]
     pub service_name: ::prost::alloc::string::String,
-    /// The `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`_> hosting the Grpc
-    /// endpoint. If unspecified, the extension will use the value in the ``AWS_REGION`` environment
+    /// The `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`\_> hosting the Grpc
+    /// endpoint. If unspecified, the extension will use the value in the `AWS_REGION` environment
     /// variable.
     ///
     /// Example: us-west-2

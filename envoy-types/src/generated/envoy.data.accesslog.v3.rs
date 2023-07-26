@@ -84,13 +84,13 @@ pub struct ConnectionProperties {
     pub sent_bytes: u64,
 }
 /// Defines fields that are shared by all Envoy access logs.
-/// [#next-free-field: 34]
+/// \[\#next-free-field: 34\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccessLogCommon {
-    /// \[#not-implemented-hide:\]
+    /// \\[\#not-implemented-hide:\\]
     /// This field indicates the rate at which this log entry was sampled.
-    /// Valid range is (0.0, 1.0].
+    /// Valid range is (0.0, 1.0\].
     #[prost(double, tag = "1")]
     pub sample_rate: f64,
     /// This field is the remote/origin address on which the request from the user was received.
@@ -121,16 +121,16 @@ pub struct AccessLogCommon {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Interval between the first downstream byte received and the first upstream byte sent. There may
-    /// by considerable delta between ``time_to_last_rx_byte`` and this value due to filters.
-    /// Additionally, the same caveats apply as documented in ``time_to_last_downstream_tx_byte`` about
+    /// by considerable delta between `time_to_last_rx_byte` and this value due to filters.
+    /// Additionally, the same caveats apply as documented in `time_to_last_downstream_tx_byte` about
     /// not accounting for kernel socket buffer time, etc.
     #[prost(message, optional, tag = "7")]
     pub time_to_first_upstream_tx_byte: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Interval between the first downstream byte received and the last upstream byte sent. There may
-    /// by considerable delta between ``time_to_last_rx_byte`` and this value due to filters.
-    /// Additionally, the same caveats apply as documented in ``time_to_last_downstream_tx_byte`` about
+    /// by considerable delta between `time_to_last_rx_byte` and this value due to filters.
+    /// Additionally, the same caveats apply as documented in `time_to_last_downstream_tx_byte` about
     /// not accounting for kernel socket buffer time, etc.
     #[prost(message, optional, tag = "8")]
     pub time_to_last_upstream_tx_byte: ::core::option::Option<
@@ -149,16 +149,16 @@ pub struct AccessLogCommon {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Interval between the first downstream byte received and the first downstream byte sent.
-    /// There may be a considerable delta between the ``time_to_first_upstream_rx_byte`` and this field
+    /// There may be a considerable delta between the `time_to_first_upstream_rx_byte` and this field
     /// due to filters. Additionally, the same caveats apply as documented in
-    /// ``time_to_last_downstream_tx_byte`` about not accounting for kernel socket buffer time, etc.
+    /// `time_to_last_downstream_tx_byte` about not accounting for kernel socket buffer time, etc.
     #[prost(message, optional, tag = "11")]
     pub time_to_first_downstream_tx_byte: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Interval between the first downstream byte received and the last downstream byte sent.
     /// Depending on protocol, buffering, windowing, filters, etc. there may be a considerable delta
-    /// between ``time_to_last_upstream_rx_byte`` and this field. Note also that this is an approximate
+    /// between `time_to_last_upstream_rx_byte` and this field. Note also that this is an approximate
     /// time. In the current implementation it does not include kernel socket buffer time. In the
     /// current implementation it also does not include send window buffering inside the HTTP/2 codec.
     /// In the future it is likely that work will be done to make this duration more accurate.
@@ -177,7 +177,7 @@ pub struct AccessLogCommon {
     pub upstream_local_address: ::core::option::Option<
         super::super::super::config::core::v3::Address,
     >,
-    /// The upstream cluster that ``upstream_remote_address`` belongs to.
+    /// The upstream cluster that `upstream_remote_address` belongs to.
     #[prost(string, tag = "15")]
     pub upstream_cluster: ::prost::alloc::string::String,
     /// Flags indicating occurrences during request/response processing.
@@ -212,8 +212,8 @@ pub struct AccessLogCommon {
         super::super::super::config::core::v3::Address,
     >,
     /// Map of filter state in stream info that have been configured to be logged. If the filter
-    /// state serialized to any message other than ``google.protobuf.Any`` it will be packed into
-    /// ``google.protobuf.Any``.
+    /// state serialized to any message other than `google.protobuf.Any` it will be packed into
+    /// `google.protobuf.Any`.
     #[prost(map = "string, message", tag = "21")]
     pub filter_state_objects: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -230,7 +230,7 @@ pub struct AccessLogCommon {
     /// For HTTP: Total duration in milliseconds of the request from the start time to the last byte out.
     /// For TCP: Total duration in milliseconds of the downstream connection.
     /// This is the total duration of the request (i.e., when the request's ActiveStream is destroyed)
-    /// and may be longer than ``time_to_last_downstream_tx_byte``.
+    /// and may be longer than `time_to_last_downstream_tx_byte`.
     #[prost(message, optional, tag = "23")]
     pub duration: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
@@ -256,8 +256,8 @@ pub struct AccessLogCommon {
     ///
     /// .. attention::
     ///
-    ///    This field is deprecated in favor of ``access_log_type`` for better indication of the
-    ///    type of the access log record.
+    /// This field is deprecated in favor of `access_log_type` for better indication of the
+    /// type of the access log record.
     #[deprecated]
     #[prost(bool, tag = "27")]
     pub intermediate_log_entry: bool,
@@ -285,14 +285,14 @@ pub struct AccessLogCommon {
     /// The type of the access log, which indicates when the log was recorded.
     /// See :ref:`ACCESS_LOG_TYPE <config_access_log_format_access_log_type>` for the available values.
     /// In case the access log was recorded by a flow which does not correspond to one of the supported
-    /// values, then the default value will be ``NotSet``.
+    /// values, then the default value will be `NotSet`.
     /// For more information about how access log behaves and when it is being recorded,
     /// please refer to :ref:`access logging <arch_overview_access_logs>`.
     #[prost(enumeration = "AccessLogType", tag = "33")]
     pub access_log_type: i32,
 }
 /// Flags indicating occurrences during request/response processing.
-/// [#next-free-field: 28]
+/// \[\#next-free-field: 28\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResponseFlags {
@@ -430,7 +430,7 @@ pub mod response_flags {
     }
 }
 /// Properties of a negotiated TLS connection.
-/// [#next-free-field: 8]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TlsProperties {
@@ -439,7 +439,7 @@ pub struct TlsProperties {
     pub tls_version: i32,
     /// TLS cipher suite negotiated during handshake. The value is a
     /// four-digit hex code defined by the IANA TLS Cipher Suite Registry
-    /// (e.g. ``009C`` for ``TLS_RSA_WITH_AES_128_GCM_SHA256``).
+    /// (e.g. `009C` for `TLS_RSA_WITH_AES_128_GCM_SHA256`).
     ///
     /// Here it is expressed as an integer.
     #[prost(message, optional, tag = "2")]
@@ -462,7 +462,7 @@ pub struct TlsProperties {
     /// The TLS session ID.
     #[prost(string, tag = "6")]
     pub tls_session_id: ::prost::alloc::string::String,
-    /// The ``JA3`` fingerprint when ``JA3`` fingerprinting is enabled.
+    /// The `JA3` fingerprint when `JA3` fingerprinting is enabled.
     #[prost(string, tag = "7")]
     pub ja3_fingerprint: ::prost::alloc::string::String,
 }
@@ -495,7 +495,7 @@ pub mod tls_properties {
             pub enum San {
                 #[prost(string, tag = "1")]
                 Uri(::prost::alloc::string::String),
-                /// \[#not-implemented-hide:\]
+                /// \\[\#not-implemented-hide:\\]
                 #[prost(string, tag = "2")]
                 Dns(::prost::alloc::string::String),
             }
@@ -547,7 +547,7 @@ pub mod tls_properties {
         }
     }
 }
-/// [#next-free-field: 16]
+/// \[\#next-free-field: 16\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpRequestProperties {
@@ -560,7 +560,7 @@ pub struct HttpRequestProperties {
     /// The scheme portion of the incoming request URI.
     #[prost(string, tag = "2")]
     pub scheme: ::prost::alloc::string::String,
-    /// HTTP/2 ``:authority`` or HTTP/1.1 ``Host`` header value.
+    /// HTTP/2 `:authority` or HTTP/1.1 `Host` header value.
     #[prost(string, tag = "3")]
     pub authority: ::prost::alloc::string::String,
     /// The port of the incoming request URI
@@ -572,23 +572,23 @@ pub struct HttpRequestProperties {
     /// The path portion from the incoming request URI.
     #[prost(string, tag = "5")]
     pub path: ::prost::alloc::string::String,
-    /// Value of the ``User-Agent`` request header.
+    /// Value of the `User-Agent` request header.
     #[prost(string, tag = "6")]
     pub user_agent: ::prost::alloc::string::String,
-    /// Value of the ``Referer`` request header.
+    /// Value of the `Referer` request header.
     #[prost(string, tag = "7")]
     pub referer: ::prost::alloc::string::String,
-    /// Value of the ``X-Forwarded-For`` request header.
+    /// Value of the `X-Forwarded-For` request header.
     #[prost(string, tag = "8")]
     pub forwarded_for: ::prost::alloc::string::String,
-    /// Value of the ``X-Request-Id`` request header
+    /// Value of the `X-Request-Id` request header
     ///
     /// This header is used by Envoy to uniquely identify a request.
     /// It will be generated for all external requests and internal requests that
     /// do not already have a request ID.
     #[prost(string, tag = "9")]
     pub request_id: ::prost::alloc::string::String,
-    /// Value of the ``X-Envoy-Original-Path`` request header.
+    /// Value of the `X-Envoy-Original-Path` request header.
     #[prost(string, tag = "10")]
     pub original_path: ::prost::alloc::string::String,
     /// Size of the HTTP request headers in bytes.
@@ -618,7 +618,7 @@ pub struct HttpRequestProperties {
     #[prost(uint64, tag = "15")]
     pub downstream_header_bytes_received: u64,
 }
-/// [#next-free-field: 9]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpResponseProperties {

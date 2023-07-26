@@ -1,16 +1,15 @@
 /// Top level configuration for the AWS request signing filter.
-/// [#next-free-field: 6]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AwsRequestSigning {
-    /// The `service namespace
-    /// <<https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces>`_>
+    /// The `service namespace <<https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namespaces>`\_>
     /// of the HTTP endpoint.
     ///
     /// Example: s3
     #[prost(string, tag = "1")]
     pub service_name: ::prost::alloc::string::String,
-    /// The `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`_> hosting the HTTP
+    /// The `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`\_> hosting the HTTP
     /// endpoint.
     ///
     /// Example: us-west-2
@@ -27,9 +26,8 @@ pub struct AwsRequestSigning {
     /// for host header forwarding which is not the desired outcome.
     #[prost(string, tag = "3")]
     pub host_rewrite: ::prost::alloc::string::String,
-    /// Instead of buffering the request to calculate the payload hash, use the literal string ``UNSIGNED-PAYLOAD``
-    /// to calculate the payload hash. Not all services support this option. See the `S3
-    /// <<https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html>`_> policy for details.
+    /// Instead of buffering the request to calculate the payload hash, use the literal string `UNSIGNED-PAYLOAD`
+    /// to calculate the payload hash. Not all services support this option. See the `S3 <<https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html>`\_> policy for details.
     #[prost(bool, tag = "4")]
     pub use_unsigned_payload: bool,
     /// A list of request header string matchers that will be excluded from signing. The excluded header can be matched by
@@ -37,10 +35,11 @@ pub struct AwsRequestSigning {
     ///
     /// Example:
     /// match_excluded_headers:
-    /// - prefix: x-envoy
-    /// - exact: foo
-    /// - exact: bar
-    /// When applied, all headers that start with "x-envoy" and headers "foo" and "bar" will not be signed.
+    ///
+    /// * prefix: x-envoy
+    /// * exact: foo
+    /// * exact: bar
+    ///   When applied, all headers that start with "x-envoy" and headers "foo" and "bar" will not be signed.
     #[prost(message, repeated, tag = "5")]
     pub match_excluded_headers: ::prost::alloc::vec::Vec<
         super::super::super::super::super::r#type::matcher::v3::StringMatcher,

@@ -8,17 +8,17 @@ pub struct ProxyProtocol {
     ///
     /// .. attention::
     ///
-    ///    This breaks conformance with the specification.
-    ///    Only enable if ALL traffic to the listener comes from a trusted source.
-    ///    For more information on the security implications of this feature, see
-    ///    <https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>
+    /// This breaks conformance with the specification.
+    /// Only enable if ALL traffic to the listener comes from a trusted source.
+    /// For more information on the security implications of this feature, see
+    /// <https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>
     ///
     /// .. attention::
     ///
-    ///    Requests of 12 or fewer bytes that match the proxy protocol v2 signature
-    ///    and requests of 6 or fewer bytes that match the proxy protocol v1
-    ///    signature will timeout (Envoy is unable to differentiate these requests
-    ///    from incomplete proxy protocol requests).
+    /// Requests of 12 or fewer bytes that match the proxy protocol v2 signature
+    /// and requests of 6 or fewer bytes that match the proxy protocol v1
+    /// signature will timeout (Envoy is unable to differentiate these requests
+    /// from incomplete proxy protocol requests).
     #[prost(bool, tag = "2")]
     pub allow_requests_without_proxy_protocol: bool,
     /// This config controls which TLVs can be passed to filter state if it is Proxy Protocol
@@ -26,9 +26,9 @@ pub struct ProxyProtocol {
     ///
     /// .. note::
     ///
-    ///    If this is configured, you likely also want to set
-    ///    :ref:`core.v3.ProxyProtocolConfig.pass_through_tlvs <envoy_v3_api_field_config.core.v3.ProxyProtocolConfig.pass_through_tlvs>`,
-    ///    which controls pass-through for the upstream.
+    /// If this is configured, you likely also want to set
+    /// :ref:`core.v3.ProxyProtocolConfig.pass_through_tlvs <envoy_v3_api_field_config.core.v3.ProxyProtocolConfig.pass_through_tlvs>`,
+    /// which controls pass-through for the upstream.
     #[prost(message, optional, tag = "3")]
     pub pass_through_tlvs: ::core::option::Option<
         super::super::super::super::super::config::core::v3::ProxyProtocolPassThroughTlVs,
@@ -51,8 +51,7 @@ pub mod proxy_protocol {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Rule {
         /// The type that triggers the rule - required
-        /// TLV type is defined as uint8_t in proxy protocol. See `the spec
-        /// <<https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>`_> for details.
+        /// TLV type is defined as uint8_t in proxy protocol. See `the spec <<https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>`\_> for details.
         #[prost(uint32, tag = "1")]
         pub tlv_type: u32,
         /// If the TLV type is present, apply this metadata KeyValuePair.

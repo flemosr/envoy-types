@@ -26,8 +26,7 @@ pub mod stream_access_logs_message {
         pub node: ::core::option::Option<
             super::super::super::super::config::core::v3::Node,
         >,
-        /// The friendly name of the log configured in :ref:`CommonGrpcAccessLogConfig
-        /// <envoy_v3_api_msg_extensions.access_loggers.grpc.v3.CommonGrpcAccessLogConfig>`.
+        /// The friendly name of the log configured in :ref:`CommonGrpcAccessLogConfig <envoy_v3_api_msg_extensions.access_loggers.grpc.v3.CommonGrpcAccessLogConfig>`.
         #[prost(string, tag = "2")]
         pub log_name: ::prost::alloc::string::String,
     }

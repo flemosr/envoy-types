@@ -1,12 +1,11 @@
 /// This extension allows for the original downstream remote IP to be detected
 /// by reading the value from a configured header name. If the value is successfully parsed
 /// as an IP, it'll be treated as the effective downstream remote address and seen as such
-/// by all filters. See :ref:`original_ip_detection_extensions
-/// <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.original_ip_detection_extensions>`
+/// by all filters. See :ref:`original_ip_detection_extensions <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.original_ip_detection_extensions>`
 /// for an overview of how extensions operate and what happens when an extension fails
 /// to detect the remote IP.
 ///
-/// [#extension: envoy.http.original_ip_detection.custom_header]
+/// \[\#extension: envoy.http.original_ip_detection.custom_header\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CustomHeaderConfig {
@@ -23,7 +22,7 @@ pub struct CustomHeaderConfig {
     /// If this is set, the request will be rejected when detection fails using it as the HTTP response status.
     ///
     /// .. note::
-    ///    If this is set to < 400 or > 511, the default status 403 will be used instead.
+    /// If this is set to \< 400 or > 511, the default status 403 will be used instead.
     #[prost(message, optional, tag = "3")]
     pub reject_with_status: ::core::option::Option<
         super::super::super::super::super::r#type::v3::HttpStatus,
