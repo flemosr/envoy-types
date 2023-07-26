@@ -6,9 +6,11 @@ services.
 Among other use cases, this crate can be used to implement an
 [Envoy External Authorization] (ExtAuthz) gRPC Server written in Rust.
 
-<!-- [![Crates.io](https://img.shields.io/crates/v/envoy-types)](https://crates.io/crates/envoy-types)
+[![Crates.io](https://img.shields.io/crates/v/envoy-types)](https://crates.io/crates/envoy-types)
 [![Documentation](https://docs.rs/envoy-types/badge.svg)](https://docs.rs/envoy-types)
-[![Crates.io](https://img.shields.io/crates/l/envoy-types)](LICENSE) -->
+[![Crates.io](https://img.shields.io/crates/l/envoy-types)](LICENSE)
+
+[Examples] | [Docs]
 
 ## Getting Started
 
@@ -109,6 +111,7 @@ terms or conditions.
 
 [Envoy Proxy]: https://www.envoyproxy.io
 [Envoy External Authorization]: https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter
+[examples]: https://github.com/flemosr/envoy-types/tree/main/examples
+[Docs]: https://docs.rs/envoy-types/latest/envoy-types/
 [protoc-install]: https://grpc.io/docs/protoc-installation/
 [`tonic`]: https://github.com/hyperium/tonic
-[examples]: https://github.com/flemosr/envoy-types/tree/main/examples
