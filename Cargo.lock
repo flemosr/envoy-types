@@ -156,9 +156,6 @@ name = "envoy-proto-collect"
 version = "0.1.0"
 dependencies = [
  "glob",
- "prost",
- "tonic",
- "tonic-build",
 ]
 
 [[package]]
