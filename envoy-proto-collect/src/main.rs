@@ -3,6 +3,7 @@ use std::{
     fs::{self, File},
     io::{self, Write},
     path::PathBuf,
+    process,
 };
 
 /// Generate an Apache-2.0 declaration, in the form of a Protocol Buffer
@@ -27,10 +28,21 @@ fn apache_v2(year: u32, owner: &str) -> String {
     )
 }
 
-fn collect_protos(repo: &str, glob_patterns: Vec<&str>, add_license: Option<&String>) {
-    let out_dir = PathBuf::from("../envoy-types/proto");
+fn collect_protos(
+    out_dir: &PathBuf,
+    repo: &str,
+    glob_patterns: Vec<&str>,
+    add_license: Option<&String>,
+) {
+    let repo = PathBuf::from(std::env!("CARGO_MANIFEST_DIR"))
+        .join("submodules")
+        .join(repo);
 
-    let repo = PathBuf::from("submodules").join(repo);
+    if !repo.is_dir() {
+        eprintln!("Error: submodule repo {:?} not found.", repo);
+        process::exit(1);
+    }
+
     let mut source_protos: Vec<PathBuf> = Vec::new();
 
     for pattern in glob_patterns {
@@ -72,15 +84,30 @@ fn collect_protos(repo: &str, glob_patterns: Vec<&str>, add_license: Option<&Str
 }
 
 fn main() {
-    let out_dir = PathBuf::from("../envoy-types/proto");
+    let out_dir = PathBuf::from(std::env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .expect("envoy-proto-collect is inside a workspace")
+        .join("envoy-types")
+        .join("proto");
+
     if !out_dir.is_dir() {
-        panic!("out_dir {:?} not found", out_dir);
+        eprintln!("Error: out_dir {:?} not found.", out_dir);
+        process::exit(1);
     }
-    fs::remove_dir_all(&out_dir).expect("can remove proto dir");
-    fs::create_dir(&out_dir).expect("can create proto dir");
+
+    if out_dir.read_dir().expect("read contents").next().is_some() {
+        eprintln!(
+            "Error: out_dir {:?} is not empty.\nPlease, delete all old protos before collecting new ones.",
+            out_dir
+        );
+        process::exit(1);
+    }
+
+    println!("Collecting protos to {:?}...", out_dir);
 
     let envoy_license = apache_v2(2023, "Envoy Project Authors");
     collect_protos(
+        &out_dir,
         "data-plane-api",
         vec![
             "envoy/**/v3/*.proto", // Main protos
@@ -92,6 +119,7 @@ fn main() {
 
     let xds_license = apache_v2(2023, "CNCF xDS API Working Group (xDS-WG) Authors");
     collect_protos(
+        &out_dir,
         "xds",
         vec![
             "udpa/annotations/*.proto",
@@ -110,6 +138,7 @@ fn main() {
 
     let protoc_gen_validate_license = apache_v2(2023, "Buf Technologies, Inc.");
     collect_protos(
+        &out_dir,
         "protoc-gen-validate",
         vec!["**/validate.proto"],
         Some(&protoc_gen_validate_license),
@@ -117,6 +146,7 @@ fn main() {
 
     // Files from `googleapis` already have an Apache-2.0 declaration
     collect_protos(
+        &out_dir,
         "googleapis",
         vec![
             "google/api/expr/v1alpha1/checked.proto",
@@ -131,6 +161,7 @@ fn main() {
 
     // Files from `opencensus-proto` already have an Apache-2.0 declaration
     collect_protos(
+        &out_dir,
         "opencensus-proto",
         vec![
             "**/opencensus/proto/trace/v1/*.proto",
@@ -141,6 +172,7 @@ fn main() {
 
     // Files from `opentelemetry-proto` already have an Apache-2.0 declaration
     collect_protos(
+        &out_dir,
         "opentelemetry-proto",
         vec!["**/opentelemetry/proto/common/v1/common.proto"],
         None,
@@ -148,6 +180,7 @@ fn main() {
 
     // Files from `client_model` already have an Apache-2.0 declaration
     collect_protos(
+        &out_dir,
         "client_model",
         vec!["io/prometheus/client/metrics.proto"],
         None,
