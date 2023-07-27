@@ -76,20 +76,20 @@ impl Authorization for MyServer {
     }
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = format!("0.0.0.0:50051").parse().unwrap();
-    let server = MyServer::default();
+// #[tokio::main]
+// async fn main() -> Result<(), Box<dyn std::error::Error>> {
+//     let addr = format!("0.0.0.0:50051").parse().unwrap();
+//     let server = MyServer::default();
 
-    println!("AuthorizationServer listening on 50051");
+//     println!("AuthorizationServer listening on 50051");
 
-    Server::builder()
-        .add_service(AuthorizationServer::new(server))
-        .serve(addr)
-        .await?;
+//     Server::builder()
+//         .add_service(AuthorizationServer::new(server))
+//         .serve(addr)
+//         .await?;
 
-    Ok(())
-}
+//     Ok(())
+// }
 ```
 
 [Envoy Proxy]: https://www.envoyproxy.io
