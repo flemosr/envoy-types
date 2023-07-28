@@ -295,6 +295,31 @@ pub mod v3 {
             self
         }
 
+        /// Get reference to `headers`.
+        pub fn get_headers(&self) -> &Vec<HeaderValueOption> {
+            &self.headers
+        }
+
+        /// Get reference to `headers_to_remove`.
+        pub fn get_headers_to_remove(&self) -> &Vec<String> {
+            &self.headers_to_remove
+        }
+
+        /// Get reference to `response_headers_to_add`.
+        pub fn get_response_headers_to_add(&self) -> &Vec<HeaderValueOption> {
+            &self.response_headers_to_add
+        }
+
+        /// Get reference to `query_parameters_to_remove`.
+        pub fn get_query_parameters_to_remove(&self) -> &Vec<String> {
+            &self.query_parameters_to_remove
+        }
+
+        /// Get reference to `query_parameters_to_set`.
+        pub fn get_query_parameters_to_set(&self) -> &Vec<QueryParameter> {
+            &self.query_parameters_to_set
+        }
+
         /// Build a [`pb::OkHttpResponse`], consuming the
         /// [`OkHttpResponseBuilder`].
         pub fn build(self) -> OkHttpResponse {
@@ -383,6 +408,21 @@ pub mod v3 {
         pub fn set_body(&mut self, body: impl Into<String>) -> &mut Self {
             self.body = body.into();
             self
+        }
+
+        /// Get reference to `status`.
+        pub fn get_http_status(&self) -> &Option<HttpStatus> {
+            &self.status
+        }
+
+        /// Get reference to `headers`.
+        pub fn get_headers(&self) -> &Vec<HeaderValueOption> {
+            &self.headers
+        }
+
+        /// Get reference to `body`.
+        pub fn get_body(&self) -> &String {
+            &self.body
         }
 
         /// Build a [`pb::DeniedHttpResponse`], consuming the
