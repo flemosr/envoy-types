@@ -7,8 +7,16 @@ publish = false
 version = "0.1.0"
 
 [[example]]
-name = "authorization-server"
-path = "src/authorization_server.rs"
+name = "authorization-server-basic"
+path = "src/authorization_server_basic.rs"
+
+[[example]]
+name = "authorization-server-full"
+path = "src/authorization_server_full.rs"
+
+[[example]]
+name = "authorization-server-pb-only"
+path = "src/authorization_server_pb_only.rs"
 
 [dependencies]
 envoy-types = { path = "../envoy-types" }
