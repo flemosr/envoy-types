@@ -16,7 +16,7 @@ fn denied_response(status: Status) -> Result<Response<CheckResponse>, Status> {
     denied_http_response
         .set_http_status(HttpStatusCode::Forbidden)
         .add_header("downstream-header", "downstream-header-value", None, false)
-        .add_body("FORBIDDEN");
+        .set_body("FORBIDDEN");
 
     let mut denied_response = CheckResponse::with_status(status);
     denied_response.set_http_response(denied_http_response);
