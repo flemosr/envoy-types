@@ -1,7 +1,7 @@
 # Envoy Types
 
-Collection of protobuf types to work with the [Envoy Proxy] through Rust
-services.
+Collection of protobuf types and other assets to work with the [Envoy Proxy]
+through Rust services.
 
 Among other use cases, this crate can be used to implement an
 [Envoy External Authorization] (ExtAuthz) gRPC Server written in Rust.
@@ -31,28 +31,15 @@ query parameters and header manipulation, can be found at the [examples]
 directory.
 
 ```rust
-use std::collections::HashMap;
 use tonic::{transport::Server, Request, Response, Status};
 
 use envoy_types::ext_authz::v3::pb::{
-    Address, Authorization, AuthorizationServer, CheckRequest, CheckResponse,
+    Authorization, AuthorizationServer, CheckRequest, CheckResponse,
 };
-use envoy_types::pb::google::rpc;
+use envoy_types::ext_authz::v3::{CheckRequestExt, CheckResponseExt};
 
 #[derive(Default)]
 struct MyServer;
-
-fn get_external_request_data(
-    request: Request<CheckRequest>,
-) -> Option<(String, HashMap<String, String>)> {
-    let attributes = request.into_inner().attributes?;
-    let client_address = match attributes.source?.address?.address? {
-        Address::SocketAddress(socket_address) => socket_address.address,
-        _ => return None,
-    };
-    let client_headers = attributes.request?.http?.headers;
-    Some((client_address, client_headers))
-}
 
 #[tonic::async_trait]
 impl Authorization for MyServer {
@@ -60,26 +47,21 @@ impl Authorization for MyServer {
         &self,
         request: Request<CheckRequest>,
     ) -> Result<Response<CheckResponse>, Status> {
-        // Request is unauthenticated by default
-        let mut response_status = rpc::Status::default();
-        response_status.code = rpc::Code::Unauthenticated.into();
+        let request = request.into_inner();
 
-        if let Some((client_address, client_headers)) = get_external_request_data(request) {
-            // Validate `client_address` and/or `client_headers`
-            // ...
+        let client_headers = request
+            .get_client_headers()
+            .ok_or_else(|| Status::invalid_argument("client headers not populated by envoy"))?;
 
-            if let Some(authorization) = client_headers.get("authorization") {
-                if authorization == "Bearer valid-token" {
-                    // Mark request as authenticated
-                    response_status.code = rpc::Code::Ok.into();
-                }
+        let mut request_status = Status::unauthenticated("not authorized");
+
+        if let Some(authorization) = client_headers.get("authorization") {
+            if authorization == "Bearer valid-token" {
+                request_status = Status::ok("request is valid");
             }
         }
 
-        let mut response = CheckResponse::default();
-        response.status = Some(response_status);
-
-        Ok(Response::new(response))
+        Ok(Response::new(CheckResponse::with_status(request_status)))
     }
 }
 
@@ -88,7 +70,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = format!("0.0.0.0:50051").parse().unwrap();
     let server = MyServer::default();
 
-    println!("AuthorizationServer listening on 50051");
+    println!("AuthorizationServer listening on {addr}");
 
     Server::builder()
         .add_service(AuthorizationServer::new(server))
