@@ -1,2 +1,3 @@
 [workspace]
 members = ["envoy-proto-collect", "envoy-types", "examples"]
+resolver = "2"
