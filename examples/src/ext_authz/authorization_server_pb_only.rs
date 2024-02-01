@@ -37,6 +37,7 @@ fn denied_response(status: Status) -> Result<Response<CheckResponse>, Status> {
             header: Some(HeaderValue {
                 key: "downstream-header".into(),
                 value: "downstream-header-value".into(),
+                raw_value: Vec::new(), // Only one of `value` or `raw_value` can be set
             }),
             append: None, // Deprecated field
             append_action: HeaderAppendAction::AppendIfExistsOrAdd.into(),
@@ -112,6 +113,7 @@ impl Authorization for MyServer {
                 header: Some(HeaderValue {
                     key: "extauthz-header".into(),
                     value: "extauthz-value".into(),
+                    raw_value: Vec::new(), // Only one of `value` or `raw_value` can be set
                 }),
                 append: None, // Deprecated field
                 append_action: HeaderAppendAction::AppendIfExistsOrAdd.into(),
