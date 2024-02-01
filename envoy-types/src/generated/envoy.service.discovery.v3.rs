@@ -54,7 +54,7 @@ pub struct DiscoveryRequest {
     /// which will be explicitly enumerated in resource_names.
     #[prost(string, repeated, tag = "3")]
     pub resource_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Alternative to `resource_names` field that allows specifying dynamic
     /// parameters along with each resource name. Clients that populate this
     /// field must be able to handle responses from the server where resources
@@ -97,7 +97,7 @@ pub struct DiscoveryResponse {
     pub resources: ::prost::alloc::vec::Vec<
         super::super::super::super::google::protobuf::Any,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Canary is used to support two Envoy command line flags:
     ///
     /// * --terminate-on-canary-transition-failure. When set, Envoy is able to
@@ -151,9 +151,9 @@ pub struct DiscoveryResponse {
 /// debugging purposes only.
 ///
 /// DeltaDiscoveryRequest plays two independent roles. Any DeltaDiscoveryRequest
-/// can be either or both of: \\[1\\] informing the server of what resources the
+/// can be either or both of: \[1\] informing the server of what resources the
 /// client has gained/lost interest in (using resource_names_subscribe and
-/// resource_names_unsubscribe), or \\[2\\] (N)ACKing an earlier resource update from
+/// resource_names_unsubscribe), or \[2\] (N)ACKing an earlier resource update from
 /// the server (using response_nonce, with presence of error_detail making it a NACK).
 /// Additionally, the first message (for a given type_url) of a reconnected gRPC stream
 /// has a third role: informing the server of the resources (and their versions)
@@ -208,14 +208,14 @@ pub struct DeltaDiscoveryRequest {
     pub resource_names_unsubscribe: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Alternative to `resource_names_subscribe` field that allows specifying dynamic parameters
     /// along with each resource name.
     /// Note that it is legal for a request to have some resources listed
     /// in `resource_names_subscribe` and others in `resource_locators_subscribe`.
     #[prost(message, repeated, tag = "8")]
     pub resource_locators_subscribe: ::prost::alloc::vec::Vec<ResourceLocator>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Alternative to `resource_names_unsubscribe` field that allows specifying dynamic parameters
     /// along with each resource name.
     /// Note that it is legal for a request to have some resources listed
@@ -224,8 +224,8 @@ pub struct DeltaDiscoveryRequest {
     pub resource_locators_unsubscribe: ::prost::alloc::vec::Vec<ResourceLocator>,
     /// Informs the server of the versions of the resources the xDS client knows of, to enable the
     /// client to continue the same logical xDS session even in the face of gRPC stream reconnection.
-    /// It will not be populated: \\[1\\] in the very first stream of a session, since the client will
-    /// not yet have any resources,  \\[2\\] in any message after the first in a stream (for a given
+    /// It will not be populated: \[1\] in the very first stream of a session, since the client will
+    /// not yet have any resources,  \[2\] in any message after the first in a stream (for a given
     /// type_url), since the server will already be correctly tracking the client's state.
     /// (In ADS, the first message *of each type_url* of a reconnected stream populates this map.)
     /// The map's keys are names of xDS resources known to the xDS client.
@@ -277,7 +277,7 @@ pub struct DeltaDiscoveryResponse {
     /// reference a DeltaDiscoveryResponse when (N)ACKing. The nonce is required.
     #[prost(string, tag = "5")]
     pub nonce: ::prost::alloc::string::String,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// The control plane instance that sent the response.
     #[prost(message, optional, tag = "7")]
     pub control_plane: ::core::option::Option<
@@ -395,7 +395,7 @@ pub struct Resource {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Cache control properties for the resource.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "7")]
     pub cache_control: ::core::option::Option<resource::CacheControl>,
     /// The Metadata field can be used to provide additional information for the resource.
@@ -408,7 +408,7 @@ pub struct Resource {
 /// Nested message and enum types in `Resource`.
 pub mod resource {
     /// Cache control properties for the resource.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CacheControl {
@@ -419,7 +419,7 @@ pub mod resource {
         pub do_not_cache: bool,
     }
 }
-/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
+/// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221>
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -579,7 +579,7 @@ pub mod aggregated_discovery_service_server {
     #[async_trait]
     pub trait AggregatedDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the StreamAggregatedResources method.
-        type StreamAggregatedResourcesStream: futures_core::Stream<
+        type StreamAggregatedResourcesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::DiscoveryResponse, tonic::Status>,
             >
             + Send
@@ -593,7 +593,7 @@ pub mod aggregated_discovery_service_server {
             tonic::Status,
         >;
         /// Server streaming response type for the DeltaAggregatedResources method.
-        type DeltaAggregatedResourcesStream: futures_core::Stream<
+        type DeltaAggregatedResourcesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::DeltaDiscoveryResponse, tonic::Status>,
             >
             + Send
@@ -715,7 +715,11 @@ pub mod aggregated_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_aggregated_resources(request).await
+                                <T as AggregatedDiscoveryService>::stream_aggregated_resources(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -766,7 +770,11 @@ pub mod aggregated_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).delta_aggregated_resources(request).await
+                                <T as AggregatedDiscoveryService>::delta_aggregated_resources(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

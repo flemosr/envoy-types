@@ -12,6 +12,7 @@
 /// without `case normalization <<https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.2.1>`\_>
 ///
 /// \[\#comment:TODO(yanavlasov): Put #extension: envoy.http.header_validators.envoy_default after it is not hidden any more\]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderValidatorConfig {
@@ -41,6 +42,10 @@ pub struct HeaderValidatorConfig {
         tag = "4"
     )]
     pub headers_with_underscores_action: i32,
+    /// Allow requests with fragment in URL path and strip the fragment before request processing.
+    /// By default Envoy rejects requests with fragment in URL path.
+    #[prost(bool, tag = "5")]
+    pub strip_fragment_from_path: bool,
 }
 /// Nested message and enum types in `HeaderValidatorConfig`.
 pub mod header_validator_config {

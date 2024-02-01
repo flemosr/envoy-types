@@ -164,12 +164,12 @@ pub mod double_matcher {
 }
 /// Specifies the way to match a ProtobufWkt::Value. Primitive values and ListValue are supported.
 /// StructValue is not supported and is always not matched.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValueMatcher {
     /// Specifies how to match a value.
-    #[prost(oneof = "value_matcher::MatchPattern", tags = "1, 2, 3, 4, 5, 6")]
+    #[prost(oneof = "value_matcher::MatchPattern", tags = "1, 2, 3, 4, 5, 6, 7")]
     pub match_pattern: ::core::option::Option<value_matcher::MatchPattern>,
 }
 /// Nested message and enum types in `ValueMatcher`.
@@ -206,6 +206,9 @@ pub mod value_matcher {
         /// is matched to this field.
         #[prost(message, tag = "6")]
         ListMatch(::prost::alloc::boxed::Box<super::ListMatcher>),
+        /// If specified, a match occurs if and only if any of the alternatives in the match accept the value.
+        #[prost(message, tag = "7")]
+        OrMatch(super::OrMatcher),
     }
 }
 /// Specifies the way to match a list value.
@@ -224,6 +227,13 @@ pub mod list_matcher {
         #[prost(message, tag = "1")]
         OneOf(::prost::alloc::boxed::Box<super::ValueMatcher>),
     }
+}
+/// Specifies a list of alternatives for the match.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct OrMatcher {
+    #[prost(message, repeated, tag = "1")]
+    pub value_matchers: ::prost::alloc::vec::Vec<ValueMatcher>,
 }
 /// \[\#next-major-version: MetadataMatcher should use StructMatcher\]
 #[allow(clippy::derive_partial_eq_without_eq)]

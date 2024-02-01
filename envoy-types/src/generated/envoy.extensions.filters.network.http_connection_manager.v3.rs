@@ -48,7 +48,7 @@ pub struct HttpConnectionManager {
         super::super::super::super::super::config::core::v3::Http2ProtocolOptions,
     >,
     /// Additional HTTP/3 settings that are passed directly to the HTTP/3 codec.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "44")]
     pub http3_protocol_options: ::core::option::Option<
         super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
@@ -328,7 +328,7 @@ pub struct HttpConnectionManager {
     /// :ref:`config_http_conn_man_headers_x-envoy-external-address` header. See
     /// :ref:`http_connection_manager.represent_ipv4_remote_address_as_ipv4_mapped_ipv6 <config_http_conn_man_runtime_represent_ipv4_remote_address_as_ipv4_mapped_ipv6>` for runtime
     /// control.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(bool, tag = "20")]
     pub represent_ipv4_remote_address_as_ipv4_mapped_ipv6: bool,
     #[prost(message, repeated, tag = "23")]
@@ -427,7 +427,7 @@ pub struct HttpConnectionManager {
     pub stream_error_on_invalid_http_message: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \\[\#not-implemented-hide:\\] Path normalization configuration. This includes
+    /// \[\#not-implemented-hide:\] Path normalization configuration. This includes
     /// configurations for transformations (e.g. RFC 3986 normalization or merge
     /// adjacent slashes) and the policy to apply them. The policy determines
     /// whether transformations affect the forwarded `:path` header. RFC 3986 path
@@ -475,7 +475,7 @@ pub struct HttpConnectionManager {
     /// \#. Normalization of the URI path according to `Normalization and Comparison <<https://datatracker.ietf.org/doc/html/rfc3986#section-6>`\_>
     /// without `case normalization <<https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.2.1>`\_>
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// \[\#extension-category: envoy.http.header_validators\]
     #[prost(message, optional, tag = "50")]
     pub typed_header_validation_config: ::core::option::Option<
@@ -499,7 +499,7 @@ pub struct HttpConnectionManager {
 }
 /// Nested message and enum types in `HttpConnectionManager`.
 pub mod http_connection_manager {
-    /// \[\#next-free-field: 10\]
+    /// \[\#next-free-field: 11\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Tracing {
@@ -562,6 +562,29 @@ pub mod http_connection_manager {
         #[prost(message, optional, tag = "9")]
         pub provider: ::core::option::Option<
             super::super::super::super::super::super::config::trace::v3::tracing::Http,
+        >,
+        /// Create separate tracing span for each upstream request if true. And if this flag is set to true,
+        /// the tracing provider will assume that Envoy will be independent hop in the trace chain and may
+        /// set span type to client or server based on this flag.
+        /// This will deprecate the
+        /// :ref:`start_child_span <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>`
+        /// in the router.
+        ///
+        /// Users should set appropriate value based on their tracing provider and actual scenario:
+        ///
+        /// * If Envoy is used as sidecar and users want to make the sidecar and its application as only one
+        ///   hop in the trace chain, this flag should be set to false. And please also make sure the
+        ///   :ref:`start_child_span <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>`
+        ///   in the router is not set to true.
+        /// * If Envoy is used as gateway or independent proxy, or users want to make the sidecar and its
+        ///   application as different hops in the trace chain, this flag should be set to true.
+        /// * If tracing provider that has explicit requirements on span creation (like SkyWalking),
+        ///   this flag should be set to true.
+        ///
+        /// The default value is false for now for backward compatibility.
+        #[prost(message, optional, tag = "10")]
+        pub spawn_upstream_span: ::core::option::Option<
+            super::super::super::super::super::super::super::google::protobuf::BoolValue,
         >,
     }
     /// Nested message and enum types in `Tracing`.
@@ -666,7 +689,7 @@ pub mod http_connection_manager {
     pub struct UpgradeConfig {
         /// The case-insensitive name of this upgrade, e.g. "websocket".
         /// For each upgrade type present in upgrade_configs, requests with
-        /// Upgrade: \\[upgrade_type\\]
+        /// Upgrade: \[upgrade_type\]
         /// will be proxied upstream.
         #[prost(string, tag = "1")]
         pub upgrade_type: ::prost::alloc::string::String,
@@ -683,7 +706,7 @@ pub mod http_connection_manager {
             super::super::super::super::super::super::super::google::protobuf::BoolValue,
         >,
     }
-    /// \\[\#not-implemented-hide:\\] Transformations that apply to path headers. Transformations are applied
+    /// \[\#not-implemented-hide:\] Transformations that apply to path headers. Transformations are applied
     /// before any processing of requests by HTTP filters, routing, and matching. Only the normalized
     /// path will be visible internally if a transformation is enabled. Any path rewrites that the
     /// router performs (e.g. :ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>` or :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`) will apply to the `:path` header
@@ -693,7 +716,7 @@ pub mod http_connection_manager {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct PathNormalizationOptions {
-        /// \\[\#not-implemented-hide:\\] Normalization applies internally before any processing of requests by
+        /// \[\#not-implemented-hide:\] Normalization applies internally before any processing of requests by
         /// HTTP filters, routing, and matching *and* will affect the forwarded `:path` header. Defaults
         /// to :ref:`NormalizePathRFC3986 <envoy_v3_api_msg_type.http.v3.PathTransformation.Operation.NormalizePathRFC3986>`. When not
         /// specified, this value may be overridden by the runtime variable
@@ -704,7 +727,7 @@ pub mod http_connection_manager {
         pub forwarding_transformation: ::core::option::Option<
             super::super::super::super::super::super::r#type::http::v3::PathTransformation,
         >,
-        /// \\[\#not-implemented-hide:\\] Normalization only applies internally before any processing of
+        /// \[\#not-implemented-hide:\] Normalization only applies internally before any processing of
         /// requests by HTTP filters, routing, and matching. These will be applied after full
         /// transformation is applied. The `:path` header before this transformation will be restored in
         /// the router filter and sent upstream unless it was mutated by a filter. Defaults to no
@@ -787,7 +810,7 @@ pub mod http_connection_manager {
         /// on stream close, when the HTTP request is complete. If this field is set, the HCM will flush access
         /// logs periodically at the specified interval. This is especially useful in the case of long-lived
         /// requests, such as CONNECT and Websockets. Final access logs can be detected via the
-        /// `requestComplete()` method of `StreamInfo` in access log filters, or thru the `%DURATION%` substitution
+        /// `requestComplete()` method of `StreamInfo` in access log filters, or through the `%DURATION%` substitution
         /// string.
         /// The interval must be at least 1 millisecond.
         #[prost(message, optional, tag = "1")]
@@ -831,7 +854,7 @@ pub mod http_connection_manager {
         /// (Envoy does not require HTTP/2 to take place over TLS or to use ALPN.
         /// Prior knowledge is allowed).
         Http2 = 2,
-        /// \\[\#not-implemented-hide:\\] QUIC implementation is not production ready yet. Use this enum with
+        /// \[\#not-implemented-hide:\] QUIC implementation is not production ready yet. Use this enum with
         /// caution to prevent accidental execution of QUIC code. I.e. `!= HTTP2` is no longer sufficient
         /// to distinguish HTTP1 and HTTP2 traffic.
         Http3 = 3,
@@ -1329,11 +1352,11 @@ pub struct ScopedRds {
         super::super::super::super::super::config::core::v3::ConfigSource,
     >,
     /// xdstp:// resource locator for scoped RDS collection.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(string, tag = "2")]
     pub srds_resources_locator: ::prost::alloc::string::String,
 }
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpFilter {
@@ -1345,6 +1368,14 @@ pub struct HttpFilter {
     /// Otherwise, clients that do not support this filter must reject the config.
     #[prost(bool, tag = "6")]
     pub is_optional: bool,
+    /// If true, the filter is disabled by default and must be explicitly enabled by setting
+    /// per filter configuration in the route configuration.
+    /// See :ref:`route based filter chain <arch_overview_http_filters_route_based_filter_chain>`
+    /// for more details.
+    ///
+    /// Terminal filters (e.g. `envoy.filters.http.router`) cannot be marked as disabled.
+    #[prost(bool, tag = "7")]
+    pub disabled: bool,
     #[prost(oneof = "http_filter::ConfigType", tags = "4, 5")]
     pub config_type: ::core::option::Option<http_filter::ConfigType>,
 }

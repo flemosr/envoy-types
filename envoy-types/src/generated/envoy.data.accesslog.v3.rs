@@ -88,7 +88,7 @@ pub struct ConnectionProperties {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccessLogCommon {
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// This field indicates the rate at which this log entry was sampled.
     /// Valid range is (0.0, 1.0\].
     #[prost(double, tag = "1")]
@@ -479,6 +479,9 @@ pub mod tls_properties {
         /// The subject field of the certificate.
         #[prost(string, tag = "2")]
         pub subject: ::prost::alloc::string::String,
+        /// The issuer field of the certificate.
+        #[prost(string, tag = "3")]
+        pub issuer: ::prost::alloc::string::String,
     }
     /// Nested message and enum types in `CertificateProperties`.
     pub mod certificate_properties {
@@ -495,7 +498,7 @@ pub mod tls_properties {
             pub enum San {
                 #[prost(string, tag = "1")]
                 Uri(::prost::alloc::string::String),
-                /// \\[\#not-implemented-hide:\\]
+                /// \[\#not-implemented-hide:\]
                 #[prost(string, tag = "2")]
                 Dns(::prost::alloc::string::String),
             }
@@ -675,6 +678,9 @@ pub enum AccessLogType {
     UpstreamPeriodic = 8,
     UpstreamEnd = 9,
     DownstreamTunnelSuccessfullyEstablished = 10,
+    UdpTunnelUpstreamConnected = 11,
+    UdpPeriodic = 12,
+    UdpSessionEnd = 13,
 }
 impl AccessLogType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -696,6 +702,9 @@ impl AccessLogType {
             AccessLogType::DownstreamTunnelSuccessfullyEstablished => {
                 "DownstreamTunnelSuccessfullyEstablished"
             }
+            AccessLogType::UdpTunnelUpstreamConnected => "UdpTunnelUpstreamConnected",
+            AccessLogType::UdpPeriodic => "UdpPeriodic",
+            AccessLogType::UdpSessionEnd => "UdpSessionEnd",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -714,6 +723,9 @@ impl AccessLogType {
             "DownstreamTunnelSuccessfullyEstablished" => {
                 Some(Self::DownstreamTunnelSuccessfullyEstablished)
             }
+            "UdpTunnelUpstreamConnected" => Some(Self::UdpTunnelUpstreamConnected),
+            "UdpPeriodic" => Some(Self::UdpPeriodic),
+            "UdpSessionEnd" => Some(Self::UdpSessionEnd),
             _ => None,
         }
     }

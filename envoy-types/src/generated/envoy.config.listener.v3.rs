@@ -40,7 +40,6 @@ pub mod filter {
         /// Configuration source specifier for an extension configuration discovery
         /// service. In case of a failure and without the default configuration, the
         /// listener closes the connections.
-        /// \\[\#not-implemented-hide:\\]
         #[prost(message, tag = "5")]
         ConfigDiscovery(super::super::super::core::v3::ExtensionConfigSource),
     }
@@ -103,10 +102,10 @@ pub struct FilterChainMatch {
     pub prefix_ranges: ::prost::alloc::vec::Vec<super::super::core::v3::CidrRange>,
     /// If non-empty, an IP address and suffix length to match addresses when the
     /// listener is bound to 0.0.0.0/:: or when use_original_dst is specified.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(string, tag = "4")]
     pub address_suffix: ::prost::alloc::string::String,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "5")]
     pub suffix_len: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -263,7 +262,7 @@ pub struct FilterChain {
     pub use_proxy_proto: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \\[\#not-implemented-hide:\\] filter chain metadata.
+    /// \[\#not-implemented-hide:\] filter chain metadata.
     #[prost(message, optional, tag = "5")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
     /// Optional custom transport socket implementation to use for downstream connections.
@@ -288,7 +287,7 @@ pub struct FilterChain {
     /// requires that filter chains are uniquely named within a listener.
     #[prost(string, tag = "7")]
     pub name: ::prost::alloc::string::String,
-    /// \\[\#not-implemented-hide:\\] The configuration to specify whether the filter chain will be built on-demand.
+    /// \[\#not-implemented-hide:\] The configuration to specify whether the filter chain will be built on-demand.
     /// If this field is not empty, the filter chain will be built on-demand.
     /// Otherwise, the filter chain will be built normally and block listener warming.
     #[prost(message, optional, tag = "8")]
@@ -421,7 +420,7 @@ pub mod listener_filter {
     }
 }
 /// Configuration specific to the UDP QUIC listener.
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuicProtocolOptions {
@@ -488,6 +487,12 @@ pub struct QuicProtocolOptions {
     pub server_preferred_address_config: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
     >,
+    /// Configure the server to send transport parameter `disable_active_migration <<https://www.rfc-editor.org/rfc/rfc9000#section-18.2-4.30.1>`\_.>
+    /// Defaults to false (do not send this transport parameter).
+    #[prost(message, optional, tag = "10")]
+    pub send_disable_active_migration: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
 }
 /// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -538,7 +543,7 @@ pub struct AdditionalAddress {
     >,
 }
 /// Listener list collections. Entries are `Listener` resources or references.
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListenerCollection {
@@ -547,7 +552,7 @@ pub struct ListenerCollection {
         super::super::super::super::xds::core::v3::CollectionEntry,
     >,
 }
-/// \[\#next-free-field: 34\]
+/// \[\#next-free-field: 35\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Listener {
@@ -621,7 +626,7 @@ pub struct Listener {
     /// Listener metadata.
     #[prost(message, optional, tag = "6")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[deprecated]
     #[prost(message, optional, tag = "7")]
     pub deprecated_v1: ::core::option::Option<listener::DeprecatedV1>,
@@ -634,7 +639,11 @@ pub struct Listener {
     /// filters are processed sequentially right after a socket has been accepted by the listener, and
     /// before a connection is created.
     /// UDP Listener filters can be specified when the protocol in the listener socket address in
-    /// :ref:`protocol <envoy_v3_api_field_config.core.v3.SocketAddress.protocol>` is :ref:`UDP <envoy_v3_api_enum_value_config.core.v3.SocketAddress.Protocol.UDP>`.
+    /// :ref:`protocol <envoy_v3_api_field_config.core.v3.SocketAddress.protocol>` is :ref:`UDP <envoy_v3_api_enum_value_config.core.v3.SocketAddress.Protocol.UDP>` and no
+    /// :ref:`quic_options <envoy_v3_api_field_config.listener.v3.UdpListenerConfig.quic_options>` is specified in :ref:`udp_listener_config <envoy_v3_api_field_config.listener.v3.Listener.udp_listener_config>`.
+    /// QUIC listener filters can be specified when :ref:`quic_options <envoy_v3_api_field_config.listener.v3.UdpListenerConfig.quic_options>` is
+    /// specified in :ref:`udp_listener_config <envoy_v3_api_field_config.listener.v3.Listener.udp_listener_config>`.
+    /// They are processed sequentially right before connection creation. And like TCP Listener filters, they can be used to manipulate the connection metadata and socket. But the difference is that they can't be used to pause connection creation.
     #[prost(message, repeated, tag = "9")]
     pub listener_filters: ::prost::alloc::vec::Vec<ListenerFilter>,
     /// The timeout to wait for all listener filters to complete operation. If the timeout is reached,
@@ -785,6 +794,18 @@ pub struct Listener {
     pub tcp_backlog_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
+    /// The maximum number of connections to accept from the kernel per socket
+    /// event. Envoy may decide to close these connections after accepting them
+    /// from the kernel e.g. due to load shedding, or other policies.
+    /// If there are more than max_connections_to_accept_per_socket_event
+    /// connections pending accept, connections over this threshold will be
+    /// accepted in later event loop iterations.
+    /// If no value is provided Envoy will accept all connections pending accept
+    /// from the kernel.
+    #[prost(message, optional, tag = "34")]
+    pub max_connections_to_accept_per_socket_event: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt32Value,
+    >,
     /// Whether the listener should bind to the port. A listener that doesn't
     /// bind can only receive connections redirected from other listeners that set
     /// :ref:`use_original_dst <envoy_v3_api_field_config.listener.v3.Listener.use_original_dst>`
@@ -807,7 +828,7 @@ pub struct Listener {
 }
 /// Nested message and enum types in `Listener`.
 pub mod listener {
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DeprecatedV1 {
@@ -919,19 +940,19 @@ pub mod listener {
 }
 /// A placeholder proto so that users can explicitly configure the standard
 /// Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListenerManager {}
 /// A placeholder proto so that users can explicitly configure the standard
 /// Validation Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValidationListenerManager {}
 /// A placeholder proto so that users can explicitly configure the API
 /// Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiListenerManager {}

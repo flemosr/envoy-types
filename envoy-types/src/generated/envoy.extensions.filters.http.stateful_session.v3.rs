@@ -9,6 +9,10 @@ pub struct StatefulSession {
     pub session_state: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
+    /// If set to True, the HTTP request must be routed to the requested destination.
+    /// If the requested destination is not available, Envoy returns 503. Defaults to False.
+    #[prost(bool, tag = "2")]
+    pub strict: bool,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

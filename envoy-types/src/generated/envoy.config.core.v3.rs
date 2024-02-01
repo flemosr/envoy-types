@@ -1,3 +1,22 @@
+/// Message type for extension configuration.
+/// \[\#next-major-version: revisit all existing typed_config that doesn't use this wrapper.\].
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TypedExtensionConfig {
+    /// The name of an extension. This is not used to select the extension, instead
+    /// it serves the role of an opaque identifier.
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+    /// The typed config for the extension. The type URL will be used to identify
+    /// the extension. In the case that the type URL is `xds.type.v3.TypedStruct`
+    /// (or, for historical reasons, `udpa.type.v1.TypedStruct`), the inner type
+    /// URL of `TypedStruct` will be utilized. See the
+    /// :ref:`extension configuration overview <config_overview_extension_configuration>` for further details.
+    #[prost(message, optional, tag = "2")]
+    pub typed_config: ::core::option::Option<
+        super::super::super::super::google::protobuf::Any,
+    >,
+}
 /// Generic socket option message. This would be used to set socket options that
 /// might not exist in upstream kernels or precompiled Envoy binaries.
 ///
@@ -263,7 +282,7 @@ pub struct ExtraSourceAddress {
     #[prost(message, optional, tag = "2")]
     pub socket_options: ::core::option::Option<SocketOptionsOverride>,
 }
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BindConfig {
@@ -285,13 +304,8 @@ pub struct BindConfig {
     #[prost(message, repeated, tag = "3")]
     pub socket_options: ::prost::alloc::vec::Vec<SocketOption>,
     /// Extra source addresses appended to the address specified in the `source_address`
-    /// field. This enables to specify multiple source addresses. Currently, only one extra
-    /// address can be supported, and the extra address should have a different IP version
-    /// with the address in the `source_address` field. The address which has the same IP
-    /// version with the target host's address IP version will be used as bind address. If more
-    /// than one extra address specified, only the first address matched IP version will be
-    /// returned. If there is no same IP version address found, the address in the `source_address`
-    /// will be returned.
+    /// field. This enables to specify multiple source addresses.
+    /// The source address selection is determined by :ref:`local_address_selector <envoy_v3_api_field_config.core.v3.BindConfig.local_address_selector>`.
     #[prost(message, repeated, tag = "5")]
     pub extra_source_addresses: ::prost::alloc::vec::Vec<ExtraSourceAddress>,
     /// Deprecated by
@@ -299,6 +313,11 @@ pub struct BindConfig {
     #[deprecated]
     #[prost(message, repeated, tag = "4")]
     pub additional_source_addresses: ::prost::alloc::vec::Vec<SocketAddress>,
+    /// Custom local address selector to override the default (i.e.
+    /// :ref:`DefaultLocalAddressSelector <envoy_v3_api_msg_config.upstream.local_address_selector.v3.DefaultLocalAddressSelector>`).
+    /// \[\#extension-category: envoy.upstream.local_address_selector\]
+    #[prost(message, optional, tag = "6")]
+    pub local_address_selector: ::core::option::Option<TypedExtensionConfig>,
 }
 /// Addresses specify either a logical or physical address and port, which are
 /// used to tell Envoy where to bind/listen, connect to upstream and find
@@ -458,7 +477,7 @@ pub struct Extension {
     /// \[\#comment:TODO(yanavlasov): Link to the doc with existing envoy category names.\]
     #[prost(string, tag = "2")]
     pub category: ::prost::alloc::string::String,
-    /// \\[\#not-implemented-hide:\\] Type descriptor of extension configuration proto.
+    /// \[\#not-implemented-hide:\] Type descriptor of extension configuration proto.
     /// \[\#comment:TODO(yanavlasov): Link to the doc with existing configuration protos.\]
     /// \[\#comment:TODO(yanavlasov): Add tests when PR #9391 lands.\]
     #[deprecated]
@@ -675,8 +694,14 @@ pub struct HeaderValue {
     /// The same :ref:`format specifier <config_access_log_format>` as used for
     /// :ref:`HTTP access logging <config_access_log>` applies here, however
     /// unknown header values are replaced with the empty string instead of `-`.
+    /// Header value is encoded as string. This does not work for non-utf8 characters.
+    /// Only one of `value` or `raw_value` can be set.
     #[prost(string, tag = "2")]
     pub value: ::prost::alloc::string::String,
+    /// Header value is encoded as bytes which can support non-utf8 characters.
+    /// Only one of `value` or `raw_value` can be set.
+    #[prost(bytes = "vec", tag = "3")]
+    pub raw_value: ::prost::alloc::vec::Vec<u8>,
 }
 /// Header name/value pair plus option to control append behavior.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -725,9 +750,12 @@ pub mod header_value_option {
     )]
     #[repr(i32)]
     pub enum HeaderAppendAction {
-        /// This action will append the specified value to the existing values if the header
-        /// already exists. If the header doesn't exist then this will add the header with
-        /// specified key and value.
+        /// If the header already exists, this action will result in:
+        ///
+        /// * Comma-concatenated for predefined inline headers.
+        /// * Duplicate header added in the `HeaderMap` for other headers.
+        ///
+        /// If the header doesn't exist then this will add new header with specified key and value.
         AppendIfExistsOrAdd = 0,
         /// This action will add the header if it doesn't already exist. If the header
         /// already exists then this will be a no-op.
@@ -736,6 +764,9 @@ pub mod header_value_option {
         /// the header already exists. If the header doesn't exist then this will add the header
         /// with specified key and value.
         OverwriteIfExistsOrAdd = 2,
+        /// This action will overwrite the specified value by discarding any existing values if
+        /// the header already exists. If the header doesn't exist then this will be no-op.
+        OverwriteIfExists = 3,
     }
     impl HeaderAppendAction {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -749,6 +780,7 @@ pub mod header_value_option {
                 HeaderAppendAction::OverwriteIfExistsOrAdd => {
                     "OVERWRITE_IF_EXISTS_OR_ADD"
                 }
+                HeaderAppendAction::OverwriteIfExists => "OVERWRITE_IF_EXISTS",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -757,6 +789,7 @@ pub mod header_value_option {
                 "APPEND_IF_EXISTS_OR_ADD" => Some(Self::AppendIfExistsOrAdd),
                 "ADD_IF_ABSENT" => Some(Self::AddIfAbsent),
                 "OVERWRITE_IF_EXISTS_OR_ADD" => Some(Self::OverwriteIfExistsOrAdd),
+                "OVERWRITE_IF_EXISTS" => Some(Self::OverwriteIfExists),
                 _ => None,
             }
         }
@@ -1354,7 +1387,7 @@ pub mod grpc_service {
         GoogleGrpc(GoogleGrpc),
     }
 }
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 /// Configuration of the event reporting service endpoint.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1373,25 +1406,6 @@ pub mod event_service_config {
         #[prost(message, tag = "1")]
         GrpcService(super::GrpcService),
     }
-}
-/// Message type for extension configuration.
-/// \[\#next-major-version: revisit all existing typed_config that doesn't use this wrapper.\].
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TypedExtensionConfig {
-    /// The name of an extension. This is not used to select the extension, instead
-    /// it serves the role of an opaque identifier.
-    #[prost(string, tag = "1")]
-    pub name: ::prost::alloc::string::String,
-    /// The typed config for the extension. The type URL will be used to identify
-    /// the extension. In the case that the type URL is `xds.type.v3.TypedStruct`
-    /// (or, for historical reasons, `udpa.type.v1.TypedStruct`), the inner type
-    /// URL of `TypedStruct` will be utilized. See the
-    /// :ref:`extension configuration overview <config_overview_extension_configuration>` for further details.
-    #[prost(message, optional, tag = "2")]
-    pub typed_config: ::core::option::Option<
-        super::super::super::super::google::protobuf::Any,
-    >,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1452,7 +1466,7 @@ pub struct HealthCheck {
     pub healthy_threshold: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// \\[\#not-implemented-hide:\\] Non-serving port for health checking.
+    /// \[\#not-implemented-hide:\] Non-serving port for health checking.
     #[prost(message, optional, tag = "6")]
     pub alt_port: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -1533,7 +1547,7 @@ pub struct HealthCheck {
     /// \[\#extension-category: envoy.health_check.event_sinks\]
     #[prost(message, repeated, tag = "25")]
     pub event_logger: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// The gRPC service for the health check event service.
     /// If empty, health check events won't be sent to a remote endpoint.
     #[prost(message, optional, tag = "22")]
@@ -1620,7 +1634,7 @@ pub mod health_check {
         /// `/healthcheck`.
         #[prost(string, tag = "2")]
         pub path: ::prost::alloc::string::String,
-        /// \\[\#not-implemented-hide:\\] HTTP specific payload.
+        /// \[\#not-implemented-hide:\] HTTP specific payload.
         #[prost(message, optional, tag = "3")]
         pub send: ::core::option::Option<Payload>,
         /// Specifies a list of HTTP expected responses to match in the first `response_buffer_size` bytes of the response body.
@@ -1960,7 +1974,7 @@ pub struct ApiConfigSource {
     #[prost(enumeration = "api_config_source::ApiType", tag = "1")]
     pub api_type: i32,
     /// API version for xDS transport protocol. This describes the xDS gRPC/REST
-    /// endpoint and version of \\[Delta\\]DiscoveryRequest/Response used on the wire.
+    /// endpoint and version of \[Delta\]DiscoveryRequest/Response used on the wire.
     #[prost(enumeration = "ApiVersion", tag = "8")]
     pub transport_api_version: i32,
     /// Cluster names should be used only with REST. If > 1
@@ -2035,11 +2049,11 @@ pub mod api_config_source {
         DeltaGrpc = 3,
         /// SotW xDS gRPC with ADS. All resources which resolve to this configuration source will be
         /// multiplexed on a single connection to an ADS endpoint.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         AggregatedGrpc = 5,
         /// Delta xDS gRPC with ADS. All resources which resolve to this configuration source will be
         /// multiplexed on a single connection to an ADS endpoint.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         AggregatedDeltaGrpc = 6,
     }
     impl ApiType {
@@ -2081,7 +2095,7 @@ pub mod api_config_source {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AggregatedConfigSource {}
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 /// Self-referencing config source options. This is currently empty, but when
 /// set in :ref:`ConfigSource <envoy_v3_api_msg_config.core.v3.ConfigSource>` can be used to
 /// specify that other data can be obtained from the same server.
@@ -2089,7 +2103,7 @@ pub struct AggregatedConfigSource {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SelfConfigSource {
     /// API version for xDS transport protocol. This describes the xDS gRPC/REST
-    /// endpoint and version of \\[Delta\\]DiscoveryRequest/Response used on the wire.
+    /// endpoint and version of \[Delta\]DiscoveryRequest/Response used on the wire.
     #[prost(enumeration = "ApiVersion", tag = "1")]
     pub transport_api_version: i32,
 }
@@ -2104,7 +2118,8 @@ pub struct RateLimitSettings {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Rate at which tokens will be filled per second. If not set, a default fill rate of 10 tokens
-    /// per second will be used.
+    /// per second will be used. The minimal fill rate is once per year. Lower
+    /// fill rates will be set to once per year.
     #[prost(message, optional, tag = "2")]
     pub fill_rate: ::core::option::Option<
         super::super::super::super::google::protobuf::DoubleValue,
@@ -2159,7 +2174,7 @@ pub struct ConfigSource {
     /// Authorities that this config source may be used for. An authority specified in a xdstp:// URL
     /// is resolved to a `ConfigSource` prior to configuration fetch. This field provides the
     /// association between authority name and configuration source.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, repeated, tag = "7")]
     pub authorities: ::prost::alloc::vec::Vec<
         super::super::super::super::xds::core::v3::Authority,
@@ -2202,7 +2217,7 @@ pub mod config_source {
         /// source in the bootstrap configuration is used.
         #[prost(message, tag = "3")]
         Ads(super::AggregatedConfigSource),
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         /// When set, the client will access the resources from the same server it got the
         /// ConfigSource from, although not necessarily from the same stream. This is similar to the
         /// :ref:`ads<envoy_v3_api_field.ConfigSource.ads>` field, except that the client may use a
@@ -2286,7 +2301,7 @@ impl ApiVersion {
         }
     }
 }
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TcpProtocolOptions {}
@@ -2317,7 +2332,7 @@ pub struct QuicKeepAliveSettings {
     >,
 }
 /// QUIC protocol options which apply to both downstream and upstream connections.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuicProtocolOptions {
@@ -2351,7 +2366,7 @@ pub struct QuicProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// The number of timeouts that can occur before port migration is triggered for QUIC clients.
-    /// This defaults to 1. If set to 0, port migration will not occur on path degrading.
+    /// This defaults to 4. If set to 0, port migration will not occur on path degrading.
     /// Timeout here refers to QUIC internal path degrading timeout mechanism, such as PTO.
     /// This has no effect on server sessions.
     #[prost(message, optional, tag = "4")]
@@ -2362,6 +2377,14 @@ pub struct QuicProtocolOptions {
     /// If absent, use the default keepalive behavior of which a client connection sends PINGs every 15s, and a server connection doesn't do anything.
     #[prost(message, optional, tag = "5")]
     pub connection_keepalive: ::core::option::Option<QuicKeepAliveSettings>,
+    /// A comma-separated list of strings representing QUIC connection options defined in
+    /// `QUICHE <<https://github.com/google/quiche/blob/main/quiche/quic/core/crypto/crypto_protocol.h>`\_> and to be sent by upstream connections.
+    #[prost(string, tag = "6")]
+    pub connection_options: ::prost::alloc::string::String,
+    /// A comma-separated list of strings representing QUIC client connection options defined in
+    /// `QUICHE <<https://github.com/google/quiche/blob/main/quiche/quic/core/crypto/crypto_protocol.h>`\_> and to be sent by upstream connections.
+    #[prost(string, tag = "7")]
+    pub client_connection_options: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -2437,7 +2460,7 @@ pub struct AlternateProtocolsCacheOptions {
     /// first listed suffix will be used.
     ///
     /// Since lookup in this list is O(n), it is recommended that the number of suffixes be limited.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(string, repeated, tag = "5")]
     pub canonical_suffixes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
@@ -2651,7 +2674,7 @@ pub struct Http1ProtocolOptions {
     /// (from first line or :path header).
     #[prost(bool, tag = "8")]
     pub send_fully_qualified_url: bool,
-    /// \\[\#not-implemented-hide:\\] Hiding so that field can be removed after BalsaParser is rolled out.
+    /// \[\#not-implemented-hide:\] Hiding so that field can be removed after BalsaParser is rolled out.
     /// If set, force HTTP/1 parser: BalsaParser if true, http-parser if false.
     /// If unset, HTTP/1 parser is selected based on
     /// envoy.reloadable_features.http1_use_balsa_parser.
@@ -2660,7 +2683,7 @@ pub struct Http1ProtocolOptions {
     pub use_balsa_parser: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \\[\#not-implemented-hide:\\] Hiding so that field can be removed.
+    /// \[\#not-implemented-hide:\] Hiding so that field can be removed.
     /// If true, and BalsaParser is used (either `use_balsa_parser` above is true,
     /// or `envoy.reloadable_features.http1_use_balsa_parser` is true and
     /// `use_balsa_parser` is unset), then every non-empty method with only valid
@@ -2791,7 +2814,7 @@ pub struct Http2ProtocolOptions {
     /// Allows proxying Websocket and other upgrades over H2 connect.
     #[prost(bool, tag = "5")]
     pub allow_connect: bool,
-    /// \\[\#not-implemented-hide:\\] Hiding until envoy has full metadata support.
+    /// \[\#not-implemented-hide:\] Hiding until envoy has full metadata support.
     /// Still under implementation. DO NOT USE.
     ///
     /// Allows metadata. See [metadata
@@ -2883,7 +2906,7 @@ pub struct Http2ProtocolOptions {
     pub override_stream_error_on_invalid_http_message: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Specifies SETTINGS frame parameters to be sent to the peer, with two exceptions:
     ///
     /// 1. SETTINGS_ENABLE_PUSH (0x2) is not configurable as HTTP/2 server push is not supported by
@@ -2916,7 +2939,7 @@ pub struct Http2ProtocolOptions {
     /// does not respond within the configured timeout, the connection will be aborted.
     #[prost(message, optional, tag = "15")]
     pub connection_keepalive: ::core::option::Option<KeepaliveSettings>,
-    /// \\[\#not-implemented-hide:\\] Hiding so that the field can be removed after oghttp2 is rolled out.
+    /// \[\#not-implemented-hide:\] Hiding so that the field can be removed after oghttp2 is rolled out.
     /// If set, force use of a particular HTTP/2 codec: oghttp2 if true, nghttp2 if false.
     /// If unset, HTTP/2 codec is selected based on envoy.reloadable_features.http2_use_oghttp2.
     #[prost(message, optional, tag = "16")]
@@ -2943,7 +2966,7 @@ pub mod http2_protocol_options {
         >,
     }
 }
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcProtocolOptions {
@@ -3057,9 +3080,37 @@ pub mod grpc_method_list {
         pub method_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
 }
+/// HTTP service configuration.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct HttpService {
+    /// The service's HTTP URI. For example:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// ```text
+    /// http_uri:
+    ///   uri: <https://www.myserviceapi.com/v1/data>
+    ///   cluster: www.myserviceapi.com|443
+    /// ```
+    #[prost(message, optional, tag = "1")]
+    pub http_uri: ::core::option::Option<HttpUri>,
+    /// Specifies a list of HTTP headers that should be added to each request
+    /// handled by this virtual host.
+    #[prost(message, repeated, tag = "2")]
+    pub request_headers_to_add: ::prost::alloc::vec::Vec<HeaderValueOption>,
+}
+/// Optional configuration options to be used with json_format.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct JsonFormatOptions {
+    /// The output JSON string properties will be sorted.
+    #[prost(bool, tag = "1")]
+    pub sort_properties: bool,
+}
 /// Configuration to use multiple :ref:`command operators <config_access_log_command_operators>`
 /// to generate a new string in either plain text or JSON format.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SubstitutionFormatString {
@@ -3085,6 +3136,9 @@ pub struct SubstitutionFormatString {
     /// \[\#extension-category: envoy.formatter\]
     #[prost(message, repeated, tag = "6")]
     pub formatters: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
+    /// If json_format is used, the options will be applied to the output JSON string.
+    #[prost(message, optional, tag = "7")]
+    pub json_format_options: ::core::option::Option<JsonFormatOptions>,
     #[prost(oneof = "substitution_format_string::Format", tags = "1, 2, 5")]
     pub format: ::core::option::Option<substitution_format_string::Format>,
 }

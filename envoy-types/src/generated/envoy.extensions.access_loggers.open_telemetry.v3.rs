@@ -3,6 +3,7 @@
 /// populate `opentelemetry.proto.collector.v1.logs.ExportLogsServiceRequest.resource_logs <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/collector/logs/v1/logs_service.proto>`\_.>
 /// In addition, the request start time is set in the dedicated field.
 /// \[\#extension: envoy.access_loggers.open_telemetry\]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryAccessLogConfig {
@@ -11,6 +12,10 @@ pub struct OpenTelemetryAccessLogConfig {
     pub common_config: ::core::option::Option<
         super::super::grpc::v3::CommonGrpcAccessLogConfig,
     >,
+    /// If specified, Envoy will not generate built-in resource labels
+    /// like `log_name`, `zone_name`, `cluster_name`, `node_name`.
+    #[prost(bool, tag = "5")]
+    pub disable_builtin_labels: bool,
     /// OpenTelemetry `Resource <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/logs/v1/logs.proto#L51>`\_>
     /// attributes are filled with Envoy node info.
     /// Example: `resource_attributes { values { key: "region" value { string_value: "cn-north-7" } } }`.

@@ -25,7 +25,7 @@ pub struct TapConfig {
     /// a tap will occur and the data will be written to the configured output.
     #[prost(message, optional, tag = "2")]
     pub output_config: ::core::option::Option<OutputConfig>,
-    /// \\[\#not-implemented-hide:\\] Specify if Tap matching is enabled. The % of requests\connections for
+    /// \[\#not-implemented-hide:\] Specify if Tap matching is enabled. The % of requests\connections for
     /// which the tap matching is enabled. When not enabled, the request\connection will not be
     /// recorded.
     ///
@@ -173,14 +173,14 @@ pub struct OutputConfig {
     pub streaming: bool,
 }
 /// Tap output sink configuration.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutputSink {
     /// Sink output format.
     #[prost(enumeration = "output_sink::Format", tag = "1")]
     pub format: i32,
-    #[prost(oneof = "output_sink::OutputSinkType", tags = "2, 3, 4, 5")]
+    #[prost(oneof = "output_sink::OutputSinkType", tags = "2, 3, 4, 5, 6")]
     pub output_sink_type: ::core::option::Option<output_sink::OutputSinkType>,
 }
 /// Nested message and enum types in `OutputSink`.
@@ -266,7 +266,7 @@ pub mod output_sink {
         /// Tap output will be written to a file per tap sink.
         #[prost(message, tag = "3")]
         FilePerTap(super::FilePerTapSink),
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         /// GrpcService to stream data to. The format argument must be PROTO_BINARY.
         /// \[\#comment: TODO(samflattery): remove cleanup in uber_per_filter.cc once implemented\]
         #[prost(message, tag = "4")]
@@ -281,6 +281,9 @@ pub mod output_sink {
         /// file, XDS, etc.) configuring the buffered admin output type will fail.
         #[prost(message, tag = "5")]
         BufferedAdmin(super::BufferedAdminSink),
+        /// Tap output filter will be defined by an extension type
+        #[prost(message, tag = "6")]
+        CustomSink(super::super::super::core::v3::TypedExtensionConfig),
     }
 }
 /// Streaming admin sink configuration.
@@ -318,7 +321,7 @@ pub struct FilePerTapSink {
     #[prost(string, tag = "1")]
     pub path_prefix: ::prost::alloc::string::String,
 }
-/// \\[\#not-implemented-hide:\\] Streaming gRPC sink configuration sends the taps to an external gRPC
+/// \[\#not-implemented-hide:\] Streaming gRPC sink configuration sends the taps to an external gRPC
 /// server.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

@@ -11,6 +11,11 @@ pub struct ClientStatusRequest {
     /// The node making the csds request.
     #[prost(message, optional, tag = "2")]
     pub node: ::core::option::Option<super::super::super::config::core::v3::Node>,
+    /// If true, the server will not include the resource contents in the response
+    /// (i.e., the generic_xds_configs.xds_config field will not be populated).
+    /// \[\#not-implemented-hide:\]
+    #[prost(bool, tag = "3")]
+    pub exclude_resource_contents: bool,
 }
 /// Detailed config (per xDS) with status.
 /// \[\#next-free-field: 8\]
@@ -67,6 +72,11 @@ pub struct ClientConfig {
     /// the type URL (like Cluster if it is CDS)
     #[prost(message, repeated, tag = "3")]
     pub generic_xds_configs: ::prost::alloc::vec::Vec<client_config::GenericXdsConfig>,
+    /// For xDS clients, the scope in which the data is used.
+    /// For example, gRPC indicates the data plane target or that the data is
+    /// associated with gRPC server(s).
+    #[prost(string, tag = "4")]
+    pub client_scope: ::prost::alloc::string::String,
 }
 /// Nested message and enum types in `ClientConfig`.
 pub mod client_config {
@@ -114,7 +124,7 @@ pub mod client_config {
         /// this particular resource along with the reason and timestamp. For
         /// successfully updated or acknowledged resource, this field should
         /// be empty.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "8")]
         pub error_state: ::core::option::Option<
             super::super::super::super::admin::v3::UpdateFailureState,
@@ -367,7 +377,7 @@ pub mod client_status_discovery_service_server {
     #[async_trait]
     pub trait ClientStatusDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the StreamClientStatus method.
-        type StreamClientStatusStream: futures_core::Stream<
+        type StreamClientStatusStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::ClientStatusResponse, tonic::Status>,
             >
             + Send
@@ -493,7 +503,11 @@ pub mod client_status_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_client_status(request).await
+                                <T as ClientStatusDiscoveryService>::stream_client_status(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -541,7 +555,11 @@ pub mod client_status_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).fetch_client_status(request).await
+                                <T as ClientStatusDiscoveryService>::fetch_client_status(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

@@ -28,6 +28,13 @@ pub struct Endpoint {
     /// :ref:`auto_host_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.auto_host_rewrite>`.
     #[prost(string, tag = "3")]
     pub hostname: ::prost::alloc::string::String,
+    /// An ordered list of addresses that together with `address` comprise the
+    /// list of addresses for an endpoint. The address given in the `address` is
+    /// prepended to this list. It is assumed that the list must already be
+    /// sorted by preference order of the addresses. This will only be supported
+    /// for STATIC and EDS clusters.
+    #[prost(message, repeated, tag = "4")]
+    pub additional_addresses: ::prost::alloc::vec::Vec<endpoint::AdditionalAddress>,
 }
 /// Nested message and enum types in `Endpoint`.
 pub mod endpoint {
@@ -61,6 +68,13 @@ pub mod endpoint {
         /// Active health check is enabled by default if there is a health checker.
         #[prost(bool, tag = "4")]
         pub disable_active_health_check: bool,
+    }
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct AdditionalAddress {
+        /// Additional address that is associated with the endpoint.
+        #[prost(message, optional, tag = "1")]
+        pub address: ::core::option::Option<super::super::super::core::v3::Address>,
     }
 }
 /// An Endpoint that Envoy can route traffic to.
@@ -105,12 +119,12 @@ pub mod lb_endpoint {
     pub enum HostIdentifier {
         #[prost(message, tag = "1")]
         Endpoint(super::Endpoint),
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(string, tag = "5")]
         EndpointName(::prost::alloc::string::String),
     }
 }
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 /// A configuration for a LEDS collection.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -156,9 +170,9 @@ pub struct LocalityLbEndpoints {
     /// default to the highest priority (0).
     ///
     /// Under usual circumstances, Envoy will only select endpoints for the highest
-    /// priority (0). In the event all endpoints for a particular priority are
+    /// priority (0). In the event that enough endpoints for a particular priority are
     /// unavailable/unhealthy, Envoy will fail over to selecting endpoints for the
-    /// next highest priority group.
+    /// next highest priority group. Read more at :ref:`priority levels <arch_overview_load_balancing_priority_levels>`.
     ///
     /// Priorities should range from 0 (highest) to N (lowest) without skipping.
     #[prost(uint32, tag = "5")]
@@ -168,18 +182,18 @@ pub struct LocalityLbEndpoints {
     /// information (lower the value, closer it is to the source locality).
     /// This will be consumed by load balancing schemes that need proximity order
     /// to determine where to route the requests.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "6")]
     pub proximity: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(oneof = "locality_lb_endpoints::LbConfig", tags = "7, 8")]
     pub lb_config: ::core::option::Option<locality_lb_endpoints::LbConfig>,
 }
 /// Nested message and enum types in `LocalityLbEndpoints`.
 pub mod locality_lb_endpoints {
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// A list of endpoints of a specific locality.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -187,7 +201,7 @@ pub mod locality_lb_endpoints {
         #[prost(message, repeated, tag = "1")]
         pub lb_endpoints: ::prost::alloc::vec::Vec<super::LbEndpoint>,
     }
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum LbConfig {
@@ -222,7 +236,7 @@ pub struct ClusterLoadAssignment {
     #[prost(message, repeated, tag = "2")]
     pub endpoints: ::prost::alloc::vec::Vec<LocalityLbEndpoints>,
     /// Map of named endpoints that can be referenced in LocalityLbEndpoints.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(map = "string, message", tag = "5")]
     pub named_endpoints: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -235,7 +249,7 @@ pub struct ClusterLoadAssignment {
 /// Nested message and enum types in `ClusterLoadAssignment`.
 pub mod cluster_load_assignment {
     /// Load balancing policy settings.
-    /// \[\#next-free-field: 6\]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Policy {
@@ -258,7 +272,9 @@ pub mod cluster_load_assignment {
         /// "throttle"\_drop = 60%
         /// "lb"\_drop = 20%  // 50% of the remaining 'actual' load, which is 40%.
         /// actual_outgoing_load = 20% // remaining after applying all categories.
-        /// \\[\#not-implemented-hide:\\]
+        ///
+        /// Envoy supports only one element and will NACK if more than one element is present.
+        /// Other xDS-capable data planes will not necessarily have this limitation.
         #[prost(message, repeated, tag = "2")]
         pub drop_overloads: ::prost::alloc::vec::Vec<policy::DropOverload>,
         /// Priority levels and localities are considered overprovisioned with this
@@ -287,10 +303,18 @@ pub mod cluster_load_assignment {
         pub endpoint_stale_after: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Duration,
         >,
+        /// If true, use the :ref:`load balancing weight <envoy_v3_api_field_config.endpoint.v3.LbEndpoint.load_balancing_weight>` of healthy and unhealthy
+        /// hosts to determine the health of the priority level. If false, use the number of healthy and unhealthy hosts
+        /// to determine the health of the priority level, or in other words assume each host has a weight of 1 for
+        /// this calculation.
+        ///
+        /// Note: this is not currently implemented for
+        /// :ref:`locality weighted load balancing <arch_overview_load_balancing_locality_weighted_lb>`.
+        #[prost(bool, tag = "6")]
+        pub weighted_priority_health: bool,
     }
     /// Nested message and enum types in `Policy`.
     pub mod policy {
-        /// \\[\#not-implemented-hide:\\]
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct DropOverload {
@@ -340,7 +364,7 @@ pub struct UpstreamLocalityStats {
     /// :ref:`LoadStatsResponse.report_endpoint_granularity<envoy_v3_api_field_service.load_stats.v3.LoadStatsResponse.report_endpoint_granularity>`.
     #[prost(message, repeated, tag = "7")]
     pub upstream_endpoint_stats: ::prost::alloc::vec::Vec<UpstreamEndpointStats>,
-    /// \\[\#not-implemented-hide:\\] The priority of the endpoint group these metrics
+    /// \[\#not-implemented-hide:\] The priority of the endpoint group these metrics
     /// were collected from.
     #[prost(uint32, tag = "6")]
     pub priority: u32,

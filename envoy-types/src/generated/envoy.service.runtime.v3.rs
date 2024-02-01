@@ -1,4 +1,4 @@
-/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
+/// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221>
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -207,7 +207,7 @@ pub mod runtime_discovery_service_server {
     #[async_trait]
     pub trait RuntimeDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the StreamRuntime method.
-        type StreamRuntimeStream: futures_core::Stream<
+        type StreamRuntimeStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DiscoveryResponse,
                     tonic::Status,
@@ -225,7 +225,7 @@ pub mod runtime_discovery_service_server {
             tonic::Status,
         >;
         /// Server streaming response type for the DeltaRuntime method.
-        type DeltaRuntimeStream: futures_core::Stream<
+        type DeltaRuntimeStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DeltaDiscoveryResponse,
                     tonic::Status,
@@ -357,7 +357,11 @@ pub mod runtime_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_runtime(request).await
+                                <T as RuntimeDiscoveryService>::stream_runtime(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -409,7 +413,11 @@ pub mod runtime_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).delta_runtime(request).await
+                                <T as RuntimeDiscoveryService>::delta_runtime(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -458,7 +466,11 @@ pub mod runtime_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).fetch_runtime(request).await
+                                <T as RuntimeDiscoveryService>::fetch_runtime(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

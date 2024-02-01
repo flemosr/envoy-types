@@ -275,7 +275,7 @@ pub mod redis_proxy {
     }
     /// Nested message and enum types in `PrefixRoutes`.
     pub mod prefix_routes {
-        /// \[\#next-free-field: 6\]
+        /// \[\#next-free-field: 7\]
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Route {
@@ -298,6 +298,9 @@ pub mod redis_proxy {
             /// expression, use %KEY% as a string replacement command.
             #[prost(string, tag = "5")]
             pub key_formatter: ::prost::alloc::string::String,
+            /// Indicates that the route has a read command policy
+            #[prost(message, optional, tag = "6")]
+            pub read_command_policy: ::core::option::Option<route::ReadCommandPolicy>,
         }
         /// Nested message and enum types in `Route`.
         pub mod route {
@@ -325,6 +328,13 @@ pub mod redis_proxy {
                 /// writes in a "fire and forget" manner.
                 #[prost(bool, tag = "3")]
                 pub exclude_read_commands: bool,
+            }
+            /// ReadCommandPolicy specifies that Envoy should route read commands to another cluster.
+            #[allow(clippy::derive_partial_eq_without_eq)]
+            #[derive(Clone, PartialEq, ::prost::Message)]
+            pub struct ReadCommandPolicy {
+                #[prost(string, tag = "1")]
+                pub cluster: ::prost::alloc::string::String,
             }
         }
     }

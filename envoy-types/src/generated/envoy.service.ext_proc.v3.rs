@@ -1,6 +1,6 @@
 /// This represents the different types of messages that Envoy can send
 /// to an external processing server.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingRequest {
@@ -16,6 +16,11 @@ pub struct ProcessingRequest {
     ///   are needed.
     #[prost(bool, tag = "1")]
     pub async_mode: bool,
+    /// Dynamic metadata associated with the request.
+    #[prost(message, optional, tag = "8")]
+    pub metadata_context: ::core::option::Option<
+        super::super::super::config::core::v3::Metadata,
+    >,
     /// Each request message will include one of the following sub-messages. Which
     /// ones are set for a particular HTTP request/response depend on the
     /// processing mode.
@@ -44,28 +49,22 @@ pub mod processing_request {
         /// a BodyResponse message, an ImmediateResponse message, or close the stream.
         #[prost(message, tag = "4")]
         RequestBody(super::HttpBody),
-        /// A chunk of the HTTP request body. Unless `async_mode` is `true`, the server must send back
+        /// A chunk of the HTTP response body. Unless `async_mode` is `true`, the server must send back
         /// a BodyResponse message or close the stream.
         #[prost(message, tag = "5")]
         ResponseBody(super::HttpBody),
         /// The HTTP trailers for the request path. Unless `async_mode` is `true`, the server
         /// must send back a TrailerResponse message or close the stream.
         ///
-        /// This message is only sent if the trailers processing mode is set to `SEND`.
-        /// If there are no trailers on the original downstream request, then this message
-        /// will only be sent (with empty trailers waiting to be populated) if the
-        /// processing mode is set before the request headers are sent, such as
-        /// in the filter configuration.
+        /// This message is only sent if the trailers processing mode is set to `SEND` and
+        /// the original downstream request has trailers.
         #[prost(message, tag = "6")]
         RequestTrailers(super::HttpTrailers),
         /// The HTTP trailers for the response path. Unless `async_mode` is `true`, the server
         /// must send back a TrailerResponse message or close the stream.
         ///
-        /// This message is only sent if the trailers processing mode is set to `SEND`.
-        /// If there are no trailers on the original downstream request, then this message
-        /// will only be sent (with empty trailers waiting to be populated) if the
-        /// processing mode is set before the request headers are sent, such as
-        /// in the filter configuration.
+        /// This message is only sent if the trailers processing mode is set to `SEND` and
+        /// the original upstream response has trailers.
         #[prost(message, tag = "7")]
         ResponseTrailers(super::HttpTrailers),
     }
@@ -76,9 +75,9 @@ pub mod processing_request {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingResponse {
-    /// \\[\#not-implemented-hide:\\]
-    /// Optional metadata that will be emitted as dynamic metadata to be consumed by the next
-    /// filter. This metadata will be placed in the namespace `envoy.filters.http.ext_proc`.
+    /// Optional metadata that will be emitted as dynamic metadata to be consumed by
+    /// following filters. This metadata will be placed in the namespace(s) specified by the top-level
+    /// field name(s) of the struct.
     #[prost(message, optional, tag = "8")]
     pub dynamic_metadata: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
@@ -87,6 +86,11 @@ pub struct ProcessingResponse {
     /// for the duration of this particular request/response only. Servers
     /// may use this to intelligently control how requests are processed
     /// based on the headers and other metadata that they see.
+    /// This field is only applicable when servers responding to the header requests.
+    /// If it is set in the response to the body or trailer requests, it will be ignored by Envoy.
+    /// It is also ignored by Envoy when the ext_proc filter config
+    /// :ref:`allow_mode_override <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.allow_mode_override>`
+    /// is set to false.
     #[prost(message, optional, tag = "9")]
     pub mode_override: ::core::option::Option<
         super::super::super::extensions::filters::http::ext_proc::v3::ProcessingMode,
@@ -157,11 +161,17 @@ pub mod processing_response {
 pub struct HttpHeaders {
     /// The HTTP request headers. All header keys will be
     /// lower-cased, because HTTP header keys are case-insensitive.
+    /// The `headers` encoding is based on the runtime guard
+    /// envoy_reloadable_features_send_header_raw_value setting.
+    /// When it is true, the header value is encoded in the
+    /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
+    /// When it is false, the header value is encoded in the
+    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, optional, tag = "1")]
     pub headers: ::core::option::Option<
         super::super::super::config::core::v3::HeaderMap,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// The values of properties selected by the `request_attributes`
     /// or `response_attributes` list in the configuration. Each entry
     /// in the list is populated
@@ -190,6 +200,12 @@ pub struct HttpBody {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpTrailers {
+    /// The `trailers` encoding is based on the runtime guard
+    /// envoy_reloadable_features_send_header_raw_value setting.
+    /// When it is true, the header value is encoded in the
+    /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
+    /// When it is false, the header value is encoded in the
+    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, optional, tag = "1")]
     pub trailers: ::core::option::Option<
         super::super::super::config::core::v3::HeaderMap,
@@ -233,21 +249,30 @@ pub struct CommonResponse {
     pub header_mutation: ::core::option::Option<HeaderMutation>,
     /// Replace the body of the last message sent to the remote server on this
     /// stream. If responding to an HttpBody request, simply replace or clear
-    /// the body chunk that was sent with that request. Body mutations only take
-    /// effect in response to `body` messages and are ignored otherwise.
+    /// the body chunk that was sent with that request. Body mutations may take
+    /// effect in response either to `header` or `body` messages. When it is
+    /// in response to `header` messages, it only take effect if the
+    /// :ref:`status <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.status>`
+    /// is set to CONTINUE_AND_REPLACE.
     #[prost(message, optional, tag = "3")]
     pub body_mutation: ::core::option::Option<BodyMutation>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Add new trailers to the message. This may be used when responding to either a
     /// HttpHeaders or HttpBody message, but only if this message is returned
     /// along with the CONTINUE_AND_REPLACE status.
+    /// The `trailers` encoding is based on the runtime guard
+    /// envoy_reloadable_features_send_header_raw_value setting.
+    /// When it is true, the header value is encoded in the
+    /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
+    /// When it is false, the header value is encoded in the
+    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, optional, tag = "4")]
     pub trailers: ::core::option::Option<
         super::super::super::config::core::v3::HeaderMap,
     >,
-    /// Clear the route cache for the current request.
-    /// This is necessary if the remote server
-    /// modified headers that are used to calculate the route.
+    /// Clear the route cache for the current client request. This is necessary
+    /// if the remote server modified headers that are used to calculate the route.
+    /// This field is ignored in the response direction.
     #[prost(bool, tag = "5")]
     pub clear_route_cache: bool,
 }
@@ -350,6 +375,12 @@ pub struct HeaderMutation {
     /// Add or replace HTTP headers. Attempts to set the value of
     /// any `x-envoy` header, and attempts to set the `:method`,
     /// `:authority`, `:scheme`, or `host` headers will be ignored.
+    /// The `set_headers` encoding is based on the runtime guard
+    /// envoy_reloadable_features_send_header_raw_value setting.
+    /// When it is true, the header value is encoded in the
+    /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
+    /// When it is false, the header value is encoded in the
+    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, repeated, tag = "1")]
     pub set_headers: ::prost::alloc::vec::Vec<
         super::super::super::config::core::v3::HeaderValueOption,
@@ -498,7 +529,7 @@ pub mod external_processor_server {
     #[async_trait]
     pub trait ExternalProcessor: Send + Sync + 'static {
         /// Server streaming response type for the Process method.
-        type ProcessStream: futures_core::Stream<
+        type ProcessStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::ProcessingResponse, tonic::Status>,
             >
             + Send
@@ -611,7 +642,9 @@ pub mod external_processor_server {
                             >,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).process(request).await };
+                            let fut = async move {
+                                <T as ExternalProcessor>::process(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }

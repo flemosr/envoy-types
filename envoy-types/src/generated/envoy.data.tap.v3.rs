@@ -26,6 +26,21 @@ pub mod body {
         AsString(::prost::alloc::string::String),
     }
 }
+/// Connection properties.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Connection {
+    /// Local address.
+    #[prost(message, optional, tag = "1")]
+    pub local_address: ::core::option::Option<
+        super::super::super::config::core::v3::Address,
+    >,
+    /// Remote address.
+    #[prost(message, optional, tag = "2")]
+    pub remote_address: ::core::option::Option<
+        super::super::super::config::core::v3::Address,
+    >,
+}
 /// A fully buffered HTTP trace message.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -36,6 +51,9 @@ pub struct HttpBufferedTrace {
     /// Response message.
     #[prost(message, optional, tag = "2")]
     pub response: ::core::option::Option<http_buffered_trace::Message>,
+    /// downstream connection
+    #[prost(message, optional, tag = "3")]
+    pub downstream_connection: ::core::option::Option<Connection>,
 }
 /// Nested message and enum types in `HttpBufferedTrace`.
 pub mod http_buffered_trace {
@@ -55,6 +73,11 @@ pub mod http_buffered_trace {
         #[prost(message, repeated, tag = "3")]
         pub trailers: ::prost::alloc::vec::Vec<
             super::super::super::super::config::core::v3::HeaderValue,
+        >,
+        /// The timestamp after receiving the message headers.
+        #[prost(message, optional, tag = "4")]
+        pub headers_received_time: ::core::option::Option<
+            super::super::super::super::super::google::protobuf::Timestamp,
         >,
     }
 }
@@ -97,21 +120,6 @@ pub mod http_streamed_trace_segment {
         #[prost(message, tag = "7")]
         ResponseTrailers(super::super::super::super::config::core::v3::HeaderMap),
     }
-}
-/// Connection properties.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Connection {
-    /// Local address.
-    #[prost(message, optional, tag = "2")]
-    pub local_address: ::core::option::Option<
-        super::super::super::config::core::v3::Address,
-    >,
-    /// Remote address.
-    #[prost(message, optional, tag = "3")]
-    pub remote_address: ::core::option::Option<
-        super::super::super::config::core::v3::Address,
-    >,
 }
 /// Event in a socket trace.
 #[allow(clippy::derive_partial_eq_without_eq)]

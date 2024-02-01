@@ -323,7 +323,7 @@ pub mod rate_limit_quota_service_server {
     #[async_trait]
     pub trait RateLimitQuotaService: Send + Sync + 'static {
         /// Server streaming response type for the StreamRateLimitQuotas method.
-        type StreamRateLimitQuotasStream: futures_core::Stream<
+        type StreamRateLimitQuotasStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::RateLimitQuotaResponse, tonic::Status>,
             >
             + Send
@@ -442,7 +442,11 @@ pub mod rate_limit_quota_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_rate_limit_quotas(request).await
+                                <T as RateLimitQuotaService>::stream_rate_limit_quotas(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

@@ -1,4 +1,4 @@
-/// \\[\#not-implemented-hide:\\] Stream message for the Tap API. Envoy will open a stream to the server
+/// \[\#not-implemented-hide:\] Stream message for the Tap API. Envoy will open a stream to the server
 /// and stream taps without ever expecting a response.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -30,7 +30,7 @@ pub mod stream_taps_request {
         pub tap_id: ::prost::alloc::string::String,
     }
 }
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StreamTapsResponse {}
@@ -260,7 +260,9 @@ pub mod tap_sink_service_server {
                             >,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).stream_taps(request).await };
+                            let fut = async move {
+                                <T as TapSinkService>::stream_taps(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }

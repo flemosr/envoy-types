@@ -9,4 +9,7 @@ pub struct Config {
     /// response to the client.
     #[prost(bool, tag = "1")]
     pub upgrade_protobuf_to_grpc: bool,
+    /// If true then query parameters in request's URL path will be removed.
+    #[prost(bool, tag = "2")]
+    pub ignore_query_parameters: bool,
 }

@@ -1,4 +1,4 @@
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 /// An events envoy sends to the management server.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -32,7 +32,7 @@ pub mod stream_events_request {
         >,
     }
 }
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 /// The management server may send envoy a StreamEventsResponse to tell which events the server
 /// is interested in. In future, with aggregated event reporting service, this message will
 /// contain, for example, clusters the envoy should send events for, or event types the server
@@ -162,7 +162,7 @@ pub mod event_reporting_service_server {
     #[async_trait]
     pub trait EventReportingService: Send + Sync + 'static {
         /// Server streaming response type for the StreamEvents method.
-        type StreamEventsStream: futures_core::Stream<
+        type StreamEventsStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::StreamEventsResponse, tonic::Status>,
             >
             + Send
@@ -282,7 +282,8 @@ pub mod event_reporting_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_events(request).await
+                                <T as EventReportingService>::stream_events(&inner, request)
+                                    .await
                             };
                             Box::pin(fut)
                         }

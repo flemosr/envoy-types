@@ -70,10 +70,12 @@ pub struct DatadogConfig {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicOtConfig {
     /// Dynamic library implementing the `OpenTracing API <<https://github.com/opentracing/opentracing-cpp>`\_.>
+    #[deprecated]
     #[prost(string, tag = "1")]
     pub library: ::prost::alloc::string::String,
     /// The configuration to use when creating a tracer from the given dynamic
     /// library.
+    #[deprecated]
     #[prost(message, optional, tag = "2")]
     pub config: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
@@ -81,7 +83,7 @@ pub struct DynamicOtConfig {
 }
 /// Configuration for the LightStep tracer.
 /// \[\#extension: envoy.tracers.lightstep\]
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LightstepConfig {
@@ -161,30 +163,36 @@ pub mod lightstep_config {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenCensusConfig {
     /// Configures tracing, e.g. the sampler, max number of annotations, etc.
+    #[deprecated]
     #[prost(message, optional, tag = "1")]
     pub trace_config: ::core::option::Option<
         super::super::super::super::opencensus::proto::trace::v1::TraceConfig,
     >,
     /// Enables the stdout exporter if set to true. This is intended for debugging
     /// purposes.
+    #[deprecated]
     #[prost(bool, tag = "2")]
     pub stdout_exporter_enabled: bool,
     /// Enables the Stackdriver exporter if set to true. The project_id must also
     /// be set.
+    #[deprecated]
     #[prost(bool, tag = "3")]
     pub stackdriver_exporter_enabled: bool,
     /// The Cloud project_id to use for Stackdriver tracing.
+    #[deprecated]
     #[prost(string, tag = "4")]
     pub stackdriver_project_id: ::prost::alloc::string::String,
     /// (optional) By default, the Stackdriver exporter will connect to production
     /// Stackdriver. If stackdriver_address is non-empty, it will instead connect
     /// to this address, which is in the gRPC format:
     /// <https://github.com/grpc/grpc/blob/master/doc/naming.md>
+    #[deprecated]
     #[prost(string, tag = "10")]
     pub stackdriver_address: ::prost::alloc::string::String,
     /// (optional) The gRPC server that hosts Stackdriver tracing service. Only
     /// Google gRPC is supported. If :ref:`target_uri <envoy_v3_api_field_config.core.v3.GrpcService.GoogleGrpc.target_uri>`
     /// is not provided, the default production Stackdriver address will be used.
+    #[deprecated]
     #[prost(message, optional, tag = "13")]
     pub stackdriver_grpc_service: ::core::option::Option<
         super::super::core::v3::GrpcService,
@@ -201,25 +209,40 @@ pub struct OpenCensusConfig {
     pub zipkin_url: ::prost::alloc::string::String,
     /// Enables the OpenCensus Agent exporter if set to true. The ocagent_address or
     /// ocagent_grpc_service must also be set.
+    #[deprecated]
     #[prost(bool, tag = "11")]
     pub ocagent_exporter_enabled: bool,
     /// The address of the OpenCensus Agent, if its exporter is enabled, in gRPC
     /// format: <https://github.com/grpc/grpc/blob/master/doc/naming.md>
     /// \[\#comment:TODO: deprecate this field\]
+    #[deprecated]
     #[prost(string, tag = "12")]
     pub ocagent_address: ::prost::alloc::string::String,
     /// (optional) The gRPC server hosted by the OpenCensus Agent. Only Google gRPC is supported.
     /// This is only used if the ocagent_address is left empty.
+    #[deprecated]
     #[prost(message, optional, tag = "14")]
     pub ocagent_grpc_service: ::core::option::Option<
         super::super::core::v3::GrpcService,
     >,
     /// List of incoming trace context headers we will accept. First one found
     /// wins.
-    #[prost(enumeration = "open_census_config::TraceContext", repeated, tag = "8")]
+    #[deprecated]
+    #[prost(
+        enumeration = "open_census_config::TraceContext",
+        repeated,
+        packed = "false",
+        tag = "8"
+    )]
     pub incoming_trace_context: ::prost::alloc::vec::Vec<i32>,
     /// List of outgoing trace context headers we will produce.
-    #[prost(enumeration = "open_census_config::TraceContext", repeated, tag = "9")]
+    #[deprecated]
+    #[prost(
+        enumeration = "open_census_config::TraceContext",
+        repeated,
+        packed = "false",
+        tag = "9"
+    )]
     pub outgoing_trace_context: ::prost::alloc::vec::Vec<i32>,
 }
 /// Nested message and enum types in `OpenCensusConfig`.
@@ -277,18 +300,47 @@ pub mod open_census_config {
 }
 /// Configuration for the OpenTelemetry tracer.
 /// \[\#extension: envoy.tracers.opentelemetry\]
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryConfig {
     /// The upstream gRPC cluster that will receive OTLP traces.
     /// Note that the tracer drops traces if the server does not read data fast enough.
-    /// This field can be left empty to disable reporting traces to the collector.
+    /// This field can be left empty to disable reporting traces to the gRPC service.
+    /// Only one of `grpc_service`, `http_service` may be used.
     #[prost(message, optional, tag = "1")]
     pub grpc_service: ::core::option::Option<super::super::core::v3::GrpcService>,
+    /// The upstream HTTP cluster that will receive OTLP traces.
+    /// This field can be left empty to disable reporting traces to the HTTP service.
+    /// Only one of `grpc_service`, `http_service` may be used.
+    ///
+    /// .. note::
+    ///
+    /// Note: The `request_headers_to_add` property in the OTLP HTTP exporter service
+    /// does not support the :ref:`format specifier <config_access_log_format>` as used for
+    /// :ref:`HTTP access logging <config_access_log>`.
+    /// The values configured are added as HTTP headers on the OTLP export request
+    /// without any formatting applied.
+    #[prost(message, optional, tag = "3")]
+    pub http_service: ::core::option::Option<super::super::core::v3::HttpService>,
     /// The name for the service. This will be populated in the ResourceSpan Resource attributes.
     /// If it is not provided, it will default to "unknown_service:envoy".
     #[prost(string, tag = "2")]
     pub service_name: ::prost::alloc::string::String,
+    /// An ordered list of resource detectors
+    /// \[\#extension-category: envoy.tracers.opentelemetry.resource_detectors\]
+    #[prost(message, repeated, tag = "4")]
+    pub resource_detectors: ::prost::alloc::vec::Vec<
+        super::super::core::v3::TypedExtensionConfig,
+    >,
+    /// Specifies the sampler to be used by the OpenTelemetry tracer.
+    /// The configured sampler implements the Sampler interface defined by the OpenTelemetry specification.
+    /// This field can be left empty. In this case, the default Envoy sampling decision is used.
+    ///
+    /// See: `OpenTelemetry sampler specification <<https://opentelemetry.io/docs/specs/otel/trace/sdk/#sampler>`\_>
+    /// \[\#extension-category: envoy.tracers.opentelemetry.samplers\]
+    #[prost(message, optional, tag = "5")]
+    pub sampler: ::core::option::Option<super::super::core::v3::TypedExtensionConfig>,
 }
 /// Configuration structure.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -299,9 +351,9 @@ pub struct TraceServiceConfig {
     pub grpc_service: ::core::option::Option<super::super::core::v3::GrpcService>,
 }
 /// Configuration for the SkyWalking tracer. Please note that if SkyWalking tracer is used as the
-/// provider of http tracer, then
-/// :ref:`start_child_span <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>`
-/// in the router must be set to true to get the correct topology and tracing data. Moreover, SkyWalking
+/// provider of tracing, then
+/// :ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`
+/// in the tracing config must be set to true to get the correct topology and tracing data. Moreover, SkyWalking
 /// Tracer does not support SkyWalking extension header (`sw8-x`) temporarily.
 /// \[\#extension: envoy.tracers.skywalking\]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -397,7 +449,7 @@ pub struct ZipkinConfig {
     ///
     /// * The Envoy Proxy is used as gateway or ingress.
     /// * The Envoy Proxy is used as sidecar but inbound traffic capturing or outbound traffic capturing is disabled.
-    /// * Any case that the `start_child_span of router <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>` is set to true.
+    /// * Any case that the :ref:`start_child_span of router <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>` is set to true.
     ///
     /// .. attention::
     ///
@@ -435,7 +487,7 @@ pub mod zipkin_config {
         HttpJson = 1,
         /// Zipkin API v2, protobuf over HTTP.
         HttpProto = 2,
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         Grpc = 3,
     }
     impl CollectorEndpointVersion {

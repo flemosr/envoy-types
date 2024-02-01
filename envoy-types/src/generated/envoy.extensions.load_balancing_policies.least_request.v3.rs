@@ -1,5 +1,6 @@
 /// This configuration allows the built-in LEAST_REQUEST LB policy to be configured via the LB policy
 /// extension point. See the :ref:`load balancing architecture overview <arch_overview_load_balancing_types>` for more information.
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LeastRequest {
@@ -46,5 +47,13 @@ pub struct LeastRequest {
     #[prost(message, optional, tag = "4")]
     pub locality_lb_config: ::core::option::Option<
         super::super::common::v3::LocalityLbConfig,
+    >,
+    /// \[\#not-implemented-hide:\]
+    /// Configuration for performing full scan on the list of hosts.
+    /// If this configuration is set, when selecting the host a full scan on the list hosts will be
+    /// used to select the one with least requests instead of using random choices.
+    #[prost(message, optional, tag = "5")]
+    pub enable_full_scan: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }

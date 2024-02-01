@@ -39,7 +39,7 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// If unset there is no limit.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "4")]
     pub max_individual_cache_entry_size_bytes: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt64Value,
@@ -59,7 +59,7 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// On file systems that perform well with many inodes, the default value of 1 should be used.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(uint32, tag = "6")]
     pub cache_subdivisions: u32,
     /// The amount of the maximum cache size or count to evict when cache eviction is
@@ -73,7 +73,7 @@ pub struct FileSystemHttpCacheConfig {
     /// Evicting a larger fraction will mean the eviction thread will run less often (sparing
     /// CPU load) at the cost of more cache misses due to the extra evicted entries.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(float, tag = "7")]
     pub evict_fraction: f32,
     /// The longest amount of time to wait before running a cache eviction pass. An eviction
@@ -88,7 +88,7 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// If unset, there will be no eviction passes except those triggered by cache limits.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "8")]
     pub max_eviction_period: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -105,7 +105,7 @@ pub struct FileSystemHttpCacheConfig {
     /// reduce churn. Both together will work but since they're both aiming for the same goal,
     /// it's simpler not to.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "9")]
     pub min_eviction_period: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -115,7 +115,7 @@ pub struct FileSystemHttpCacheConfig {
     ///
     /// If false, and the cache path does not exist, the config is rejected.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(bool, tag = "10")]
     pub create_cache_path: bool,
 }

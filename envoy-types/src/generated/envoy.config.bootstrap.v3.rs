@@ -1,5 +1,5 @@
 /// Bootstrap :ref:`configuration overview <config_overview_bootstrap>`.
-/// \[\#next-free-field: 38\]
+/// \[\#next-free-field: 41\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bootstrap {
@@ -31,7 +31,7 @@ pub struct Bootstrap {
     /// override). Field names will be prefixed with “udpa.node.” when included in
     /// context parameters.
     ///
-    /// For example, if node_context_params is `["user_agent_name", "metadata"]`,
+    /// For example, if node_context_params is `\["user_agent_name", "metadata"\]`,
     /// the implied context parameters might be::
     ///
     /// node.user_agent_name: "envoy"
@@ -39,7 +39,7 @@ pub struct Bootstrap {
     /// node.metadata.some: "42"
     /// node.metadata.thing: ""thing""
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(string, repeated, tag = "26")]
     pub node_context_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Statically specified resources.
@@ -62,6 +62,9 @@ pub struct Bootstrap {
     /// Optional set of stats sinks.
     #[prost(message, repeated, tag = "6")]
     pub stats_sinks: ::prost::alloc::vec::Vec<super::super::metrics::v3::StatsSink>,
+    /// Options to control behaviors of deferred creation compatible stats.
+    #[prost(message, optional, tag = "39")]
+    pub deferred_stat_options: ::core::option::Option<bootstrap::DeferredStatOptions>,
     /// Configuration for internal processing of stats.
     #[prost(message, optional, tag = "13")]
     pub stats_config: ::core::option::Option<super::super::metrics::v3::StatsConfig>,
@@ -195,12 +198,12 @@ pub struct Bootstrap {
     /// 1. As a fallback, if no configuration source matches, then
     ///    `default_config_source` is used.
     /// 1. If `default_config_source` is not specified, resolution fails.
-    ///    \\[\#not-implemented-hide:\\]
+    ///    \[\#not-implemented-hide:\]
     #[prost(message, repeated, tag = "22")]
     pub config_sources: ::prost::alloc::vec::Vec<super::super::core::v3::ConfigSource>,
     /// Default configuration source for xdstp:// URLs if all
     /// other resolution fails.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "23")]
     pub default_config_source: ::core::option::Option<
         super::super::core::v3::ConfigSource,
@@ -212,7 +215,7 @@ pub struct Bootstrap {
     /// Global map of CertificateProvider instances. These instances are referred to by name in the
     /// :ref:`CommonTlsContext.CertificateProviderInstance.instance_name <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProviderInstance.instance_name>`
     /// field.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(map = "string, message", tag = "25")]
     pub certificate_provider_instances: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -240,7 +243,7 @@ pub struct Bootstrap {
     /// fetch and load events during xDS processing.
     /// If a value is not specified, no XdsResourcesDelegate will be used.
     /// TODO(abeyad): Add public-facing documentation.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "35")]
     pub xds_delegate_extension: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -261,13 +264,21 @@ pub struct Bootstrap {
     pub xds_config_tracker_extension: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// This controls the type of listener manager configured for Envoy. Currently
     /// Envoy only supports ListenerManager for this field and Envoy Mobile
     /// supports ApiListenerManager.
     #[prost(message, optional, tag = "37")]
     pub listener_manager: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
+    >,
+    /// Optional application log configuration.
+    #[prost(message, optional, tag = "38")]
+    pub application_log_config: ::core::option::Option<bootstrap::ApplicationLogConfig>,
+    /// Optional gRPC async manager config.
+    #[prost(message, optional, tag = "40")]
+    pub grpc_async_client_manager_config: ::core::option::Option<
+        bootstrap::GrpcAsyncClientManagerConfig,
     >,
     #[prost(oneof = "bootstrap::StatsFlush", tags = "29")]
     pub stats_flush: ::core::option::Option<bootstrap::StatsFlush>,
@@ -309,7 +320,7 @@ pub mod bootstrap {
             super::super::super::core::v3::ConfigSource,
         >,
         /// xdstp:// resource locator for listener collection.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(string, tag = "5")]
         pub lds_resources_locator: ::prost::alloc::string::String,
         /// All post-bootstrap :ref:`Cluster <envoy_v3_api_msg_config.cluster.v3.Cluster>` definitions are
@@ -320,7 +331,7 @@ pub mod bootstrap {
             super::super::super::core::v3::ConfigSource,
         >,
         /// xdstp:// resource locator for cluster collection.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(string, tag = "6")]
         pub cds_resources_locator: ::prost::alloc::string::String,
         /// A single :ref:`ADS <config_overview_ads>` source may be optionally
@@ -331,6 +342,68 @@ pub mod bootstrap {
         #[prost(message, optional, tag = "3")]
         pub ads_config: ::core::option::Option<
             super::super::super::core::v3::ApiConfigSource,
+        >,
+    }
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct ApplicationLogConfig {
+        /// Optional field to set the application logs format. If this field is set, it will override
+        /// the default log format. Setting both this field and :option:`--log-format` command line
+        /// option is not allowed, and will cause a bootstrap error.
+        #[prost(message, optional, tag = "1")]
+        pub log_format: ::core::option::Option<application_log_config::LogFormat>,
+    }
+    /// Nested message and enum types in `ApplicationLogConfig`.
+    pub mod application_log_config {
+        #[allow(clippy::derive_partial_eq_without_eq)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct LogFormat {
+            #[prost(oneof = "log_format::LogFormat", tags = "1, 2")]
+            pub log_format: ::core::option::Option<log_format::LogFormat>,
+        }
+        /// Nested message and enum types in `LogFormat`.
+        pub mod log_format {
+            #[allow(clippy::derive_partial_eq_without_eq)]
+            #[derive(Clone, PartialEq, ::prost::Oneof)]
+            pub enum LogFormat {
+                /// Flush application logs in JSON format. The configured JSON struct can
+                /// support all the format flags specified in the :option:`--log-format`
+                /// command line options section, except for the `%v` and `%_` flags.
+                #[prost(message, tag = "1")]
+                JsonFormat(
+                    super::super::super::super::super::super::super::google::protobuf::Struct,
+                ),
+                /// Flush application log in a format defined by a string. The text format
+                /// can support all the format flags specified in the :option:`--log-format`
+                /// command line option section.
+                #[prost(string, tag = "2")]
+                TextFormat(::prost::alloc::string::String),
+            }
+        }
+    }
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct DeferredStatOptions {
+        /// When the flag is enabled, Envoy will lazily initialize a subset of the stats (see below).
+        /// This will save memory and CPU cycles when creating the objects that own these stats, if those
+        /// stats are never referenced throughout the lifetime of the process. However, it will incur additional
+        /// memory overhead for these objects, and a small increase of CPU usage when a at least one of the stats
+        /// is updated for the first time.
+        /// Groups of stats that will be lazily initialized:
+        ///
+        /// * Cluster traffic stats: a subgroup of the :ref:`cluster statistics <config_cluster_manager_cluster_stats>`
+        ///   that are used when requests are routed to the cluster.
+        #[prost(bool, tag = "1")]
+        pub enable_deferred_creation_stats: bool,
+    }
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct GrpcAsyncClientManagerConfig {
+        /// Optional field to set the expiration time for the cached gRPC client object.
+        /// The minimal value is 5s and the default is 50s.
+        #[prost(message, optional, tag = "1")]
+        pub max_cached_entry_idle_duration: ::core::option::Option<
+            super::super::super::super::super::google::protobuf::Duration,
         >,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -377,6 +450,7 @@ pub struct Admin {
     pub ignore_global_conn_limit: bool,
 }
 /// Cluster manager :ref:`architecture overview <arch_overview_cluster_manager>`.
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterManager {
@@ -399,6 +473,11 @@ pub struct ClusterManager {
     pub load_stats_config: ::core::option::Option<
         super::super::core::v3::ApiConfigSource,
     >,
+    /// Whether the ClusterManager will create clusters on the worker threads
+    /// inline during requests. This will save memory and CPU cycles in cases where
+    /// there are lots of inactive clusters and > 1 worker thread.
+    #[prost(bool, tag = "5")]
+    pub enable_deferred_cluster_creation: bool,
 }
 /// Nested message and enum types in `ClusterManager`.
 pub mod cluster_manager {
@@ -408,7 +487,7 @@ pub mod cluster_manager {
         /// Specifies the path to the outlier event log.
         #[prost(string, tag = "1")]
         pub event_log_path: ::prost::alloc::string::String,
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         /// The gRPC service for the outlier detection event service.
         /// If empty, outlier detection events won't be sent to a remote endpoint.
         #[prost(message, optional, tag = "2")]

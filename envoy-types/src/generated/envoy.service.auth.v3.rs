@@ -16,7 +16,7 @@
 /// * field mask to send
 /// * which return values from request_context are copied back
 /// * which return values are copied into request_headers\]
-///   \[\#next-free-field: 13\]
+///   \[\#next-free-field: 14\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AttributeContext {
@@ -45,6 +45,11 @@ pub struct AttributeContext {
     /// Dynamic metadata associated with the request.
     #[prost(message, optional, tag = "11")]
     pub metadata_context: ::core::option::Option<
+        super::super::super::config::core::v3::Metadata,
+    >,
+    /// Metadata associated with the selected route.
+    #[prost(message, optional, tag = "13")]
+    pub route_metadata_context: ::core::option::Option<
         super::super::super::config::core::v3::Metadata,
     >,
     /// TLS session details of the underlying connection.
@@ -524,7 +529,9 @@ pub mod authorization_server {
                             request: tonic::Request<super::CheckRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).check(request).await };
+                            let fut = async move {
+                                <T as Authorization>::check(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }

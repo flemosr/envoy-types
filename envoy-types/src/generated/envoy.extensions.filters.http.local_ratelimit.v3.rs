@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 14\]
+/// \[\#next-free-field: 16\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalRateLimit {
@@ -59,7 +59,7 @@ pub struct LocalRateLimit {
         super::super::super::super::super::config::core::v3::HeaderValueOption,
     >,
     /// Specifies a list of HTTP headers that should be added to each response for requests that
-    /// have been rate limited. This occurs when the filter is either enabled or fully enforced.
+    /// have been rate limited. This occurs when the filter is enabled and fully enforced.
     #[prost(message, repeated, tag = "6")]
     pub response_headers_to_add: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::core::v3::HeaderValueOption,
@@ -112,4 +112,17 @@ pub struct LocalRateLimit {
         tag = "13"
     )]
     pub vh_rate_limits: i32,
+    /// Specifies if default token bucket should be always consumed.
+    /// If set to false, default token bucket will only be consumed when there is
+    /// no matching descriptor. If set to true, default token bucket will always
+    /// be consumed. Default is true.
+    #[prost(message, optional, tag = "14")]
+    pub always_consume_default_token_bucket: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Specifies whether a `RESOURCE_EXHAUSTED` gRPC code must be returned instead
+    /// of the default `UNAVAILABLE` gRPC code for a rate limited gRPC call. The
+    /// HTTP code will be 200 for a gRPC response.
+    #[prost(bool, tag = "15")]
+    pub rate_limited_as_resource_exhausted: bool,
 }

@@ -56,14 +56,14 @@ pub struct HttpProtocolOptions {
     /// .. note::
     /// Upstream HTTP filters are currently in alpha.
     ///
-    /// Optional HTTP filters for the upstream filter chain.
+    /// Optional HTTP filters for the upstream HTTP filter chain.
     ///
     /// These filters will be applied for all HTTP streams which flow through this
-    /// cluster. Unlike downstream filters, they will *not* be applied to terminated CONNECT requests.
+    /// cluster. Unlike downstream HTTP filters, they will *not* be applied to terminated CONNECT requests.
     ///
-    /// If using upstream filters, please be aware that local errors sent by
-    /// upstream filters will not trigger retries, and local errors sent by
-    /// upstream filters will count as a final response if hedging is configured.
+    /// If using upstream HTTP filters, please be aware that local errors sent by
+    /// upstream HTTP filters will not trigger retries, and local errors sent by
+    /// upstream HTTP filters will count as a final response if hedging is configured.
     /// \[\#extension-category: envoy.filters.http.upstream\]
     #[prost(message, repeated, tag = "6")]
     pub http_filters: ::prost::alloc::vec::Vec<
@@ -75,7 +75,7 @@ pub struct HttpProtocolOptions {
     /// \[\#comment:TODO(yanavlasov): Make it a link to the default header validator doc when it becomes visible.\]
     /// Leaving this field unspecified, selects the default header validator `envoy.http.header_validators.envoy_default`.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// \[\#extension-category: envoy.http.header_validators\]
     #[prost(message, optional, tag = "7")]
     pub header_validation_config: ::core::option::Option<

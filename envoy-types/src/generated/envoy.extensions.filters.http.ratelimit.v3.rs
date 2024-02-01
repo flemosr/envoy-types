@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 12\]
+/// \[\#next-free-field: 14\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimit {
@@ -92,6 +92,16 @@ pub struct RateLimit {
     pub response_headers_to_add: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::core::v3::HeaderValueOption,
     >,
+    /// Sets the HTTP status that is returned to the client when the ratelimit server returns an error
+    /// or cannot be reached. The default status is 500.
+    #[prost(message, optional, tag = "12")]
+    pub status_on_error: ::core::option::Option<
+        super::super::super::super::super::r#type::v3::HttpStatus,
+    >,
+    /// Optional additional prefix to use when emitting statistics. This allows to distinguish
+    /// emitted statistics between configured `ratelimit` filters in an HTTP filter chain.
+    #[prost(string, tag = "13")]
+    pub stat_prefix: ::prost::alloc::string::String,
 }
 /// Nested message and enum types in `RateLimit`.
 pub mod rate_limit {
@@ -139,7 +149,7 @@ pub mod rate_limit {
 }
 /// Global rate limiting :ref:`architecture overview <arch_overview_global_rate_limit>`.
 /// Also applies to Local rate limiting :ref:`using descriptors <config_http_filters_local_rate_limit_descriptors>`.
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitConfig {
@@ -425,13 +435,13 @@ pub struct RateLimitPerRoute {
     #[prost(enumeration = "rate_limit_per_route::VhRateLimitsOptions", tag = "1")]
     pub vh_rate_limits: i32,
     /// Specifies if the rate limit filter should include the lower levels (route level, virtual host level or cluster weight level) rate limits override options.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(enumeration = "rate_limit_per_route::OverrideOptions", tag = "2")]
     pub override_option: i32,
     /// Rate limit configuration. If not set, uses the
     /// :ref:`VirtualHost.rate_limits<envoy_v3_api_field_config.route.v3.VirtualHost.rate_limits>` or
     /// :ref:`RouteAction.rate_limits<envoy_v3_api_field_config.route.v3.RouteAction.rate_limits>` fields instead.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, repeated, tag = "3")]
     pub rate_limits: ::prost::alloc::vec::Vec<RateLimitConfig>,
     /// Overrides the domain. If not set, uses the filter-level domain instead.
@@ -484,7 +494,7 @@ pub mod rate_limit_per_route {
         }
     }
     /// The override option determines how the filter handles the cases where there is an override config at a more specific level than this one (from least to most specific: virtual host, route, cluster weight).
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[derive(
         Clone,
         Copy,

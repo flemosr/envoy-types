@@ -31,7 +31,7 @@ pub struct TcpProxy {
     pub idle_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
-    /// \\[\#not-implemented-hide:\\] The idle timeout for connections managed by the TCP proxy
+    /// \[\#not-implemented-hide:\] The idle timeout for connections managed by the TCP proxy
     /// filter. The idle timeout is defined as the period in which there is no
     /// active traffic. If not set, there is no idle timeout. When the idle timeout
     /// is reached the connection will be closed. The distinction between
@@ -41,7 +41,7 @@ pub struct TcpProxy {
     pub downstream_idle_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "4")]
     pub upstream_idle_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -209,12 +209,12 @@ pub mod tcp_proxy {
             super::super::super::super::super::super::config::core::v3::ConfigSource,
         >,
         /// xdstp:// resource locator for on-demand cluster collection.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(string, tag = "2")]
         pub resources_locator: ::prost::alloc::string::String,
         /// The timeout for on demand cluster lookup. If the CDS cannot return the required cluster,
         /// the downstream request will be closed with the error code detail NO_CLUSTER_FOUND.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "3")]
         pub timeout: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::Duration,

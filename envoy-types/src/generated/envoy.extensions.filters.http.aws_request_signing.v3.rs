@@ -1,5 +1,5 @@
 /// Top level configuration for the AWS request signing filter.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AwsRequestSigning {
@@ -9,10 +9,20 @@ pub struct AwsRequestSigning {
     /// Example: s3
     #[prost(string, tag = "1")]
     pub service_name: ::prost::alloc::string::String,
-    /// The `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`\_> hosting the HTTP
-    /// endpoint.
+    /// When signing_algorithm is set to `AWS_SIGV4` the region is a standard AWS `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`\_> string for the service
+    /// hosting the HTTP endpoint.
     ///
     /// Example: us-west-2
+    ///
+    /// When signing_algorithm is set to `AWS_SIGV4A` the region is used as a region set.
+    ///
+    /// A region set is a comma separated list of AWS regions, such as `us-east-1,us-east-2` or wildcard `*`
+    /// or even region strings containing wildcards such as `us-east-*`
+    ///
+    /// Example: '\*'
+    ///
+    /// By configuring a region set, a sigv4a signed request can be sent to multiple regions, rather than being
+    /// valid for only a single region destination.
     #[prost(string, tag = "2")]
     pub region: ::prost::alloc::string::String,
     /// Indicates that before signing headers, the host header will be swapped with
@@ -44,6 +54,50 @@ pub struct AwsRequestSigning {
     pub match_excluded_headers: ::prost::alloc::vec::Vec<
         super::super::super::super::super::r#type::matcher::v3::StringMatcher,
     >,
+    /// Optional Signing algorithm specifier, either `AWS_SIGV4` or `AWS_SIGV4A`, defaulting to `AWS_SIGV4`.
+    #[prost(enumeration = "aws_request_signing::SigningAlgorithm", tag = "6")]
+    pub signing_algorithm: i32,
+}
+/// Nested message and enum types in `AwsRequestSigning`.
+pub mod aws_request_signing {
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum SigningAlgorithm {
+        /// Use SigV4 for signing
+        AwsSigv4 = 0,
+        /// Use SigV4A for signing
+        AwsSigv4a = 1,
+    }
+    impl SigningAlgorithm {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                SigningAlgorithm::AwsSigv4 => "AWS_SIGV4",
+                SigningAlgorithm::AwsSigv4a => "AWS_SIGV4A",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "AWS_SIGV4" => Some(Self::AwsSigv4),
+                "AWS_SIGV4A" => Some(Self::AwsSigv4a),
+                _ => None,
+            }
+        }
+    }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

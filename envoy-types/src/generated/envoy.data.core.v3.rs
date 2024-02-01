@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 12\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheckEvent {
@@ -12,6 +12,16 @@ pub struct HealthCheckEvent {
     #[prost(message, optional, tag = "6")]
     pub timestamp: ::core::option::Option<
         super::super::super::super::google::protobuf::Timestamp,
+    >,
+    /// Host metadata
+    #[prost(message, optional, tag = "10")]
+    pub metadata: ::core::option::Option<
+        super::super::super::config::core::v3::Metadata,
+    >,
+    /// Host locality
+    #[prost(message, optional, tag = "11")]
+    pub locality: ::core::option::Option<
+        super::super::super::config::core::v3::Locality,
     >,
     #[prost(oneof = "health_check_event::Event", tags = "4, 5, 7, 8, 9")]
     pub event: ::core::option::Option<health_check_event::Event>,

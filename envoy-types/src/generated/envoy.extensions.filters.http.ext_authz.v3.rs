@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 19\]
+/// \[\#next-free-field: 23\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {
@@ -22,6 +22,12 @@ pub struct ExtAuthz {
     /// Note that errors can be `always` tracked in the :ref:`stats <config_http_filters_ext_authz_stats>`.
     #[prost(bool, tag = "2")]
     pub failure_mode_allow: bool,
+    /// When `failure_mode_allow` and `failure_mode_allow_header_add` are both set to true,
+    /// `x-envoy-auth-failure-mode-allowed: true` will be added to request headers if the communication
+    /// with the authorization service has failed, or if the authorization service has returned a
+    /// HTTP 5xx error.
+    #[prost(bool, tag = "19")]
+    pub failure_mode_allow_header_add: bool,
     /// Enables filter to buffer the client request body and send it within the authorization request.
     /// A `x-envoy-auth-partial-body: false|true` metadata header will be added to the authorization
     /// request message indicating if the body data is partial.
@@ -45,7 +51,10 @@ pub struct ExtAuthz {
         super::super::super::super::super::r#type::v3::HttpStatus,
     >,
     /// Specifies a list of metadata namespaces whose values, if present, will be passed to the
-    /// ext_authz service. :ref:`filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.filter_metadata>` is passed as an opaque `protobuf::Struct`.
+    /// ext_authz service. The :ref:`filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.filter_metadata>`
+    /// is passed as an opaque `protobuf::Struct`.
+    ///
+    /// Please note that this field exclusively applies to the gRPC ext_authz service and has no effect on the HTTP service.
     ///
     /// For example, if the `jwt_authn` filter is used and :ref:`payload_in_metadata <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtProvider.payload_in_metadata>` is set,
     /// then the following will pass the jwt payload to the authorization server.
@@ -61,12 +70,31 @@ pub struct ExtAuthz {
         ::prost::alloc::string::String,
     >,
     /// Specifies a list of metadata namespaces whose values, if present, will be passed to the
-    /// ext_authz service. :ref:`typed_filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.typed_filter_metadata>` is passed as an `protobuf::Any`.
+    /// ext_authz service. :ref:`typed_filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.typed_filter_metadata>`
+    /// is passed as a `protobuf::Any`.
     ///
-    /// It works in a way similar to `metadata_context_namespaces` but allows envoy and external authz server to share the protobuf message definition
-    /// in order to do a safe parsing.
+    /// Please note that this field exclusively applies to the gRPC ext_authz service and has no effect on the HTTP service.
+    ///
+    /// It works in a way similar to `metadata_context_namespaces` but allows Envoy and ext_authz server to share
+    /// the protobuf message definition in order to do a safe parsing.
     #[prost(string, repeated, tag = "16")]
     pub typed_metadata_context_namespaces: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
+    >,
+    /// Specifies a list of route metadata namespaces whose values, if present, will be passed to the
+    /// ext_authz service at :ref:`route_metadata_context <envoy_v3_api_field_service.auth.v3.AttributeContext.route_metadata_context>` in
+    /// :ref:`CheckRequest <envoy_v3_api_field_service.auth.v3.CheckRequest.attributes>`.
+    /// :ref:`filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.filter_metadata>` is passed as an opaque `protobuf::Struct`.
+    #[prost(string, repeated, tag = "21")]
+    pub route_metadata_context_namespaces: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
+    >,
+    /// Specifies a list of route metadata namespaces whose values, if present, will be passed to the
+    /// ext_authz service at :ref:`route_metadata_context <envoy_v3_api_field_service.auth.v3.AttributeContext.route_metadata_context>` in
+    /// :ref:`CheckRequest <envoy_v3_api_field_service.auth.v3.CheckRequest.attributes>`.
+    /// :ref:`typed_filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.typed_filter_metadata>` is passed as an `protobuf::Any`.
+    #[prost(string, repeated, tag = "22")]
+    pub route_typed_metadata_context_namespaces: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
     /// Specifies if the filter is enabled.
@@ -154,6 +182,12 @@ pub struct ExtAuthz {
     /// :ref:`tls_session<envoy_v3_api_field_service.auth.v3.AttributeContext.tls_session>`.
     #[prost(bool, tag = "18")]
     pub include_tls_session: bool,
+    /// Whether to increment cluster statistics (e.g. cluster.\<cluster_name>.upstream_rq\_\*) on authorization failure.
+    /// Defaults to true.
+    #[prost(message, optional, tag = "20")]
+    pub charge_cluster_response_stats: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
     /// External authorization service configuration.
     #[prost(oneof = "ext_authz::Services", tags = "1, 3")]
     pub services: ::core::option::Option<ext_authz::Services>,
@@ -192,6 +226,10 @@ pub struct BufferSettings {
     /// the :ref:`raw_body<envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.raw_body>`
     /// field of HTTP request attribute context. Otherwise, :ref:`body <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.body>` will be filled
     /// with UTF-8 string request body.
+    ///
+    /// This field only affects configurations using a :ref:`grpc_service <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.grpc_service>`. In configurations that use
+    /// an :ref:`http_service <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.http_service>`, this
+    /// has no effect.
     #[prost(bool, tag = "3")]
     pub pack_as_bytes: bool,
 }
@@ -278,8 +316,8 @@ pub struct AuthorizationResponse {
         super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
     >,
     /// When this :ref:`list <envoy_v3_api_msg_type.matcher.v3.ListStringMatcher>` is set, authorization
-    /// response headers that have a correspondent match will be added to the client's response. Note
-    /// that coexistent headers will be appended.
+    /// response headers that have a correspondent match will be added to the original client request.
+    /// Note that coexistent headers will be appended.
     #[prost(message, optional, tag = "3")]
     pub allowed_upstream_headers_to_append: ::core::option::Option<
         super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
@@ -357,7 +395,20 @@ pub struct CheckSettings {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
-    /// When set to true, disable the configured :ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.with_request_body>` for a route.
+    /// When set to true, disable the configured :ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.with_request_body>` for a specific route.
+    ///
+    /// Please note that only one of *disable_request_body_buffering* or
+    /// :ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.CheckSettings.with_request_body>`
+    /// may be specified.
     #[prost(bool, tag = "2")]
     pub disable_request_body_buffering: bool,
+    /// Enable or override request body buffering, which is configured using the
+    /// :ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.with_request_body>`
+    /// option for a specific route.
+    ///
+    /// Please note that only only one of *with_request_body* or
+    /// :ref:`disable_request_body_buffering <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.CheckSettings.disable_request_body_buffering>`
+    /// may be specified.
+    #[prost(message, optional, tag = "3")]
+    pub with_request_body: ::core::option::Option<BufferSettings>,
 }

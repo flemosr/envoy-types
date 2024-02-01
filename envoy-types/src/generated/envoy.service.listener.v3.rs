@@ -1,4 +1,4 @@
-/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
+/// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -197,7 +197,7 @@ pub mod listener_discovery_service_server {
     #[async_trait]
     pub trait ListenerDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the DeltaListeners method.
-        type DeltaListenersStream: futures_core::Stream<
+        type DeltaListenersStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DeltaDiscoveryResponse,
                     tonic::Status,
@@ -217,7 +217,7 @@ pub mod listener_discovery_service_server {
             tonic::Status,
         >;
         /// Server streaming response type for the StreamListeners method.
-        type StreamListenersStream: futures_core::Stream<
+        type StreamListenersStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DiscoveryResponse,
                     tonic::Status,
@@ -350,7 +350,11 @@ pub mod listener_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).delta_listeners(request).await
+                                <T as ListenerDiscoveryService>::delta_listeners(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -402,7 +406,11 @@ pub mod listener_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_listeners(request).await
+                                <T as ListenerDiscoveryService>::stream_listeners(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -451,7 +459,11 @@ pub mod listener_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).fetch_listeners(request).await
+                                <T as ListenerDiscoveryService>::fetch_listeners(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

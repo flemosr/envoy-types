@@ -70,7 +70,7 @@ pub mod dns_filter_config {
         /// Control planes that need to simultaneously support Envoy 1.18.x and
         /// Envoy 1.19.x should avoid Envoy 1.19.0 and 1.19.1.
         ///
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[deprecated]
         #[prost(message, repeated, tag = "2")]
         pub upstream_resolvers: ::prost::alloc::vec::Vec<

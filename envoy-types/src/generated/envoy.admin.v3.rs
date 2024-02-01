@@ -324,7 +324,7 @@ pub struct UpdateFailureState {
     #[prost(string, tag = "3")]
     pub details: ::prost::alloc::string::String,
     /// This is the version of the rejected resource.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(string, tag = "4")]
     pub version_info: ::prost::alloc::string::String,
 }
@@ -418,7 +418,7 @@ pub mod listeners_config_dump {
         #[prost(message, optional, tag = "5")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
@@ -494,11 +494,11 @@ pub mod clusters_config_dump {
         /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -561,11 +561,11 @@ pub mod routes_config_dump {
         /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -633,11 +633,11 @@ pub mod scoped_routes_config_dump {
         /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "5")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
@@ -669,7 +669,7 @@ pub mod endpoints_config_dump {
         pub endpoint_config: ::core::option::Option<
             super::super::super::super::google::protobuf::Any,
         >,
-        /// \\[\#not-implemented-hide:\\] The timestamp when the Endpoint was last updated.
+        /// \[\#not-implemented-hide:\] The timestamp when the Endpoint was last updated.
         #[prost(message, optional, tag = "2")]
         pub last_updated: ::core::option::Option<
             super::super::super::super::google::protobuf::Timestamp,
@@ -679,7 +679,7 @@ pub mod endpoints_config_dump {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicEndpointConfig {
-        /// \\[\#not-implemented-hide:\\] This is the per-resource version information. This version is currently taken from the
+        /// \[\#not-implemented-hide:\] This is the per-resource version information. This version is currently taken from the
         /// :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
         /// the endpoint configuration was loaded.
         #[prost(string, tag = "1")]
@@ -689,7 +689,7 @@ pub mod endpoints_config_dump {
         pub endpoint_config: ::core::option::Option<
             super::super::super::super::google::protobuf::Any,
         >,
-        /// \\[\#not-implemented-hide:\\] The timestamp when the Endpoint was last updated.
+        /// \[\#not-implemented-hide:\] The timestamp when the Endpoint was last updated.
         #[prost(message, optional, tag = "3")]
         pub last_updated: ::core::option::Option<
             super::super::super::super::google::protobuf::Timestamp,
@@ -698,11 +698,11 @@ pub mod endpoints_config_dump {
         /// The `error_state` field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -743,11 +743,11 @@ pub mod ecds_config_dump {
         /// The `error_state` field contains the rejected version of this
         /// particular resource along with the reason and timestamp. For successfully
         /// updated or acknowledged resource, this field should be empty.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "4")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
     }
@@ -813,6 +813,7 @@ pub struct ConfigDump {
     /// * `bootstrap`: :ref:`BootstrapConfigDump <envoy_v3_api_msg_admin.v3.BootstrapConfigDump>`
     /// * `clusters`: :ref:`ClustersConfigDump <envoy_v3_api_msg_admin.v3.ClustersConfigDump>`
     /// * `ecds_filter_http`: :ref:`EcdsConfigDump <envoy_v3_api_msg_admin.v3.EcdsConfigDump>`
+    /// * `ecds_filter_quic_listener`: :ref:`EcdsConfigDump <envoy_v3_api_msg_admin.v3.EcdsConfigDump>`
     /// * `ecds_filter_tcp_listener`: :ref:`EcdsConfigDump <envoy_v3_api_msg_admin.v3.EcdsConfigDump>`
     /// * `endpoints`:  :ref:`EndpointsConfigDump <envoy_v3_api_msg_admin.v3.EndpointsConfigDump>`
     /// * `listeners`: :ref:`ListenersConfigDump <envoy_v3_api_msg_admin.v3.ListenersConfigDump>`
@@ -888,7 +889,7 @@ pub mod secrets_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// The actual secret information.
-        /// Security sensitive information is redacted (replaced with "\\[redacted\\]") for
+        /// Security sensitive information is redacted (replaced with "\[redacted\]") for
         /// private keys and passwords in TLS certificates.
         #[prost(message, optional, tag = "4")]
         pub secret: ::core::option::Option<
@@ -898,11 +899,11 @@ pub mod secrets_config_dump {
         /// The *error_state* field contains the rejected version of this particular
         /// resource along with the reason and timestamp. For successfully updated or
         /// acknowledged resource, this field should be empty.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, optional, tag = "5")]
         pub error_state: ::core::option::Option<super::UpdateFailureState>,
         /// The client status of this resource.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
@@ -919,7 +920,7 @@ pub mod secrets_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
         /// The actual secret information.
-        /// Security sensitive information is redacted (replaced with "\\[redacted\\]") for
+        /// Security sensitive information is redacted (replaced with "\[redacted\]") for
         /// private keys and passwords in TLS certificates.
         #[prost(message, optional, tag = "3")]
         pub secret: ::core::option::Option<
@@ -1018,11 +1019,11 @@ pub struct Memory {
 }
 /// Proto representation of the statistics collected upon absl::Mutex contention, if Envoy is run
 /// under :option:`--enable-mutex-tracing`. For more information, see the `absl::Mutex`
-/// \[docs\](<https://abseil.io/about/design/mutex#extra-features>).
+/// [docs](<https://abseil.io/about/design/mutex#extra-features>).
 ///
 /// *NB*: The wait cycles below are measured by `absl::base_internal::CycleClock`, and may not
 /// correspond to core clock frequency. For more information, see the `CycleClock`
-/// \[docs\](<https://github.com/abseil/abseil-cpp/blob/master/absl/base/internal/cycleclock.h>).
+/// [docs](<https://github.com/abseil/abseil-cpp/blob/master/absl/base/internal/cycleclock.h>).
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MutexStats {

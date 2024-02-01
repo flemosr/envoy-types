@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SinkConfig {
@@ -23,6 +23,12 @@ pub struct SinkConfig {
     pub use_tag_extracted_name: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// If set, emitted stats names will be prepended with a prefix, so full stat name will be
+    /// <prefix>.\<stats_name>. For example, if the stat name is "foo.bar" and prefix is
+    /// "pre", the full stat name will be "pre.foo.bar". If this field is not set, there is no
+    /// prefix added. According to the example, the full stat name will remain "foo.bar".
+    #[prost(string, tag = "6")]
+    pub prefix: ::prost::alloc::string::String,
     #[prost(oneof = "sink_config::ProtocolSpecifier", tags = "1")]
     pub protocol_specifier: ::core::option::Option<sink_config::ProtocolSpecifier>,
 }

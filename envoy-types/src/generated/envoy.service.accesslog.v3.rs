@@ -296,7 +296,8 @@ pub mod access_log_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_access_logs(request).await
+                                <T as AccessLogService>::stream_access_logs(&inner, request)
+                                    .await
                             };
                             Box::pin(fut)
                         }

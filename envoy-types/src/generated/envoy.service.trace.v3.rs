@@ -259,7 +259,7 @@ pub mod trace_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_traces(request).await
+                                <T as TraceService>::stream_traces(&inner, request).await
                             };
                             Box::pin(fut)
                         }

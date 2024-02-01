@@ -25,7 +25,7 @@ pub struct RateLimitQuotaFilterConfig {
     ///
     /// matcher_list:
     /// matchers:
-    /// \# Assign requests with header\\['env'\\] set to 'staging' to the bucket { name: 'staging' }
+    /// \# Assign requests with header\['env'\] set to 'staging' to the bucket { name: 'staging' }
     /// - predicate:
     /// single_predicate:
     /// input:
@@ -251,6 +251,11 @@ pub struct RateLimitQuotaBucketSettings {
     ///
     /// After sending the initial report, the data plane is to continue reporting the bucket usage with
     /// the internal specified in this field.
+    ///
+    /// If for any reason RLQS client doesn't receive the initial assignment for the reported bucket,
+    /// the data plane will eventually consider the bucket abandoned and stop sending the usage
+    /// reports. This is explained in more details at :ref:`Rate Limit Quota Service (RLQS) <envoy_v3_api_file_envoy/service/rate_limit_quota/v3/rlqs.proto>`.
+    ///
     /// \[\#comment: 100000000 nanoseconds = 0.1 seconds\]
     #[prost(message, optional, tag = "2")]
     pub reporting_interval: ::core::option::Option<
@@ -324,8 +329,7 @@ pub mod rate_limit_quota_bucket_settings {
         ///    subscription is described in the :ref:`AbandonAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
         ///    message.
         ///
-        /// If the field is not set, the `ExpiredAssignmentBehavior` time is **not limited**:
-        /// it applies to the bucket until replaced by an `active` assignment.
+        /// If not set, defaults to zero, and the bucket is abandoned immediately.
         #[prost(message, optional, tag = "1")]
         pub expired_assignment_behavior_timeout: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::Duration,

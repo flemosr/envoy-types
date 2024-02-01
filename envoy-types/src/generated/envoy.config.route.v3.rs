@@ -3,7 +3,7 @@
 /// host header. This allows a single listener to service multiple top level domain path trees. Once
 /// a virtual host is selected based on the domain, the routes are processed in order to see which
 /// upstream cluster to route to or whether to perform a redirect.
-/// \[\#next-free-field: 24\]
+/// \[\#next-free-field: 25\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VirtualHost {
@@ -98,14 +98,10 @@ pub struct VirtualHost {
     #[deprecated]
     #[prost(message, optional, tag = "8")]
     pub cors: ::core::option::Option<CorsPolicy>,
-    /// The per_filter_config field can be used to provide virtual host-specific configurations for filters.
-    /// The key should match the :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
-    /// The canonical filter name (e.g., `envoy.filters.http.buffer` for the HTTP buffer filter) can also
-    /// be used for the backwards compatibility. If there is no entry referred by the filter config name, the
-    /// entry referred by the canonical filter name will be provided to the filters as fallback.
-    ///
-    /// Use of this field is filter specific;
-    /// see the :ref:`HTTP filter documentation <config_http_filters>` for if and how it is utilized.
+    /// This field can be used to provide virtual host level per filter config. The key should match the
+    /// :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
+    /// See :ref:`Http filter route specific config <arch_overview_http_filters_per_filter_config>`
+    /// for details.
     /// \[\#comment: An entry's value may be wrapped in a
     /// :ref:`FilterConfig<envoy_v3_api_msg_config.route.v3.FilterConfig>`
     /// message to specify additional options.\]
@@ -137,7 +133,7 @@ pub struct VirtualHost {
     /// independently (e.g.: values are not inherited).
     #[prost(message, optional, tag = "16")]
     pub retry_policy: ::core::option::Option<RetryPolicy>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Specifies the configuration for retry policy extension. Note that setting a route level entry
     /// will take precedence over this config and it'll be treated independently (e.g.: values are not
     /// inherited). :ref:`Retry policy <envoy_v3_api_field_config.route.v3.VirtualHost.retry_policy>` should not be
@@ -169,6 +165,13 @@ pub struct VirtualHost {
     pub request_mirror_policies: ::prost::alloc::vec::Vec<
         route_action::RequestMirrorPolicy,
     >,
+    /// The metadata field can be used to provide additional information
+    /// about the virtual host. It can be used for configuration, stats, and logging.
+    /// The metadata should go under the filter namespace that will need it.
+    /// For instance, if the metadata is intended for the Router filter,
+    /// the filter name should be specified as `envoy.filters.http.router`.
+    #[prost(message, optional, tag = "24")]
+    pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
 }
 /// Nested message and enum types in `VirtualHost`.
 pub mod virtual_host {
@@ -261,14 +264,10 @@ pub struct Route {
     /// Decorator for the matched route.
     #[prost(message, optional, tag = "5")]
     pub decorator: ::core::option::Option<Decorator>,
-    /// The per_filter_config field can be used to provide route-specific configurations for filters.
-    /// The key should match the :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
-    /// The canonical filter name (e.g., `envoy.filters.http.buffer` for the HTTP buffer filter) can also
-    /// be used for the backwards compatibility. If there is no entry referred by the filter config name, the
-    /// entry referred by the canonical filter name will be provided to the filters as fallback.
-    ///
-    /// Use of this field is filter specific;
-    /// see the :ref:`HTTP filter documentation <config_http_filters>` for if and how it is utilized.
+    /// This field can be used to provide route specific per filter config. The key should match the
+    /// :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
+    /// See :ref:`Http filter route specific config <arch_overview_http_filters_per_filter_config>`
+    /// for details.
     /// \[\#comment: An entry's value may be wrapped in a
     /// :ref:`FilterConfig<envoy_v3_api_msg_config.route.v3.FilterConfig>`
     /// message to specify additional options.\]
@@ -353,13 +352,13 @@ pub mod route {
         /// Return an arbitrary HTTP response directly, without proxying.
         #[prost(message, tag = "7")]
         DirectResponse(super::DirectResponseAction),
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         /// A filter-defined action (e.g., it could dynamically generate the RouteAction).
         /// \[\#comment: TODO(samflattery): Remove cleanup in route_fuzz_test.cc when
         /// implemented\]
         #[prost(message, tag = "17")]
         FilterAction(super::FilterAction),
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         /// An action used when the route will generate a response directly,
         /// without forwarding to an upstream host. This will be used in non-proxy
         /// xDS clients like the gRPC server. It could also be used in the future
@@ -481,15 +480,10 @@ pub mod weighted_cluster {
         pub response_headers_to_remove: ::prost::alloc::vec::Vec<
             ::prost::alloc::string::String,
         >,
-        /// The per_filter_config field can be used to provide weighted cluster-specific configurations
-        /// for filters.
-        /// The key should match the :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
-        /// The canonical filter name (e.g., `envoy.filters.http.buffer` for the HTTP buffer filter) can also
-        /// be used for the backwards compatibility. If there is no entry referred by the filter config name, the
-        /// entry referred by the canonical filter name will be provided to the filters as fallback.
-        ///
-        /// Use of this field is filter specific;
-        /// see the :ref:`HTTP filter documentation <config_http_filters>` for if and how it is utilized.
+        /// This field can be used to provide weighted cluster specific per filter config. The key should match the
+        /// :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
+        /// See :ref:`Http filter route specific config <arch_overview_http_filters_per_filter_config>`
+        /// for details.
         /// \[\#comment: An entry's value may be wrapped in a
         /// :ref:`FilterConfig<envoy_v3_api_msg_config.route.v3.FilterConfig>`
         /// message to specify additional options.\]
@@ -583,7 +577,8 @@ pub struct RouteMatch {
     /// match. The router will check the query string from the `path` header
     /// against all the specified query parameters. If the number of specified
     /// query parameters is nonzero, they all must match the `path` header's
-    /// query string for a match to occur.
+    /// query string for a match to occur. In the event query parameters are
+    /// repeated, only the first value for each key will be considered.
     ///
     /// .. note::
     ///
@@ -634,12 +629,24 @@ pub mod route_match {
         >,
         /// If specified, the route will match against whether or not a certificate is validated.
         /// If not specified, certificate validation status (true or false) will not be considered when route matching.
+        ///
+        /// .. warning::
+        ///
+        /// ```text
+        /// Client certificate validation is not currently performed upon TLS session resumption. For
+        /// a resumed TLS session the route will match only when ``validated`` is false, regardless of
+        /// whether the client TLS certificate is valid.
+        ///
+        /// The only known workaround for this issue is to disable TLS session resumption entirely, by
+        /// setting both :ref:`disable_stateless_session_resumption <envoy_v3_api_field_extensions.transport_sockets.tls.v3.DownstreamTlsContext.disable_stateless_session_resumption>`
+        /// and :ref:`disable_stateful_session_resumption <envoy_v3_api_field_extensions.transport_sockets.tls.v3.DownstreamTlsContext.disable_stateful_session_resumption>` on the DownstreamTlsContext.
+        /// ```
         #[prost(message, optional, tag = "2")]
         pub validated: ::core::option::Option<
             super::super::super::super::super::google::protobuf::BoolValue,
         >,
     }
-    /// An extensible message for matching CONNECT requests.
+    /// An extensible message for matching CONNECT or CONNECT-UDP requests.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ConnectMatcher {}
@@ -668,11 +675,10 @@ pub mod route_match {
         /// stripping. This needs more thought.\]
         #[prost(message, tag = "10")]
         SafeRegex(super::super::super::super::r#type::matcher::v3::RegexMatcher),
-        /// If this is used as the matcher, the matcher will only match CONNECT requests.
-        /// Note that this will not match HTTP/2 upgrade-style CONNECT requests
-        /// (WebSocket and the like) as they are normalized in Envoy as HTTP/1.1 style
-        /// upgrades.
-        /// This is the only way to match CONNECT requests for HTTP/1.1. For HTTP/2,
+        /// If this is used as the matcher, the matcher will only match CONNECT or CONNECT-UDP requests.
+        /// Note that this will not match other Extended CONNECT requests (WebSocket and the like) as
+        /// they are normalized in Envoy as HTTP/1.1 style upgrades.
+        /// This is the only way to match CONNECT requests for HTTP/1.1. For HTTP/2 and HTTP/3,
         /// where Extended CONNECT requests may have a path, the path matchers will work if
         /// there is a path present.
         /// Note that CONNECT support is currently considered alpha in Envoy.
@@ -916,7 +922,7 @@ pub struct RouteAction {
     /// (e.g.: policies are not merged, most internal one becomes the enforced policy).
     #[prost(message, optional, tag = "9")]
     pub retry_policy: ::core::option::Option<RetryPolicy>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Specifies the configuration for retry policy extension. Note that if this is set, it'll take
     /// precedence over the virtual host level retry policy entirely (e.g.: policies are not merged,
     /// most internal one becomes the enforced policy). :ref:`Retry policy <envoy_v3_api_field_config.route.v3.VirtualHost.retry_policy>`
@@ -1165,6 +1171,17 @@ pub mod route_action {
                 super::super::super::super::super::r#type::matcher::v3::RegexMatchAndSubstitute,
             >,
         }
+        /// CookieAttribute defines an API for adding additional attributes for a HTTP cookie.
+        #[allow(clippy::derive_partial_eq_without_eq)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct CookieAttribute {
+            /// The name of the cookie attribute.
+            #[prost(string, tag = "1")]
+            pub name: ::prost::alloc::string::String,
+            /// The optional value of the cookie attribute.
+            #[prost(string, tag = "2")]
+            pub value: ::prost::alloc::string::String,
+        }
         /// Envoy supports two types of cookie affinity:
         ///
         /// 1. Passive. Envoy takes a cookie that's present in the cookies header and
@@ -1198,6 +1215,9 @@ pub mod route_action {
             /// will be set for the cookie.
             #[prost(string, tag = "3")]
             pub path: ::prost::alloc::string::String,
+            /// Additional attributes for the cookie. They will be used when generating a new cookie.
+            #[prost(message, repeated, tag = "4")]
+            pub attributes: ::prost::alloc::vec::Vec<CookieAttribute>,
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1211,7 +1231,8 @@ pub mod route_action {
         pub struct QueryParameter {
             /// The name of the URL query parameter that will be used to obtain the hash
             /// key. If the parameter is not present, no hash will be produced. Query
-            /// parameter names are case-sensitive.
+            /// parameter names are case-sensitive. If query parameters are repeated, only
+            /// the first value will be considered.
             #[prost(string, tag = "1")]
             pub name: ::prost::alloc::string::String,
         }
@@ -1254,7 +1275,7 @@ pub mod route_action {
     pub struct UpgradeConfig {
         /// The case-insensitive name of this upgrade, e.g. "websocket".
         /// For each upgrade type present in upgrade_configs, requests with
-        /// Upgrade: \\[upgrade_type\\] will be proxied upstream.
+        /// Upgrade: \[upgrade_type\] will be proxied upstream.
         #[prost(string, tag = "1")]
         pub upgrade_type: ::prost::alloc::string::String,
         /// Determines if upgrades are available on this route. Defaults to true.
@@ -1458,7 +1479,9 @@ pub mod route_action {
         /// Indicates that during forwarding, the host header will be swapped with
         /// the hostname of the upstream host chosen by the cluster manager. This
         /// option is applicable only when the destination cluster for a route is of
-        /// type `strict_dns` or `logical_dns`. Setting this to true with other cluster types
+        /// type `strict_dns` or `logical_dns`,
+        /// or when :ref:`hostname <envoy_v3_api_field_config.endpoint.v3.Endpoint.hostname>`
+        /// field is not empty. Setting this to true with other cluster types
         /// has no effect. Using this option will append the
         /// :ref:`config_http_conn_man_headers_x-forwarded-host` header if
         /// :ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
@@ -1794,7 +1817,7 @@ pub struct HedgePolicy {
     /// Specifies the number of initial requests that should be sent upstream.
     /// Must be at least 1.
     /// Defaults to 1.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "1")]
     pub initial_requests: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -1802,7 +1825,7 @@ pub struct HedgePolicy {
     /// Specifies a probability that an additional upstream request should be sent
     /// on top of what is specified by initial_requests.
     /// Defaults to 0.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "2")]
     pub additional_request_chance: ::core::option::Option<
         super::super::super::r#type::v3::FractionalPercent,
@@ -2001,7 +2024,7 @@ pub struct DirectResponseAction {
     #[prost(message, optional, tag = "2")]
     pub body: ::core::option::Option<super::super::core::v3::DataSource>,
 }
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NonForwardingAction {}
@@ -2664,6 +2687,7 @@ pub mod query_parameter_matcher {
     }
 }
 /// HTTP Internal Redirect :ref:`architecture overview <arch_overview_internal_redirects>`.
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InternalRedirectPolicy {
@@ -2695,6 +2719,13 @@ pub struct InternalRedirectPolicy {
     /// x-forwarded-proto. The default is false.
     #[prost(bool, tag = "4")]
     pub allow_cross_scheme_redirect: bool,
+    /// Specifies a list of headers, by name, to copy from the internal redirect into the subsequent
+    /// request. If a header is specified here but not present in the redirect, it will be cleared in
+    /// the subsequent request.
+    #[prost(string, repeated, tag = "5")]
+    pub response_headers_to_copy: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
+    >,
 }
 /// A simple wrapper for an HTTP filter config. This is intended to be used as a wrapper for the
 /// map value in
@@ -2716,6 +2747,8 @@ pub struct FilterConfig {
     #[prost(bool, tag = "2")]
     pub is_optional: bool,
     /// If true, the filter is disabled in the route or virtual host and the `config` field is ignored.
+    /// See :ref:`route based filter chain <arch_overview_http_filters_route_based_filter_chain>`
+    /// for more details.
     ///
     /// .. note::
     ///
@@ -2727,12 +2760,10 @@ pub struct FilterConfig {
     /// created and it is too late to change the chain.
     ///
     /// This field only make sense for the downstream HTTP filters for now.
-    ///
-    /// \\[\#not-implemented-hide:\\]
     #[prost(bool, tag = "3")]
     pub disabled: bool,
 }
-/// \[\#next-free-field: 17\]
+/// \[\#next-free-field: 18\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteConfiguration {
@@ -2788,14 +2819,11 @@ pub struct RouteConfiguration {
     pub request_headers_to_remove: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
-    /// By default, headers that should be added/removed are evaluated from most to least specific:
-    ///
-    /// * route level
-    /// * virtual host level
-    /// * connection manager level
-    ///
-    /// To allow setting overrides at the route or virtual host level, this order can be reversed
-    /// by setting this option to true. Defaults to false.
+    /// Headers mutations at all levels are evaluated, if specified. By default, the order is from most
+    /// specific (i.e. route entry level) to least specific (i.e. route configuration level). Later header
+    /// mutations may override earlier mutations.
+    /// This order can be reversed by setting this field to true. In other words, most specific level mutation
+    /// is evaluated last.
     #[prost(bool, tag = "10")]
     pub most_specific_header_mutations_wins: bool,
     /// An optional boolean that specifies whether the clusters that the route
@@ -2848,14 +2876,10 @@ pub struct RouteConfiguration {
     /// For users who want to only match path on the "<path>" portion, this option should be true.
     #[prost(bool, tag = "15")]
     pub ignore_path_parameters_in_path_matching: bool,
-    /// The typed_per_filter_config field can be used to provide RouteConfiguration level per filter config.
-    /// The key should match the :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
-    /// The canonical filter name (e.g., `envoy.filters.http.buffer` for the HTTP buffer filter) can also
-    /// be used for the backwards compatibility. If there is no entry referred by the filter config name, the
-    /// entry referred by the canonical filter name will be provided to the filters as fallback.
-    ///
-    /// Use of this field is filter specific;
-    /// see the :ref:`HTTP filter documentation <config_http_filters>` for if and how it is utilized.
+    /// This field can be used to provide RouteConfiguration level per filter config. The key should match the
+    /// :ref:`filter config name <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
+    /// See :ref:`Http filter route specific config <arch_overview_http_filters_per_filter_config>`
+    /// for details.
     /// \[\#comment: An entry's value may be wrapped in a
     /// :ref:`FilterConfig<envoy_v3_api_msg_config.route.v3.FilterConfig>`
     /// message to specify additional options.\]
@@ -2864,6 +2888,13 @@ pub struct RouteConfiguration {
         ::prost::alloc::string::String,
         super::super::super::super::google::protobuf::Any,
     >,
+    /// The metadata field can be used to provide additional information
+    /// about the route configuration. It can be used for configuration, stats, and logging.
+    /// The metadata should go under the filter namespace that will need it.
+    /// For instance, if the metadata is intended for the Router filter,
+    /// the filter name should be specified as `envoy.filters.http.router`.
+    #[prost(message, optional, tag = "17")]
+    pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -2898,7 +2929,7 @@ pub struct Vhds {
 /// fragments:
 /// - header_value_extractor:
 /// name: X-Route-Selector
-/// element_separator: ,
+/// element_separator: ","
 /// element:
 /// separator: =
 /// key: vip

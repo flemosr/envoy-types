@@ -178,7 +178,7 @@ pub struct HealthCheckSpecifier {
         super::super::super::super::google::protobuf::Duration,
     >,
 }
-/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
+/// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -375,7 +375,7 @@ pub mod health_discovery_service_server {
     #[async_trait]
     pub trait HealthDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the StreamHealthCheck method.
-        type StreamHealthCheckStream: futures_core::Stream<
+        type StreamHealthCheckStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::HealthCheckSpecifier, tonic::Status>,
             >
             + Send
@@ -543,7 +543,11 @@ pub mod health_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_health_check(request).await
+                                <T as HealthDiscoveryService>::stream_health_check(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -592,7 +596,11 @@ pub mod health_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).fetch_health_check(request).await
+                                <T as HealthDiscoveryService>::fetch_health_check(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

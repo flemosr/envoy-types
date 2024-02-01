@@ -560,7 +560,7 @@ pub struct StringRules {
     /// at a maximum
     #[prost(uint64, optional, tag = "5")]
     pub max_bytes: ::core::option::Option<u64>,
-    /// Pattern specifes that this field must match against the specified
+    /// Pattern specifies that this field must match against the specified
     /// regular expression (RE2 syntax). The included expression should elide
     /// any delimiters.
     #[prost(string, optional, tag = "6")]
@@ -675,7 +675,7 @@ pub struct BytesRules {
     /// at a maximum
     #[prost(uint64, optional, tag = "3")]
     pub max_len: ::core::option::Option<u64>,
-    /// Pattern specifes that this field must match against the specified
+    /// Pattern specifies that this field must match against the specified
     /// regular expression (RE2 syntax). The included expression should elide
     /// any delimiters.
     #[prost(string, optional, tag = "4")]
@@ -776,11 +776,11 @@ pub struct RepeatedRules {
     #[prost(uint64, optional, tag = "2")]
     pub max_items: ::core::option::Option<u64>,
     /// Unique specifies that all elements in this field must be unique. This
-    /// contraint is only applicable to scalar and enum types (messages are not
+    /// constraint is only applicable to scalar and enum types (messages are not
     /// supported).
     #[prost(bool, optional, tag = "3")]
     pub unique: ::core::option::Option<bool>,
-    /// Items specifies the contraints to be applied to each item in the field.
+    /// Items specifies the constraints to be applied to each item in the field.
     /// Repeated message fields will still execute validation against each item
     /// unless skip is specified here.
     #[prost(message, optional, boxed, tag = "4")]

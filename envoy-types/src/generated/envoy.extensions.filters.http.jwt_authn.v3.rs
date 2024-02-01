@@ -30,7 +30,7 @@
 ///      seconds: 300
 /// ```
 ///
-/// \[\#next-free-field: 17\]
+/// \[\#next-free-field: 19\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtProvider {
@@ -165,6 +165,11 @@ pub struct JwtProvider {
     /// exp: 1501281058
     #[prost(string, tag = "9")]
     pub payload_in_metadata: ::prost::alloc::string::String,
+    /// Normalizes the payload representation in the request metadata.
+    #[prost(message, optional, tag = "18")]
+    pub normalize_payload_in_metadata: ::core::option::Option<
+        jwt_provider::NormalizePayload,
+    >,
     /// If not empty, similar to :ref:`payload_in_metadata <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtProvider.payload_in_metadata>`,
     /// a successfully verified JWT header will be written to :ref:`Dynamic State <arch_overview_data_sharing_between_filters>`
     /// as an entry (`protobuf::Struct`) in `envoy.filters.http.jwt_authn` `namespace` with the
@@ -236,9 +241,18 @@ pub struct JwtProvider {
     /// - name: x-jwt-claim-nested-claim
     /// claim: claim.nested.key
     ///
-    /// This header is only reserved for jwt claim; any other value will be overwrite.
+    /// This header is only reserved for jwt claim; any other value will be overwritten.
     #[prost(message, repeated, tag = "15")]
     pub claim_to_headers: ::prost::alloc::vec::Vec<JwtClaimToHeader>,
+    /// Clears route cache in order to allow JWT token to correctly affect
+    /// routing decisions. Filter clears all cached routes when:
+    ///
+    /// 1. The field is set to `true`.
+    ///
+    /// 1. At least one `claim_to_headers` header is added to the request OR
+    ///    if `payload_in_metadata` is set.
+    #[prost(bool, tag = "17")]
+    pub clear_route_cache: bool,
     /// `JSON Web Key Set (JWKS) <<https://tools.ietf.org/html/rfc7517#appendix-A>`\_> is needed to
     /// validate signature of a JWT. This field specifies where to fetch JWKS.
     #[prost(oneof = "jwt_provider::JwksSourceSpecifier", tags = "3, 4")]
@@ -246,6 +260,21 @@ pub struct JwtProvider {
 }
 /// Nested message and enum types in `JwtProvider`.
 pub mod jwt_provider {
+    /// Alters the payload representation in the request dynamic metadata to facilitate its use in matching.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct NormalizePayload {
+        /// Each claim in this list will be interpreted as a space-delimited string
+        /// and converted to a list of strings based on the delimited values.
+        /// Example: a token with a claim `scopes: "email profile"` is translated
+        /// to dynamic metadata  `scopes: \["email", "profile"\]` if this field is
+        /// set value `\["scopes"\]`. This special handling of `scopes` is
+        /// recommended by `RFC8693 <<https://datatracker.ietf.org/doc/html/rfc8693#name-scope-scopes-claim>`\_.>
+        #[prost(string, repeated, tag = "1")]
+        pub space_delimited_claims: ::prost::alloc::vec::Vec<
+            ::prost::alloc::string::String,
+        >,
+    }
     /// `JSON Web Key Set (JWKS) <<https://tools.ietf.org/html/rfc7517#appendix-A>`\_> is needed to
     /// validate signature of a JWT. This field specifies where to fetch JWKS.
     #[allow(clippy::derive_partial_eq_without_eq)]

@@ -101,6 +101,9 @@ pub struct Histogram {
     #[prost(double, repeated, packed = "false", tag = "11")]
     pub negative_count: ::prost::alloc::vec::Vec<f64>,
     /// Positive buckets for the native histogram.
+    /// Use a no-op span (offset 0, length 0) for a native histogram without any
+    /// observations yet and with a zero_threshold of 0. Otherwise, it would be
+    /// indistinguishable from a classic histogram.
     #[prost(message, repeated, tag = "12")]
     pub positive_span: ::prost::alloc::vec::Vec<BucketSpan>,
     /// Use either "positive_delta" or "positive_count", the former for
@@ -113,6 +116,9 @@ pub struct Histogram {
     /// Absolute count of each bucket.
     #[prost(double, repeated, packed = "false", tag = "14")]
     pub positive_count: ::prost::alloc::vec::Vec<f64>,
+    /// Only used for native histograms. These exemplars MUST have a timestamp.
+    #[prost(message, repeated, tag = "16")]
+    pub exemplars: ::prost::alloc::vec::Vec<Exemplar>,
 }
 /// A Bucket of a conventional histogram, each of which is treated as
 /// an individual counter-like time series by Prometheus.
@@ -189,6 +195,8 @@ pub struct MetricFamily {
     pub r#type: ::core::option::Option<i32>,
     #[prost(message, repeated, tag = "4")]
     pub metric: ::prost::alloc::vec::Vec<Metric>,
+    #[prost(string, optional, tag = "5")]
+    pub unit: ::core::option::Option<::prost::alloc::string::String>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

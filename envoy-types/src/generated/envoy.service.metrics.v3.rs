@@ -256,7 +256,7 @@ pub mod metrics_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_metrics(request).await
+                                <T as MetricsService>::stream_metrics(&inner, request).await
                             };
                             Box::pin(fut)
                         }

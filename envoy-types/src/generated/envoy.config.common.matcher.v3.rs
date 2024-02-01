@@ -3,6 +3,9 @@
 /// is found the action specified by the most specific on_no_match will be evaluated.
 /// As an on_no_match might result in another matching tree being evaluated, this process
 /// might repeat several times until the final OnMatch (or no match) is decided.
+///
+/// .. note::
+/// Please use the syntactically equivalent :ref:`matching API <envoy_v3_api_msg_.xds.type.matcher.v3.Matcher>`
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Matcher {

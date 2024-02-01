@@ -135,10 +135,17 @@ pub mod compressor {
     }
 }
 /// Per-route overrides of `ResponseDirectionConfig`. Anything added here should be optional,
-/// to allow overriding arbitrary subsets of configuration. Omitted fields must have no affect.
+/// to allow overriding arbitrary subsets of configuration. Omitted fields must have no effect.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ResponseDirectionOverrides {}
+pub struct ResponseDirectionOverrides {
+    /// If set, overrides the filter-level
+    /// :ref:`remove_accept_encoding_header<envoy_v3_api_field_extensions.filters.http.compressor.v3.Compressor.ResponseDirectionConfig.remove_accept_encoding_header>`.
+    #[prost(message, optional, tag = "1")]
+    pub remove_accept_encoding_header: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
+}
 /// Per-route overrides. As per-route overrides are needed, they should be
 /// added here, mirroring the structure of `Compressor`. All fields should be
 /// optional, to allow overriding arbitrary subsets of configuration.

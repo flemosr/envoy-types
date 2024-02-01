@@ -1,4 +1,4 @@
-/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue
+/// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue
 /// with importing services: <https://github.com/google/protobuf/issues/4221> and
 /// protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -195,7 +195,7 @@ pub mod extension_config_discovery_service_server {
     #[async_trait]
     pub trait ExtensionConfigDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the StreamExtensionConfigs method.
-        type StreamExtensionConfigsStream: futures_core::Stream<
+        type StreamExtensionConfigsStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DiscoveryResponse,
                     tonic::Status,
@@ -213,7 +213,7 @@ pub mod extension_config_discovery_service_server {
             tonic::Status,
         >;
         /// Server streaming response type for the DeltaExtensionConfigs method.
-        type DeltaExtensionConfigsStream: futures_core::Stream<
+        type DeltaExtensionConfigsStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DeltaDiscoveryResponse,
                     tonic::Status,
@@ -349,7 +349,11 @@ pub mod extension_config_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_extension_configs(request).await
+                                <T as ExtensionConfigDiscoveryService>::stream_extension_configs(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -403,7 +407,11 @@ pub mod extension_config_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).delta_extension_configs(request).await
+                                <T as ExtensionConfigDiscoveryService>::delta_extension_configs(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -454,7 +462,11 @@ pub mod extension_config_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).fetch_extension_configs(request).await
+                                <T as ExtensionConfigDiscoveryService>::fetch_extension_configs(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

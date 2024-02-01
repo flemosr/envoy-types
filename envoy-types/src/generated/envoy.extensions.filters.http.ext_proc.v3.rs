@@ -69,6 +69,23 @@ pub mod processing_mode {
         }
     }
     /// Control how the request and response bodies are handled
+    /// When body mutation by external processor is enabled, ext_proc filter will always remove
+    /// the content length header in three cases below because content length can not be guaranteed
+    /// to be set correctly:
+    ///
+    /// 1. STREAMED BodySendMode: header processing completes before body mutation comes back.
+    /// 1. BUFFERED_PARTIAL BodySendMode: body is buffered and could be injected in different phases.
+    /// 1. BUFFERED BodySendMode + SKIP HeaderSendMode: header processing (e.g., update content-length) is skipped.
+    ///
+    /// In Envoy's http1 codec implementation, removing content length will enable chunked transfer
+    /// encoding whenever feasible. The recipient (either client or server) must be able
+    /// to parse and decode the chunked transfer coding.
+    /// (see `details in RFC9112 <<https://tools.ietf.org/html/rfc9112#section-7.1>`\_>).
+    ///
+    /// In BUFFERED BodySendMode + SEND HeaderSendMode, content length header is allowed but it is
+    /// external processor's responsibility to set the content length correctly matched to the length
+    /// of mutated body. If they don't match, the corresponding body mutation will be rejected and
+    /// local reply will be sent with an error message.
     #[derive(
         Clone,
         Copy,
@@ -140,16 +157,15 @@ pub mod processing_mode {
 /// * Whether subsequent HTTP requests are transmitted synchronously or whether they are
 ///   sent asynchronously.
 /// * To modify request or response trailers if they already exist
-/// * To add request or response trailers where they are not present
 ///
 /// The filter supports up to six different processing steps. Each is represented by
 /// a gRPC stream message that is sent to the external processor. For each message, the
 /// processor must send a matching response.
 ///
 /// * Request headers: Contains the headers from the original HTTP request.
-/// * Request body: Sent in a single message if the BUFFERED or BUFFERED_PARTIAL
-///   mode is chosen, in multiple messages if the STREAMED mode is chosen, and not
-///   at all otherwise.
+/// * Request body: Delivered if they are present and sent in a single message if
+///   the BUFFERED or BUFFERED_PARTIAL mode is chosen, in multiple messages if the
+///   STREAMED mode is chosen, and not at all otherwise.
 /// * Request trailers: Delivered if they are present and if the trailer mode is set
 ///   to SEND.
 /// * Response headers: Contains the headers from the HTTP response. Keep in mind
@@ -187,7 +203,7 @@ pub mod processing_mode {
 /// Stats about each gRPC call are recorded in a :ref:`dynamic filter state <arch_overview_advanced_filter_state_sharing>` object in a namespace matching the filter
 /// name.
 ///
-/// \[\#next-free-field: 15\]
+/// \[\#next-free-field: 17\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExternalProcessor {
@@ -210,7 +226,7 @@ pub struct ExternalProcessor {
     /// sent. See ProcessingMode for details.
     #[prost(message, optional, tag = "3")]
     pub processing_mode: ::core::option::Option<ProcessingMode>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// If true, send each part of the HTTP request or response specified by ProcessingMode
     /// asynchronously -- in other words, send the message on the gRPC stream and then continue
     /// filter processing. If false, which is the default, suspend filter execution after
@@ -218,7 +234,6 @@ pub struct ExternalProcessor {
     /// for a reply.
     #[prost(bool, tag = "4")]
     pub async_mode: bool,
-    /// \\[\#not-implemented-hide:\\]
     /// Envoy provides a number of :ref:`attributes <arch_overview_attributes>`
     /// for expressive policies. Each attribute name provided in this field will be
     /// matched against that list and populated in the request_headers message.
@@ -226,7 +241,6 @@ pub struct ExternalProcessor {
     /// for the list of supported attributes and their types.
     #[prost(string, repeated, tag = "5")]
     pub request_attributes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// \\[\#not-implemented-hide:\\]
     /// Envoy provides a number of :ref:`attributes <arch_overview_attributes>`
     /// for expressive policies. Each attribute name provided in this field will be
     /// matched against that list and populated in the response_headers message.
@@ -294,15 +308,79 @@ pub struct ExternalProcessor {
     /// If not set, `mode_override` API in the response message will be ignored.
     #[prost(bool, tag = "14")]
     pub allow_mode_override: bool,
+    /// If set to true, ignore the
+    /// :ref:`immediate_response <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.immediate_response>`
+    /// message in an external processor response. In such case, no local reply will be sent.
+    /// Instead, the stream to the external processor will be closed. There will be no
+    /// more external processing for this stream from now on.
+    #[prost(bool, tag = "15")]
+    pub disable_immediate_response: bool,
+    /// Options related to the sending and receiving of dynamic metadata.
+    #[prost(message, optional, tag = "16")]
+    pub metadata_options: ::core::option::Option<MetadataOptions>,
+}
+/// The MetadataOptions structure defines options for the sending and receiving of
+/// dynamic metadata. Specifically, which namespaces to send to the server, whether
+/// metadata returned by the server may be written, and how that metadata may be written.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MetadataOptions {
+    /// Describes which typed or untyped dynamic metadata namespaces to forward to
+    /// the external processing server.
+    #[prost(message, optional, tag = "1")]
+    pub forwarding_namespaces: ::core::option::Option<
+        metadata_options::MetadataNamespaces,
+    >,
+    /// Describes which typed or untyped dynamic metadata namespaces to accept from
+    /// the external processing server. Set to empty or leave unset to disallow writing
+    /// any received dynamic metadata. Receiving of typed metadata is not supported.
+    #[prost(message, optional, tag = "2")]
+    pub receiving_namespaces: ::core::option::Option<
+        metadata_options::MetadataNamespaces,
+    >,
+}
+/// Nested message and enum types in `MetadataOptions`.
+pub mod metadata_options {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct MetadataNamespaces {
+        /// Specifies a list of metadata namespaces whose values, if present,
+        /// will be passed to the ext_proc service as an opaque *protobuf::Struct*.
+        #[prost(string, repeated, tag = "1")]
+        pub untyped: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+        /// Specifies a list of metadata namespaces whose values, if present,
+        /// will be passed to the ext_proc service as a *protobuf::Any*. This allows
+        /// envoy and the external processing server to share the protobuf message
+        /// definition for safe parsing.
+        #[prost(string, repeated, tag = "2")]
+        pub typed: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
 }
 /// The HeaderForwardingRules structure specifies what headers are
 /// allowed to be forwarded to the external processing server.
+///
+/// This works as below:
+///
+/// 1. If neither `allowed_headers` nor `disallowed_headers` is set, all headers are forwarded.
+/// 1. If both `allowed_headers` and `disallowed_headers` are set, only headers in the
+///    `allowed_headers` but not in the `disallowed_headers` are forwarded.
+/// 1. If `allowed_headers` is set, and `disallowed_headers` is not set, only headers in
+///    the `allowed_headers` are forwarded.
+/// 1. If `disallowed_headers` is set, and `allowed_headers` is not set, all headers except
+///    headers in the `disallowed_headers` are forwarded.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderForwardingRules {
-    /// If not set, all headers are forwarded to the external processing server.
+    /// If set, specifically allow any header in this list to be forwarded to the external
+    /// processing server. This can be overridden by the below `disallowed_headers`.
     #[prost(message, optional, tag = "1")]
     pub allowed_headers: ::core::option::Option<
+        super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
+    >,
+    /// If set, specifically disallow any header in this list to be forwarded to the external
+    /// processing server. This overrides the above `allowed_headers` if a header matches both.
+    #[prost(message, optional, tag = "2")]
+    pub disallowed_headers: ::core::option::Option<
         super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
     >,
 }
@@ -331,23 +409,23 @@ pub mod ext_proc_per_route {
     }
 }
 /// Overrides that may be set on a per-route basis
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtProcOverrides {
     /// Set a different processing mode for this route than the default.
     #[prost(message, optional, tag = "1")]
     pub processing_mode: ::core::option::Option<ProcessingMode>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Set a different asynchronous processing option than the default.
     #[prost(bool, tag = "2")]
     pub async_mode: bool,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Set different optional attributes than the default setting of the
     /// `request_attributes` field.
     #[prost(string, repeated, tag = "3")]
     pub request_attributes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Set different optional properties than the default setting of the
     /// `response_attributes` field.
     #[prost(string, repeated, tag = "4")]
@@ -357,4 +435,11 @@ pub struct ExtProcOverrides {
     pub grpc_service: ::core::option::Option<
         super::super::super::super::super::config::core::v3::GrpcService,
     >,
+    /// Options related to the sending and receiving of dynamic metadata.
+    /// Lists of forwarding and receiving namespaces will be overridden in their entirety,
+    /// meaning the most-specific config that specifies this override will be the final
+    /// config used. It is the prerogative of the control plane to ensure this
+    /// most-specific config contains the correct final overrides.
+    #[prost(message, optional, tag = "6")]
+    pub metadata_options: ::core::option::Option<MetadataOptions>,
 }

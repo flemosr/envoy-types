@@ -1,22 +1,22 @@
 /// Optionally divide the endpoints in this cluster into subsets defined by
 /// endpoint metadata and selected by route and weighted cluster metadata.
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Subset {
     /// The behavior used when no endpoint subset matches the selected route's
     /// metadata. The value defaults to
-    /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetFallbackPolicy.NO_FALLBACK>`.
+    /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.NO_FALLBACK>`.
     #[prost(enumeration = "subset::LbSubsetFallbackPolicy", tag = "1")]
     pub fallback_policy: i32,
     /// Specifies the default subset of endpoints used during fallback if
     /// fallback_policy is
-    /// :ref:`DEFAULT_SUBSET<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetFallbackPolicy.DEFAULT_SUBSET>`.
+    /// :ref:`DEFAULT_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.DEFAULT_SUBSET>`.
     /// Each field in default_subset is
     /// compared to the matching LbEndpoint.Metadata under the `envoy.lb`
     /// namespace. It is valid for no hosts to match, in which case the behavior
     /// is the same as a fallback_policy of
-    /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetFallbackPolicy.NO_FALLBACK>`.
+    /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.NO_FALLBACK>`.
     #[prost(message, optional, tag = "2")]
     pub default_subset: ::core::option::Option<
         super::super::super::super::super::google::protobuf::Struct,
@@ -37,6 +37,44 @@ pub struct Subset {
     /// metadata. The same host may appear in multiple subsets.
     #[prost(message, repeated, tag = "3")]
     pub subset_selectors: ::prost::alloc::vec::Vec<subset::LbSubsetSelector>,
+    /// By default, only when the request metadata has exactly the **same** keys as one of subset selectors and
+    /// the values of the related keys are matched, the load balancer will have a valid subset for the request.
+    /// For example, given the following subset selectors:
+    ///
+    /// .. code-block:: json
+    ///
+    /// { "subset_selectors": \[
+    /// { "keys": \[ "version" \] },
+    /// { "keys": \[ "stage", "version" \] }
+    /// \]}
+    ///
+    /// A request with metadata `{"redundant-key": "redundant-value", "stage": "prod", "version": "v1"}` or
+    /// `{"redundant-key": "redundant-value", "version": "v1"}` will not have a valid subset even if the values
+    /// of keys `stage` and `version` are matched because of the redundant key/value pair in the request
+    /// metadata.
+    ///
+    /// By setting this field to true, the most appropriate keys will be filtered out from the request metadata
+    /// according to the subset selectors. And then the filtered keys and related values will be matched to find
+    /// the valid host subset. By this way, redundant key/value pairs are allowed in the request metadata. The keys
+    /// of a request metadata could be superset of the keys of the subset selectors and need not to be exactly the
+    /// same as the keys of the subset selectors.
+    ///
+    /// More specifically, if the keys of a request metadata is a superset of one of the subset selectors, then only
+    /// the values of the keys that in the selector keys will be matched. Take the above example, if the request
+    /// metadata is `{"redundant-key": "redundant-value", "stage": "prod", "version": "v1"}`, the load balancer
+    /// will only match the values of `stage` and `version` to find an appropriate subset because `stage`
+    /// `version` are contained by the second subset selector and the redundant `redundant-key` will be
+    /// ignored.
+    ///
+    /// .. note::
+    /// If the keys of request metadata is superset of multiple different subset selectors keys, the subset
+    /// selector with most keys to win. For example, given subset selectors
+    /// `{"subset_selectors": \["keys": ["A", "B", "C"\], \["A", "B"]\]}` and request metadata `{"A": "-", "B": "-", "C": "-", "D": "-"}`, keys `A`, `B`, `C` will be evaluated.
+    /// If the keys of request metadata is superset of multiple different subset selectors keys and the number
+    /// of selector keys are same, then the one placed in front to win. For example, given subset selectors
+    /// `{"subset_selectors": \["keys": ["A", "B"\], \["C", "D"]\]}` and request metadata `{"A": "-", "B": "-", "C": "-", "D": "-"}`, keys `A`, `B` will be evaluated.
+    #[prost(bool, tag = "10")]
+    pub allow_redundant_keys: bool,
     /// If true, routing to subsets will take into account the localities and locality weights of the
     /// endpoints when making the routing decision.
     ///
@@ -74,7 +112,7 @@ pub struct Subset {
     /// fails to select a host, this policy decides if and how the process is repeated using another metadata.
     ///
     /// The value defaults to
-    /// :ref:`METADATA_NO_FALLBACK <envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.subset.LbSubsetMetadataFallbackPolicy.METADATA_NO_FALLBACK>`.
+    /// :ref:`METADATA_NO_FALLBACK <envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.subset.LbSubsetMetadataFallbackPolicy.METADATA_NO_FALLBACK>`.
     #[prost(enumeration = "subset::LbSubsetMetadataFallbackPolicy", tag = "8")]
     pub metadata_fallback_policy: i32,
     /// The child LB policy to create for endpoint-picking within the chosen subset.
@@ -111,13 +149,13 @@ pub mod subset {
         )]
         pub fallback_policy: i32,
         /// Subset of
-        /// :ref:`keys<envoy_v3_api_field_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector.keys>` used by
-        /// :ref:`KEYS_SUBSET<envoy_v3_api_enum_value_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector.LbSubsetSelectorFallbackPolicy.KEYS_SUBSET>`
+        /// :ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` used by
+        /// :ref:`KEYS_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.LbSubsetSelectorFallbackPolicy.KEYS_SUBSET>`
         /// fallback policy.
         /// It has to be a non empty list if KEYS_SUBSET fallback policy is selected.
         /// For any other fallback policy the parameter is not used and should not be set.
         /// Only values also present in
-        /// :ref:`keys<envoy_v3_api_field_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector.keys>` are allowed, but
+        /// :ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` are allowed, but
         /// `fallback_keys_subset` cannot be equal to `keys`.
         #[prost(string, repeated, tag = "3")]
         pub fallback_keys_subset: ::prost::alloc::vec::Vec<
@@ -152,7 +190,7 @@ pub mod subset {
             DefaultSubset = 3,
             /// If KEYS_SUBSET is selected, subset selector matching is performed again with metadata
             /// keys reduced to
-            /// :ref:`fallback_keys_subset<envoy_v3_api_field_config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector.fallback_keys_subset>`.
+            /// :ref:`fallback_keys_subset<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.fallback_keys_subset>`.
             /// It allows for a fallback to a different, less specific selector if some of the keys of
             /// the selector are considered optional.
             KeysSubset = 4,

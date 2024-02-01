@@ -130,15 +130,24 @@ pub struct Filter {
     pub name: ::prost::alloc::string::String,
     /// Filter specific configuration which depends on the filter being
     /// instantiated. See the supported filters for further documentation.
-    /// Note that Envoy's :ref:`downstream network filters <config_network_filters>` are not valid upstream filters.
+    /// Note that Envoy's :ref:`downstream network filters <config_network_filters>` are not valid upstream network filters.
+    /// Only one of typed_config or config_discovery can be used.
     #[prost(message, optional, tag = "2")]
     pub typed_config: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,
     >,
+    /// Configuration source specifier for an extension configuration discovery
+    /// service. In case of a failure and without the default configuration, the
+    /// listener closes the connections.
+    /// Only one of typed_config or config_discovery can be used.
+    #[prost(message, optional, tag = "3")]
+    pub config_discovery: ::core::option::Option<
+        super::super::core::v3::ExtensionConfigSource,
+    >,
 }
 /// See the :ref:`architecture overview <arch_overview_outlier_detection>` for
 /// more information on outlier detection.
-/// \[\#next-free-field: 23\]
+/// \[\#next-free-field: 24\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutlierDetection {
@@ -316,9 +325,17 @@ pub struct OutlierDetection {
     pub max_ejection_time_jitter: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+    /// If active health checking is enabled and a host is ejected by outlier detection, a successful active health check
+    /// unejects the host by default and considers it as healthy. Unejection also clears all the outlier detection counters.
+    /// To change this default behavior set this config to `false` where active health checking will not uneject the host.
+    /// Defaults to true.
+    #[prost(message, optional, tag = "23")]
+    pub successful_active_health_check_uneject_host: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
 }
 /// Cluster list collections. Entries are `Cluster` resources or references.
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterCollection {
@@ -698,7 +715,7 @@ pub struct Cluster {
     /// :ref:`lb_policy<envoy_v3_api_field_config.cluster.v3.Cluster.lb_policy>`.
     #[prost(message, optional, tag = "41")]
     pub load_balancing_policy: ::core::option::Option<LoadBalancingPolicy>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// If present, tells the client where to send load reports via LRS. If not present, the
     /// client will fall back to a client-side default, which may be either (a) don't send any
     /// load reports or (b) send load reports for all clusters to a single default server
@@ -1336,6 +1353,12 @@ pub mod cluster {
         pub upstream_port_override: ::core::option::Option<
             super::super::super::super::super::google::protobuf::UInt32Value,
         >,
+        /// The dynamic metadata key to override destination address.
+        /// First the request metadata is considered, then the connection one.
+        #[prost(message, optional, tag = "4")]
+        pub metadata_key: ::core::option::Option<
+            super::super::super::super::r#type::metadata::v3::MetadataKey,
+        >,
     }
     /// Common configuration for all load balancer implementations.
     /// \[\#next-free-field: 9\]
@@ -1891,4 +1914,18 @@ pub struct TrackClusterStats {
     /// of requests and responses will be published.
     #[prost(bool, tag = "2")]
     pub request_response_sizes: bool,
+    /// If true, some stats will be emitted per-endpoint, similar to the stats in admin `/clusters`
+    /// output.
+    ///
+    /// This does not currently output correct stats during a hot-restart.
+    ///
+    /// This is not currently implemented by all stat sinks.
+    ///
+    /// These stats do not honor filtering or tag extraction rules in :ref:`StatsConfig <envoy_v3_api_msg_config.metrics.v3.StatsConfig>` (but fixed-value tags are supported). Admin
+    /// endpoint filtering is supported.
+    ///
+    /// This may not be used at the same time as
+    /// :ref:`load_stats_config <envoy_v3_api_field_config.bootstrap.v3.ClusterManager.load_stats_config>`.
+    #[prost(bool, tag = "3")]
+    pub per_endpoint_stats: bool,
 }

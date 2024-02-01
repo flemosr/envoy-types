@@ -12,8 +12,7 @@ pub struct Mutations {
         super::super::super::super::super::config::common::mutation_rules::v3::HeaderMutation,
     >,
 }
-/// Per route configuration for the header mutation filter. If this is configured at multiple levels
-/// (route level, virtual host level, and route table level), only the most specific one will be used.
+/// Per route configuration for the header mutation filter.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderMutationPerRoute {
@@ -27,4 +26,12 @@ pub struct HeaderMutationPerRoute {
 pub struct HeaderMutation {
     #[prost(message, optional, tag = "1")]
     pub mutations: ::core::option::Option<Mutations>,
+    /// If per route HeaderMutationPerRoute config is configured at multiple route levels, header mutations
+    /// at all specified levels are evaluated. By default, the order is from most specific (i.e. route entry level)
+    /// to least specific (i.e. route configuration level). Later header mutations may override earlier mutations.
+    ///
+    /// This order can be reversed by setting this field to true. In other words, most specific level mutation
+    /// is evaluated last.
+    #[prost(bool, tag = "2")]
+    pub most_specific_header_mutations_wins: bool,
 }

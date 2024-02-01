@@ -32,7 +32,7 @@ pub struct MetadataKey {
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
     /// The path to retrieve the Value from the Struct. It can be a prefix or a full path,
-    /// e.g. `[prop, xyz]` for a struct or `[prop, foo]` for a string in the example,
+    /// e.g. `\[prop, xyz\]` for a struct or `\[prop, foo\]` for a string in the example,
     /// which depends on the particular scenario.
     ///
     /// Note: Due to that only the key type segment is supported, the path can not specify a list

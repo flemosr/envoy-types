@@ -12,6 +12,12 @@ pub struct Router {
     /// useful in scenarios where other filters (auth, ratelimit, etc.) make
     /// outbound calls and have child spans rooted at the same ingress
     /// parent. Defaults to false.
+    ///
+    /// .. attention::
+    /// This field is deprecated by the
+    /// :ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`.
+    /// Please use that `spawn_upstream_span` field to control the span creation.
+    #[deprecated]
     #[prost(bool, tag = "2")]
     pub start_child_span: bool,
     /// Configuration for HTTP upstream logs emitted by the router. Upstream logs
@@ -66,16 +72,16 @@ pub struct Router {
     /// .. note::
     /// Upstream HTTP filters are currently in alpha.
     ///
-    /// Optional HTTP filters for the upstream filter chain.
+    /// Optional HTTP filters for the upstream HTTP filter chain.
     ///
     /// These filters will be applied for all requests that pass through the router.
     /// They will also be applied to shadowed requests.
-    /// Upstream filters cannot change route or cluster.
-    /// Upstream filters specified on the cluster will override these filters.
+    /// Upstream HTTP filters cannot change route or cluster.
+    /// Upstream HTTP filters specified on the cluster will override these filters.
     ///
-    /// If using upstream filters, please be aware that local errors sent by
-    /// upstream filters will not trigger retries, and local errors sent by
-    /// upstream filters will count as a final response if hedging is configured.
+    /// If using upstream HTTP filters, please be aware that local errors sent by
+    /// upstream HTTP filters will not trigger retries, and local errors sent by
+    /// upstream HTTP filters will count as a final response if hedging is configured.
     /// \[\#extension-category: envoy.filters.http.upstream\]
     #[prost(message, repeated, tag = "8")]
     pub upstream_http_filters: ::prost::alloc::vec::Vec<

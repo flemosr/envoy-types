@@ -3,7 +3,7 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GcpAuthnFilterConfig {
     /// The HTTP URI to fetch tokens from GCE Metadata Server(<https://cloud.google.com/compute/docs/metadata/overview>).
-    /// The URL format is "<http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=\\[AUDIENCE\\]">
+    /// The URL format is "<http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=\[AUDIENCE\]">
     #[prost(message, optional, tag = "1")]
     pub http_uri: ::core::option::Option<
         super::super::super::super::super::config::core::v3::HttpUri,

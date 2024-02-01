@@ -21,3 +21,13 @@ pub struct ExtensionWithMatcher {
         super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
 }
+/// Extra settings on a per virtualhost/route/weighted-cluster level.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ExtensionWithMatcherPerRoute {
+    /// Matcher override.
+    #[prost(message, optional, tag = "1")]
+    pub xds_matcher: ::core::option::Option<
+        super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
+    >,
+}

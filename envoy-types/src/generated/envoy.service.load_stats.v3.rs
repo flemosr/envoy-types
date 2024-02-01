@@ -185,7 +185,7 @@ pub mod load_reporting_service_server {
     #[async_trait]
     pub trait LoadReportingService: Send + Sync + 'static {
         /// Server streaming response type for the StreamLoadStats method.
-        type StreamLoadStatsStream: futures_core::Stream<
+        type StreamLoadStatsStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::LoadStatsResponse, tonic::Status>,
             >
             + Send
@@ -328,7 +328,11 @@ pub mod load_reporting_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_load_stats(request).await
+                                <T as LoadReportingService>::stream_load_stats(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

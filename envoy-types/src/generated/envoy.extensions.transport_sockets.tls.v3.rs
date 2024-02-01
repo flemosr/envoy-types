@@ -28,8 +28,8 @@ pub struct TlsParameters {
     ///
     /// .. code-block:: none
     ///
-    /// \\[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305\\]
-    /// \\[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305\\]
+    /// \[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305\]
+    /// \[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305\]
     /// ECDHE-ECDSA-AES256-GCM-SHA384
     /// ECDHE-RSA-AES256-GCM-SHA384
     ///
@@ -46,8 +46,8 @@ pub struct TlsParameters {
     ///
     /// .. code-block:: none
     ///
-    /// \\[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305\\]
-    /// \\[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305\\]
+    /// \[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305\]
+    /// \[ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305\]
     /// ECDHE-ECDSA-AES256-GCM-SHA384
     /// ECDHE-RSA-AES256-GCM-SHA384
     ///
@@ -178,6 +178,11 @@ pub struct PrivateKeyProvider {
     /// supported private key method provider type.
     #[prost(string, tag = "1")]
     pub provider_name: ::prost::alloc::string::String,
+    /// If the private key provider isn't available (eg. the required hardware capability doesn't existed),
+    /// Envoy will fallback to the BoringSSL default implementation when the `fallback` is true.
+    /// The default value is `false`.
+    #[prost(bool, tag = "4")]
+    pub fallback: bool,
     /// Private key method provider specific configuration.
     #[prost(oneof = "private_key_provider::ConfigType", tags = "3")]
     pub config_type: ::core::option::Option<private_key_provider::ConfigType>,
@@ -263,7 +268,7 @@ pub struct TlsCertificate {
     pub ocsp_staple: ::core::option::Option<
         super::super::super::super::config::core::v3::DataSource,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, repeated, tag = "5")]
     pub signed_certificate_timestamp: ::prost::alloc::vec::Vec<
         super::super::super::super::config::core::v3::DataSource,
@@ -304,7 +309,7 @@ pub struct TlsSessionTicketKeys {
 /// The plugin instances are defined in the client's bootstrap file.
 /// The plugin allows certificates to be fetched/refreshed over the network asynchronously with
 /// respect to the TLS handshake.
-/// \\[\#not-implemented-hide:\\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CertificateProviderPluginInstance {
@@ -431,7 +436,7 @@ pub struct CertificateValidationContext {
     /// Certificate provider instance for fetching TLS certificates.
     ///
     /// Only one of `trusted_ca` and `ca_certificate_provider_instance` may be specified.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "13")]
     pub ca_certificate_provider_instance: ::core::option::Option<
         CertificateProviderPluginInstance,
@@ -539,7 +544,7 @@ pub struct CertificateValidationContext {
     pub match_subject_alt_names: ::prost::alloc::vec::Vec<
         super::super::super::super::r#type::matcher::v3::StringMatcher,
     >,
-    /// \\[\#not-implemented-hide:\\] Must present signed certificate time-stamp.
+    /// \[\#not-implemented-hide:\] Must present signed certificate time-stamp.
     #[prost(message, optional, tag = "6")]
     pub require_signed_certificate_timestamp: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
@@ -586,12 +591,10 @@ pub struct CertificateValidationContext {
     #[prost(bool, tag = "14")]
     pub only_verify_leaf_cert_crl: bool,
     /// Defines maximum depth of a certificate chain accepted in verification, the default limit is 100, though this can be system-dependent.
-    /// This number does not include the leaf, so a depth of 1 allows the leaf and one CA certificate. If a trusted issuer appears in the chain,
-    /// but in a depth larger than configured, the certificate validation will fail.
-    /// See `BoringSSL SSL_CTX_set_verify_depth <<https://commondatastorage.googleapis.com/chromium-boringssl-docs/ssl.h.html#SSL_CTX_set_verify_depth>`>
-    /// If you use OpenSSL, its behavior is different from BoringSSL, this will define a limit on the number of certificates between the end-entity and trust-anchor certificates.
-    /// Neither the end-entity nor the trust-anchor certificates count against depth.
-    /// See `OpenSSL SSL set_verify_depth <<https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_set_verify_depth.html>`\_.>
+    /// This number does not include the leaf but includes the trust anchor, so a depth of 1 allows the leaf and one CA certificate. If a trusted issuer
+    /// appears in the chain, but in a depth larger than configured, the certificate validation will fail.
+    /// This matches the semantics of `SSL_CTX_set_verify_depth` in OpenSSL 1.0.x and older versions of BoringSSL. It differs from `SSL_CTX_set_verify_depth`
+    /// in OpenSSL 1.1.x and newer versions of BoringSSL in that the trust anchor is included.
     /// Trusted issues are specified by setting :ref:`trusted_ca <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.trusted_ca>`
     #[prost(message, optional, tag = "16")]
     pub max_verify_depth: ::core::option::Option<
@@ -689,6 +692,7 @@ pub mod secret {
         GenericSecret(super::GenericSecret),
     }
 }
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpstreamTlsContext {
@@ -719,8 +723,17 @@ pub struct UpstreamTlsContext {
     pub max_session_keys: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
+    /// This field is used to control the enforcement, whereby the handshake will fail if the keyUsage extension
+    /// is present and incompatible with the TLS usage. Currently, the default value is false (i.e., enforcement off)
+    /// but it is expected to be changed to true by default in a future release.
+    /// `ssl.was_key_usage_invalid` in :ref:`listener metrics <config_listener_stats>` will be set for certificate
+    /// configurations that would fail if this option were set to true.
+    #[prost(message, optional, tag = "5")]
+    pub enforce_rsa_key_usage: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::BoolValue,
+    >,
 }
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownstreamTlsContext {
@@ -734,11 +747,15 @@ pub struct DownstreamTlsContext {
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
     /// If specified, Envoy will reject connections without a valid and matching SNI.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "3")]
     pub require_sni: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// If set to true, the TLS server will not maintain a session cache of TLS sessions. (This is
+    /// relevant only for TLSv1.2 and earlier.)
+    #[prost(bool, tag = "10")]
+    pub disable_stateful_session_resumption: bool,
     /// If specified, `session_timeout` will change the maximum lifetime (in seconds) of the TLS session.
     /// Currently this value is used as a hint for the `TLS session ticket lifetime (for TLSv1.2) <<https://tools.ietf.org/html/rfc5077#section-5.6>`\_.>
     /// Only seconds can be specified (fractional seconds are ignored).
@@ -896,20 +913,20 @@ pub struct CommonTlsContext {
     ///
     /// Only one of `tls_certificates`, `tls_certificate_sds_secret_configs`,
     /// and `tls_certificate_provider_instance` may be used.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "14")]
     pub tls_certificate_provider_instance: ::core::option::Option<
         CertificateProviderPluginInstance,
     >,
     /// Certificate provider for fetching TLS certificates.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[deprecated]
     #[prost(message, optional, tag = "9")]
     pub tls_certificate_certificate_provider: ::core::option::Option<
         common_tls_context::CertificateProvider,
     >,
     /// Certificate provider instance for fetching TLS certificates.
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[deprecated]
     #[prost(message, optional, tag = "11")]
     pub tls_certificate_certificate_provider_instance: ::core::option::Option<
@@ -952,7 +969,7 @@ pub mod common_tls_context {
     /// move it out of CommonTlsContext and into common.proto, similar to the existing
     /// CertificateProviderPluginInstance message.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CertificateProvider {
@@ -992,7 +1009,7 @@ pub mod common_tls_context {
     /// DEPRECATED: This message was moved outside of CommonTlsContext
     /// and now lives in common.proto.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CertificateProviderInstance {
@@ -1029,7 +1046,7 @@ pub mod common_tls_context {
         >,
         /// Certificate provider for fetching CA certs. This will populate the
         /// `default_validation_context.trusted_ca` field.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[deprecated]
         #[prost(message, optional, tag = "3")]
         pub validation_context_certificate_provider: ::core::option::Option<
@@ -1037,7 +1054,7 @@ pub mod common_tls_context {
         >,
         /// Certificate provider instance for fetching CA certs. This will populate the
         /// `default_validation_context.trusted_ca` field.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[deprecated]
         #[prost(message, optional, tag = "4")]
         pub validation_context_certificate_provider_instance: ::core::option::Option<
@@ -1064,11 +1081,11 @@ pub mod common_tls_context {
         #[prost(message, tag = "8")]
         CombinedValidationContext(CombinedCertificateValidationContext),
         /// Certificate provider for fetching validation context.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, tag = "10")]
         ValidationContextCertificateProvider(CertificateProvider),
         /// Certificate provider instance for fetching validation context.
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, tag = "12")]
         ValidationContextCertificateProviderInstance(CertificateProviderInstance),
     }

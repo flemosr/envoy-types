@@ -92,7 +92,7 @@ pub struct SemanticVersion {
 pub enum CodecClientType {
     Http1 = 0,
     Http2 = 1,
-    /// \\[\#not-implemented-hide:\\] QUIC implementation is not production ready yet. Use this enum with
+    /// \[\#not-implemented-hide:\] QUIC implementation is not production ready yet. Use this enum with
     /// caution to prevent accidental execution of QUIC code. I.e. `!= HTTP2` is no longer sufficient
     /// to distinguish HTTP1 and HTTP2 traffic.
     Http3 = 2,

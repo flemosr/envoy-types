@@ -1,4 +1,4 @@
-/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
+/// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -318,7 +318,7 @@ pub mod route_discovery_service_server {
     #[async_trait]
     pub trait RouteDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the StreamRoutes method.
-        type StreamRoutesStream: futures_core::Stream<
+        type StreamRoutesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DiscoveryResponse,
                     tonic::Status,
@@ -336,7 +336,7 @@ pub mod route_discovery_service_server {
             tonic::Status,
         >;
         /// Server streaming response type for the DeltaRoutes method.
-        type DeltaRoutesStream: futures_core::Stream<
+        type DeltaRoutesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DeltaDiscoveryResponse,
                     tonic::Status,
@@ -472,7 +472,8 @@ pub mod route_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_routes(request).await
+                                <T as RouteDiscoveryService>::stream_routes(&inner, request)
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -524,7 +525,8 @@ pub mod route_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).delta_routes(request).await
+                                <T as RouteDiscoveryService>::delta_routes(&inner, request)
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -573,7 +575,8 @@ pub mod route_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).fetch_routes(request).await
+                                <T as RouteDiscoveryService>::fetch_routes(&inner, request)
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -651,7 +654,7 @@ pub mod virtual_host_discovery_service_server {
     #[async_trait]
     pub trait VirtualHostDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the DeltaVirtualHosts method.
-        type DeltaVirtualHostsStream: futures_core::Stream<
+        type DeltaVirtualHostsStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DeltaDiscoveryResponse,
                     tonic::Status,
@@ -785,7 +788,11 @@ pub mod virtual_host_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).delta_virtual_hosts(request).await
+                                <T as VirtualHostDiscoveryService>::delta_virtual_hosts(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -855,7 +862,7 @@ pub mod virtual_host_discovery_service_server {
         const NAME: &'static str = "envoy.service.route.v3.VirtualHostDiscoveryService";
     }
 }
-/// \\[\#not-implemented-hide:\\] Not configuration. Workaround c++ protobuf issue with importing
+/// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1057,7 +1064,7 @@ pub mod scoped_routes_discovery_service_server {
     #[async_trait]
     pub trait ScopedRoutesDiscoveryService: Send + Sync + 'static {
         /// Server streaming response type for the StreamScopedRoutes method.
-        type StreamScopedRoutesStream: futures_core::Stream<
+        type StreamScopedRoutesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DiscoveryResponse,
                     tonic::Status,
@@ -1075,7 +1082,7 @@ pub mod scoped_routes_discovery_service_server {
             tonic::Status,
         >;
         /// Server streaming response type for the DeltaScopedRoutes method.
-        type DeltaScopedRoutesStream: futures_core::Stream<
+        type DeltaScopedRoutesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
                     super::super::super::discovery::v3::DeltaDiscoveryResponse,
                     tonic::Status,
@@ -1215,7 +1222,11 @@ pub mod scoped_routes_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).stream_scoped_routes(request).await
+                                <T as ScopedRoutesDiscoveryService>::stream_scoped_routes(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -1269,7 +1280,11 @@ pub mod scoped_routes_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).delta_scoped_routes(request).await
+                                <T as ScopedRoutesDiscoveryService>::delta_scoped_routes(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -1320,7 +1335,11 @@ pub mod scoped_routes_discovery_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).fetch_scoped_routes(request).await
+                                <T as ScopedRoutesDiscoveryService>::fetch_scoped_routes(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }

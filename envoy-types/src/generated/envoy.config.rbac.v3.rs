@@ -71,7 +71,7 @@ pub struct Rbac {
     /// Audit logging options that include the condition for audit logging to happen
     /// and audit logger configurations.
     ///
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "3")]
     pub audit_logging_options: ::core::option::Option<rbac::AuditLoggingOptions>,
 }
@@ -83,12 +83,12 @@ pub mod rbac {
         /// Condition for the audit logging to happen.
         /// If this condition is met, all the audit loggers configured here will be invoked.
         ///
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "audit_logging_options::AuditCondition", tag = "1")]
         pub audit_condition: i32,
         /// Configurations for RBAC-based authorization audit loggers.
         ///
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[prost(message, repeated, tag = "2")]
         pub logger_configs: ::prost::alloc::vec::Vec<
             audit_logging_options::AuditLoggerConfig,
@@ -96,7 +96,7 @@ pub mod rbac {
     }
     /// Nested message and enum types in `AuditLoggingOptions`.
     pub mod audit_logging_options {
-        /// \\[\#not-implemented-hide:\\]
+        /// \[\#not-implemented-hide:\]
         #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct AuditLoggerConfig {
@@ -232,7 +232,7 @@ pub struct Policy {
     pub condition: ::core::option::Option<
         super::super::super::super::google::api::expr::v1alpha1::Expr,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// An optional symbolic expression that has been successfully type checked.
     /// Only be used when condition is not used.
     #[prost(message, optional, tag = "4")]
@@ -241,11 +241,14 @@ pub struct Policy {
     >,
 }
 /// Permission defines an action (or actions) that a principal can take.
-/// \[\#next-free-field: 13\]
+/// \[\#next-free-field: 14\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Permission {
-    #[prost(oneof = "permission::Rule", tags = "1, 2, 3, 4, 10, 5, 6, 11, 7, 8, 9, 12")]
+    #[prost(
+        oneof = "permission::Rule",
+        tags = "1, 2, 3, 4, 10, 5, 6, 11, 7, 8, 9, 12, 13"
+    )]
     pub rule: ::core::option::Option<permission::Rule>,
 }
 /// Nested message and enum types in `Permission`.
@@ -323,6 +326,10 @@ pub mod permission {
         /// \[\#extension-category: envoy.rbac.matchers\]
         #[prost(message, tag = "12")]
         Matcher(super::super::super::core::v3::TypedExtensionConfig),
+        /// URI template path matching.
+        /// \[\#extension-category: envoy.path.match\]
+        #[prost(message, tag = "13")]
+        UriTemplate(super::super::super::core::v3::TypedExtensionConfig),
     }
 }
 /// Principal defines an identity or a group of identities for a downstream

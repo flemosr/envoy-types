@@ -1,11 +1,11 @@
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ZooKeeperProxy {
     /// The human readable prefix to use when emitting :ref:`statistics <config_network_filters_zookeeper_proxy_stats>`.
     #[prost(string, tag = "1")]
     pub stat_prefix: ::prost::alloc::string::String,
-    /// \\[\#not-implemented-hide:\\] The optional path to use for writing ZooKeeper access logs.
+    /// \[\#not-implemented-hide:\] The optional path to use for writing ZooKeeper access logs.
     /// If the access log field is empty, access logs will not be written.
     #[prost(string, tag = "2")]
     pub access_log: ::prost::alloc::string::String,
@@ -21,7 +21,7 @@ pub struct ZooKeeperProxy {
     pub max_packet_bytes: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Whether to emit latency threshold metrics. If not set, defaults to false.
+    /// Whether to emit latency threshold metrics. If not set, it defaults to false.
     /// If false, setting `default_latency_threshold` and `latency_threshold_overrides` will not have effect.
     #[prost(bool, tag = "4")]
     pub enable_latency_threshold_metrics: bool,
@@ -40,6 +40,15 @@ pub struct ZooKeeperProxy {
     /// Specifying latency threshold overrides multiple times for one opcode is not allowed.
     #[prost(message, repeated, tag = "6")]
     pub latency_threshold_overrides: ::prost::alloc::vec::Vec<LatencyThresholdOverride>,
+    /// Whether to emit per opcode request bytes metrics. If not set, it defaults to false.
+    #[prost(bool, tag = "7")]
+    pub enable_per_opcode_request_bytes_metrics: bool,
+    /// Whether to emit per opcode response bytes metrics. If not set, it defaults to false.
+    #[prost(bool, tag = "8")]
+    pub enable_per_opcode_response_bytes_metrics: bool,
+    /// Whether to emit per opcode decoder error metrics. If not set, it defaults to false.
+    #[prost(bool, tag = "9")]
+    pub enable_per_opcode_decoder_error_metrics: bool,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -96,6 +105,7 @@ pub mod latency_threshold_override {
         GetEphemerals = 23,
         GetAllChildrenNumber = 24,
         SetWatches2 = 25,
+        AddWatch = 26,
     }
     impl Opcode {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -130,6 +140,7 @@ pub mod latency_threshold_override {
                 Opcode::GetEphemerals => "GetEphemerals",
                 Opcode::GetAllChildrenNumber => "GetAllChildrenNumber",
                 Opcode::SetWatches2 => "SetWatches2",
+                Opcode::AddWatch => "AddWatch",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -161,6 +172,7 @@ pub mod latency_threshold_override {
                 "GetEphemerals" => Some(Self::GetEphemerals),
                 "GetAllChildrenNumber" => Some(Self::GetAllChildrenNumber),
                 "SetWatches2" => Some(Self::SetWatches2),
+                "AddWatch" => Some(Self::AddWatch),
                 _ => None,
             }
         }

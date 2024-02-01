@@ -36,13 +36,13 @@ pub struct CacheConfig {
     pub allowed_vary_headers: ::prost::alloc::vec::Vec<
         super::super::super::super::super::r#type::matcher::v3::StringMatcher,
     >,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// \<TODO(toddmgreer) implement key customization>
     ///
     /// Modifies cache key creation by restricting which parts of the URL are included.
     #[prost(message, optional, tag = "3")]
     pub key_creator_params: ::core::option::Option<cache_config::KeyCreatorParams>,
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// \<TODO(toddmgreer) implement size limit>
     ///
     /// Max body size the cache filter will insert into a cache. 0 means unlimited (though the cache
@@ -52,7 +52,7 @@ pub struct CacheConfig {
 }
 /// Nested message and enum types in `CacheConfig`.
 pub mod cache_config {
-    /// \\[\#not-implemented-hide:\\]
+    /// \[\#not-implemented-hide:\]
     /// Modifies cache key creation by restricting which parts of the URL are included.
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]

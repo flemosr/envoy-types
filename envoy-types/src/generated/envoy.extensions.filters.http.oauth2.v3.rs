@@ -55,7 +55,7 @@ pub mod o_auth2_credentials {
 }
 /// OAuth config
 ///
-/// \[\#next-free-field: 12\]
+/// \[\#next-free-field: 14\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
@@ -108,6 +108,21 @@ pub struct OAuth2Config {
     /// RFC <https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1>
     #[prost(enumeration = "o_auth2_config::AuthType", tag = "11")]
     pub auth_type: i32,
+    /// If set to true, allows automatic access token refresh using the associated refresh token (see
+    /// `RFC 6749 section 6 <<https://datatracker.ietf.org/doc/html/rfc6749#section-6>`\_>), provided that the OAuth server supports that.
+    /// Default value is false.
+    #[prost(message, optional, tag = "12")]
+    pub use_refresh_token: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// The default lifetime in seconds of the access token, if omitted by the authorization server.
+    ///
+    /// If this value is not set, it will default to `0s`. In this case, the expiry must be set by
+    /// the authorization server or the OAuth flow will fail.
+    #[prost(message, optional, tag = "13")]
+    pub default_expires_in: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
 }
 /// Nested message and enum types in `OAuth2Config`.
 pub mod o_auth2_config {
