@@ -1,6 +1,6 @@
 /*!
 Collection of protobuf types and other assets to work with the [Envoy Proxy]
-through Rust services.
+through Rust gRPC services.
 
 Among other use cases, this crate can be used to implement an
 [Envoy External Authorization] (ExtAuthz) gRPC Server written in Rust.
@@ -74,11 +74,17 @@ impl Authorization for MyServer {
 // }
 ```
 
+You can check the currently supported version of [`tonic`] at this crate's
+[`Cargo.toml`] file. If you want to work with a previous version, consider
+using a [previous version of `envoy-types`].
+
 [Envoy Proxy]: https://www.envoyproxy.io
 [Envoy External Authorization]: https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter
 [protoc-install]: https://grpc.io/docs/protoc-installation/
 [`tonic`]: https://github.com/hyperium/tonic
 [examples]: https://github.com/flemosr/envoy-types/tree/main/examples
+[`Cargo.toml`]: https://github.com/flemosr/envoy-types/blob/main/envoy-types/Cargo.toml
+[previous version of `envoy-types`]: https://crates.io/crates/envoy-types/versions
 */
 
 #![warn(missing_debug_implementations, rust_2018_idioms)]
