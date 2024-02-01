@@ -176,6 +176,7 @@ pub mod v3 {
             header: Some(HeaderValue {
                 key: key.into(),
                 value: value.into(),
+                raw_value: Vec::new(), // Only one of `value` or `raw_value` can be set.
             }),
             append: None, // Deprecated field
             append_action: append_action
