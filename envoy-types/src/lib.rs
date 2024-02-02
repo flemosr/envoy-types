@@ -95,11 +95,11 @@ mod generated;
 /// Compiled protobuf types
 pub mod pb {
     pub use crate::generated::*;
+    pub const FILE_DESCRIPTOR_SET: &[u8] =  include_bytes!("generated/types.bin");
 }
 
 /// Convenience mod for `ext_authz` server implementation
 pub mod ext_authz;
-
 mod sealed {
     pub trait Sealed {}
 }
