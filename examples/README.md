@@ -26,6 +26,14 @@ directly:
 $ cargo run --example authorization-server-pb-only
 ```
 
+Authorization Server with reflection enabled:
+```bash
+$ cargo run --example authorization-server-reflection
+
+# Use grpcurl to query services exposed by the server
+grpcurl -vv -plaintext 'localhost:50051' list
+```
+
 For a more complete example, including the connection to an actual `envoy`
 container, check the [envoy-extauthz-rust] repo.
 
