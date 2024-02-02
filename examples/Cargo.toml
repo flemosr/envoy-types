@@ -18,7 +18,12 @@ path = "src/ext_authz/authorization_server_full.rs"
 name = "authorization-server-pb-only"
 path = "src/ext_authz/authorization_server_pb_only.rs"
 
+[[example]]
+name = "authorization-server-reflection"
+path = "src/ext_authz/authorization_server_reflection.rs"
+
 [dependencies]
 envoy-types = { path = "../envoy-types" }
 tokio = { version = "1.35.1", features = ["macros", "rt-multi-thread"] }
 tonic = "0.10.2"
+tonic-reflection = "0.10.2"
