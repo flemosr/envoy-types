@@ -20,5 +20,5 @@ path = "src/ext_authz/authorization_server_pb_only.rs"
 
 [dependencies]
 envoy-types = { path = "../envoy-types" }
-tokio = { version = "1.35.1", features = ["macros", "rt-multi-thread"] }
-tonic = "0.10.2"
+tokio = { version = "1.37", features = ["macros", "rt-multi-thread"] }
+tonic = "0.11"
