@@ -456,6 +456,11 @@ pub struct ZipkinConfig {
     /// If this is set to true, then the
     /// :ref:`start_child_span of router <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>`
     /// SHOULD be set to true also to ensure the correctness of trace chain.
+    ///
+    /// Both this field and `start_child_span` are deprecated by the
+    /// :ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`.
+    /// Please use that `spawn_upstream_span` field to control the span creation.
+    #[deprecated]
     #[prost(bool, tag = "7")]
     pub split_spans_for_request: bool,
 }

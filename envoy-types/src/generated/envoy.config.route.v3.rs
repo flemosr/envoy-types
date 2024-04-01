@@ -709,7 +709,7 @@ pub mod route_match {
 /// :ref:`CorsPolicy in filter extension <envoy_v3_api_msg_extensions.filters.http.cors.v3.CorsPolicy>`
 /// as as alternative.
 ///
-/// \[\#next-free-field: 13\]
+/// \[\#next-free-field: 14\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CorsPolicy {
@@ -755,6 +755,12 @@ pub struct CorsPolicy {
     /// More details refer to <https://developer.chrome.com/blog/private-network-access-preflight.>
     #[prost(message, optional, tag = "12")]
     pub allow_private_network_access: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Specifies if preflight requests not matching the configured allowed origin should be forwarded
+    /// to the upstream. Default is true.
+    #[prost(message, optional, tag = "13")]
+    pub forward_not_matching_preflights: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
     #[prost(oneof = "cors_policy::EnabledSpecifier", tags = "9")]
@@ -869,7 +875,6 @@ pub struct RouteAction {
     /// :ref:`host_rewrite_path_regex <envoy_v3_api_field_config.route.v3.RouteAction.host_rewrite_path_regex>`)
     /// causes the original value of the host header, if any, to be appended to the
     /// :ref:`config_http_conn_man_headers_x-forwarded-host` HTTP header if it is different to the last value appended.
-    /// This can be disabled by setting the runtime guard `envoy_reloadable_features_append_xfh_idempotent` to false.
     #[prost(bool, tag = "38")]
     pub append_x_forwarded_host: bool,
     /// Specifies the upstream timeout for the route. If not specified, the default is 15s. This

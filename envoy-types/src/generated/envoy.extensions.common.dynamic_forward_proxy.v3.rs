@@ -46,7 +46,7 @@ pub struct DnsCacheConfig {
     >,
     /// The minimum rate that DNS resolution will occur. Per `dns_refresh_rate`, once a host is
     /// resolved, the DNS TTL will be used, with a minimum set by `dns_min_refresh_rate`.
-    /// `dns_min_refresh_rate` defaults to 5s and must also be >= 5s.
+    /// `dns_min_refresh_rate` defaults to 5s and must also be >= 1s.
     #[prost(message, optional, tag = "14")]
     pub dns_min_refresh_rate: ::core::option::Option<
         super::super::super::super::super::google::protobuf::Duration,

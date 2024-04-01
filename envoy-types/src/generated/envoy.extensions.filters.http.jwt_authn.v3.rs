@@ -30,7 +30,7 @@
 ///      seconds: 300
 /// ```
 ///
-/// \[\#next-free-field: 19\]
+/// \[\#next-free-field: 22\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtProvider {
@@ -68,6 +68,55 @@ pub struct JwtProvider {
     /// ```
     #[prost(string, repeated, tag = "2")]
     pub audiences: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Restrict the `subjects <<https://tools.ietf.org/html/rfc7519#section-4.1.2>`\_>
+    /// that the JwtProvider can assert. For instance, this could implement JWT-SVID
+    /// `subject restrictions <<https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md#31-subject>`\_.>
+    /// If not specified, will not check subjects in the token.
+    ///
+    /// Example:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// ```text
+    /// subjects:
+    ///    prefix: spiffe://spiffe.example.com/
+    /// ```
+    #[prost(message, optional, tag = "19")]
+    pub subjects: ::core::option::Option<
+        super::super::super::super::super::r#type::matcher::v3::StringMatcher,
+    >,
+    /// Requires that the credential contains an `expiration <<https://tools.ietf.org/html/rfc7519#section-4.1.4>`*.>
+    /// For instance, this could implement JWT-SVID
+    /// `expiration restrictions <<https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md#33-expiration-time>`*.>
+    /// Unlike `max_lifetime`, this only requires that expiration is present, where `max_lifetime` also checks the value.
+    ///
+    /// Example:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// ```text
+    /// require_expiration: true
+    /// ```
+    #[prost(bool, tag = "20")]
+    pub require_expiration: bool,
+    /// Restrict the maximum remaining lifetime of a credential from the JwtProvider. Credential lifetime
+    /// is the difference between the current time and the expiration of the credential. For instance,
+    /// the following example will reject credentials that have a lifetime longer than 24 hours. If not set,
+    /// expiration checking still occurs, but there is no limit on credential lifetime. If set, takes precedence
+    /// over `require_expiration`.
+    ///
+    /// Example:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// ```text
+    /// max_lifetime:
+    ///    seconds: 86400
+    /// ```
+    #[prost(message, optional, tag = "21")]
+    pub max_lifetime: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
     /// If false, the JWT is removed in the request after a success verification. If true, the JWT is
     /// not removed in the request. Default value is false.
     /// caveat: only works for from_header & has no effect for JWTs extracted through from_params & from_cookies.
@@ -235,6 +284,7 @@ pub struct JwtProvider {
     /// Add JWT claim to HTTP Header
     /// Specify the claim name you want to copy in which HTTP header. For examples, following config:
     /// The claim must be of type; string, int, double, bool. Array type claims are not supported
+    ///
     /// .. code-block:: yaml
     ///
     /// claim_to_headers:

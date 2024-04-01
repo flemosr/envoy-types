@@ -53,8 +53,12 @@ pub struct AttributeContext {
         super::super::super::config::core::v3::Metadata,
     >,
     /// TLS session details of the underlying connection.
-    /// This is not populated by default and will be populated if ext_authz filter's
-    /// :ref:`include_tls_session <config_http_filters_ext_authz>` is set to true.
+    /// This is not populated by default and will be populated only if the ext_authz filter has
+    /// been specifically configured to include this information.
+    /// For HTTP ext_authz, that requires :ref:`include_tls_session <config_http_filters_ext_authz>`
+    /// to be set to true.
+    /// For network ext_authz, that requires :ref:`include_tls_session <config_network_filters_ext_authz>`
+    /// to be set to true.
     #[prost(message, optional, tag = "12")]
     pub tls_session: ::core::option::Option<attribute_context::TlsSession>,
 }
@@ -120,7 +124,7 @@ pub mod attribute_context {
     }
     /// This message defines attributes for an HTTP request.
     /// HTTP/1.x, HTTP/2, gRPC are all considered as HTTP requests.
-    /// \[\#next-free-field: 13\]
+    /// \[\#next-free-field: 14\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct HttpRequest {
@@ -136,10 +140,34 @@ pub mod attribute_context {
         /// The HTTP request headers. If multiple headers share the same key, they
         /// must be merged according to the HTTP spec. All header keys must be
         /// lower-cased, because HTTP header keys are case-insensitive.
+        /// Header value is encoded as UTF-8 string. Non-UTF-8 characters will be replaced by "!".
+        /// This field will not be set if
+        /// :ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
+        /// is set to true.
         #[prost(map = "string, string", tag = "3")]
         pub headers: ::std::collections::HashMap<
             ::prost::alloc::string::String,
             ::prost::alloc::string::String,
+        >,
+        /// A list of the raw HTTP request headers. This is used instead of
+        /// :ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>` when
+        /// :ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
+        /// is set to true.
+        ///
+        /// Note that this is not actually a map type. `header_map` contains a single repeated field
+        /// `headers`.
+        ///
+        /// Here, only the `key` and `raw_value` fields will be populated for each HeaderValue, and
+        /// that is only when
+        /// :ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
+        /// is set to true.
+        ///
+        /// Also, unlike the
+        /// :ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>`
+        /// field, headers with the same key are not combined into a single comma separated header.
+        #[prost(message, optional, tag = "13")]
+        pub header_map: ::core::option::Option<
+            super::super::super::super::config::core::v3::HeaderMap,
         >,
         /// The request target, as it appears in the first line of the HTTP request. This includes
         /// the URL path and query-string. No decoding is performed.

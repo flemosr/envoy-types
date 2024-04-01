@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 23\]
+/// \[\#next-free-field: 24\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {
@@ -188,6 +188,28 @@ pub struct ExtAuthz {
     pub charge_cluster_response_stats: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// Whether to encode the raw headers (i.e. unsanitized values & unconcatenated multi-line headers)
+    /// in authentication request. Works with both HTTP and GRPC clients.
+    ///
+    /// When this is set to true, header values are not sanitized. Headers with the same key will also
+    /// not be combined into a single, comma-separated header.
+    /// Requests to GRPC services will populate the field
+    /// :ref:`header_map<envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.header_map>`.
+    /// Requests to HTTP services will be constructed with the unsanitized header values and preserved
+    /// multi-line headers with the same key.
+    ///
+    /// If this field is set to false, header values will be sanitized, with any non-UTF-8-compliant
+    /// bytes replaced with '!'. Headers with the same key will have their values concatenated into a
+    /// single comma-separated header value.
+    /// Requests to GRPC services will populate the field
+    /// :ref:`headers<envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>`.
+    /// Requests to HTTP services will have their header values sanitized and will not preserve
+    /// multi-line headers with the same key.
+    ///
+    /// It's recommended you set this to true unless you already rely on the old behavior. False is the
+    /// default only for backwards compatibility.
+    #[prost(bool, tag = "23")]
+    pub encode_raw_headers: bool,
     /// External authorization service configuration.
     #[prost(oneof = "ext_authz::Services", tags = "1, 3")]
     pub services: ::core::option::Option<ext_authz::Services>,

@@ -144,6 +144,11 @@ pub mod envoy {
                     }
                 }
             }
+            pub mod fluentd {
+                pub mod v3 {
+                    include!("envoy.extensions.access_loggers.fluentd.v3.rs");
+                }
+            }
             pub mod grpc {
                 pub mod v3 {
                     include!("envoy.extensions.access_loggers.grpc.v3.rs");
@@ -1020,6 +1025,18 @@ pub mod envoy {
                 }
             }
         }
+        pub mod outlier_detection_monitors {
+            pub mod common {
+                pub mod v3 {
+                    include!("envoy.extensions.outlier_detection_monitors.common.v3.rs");
+                }
+            }
+            pub mod consecutive_errors {
+                pub mod v3 {
+                    include!("envoy.extensions.outlier_detection_monitors.consecutive_errors.v3.rs");
+                }
+            }
+        }
         pub mod path {
             pub mod r#match {
                 pub mod uri_template {
@@ -1159,6 +1176,13 @@ pub mod envoy {
             pub mod wasm {
                 pub mod v3 {
                     include!("envoy.extensions.stat_sinks.wasm.v3.rs");
+                }
+            }
+        }
+        pub mod string_matcher {
+            pub mod lua {
+                pub mod v3 {
+                    include!("envoy.extensions.string_matcher.lua.v3.rs");
                 }
             }
         }

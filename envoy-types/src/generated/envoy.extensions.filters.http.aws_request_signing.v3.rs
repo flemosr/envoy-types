@@ -1,5 +1,5 @@
 /// Top level configuration for the AWS request signing filter.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AwsRequestSigning {
@@ -9,6 +9,9 @@ pub struct AwsRequestSigning {
     /// Example: s3
     #[prost(string, tag = "1")]
     pub service_name: ::prost::alloc::string::String,
+    /// Optional region string. If region is not provided, the region will be retrieved from the environment
+    /// or AWS configuration files. See :ref:`config_http_filters_aws_request_signing_region` for more details.
+    ///
     /// When signing_algorithm is set to `AWS_SIGV4` the region is a standard AWS `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`\_> string for the service
     /// hosting the HTTP endpoint.
     ///
@@ -21,7 +24,7 @@ pub struct AwsRequestSigning {
     ///
     /// Example: '\*'
     ///
-    /// By configuring a region set, a sigv4a signed request can be sent to multiple regions, rather than being
+    /// By configuring a region set, a SigV4A signed request can be sent to multiple regions, rather than being
     /// valid for only a single region destination.
     #[prost(string, tag = "2")]
     pub region: ::prost::alloc::string::String,
@@ -57,9 +60,27 @@ pub struct AwsRequestSigning {
     /// Optional Signing algorithm specifier, either `AWS_SIGV4` or `AWS_SIGV4A`, defaulting to `AWS_SIGV4`.
     #[prost(enumeration = "aws_request_signing::SigningAlgorithm", tag = "6")]
     pub signing_algorithm: i32,
+    /// If set, use the query string to store output of SigV4 or SigV4A calculation, rather than HTTP headers. The `Authorization` header will not be modified if `query_string`
+    /// is configured.
+    ///
+    /// Example:
+    /// query_string: {}
+    #[prost(message, optional, tag = "7")]
+    pub query_string: ::core::option::Option<aws_request_signing::QueryString>,
 }
 /// Nested message and enum types in `AwsRequestSigning`.
 pub mod aws_request_signing {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct QueryString {
+        /// Optional expiration time for the query string parameters. As query string parameter based requests are replayable, in effect representing
+        /// an API call that has already been authenticated, it is recommended to keep this expiration time as short as feasible.
+        /// This value will default to 5 seconds and has a maximum value of 3600 seconds (1 hour).
+        #[prost(message, optional, tag = "1")]
+        pub expiration_time: ::core::option::Option<
+            super::super::super::super::super::super::super::google::protobuf::Duration,
+        >,
+    }
     #[derive(
         Clone,
         Copy,

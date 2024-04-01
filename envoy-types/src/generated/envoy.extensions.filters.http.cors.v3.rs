@@ -9,7 +9,7 @@
 pub struct Cors {}
 /// Per route configuration for the CORS filter. This configuration should be configured in the `RouteConfiguration` as `typed_per_filter_config` at some level to
 /// make the filter work.
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CorsPolicy {
@@ -66,6 +66,12 @@ pub struct CorsPolicy {
     /// More details refer to <https://developer.chrome.com/blog/private-network-access-preflight.>
     #[prost(message, optional, tag = "9")]
     pub allow_private_network_access: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Specifies if preflight requests not matching the configured allowed origin should be forwarded
+    /// to the upstream. Default is true.
+    #[prost(message, optional, tag = "10")]
+    pub forward_not_matching_preflights: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }

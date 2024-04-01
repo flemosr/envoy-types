@@ -89,7 +89,7 @@ pub mod json_to_metadata {
         /// The value in the KeyValuePair must be set.
         #[prost(message, optional, tag = "3")]
         pub on_missing: ::core::option::Option<KeyValuePair>,
-        /// If the body is too large or fail to parse, apply this metadata KeyValuePair.
+        /// If the body is too large or fail to parse or content-type is mismatched, apply this metadata KeyValuePair.
         ///
         /// The value in the KeyValuePair must be set.
         #[prost(message, optional, tag = "4")]
@@ -114,6 +114,12 @@ pub mod json_to_metadata {
         /// Default to false.
         #[prost(bool, tag = "3")]
         pub allow_empty_content_type: bool,
+        /// Allowed content-type by regex match for json to metadata transformation.
+        /// This can be used in parallel with `allow_content_types`.
+        #[prost(message, optional, tag = "4")]
+        pub allow_content_types_regex: ::core::option::Option<
+            super::super::super::super::super::super::r#type::matcher::v3::RegexMatcher,
+        >,
     }
     #[derive(
         Clone,

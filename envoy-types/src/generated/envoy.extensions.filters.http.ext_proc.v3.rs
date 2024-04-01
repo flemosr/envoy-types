@@ -409,7 +409,7 @@ pub mod ext_proc_per_route {
     }
 }
 /// Overrides that may be set on a per-route basis
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtProcOverrides {
@@ -442,4 +442,12 @@ pub struct ExtProcOverrides {
     /// most-specific config contains the correct final overrides.
     #[prost(message, optional, tag = "6")]
     pub metadata_options: ::core::option::Option<MetadataOptions>,
+    /// Additional metadata to include into streams initiated to the ext_proc gRPC
+    /// service. This can be used for scenarios in which additional ad hoc
+    /// authorization headers (e.g. `x-foo-bar: baz-key`) are to be injected or
+    /// when a route needs to partially override inherited metadata.
+    #[prost(message, repeated, tag = "7")]
+    pub grpc_initial_metadata: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::core::v3::HeaderValue,
+    >,
 }

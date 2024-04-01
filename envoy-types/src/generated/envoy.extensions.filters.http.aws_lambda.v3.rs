@@ -13,6 +13,19 @@ pub struct Config {
     /// Determines the way to invoke the Lambda function.
     #[prost(enumeration = "config::InvocationMode", tag = "3")]
     pub invocation_mode: i32,
+    /// Indicates that before signing headers, the host header will be swapped with
+    /// this value. If not set or empty, the original host header value
+    /// will be used and no rewrite will happen.
+    ///
+    /// Note: this rewrite affects both signing and host header forwarding. However, this
+    /// option shouldn't be used with
+    /// :ref:`HCM host rewrite <envoy_v3_api_field_config.route.v3.RouteAction.host_rewrite_literal>` given that the
+    /// value set here would be used for signing whereas the value set in the HCM would be used
+    /// for host header forwarding which is not the desired outcome.
+    /// Changing the value of the host header can result in a different route to be selected
+    /// if an HTTP filter after AWS lambda re-evaluates the route (clears route cache).
+    #[prost(string, tag = "4")]
+    pub host_rewrite: ::prost::alloc::string::String,
 }
 /// Nested message and enum types in `Config`.
 pub mod config {

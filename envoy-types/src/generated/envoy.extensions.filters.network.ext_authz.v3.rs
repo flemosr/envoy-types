@@ -2,7 +2,7 @@
 /// gRPC Authorization API defined by
 /// :ref:`CheckRequest <envoy_v3_api_msg_service.auth.v3.CheckRequest>`.
 /// A failed check will cause this filter to close the TCP connection.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {
@@ -45,4 +45,10 @@ pub struct ExtAuthz {
     /// The labels will be read from :ref:`metadata<envoy_v3_api_msg_config.core.v3.Node>` with the specified key.
     #[prost(string, tag = "7")]
     pub bootstrap_metadata_labels_key: ::prost::alloc::string::String,
+    /// Specifies if the TLS session level details like SNI are sent to the external service.
+    ///
+    /// When this field is true, Envoy will include the SNI name used for TLSClientHello, if available, in the
+    /// :ref:`tls_session<envoy_v3_api_field_service.auth.v3.AttributeContext.tls_session>`.
+    #[prost(bool, tag = "8")]
+    pub include_tls_session: bool,
 }

@@ -18,4 +18,10 @@ pub struct BasicAuth {
     pub users: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
+    /// This field specifies the header name to forward a successfully authenticated user to
+    /// the backend. The header will be added to the request with the username as the value.
+    ///
+    /// If it is not specified, the username will not be forwarded.
+    #[prost(string, tag = "2")]
+    pub forward_username_header: ::prost::alloc::string::String,
 }

@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 12\]
+/// \[\#next-free-field: 13\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheckEvent {
@@ -23,7 +23,7 @@ pub struct HealthCheckEvent {
     pub locality: ::core::option::Option<
         super::super::super::config::core::v3::Locality,
     >,
-    #[prost(oneof = "health_check_event::Event", tags = "4, 5, 7, 8, 9")]
+    #[prost(oneof = "health_check_event::Event", tags = "4, 5, 12, 7, 8, 9")]
     pub event: ::core::option::Option<health_check_event::Event>,
 }
 /// Nested message and enum types in `HealthCheckEvent`.
@@ -37,6 +37,12 @@ pub mod health_check_event {
         /// Host addition.
         #[prost(message, tag = "5")]
         AddHealthyEvent(super::HealthCheckAddHealthy),
+        /// A health check was successful. Note: a host will be considered healthy either if it is
+        /// the first ever health check, or if the healthy threshold is reached. This kind of event
+        /// indicate that a health check was successful, but does not indicates that the host is
+        /// considered healthy. A host is considered healthy if HealthCheckAddHealthy kind of event is sent.
+        #[prost(message, tag = "12")]
+        SuccessfulHealthCheckEvent(super::HealthCheckSuccessful),
         /// Host failure.
         #[prost(message, tag = "7")]
         HealthCheckFailureEvent(super::HealthCheckFailure),
@@ -64,6 +70,9 @@ pub struct HealthCheckAddHealthy {
     #[prost(bool, tag = "1")]
     pub first_check: bool,
 }
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct HealthCheckSuccessful {}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheckFailure {

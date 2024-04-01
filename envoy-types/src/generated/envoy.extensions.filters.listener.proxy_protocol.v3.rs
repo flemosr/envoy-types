@@ -33,6 +33,25 @@ pub struct ProxyProtocol {
     pub pass_through_tlvs: ::core::option::Option<
         super::super::super::super::super::config::core::v3::ProxyProtocolPassThroughTlVs,
     >,
+    /// The PROXY protocol versions that won't be matched. Useful to limit the scope and attack surface of the filter.
+    ///
+    /// When the filter receives PROXY protocol data that is disallowed, it will reject the connection.
+    /// By default, the filter will match all PROXY protocol versions.
+    /// See <https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt> for details.
+    ///
+    /// .. attention::
+    ///
+    /// When used in conjunction with the :ref:`allow_requests_without_proxy_protocol <envoy_v3_api_field_extensions.filters.listener.proxy_protocol.v3.ProxyProtocol.allow_requests_without_proxy_protocol>`,
+    /// the filter will not attempt to match signatures for the disallowed versions.
+    /// For example, when `disallowed_versions=V2`, `allow_requests_without_proxy_protocol=true`,
+    /// and an incoming request matches the V2 signature, the filter will allow the request through without any modification.
+    /// The filter treats this request as if it did not have any PROXY protocol information.
+    #[prost(
+        enumeration = "super::super::super::super::super::config::core::v3::proxy_protocol_config::Version",
+        repeated,
+        tag = "4"
+    )]
+    pub disallowed_versions: ::prost::alloc::vec::Vec<i32>,
 }
 /// Nested message and enum types in `ProxyProtocol`.
 pub mod proxy_protocol {

@@ -38,7 +38,7 @@ pub struct VmConfig {
     #[prost(string, tag = "1")]
     pub vm_id: ::prost::alloc::string::String,
     /// The Wasm runtime type, defaults to the first available Wasm engine used at Envoy build-time.
-    /// The priority to search for the available engine is: v8 -> wasmtime -> wamr -> wavm.
+    /// The priority to search for the available engine is: v8 -> wasmtime -> wamr.
     /// Available Wasm runtime types are registered as extensions. The following runtimes are included
     /// in Envoy code base:
     ///
@@ -54,11 +54,6 @@ pub struct VmConfig {
     /// .. \_extension_envoy.wasm.runtime.wamr:
     ///
     /// **envoy.wasm.runtime.wamr**: `WAMR <<https://github.com/bytecodealliance/wasm-micro-runtime/>`\_-based> WebAssembly runtime.
-    /// This runtime is not enabled in the official build.
-    ///
-    /// .. \_extension_envoy.wasm.runtime.wavm:
-    ///
-    /// **envoy.wasm.runtime.wavm**: `WAVM <<https://wavm.github.io/>`\_-based> WebAssembly runtime.
     /// This runtime is not enabled in the official build.
     ///
     /// .. \_extension_envoy.wasm.runtime.wasmtime:

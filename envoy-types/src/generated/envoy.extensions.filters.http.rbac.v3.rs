@@ -1,5 +1,5 @@
 /// RBAC filter config.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rbac {
@@ -11,6 +11,11 @@ pub struct Rbac {
     pub rules: ::core::option::Option<
         super::super::super::super::super::config::rbac::v3::Rbac,
     >,
+    /// If specified, rules will emit stats with the given prefix.
+    /// This is useful to distinguish the stat when there are more than 1 RBAC filter configured with
+    /// rules.
+    #[prost(string, tag = "6")]
+    pub rules_stat_prefix: ::prost::alloc::string::String,
     /// The match tree to use when resolving RBAC action for incoming requests. Requests do not
     /// match any matcher will be denied.
     /// If absent, no enforcing RBAC matcher will be applied.

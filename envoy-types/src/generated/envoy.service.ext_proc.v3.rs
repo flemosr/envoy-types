@@ -1,6 +1,6 @@
 /// This represents the different types of messages that Envoy can send
 /// to an external processing server.
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingRequest {
@@ -20,6 +20,15 @@ pub struct ProcessingRequest {
     #[prost(message, optional, tag = "8")]
     pub metadata_context: ::core::option::Option<
         super::super::super::config::core::v3::Metadata,
+    >,
+    /// The values of properties selected by the `request_attributes`
+    /// or `response_attributes` list in the configuration. Each entry
+    /// in the list is populated from the standard
+    /// :ref:`attributes <arch_overview_attributes>` supported across Envoy.
+    #[prost(map = "string, message", tag = "9")]
+    pub attributes: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        super::super::super::super::google::protobuf::Struct,
     >,
     /// Each request message will include one of the following sub-messages. Which
     /// ones are set for a particular HTTP request/response depend on the
@@ -172,11 +181,9 @@ pub struct HttpHeaders {
         super::super::super::config::core::v3::HeaderMap,
     >,
     /// \[\#not-implemented-hide:\]
-    /// The values of properties selected by the `request_attributes`
-    /// or `response_attributes` list in the configuration. Each entry
-    /// in the list is populated
-    /// from the standard :ref:`attributes <arch_overview_attributes>`
-    /// supported across Envoy.
+    /// This field is deprecated and not implemented. Attributes will be sent in
+    /// the  top-level :ref:`attributes <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.attributes`
+    /// field.
     #[prost(map = "string, message", tag = "2")]
     pub attributes: ::std::collections::HashMap<
         ::prost::alloc::string::String,

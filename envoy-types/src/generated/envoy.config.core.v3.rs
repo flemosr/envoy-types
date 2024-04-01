@@ -838,6 +838,7 @@ pub mod data_source {
     }
 }
 /// The message specifies the retry policy of remote data source when fetching fails.
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RetryPolicy {
@@ -852,6 +853,57 @@ pub struct RetryPolicy {
     pub num_retries: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
+    /// For details, see :ref:`retry_on <envoy_v3_api_field_config.route.v3.RetryPolicy.retry_on>`.
+    #[prost(string, tag = "3")]
+    pub retry_on: ::prost::alloc::string::String,
+    /// For details, see :ref:`retry_priority <envoy_v3_api_field_config.route.v3.RetryPolicy.retry_priority>`.
+    #[prost(message, optional, tag = "4")]
+    pub retry_priority: ::core::option::Option<retry_policy::RetryPriority>,
+    /// For details, see :ref:`RetryHostPredicate <envoy_v3_api_field_config.route.v3.RetryPolicy.retry_host_predicate>`.
+    #[prost(message, repeated, tag = "5")]
+    pub retry_host_predicate: ::prost::alloc::vec::Vec<retry_policy::RetryHostPredicate>,
+    /// For details, see :ref:`host_selection_retry_max_attempts <envoy_v3_api_field_config.route.v3.RetryPolicy.host_selection_retry_max_attempts>`.
+    #[prost(int64, tag = "6")]
+    pub host_selection_retry_max_attempts: i64,
+}
+/// Nested message and enum types in `RetryPolicy`.
+pub mod retry_policy {
+    /// See :ref:`RetryPriority <envoy_v3_api_field_config.route.v3.RetryPolicy.retry_priority>`.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct RetryPriority {
+        #[prost(string, tag = "1")]
+        pub name: ::prost::alloc::string::String,
+        #[prost(oneof = "retry_priority::ConfigType", tags = "2")]
+        pub config_type: ::core::option::Option<retry_priority::ConfigType>,
+    }
+    /// Nested message and enum types in `RetryPriority`.
+    pub mod retry_priority {
+        #[allow(clippy::derive_partial_eq_without_eq)]
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        pub enum ConfigType {
+            #[prost(message, tag = "2")]
+            TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
+        }
+    }
+    /// See :ref:`RetryHostPredicate <envoy_v3_api_field_config.route.v3.RetryPolicy.retry_host_predicate>`.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct RetryHostPredicate {
+        #[prost(string, tag = "1")]
+        pub name: ::prost::alloc::string::String,
+        #[prost(oneof = "retry_host_predicate::ConfigType", tags = "2")]
+        pub config_type: ::core::option::Option<retry_host_predicate::ConfigType>,
+    }
+    /// Nested message and enum types in `RetryHostPredicate`.
+    pub mod retry_host_predicate {
+        #[allow(clippy::derive_partial_eq_without_eq)]
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        pub enum ConfigType {
+            #[prost(message, tag = "2")]
+            TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
+        }
+    }
 }
 /// The message specifies how to fetch data from remote and how to verify it.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1063,7 +1115,7 @@ impl TrafficDirection {
     }
 }
 /// gRPC service configuration. This is used by :ref:`ApiConfigSource <envoy_v3_api_msg_config.core.v3.ApiConfigSource>` and filter configurations.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcService {
@@ -1079,6 +1131,10 @@ pub struct GrpcService {
     /// documentation on :ref:`custom request headers <config_http_conn_man_headers_custom_request_headers>`.
     #[prost(message, repeated, tag = "5")]
     pub initial_metadata: ::prost::alloc::vec::Vec<HeaderValue>,
+    /// Optional default retry policy for streams toward the service.
+    /// If an async stream doesn't have retry policy configured in its stream options, this retry policy is used.
+    #[prost(message, optional, tag = "6")]
+    pub retry_policy: ::core::option::Option<RetryPolicy>,
     #[prost(oneof = "grpc_service::TargetSpecifier", tags = "1, 2")]
     pub target_specifier: ::core::option::Option<grpc_service::TargetSpecifier>,
 }
@@ -1414,7 +1470,7 @@ pub struct HealthStatusSet {
     #[prost(enumeration = "HealthStatus", repeated, packed = "false", tag = "1")]
     pub statuses: ::prost::alloc::vec::Vec<i32>,
 }
-/// \[\#next-free-field: 26\]
+/// \[\#next-free-field: 27\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheck {
@@ -1557,6 +1613,11 @@ pub struct HealthCheck {
     /// The default value is false.
     #[prost(bool, tag = "19")]
     pub always_log_health_check_failures: bool,
+    /// If set to true, health check success events will always be logged. If set to false, only host addition event will be logged
+    /// if it is the first successful health check, or if the healthy threshold is reached.
+    /// The default value is false.
+    #[prost(bool, tag = "26")]
+    pub always_log_health_check_success: bool,
     /// This allows overriding the cluster TLS settings, just for health check connections.
     #[prost(message, optional, tag = "21")]
     pub tls_options: ::core::option::Option<health_check::TlsOptions>,
@@ -2332,7 +2393,7 @@ pub struct QuicKeepAliveSettings {
     >,
 }
 /// QUIC protocol options which apply to both downstream and upstream connections.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuicProtocolOptions {
@@ -2343,7 +2404,7 @@ pub struct QuicProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// `Initial stream-level flow-control receive window <<https://tools.ietf.org/html/draft-ietf-quic-transport-34#section-4.1>`\_> size. Valid values range from
-    /// 1 to 16777216 (2^24, maximum supported by QUICHE) and defaults to 65536 (2^16).
+    /// 1 to 16777216 (2^24, maximum supported by QUICHE) and defaults to 16777216 (16 * 1024 * 1024).
     ///
     /// NOTE: 16384 (2^14) is the minimum window size supported in Google QUIC. If configured smaller than it, we will use 16384 instead.
     /// QUICHE IETF Quic implementation supports 1 bytes window. We only support increasing the default window size now, so it's also the minimum.
@@ -2356,8 +2417,8 @@ pub struct QuicProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Similar to `initial_stream_window_size`, but for connection-level
-    /// flow-control. Valid values rage from 1 to 25165824 (24MB, maximum supported by QUICHE) and defaults to 65536 (2^16).
-    /// window. Currently, this has the same minimum/default as `initial_stream_window_size`.
+    /// flow-control. Valid values rage from 1 to 25165824 (24MB, maximum supported by QUICHE) and defaults
+    /// to 25165824 (24 * 1024 * 1024).
     ///
     /// NOTE: 16384 (2^14) is the minimum window size supported in Google QUIC. We only support increasing the default
     /// window size now, so it's also the minimum.
@@ -2385,6 +2446,14 @@ pub struct QuicProtocolOptions {
     /// `QUICHE <<https://github.com/google/quiche/blob/main/quiche/quic/core/crypto/crypto_protocol.h>`\_> and to be sent by upstream connections.
     #[prost(string, tag = "7")]
     pub client_connection_options: ::prost::alloc::string::String,
+    /// The duration that a QUIC connection stays idle before it closes itself. If this field is not present, QUICHE
+    /// default 600s will be applied.
+    /// For internal corporate network, a long timeout is often fine.
+    /// But for client facing network, 30s is usually a good choice.
+    #[prost(message, optional, tag = "8")]
+    pub idle_network_timeout: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -2814,10 +2883,10 @@ pub struct Http2ProtocolOptions {
     /// Allows proxying Websocket and other upgrades over H2 connect.
     #[prost(bool, tag = "5")]
     pub allow_connect: bool,
-    /// \[\#not-implemented-hide:\] Hiding until envoy has full metadata support.
+    /// \[\#not-implemented-hide:\] Hiding until Envoy has full metadata support.
     /// Still under implementation. DO NOT USE.
     ///
-    /// Allows metadata. See [metadata
+    /// Allows sending and receiving HTTP/2 METADATA frames. See [metadata
     /// docs](<https://github.com/envoyproxy/envoy/blob/main/source/docs/h2_metadata.md>) for more
     /// information.
     #[prost(bool, tag = "6")]
@@ -2974,7 +3043,7 @@ pub struct GrpcProtocolOptions {
     pub http2_protocol_options: ::core::option::Option<Http2ProtocolOptions>,
 }
 /// A message which allows using HTTP/3.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http3ProtocolOptions {
@@ -2995,6 +3064,14 @@ pub struct Http3ProtocolOptions {
     /// Note that HTTP/3 CONNECT is not yet an RFC.
     #[prost(bool, tag = "5")]
     pub allow_extended_connect: bool,
+    /// \[\#not-implemented-hide:\] Hiding until Envoy has full metadata support.
+    /// Still under implementation. DO NOT USE.
+    ///
+    /// Allows sending and receiving HTTP/3 METADATA frames. See [metadata
+    /// docs](<https://github.com/envoyproxy/envoy/blob/main/source/docs/h2_metadata.md>) for more
+    /// information.
+    #[prost(bool, tag = "6")]
+    pub allow_metadata: bool,
 }
 /// A message to control transformations to the :scheme header
 #[allow(clippy::derive_partial_eq_without_eq)]

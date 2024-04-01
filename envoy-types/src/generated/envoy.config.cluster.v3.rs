@@ -147,7 +147,7 @@ pub struct Filter {
 }
 /// See the :ref:`architecture overview <arch_overview_outlier_detection>` for
 /// more information on outlier detection.
-/// \[\#next-free-field: 24\]
+/// \[\#next-free-field: 25\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutlierDetection {
@@ -333,6 +333,10 @@ pub struct OutlierDetection {
     pub successful_active_health_check_uneject_host: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// Set of host's passive monitors.
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, repeated, tag = "24")]
+    pub monitors: ::prost::alloc::vec::Vec<super::super::core::v3::TypedExtensionConfig>,
 }
 /// Cluster list collections. Entries are `Cluster` resources or references.
 /// \[\#not-implemented-hide:\]
@@ -1900,6 +1904,71 @@ pub struct UpstreamConnectionOptions {
     /// implementation specific. Defaults to false due to performance concerns.
     #[prost(bool, tag = "2")]
     pub set_local_interface_name_on_upstream_connections: bool,
+    /// Configurations for happy eyeballs algorithm.
+    /// Add configs for first_address_family_version and first_address_family_count
+    /// when sorting destination ip addresses.
+    #[prost(message, optional, tag = "3")]
+    pub happy_eyeballs_config: ::core::option::Option<
+        upstream_connection_options::HappyEyeballsConfig,
+    >,
+}
+/// Nested message and enum types in `UpstreamConnectionOptions`.
+pub mod upstream_connection_options {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct HappyEyeballsConfig {
+        /// Specify the IP address family to attempt connection first in happy
+        /// eyeballs algorithm according to RFC8305#section-4.
+        #[prost(enumeration = "FirstAddressFamilyVersion", tag = "1")]
+        pub first_address_family_version: i32,
+        /// Specify the number of addresses of the first_address_family_version being
+        /// attempted for connection before the other address family.
+        #[prost(message, optional, tag = "2")]
+        pub first_address_family_count: ::core::option::Option<
+            super::super::super::super::super::google::protobuf::UInt32Value,
+        >,
+    }
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum FirstAddressFamilyVersion {
+        /// respect the native ranking of destination ip addresses returned from dns
+        /// resolution
+        Default = 0,
+        V4 = 1,
+        V6 = 2,
+    }
+    impl FirstAddressFamilyVersion {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                FirstAddressFamilyVersion::Default => "DEFAULT",
+                FirstAddressFamilyVersion::V4 => "V4",
+                FirstAddressFamilyVersion::V6 => "V6",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "DEFAULT" => Some(Self::Default),
+                "V4" => Some(Self::V4),
+                "V6" => Some(Self::V6),
+                _ => None,
+            }
+        }
+    }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

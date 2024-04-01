@@ -55,7 +55,7 @@ pub mod o_auth2_credentials {
 }
 /// OAuth config
 ///
-/// \[\#next-free-field: 14\]
+/// \[\#next-free-field: 16\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
@@ -121,6 +121,22 @@ pub struct OAuth2Config {
     /// the authorization server or the OAuth flow will fail.
     #[prost(message, optional, tag = "13")]
     pub default_expires_in: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
+    /// Any request that matches any of the provided matchers won't be redirected to OAuth server when tokens are not valid.
+    /// Automatic access token refresh will be performed for these requests, if enabled.
+    /// This behavior can be useful for AJAX requests.
+    #[prost(message, repeated, tag = "14")]
+    pub deny_redirect_matcher: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::route::v3::HeaderMatcher,
+    >,
+    /// The default lifetime in seconds of the refresh token, if the exp (expiration time) claim is omitted in the refresh token or the refresh token is not JWT.
+    ///
+    /// If this value is not set, it will default to `604800s`. In this case, the cookie with the refresh token will be expired
+    /// in a week.
+    /// This setting is only considered if `use_refresh_token` is set to true, otherwise the authorization server expiration or `defaul_expires_in` is used.
+    #[prost(message, optional, tag = "15")]
+    pub default_refresh_token_expires_in: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }

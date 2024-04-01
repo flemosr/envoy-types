@@ -292,7 +292,7 @@ pub struct AccessLogCommon {
     pub access_log_type: i32,
 }
 /// Flags indicating occurrences during request/response processing.
-/// \[\#next-free-field: 28\]
+/// \[\#next-free-field: 29\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResponseFlags {
@@ -378,6 +378,9 @@ pub struct ResponseFlags {
     /// Indicates a DNS resolution failed.
     #[prost(bool, tag = "27")]
     pub dns_resolution_failure: bool,
+    /// Indicates a downstream remote codec level reset was received on the stream
+    #[prost(bool, tag = "28")]
+    pub downstream_remote_reset: bool,
 }
 /// Nested message and enum types in `ResponseFlags`.
 pub mod response_flags {

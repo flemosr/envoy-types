@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 57\]
+/// \[\#next-free-field: 58\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpConnectionManager {
@@ -485,6 +485,10 @@ pub struct HttpConnectionManager {
     /// will be ignored if the `x-forwarded-port` header has been set by any trusted proxy in front of Envoy.
     #[prost(bool, tag = "51")]
     pub append_x_forwarded_port: bool,
+    /// Append the :ref:`config_http_conn_man_headers_x-envoy-local-overloaded` HTTP header in the scenario where
+    /// the Overload Manager has been triggered.
+    #[prost(bool, tag = "57")]
+    pub append_local_overload: bool,
     /// Whether the HCM will add ProxyProtocolFilterState to the Connection lifetime filter state. Defaults to `true`.
     /// This should be set to `false` in cases where Envoy's view of the downstream address may not correspond to the
     /// actual client address, for example, if there's another proxy in front of the Envoy.

@@ -40,7 +40,7 @@ pub mod regex_matcher {
     }
 }
 /// Specifies the way to match a string.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StringMatcher {
@@ -49,7 +49,7 @@ pub struct StringMatcher {
     /// For example, the matcher *data* will match both input string *Data* and *data* if set to true.
     #[prost(bool, tag = "6")]
     pub ignore_case: bool,
-    #[prost(oneof = "string_matcher::MatchPattern", tags = "1, 2, 3, 5, 7")]
+    #[prost(oneof = "string_matcher::MatchPattern", tags = "1, 2, 3, 5, 7, 8")]
     pub match_pattern: ::core::option::Option<string_matcher::MatchPattern>,
 }
 /// Nested message and enum types in `StringMatcher`.
@@ -91,6 +91,10 @@ pub mod string_matcher {
         /// * *abc* matches the value *xyz.abc.def*
         #[prost(string, tag = "7")]
         Contains(::prost::alloc::string::String),
+        /// Use an extension as the matcher type.
+        /// \[\#extension-category: envoy.string_matcher\]
+        #[prost(message, tag = "8")]
+        Custom(super::super::super::super::core::v3::TypedExtensionConfig),
     }
 }
 /// Specifies a list of ways to match a string.

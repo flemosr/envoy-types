@@ -53,7 +53,7 @@ pub struct Cookie {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// Duration of cookie. This will be used to set the expiry time of a new cookie when it is
-    /// generated. Set this to 0 to use a session cookie.
+    /// generated. Set this to 0s to use a session cookie and disable cookie expiration.
     #[prost(message, optional, tag = "2")]
     pub ttl: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
