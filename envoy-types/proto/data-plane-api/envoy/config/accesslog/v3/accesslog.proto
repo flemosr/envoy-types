@@ -270,6 +270,7 @@ message ResponseFlagFilter {
         in: "OM"
         in: "DF"
         in: "DO"
+        in: "DR"
       }
     }
   }];

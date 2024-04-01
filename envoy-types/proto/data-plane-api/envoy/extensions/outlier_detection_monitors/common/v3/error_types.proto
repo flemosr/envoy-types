@@ -1,0 +1,58 @@
+// Copyright 2023 Envoy Project Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package envoy.extensions.outlier_detection_monitors.common.v3;
+
+import "envoy/type/v3/range.proto";
+
+import "udpa/annotations/status.proto";
+
+option java_package = "io.envoyproxy.envoy.extensions.outlier_detection_monitors.common.v3";
+option java_outer_classname = "ErrorTypesProto";
+option java_multiple_files = true;
+option go_package = "github.com/envoyproxy/go-control-plane/envoy/extensions/outlier_detection_monitors/common/v3;commonv3";
+option (udpa.annotations.file_status).package_version_status = ACTIVE;
+
+// [#protodoc-title: Outlier detection error buckets]
+// Error bucket for HTTP codes.
+// [#not-implemented-hide:]
+message HttpErrors {
+  type.v3.Int32Range range = 1;
+}
+
+// Error bucket for locally originated errors.
+// [#not-implemented-hide:]
+message LocalOriginErrors {
+}
+
+// Error bucket for database errors.
+// Sub-parameters may be added later, like malformed response, error on write, etc.
+// [#not-implemented-hide:]
+message DatabaseErrors {
+}
+
+// Union of possible error buckets.
+// [#not-implemented-hide:]
+message ErrorBuckets {
+  // List of buckets "catching" HTTP codes.
+  repeated HttpErrors http_errors = 1;
+
+  // List of buckets "catching" locally originated errors.
+  repeated LocalOriginErrors local_origin_errors = 2;
+
+  // List of buckets "catching" database errors.
+  repeated DatabaseErrors database_errors = 3;
+}
