@@ -1,5 +1,5 @@
 /// RBAC filter config.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rbac {
@@ -44,6 +44,9 @@ pub struct Rbac {
     /// shadow rules.
     #[prost(string, tag = "3")]
     pub shadow_rules_stat_prefix: ::prost::alloc::string::String,
+    /// If track_per_rule_stats is true, counters will be published for each rule and shadow rule.
+    #[prost(bool, tag = "7")]
+    pub track_per_rule_stats: bool,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

@@ -55,7 +55,7 @@ pub mod o_auth2_credentials {
 }
 /// OAuth config
 ///
-/// \[\#next-free-field: 16\]
+/// \[\#next-free-field: 18\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
@@ -90,6 +90,12 @@ pub struct OAuth2Config {
     /// Forward the OAuth token as a Bearer to upstream web service.
     #[prost(bool, tag = "7")]
     pub forward_bearer_token: bool,
+    /// If set to true, preserve the existing authorization header.
+    /// By default Envoy strips the existing authorization header before forwarding upstream.
+    /// Can not be set to true if forward_bearer_token is already set to true.
+    /// Default value is false.
+    #[prost(bool, tag = "16")]
+    pub preserve_authorization_header: bool,
     /// Any request that matches any of the provided matchers will be passed through without OAuth validation.
     #[prost(message, repeated, tag = "8")]
     pub pass_through_matcher: ::prost::alloc::vec::Vec<
@@ -134,11 +140,17 @@ pub struct OAuth2Config {
     ///
     /// If this value is not set, it will default to `604800s`. In this case, the cookie with the refresh token will be expired
     /// in a week.
-    /// This setting is only considered if `use_refresh_token` is set to true, otherwise the authorization server expiration or `defaul_expires_in` is used.
+    /// This setting is only considered if `use_refresh_token` is set to true, otherwise the authorization server expiration or `default_expires_in` is used.
     #[prost(message, optional, tag = "15")]
     pub default_refresh_token_expires_in: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
+    /// If set to true, Envoy will not set a cookie for ID Token even if one is received from the Identity Provider. This may be useful in cases where the ID
+    /// Token is too large for HTTP cookies (longer than 4096 characters). Enabling this option will only disable setting the cookie response header, the filter
+    /// will still process incoming ID Tokens as part of the HMAC if they are there. This is to ensure compatibility while switching this setting on. Future
+    /// sessions would not set the IdToken cookie header.
+    #[prost(bool, tag = "17")]
+    pub disable_id_token_set_cookie: bool,
 }
 /// Nested message and enum types in `OAuth2Config`.
 pub mod o_auth2_config {

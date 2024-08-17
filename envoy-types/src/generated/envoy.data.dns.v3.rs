@@ -147,7 +147,15 @@ pub mod dns_table {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DnsVirtualDomain {
-        /// A domain name for which Envoy will respond to query requests
+        /// A domain name for which Envoy will respond to query requests.
+        /// Wildcard records are supported on the first label only, e.g. `*.example.com` or `*.subdomain.example.com`.
+        /// Names such as `*example.com`, `subdomain.*.example.com`, `*subdomain.example.com`, etc
+        /// are not valid wildcard names and asterisk will be interpreted as a literal `*` character.
+        /// Wildcard records match subdomains on any levels, e.g. `*.example.com` will match
+        /// `foo.example.com`, `bar.foo.example.com`, `baz.bar.foo.example.com`, etc. In case there are multiple
+        /// wildcard records, the longest wildcard match will be used, e.g. if there are wildcard records for
+        /// `*.example.com` and `*.foo.example.com` and the query is for `bar.foo.example.com`, the latter will be used.
+        /// Specific records will always take precedence over wildcard records.
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
         /// The configuration containing the method to determine the address of this endpoint

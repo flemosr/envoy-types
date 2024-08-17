@@ -3,7 +3,7 @@
 /// populate `opentelemetry.proto.collector.v1.logs.ExportLogsServiceRequest.resource_logs <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/collector/logs/v1/logs_service.proto>`\_.>
 /// In addition, the request start time is set in the dedicated field.
 /// \[\#extension: envoy.access_loggers.open_telemetry\]
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryAccessLogConfig {
@@ -37,5 +37,17 @@ pub struct OpenTelemetryAccessLogConfig {
     #[prost(message, optional, tag = "3")]
     pub attributes: ::core::option::Option<
         super::super::super::super::super::opentelemetry::proto::common::v1::KeyValueList,
+    >,
+    /// Optional. Additional prefix to use on OpenTelemetry access logger stats. If empty, the stats will be rooted at
+    /// `access_logs.open_telemetry_access_log.`. If non-empty, stats will be rooted at
+    /// `access_logs.open_telemetry_access_log.<stat_prefix>.`.
+    #[prost(string, tag = "6")]
+    pub stat_prefix: ::prost::alloc::string::String,
+    /// Specifies a collection of Formatter plugins that can be called from the access log configuration.
+    /// See the formatters extensions documentation for details.
+    /// \[\#extension-category: envoy.formatter\]
+    #[prost(message, repeated, tag = "7")]
+    pub formatters: ::prost::alloc::vec::Vec<
+        super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
 }

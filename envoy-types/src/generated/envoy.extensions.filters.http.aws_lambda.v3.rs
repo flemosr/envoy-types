@@ -1,4 +1,5 @@
 /// AWS Lambda filter config
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {
@@ -26,6 +27,24 @@ pub struct Config {
     /// if an HTTP filter after AWS lambda re-evaluates the route (clears route cache).
     #[prost(string, tag = "4")]
     pub host_rewrite: ::prost::alloc::string::String,
+    /// Specifies the credentials profile to be used from the AWS credentials file.
+    /// This parameter is optional. If set, it will override the value set in the AWS_PROFILE env variable and
+    /// the provider chain is limited to the AWS credentials file Provider.
+    /// If credentials configuration is provided, this configuration will be ignored.
+    /// If this field is provided, then the default providers chain specified in the documentation will be ignored.
+    /// (See :ref:`default credentials providers <config_http_filters_aws_lambda_credentials>`).
+    #[prost(string, tag = "5")]
+    pub credentials_profile: ::prost::alloc::string::String,
+    /// Specifies the credentials to be used. This parameter is optional and if it is set,
+    /// it will override other providers and will take precedence over credentials_profile.
+    /// The provider chain is limited to the configuration credentials provider.
+    /// If this field is provided, then the default providers chain specified in the documentation will be ignored.
+    /// (See :ref:`default credentials providers <config_http_filters_aws_lambda_credentials>`).
+    ///
+    /// .. warning::
+    /// Distributing the AWS credentials via this configuration should not be done in production.
+    #[prost(message, optional, tag = "6")]
+    pub credentials: ::core::option::Option<Credentials>,
 }
 /// Nested message and enum types in `Config`.
 pub mod config {
@@ -70,6 +89,22 @@ pub mod config {
             }
         }
     }
+}
+/// AWS Lambda Credentials config.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Credentials {
+    /// AWS access key id.
+    #[prost(string, tag = "1")]
+    pub access_key_id: ::prost::alloc::string::String,
+    /// AWS secret access key.
+    #[prost(string, tag = "2")]
+    pub secret_access_key: ::prost::alloc::string::String,
+    /// AWS session token.
+    /// This parameter is optional. If it is set to empty string it will not be consider in the request.
+    /// It is required if temporary security credentials retrieved directly from AWS STS operations are used.
+    #[prost(string, tag = "3")]
+    pub session_token: ::prost::alloc::string::String,
 }
 /// Per-route configuration for AWS Lambda. This can be useful when invoking a different Lambda function or a different
 /// version of the same Lambda depending on the route.

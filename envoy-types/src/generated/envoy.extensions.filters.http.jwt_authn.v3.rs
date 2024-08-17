@@ -119,7 +119,7 @@ pub struct JwtProvider {
     >,
     /// If false, the JWT is removed in the request after a success verification. If true, the JWT is
     /// not removed in the request. Default value is false.
-    /// caveat: only works for from_header & has no effect for JWTs extracted through from_params & from_cookies.
+    /// caveat: only works for from_header/from_params & has no effect for JWTs extracted through from_cookies.
     #[prost(bool, tag = "5")]
     pub forward: bool,
     /// Two fields below define where to extract the JWT from an HTTP request.
@@ -285,11 +285,12 @@ pub struct JwtProvider {
     /// Specify the claim name you want to copy in which HTTP header. For examples, following config:
     /// The claim must be of type; string, int, double, bool. Array type claims are not supported
     ///
-    /// .. code-block:: yaml
-    ///
-    /// claim_to_headers:
-    /// - name: x-jwt-claim-nested-claim
-    /// claim: claim.nested.key
+    /// .. literalinclude:: /\_configs/repo/jwt_authn.yaml
+    /// :language: yaml
+    /// :lines: 44-48
+    /// :linenos:
+    /// :lineno-start: 44
+    /// :caption: :download:`jwt_authn.yaml </_configs/repo/jwt_authn.yaml>`
     ///
     /// This header is only reserved for jwt claim; any other value will be overwritten.
     #[prost(message, repeated, tag = "15")]
@@ -764,7 +765,7 @@ pub struct FilterStateRule {
 ///           - provider_name: provider2
 /// ```
 ///
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtAuthentication {
@@ -840,6 +841,11 @@ pub struct JwtAuthentication {
         ::prost::alloc::string::String,
         JwtRequirement,
     >,
+    /// A request failing the verification process will receive a 401 downstream with the failure response details
+    /// in the body along with WWWAuthenticate header value set with "invalid token". If this value is set to true,
+    /// the response details will be stripped and only a 401 response code will be returned. Default value is false
+    #[prost(bool, tag = "6")]
+    pub strip_failure_response: bool,
 }
 /// Specify per-route config.
 #[allow(clippy::derive_partial_eq_without_eq)]

@@ -47,6 +47,17 @@ pub mod tracing {
         }
     }
 }
+/// Configuration for the Remote Configuration feature.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DatadogRemoteConfig {
+    /// Frequency at which new configuration updates are queried.
+    /// If no value is provided, the default value is delegated to the Datadog tracing library.
+    #[prost(message, optional, tag = "1")]
+    pub polling_interval: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
+}
 /// Configuration for the Datadog tracer.
 /// \[\#extension: envoy.tracers.datadog\]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -62,10 +73,17 @@ pub struct DatadogConfig {
     /// that require a specific hostname. Defaults to :ref:`collector_cluster <envoy_v3_api_field_config.trace.v3.DatadogConfig.collector_cluster>` above.
     #[prost(string, tag = "3")]
     pub collector_hostname: ::prost::alloc::string::String,
+    /// Enables and configures remote configuration.
+    /// Remote Configuration allows to configure the tracer from Datadog's user interface.
+    /// This feature can drastically increase the number of connections to the Datadog Agent.
+    /// Each tracer regularly polls for configuration updates, and the number of tracers is the product
+    /// of the number of listeners and worker threads.
+    #[prost(message, optional, tag = "4")]
+    pub remote_config: ::core::option::Option<DatadogRemoteConfig>,
 }
-/// DynamicOtConfig is used to dynamically load a tracer from a shared library
+/// DynamicOtConfig was used to dynamically load a tracer from a shared library
 /// that implements the `OpenTracing dynamic loading API <<https://github.com/opentracing/opentracing-cpp>`\_.>
-/// \[\#extension: envoy.tracers.dynamic_ot\]
+/// \[\#not-implemented-hide:\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicOtConfig {

@@ -1,5 +1,5 @@
 /// Bootstrap :ref:`configuration overview <config_overview_bootstrap>`.
-/// \[\#next-free-field: 41\]
+/// \[\#next-free-field: 42\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bootstrap {
@@ -280,6 +280,10 @@ pub struct Bootstrap {
     pub grpc_async_client_manager_config: ::core::option::Option<
         bootstrap::GrpcAsyncClientManagerConfig,
     >,
+    /// Optional configuration for memory allocation manager.
+    /// Memory releasing is only supported for `tcmalloc allocator <<https://github.com/google/tcmalloc>`\_.>
+    #[prost(message, optional, tag = "41")]
+    pub memory_allocator_manager: ::core::option::Option<MemoryAllocatorManager>,
     #[prost(oneof = "bootstrap::StatsFlush", tags = "29")]
     pub stats_flush: ::core::option::Option<bootstrap::StatsFlush>,
 }
@@ -835,4 +839,19 @@ pub mod custom_inline_header {
             }
         }
     }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MemoryAllocatorManager {
+    /// Configures tcmalloc to perform background release of free memory in amount of bytes per `memory_release_interval` interval.
+    /// If equals to `0`, no memory release will occur. Defaults to `0`.
+    #[prost(uint64, tag = "1")]
+    pub bytes_to_release: u64,
+    /// Interval in milliseconds for memory releasing. If specified, during every
+    /// interval Envoy will try to release `bytes_to_release` of free memory back to operating system for reuse.
+    /// Defaults to 1000 milliseconds.
+    #[prost(message, optional, tag = "2")]
+    pub memory_release_interval: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
 }

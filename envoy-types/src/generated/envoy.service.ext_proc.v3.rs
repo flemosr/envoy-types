@@ -1,21 +1,9 @@
 /// This represents the different types of messages that Envoy can send
 /// to an external processing server.
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingRequest {
-    /// Specify whether the filter that sent this request is running in synchronous
-    /// or asynchronous mode. The choice of synchronous or asynchronous mode
-    /// can be set in the filter configuration, and defaults to false.
-    ///
-    /// * A value of `false` indicates that the server must respond
-    ///   to this message by either sending back a matching ProcessingResponse message,
-    ///   or by closing the stream.
-    /// * A value of `true` indicates that the server must not respond to this
-    ///   message, although it may still close the stream to indicate that no more messages
-    ///   are needed.
-    #[prost(bool, tag = "1")]
-    pub async_mode: bool,
     /// Dynamic metadata associated with the request.
     #[prost(message, optional, tag = "8")]
     pub metadata_context: ::core::option::Option<
@@ -30,6 +18,17 @@ pub struct ProcessingRequest {
         ::prost::alloc::string::String,
         super::super::super::super::google::protobuf::Struct,
     >,
+    /// Specify whether the filter that sent this request is running in :ref:`observability_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.observability_mode>`
+    /// and defaults to false.
+    ///
+    /// * A value of `false` indicates that the server must respond
+    ///   to this message by either sending back a matching ProcessingResponse message,
+    ///   or by closing the stream.
+    /// * A value of `true` indicates that the server should not respond to this message, as any
+    ///   responses will be ignored. However, it may still close the stream to indicate that no more messages
+    ///   are needed.
+    #[prost(bool, tag = "10")]
+    pub observability_mode: bool,
     /// Each request message will include one of the following sub-messages. Which
     /// ones are set for a particular HTTP request/response depend on the
     /// processing mode.
@@ -45,31 +44,31 @@ pub mod processing_request {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
         /// Information about the HTTP request headers, as well as peer info and additional
-        /// properties. Unless `async_mode` is `true`, the server must send back a
+        /// properties. Unless `observability_mode` is `true`, the server must send back a
         /// HeaderResponse message, an ImmediateResponse message, or close the stream.
         #[prost(message, tag = "2")]
         RequestHeaders(super::HttpHeaders),
         /// Information about the HTTP response headers, as well as peer info and additional
-        /// properties. Unless `async_mode` is `true`, the server must send back a
+        /// properties. Unless `observability_mode` is `true`, the server must send back a
         /// HeaderResponse message or close the stream.
         #[prost(message, tag = "3")]
         ResponseHeaders(super::HttpHeaders),
-        /// A chunk of the HTTP request body. Unless `async_mode` is true, the server must send back
+        /// A chunk of the HTTP request body. Unless `observability_mode` is true, the server must send back
         /// a BodyResponse message, an ImmediateResponse message, or close the stream.
         #[prost(message, tag = "4")]
         RequestBody(super::HttpBody),
-        /// A chunk of the HTTP response body. Unless `async_mode` is `true`, the server must send back
+        /// A chunk of the HTTP response body. Unless `observability_mode` is `true`, the server must send back
         /// a BodyResponse message or close the stream.
         #[prost(message, tag = "5")]
         ResponseBody(super::HttpBody),
-        /// The HTTP trailers for the request path. Unless `async_mode` is `true`, the server
+        /// The HTTP trailers for the request path. Unless `observability_mode` is `true`, the server
         /// must send back a TrailerResponse message or close the stream.
         ///
         /// This message is only sent if the trailers processing mode is set to `SEND` and
         /// the original downstream request has trailers.
         #[prost(message, tag = "6")]
         RequestTrailers(super::HttpTrailers),
-        /// The HTTP trailers for the response path. Unless `async_mode` is `true`, the server
+        /// The HTTP trailers for the response path. Unless `observability_mode` is `true`, the server
         /// must send back a TrailerResponse message or close the stream.
         ///
         /// This message is only sent if the trailers processing mode is set to `SEND` and
@@ -78,7 +77,7 @@ pub mod processing_request {
         ResponseTrailers(super::HttpTrailers),
     }
 }
-/// For every ProcessingRequest received by the server with the `async_mode` field
+/// For every ProcessingRequest received by the server with the `observability_mode` field
 /// set to false, the server must send back exactly one ProcessingResponse message.
 /// \[\#next-free-field: 11\]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -170,12 +169,8 @@ pub mod processing_response {
 pub struct HttpHeaders {
     /// The HTTP request headers. All header keys will be
     /// lower-cased, because HTTP header keys are case-insensitive.
-    /// The `headers` encoding is based on the runtime guard
-    /// envoy_reloadable_features_send_header_raw_value setting.
-    /// When it is true, the header value is encoded in the
+    /// The header value is encoded in the
     /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
-    /// When it is false, the header value is encoded in the
-    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, optional, tag = "1")]
     pub headers: ::core::option::Option<
         super::super::super::config::core::v3::HeaderMap,
@@ -207,12 +202,8 @@ pub struct HttpBody {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpTrailers {
-    /// The `trailers` encoding is based on the runtime guard
-    /// envoy_reloadable_features_send_header_raw_value setting.
-    /// When it is true, the header value is encoded in the
+    /// The header value is encoded in the
     /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
-    /// When it is false, the header value is encoded in the
-    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, optional, tag = "1")]
     pub trailers: ::core::option::Option<
         super::super::super::config::core::v3::HeaderMap,
@@ -267,19 +258,16 @@ pub struct CommonResponse {
     /// Add new trailers to the message. This may be used when responding to either a
     /// HttpHeaders or HttpBody message, but only if this message is returned
     /// along with the CONTINUE_AND_REPLACE status.
-    /// The `trailers` encoding is based on the runtime guard
-    /// envoy_reloadable_features_send_header_raw_value setting.
-    /// When it is true, the header value is encoded in the
+    /// The header value is encoded in the
     /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
-    /// When it is false, the header value is encoded in the
-    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, optional, tag = "4")]
     pub trailers: ::core::option::Option<
         super::super::super::config::core::v3::HeaderMap,
     >,
     /// Clear the route cache for the current client request. This is necessary
     /// if the remote server modified headers that are used to calculate the route.
-    /// This field is ignored in the response direction.
+    /// This field is ignored in the response direction. This field is also ignored
+    /// if the Envoy ext_proc filter is in the upstream filter chain.
     #[prost(bool, tag = "5")]
     pub clear_route_cache: bool,
 }
@@ -355,8 +343,8 @@ pub struct ImmediateResponse {
     pub headers: ::core::option::Option<HeaderMutation>,
     /// The message body to return with the response which is sent using the
     /// text/plain content type, or encoded in the grpc-message header.
-    #[prost(string, tag = "3")]
-    pub body: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", tag = "3")]
+    pub body: ::prost::alloc::vec::Vec<u8>,
     /// If set, then include a gRPC status trailer.
     #[prost(message, optional, tag = "4")]
     pub grpc_status: ::core::option::Option<GrpcStatus>,
@@ -382,12 +370,8 @@ pub struct HeaderMutation {
     /// Add or replace HTTP headers. Attempts to set the value of
     /// any `x-envoy` header, and attempts to set the `:method`,
     /// `:authority`, `:scheme`, or `host` headers will be ignored.
-    /// The `set_headers` encoding is based on the runtime guard
-    /// envoy_reloadable_features_send_header_raw_value setting.
-    /// When it is true, the header value is encoded in the
+    /// The header value is encoded in the
     /// :ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
-    /// When it is false, the header value is encoded in the
-    /// :ref:`value <envoy_v3_api_field_config.core.v3.HeaderValue.value>` field.
     #[prost(message, repeated, tag = "1")]
     pub set_headers: ::prost::alloc::vec::Vec<
         super::super::super::config::core::v3::HeaderValueOption,

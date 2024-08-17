@@ -1,3 +1,4 @@
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProxyProtocol {
@@ -52,6 +53,12 @@ pub struct ProxyProtocol {
         tag = "4"
     )]
     pub disallowed_versions: ::prost::alloc::vec::Vec<i32>,
+    /// The human readable prefix to use when emitting statistics for the filter.
+    /// If not configured, statistics will be emitted without the prefix segment.
+    /// See the :ref:`filter's statistics documentation <config_listener_filters_proxy_protocol>` for
+    /// more information.
+    #[prost(string, tag = "5")]
+    pub stat_prefix: ::prost::alloc::string::String,
 }
 /// Nested message and enum types in `ProxyProtocol`.
 pub mod proxy_protocol {

@@ -21,6 +21,8 @@ pub struct RateLimitRequest {
     >,
     /// Rate limit requests can optionally specify the number of hits a request adds to the matched
     /// limit. If the value is not set in the message, a request increases the matched limit by 1.
+    /// This value can be overridden by setting filter state value `envoy.ratelimit.hits_addend`
+    /// to the desired number. Invalid number (\< 0) or number will be ignored.
     #[prost(uint32, tag = "3")]
     pub hits_addend: u32,
 }

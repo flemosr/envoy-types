@@ -1,4 +1,5 @@
 /// Configuration for c-ares DNS resolver.
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CaresDnsResolverConfig {
@@ -28,5 +29,11 @@ pub struct CaresDnsResolverConfig {
     #[prost(message, optional, tag = "2")]
     pub dns_resolver_options: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DnsResolverOptions,
+    >,
+    /// This option allows for number of UDP based DNS queries to be capped. Note, this
+    /// is only applicable to c-ares DNS resolver currently.
+    #[prost(message, optional, tag = "5")]
+    pub udp_max_queries: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }

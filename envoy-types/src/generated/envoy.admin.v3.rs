@@ -1118,7 +1118,7 @@ pub mod server_info {
         }
     }
 }
-/// \[\#next-free-field: 39\]
+/// \[\#next-free-field: 41\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommandLineOptions {
@@ -1128,6 +1128,12 @@ pub struct CommandLineOptions {
     /// See :option:`--use-dynamic-base-id` for details.
     #[prost(bool, tag = "31")]
     pub use_dynamic_base_id: bool,
+    /// See :option:`--skip-hot-restart-on-no-parent` for details.
+    #[prost(bool, tag = "39")]
+    pub skip_hot_restart_on_no_parent: bool,
+    /// See :option:`--skip-hot-restart-parent-stats` for details.
+    #[prost(bool, tag = "40")]
+    pub skip_hot_restart_parent_stats: bool,
     /// See :option:`--base-id-path` for details.
     #[prost(string, tag = "32")]
     pub base_id_path: ::prost::alloc::string::String,

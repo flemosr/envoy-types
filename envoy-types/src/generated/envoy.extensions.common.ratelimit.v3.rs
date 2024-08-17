@@ -93,6 +93,17 @@ pub struct LocalRateLimitDescriptor {
         super::super::super::super::r#type::v3::TokenBucket,
     >,
 }
+/// Configuration used to enable local cluster level rate limiting where the token buckets
+/// will be shared across all the Envoy instances in the local cluster.
+/// A share will be calculated based on the membership of the local cluster dynamically
+/// and the configuration. When the limiter refilling the token bucket, the share will be
+/// applied. By default, the token bucket will be shared evenly.
+///
+/// See :ref:`local cluster name <envoy_v3_api_field_config.bootstrap.v3.ClusterManager.local_cluster_name>` for more context
+/// about local cluster.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct LocalClusterRateLimit {}
 /// Defines the version of the standard to use for X-RateLimit headers.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

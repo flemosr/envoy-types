@@ -22,3 +22,18 @@ pub struct DynatraceResourceDetectorConfig {}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EnvironmentResourceDetectorConfig {}
+/// Configuration for the Static Resource detector extension.
+/// The resource detector uses static config for resource attribute,
+/// as per the OpenTelemetry specification.
+///
+/// \[\#extension: envoy.tracers.opentelemetry.resource_detectors.static_config\]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StaticConfigResourceDetectorConfig {
+    /// Custom Resource attributes to be included.
+    #[prost(map = "string, string", tag = "1")]
+    pub attributes: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+}

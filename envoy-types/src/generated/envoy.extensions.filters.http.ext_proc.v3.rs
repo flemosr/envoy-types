@@ -203,16 +203,25 @@ pub mod processing_mode {
 /// Stats about each gRPC call are recorded in a :ref:`dynamic filter state <arch_overview_advanced_filter_state_sharing>` object in a namespace matching the filter
 /// name.
 ///
-/// \[\#next-free-field: 17\]
+/// \[\#next-free-field: 21\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExternalProcessor {
     /// Configuration for the gRPC service that the filter will communicate with.
     /// The filter supports both the "Envoy" and "Google" gRPC clients.
+    /// Only one of `grpc_service` or `http_service` can be set.
+    /// It is required that one of them must be set.
     #[prost(message, optional, tag = "1")]
     pub grpc_service: ::core::option::Option<
         super::super::super::super::super::config::core::v3::GrpcService,
     >,
+    /// \[\#not-implemented-hide:\]
+    /// Configuration for the HTTP service that the filter will communicate with.
+    /// Only one of `http_service` or
+    /// :ref:`grpc_service <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.grpc_service>`.
+    /// can be set. It is required that one of them must be set.
+    #[prost(message, optional, tag = "20")]
+    pub http_service: ::core::option::Option<ExtProcHttpService>,
     /// By default, if the gRPC stream cannot be established, or if it is closed
     /// prematurely with an error, the filter will fail. Specifically, if the
     /// response headers have not yet been delivered, then it will return a 500
@@ -226,14 +235,6 @@ pub struct ExternalProcessor {
     /// sent. See ProcessingMode for details.
     #[prost(message, optional, tag = "3")]
     pub processing_mode: ::core::option::Option<ProcessingMode>,
-    /// \[\#not-implemented-hide:\]
-    /// If true, send each part of the HTTP request or response specified by ProcessingMode
-    /// asynchronously -- in other words, send the message on the gRPC stream and then continue
-    /// filter processing. If false, which is the default, suspend filter execution after
-    /// each message is sent to the remote service and wait up to "message_timeout"
-    /// for a reply.
-    #[prost(bool, tag = "4")]
-    pub async_mode: bool,
     /// Envoy provides a number of :ref:`attributes <arch_overview_attributes>`
     /// for expressive policies. Each attribute name provided in this field will be
     /// matched against that list and populated in the request_headers message.
@@ -286,11 +287,6 @@ pub struct ExternalProcessor {
     pub max_message_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
-    /// Prevents clearing the route-cache when the
-    /// :ref:`clear_route_cache <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.clear_route_cache>`
-    /// field is set in an external processor response.
-    #[prost(bool, tag = "11")]
-    pub disable_clear_route_cache: bool,
     /// Allow headers matching the `forward_rules` to be forwarded to the external processing server.
     /// If not set, all headers are forwarded to the external processing server.
     #[prost(message, optional, tag = "12")]
@@ -318,6 +314,116 @@ pub struct ExternalProcessor {
     /// Options related to the sending and receiving of dynamic metadata.
     #[prost(message, optional, tag = "16")]
     pub metadata_options: ::core::option::Option<MetadataOptions>,
+    /// If true, send each part of the HTTP request or response specified by ProcessingMode
+    /// without pausing on filter chain iteration. It is "Send and Go" mode that can be used
+    /// by external processor to observe Envoy data and status. In this mode:
+    ///
+    /// 1. Only STREAMED body processing mode is supported and any other body processing modes will be
+    ///    ignored. NONE mode(i.e., skip body processing) will still work as expected.
+    ///
+    /// 1. External processor should not send back processing response, as any responses will be ignored.
+    ///    This also means that
+    ///    :ref:`message_timeout <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.message_timeout>`
+    ///    restriction doesn't apply to this mode.
+    ///
+    /// 1. External processor may still close the stream to indicate that no more messages are needed.
+    ///
+    /// .. warning::
+    ///
+    /// ```text
+    /// Flow control is necessary mechanism to prevent the fast sender (either downstream client or upstream server)
+    /// from overwhelming the external processor when its processing speed is slower.
+    /// This protective measure is being explored and developed but has not been ready yet, so please use your own
+    /// discretion when enabling this feature.
+    /// This work is currently tracked under <https://github.com/envoyproxy/envoy/issues/33319.>
+    /// ```
+    #[prost(bool, tag = "17")]
+    pub observability_mode: bool,
+    /// Prevents clearing the route-cache when the
+    /// :ref:`clear_route_cache <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.clear_route_cache>`
+    /// field is set in an external processor response.
+    /// Only one of `disable_clear_route_cache` or `route_cache_action` can be set.
+    /// It is recommended to set `route_cache_action` which supersedes `disable_clear_route_cache`.
+    #[prost(bool, tag = "11")]
+    pub disable_clear_route_cache: bool,
+    /// Specifies the action to be taken when an external processor response is
+    /// received in response to request headers. It is recommended to set this field than set
+    /// :ref:`disable_clear_route_cache <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.disable_clear_route_cache>`.
+    /// Only one of `disable_clear_route_cache` or `route_cache_action` can be set.
+    #[prost(enumeration = "external_processor::RouteCacheAction", tag = "18")]
+    pub route_cache_action: i32,
+    /// Specifies the deferred closure timeout for gRPC stream that connects to external processor. Currently, the deferred stream closure
+    /// is only used in :ref:`observability_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.observability_mode>`.
+    /// In observability mode, gRPC streams may be held open to the external processor longer than the lifetime of the regular client to
+    /// backend stream lifetime. In this case, Envoy will eventually timeout the external processor stream according to this time limit.
+    /// The default value is 5000 milliseconds (5 seconds) if not specified.
+    #[prost(message, optional, tag = "19")]
+    pub deferred_close_timeout: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
+}
+/// Nested message and enum types in `ExternalProcessor`.
+pub mod external_processor {
+    /// Describes the route cache action to be taken when an external processor response
+    /// is received in response to request headers.
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum RouteCacheAction {
+        /// The default behavior is to clear the route cache only when the
+        /// :ref:`clear_route_cache <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.clear_route_cache>`
+        /// field is set in an external processor response.
+        Default = 0,
+        /// Always clear the route cache irrespective of the clear_route_cache bit in
+        /// the external processor response.
+        Clear = 1,
+        /// Do not clear the route cache irrespective of the clear_route_cache bit in
+        /// the external processor response. Setting to RETAIN is equivalent to set the
+        /// :ref:`disable_clear_route_cache <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.disable_clear_route_cache>`
+        /// to true.
+        Retain = 2,
+    }
+    impl RouteCacheAction {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                RouteCacheAction::Default => "DEFAULT",
+                RouteCacheAction::Clear => "CLEAR",
+                RouteCacheAction::Retain => "RETAIN",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "DEFAULT" => Some(Self::Default),
+                "CLEAR" => Some(Self::Clear),
+                "RETAIN" => Some(Self::Retain),
+                _ => None,
+            }
+        }
+    }
+}
+/// ExtProcHttpService is used for HTTP communication between the filter and the external processing service.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ExtProcHttpService {
+    /// Sets the HTTP service which the external processing requests must be sent to.
+    #[prost(message, optional, tag = "1")]
+    pub http_service: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::HttpService,
+    >,
 }
 /// The MetadataOptions structure defines options for the sending and receiving of
 /// dynamic metadata. Specifically, which namespaces to send to the server, whether

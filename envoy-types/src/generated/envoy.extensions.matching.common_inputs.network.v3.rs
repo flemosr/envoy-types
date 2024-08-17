@@ -88,3 +88,64 @@ pub struct FilterStateInput {
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
 }
+/// Input that matches dynamic metadata by key.
+/// DynamicMetadataInput provides a general interface using `filter` and `path` to retrieve value from
+/// :ref:`Metadata <envoy_v3_api_msg_config.core.v3.Metadata>`.
+///
+/// For example, for the following Metadata:
+///
+/// .. code-block:: yaml
+///
+/// ```text
+/// filter_metadata:
+///   envoy.xxx:
+///     prop:
+///       foo: bar
+///       xyz:
+///         hello: envoy
+/// ```
+///
+/// The following DynamicMetadataInput will retrieve a string value "bar" from the Metadata.
+///
+/// .. code-block:: yaml
+///
+/// ```text
+/// filter: envoy.xxx
+/// path:
+/// - key: prop
+/// - key: foo
+/// ```
+///
+/// \[\#extension: envoy.matching.inputs.dynamic_metadata\]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DynamicMetadataInput {
+    /// The filter name to retrieve the Struct from the Metadata.
+    #[prost(string, tag = "1")]
+    pub filter: ::prost::alloc::string::String,
+    /// The path to retrieve the Value from the Struct.
+    #[prost(message, repeated, tag = "2")]
+    pub path: ::prost::alloc::vec::Vec<dynamic_metadata_input::PathSegment>,
+}
+/// Nested message and enum types in `DynamicMetadataInput`.
+pub mod dynamic_metadata_input {
+    /// Specifies the segment in a path to retrieve value from Metadata.
+    /// Note: Currently it's not supported to retrieve a value from a list in Metadata. This means that
+    /// if the segment key refers to a list, it has to be the last segment in a path.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct PathSegment {
+        #[prost(oneof = "path_segment::Segment", tags = "1")]
+        pub segment: ::core::option::Option<path_segment::Segment>,
+    }
+    /// Nested message and enum types in `PathSegment`.
+    pub mod path_segment {
+        #[allow(clippy::derive_partial_eq_without_eq)]
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        pub enum Segment {
+            /// If specified, use the key to retrieve the value in a Struct.
+            #[prost(string, tag = "1")]
+            Key(::prost::alloc::string::String),
+        }
+    }
+}

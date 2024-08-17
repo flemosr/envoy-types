@@ -25,3 +25,14 @@ pub struct BasicAuth {
     #[prost(string, tag = "2")]
     pub forward_username_header: ::prost::alloc::string::String,
 }
+/// Extra settings that may be added to per-route configuration for
+/// a virtual host or a cluster.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BasicAuthPerRoute {
+    /// Username-password pairs for this route.
+    #[prost(message, optional, tag = "1")]
+    pub users: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::DataSource,
+    >,
+}

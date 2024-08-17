@@ -420,7 +420,7 @@ pub mod listener_filter {
     }
 }
 /// Configuration specific to the UDP QUIC listener.
-/// \[\#next-free-field: 11\]
+/// \[\#next-free-field: 12\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuicProtocolOptions {
@@ -493,6 +493,13 @@ pub struct QuicProtocolOptions {
     pub send_disable_active_migration: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// Configure which implementation of `quic::QuicConnectionDebugVisitor` to be used for this listener.
+    /// If not specified, no debug visitor will be attached to connections.
+    /// \[\#extension-category: envoy.quic.connection_debug_visitor\]
+    #[prost(message, optional, tag = "11")]
+    pub connection_debug_visitor_config: ::core::option::Option<
+        super::super::core::v3::TypedExtensionConfig,
+    >,
 }
 /// \[\#next-free-field: 9\]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -552,7 +559,7 @@ pub struct ListenerCollection {
         super::super::super::super::xds::core::v3::CollectionEntry,
     >,
 }
-/// \[\#next-free-field: 35\]
+/// \[\#next-free-field: 36\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Listener {
@@ -822,6 +829,9 @@ pub struct Listener {
     /// :ref:`global_downstream_max_connections <config_overload_manager_limiting_connections>`.
     #[prost(bool, tag = "31")]
     pub ignore_global_conn_limit: bool,
+    /// Whether the listener bypasses configured overload manager actions.
+    #[prost(bool, tag = "35")]
+    pub bypass_overload_manager: bool,
     /// The exclusive listener type and the corresponding config.
     #[prost(oneof = "listener::ListenerSpecifier", tags = "27")]
     pub listener_specifier: ::core::option::Option<listener::ListenerSpecifier>,

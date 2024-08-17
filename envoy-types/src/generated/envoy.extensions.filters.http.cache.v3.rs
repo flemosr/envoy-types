@@ -1,5 +1,5 @@
 /// \[\#extension: envoy.filters.http.cache\]
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CacheConfig {
@@ -49,6 +49,11 @@ pub struct CacheConfig {
     /// storage implementation may have its own limit beyond which it will reject insertions).
     #[prost(uint32, tag = "4")]
     pub max_body_bytes: u32,
+    /// By default, a `cache-control: no-cache` or `pragma: no-cache` header in the request
+    /// causes the cache to validate with its upstream even if the lookup is a hit. Setting this
+    /// to true will ignore these headers.
+    #[prost(bool, tag = "6")]
+    pub ignore_request_cache_control_header: bool,
 }
 /// Nested message and enum types in `CacheConfig`.
 pub mod cache_config {

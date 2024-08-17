@@ -1078,7 +1078,8 @@ pub mod route_action {
     /// collected for the shadow cluster making this feature useful for testing.
     ///
     /// During shadowing, the host/authority header is altered such that `-shadow` is appended. This is
-    /// useful for logging. For example, `cluster1` becomes `cluster1-shadow`.
+    /// useful for logging. For example, `cluster1` becomes `cluster1-shadow`. This behavior can be
+    /// disabled by setting `disable_shadow_host_suffix_append` to `true`.
     ///
     /// .. note::
     ///
@@ -1087,7 +1088,7 @@ pub mod route_action {
     /// .. note::
     ///
     /// Shadowing doesn't support Http CONNECT and upgrades.
-    /// \[\#next-free-field: 6\]
+    /// \[\#next-free-field: 7\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RequestMirrorPolicy {
@@ -1130,6 +1131,9 @@ pub mod route_action {
         pub trace_sampled: ::core::option::Option<
             super::super::super::super::super::google::protobuf::BoolValue,
         >,
+        /// Disables appending the `-shadow` suffix to the shadowed `Host` header. Defaults to `false`.
+        #[prost(bool, tag = "6")]
+        pub disable_shadow_host_suffix_append: bool,
     }
     /// Specifies the route's hashing policy if the upstream cluster uses a hashing :ref:`load balancer <arch_overview_load_balancing_types>`.
     /// \[\#next-free-field: 7\]

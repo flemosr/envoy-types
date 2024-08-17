@@ -335,10 +335,27 @@ pub struct SubjectAltNameMatcher {
     #[prost(enumeration = "subject_alt_name_matcher::SanType", tag = "1")]
     pub san_type: i32,
     /// Matcher for SAN value.
+    ///
+    /// The string matching for OTHER_NAME SAN values depends on their ASN.1 type:
+    ///
+    /// ```text
+    ///       * OBJECT: Validated against its dotted numeric notation (e.g., "1.2.3.4")
+    ///       * BOOLEAN: Validated against strings "true" or "false"
+    ///       * INTEGER/ENUMERATED: Validated against a string containing the integer value
+    ///       * NULL: Validated against an empty string
+    ///       * Other types: Validated directly against the string value
+    /// ```
     #[prost(message, optional, tag = "2")]
     pub matcher: ::core::option::Option<
         super::super::super::super::r#type::matcher::v3::StringMatcher,
     >,
+    /// OID Value which is required if OTHER_NAME SAN type is used.
+    /// For example, UPN OID is 1.3.6.1.4.1.311.20.2.3
+    /// (Reference: <http://oid-info.com/get/1.3.6.1.4.1.311.20.2.3>).
+    ///
+    /// If set for SAN types other than OTHER_NAME, it will be ignored.
+    #[prost(string, tag = "3")]
+    pub oid: ::prost::alloc::string::String,
 }
 /// Nested message and enum types in `SubjectAltNameMatcher`.
 pub mod subject_alt_name_matcher {
@@ -362,6 +379,7 @@ pub mod subject_alt_name_matcher {
         Dns = 2,
         Uri = 3,
         IpAddress = 4,
+        OtherName = 5,
     }
     impl SanType {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -375,6 +393,7 @@ pub mod subject_alt_name_matcher {
                 SanType::Dns => "DNS",
                 SanType::Uri => "URI",
                 SanType::IpAddress => "IP_ADDRESS",
+                SanType::OtherName => "OTHER_NAME",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -385,12 +404,13 @@ pub mod subject_alt_name_matcher {
                 "DNS" => Some(Self::Dns),
                 "URI" => Some(Self::Uri),
                 "IP_ADDRESS" => Some(Self::IpAddress),
+                "OTHER_NAME" => Some(Self::OtherName),
                 _ => None,
             }
         }
     }
 }
-/// \[\#next-free-field: 17\]
+/// \[\#next-free-field: 18\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CertificateValidationContext {
@@ -425,21 +445,26 @@ pub struct CertificateValidationContext {
     /// can be treated as trust anchor as well. It allows verification with building valid partial chain instead
     /// of a full chain.
     ///
-    /// Only one of `trusted_ca` and `ca_certificate_provider_instance` may be specified.
-    ///
-    /// \[\#next-major-version: This field and watched_directory below should ideally be moved into a
-    /// separate sub-message, since there's no point in specifying the latter field without this one.\]
+    /// If `ca_certificate_provider_instance` is set, it takes precedence over `trusted_ca`.
     #[prost(message, optional, tag = "1")]
     pub trusted_ca: ::core::option::Option<
         super::super::super::super::config::core::v3::DataSource,
     >,
     /// Certificate provider instance for fetching TLS certificates.
     ///
-    /// Only one of `trusted_ca` and `ca_certificate_provider_instance` may be specified.
+    /// If set, takes precedence over `trusted_ca`.
     /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "13")]
     pub ca_certificate_provider_instance: ::core::option::Option<
         CertificateProviderPluginInstance,
+    >,
+    /// Use system root certs for validation.
+    /// If present, system root certs are used only if neither of the `trusted_ca`
+    /// or `ca_certificate_provider_instance` fields are set.
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "17")]
+    pub system_root_certs: ::core::option::Option<
+        certificate_validation_context::SystemRootCerts,
     >,
     /// If specified, updates of a file-based `trusted_ca` source will be triggered
     /// by this watch. This allows explicit control over the path watched, by
@@ -603,6 +628,9 @@ pub struct CertificateValidationContext {
 }
 /// Nested message and enum types in `CertificateValidationContext`.
 pub mod certificate_validation_context {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct SystemRootCerts {}
     /// Peer certificate verification mode.
     #[derive(
         Clone,
@@ -733,7 +761,7 @@ pub struct UpstreamTlsContext {
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
-/// \[\#next-free-field: 11\]
+/// \[\#next-free-field: 12\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownstreamTlsContext {
@@ -775,6 +803,11 @@ pub struct DownstreamTlsContext {
     pub full_scan_certs_on_sni_mismatch: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// By default, Envoy as a server uses its preferred cipher during the handshake.
+    /// Setting this to true would allow the downstream client's preferred cipher to be used instead.
+    /// Has no effect when using TLSv1_3.
+    #[prost(bool, tag = "11")]
+    pub prefer_client_ciphers: bool,
     #[prost(oneof = "downstream_tls_context::SessionTicketKeysType", tags = "4, 5, 7")]
     pub session_ticket_keys_type: ::core::option::Option<
         downstream_tls_context::SessionTicketKeysType,
@@ -878,7 +911,7 @@ pub struct TlsKeyLog {
     >,
 }
 /// TLS context shared by both client and server TLS contexts.
-/// \[\#next-free-field: 16\]
+/// \[\#next-free-field: 17\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommonTlsContext {
@@ -889,11 +922,8 @@ pub struct CommonTlsContext {
     /// :ref:`Multiple TLS certificates <arch_overview_ssl_cert_select>` can be associated with the
     /// same context to allow both RSA and ECDSA certificates and support SNI-based selection.
     ///
-    /// Only one of `tls_certificates`, `tls_certificate_sds_secret_configs`,
-    /// and `tls_certificate_provider_instance` may be used.
-    /// \[\#next-major-version: These mutually exclusive fields should ideally be in a oneof, but it's
-    /// not legal to put a repeated field in a oneof. In the next major version, we should rework
-    /// this to avoid this problem.\]
+    /// If `tls_certificate_provider_instance` is set, this field is ignored.
+    /// If this field is set, `tls_certificate_sds_secret_configs` is ignored.
     #[prost(message, repeated, tag = "2")]
     pub tls_certificates: ::prost::alloc::vec::Vec<TlsCertificate>,
     /// Configs for fetching TLS certificates via SDS API. Note SDS API allows certificates to be
@@ -902,21 +932,27 @@ pub struct CommonTlsContext {
     /// The same number and types of certificates as :ref:`tls_certificates <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CommonTlsContext.tls_certificates>`
     /// are valid in the the certificates fetched through this setting.
     ///
-    /// Only one of `tls_certificates`, `tls_certificate_sds_secret_configs`,
-    /// and `tls_certificate_provider_instance` may be used.
-    /// \[\#next-major-version: These mutually exclusive fields should ideally be in a oneof, but it's
-    /// not legal to put a repeated field in a oneof. In the next major version, we should rework
-    /// this to avoid this problem.\]
+    /// If `tls_certificates` or `tls_certificate_provider_instance` are set, this field
+    /// is ignored.
     #[prost(message, repeated, tag = "6")]
     pub tls_certificate_sds_secret_configs: ::prost::alloc::vec::Vec<SdsSecretConfig>,
     /// Certificate provider instance for fetching TLS certs.
     ///
-    /// Only one of `tls_certificates`, `tls_certificate_sds_secret_configs`,
-    /// and `tls_certificate_provider_instance` may be used.
+    /// If this field is set, `tls_certificates` and `tls_certificate_provider_instance`
+    /// are ignored.
     /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "14")]
     pub tls_certificate_provider_instance: ::core::option::Option<
         CertificateProviderPluginInstance,
+    >,
+    /// Custom TLS certificate selector.
+    ///
+    /// Select TLS certificate based on TLS client hello.
+    /// If empty, defaults to native TLS certificate selection behavior:
+    /// DNS SANs or Subject Common Name in TLS certificates is extracted as server name pattern to match SNI.
+    #[prost(message, optional, tag = "16")]
+    pub custom_tls_certificate_selector: ::core::option::Option<
+        super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
     /// Certificate provider for fetching TLS certificates.
     /// \[\#not-implemented-hide:\]

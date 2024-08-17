@@ -39,9 +39,19 @@ pub struct ExecuteFilterAction {
     pub typed_config: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
-    /// Dynamic configuration of filter obtained via extension configuration discovery
-    /// service.
+    /// Dynamic configuration of filter obtained via extension configuration discovery service.
     /// Only one of `typed_config` or `dynamic_config` can be set.
     #[prost(message, optional, tag = "2")]
     pub dynamic_config: ::core::option::Option<DynamicConfig>,
+    /// Probability of the action execution. If not specified, this is 100%.
+    /// This allows sampling behavior for the configured actions.
+    /// For example, if
+    /// :ref:`default_value <envoy_v3_api_field_config.core.v3.RuntimeFractionalPercent.default_value>`
+    /// under the `sample_percent` is configured with 30%, a dice roll with that
+    /// probability is done. The underline action will only be executed if the
+    /// dice roll returns positive. Otherwise, the action is skipped.
+    #[prost(message, optional, tag = "3")]
+    pub sample_percent: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::RuntimeFractionalPercent,
+    >,
 }

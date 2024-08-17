@@ -39,7 +39,7 @@ pub struct TypedExtensionConfig {
 /// :ref:`admin's <envoy_v3_api_field_config.bootstrap.v3.Admin.socket_options>` socket_options etc.
 ///
 /// It should be noted that the name or level may have different values on different platforms.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketOption {
@@ -57,11 +57,43 @@ pub struct SocketOption {
     /// STATE_PREBIND is currently the only valid value.
     #[prost(enumeration = "socket_option::SocketState", tag = "6")]
     pub state: i32,
+    /// Apply the socket option to the specified `socket type <<https://linux.die.net/man/2/socket>`\_.>
+    /// If not specified, the socket option will be applied to all socket types.
+    #[prost(message, optional, tag = "7")]
+    pub r#type: ::core::option::Option<socket_option::SocketType>,
     #[prost(oneof = "socket_option::Value", tags = "4, 5")]
     pub value: ::core::option::Option<socket_option::Value>,
 }
 /// Nested message and enum types in `SocketOption`.
 pub mod socket_option {
+    /// The `socket type <<https://linux.die.net/man/2/socket>`\_> to apply the socket option to.
+    /// Only one field should be set. If multiple fields are set, the precedence order will determine
+    /// the selected one. If none of the fields is set, the socket option will be applied to all socket types.
+    ///
+    /// For example:
+    /// If :ref:`stream <envoy_v3_api_field_config.core.v3.SocketOption.SocketType.stream>` is set,
+    /// it takes precedence over :ref:`datagram <envoy_v3_api_field_config.core.v3.SocketOption.SocketType.datagram>`.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct SocketType {
+        /// Apply the socket option to the stream socket type.
+        #[prost(message, optional, tag = "1")]
+        pub stream: ::core::option::Option<socket_type::Stream>,
+        /// Apply the socket option to the datagram socket type.
+        #[prost(message, optional, tag = "2")]
+        pub datagram: ::core::option::Option<socket_type::Datagram>,
+    }
+    /// Nested message and enum types in `SocketType`.
+    pub mod socket_type {
+        /// The stream socket type.
+        #[allow(clippy::derive_partial_eq_without_eq)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct Stream {}
+        /// The datagram socket type.
+        #[allow(clippy::derive_partial_eq_without_eq)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct Datagram {}
+    }
     #[derive(
         Clone,
         Copy,
@@ -671,6 +703,102 @@ pub struct RuntimeFeatureFlag {
     #[prost(string, tag = "2")]
     pub runtime_key: ::prost::alloc::string::String,
 }
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct KeyValue {
+    /// The key of the key/value pair.
+    #[prost(string, tag = "1")]
+    pub key: ::prost::alloc::string::String,
+    /// The value of the key/value pair.
+    #[prost(bytes = "vec", tag = "2")]
+    pub value: ::prost::alloc::vec::Vec<u8>,
+}
+/// Key/value pair plus option to control append behavior. This is used to specify
+/// key/value pairs that should be appended to a set of existing key/value pairs.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct KeyValueAppend {
+    /// Key/value pair entry that this option to append or overwrite.
+    #[prost(message, optional, tag = "1")]
+    pub entry: ::core::option::Option<KeyValue>,
+    /// Describes the action taken to append/overwrite the given value for an existing
+    /// key or to only add this key if it's absent.
+    #[prost(enumeration = "key_value_append::KeyValueAppendAction", tag = "2")]
+    pub action: i32,
+}
+/// Nested message and enum types in `KeyValueAppend`.
+pub mod key_value_append {
+    /// Describes the supported actions types for key/value pair append action.
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum KeyValueAppendAction {
+        /// If the key already exists, this action will result in the following behavior:
+        ///
+        /// * Comma-concatenated value if multiple values are not allowed.
+        /// * New value added to the list of values if multiple values are allowed.
+        ///
+        /// If the key doesn't exist then this will add pair with specified key and value.
+        AppendIfExistsOrAdd = 0,
+        /// This action will add the key/value pair if it doesn't already exist. If the
+        /// key already exists then this will be a no-op.
+        AddIfAbsent = 1,
+        /// This action will overwrite the specified value by discarding any existing
+        /// values if the key already exists. If the key doesn't exist then this will add
+        /// the pair with specified key and value.
+        OverwriteIfExistsOrAdd = 2,
+        /// This action will overwrite the specified value by discarding any existing
+        /// values if the key already exists. If the key doesn't exist then this will
+        /// be no-op.
+        OverwriteIfExists = 3,
+    }
+    impl KeyValueAppendAction {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                KeyValueAppendAction::AppendIfExistsOrAdd => "APPEND_IF_EXISTS_OR_ADD",
+                KeyValueAppendAction::AddIfAbsent => "ADD_IF_ABSENT",
+                KeyValueAppendAction::OverwriteIfExistsOrAdd => {
+                    "OVERWRITE_IF_EXISTS_OR_ADD"
+                }
+                KeyValueAppendAction::OverwriteIfExists => "OVERWRITE_IF_EXISTS",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "APPEND_IF_EXISTS_OR_ADD" => Some(Self::AppendIfExistsOrAdd),
+                "ADD_IF_ABSENT" => Some(Self::AddIfAbsent),
+                "OVERWRITE_IF_EXISTS_OR_ADD" => Some(Self::OverwriteIfExistsOrAdd),
+                "OVERWRITE_IF_EXISTS" => Some(Self::OverwriteIfExists),
+                _ => None,
+            }
+        }
+    }
+}
+/// Key/value pair to append or remove.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct KeyValueMutation {
+    /// Key/value pair to append or overwrite. Only one of `append` or `remove` can be set.
+    #[prost(message, optional, tag = "1")]
+    pub append: ::core::option::Option<KeyValueAppend>,
+    /// Key to remove. Only one of `append` or `remove` can be set.
+    #[prost(string, tag = "2")]
+    pub remove: ::prost::alloc::string::String,
+}
 /// Query parameter name/value pair.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -812,9 +940,26 @@ pub struct WatchedDirectory {
     pub path: ::prost::alloc::string::String,
 }
 /// Data source consisting of a file, an inline value, or an environment variable.
+/// \[\#next-free-field: 6\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DataSource {
+    /// Watched directory that is watched for file changes. If this is set explicitly, the file
+    /// specified in the `filename` field will be reloaded when relevant file move events occur.
+    ///
+    /// .. note::
+    /// This field only makes sense when the `filename` field is set.
+    ///
+    /// .. note::
+    /// Envoy only updates when the file is replaced by a file move, and not when the file is
+    /// edited in place.
+    ///
+    /// .. note::
+    /// Not all use cases of `DataSource` support watching directories. It depends on the
+    /// specific usage of the `DataSource`. See the documentation of the parent message for
+    /// details.
+    #[prost(message, optional, tag = "5")]
+    pub watched_directory: ::core::option::Option<WatchedDirectory>,
     #[prost(oneof = "data_source::Specifier", tags = "1, 2, 3, 4")]
     pub specifier: ::core::option::Option<data_source::Specifier>,
 }
@@ -1140,6 +1285,7 @@ pub struct GrpcService {
 }
 /// Nested message and enum types in `GrpcService`.
 pub mod grpc_service {
+    /// \[\#next-free-field: 6\]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct EnvoyGrpc {
@@ -1157,6 +1303,20 @@ pub mod grpc_service {
         /// If not set, xDS gRPC streams default base interval:500ms, maximum interval:30s will be applied.
         #[prost(message, optional, tag = "3")]
         pub retry_policy: ::core::option::Option<super::RetryPolicy>,
+        /// Maximum gRPC message size that is allowed to be received.
+        /// If a message over this limit is received, the gRPC stream is terminated with the RESOURCE_EXHAUSTED error.
+        /// This limit is applied to individual messages in the streaming response and not the total size of streaming response.
+        /// Defaults to 0, which means unlimited.
+        #[prost(message, optional, tag = "4")]
+        pub max_receive_message_length: ::core::option::Option<
+            super::super::super::super::super::google::protobuf::UInt32Value,
+        >,
+        /// This provides gRPC client level control over envoy generated headers.
+        /// If false, the header will be sent but it can be overridden by per stream option.
+        /// If true, the header will be removed and can not be overridden by per stream option.
+        /// Default to false.
+        #[prost(bool, tag = "5")]
+        pub skip_envoy_headers: bool,
     }
     /// \[\#next-free-field: 9\]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1461,6 +1621,114 @@ pub mod event_service_config {
         /// Specifies the gRPC service that hosts the event reporting service.
         #[prost(message, tag = "1")]
         GrpcService(super::GrpcService),
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ProxyProtocolPassThroughTlVs {
+    /// The strategy to pass through TLVs. Default is INCLUDE_ALL.
+    /// If INCLUDE_ALL is set, all TLVs will be passed through no matter the tlv_type field.
+    #[prost(
+        enumeration = "proxy_protocol_pass_through_tl_vs::PassTlVsMatchType",
+        tag = "1"
+    )]
+    pub match_type: i32,
+    /// The TLV types that are applied based on match_type.
+    /// TLV type is defined as uint8_t in proxy protocol. See `the spec <<https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>`\_> for details.
+    #[prost(uint32, repeated, packed = "false", tag = "2")]
+    pub tlv_type: ::prost::alloc::vec::Vec<u32>,
+}
+/// Nested message and enum types in `ProxyProtocolPassThroughTLVs`.
+pub mod proxy_protocol_pass_through_tl_vs {
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum PassTlVsMatchType {
+        /// Pass all TLVs.
+        IncludeAll = 0,
+        /// Pass specific TLVs defined in tlv_type.
+        Include = 1,
+    }
+    impl PassTlVsMatchType {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                PassTlVsMatchType::IncludeAll => "INCLUDE_ALL",
+                PassTlVsMatchType::Include => "INCLUDE",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "INCLUDE_ALL" => Some(Self::IncludeAll),
+                "INCLUDE" => Some(Self::Include),
+                _ => None,
+            }
+        }
+    }
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ProxyProtocolConfig {
+    /// The PROXY protocol version to use. See <https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt> for details
+    #[prost(enumeration = "proxy_protocol_config::Version", tag = "1")]
+    pub version: i32,
+    /// This config controls which TLVs can be passed to upstream if it is Proxy Protocol
+    /// V2 header. If there is no setting for this field, no TLVs will be passed through.
+    #[prost(message, optional, tag = "2")]
+    pub pass_through_tlvs: ::core::option::Option<ProxyProtocolPassThroughTlVs>,
+}
+/// Nested message and enum types in `ProxyProtocolConfig`.
+pub mod proxy_protocol_config {
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum Version {
+        /// PROXY protocol version 1. Human readable format.
+        V1 = 0,
+        /// PROXY protocol version 2. Binary format.
+        V2 = 1,
+    }
+    impl Version {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Version::V1 => "V1",
+                Version::V2 => "V2",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "V1" => Some(Self::V1),
+                "V2" => Some(Self::V2),
+                _ => None,
+            }
+        }
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1778,6 +2046,13 @@ pub mod health_check {
         /// necessarily contiguous.
         #[prost(message, repeated, tag = "2")]
         pub receive: ::prost::alloc::vec::Vec<Payload>,
+        /// When setting this value, it tries to attempt health check request with ProxyProtocol.
+        /// When `send` is presented, they are sent after preceding ProxyProtocol header.
+        /// Only ProxyProtocol header is sent when `send` is not presented.
+        /// It allows to use both ProxyProtocol V1 and V2. In V1, it presents L3/L4. In V2, it includes
+        /// LOCAL command and doesn't include L3/L4.
+        #[prost(message, optional, tag = "3")]
+        pub proxy_protocol_config: ::core::option::Option<super::ProxyProtocolConfig>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1914,114 +2189,6 @@ impl HealthStatus {
             "TIMEOUT" => Some(Self::Timeout),
             "DEGRADED" => Some(Self::Degraded),
             _ => None,
-        }
-    }
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ProxyProtocolPassThroughTlVs {
-    /// The strategy to pass through TLVs. Default is INCLUDE_ALL.
-    /// If INCLUDE_ALL is set, all TLVs will be passed through no matter the tlv_type field.
-    #[prost(
-        enumeration = "proxy_protocol_pass_through_tl_vs::PassTlVsMatchType",
-        tag = "1"
-    )]
-    pub match_type: i32,
-    /// The TLV types that are applied based on match_type.
-    /// TLV type is defined as uint8_t in proxy protocol. See `the spec <<https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>`\_> for details.
-    #[prost(uint32, repeated, packed = "false", tag = "2")]
-    pub tlv_type: ::prost::alloc::vec::Vec<u32>,
-}
-/// Nested message and enum types in `ProxyProtocolPassThroughTLVs`.
-pub mod proxy_protocol_pass_through_tl_vs {
-    #[derive(
-        Clone,
-        Copy,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-        PartialOrd,
-        Ord,
-        ::prost::Enumeration
-    )]
-    #[repr(i32)]
-    pub enum PassTlVsMatchType {
-        /// Pass all TLVs.
-        IncludeAll = 0,
-        /// Pass specific TLVs defined in tlv_type.
-        Include = 1,
-    }
-    impl PassTlVsMatchType {
-        /// String value of the enum field names used in the ProtoBuf definition.
-        ///
-        /// The values are not transformed in any way and thus are considered stable
-        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-        pub fn as_str_name(&self) -> &'static str {
-            match self {
-                PassTlVsMatchType::IncludeAll => "INCLUDE_ALL",
-                PassTlVsMatchType::Include => "INCLUDE",
-            }
-        }
-        /// Creates an enum from field names used in the ProtoBuf definition.
-        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-            match value {
-                "INCLUDE_ALL" => Some(Self::IncludeAll),
-                "INCLUDE" => Some(Self::Include),
-                _ => None,
-            }
-        }
-    }
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ProxyProtocolConfig {
-    /// The PROXY protocol version to use. See <https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt> for details
-    #[prost(enumeration = "proxy_protocol_config::Version", tag = "1")]
-    pub version: i32,
-    /// This config controls which TLVs can be passed to upstream if it is Proxy Protocol
-    /// V2 header. If there is no setting for this field, no TLVs will be passed through.
-    #[prost(message, optional, tag = "2")]
-    pub pass_through_tlvs: ::core::option::Option<ProxyProtocolPassThroughTlVs>,
-}
-/// Nested message and enum types in `ProxyProtocolConfig`.
-pub mod proxy_protocol_config {
-    #[derive(
-        Clone,
-        Copy,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-        PartialOrd,
-        Ord,
-        ::prost::Enumeration
-    )]
-    #[repr(i32)]
-    pub enum Version {
-        /// PROXY protocol version 1. Human readable format.
-        V1 = 0,
-        /// PROXY protocol version 2. Binary format.
-        V2 = 1,
-    }
-    impl Version {
-        /// String value of the enum field names used in the ProtoBuf definition.
-        ///
-        /// The values are not transformed in any way and thus are considered stable
-        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-        pub fn as_str_name(&self) -> &'static str {
-            match self {
-                Version::V1 => "V1",
-                Version::V2 => "V2",
-            }
-        }
-        /// Creates an enum from field names used in the ProtoBuf definition.
-        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-            match value {
-                "V1" => Some(Self::V1),
-                "V2" => Some(Self::V2),
-                _ => None,
-            }
         }
     }
 }
@@ -2331,11 +2498,9 @@ pub struct ExtensionConfigSource {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum ApiVersion {
-    /// When not specified, we assume v2, to ease migration to Envoy's stable API
-    /// versioning. If a client does not support v2 (e.g. due to deprecation), this
-    /// is an invalid value.
+    /// When not specified, we assume v3; it is the only supported version.
     Auto = 0,
-    /// Use xDS v2 API.
+    /// Use xDS v2 API. This is no longer supported.
     V2 = 1,
     /// Use xDS v3 API.
     V3 = 2,
@@ -2579,10 +2744,9 @@ pub struct HttpProtocolOptions {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// The maximum duration of a connection. The duration is defined as a period since a connection
-    /// was established. If not set, there is no max duration. When max_connection_duration is reached
-    /// and if there are no active streams, the connection will be closed. If the connection is a
-    /// downstream connection and there are any active streams, the drain sequence will kick-in,
-    /// and the connection will be force-closed after the drain period. See :ref:`drain_timeout <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
+    /// was established. If not set, there is no max duration. When max_connection_duration is reached,
+    /// the drain sequence will kick-in. The connection will be closed after the drain timeout period
+    /// if there are no active streams. See :ref:`drain_timeout <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
     #[prost(message, optional, tag = "3")]
     pub max_connection_duration: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
@@ -3077,6 +3241,12 @@ pub struct Http3ProtocolOptions {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SchemeHeaderTransformation {
+    /// Set the Scheme header to match the upstream transport protocol. For example, should a
+    /// request be sent to the upstream over TLS, the scheme header will be set to "https". Should the
+    /// request be sent over plaintext, the scheme header will be set to "http".
+    /// If scheme_to_overwrite is set, this field is not used.
+    #[prost(bool, tag = "2")]
+    pub match_upstream: bool,
     #[prost(oneof = "scheme_header_transformation::Transformation", tags = "1")]
     pub transformation: ::core::option::Option<
         scheme_header_transformation::Transformation,
@@ -3088,6 +3258,7 @@ pub mod scheme_header_transformation {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Transformation {
         /// Overwrite any Scheme header with the contents of this string.
+        /// If set, takes precedence over match_upstream.
         #[prost(string, tag = "1")]
         SchemeToOverwrite(::prost::alloc::string::String),
     }

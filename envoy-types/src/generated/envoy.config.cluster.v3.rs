@@ -147,7 +147,7 @@ pub struct Filter {
 }
 /// See the :ref:`architecture overview <arch_overview_outlier_detection>` for
 /// more information on outlier detection.
-/// \[\#next-free-field: 25\]
+/// \[\#next-free-field: 26\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutlierDetection {
@@ -173,8 +173,8 @@ pub struct OutlierDetection {
     pub base_ejection_time: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
-    /// The maximum % of an upstream cluster that can be ejected due to outlier
-    /// detection. Defaults to 10% but will eject at least one host regardless of the value.
+    /// The maximum % of an upstream cluster that can be ejected due to outlier detection. Defaults to 10% .
+    /// Will eject at least one host regardless of the value if :ref:`always_eject_one_host<envoy_v3_api_field_config.cluster.v3.OutlierDetection.always_eject_one_host>` is enabled.
     #[prost(message, optional, tag = "4")]
     pub max_ejection_percent: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -337,6 +337,12 @@ pub struct OutlierDetection {
     /// \[\#not-implemented-hide:\]
     #[prost(message, repeated, tag = "24")]
     pub monitors: ::prost::alloc::vec::Vec<super::super::core::v3::TypedExtensionConfig>,
+    /// If enabled, at least one host is ejected regardless of the value of :ref:`max_ejection_percent<envoy_v3_api_field_config.cluster.v3.OutlierDetection.max_ejection_percent>`.
+    /// Defaults to false.
+    #[prost(message, optional, tag = "25")]
+    pub always_eject_one_host: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
 }
 /// Cluster list collections. Entries are `Cluster` resources or references.
 /// \[\#not-implemented-hide:\]
@@ -349,16 +355,15 @@ pub struct ClusterCollection {
     >,
 }
 /// Configuration for a single upstream cluster.
-/// \[\#next-free-field: 57\]
+/// \[\#next-free-field: 58\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Cluster {
-    /// Configuration to use different transport sockets for different endpoints.
-    /// The entry of `envoy.transport_socket_match` in the
-    /// :ref:`LbEndpoint.Metadata <envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`
-    /// is used to match against the transport sockets as they appear in the list. The first
-    /// :ref:`match <envoy_v3_api_msg_config.cluster.v3.Cluster.TransportSocketMatch>` is used.
-    /// For example, with the following match
+    /// Configuration to use different transport sockets for different endpoints. The entry of
+    /// `envoy.transport_socket_match` in the :ref:`LbEndpoint.Metadata <envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>` is used to match against the
+    /// transport sockets as they appear in the list. If a match is not found, the search continues in
+    /// :ref:`LocalityLbEndpoints.Metadata <envoy_v3_api_field_config.endpoint.v3.LocalityLbEndpoints.metadata>`. The first :ref:`match <envoy_v3_api_msg_config.cluster.v3.Cluster.TransportSocketMatch>` is used. For example, with
+    /// the following match
     ///
     /// .. code-block:: yaml
     ///
@@ -383,8 +388,9 @@ pub struct Cluster {
     /// socket match in case above.
     ///
     /// If an endpoint metadata's value under `envoy.transport_socket_match` does not match any
-    /// `TransportSocketMatch`, socket configuration fallbacks to use the `tls_context` or
-    /// `transport_socket` specified in this cluster.
+    /// `TransportSocketMatch`, the locality metadata is then checked for a match. Barring any
+    /// matches in the endpoint or locality metadata, the socket configuration fallbacks to use the
+    /// `tls_context` or `transport_socket` specified in this cluster.
     ///
     /// This field allows gradual and flexible transport socket configuration changes.
     ///
@@ -735,6 +741,26 @@ pub struct Cluster {
     /// from the LRS stream here.\]
     #[prost(message, optional, tag = "42")]
     pub lrs_server: ::core::option::Option<super::super::core::v3::ConfigSource>,
+    /// \[\#not-implemented-hide:\]
+    /// A list of metric names from ORCA load reports to propagate to LRS.
+    ///
+    /// If not specified, then ORCA load reports will not be propagated to LRS.
+    ///
+    /// For map fields in the ORCA proto, the string will be of the form `<map_field_name>.<map_key>`.
+    /// For example, the string `named_metrics.foo` will mean to look for the key `foo` in the ORCA
+    /// `named_metrics` field.
+    ///
+    /// The special map key `*` means to report all entries in the map (e.g., `named_metrics.*` means to
+    /// report all entries in the ORCA named_metrics field). Note that this should be used only with trusted
+    /// backends.
+    ///
+    /// The metric names in LRS will follow the same semantics as this field. In other words, if this field
+    /// contains `named_metrics.foo`, then the LRS load report will include the data with that same string
+    /// as the key.
+    #[prost(string, repeated, tag = "57")]
+    pub lrs_report_endpoint_metrics: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
+    >,
     /// If track_timeout_budgets is true, the :ref:`timeout budget histograms <config_cluster_manager_cluster_stats_timeout_budgets>` will be published for each
     /// request. These show what percentage of a request's per try and global timeout was used. A value
     /// of 0 would indicate that none of the timeout was used or that the timeout was infinite. A value
@@ -802,7 +828,7 @@ pub mod cluster {
         /// The name of the match, used in stats generation.
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
-        /// Optional endpoint metadata match criteria.
+        /// Optional metadata match criteria.
         /// The connection to the endpoint with metadata matching what is set in this field
         /// will use the transport socket configuration specified here.
         /// The endpoint's metadata entry in `envoy.transport_socket_match` is used to match

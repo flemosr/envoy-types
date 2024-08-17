@@ -423,7 +423,6 @@ pub struct HystrixSink {
 ///    - name: envoy.stat_sinks.metrics_service
 ///      typed_config:
 ///        "@type": type.googleapis.com/envoy.config.metrics.v3.MetricsServiceConfig
-///        transport_api_version: V3
 /// ```
 ///
 /// \[\#extension: envoy.stat_sinks.metrics_service\]

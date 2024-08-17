@@ -2,7 +2,8 @@
 /// they can be requested through the OAuth2 client credential grant. The credentials obtained are then injected into the Authorization header
 /// of the proxied HTTP requests, utilizing either the Basic or Bearer scheme.
 ///
-/// If the credential is not present, the request will fail with 401 Unauthorized if fail_if_not_present is set to true.
+/// If the credential is not present or there was a failure injecting the credential, the request will fail with `401 Unauthorized` unless
+/// `allow_request_without_credential` is set to `true`.
 ///
 /// Notice: This filter is intended to be used for workload authentication, which means that the identity associated with the inserted credential
 /// is considered as the identity of the workload behind the envoy proxy(in this case, envoy is typically deployed as a sidecar alongside that
@@ -13,11 +14,10 @@
 /// .. code-block:: yaml
 ///
 /// overwrite: true
-/// fail_if_not_present: true
 /// credential:
 /// name: generic_credential
 /// typed_config:
-/// "@type": type.googleapis.com/envoy.extensions.injected_credentials.generic.v3.Generic
+/// "@type": type.googleapis.com/envoy.extensions.http.injected_credentials.generic.v3.Generic
 /// credential:
 /// name: credential
 /// sds_config:
@@ -26,6 +26,7 @@
 /// header: Authorization
 ///
 /// credential.yaml for Basic Auth:
+///
 /// .. code-block:: yaml
 ///
 /// resources:
@@ -37,7 +38,9 @@
 ///   inline_string: "Basic base64EncodedUsernamePassword"
 ///
 /// It can also be configured to inject a Bearer token into the proxied requests.
+///
 /// credential.yaml for Bearer Token:
+///
 /// .. code-block:: yaml
 ///
 /// resources:
@@ -54,13 +57,16 @@ pub struct CredentialInjector {
     /// Value defaults to false.
     #[prost(bool, tag = "1")]
     pub overwrite: bool,
-    /// Whether to fail the request if the credential is not present.
-    /// Value defaults to false.
-    /// If set to true, the request will fail with 401 Unauthorized if the credential is not present.
+    /// Whether to send the request to upstream if the credential is not present or if the credential injection
+    /// to the request fails.
+    ///
+    /// By default, a request will fail with `401 Unauthorized` if the
+    /// credential is not present or the injection of the credential to the request fails.
+    /// If set to true, the request will be sent to upstream without the credential.
     #[prost(bool, tag = "2")]
-    pub fail_if_not_present: bool,
+    pub allow_request_without_credential: bool,
     /// The credential to inject into the proxied requests
-    /// TODO add extension-category
+    /// \[\#extension-category: envoy.http.injected_credentials\]
     #[prost(message, optional, tag = "3")]
     pub credential: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,

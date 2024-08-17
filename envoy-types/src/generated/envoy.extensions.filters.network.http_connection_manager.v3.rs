@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 58\]
+/// \[\#next-free-field: 59\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpConnectionManager {
@@ -32,6 +32,20 @@ pub struct HttpConnectionManager {
     pub common_http_protocol_options: ::core::option::Option<
         super::super::super::super::super::config::core::v3::HttpProtocolOptions,
     >,
+    /// If set to true, Envoy will not start a drain timer for downstream HTTP1 connections after
+    /// :ref:`common_http_protocol_options.max_connection_duration <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_connection_duration>` passes.
+    /// Instead, Envoy will wait for the next downstream request, add connection:close to the response
+    /// headers, then close the connection after the stream ends.
+    ///
+    /// This behavior is compliant with `RFC 9112 section 9.6 <<https://www.rfc-editor.org/rfc/rfc9112#name-tear-down>`\_>
+    ///
+    /// If set to false, `max_connection_duration` will cause Envoy to enter the normal drain
+    /// sequence for HTTP1 with Envoy eventually closing the connection (once there are no active
+    /// streams).
+    ///
+    /// Has no effect if `max_connection_duration` is unset. Defaults to false.
+    #[prost(bool, tag = "58")]
+    pub http1_safe_max_connection_duration: bool,
     /// Additional HTTP/1 settings that are passed to the HTTP/1 codec.
     /// \[\#comment:TODO: The following fields are ignored when the
     /// :ref:`header validation configuration <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.typed_header_validation_config>`
@@ -140,9 +154,9 @@ pub struct HttpConnectionManager {
     /// race with the final GOAWAY frame. During this grace period, Envoy will
     /// continue to accept new streams. After the grace period, a final GOAWAY
     /// frame is sent and Envoy will start refusing new streams. Draining occurs
-    /// both when a connection hits the idle timeout or during general server
-    /// draining. The default grace period is 5000 milliseconds (5 seconds) if this
-    /// option is not specified.
+    /// either when a connection hits the idle timeout, when :ref:`max_connection_duration <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_connection_duration>`
+    /// is reached, or during general server draining. The default grace period is
+    /// 5000 milliseconds (5 seconds) if this option is not specified.
     #[prost(message, optional, tag = "12")]
     pub drain_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -187,7 +201,10 @@ pub struct HttpConnectionManager {
     pub access_log: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::accesslog::v3::AccessLog,
     >,
+    /// The interval to flush the above access logs.
+    ///
     /// .. attention::
+    ///
     /// This field is deprecated in favor of
     /// :ref:`access_log_flush_interval <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.access_log_flush_interval>`.
     /// Note that if both this field and :ref:`access_log_flush_interval <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.access_log_flush_interval>`
@@ -197,7 +214,11 @@ pub struct HttpConnectionManager {
     pub access_log_flush_interval: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
+    /// If set to true, HCM will flush an access log once when a new HTTP request is received, after the request
+    /// headers have been evaluated, and before iterating through the HTTP filter chain.
+    ///
     /// .. attention::
+    ///
     /// This field is deprecated in favor of
     /// :ref:`flush_access_log_on_new_request <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.flush_access_log_on_new_request>`.
     /// Note that if both this field and :ref:`flush_access_log_on_new_request <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions.flush_access_log_on_new_request>`

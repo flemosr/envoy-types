@@ -564,6 +564,11 @@ pub mod envoy {
                         include!("envoy.extensions.filters.http.tap.v3.rs");
                     }
                 }
+                pub mod thrift_to_metadata {
+                    pub mod v3 {
+                        include!("envoy.extensions.filters.http.thrift_to_metadata.v3.rs");
+                    }
+                }
                 pub mod upstream_codec {
                     pub mod v3 {
                         include!("envoy.extensions.filters.http.upstream_codec.v3.rs");
@@ -636,6 +641,38 @@ pub mod envoy {
                 pub mod ext_authz {
                     pub mod v3 {
                         include!("envoy.extensions.filters.network.ext_authz.v3.rs");
+                    }
+                }
+                pub mod generic_proxy {
+                    pub mod action {
+                        pub mod v3 {
+                            include!("envoy.extensions.filters.network.generic_proxy.action.v3.rs");
+                        }
+                    }
+                    pub mod codecs {
+                        pub mod dubbo {
+                            pub mod v3 {
+                                include!("envoy.extensions.filters.network.generic_proxy.codecs.dubbo.v3.rs");
+                            }
+                        }
+                        pub mod http1 {
+                            pub mod v3 {
+                                include!("envoy.extensions.filters.network.generic_proxy.codecs.http1.v3.rs");
+                            }
+                        }
+                    }
+                    pub mod matcher {
+                        pub mod v3 {
+                            include!("envoy.extensions.filters.network.generic_proxy.matcher.v3.rs");
+                        }
+                    }
+                    pub mod router {
+                        pub mod v3 {
+                            include!("envoy.extensions.filters.network.generic_proxy.router.v3.rs");
+                        }
+                    }
+                    pub mod v3 {
+                        include!("envoy.extensions.filters.network.generic_proxy.v3.rs");
                     }
                 }
                 pub mod http_connection_manager {
@@ -847,6 +884,18 @@ pub mod envoy {
                     }
                 }
             }
+            pub mod injected_credentials {
+                pub mod generic {
+                    pub mod v3 {
+                        include!("envoy.extensions.http.injected_credentials.generic.v3.rs");
+                    }
+                }
+                pub mod oauth2 {
+                    pub mod v3 {
+                        include!("envoy.extensions.http.injected_credentials.oauth2.v3.rs");
+                    }
+                }
+            }
             pub mod original_ip_detection {
                 pub mod custom_header {
                     pub mod v3 {
@@ -869,18 +918,6 @@ pub mod envoy {
                     pub mod v3 {
                         include!("envoy.extensions.http.stateful_session.header.v3.rs");
                     }
-                }
-            }
-        }
-        pub mod injected_credentials {
-            pub mod generic {
-                pub mod v3 {
-                    include!("envoy.extensions.injected_credentials.generic.v3.rs");
-                }
-            }
-            pub mod oauth2 {
-                pub mod v3 {
-                    include!("envoy.extensions.injected_credentials.oauth2.v3.rs");
                 }
             }
         }
@@ -994,6 +1031,11 @@ pub mod envoy {
                         include!("envoy.extensions.matching.input_matchers.ip.v3.rs");
                     }
                 }
+                pub mod metadata {
+                    pub mod v3 {
+                        include!("envoy.extensions.matching.input_matchers.metadata.v3.rs");
+                    }
+                }
                 pub mod runtime_fraction {
                     pub mod v3 {
                         include!("envoy.extensions.matching.input_matchers.runtime_fraction.v3.rs");
@@ -1054,6 +1096,11 @@ pub mod envoy {
             }
         }
         pub mod quic {
+            pub mod connection_debug_visitor {
+                pub mod v3 {
+                    include!("envoy.extensions.quic.connection_debug_visitor.v3.rs");
+                }
+            }
             pub mod connection_id_generator {
                 pub mod v3 {
                     include!("envoy.extensions.quic.connection_id_generator.v3.rs");

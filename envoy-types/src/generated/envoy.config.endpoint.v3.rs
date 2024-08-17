@@ -140,13 +140,16 @@ pub struct LedsClusterLocalityConfig {
 /// A group of endpoints belonging to a Locality.
 /// One can have multiple LocalityLbEndpoints for a locality, but only if
 /// they have different priorities.
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalityLbEndpoints {
     /// Identifies location of where the upstream hosts run.
     #[prost(message, optional, tag = "1")]
     pub locality: ::core::option::Option<super::super::core::v3::Locality>,
+    /// Metadata to provide additional information about the locality endpoints in aggregate.
+    #[prost(message, optional, tag = "9")]
+    pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
     /// The group of endpoints belonging to the locality specified.
     /// \[\#comment:TODO(adisuissa): Once LEDS is implemented this field needs to be
     /// deprecated and replaced by `load_balancer_endpoints`.\]
@@ -275,6 +278,12 @@ pub mod cluster_load_assignment {
         ///
         /// Envoy supports only one element and will NACK if more than one element is present.
         /// Other xDS-capable data planes will not necessarily have this limitation.
+        ///
+        /// In Envoy, this `drop_overloads` config can be overridden by a runtime key
+        /// "load_balancing_policy.drop_overload_limit" setting. This runtime key can be set to
+        /// any integer number between 0 and 100. 0 means drop 0%. 100 means drop 100%.
+        /// When both `drop_overloads` config and "load_balancing_policy.drop_overload_limit"
+        /// setting are in place, the min of these two wins.
         #[prost(message, repeated, tag = "2")]
         pub drop_overloads: ::prost::alloc::vec::Vec<policy::DropOverload>,
         /// Priority levels and localities are considered overprovisioned with this
@@ -332,7 +341,7 @@ pub mod cluster_load_assignment {
 /// These are stats Envoy reports to the management server at a frequency defined by
 /// :ref:`LoadStatsResponse.load_reporting_interval<envoy_v3_api_field_service.load_stats.v3.LoadStatsResponse.load_reporting_interval>`.
 /// Stats per upstream region/zone and optionally per subzone.
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 15\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpstreamLocalityStats {
@@ -356,7 +365,45 @@ pub struct UpstreamLocalityStats {
     /// upstream endpoints in the locality.
     #[prost(uint64, tag = "8")]
     pub total_issued_requests: u64,
-    /// Stats for multi-dimensional load balancing.
+    /// The total number of connections in an established state at the time of the
+    /// report. This field is aggregated over all the upstream endpoints in the
+    /// locality.
+    /// In Envoy, this information may be based on `upstream_cx_active metric`.
+    /// \[\#not-implemented-hide:\]
+    #[prost(uint64, tag = "9")]
+    pub total_active_connections: u64,
+    /// The total number of connections opened since the last report.
+    /// This field is aggregated over all the upstream endpoints in the locality.
+    /// In Envoy, this information may be based on `upstream_cx_total` metric
+    /// compared to itself between start and end of an interval, i.e.
+    /// `upstream_cx_total`(now) - `upstream_cx_total`(now -
+    /// load_report_interval).
+    /// \[\#not-implemented-hide:\]
+    #[prost(uint64, tag = "10")]
+    pub total_new_connections: u64,
+    /// The total number of connection failures since the last report.
+    /// This field is aggregated over all the upstream endpoints in the locality.
+    /// In Envoy, this information may be based on `upstream_cx_connect_fail`
+    /// metric compared to itself between start and end of an interval, i.e.
+    /// `upstream_cx_connect_fail`(now) - `upstream_cx_connect_fail`(now -
+    /// load_report_interval).
+    /// \[\#not-implemented-hide:\]
+    #[prost(uint64, tag = "11")]
+    pub total_fail_connections: u64,
+    /// CPU utilization stats for multi-dimensional load balancing.
+    /// This typically comes from endpoint metrics reported via ORCA.
+    #[prost(message, optional, tag = "12")]
+    pub cpu_utilization: ::core::option::Option<UnnamedEndpointLoadMetricStats>,
+    /// Memory utilization for multi-dimensional load balancing.
+    /// This typically comes from endpoint metrics reported via ORCA.
+    #[prost(message, optional, tag = "13")]
+    pub mem_utilization: ::core::option::Option<UnnamedEndpointLoadMetricStats>,
+    /// Blended application-defined utilization for multi-dimensional load balancing.
+    /// This typically comes from endpoint metrics reported via ORCA.
+    #[prost(message, optional, tag = "14")]
+    pub application_utilization: ::core::option::Option<UnnamedEndpointLoadMetricStats>,
+    /// Named stats for multi-dimensional load balancing.
+    /// These typically come from endpoint metrics reported via ORCA.
     #[prost(message, repeated, tag = "5")]
     pub load_metric_stats: ::prost::alloc::vec::Vec<EndpointLoadMetricStats>,
     /// Endpoint granularity stats information for this locality. This information
@@ -424,6 +471,18 @@ pub struct EndpointLoadMetricStats {
     /// Sum of metric values across all calls that finished with this metric for
     /// load_reporting_interval.
     #[prost(double, tag = "3")]
+    pub total_metric_value: f64,
+}
+/// Same as EndpointLoadMetricStats, except without the metric_name field.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UnnamedEndpointLoadMetricStats {
+    /// Number of calls that finished and included this metric.
+    #[prost(uint64, tag = "1")]
+    pub num_requests_finished_with_metric: u64,
+    /// Sum of metric values across all calls that finished with this metric for
+    /// load_reporting_interval.
+    #[prost(double, tag = "2")]
     pub total_metric_value: f64,
 }
 /// Per cluster load stats. Envoy reports these stats a management server in a

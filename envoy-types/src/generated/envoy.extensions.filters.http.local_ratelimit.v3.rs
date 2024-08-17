@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 16\]
+/// \[\#next-free-field: 17\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalRateLimit {
@@ -98,6 +98,24 @@ pub struct LocalRateLimit {
     /// If unspecified, the default value is false.
     #[prost(bool, tag = "11")]
     pub local_rate_limit_per_downstream_connection: bool,
+    /// Enables the local cluster level rate limiting, iff this is set explicitly. For example,
+    /// given an Envoy gateway that contains N Envoy instances and a rate limit rule X tokens
+    /// per second. If this is set, the total rate limit of whole gateway will always be X tokens
+    /// per second regardless of how N changes. If this is not set, the total rate limit of whole
+    /// gateway will be N * X tokens per second.
+    ///
+    /// .. note::
+    /// This should never be set if the `local_rate_limit_per_downstream_connection` is set to
+    /// true. Because if per connection rate limiting is enabled, we assume that the token buckets
+    /// should never be shared across Envoy instances.
+    ///
+    /// .. note::
+    /// This only works when the :ref:`local cluster name <envoy_v3_api_field_config.bootstrap.v3.ClusterManager.local_cluster_name>` is set and
+    /// the related cluster is defined in the bootstrap configuration.
+    #[prost(message, optional, tag = "16")]
+    pub local_cluster_rate_limit: ::core::option::Option<
+        super::super::super::super::common::ratelimit::v3::LocalClusterRateLimit,
+    >,
     /// Defines the standard version to use for X-RateLimit headers emitted by the filter.
     ///
     /// Disabled by default.

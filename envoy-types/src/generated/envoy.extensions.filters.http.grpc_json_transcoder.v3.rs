@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 17\]
+/// \[\#next-free-field: 18\]
 /// GrpcJsonTranscoder filter configuration.
 /// The filter itself can be used per route / per virtual host or on the general level. The most
 /// specific one is being used for a given route. If the list of services is empty - filter
@@ -190,6 +190,10 @@ pub struct GrpcJsonTranscoder {
     pub max_response_body_size: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
+    /// If true, query parameters that cannot be mapped to a corresponding
+    /// protobuf field are captured in an HttpBody extension of UnknownQueryParams.
+    #[prost(bool, tag = "17")]
+    pub capture_unknown_query_parameters: bool,
     #[prost(oneof = "grpc_json_transcoder::DescriptorSet", tags = "1, 4")]
     pub descriptor_set: ::core::option::Option<grpc_json_transcoder::DescriptorSet>,
 }
@@ -237,7 +241,8 @@ pub mod grpc_json_transcoder {
         /// When set to true, the request will be rejected with a `HTTP 400 Bad Request`.
         ///
         /// The fields
-        /// :ref:`ignore_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignore_unknown_query_parameters>`
+        /// :ref:`ignore_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignore_unknown_query_parameters>`,
+        /// :ref:`capture_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.capture_unknown_query_parameters>`,
         /// and
         /// :ref:`ignored_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignored_query_parameters>`
         /// have priority over this strict validation behavior.
@@ -316,5 +321,27 @@ pub mod grpc_json_transcoder {
         /// services.
         #[prost(bytes, tag = "4")]
         ProtoDescriptorBin(::prost::alloc::vec::Vec<u8>),
+    }
+}
+/// `UnknownQueryParams` is added as an extension field in `HttpBody` if
+/// `GrpcJsonTranscoder::capture_unknown_query_parameters` is true and unknown query
+/// parameters were present in the request.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UnknownQueryParams {
+    /// A map from unrecognized query parameter keys, to the values associated with those keys.
+    #[prost(map = "string, message", tag = "1")]
+    pub key: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        unknown_query_params::Values,
+    >,
+}
+/// Nested message and enum types in `UnknownQueryParams`.
+pub mod unknown_query_params {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct Values {
+        #[prost(string, repeated, tag = "1")]
+        pub values: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
 }

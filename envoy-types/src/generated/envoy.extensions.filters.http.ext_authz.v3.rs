@@ -1,4 +1,4 @@
-/// \[\#next-free-field: 24\]
+/// \[\#next-free-field: 29\]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {
@@ -50,6 +50,20 @@ pub struct ExtAuthz {
     pub status_on_error: ::core::option::Option<
         super::super::super::super::super::r#type::v3::HttpStatus,
     >,
+    /// When this is set to true, the filter will check the :ref:`ext_authz response <envoy_v3_api_msg_service.auth.v3.CheckResponse>` for invalid header &
+    /// query parameter mutations. If the side stream response is invalid, it will send a local reply
+    /// to the downstream request with status HTTP 500 Internal Server Error.
+    ///
+    /// Note that headers_to_remove & query_parameters_to_remove are validated, but invalid elements in
+    /// those fields should not affect any headers & thus will not cause the filter to send a local
+    /// reply.
+    ///
+    /// When set to false, any invalid mutations will be visible to the rest of envoy and may cause
+    /// unexpected behavior.
+    ///
+    /// If you are using ext_authz with an untrusted ext_authz server, you should set this to true.
+    #[prost(bool, tag = "24")]
+    pub validate_mutations: bool,
     /// Specifies a list of metadata namespaces whose values, if present, will be passed to the
     /// ext_authz service. The :ref:`filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.filter_metadata>`
     /// is passed as an opaque `protobuf::Struct`.
@@ -172,8 +186,19 @@ pub struct ExtAuthz {
     ///    client request body (controlled by :ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.with_request_body>` setting),
     ///    consequently the value of *Content-Length* of the authorization request reflects the size of
     ///    its payload size.
+    ///
+    /// .. note::
+    ///
+    /// 3. This can be overridden by the field `disallowed_headers` below. That is, if a header
+    ///    matches for both `allowed_headers` and `disallowed_headers`, the header will NOT be sent.
     #[prost(message, optional, tag = "17")]
     pub allowed_headers: ::core::option::Option<
+        super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
+    >,
+    /// If set, specifically disallow any header in this list to be forwarded to the external
+    /// authentication server. This overrides the above `allowed_headers` if a header matches both.
+    #[prost(message, optional, tag = "25")]
+    pub disallowed_headers: ::core::option::Option<
         super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
     >,
     /// Specifies if the TLS session level details like SNI are sent to the external service.
@@ -210,6 +235,45 @@ pub struct ExtAuthz {
     /// default only for backwards compatibility.
     #[prost(bool, tag = "23")]
     pub encode_raw_headers: bool,
+    /// Rules for what modifications an ext_authz server may make to the request headers before
+    /// continuing decoding / forwarding upstream.
+    ///
+    /// If set to anything, enables header mutation checking against configured rules. Note that
+    /// :ref:`HeaderMutationRules <envoy_v3_api_msg_config.common.mutation_rules.v3.HeaderMutationRules>`
+    /// has defaults that change ext_authz behavior. Also note that if this field is set to anything,
+    /// ext_authz can no longer append to :-prefixed headers.
+    ///
+    /// If empty, header mutation rule checking is completely disabled.
+    ///
+    /// Regardless of what is configured here, ext_authz cannot remove :-prefixed headers.
+    ///
+    /// This field and `validate_mutations` have different use cases. `validate_mutations` enables
+    /// correctness checks for all header / query parameter mutations (e.g. for invalid characters).
+    /// This field allows the filter to reject mutations to specific headers.
+    #[prost(message, optional, tag = "26")]
+    pub decoder_header_mutation_rules: ::core::option::Option<
+        super::super::super::super::super::config::common::mutation_rules::v3::HeaderMutationRules,
+    >,
+    /// Enable / disable ingestion of dynamic metadata from ext_authz service.
+    ///
+    /// If false, the filter will ignore dynamic metadata injected by the ext_authz service. If the
+    /// ext_authz service tries injecting dynamic metadata, the filter will log, increment the
+    /// `ignored_dynamic_metadata` stat, then continue handling the response.
+    ///
+    /// If true, the filter will ingest dynamic metadata entries as normal.
+    ///
+    /// If unset, defaults to true.
+    #[prost(message, optional, tag = "27")]
+    pub enable_dynamic_metadata_ingestion: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Additional metadata to be added to the filter state for logging purposes. The metadata will be
+    /// added to StreamInfo's filter state under the namespace corresponding to the ext_authz filter
+    /// name.
+    #[prost(message, optional, tag = "28")]
+    pub filter_metadata: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Struct,
+    >,
     /// External authorization service configuration.
     #[prost(oneof = "ext_authz::Services", tags = "1, 3")]
     pub services: ::core::option::Option<ext_authz::Services>,
