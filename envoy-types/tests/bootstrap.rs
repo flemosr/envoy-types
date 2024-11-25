@@ -25,7 +25,7 @@ fn bootstrap() {
         .out_dir(&out_dir)
         .file_descriptor_set_path(out_dir.join("types.bin"))
         .include_file("mod.rs")
-        .compile(
+        .compile_protos(
             &protos,
             &[
                 "proto/data-plane-api",
