@@ -16,7 +16,6 @@
 ///
 ///    See the :ref:`x-request-id <config_http_conn_man_headers_x-request-id>` documentation for
 ///    more information.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct UuidRequestIdConfig {
     /// Whether the implementation alters the UUID to contain the trace sampling decision as per the

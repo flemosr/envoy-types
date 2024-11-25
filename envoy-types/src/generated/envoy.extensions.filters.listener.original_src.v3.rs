@@ -2,7 +2,6 @@
 /// The Original Src filter binds upstream connections to the original source address determined
 /// for the connection. This address could come from something like the Proxy Protocol filter, or it
 /// could come from trusted http headers.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct OriginalSrc {
     /// Whether to bind the port to the one used in the original downstream connection.

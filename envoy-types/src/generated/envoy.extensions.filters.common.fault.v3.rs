@@ -2,7 +2,6 @@
 /// Delay specification is used to inject latency into the
 /// HTTP/Mongo operation.
 /// \[\#next-free-field: 6\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct FaultDelay {
     /// The percentage of operations/connections/requests on which the delay will be injected.
@@ -15,10 +14,10 @@ pub struct FaultDelay {
 }
 /// Nested message and enum types in `FaultDelay`.
 pub mod fault_delay {
+    ///
     /// Fault delays are controlled via an HTTP header (if applicable). See the
-    /// :ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
+    /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
     /// more information.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct HeaderDelay {}
     #[derive(
@@ -44,7 +43,7 @@ pub mod fault_delay {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                FaultDelayType::Fixed => "FIXED",
+                Self::Fixed => "FIXED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -55,7 +54,6 @@ pub mod fault_delay {
             }
         }
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
     pub enum FaultDelaySecifier {
         /// Add a fixed delay before forwarding the operation upstream. See
@@ -73,7 +71,6 @@ pub mod fault_delay {
     }
 }
 /// Describes a rate limit to be applied.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct FaultRateLimit {
     /// The percentage of operations/connections/requests on which the rate limit will be injected.
@@ -87,20 +84,18 @@ pub struct FaultRateLimit {
 /// Nested message and enum types in `FaultRateLimit`.
 pub mod fault_rate_limit {
     /// Describes a fixed/constant rate limit.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct FixedLimit {
         /// The limit supplied in KiB/s.
         #[prost(uint64, tag = "1")]
         pub limit_kbps: u64,
     }
+    ///
     /// Rate limits are controlled via an HTTP header (if applicable). See the
-    /// :ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
+    /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
     /// more information.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct HeaderLimit {}
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
     pub enum LimitType {
         /// A fixed rate limit.

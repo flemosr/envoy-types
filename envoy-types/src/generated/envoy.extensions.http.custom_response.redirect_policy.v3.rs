@@ -2,7 +2,6 @@
 /// Custom response policy to internally redirect the original response to a different
 /// upstream.
 /// \[\#next-free-field: 7\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RedirectPolicy {
     /// The new response status code if specified. This is used to override the
@@ -40,7 +39,6 @@ pub struct RedirectPolicy {
 }
 /// Nested message and enum types in `RedirectPolicy`.
 pub mod redirect_policy {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum RedirectActionSpecifier {
         /// The Http URI to redirect the original request to, to get the custom

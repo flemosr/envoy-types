@@ -7,7 +7,6 @@
 ///
 /// .. note::
 /// Please use the syntactically equivalent :ref:`matching API <envoy_v3_api_msg_.xds.type.matcher.v3.Matcher>`
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Matcher {
     /// Optional OnMatch to use if the matcher failed.
@@ -24,7 +23,6 @@ pub struct Matcher {
 /// Nested message and enum types in `Matcher`.
 pub mod matcher {
     /// What to do if a match is successful.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct OnMatch {
         #[prost(oneof = "on_match::OnMatch", tags = "1, 2")]
@@ -32,7 +30,6 @@ pub mod matcher {
     }
     /// Nested message and enum types in `OnMatch`.
     pub mod on_match {
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum OnMatch {
             /// Nested matcher to evaluate.
@@ -50,7 +47,6 @@ pub mod matcher {
     /// A linear list of field matchers.
     /// The field matchers are evaluated in order, and the first match
     /// wins.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MatcherList {
         /// A list of matchers. First match wins.
@@ -60,7 +56,6 @@ pub mod matcher {
     /// Nested message and enum types in `MatcherList`.
     pub mod matcher_list {
         /// Predicate to determine if a match is successful.
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Predicate {
             #[prost(oneof = "predicate::MatchType", tags = "1, 2, 3, 4")]
@@ -69,7 +64,6 @@ pub mod matcher {
         /// Nested message and enum types in `Predicate`.
         pub mod predicate {
             /// Predicate for a single input field.
-            #[allow(clippy::derive_partial_eq_without_eq)]
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct SinglePredicate {
                 /// Protocol-specific specification of input field to match on.
@@ -83,7 +77,6 @@ pub mod matcher {
             }
             /// Nested message and enum types in `SinglePredicate`.
             pub mod single_predicate {
-                #[allow(clippy::derive_partial_eq_without_eq)]
                 #[derive(Clone, PartialEq, ::prost::Oneof)]
                 pub enum Matcher {
                     /// Built-in string matcher.
@@ -100,13 +93,11 @@ pub mod matcher {
                 }
             }
             /// A list of two or more matchers. Used to allow using a list within a oneof.
-            #[allow(clippy::derive_partial_eq_without_eq)]
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct PredicateList {
                 #[prost(message, repeated, tag = "1")]
                 pub predicate: ::prost::alloc::vec::Vec<super::Predicate>,
             }
-            #[allow(clippy::derive_partial_eq_without_eq)]
             #[derive(Clone, PartialEq, ::prost::Oneof)]
             pub enum MatchType {
                 /// A single predicate to evaluate.
@@ -124,7 +115,6 @@ pub mod matcher {
             }
         }
         /// An individual matcher.
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct FieldMatcher {
             /// Determines if the match succeeds.
@@ -135,7 +125,6 @@ pub mod matcher {
             pub on_match: ::core::option::Option<super::OnMatch>,
         }
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MatcherTree {
         /// Protocol-specific specification of input field to match on.
@@ -152,7 +141,6 @@ pub mod matcher {
     /// Nested message and enum types in `MatcherTree`.
     pub mod matcher_tree {
         /// A map of configured matchers. Used to allow using a map within a oneof.
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct MatchMap {
             #[prost(map = "string, message", tag = "1")]
@@ -164,7 +152,6 @@ pub mod matcher {
         /// Exact or prefix match maps in which to look up the input value.
         /// If the lookup succeeds, the match is considered successful, and
         /// the corresponding OnMatch is used.
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum TreeType {
             #[prost(message, tag = "2")]
@@ -179,7 +166,6 @@ pub mod matcher {
             ),
         }
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum MatcherType {
         /// A linear list of matchers to evaluate.
@@ -193,7 +179,6 @@ pub mod matcher {
 /// Match configuration. This is a recursive structure which allows complex nested match
 /// configurations to be built using various logical operators.
 /// \[\#next-free-field: 11\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MatchPredicate {
     #[prost(oneof = "match_predicate::Rule", tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10")]
@@ -202,14 +187,12 @@ pub struct MatchPredicate {
 /// Nested message and enum types in `MatchPredicate`.
 pub mod match_predicate {
     /// A set of match configurations used for logical operations.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MatchSet {
         /// The list of rules that make up the set.
         #[prost(message, repeated, tag = "1")]
         pub rules: ::prost::alloc::vec::Vec<super::MatchPredicate>,
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Rule {
         /// A set that describes a logical OR. If any member of the set matches, the match configuration
@@ -247,7 +230,6 @@ pub mod match_predicate {
     }
 }
 /// HTTP headers match configuration.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpHeadersMatch {
     /// HTTP headers to match.
@@ -264,7 +246,6 @@ pub struct HttpHeadersMatch {
 /// Searching for patterns in HTTP body is potentially cpu intensive. For each specified pattern, http body is scanned byte by byte to find a match.
 /// If multiple patterns are specified, the process is repeated for each pattern. If location of a pattern is known, `bytes_limit` should be specified
 /// to scan only part of the http body.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpGenericBodyMatch {
     /// Limits search to specified number of bytes - default zero (no limit - match entire captured buffer).
@@ -276,7 +257,6 @@ pub struct HttpGenericBodyMatch {
 }
 /// Nested message and enum types in `HttpGenericBodyMatch`.
 pub mod http_generic_body_match {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GenericTextMatch {
         #[prost(oneof = "generic_text_match::Rule", tags = "1, 2")]
@@ -284,7 +264,6 @@ pub mod http_generic_body_match {
     }
     /// Nested message and enum types in `GenericTextMatch`.
     pub mod generic_text_match {
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Rule {
             /// Text string to be located in HTTP body.

@@ -25,7 +25,6 @@
 /// rejected. In the ext_proc filter, that counter is named
 /// `rejected_header_mutations`.
 /// \[\#next-free-field: 8\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderMutationRules {
     /// By default, certain headers that could affect processing of subsequent
@@ -36,10 +35,11 @@ pub struct HeaderMutationRules {
     pub allow_all_routing: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
+    ///
     /// If true, allow modification of envoy internal headers. By default, these
     /// start with `x-envoy` but this may be overridden in the `Bootstrap`
     /// configuration using the
-    /// :ref:`header_prefix <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.header_prefix>`
+    /// : ref:`header_prefix <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.header_prefix>`
     /// field. Default is false.
     #[prost(message, optional, tag = "2")]
     pub allow_envoy: ::core::option::Option<
@@ -86,7 +86,6 @@ pub struct HeaderMutationRules {
 }
 /// The HeaderMutation structure specifies an action that may be taken on HTTP
 /// headers.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderMutation {
     #[prost(oneof = "header_mutation::Action", tags = "1, 2")]
@@ -94,7 +93,6 @@ pub struct HeaderMutation {
 }
 /// Nested message and enum types in `HeaderMutation`.
 pub mod header_mutation {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Action {
         /// Remove the specified header if it exists.

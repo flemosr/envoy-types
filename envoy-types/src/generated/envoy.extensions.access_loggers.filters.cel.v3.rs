@@ -2,7 +2,6 @@
 /// ExpressionFilter is an access logging filter that evaluates configured
 /// symbolic Common Expression Language expressions to inform the decision
 /// to generate an access log.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExpressionFilter {
     /// Expression that, when evaluated, will be used to filter access logs.

@@ -8,7 +8,6 @@
 /// filter is applied. It matters when specifying the route configuration and paths to match the
 /// request - for per-route grpc transcoder configs, the original path should be matched, while
 /// in other cases, the grpc-like path is expected (the one AFTER the filter is applied).
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcJsonTranscoder {
     /// A list of strings that
@@ -17,15 +16,16 @@ pub struct GrpcJsonTranscoder {
     /// Envoy will fail at startup. The `proto_descriptor` may contain more services than
     /// the service names specified here, but they won't be translated.
     ///
+    ///
     /// By default, the filter will pass through requests that do not map to any specified services.
     /// If the list of services is empty, filter is considered disabled.
     /// However, this behavior changes if
-    /// :ref:`reject_unknown_method <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.RequestValidationOptions.reject_unknown_method>`
+    /// : ref:`reject_unknown_method <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.RequestValidationOptions.reject_unknown_method>`
     /// is enabled.
     #[prost(string, repeated, tag = "2")]
     pub services: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Control options for response JSON. These options are passed directly to
-    /// `JsonPrintOptions <<https://developers.google.com/protocol-buffers/docs/reference/cpp/> google.protobuf.util.json_util#JsonPrintOptions>`\_.
+    /// `JsonPrintOptions <<https://developers.google.com/protocol-buffers/docs/reference/cpp/>  google.protobuf.util.json_util#JsonPrintOptions>`\_.
     #[prost(message, optional, tag = "3")]
     pub print_options: ::core::option::Option<grpc_json_transcoder::PrintOptions>,
     /// Whether to keep the incoming request route after the outgoing headers have been transformed to
@@ -57,7 +57,7 @@ pub struct GrpcJsonTranscoder {
     /// message Shelf {}
     /// ```
     ///
-    /// The request `/shelves/100?foo=bar` will not be mapped to `` GetShelf``` because variable binding for  ``foo`is not defined. Adding`foo`to`ignored_query_parameters`will allow the same request to be mapped to`GetShelf\``.
+    /// The request `/shelves/100?foo=bar` will not be mapped to ````GetShelf``` because variable  binding for ````foo`is not defined. Adding`foo`to`ignored_query_parameters`will allow  the same request to be mapped to`GetShelf\``.
     #[prost(string, repeated, tag = "6")]
     pub ignored_query_parameters: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
@@ -121,9 +121,10 @@ pub struct GrpcJsonTranscoder {
     /// {"code":5,"details":\[{"@type":"type.googleapis.com/google.rpc.RequestInfo","requestId":"r-1"}\]}
     /// ```
     ///
+    ///
     /// In order to transcode the message, the `google.rpc.RequestInfo` type from
     /// the `google/rpc/error_details.proto` should be included in the configured
-    /// :ref:`proto descriptor set <config_grpc_json_generate_proto_descriptor_set>`.
+    /// : ref:`proto descriptor set <config_grpc_json_generate_proto_descriptor_set>`.
     #[prost(bool, tag = "9")]
     pub convert_grpc_status: bool,
     /// URL unescaping policy.
@@ -201,7 +202,6 @@ pub struct GrpcJsonTranscoder {
 /// Nested message and enum types in `GrpcJsonTranscoder`.
 pub mod grpc_json_transcoder {
     /// \[\#next-free-field: 6\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct PrintOptions {
         /// Whether to add spaces, line breaks and indentation to make the JSON
@@ -228,11 +228,11 @@ pub mod grpc_json_transcoder {
         #[prost(bool, tag = "5")]
         pub stream_newline_delimited: bool,
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct RequestValidationOptions {
+        ///
         /// By default, a request that cannot be mapped to any specified gRPC
-        /// :ref:`services <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.services>`
+        /// : ref:`services <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.services>`
         /// will pass-through this filter.
         /// When set to true, the request will be rejected with a `HTTP 404 Not Found`.
         #[prost(bool, tag = "1")]
@@ -241,11 +241,12 @@ pub mod grpc_json_transcoder {
         /// will pass-through this filter.
         /// When set to true, the request will be rejected with a `HTTP 400 Bad Request`.
         ///
+        ///
         /// The fields
-        /// :ref:`ignore_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignore_unknown_query_parameters>`,
-        /// :ref:`capture_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.capture_unknown_query_parameters>`,
+        /// : ref:`ignore_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignore_unknown_query_parameters>`,
+        /// : ref:`capture_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.capture_unknown_query_parameters>`,
         /// and
-        /// :ref:`ignored_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignored_query_parameters>`
+        /// : ref:`ignored_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignored_query_parameters>`
         /// have priority over this strict validation behavior.
         #[prost(bool, tag = "2")]
         pub reject_unknown_query_parameters: bool,
@@ -288,13 +289,9 @@ pub mod grpc_json_transcoder {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                UrlUnescapeSpec::AllCharactersExceptReserved => {
-                    "ALL_CHARACTERS_EXCEPT_RESERVED"
-                }
-                UrlUnescapeSpec::AllCharactersExceptSlash => {
-                    "ALL_CHARACTERS_EXCEPT_SLASH"
-                }
-                UrlUnescapeSpec::AllCharacters => "ALL_CHARACTERS",
+                Self::AllCharactersExceptReserved => "ALL_CHARACTERS_EXCEPT_RESERVED",
+                Self::AllCharactersExceptSlash => "ALL_CHARACTERS_EXCEPT_SLASH",
+                Self::AllCharacters => "ALL_CHARACTERS",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -309,16 +306,17 @@ pub mod grpc_json_transcoder {
             }
         }
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum DescriptorSet {
+        ///
         /// Supplies the filename of
-        /// :ref:`the proto descriptor set <config_grpc_json_generate_proto_descriptor_set>` for the gRPC
+        /// : ref:`the proto descriptor set <config_grpc_json_generate_proto_descriptor_set>` for the gRPC
         /// services.
         #[prost(string, tag = "1")]
         ProtoDescriptor(::prost::alloc::string::String),
+        ///
         /// Supplies the binary content of
-        /// :ref:`the proto descriptor set <config_grpc_json_generate_proto_descriptor_set>` for the gRPC
+        /// : ref:`the proto descriptor set <config_grpc_json_generate_proto_descriptor_set>` for the gRPC
         /// services.
         #[prost(bytes, tag = "4")]
         ProtoDescriptorBin(::prost::alloc::vec::Vec<u8>),
@@ -327,7 +325,6 @@ pub mod grpc_json_transcoder {
 /// `UnknownQueryParams` is added as an extension field in `HttpBody` if
 /// `GrpcJsonTranscoder::capture_unknown_query_parameters` is true and unknown query
 /// parameters were present in the request.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UnknownQueryParams {
     /// A map from unrecognized query parameter keys, to the values associated with those keys.
@@ -339,7 +336,6 @@ pub struct UnknownQueryParams {
 }
 /// Nested message and enum types in `UnknownQueryParams`.
 pub mod unknown_query_params {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Values {
         #[prost(string, repeated, tag = "1")]

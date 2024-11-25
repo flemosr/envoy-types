@@ -5,7 +5,6 @@
 ///
 /// For implementation details, see `DESIGN.md <<https://github.com/envoyproxy/envoy/blob/main/source/extensions/http/cache/file_system_http_cache/DESIGN.md>`\_.>
 /// \[\#next-free-field: 11\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FileSystemHttpCacheConfig {
     /// Configuration of a manager for how the file system is used asynchronously.

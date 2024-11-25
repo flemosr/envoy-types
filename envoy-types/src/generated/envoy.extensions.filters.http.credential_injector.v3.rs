@@ -51,7 +51,6 @@
 ///   generic_secret:
 ///   secret:
 ///   inline_string: "Bearer myToken"
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CredentialInjector {
     /// Whether to overwrite the value or not if the injected headers already exist.

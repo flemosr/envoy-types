@@ -18,7 +18,6 @@
 /// * which return values from request_context are copied back
 /// * which return values are copied into request_headers\]
 ///   \[\#next-free-field: 14\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AttributeContext {
     /// The source of a network activity, such as starting a TCP connection.
@@ -70,7 +69,6 @@ pub mod attribute_context {
     /// or receives the request. Service peers should fill in the `service`,
     /// `principal`, and `labels` as appropriate.
     /// \[\#next-free-field: 6\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Peer {
         /// The address of the peer, this is typically the IP address.
@@ -80,7 +78,7 @@ pub mod attribute_context {
             super::super::super::super::config::core::v3::Address,
         >,
         /// The canonical service name of the peer.
-        /// It should be set to :ref:`the HTTP x-envoy-downstream-service-cluster <config_http_conn_man_headers_downstream-service-cluster>`
+        /// It should be set to :ref:`the HTTP x-envoy-downstream-service-cluster  <config_http_conn_man_headers_downstream-service-cluster>`
         /// If a more trusted source of the service name is available through mTLS/secure naming, it
         /// should be used.
         #[prost(string, tag = "2")]
@@ -111,7 +109,6 @@ pub mod attribute_context {
         pub certificate: ::prost::alloc::string::String,
     }
     /// Represents a network request, such as an HTTP request.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Request {
         /// The timestamp when the proxy receives the first byte of the request.
@@ -126,7 +123,6 @@ pub mod attribute_context {
     /// This message defines attributes for an HTTP request.
     /// HTTP/1.x, HTTP/2, gRPC are all considered as HTTP requests.
     /// \[\#next-free-field: 14\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct HttpRequest {
         /// The unique ID for a request, which can be propagated to downstream
@@ -138,33 +134,35 @@ pub mod attribute_context {
         /// The HTTP request method, such as `GET`, `POST`.
         #[prost(string, tag = "2")]
         pub method: ::prost::alloc::string::String,
+        ///
         /// The HTTP request headers. If multiple headers share the same key, they
         /// must be merged according to the HTTP spec. All header keys must be
         /// lower-cased, because HTTP header keys are case-insensitive.
         /// Header value is encoded as UTF-8 string. Non-UTF-8 characters will be replaced by "!".
         /// This field will not be set if
-        /// :ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
+        /// : ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
         /// is set to true.
         #[prost(map = "string, string", tag = "3")]
         pub headers: ::std::collections::HashMap<
             ::prost::alloc::string::String,
             ::prost::alloc::string::String,
         >,
-        /// A list of the raw HTTP request headers. This is used instead of
-        /// :ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>` when
-        /// :ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
-        /// is set to true.
         ///
+        /// A list of the raw HTTP request headers. This is used instead of
+        /// : ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>` when
+        /// : ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
+        /// is set to true.
         /// Note that this is not actually a map type. `header_map` contains a single repeated field
         /// `headers`.
         ///
+        ///
         /// Here, only the `key` and `raw_value` fields will be populated for each HeaderValue, and
         /// that is only when
-        /// :ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
+        /// : ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
         /// is set to true.
         ///
         /// Also, unlike the
-        /// :ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>`
+        /// : ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>`
         /// field, headers with the same key are not combined into a single comma separated header.
         #[prost(message, optional, tag = "13")]
         pub header_map: ::core::option::Option<
@@ -200,15 +198,15 @@ pub mod attribute_context {
         /// The HTTP request body.
         #[prost(string, tag = "11")]
         pub body: ::prost::alloc::string::String,
+        ///
         /// The HTTP request body in bytes. This is used instead of
-        /// :ref:`body <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.body>` when
-        /// :ref:`pack_as_bytes <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.BufferSettings.pack_as_bytes>`
+        /// : ref:`body <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.body>` when
+        /// : ref:`pack_as_bytes <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.BufferSettings.pack_as_bytes>`
         /// is set to true.
         #[prost(bytes = "vec", tag = "12")]
         pub raw_body: ::prost::alloc::vec::Vec<u8>,
     }
     /// This message defines attributes for the underlying TLS session.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct TlsSession {
         /// SNI used for TLS session.
@@ -216,7 +214,6 @@ pub mod attribute_context {
         pub sni: ::prost::alloc::string::String,
     }
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CheckRequest {
     /// The request attributes.
@@ -224,7 +221,6 @@ pub struct CheckRequest {
     pub attributes: ::core::option::Option<AttributeContext>,
 }
 /// HTTP attributes for a denied response.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeniedHttpResponse {
     /// This field allows the authorization service to send an HTTP response status code to the
@@ -245,7 +241,6 @@ pub struct DeniedHttpResponse {
 }
 /// HTTP attributes for an OK response.
 /// \[\#next-free-field: 9\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OkHttpResponse {
     /// HTTP entity headers in addition to the original request headers. This allows the authorization
@@ -276,8 +271,8 @@ pub struct OkHttpResponse {
     /// `x-envoy-auth-headers-to-remove: one-auth-header, another-auth-header`.
     #[prost(string, repeated, tag = "5")]
     pub headers_to_remove: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// This field has been deprecated in favor of :ref:`CheckResponse.dynamic_metadata <envoy_v3_api_field_service.auth.v3.CheckResponse.dynamic_metadata>`. Until it is removed,
-    /// setting this field overrides :ref:`CheckResponse.dynamic_metadata <envoy_v3_api_field_service.auth.v3.CheckResponse.dynamic_metadata>`.
+    /// This field has been deprecated in favor of :ref:`CheckResponse.dynamic_metadata  <envoy_v3_api_field_service.auth.v3.CheckResponse.dynamic_metadata>`. Until it is removed,
+    /// setting this field overrides :ref:`CheckResponse.dynamic_metadata  <envoy_v3_api_field_service.auth.v3.CheckResponse.dynamic_metadata>`.
     #[deprecated]
     #[prost(message, optional, tag = "3")]
     pub dynamic_metadata: ::core::option::Option<
@@ -305,7 +300,6 @@ pub struct OkHttpResponse {
     >,
 }
 /// Intended for gRPC and Network Authorization servers `only`.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CheckResponse {
     /// Status `OK` allows the request. Any other status indicates the request should be denied, and
@@ -334,7 +328,6 @@ pub mod check_response {
     /// An message that contains HTTP response attributes. This message is
     /// used when the authorization service needs to send custom responses to the
     /// downstream client or, to modify/add request headers being dispatched to the upstream.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum HttpResponse {
         /// Supplies http attributes for a denied response.
@@ -347,7 +340,13 @@ pub mod check_response {
 }
 /// Generated client implementations.
 pub mod authorization_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     /// A generic interface for performing authorization check on incoming
@@ -360,8 +359,8 @@ pub mod authorization_client {
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
@@ -386,7 +385,7 @@ pub mod authorization_client {
             >,
             <T as tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
             AuthorizationClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -431,8 +430,7 @@ pub mod authorization_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -449,11 +447,17 @@ pub mod authorization_client {
 }
 /// Generated server implementations.
 pub mod authorization_server {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with AuthorizationServer.
     #[async_trait]
-    pub trait Authorization: Send + Sync + 'static {
+    pub trait Authorization: std::marker::Send + std::marker::Sync + 'static {
         /// Performs authorization check based on the attributes associated with the
         /// incoming request, and returns status `OK` or not `OK`.
         async fn check(
@@ -464,14 +468,14 @@ pub mod authorization_server {
     /// A generic interface for performing authorization check on incoming
     /// requests to a networked service.
     #[derive(Debug)]
-    pub struct AuthorizationServer<T: Authorization> {
+    pub struct AuthorizationServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T: Authorization> AuthorizationServer<T> {
+    impl<T> AuthorizationServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -525,8 +529,8 @@ pub mod authorization_server {
     impl<T, B> tonic::codegen::Service<http::Request<B>> for AuthorizationServer<T>
     where
         T: Authorization,
-        B: Body + Send + 'static,
-        B::Error: Into<StdError> + Send + 'static,
+        B: Body + std::marker::Send + 'static,
+        B::Error: Into<StdError> + std::marker::Send + 'static,
     {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
@@ -585,23 +589,25 @@ pub mod authorization_server {
                 }
                 _ => {
                     Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", tonic::Code::Unimplemented as i32)
-                                .header(
-                                    http::header::CONTENT_TYPE,
-                                    tonic::metadata::GRPC_CONTENT_TYPE,
-                                )
-                                .body(empty_body())
-                                .unwrap(),
-                        )
+                        let mut response = http::Response::new(empty_body());
+                        let headers = response.headers_mut();
+                        headers
+                            .insert(
+                                tonic::Status::GRPC_STATUS,
+                                (tonic::Code::Unimplemented as i32).into(),
+                            );
+                        headers
+                            .insert(
+                                http::header::CONTENT_TYPE,
+                                tonic::metadata::GRPC_CONTENT_TYPE,
+                            );
+                        Ok(response)
                     })
                 }
             }
         }
     }
-    impl<T: Authorization> Clone for AuthorizationServer<T> {
+    impl<T> Clone for AuthorizationServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -613,7 +619,9 @@ pub mod authorization_server {
             }
         }
     }
-    impl<T: Authorization> tonic::server::NamedService for AuthorizationServer<T> {
-        const NAME: &'static str = "envoy.service.auth.v3.Authorization";
+    /// Generated gRPC service name
+    pub const SERVICE_NAME: &str = "envoy.service.auth.v3.Authorization";
+    impl<T> tonic::server::NamedService for AuthorizationServer<T> {
+        const NAME: &'static str = SERVICE_NAME;
     }
 }

@@ -6,7 +6,6 @@
 ///
 /// `xds.resource.listening_address`: The value is "IP:port" (e.g. "10.1.1.3:8080") which is
 /// the listening address of a Listener. Used in a Listener resource query.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ContextParams {
     #[prost(map = "string, string", tag = "1")]
@@ -16,23 +15,22 @@ pub struct ContextParams {
     >,
 }
 /// Message type for extension configuration.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TypedExtensionConfig {
     /// The name of an extension. This is not used to select the extension, instead
     /// it serves the role of an opaque identifier.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
+    ///
     /// The typed config for the extension. The type URL will be used to identify
     /// the extension. In the case that the type URL is *xds.type.v3.TypedStruct*
     /// (or, for historical reasons, *udpa.type.v1.TypedStruct*), the inner type
     /// URL of *TypedStruct* will be utilized. See the
-    /// :ref:`extension configuration overview <config_overview_extension_configuration>` for further details.
+    /// : ref:`extension configuration overview  <config_overview_extension_configuration>` for further details.
     #[prost(message, optional, tag = "2")]
     pub typed_config: ::core::option::Option<super::super::super::google::protobuf::Any>,
 }
 /// xDS authority information.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Authority {
     #[prost(string, tag = "1")]
@@ -54,7 +52,6 @@ pub struct Authority {
 /// Resource locators also have a simplified file:// URI representation:
 ///
 /// file:///{id}{#directive,\*}
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResourceLocator {
     /// URI scheme.
@@ -109,7 +106,6 @@ pub mod resource_locator {
     /// of the xDS scheme specific ','. See
     /// <https://tools.ietf.org/html/rfc3986#page-49> for further details on URI ABNF
     /// and reserved characters.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Directive {
         #[prost(oneof = "directive::Directive", tags = "1, 2")]
@@ -117,7 +113,6 @@ pub mod resource_locator {
     }
     /// Nested message and enum types in `Directive`.
     pub mod directive {
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Directive {
             /// An alternative resource locator for fallback if the resource is
@@ -163,9 +158,9 @@ pub mod resource_locator {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Scheme::Xdstp => "XDSTP",
-                Scheme::Http => "HTTP",
-                Scheme::File => "FILE",
+                Self::Xdstp => "XDSTP",
+                Self::Http => "HTTP",
+                Self::File => "FILE",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -178,7 +173,6 @@ pub mod resource_locator {
             }
         }
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ContextParamSpecifier {
         /// Additional parameters that can be used to select resource variants.
@@ -198,7 +192,6 @@ pub mod resource_locator {
 /// message <T>Collection {
 /// repeated CollectionEntry resources = 1;
 /// }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CollectionEntry {
     #[prost(oneof = "collection_entry::ResourceSpecifier", tags = "1, 2")]
@@ -207,7 +200,6 @@ pub struct CollectionEntry {
 /// Nested message and enum types in `CollectionEntry`.
 pub mod collection_entry {
     /// Inlined resource entry.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct InlineEntry {
         /// Optional name to describe the inlined resource. Resource names must match
@@ -226,7 +218,6 @@ pub mod collection_entry {
             super::super::super::super::google::protobuf::Any,
         >,
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ResourceSpecifier {
         /// A resource locator describing how the member resource is to be located.

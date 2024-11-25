@@ -6,9 +6,9 @@
 ///
 /// .. attention::
 ///
+///
 /// Use of this message type has been deprecated in favor of direct use of
-/// :ref:`Tracing.Http <envoy_v3_api_msg_config.trace.v3.Tracing.Http>`.
-#[allow(clippy::derive_partial_eq_without_eq)]
+/// : ref:`Tracing.Http <envoy_v3_api_msg_config.trace.v3.Tracing.Http>`.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Tracing {
     /// Provides configuration for the HTTP tracer.
@@ -19,11 +19,11 @@ pub struct Tracing {
 pub mod tracing {
     /// Configuration for an HTTP tracer provider used by Envoy.
     ///
+    ///
     /// The configuration is defined by the
-    /// :ref:`HttpConnectionManager.Tracing <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing>`
-    /// :ref:`provider <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.provider>`
+    /// : ref:`HttpConnectionManager.Tracing <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing>`
+    /// : ref:`provider <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.provider>`
     /// field.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Http {
         /// The name of the HTTP trace driver to instantiate. The name must match a
@@ -40,7 +40,6 @@ pub mod tracing {
     pub mod http {
         /// Trace driver specific configuration which must be set according to the driver being instantiated.
         /// \[\#extension-category: envoy.tracers\]
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum ConfigType {
             #[prost(message, tag = "3")]
@@ -49,7 +48,6 @@ pub mod tracing {
     }
 }
 /// Configuration for the Remote Configuration feature.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct DatadogRemoteConfig {
     /// Frequency at which new configuration updates are queried.
@@ -61,7 +59,6 @@ pub struct DatadogRemoteConfig {
 }
 /// Configuration for the Datadog tracer.
 /// \[\#extension: envoy.tracers.datadog\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DatadogConfig {
     /// The cluster to use for submitting traces to the Datadog agent.
@@ -83,12 +80,11 @@ pub struct DatadogConfig {
     pub remote_config: ::core::option::Option<DatadogRemoteConfig>,
 }
 /// DynamicOtConfig was used to dynamically load a tracer from a shared library
-/// that implements the `OpenTracing dynamic loading API <<https://github.com/opentracing/opentracing-cpp>`\_.>
+/// that implements the `OpenTracing dynamic loading API  <<https://github.com/opentracing/opentracing-cpp>`\_.>
 /// \[\#not-implemented-hide:\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicOtConfig {
-    /// Dynamic library implementing the `OpenTracing API <<https://github.com/opentracing/opentracing-cpp>`\_.>
+    /// Dynamic library implementing the `OpenTracing API  <<https://github.com/opentracing/opentracing-cpp>`\_.>
     #[deprecated]
     #[prost(string, tag = "1")]
     pub library: ::prost::alloc::string::String,
@@ -103,13 +99,12 @@ pub struct DynamicOtConfig {
 /// Configuration for the LightStep tracer.
 /// \[\#extension: envoy.tracers.lightstep\]
 /// \[\#not-implemented-hide:\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LightstepConfig {
     /// The cluster manager cluster that hosts the LightStep collectors.
     #[prost(string, tag = "1")]
     pub collector_cluster: ::prost::alloc::string::String,
-    /// File containing the access token to the `LightStep <<https://lightstep.com/>`\_> API.
+    /// File containing the access token to the `LightStep  <<https://lightstep.com/>`\_> API.
     #[deprecated]
     #[prost(string, tag = "2")]
     pub access_token_file: ::prost::alloc::string::String,
@@ -157,10 +152,10 @@ pub mod lightstep_config {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                PropagationMode::Envoy => "ENVOY",
-                PropagationMode::Lightstep => "LIGHTSTEP",
-                PropagationMode::B3 => "B3",
-                PropagationMode::TraceContext => "TRACE_CONTEXT",
+                Self::Envoy => "ENVOY",
+                Self::Lightstep => "LIGHTSTEP",
+                Self::B3 => "B3",
+                Self::TraceContext => "TRACE_CONTEXT",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -178,7 +173,6 @@ pub mod lightstep_config {
 /// Configuration for the OpenCensus tracer.
 /// \[\#next-free-field: 15\]
 /// \[\#extension: envoy.tracers.opencensus\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenCensusConfig {
     /// Configures tracing, e.g. the sampler, max number of annotations, etc.
@@ -217,12 +211,12 @@ pub struct OpenCensusConfig {
         super::super::core::v3::GrpcService,
     >,
     /// Enables the Zipkin exporter if set to true. The url and service name must
-    /// also be set. This is deprecated, prefer to use Envoy's :ref:`native Zipkin tracer <envoy_v3_api_msg_config.trace.v3.ZipkinConfig>`.
+    /// also be set. This is deprecated, prefer to use Envoy's :ref:`native Zipkin  tracer <envoy_v3_api_msg_config.trace.v3.ZipkinConfig>`.
     #[deprecated]
     #[prost(bool, tag = "5")]
     pub zipkin_exporter_enabled: bool,
     /// The URL to Zipkin, e.g. "<http://127.0.0.1:9411/api/v2/spans".> This is
-    /// deprecated, prefer to use Envoy's :ref:`native Zipkin tracer <envoy_v3_api_msg_config.trace.v3.ZipkinConfig>`.
+    /// deprecated, prefer to use Envoy's :ref:`native Zipkin tracer  <envoy_v3_api_msg_config.trace.v3.ZipkinConfig>`.
     #[deprecated]
     #[prost(string, tag = "6")]
     pub zipkin_url: ::prost::alloc::string::String,
@@ -297,11 +291,11 @@ pub mod open_census_config {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                TraceContext::None => "NONE",
-                TraceContext::TraceContext => "TRACE_CONTEXT",
-                TraceContext::GrpcTraceBin => "GRPC_TRACE_BIN",
-                TraceContext::CloudTraceContext => "CLOUD_TRACE_CONTEXT",
-                TraceContext::B3 => "B3",
+                Self::None => "NONE",
+                Self::TraceContext => "TRACE_CONTEXT",
+                Self::GrpcTraceBin => "GRPC_TRACE_BIN",
+                Self::CloudTraceContext => "CLOUD_TRACE_CONTEXT",
+                Self::B3 => "B3",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -320,7 +314,6 @@ pub mod open_census_config {
 /// Configuration for the OpenTelemetry tracer.
 /// \[\#extension: envoy.tracers.opentelemetry\]
 /// \[\#next-free-field: 6\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryConfig {
     /// The upstream gRPC cluster that will receive OTLP traces.
@@ -335,9 +328,10 @@ pub struct OpenTelemetryConfig {
     ///
     /// .. note::
     ///
+    ///
     /// Note: The `request_headers_to_add` property in the OTLP HTTP exporter service
     /// does not support the :ref:`format specifier <config_access_log_format>` as used for
-    /// :ref:`HTTP access logging <config_access_log>`.
+    /// : ref:`HTTP access logging <config_access_log>`.
     /// The values configured are added as HTTP headers on the OTLP export request
     /// without any formatting applied.
     #[prost(message, optional, tag = "3")]
@@ -362,20 +356,19 @@ pub struct OpenTelemetryConfig {
     pub sampler: ::core::option::Option<super::super::core::v3::TypedExtensionConfig>,
 }
 /// Configuration structure.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TraceServiceConfig {
     /// The upstream gRPC cluster that hosts the metrics service.
     #[prost(message, optional, tag = "1")]
     pub grpc_service: ::core::option::Option<super::super::core::v3::GrpcService>,
 }
+///
 /// Configuration for the SkyWalking tracer. Please note that if SkyWalking tracer is used as the
 /// provider of tracing, then
-/// :ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`
+/// : ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`
 /// in the tracing config must be set to true to get the correct topology and tracing data. Moreover, SkyWalking
 /// Tracer does not support SkyWalking extension header (`sw8-x`) temporarily.
 /// \[\#extension: envoy.tracers.skywalking\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SkyWalkingConfig {
     /// SkyWalking collector service.
@@ -385,7 +378,6 @@ pub struct SkyWalkingConfig {
     pub client_config: ::core::option::Option<ClientConfig>,
 }
 /// Client config for SkyWalking tracer.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientConfig {
     /// Service name for SkyWalking tracer. If this field is empty, then local service cluster name
@@ -395,10 +387,11 @@ pub struct ClientConfig {
     /// name are empty, `EnvoyProxy` is used as the service name by default.
     #[prost(string, tag = "1")]
     pub service_name: ::prost::alloc::string::String,
+    ///
     /// Service instance name for SkyWalking tracer. If this field is empty, then local service node
     /// that configured by :ref:`Bootstrap node <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.node>`
     /// message's :ref:`id <envoy_v3_api_field_config.core.v3.Node.id>` field or command line  option
-    /// :option:`--service-node` will be used. If both this field and local service node are empty,
+    /// : option:`--service-node` will be used. If both this field and local service node are empty,
     /// `EnvoyProxy` is used as the instance name by default.
     #[prost(string, tag = "2")]
     pub instance_name: ::prost::alloc::string::String,
@@ -424,7 +417,6 @@ pub mod client_config {
     /// that monitoring application data can be trusted. In current version, Token is considered as a
     /// simple string.
     /// \[\#comment:TODO(wbpcode): Get backend token through the SDS API.\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum BackendTokenSpecifier {
         /// Inline authentication token string.
@@ -435,7 +427,6 @@ pub mod client_config {
 /// Configuration for the Zipkin tracer.
 /// \[\#extension: envoy.tracers.zipkin\]
 /// \[\#next-free-field: 8\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ZipkinConfig {
     /// The cluster manager cluster that hosts the Zipkin collectors.
@@ -472,12 +463,13 @@ pub struct ZipkinConfig {
     ///
     /// .. attention::
     ///
+    ///
     /// If this is set to true, then the
-    /// :ref:`start_child_span of router <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>`
+    /// : ref:`start_child_span of router <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>`
     /// SHOULD be set to true also to ensure the correctness of trace chain.
     ///
     /// Both this field and `start_child_span` are deprecated by the
-    /// :ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`.
+    /// : ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`.
     /// Please use that `spawn_upstream_span` field to control the span creation.
     #[deprecated]
     #[prost(bool, tag = "7")]
@@ -521,12 +513,12 @@ pub mod zipkin_config {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                CollectorEndpointVersion::DeprecatedAndUnavailableDoNotUse => {
+                Self::DeprecatedAndUnavailableDoNotUse => {
                     "DEPRECATED_AND_UNAVAILABLE_DO_NOT_USE"
                 }
-                CollectorEndpointVersion::HttpJson => "HTTP_JSON",
-                CollectorEndpointVersion::HttpProto => "HTTP_PROTO",
-                CollectorEndpointVersion::Grpc => "GRPC",
+                Self::HttpJson => "HTTP_JSON",
+                Self::HttpProto => "HTTP_PROTO",
+                Self::Grpc => "GRPC",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -544,7 +536,6 @@ pub mod zipkin_config {
     }
 }
 /// \[\#extension: envoy.tracers.xray\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct XRayConfig {
     /// The UDP endpoint of the X-Ray Daemon where the spans will be sent.
@@ -556,19 +547,18 @@ pub struct XRayConfig {
     pub segment_name: ::prost::alloc::string::String,
     /// The location of a local custom sampling rules JSON file.
     /// For an example of the sampling rules see:
-    /// `X-Ray SDK documentation <<https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-go-configuration.html#xray-sdk-go-configuration-sampling>`\_>
+    /// `X-Ray SDK documentation  <<https://docs.aws.amazon.com/xray/latest/devguide/xray-sdk-go-configuration.html#xray-sdk-go-configuration-sampling>`\_>
     #[prost(message, optional, tag = "3")]
     pub sampling_rule_manifest: ::core::option::Option<
         super::super::core::v3::DataSource,
     >,
     /// Optional custom fields to be added to each trace segment.
-    /// see: `X-Ray Segment Document documentation <<https://docs.aws.amazon.com/xray/latest/devguide/xray-api-segmentdocuments.html>`\_\_>
+    /// see: `X-Ray Segment Document documentation  <<https://docs.aws.amazon.com/xray/latest/devguide/xray-api-segmentdocuments.html>`\_\_>
     #[prost(message, optional, tag = "4")]
     pub segment_fields: ::core::option::Option<x_ray_config::SegmentFields>,
 }
 /// Nested message and enum types in `XRayConfig`.
 pub mod x_ray_config {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SegmentFields {
         /// The type of AWS resource, e.g. "AWS::AppMesh::Proxy".

@@ -6,6 +6,5 @@
 /// Envoy emits two stats for tracking the program size of regexes: the histogram `re2.program_size`,
 /// which records the program size, and the counter `re2.exceeded_warn_level`, which is incremented
 /// each time the program size exceeds the warn level threshold.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct GoogleRe2 {}

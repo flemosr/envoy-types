@@ -3,7 +3,6 @@
 /// into the proxied requests.
 /// The credential will be injected into the specified HTTP request header.
 /// Refer to [RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage](<https://www.rfc-editor.org/rfc/rfc6750>) for details.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Generic {
     /// The SDS configuration for the credential that will be injected to the specified HTTP request header.

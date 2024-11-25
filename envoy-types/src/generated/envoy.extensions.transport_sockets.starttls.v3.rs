@@ -4,7 +4,6 @@
 ///
 /// * raw_buffer socket which is used at the beginning of the session
 /// * TLS socket used when a protocol negotiates a switch to encrypted traffic.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StartTlsConfig {
     /// (optional) Configuration for clear-text socket used at the beginning of the session.
@@ -23,7 +22,6 @@ pub struct StartTlsConfig {
 ///
 /// * raw_buffer socket which is used at the beginning of the session
 /// * TLS socket used when a protocol negotiates a switch to encrypted traffic.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpstreamStartTlsConfig {
     /// (optional) Configuration for clear-text socket used at the beginning of the session.

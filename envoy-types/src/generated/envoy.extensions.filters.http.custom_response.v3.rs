@@ -3,18 +3,17 @@
 /// policies in a matcher tree. The configuration can be defined at the filter,
 /// virtual host or route level. The response will be matched against the most
 /// specific to the least specific config, till a match is found.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CustomResponse {
+    ///
     /// Matcher to match against the original response to select a
-    /// :ref:`Custom Response Policy <extension_category_envoy.http.custom_response>`
+    /// : ref:`Custom Response Policy <extension_category_envoy.http.custom_response>`
     /// that will override the original response. The matching is done by matching
     /// against :ref:`response header values<extension_category_envoy.matching.http.input>`
     /// Example:
     ///
     /// .. validated-code-block:: yaml
-    /// :type-name: xds.type.matcher.v3.Matcher
-    ///
+    /// : type-name: xds.type.matcher.v3.Matcher
     /// matcher_list:
     /// matchers:
     /// \# Apply a locally stored custom response to any 4xx response.

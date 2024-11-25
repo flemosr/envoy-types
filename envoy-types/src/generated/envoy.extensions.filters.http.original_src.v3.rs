@@ -3,7 +3,6 @@
 /// for the request. This address could come from something like the Proxy Protocol filter, or it
 /// could come from trusted http headers.
 /// \[\#extension: envoy.filters.http.original_src\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct OriginalSrc {
     /// Sets the SO_MARK option on the upstream connection's socket to the provided value. Used to

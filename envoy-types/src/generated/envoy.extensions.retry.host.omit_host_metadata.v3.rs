@@ -2,7 +2,6 @@
 /// A retry host predicate that can be used to reject a host based on
 /// predefined metadata match criteria.
 /// \[\#extension: envoy.retry_host_predicates.omit_host_metadata\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OmitHostMetadataConfig {
     /// Retry host predicate metadata match criteria. The hosts in

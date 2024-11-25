@@ -7,7 +7,6 @@
 /// connections. All filter state objects that are shared with the upstream
 /// connection are also shared with the downstream internal connection using
 /// this transport socket.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InternalUpstreamTransport {
     /// Specifies the metadata namespaces and values to insert into the downstream
@@ -30,7 +29,6 @@ pub mod internal_upstream_transport {
     /// Describes the location of the imported metadata value.
     /// If the metadata with the given name is not present at the source location,
     /// then no metadata is passed through for this particular instance.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MetadataValueSource {
         /// Specifies what kind of metadata.

@@ -201,6 +201,11 @@ pub mod envoy {
                     include!("envoy.extensions.common.async_files.v3.rs");
                 }
             }
+            pub mod aws {
+                pub mod v3 {
+                    include!("envoy.extensions.common.aws.v3.rs");
+                }
+            }
             pub mod dynamic_forward_proxy {
                 pub mod v3 {
                     include!("envoy.extensions.common.dynamic_forward_proxy.v3.rs");
@@ -269,6 +274,11 @@ pub mod envoy {
                 }
             }
         }
+        pub mod dynamic_modules {
+            pub mod v3 {
+                include!("envoy.extensions.dynamic_modules.v3.rs");
+            }
+        }
         pub mod early_data {
             pub mod v3 {
                 include!("envoy.extensions.early_data.v3.rs");
@@ -313,6 +323,11 @@ pub mod envoy {
                 pub mod alternate_protocols_cache {
                     pub mod v3 {
                         include!("envoy.extensions.filters.http.alternate_protocols_cache.v3.rs");
+                    }
+                }
+                pub mod api_key_auth {
+                    pub mod v3 {
+                        include!("envoy.extensions.filters.http.api_key_auth.v3.rs");
                     }
                 }
                 pub mod aws_lambda {
@@ -393,6 +408,11 @@ pub mod envoy {
                 pub mod dynamic_forward_proxy {
                     pub mod v3 {
                         include!("envoy.extensions.filters.http.dynamic_forward_proxy.v3.rs");
+                    }
+                }
+                pub mod dynamic_modules {
+                    pub mod v3 {
+                        include!("envoy.extensions.filters.http.dynamic_modules.v3.rs");
                     }
                 }
                 pub mod ext_authz {
@@ -520,9 +540,9 @@ pub mod envoy {
                         include!("envoy.extensions.filters.http.original_src.v3.rs");
                     }
                 }
-                pub mod proto_message_logging {
+                pub mod proto_message_extraction {
                     pub mod v3 {
-                        include!("envoy.extensions.filters.http.proto_message_logging.v3.rs");
+                        include!("envoy.extensions.filters.http.proto_message_extraction.v3.rs");
                     }
                 }
                 pub mod rate_limit_quota {
@@ -1098,6 +1118,11 @@ pub mod envoy {
         }
         pub mod quic {
             pub mod connection_debug_visitor {
+                pub mod quic_stats {
+                    pub mod v3 {
+                        include!("envoy.extensions.quic.connection_debug_visitor.quic_stats.v3.rs");
+                    }
+                }
                 pub mod v3 {
                     include!("envoy.extensions.quic.connection_debug_visitor.v3.rs");
                 }
@@ -1159,6 +1184,11 @@ pub mod envoy {
             }
         }
         pub mod resource_monitors {
+            pub mod cpu_utilization {
+                pub mod v3 {
+                    include!("envoy.extensions.resource_monitors.cpu_utilization.v3.rs");
+                }
+            }
             pub mod downstream_connections {
                 pub mod v3 {
                     include!("envoy.extensions.resource_monitors.downstream_connections.v3.rs");
@@ -1455,6 +1485,11 @@ pub mod envoy {
         pub mod ratelimit {
             pub mod v3 {
                 include!("envoy.service.ratelimit.v3.rs");
+            }
+        }
+        pub mod redis_auth {
+            pub mod v3 {
+                include!("envoy.service.redis_auth.v3.rs");
             }
         }
         pub mod route {

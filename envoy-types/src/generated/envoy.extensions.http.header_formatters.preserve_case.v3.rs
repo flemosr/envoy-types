@@ -2,7 +2,6 @@
 /// Configuration for the preserve case header formatter.
 /// See the :ref:`header casing <config_http_conn_man_header_casing>` configuration guide for more
 /// information.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct PreserveCaseFormatterConfig {
     /// Allows forwarding reason phrase text.
@@ -46,8 +45,8 @@ pub mod preserve_case_formatter_config {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                FormatterTypeOnEnvoyHeaders::Default => "DEFAULT",
-                FormatterTypeOnEnvoyHeaders::ProperCase => "PROPER_CASE",
+                Self::Default => "DEFAULT",
+                Self::ProperCase => "PROPER_CASE",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.

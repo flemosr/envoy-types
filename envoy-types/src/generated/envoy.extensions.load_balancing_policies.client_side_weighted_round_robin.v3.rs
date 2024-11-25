@@ -12,13 +12,12 @@
 /// regardless of result. Only failed queries count toward eps. A config
 /// parameter error_utilization_penalty controls the penalty to adjust endpoint
 /// weights using eps and qps. The weight of a given endpoint is computed as:
-/// qps / (utilization + eps/qps * error_utilization_penalty)
+/// `qps / (utilization + eps/qps * error_utilization_penalty)`.
 ///
-/// See the :ref:`load balancing architecture overview<arch_overview_load_balancing_types>` for more information.
+/// See the :ref:`load balancing architecture  overview<arch_overview_load_balancing_types>` for more information.
 ///
-/// \[\#next-free-field: 7\]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+/// \[\#next-free-field: 8\]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientSideWeightedRoundRobin {
     /// Whether to enable out-of-band utilization reporting collection from
     /// the endpoints. By default, per-request utilization reporting is used.
@@ -64,5 +63,13 @@ pub struct ClientSideWeightedRoundRobin {
     #[prost(message, optional, tag = "6")]
     pub error_utilization_penalty: ::core::option::Option<
         super::super::super::super::super::google::protobuf::FloatValue,
+    >,
+    /// By default, endpoint weight is computed based on the :ref:`application_utilization <envoy_v3_api_field_.xds.data.orca.v3.OrcaLoadReport.application_utilization>` field reported by the endpoint.
+    /// If that field is not set, then utilization will instead be computed by taking the max of the values of the metrics specified here.
+    /// For map fields in the ORCA proto, the string will be of the form `<map_field_name>.<map_key>`. For example, the string `named_metrics.foo` will mean to look for the key `foo` in the ORCA :ref:`named_metrics <envoy_v3_api_field_.xds.data.orca.v3.OrcaLoadReport.named_metrics>` field.
+    /// If none of the specified metrics are present in the load report, then :ref:`cpu_utilization <envoy_v3_api_field_.xds.data.orca.v3.OrcaLoadReport.cpu_utilization>` is used instead.
+    #[prost(string, repeated, tag = "7")]
+    pub metric_names_for_computing_utilization: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
     >,
 }

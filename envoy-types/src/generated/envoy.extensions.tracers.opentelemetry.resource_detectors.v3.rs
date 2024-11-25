@@ -8,7 +8,6 @@
 /// `Enrich ingested data with Dynatrace-specific dimensions <<https://docs.dynatrace.com/docs/shortlink/enrichment-files>`\_>
 ///
 /// \[\#extension: envoy.tracers.opentelemetry.resource_detectors.dynatrace\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct DynatraceResourceDetectorConfig {}
 /// Configuration for the Environment Resource detector extension.
@@ -20,7 +19,6 @@ pub struct DynatraceResourceDetectorConfig {}
 /// `OpenTelemetry specification <<https://github.com/open-telemetry/opentelemetry-specification/blob/v1.24.0/specification/resource/sdk.md#detecting-resource-information-from-the-environment>`\_>
 ///
 /// \[\#extension: envoy.tracers.opentelemetry.resource_detectors.environment\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct EnvironmentResourceDetectorConfig {}
 /// Configuration for the Static Resource detector extension.
@@ -28,7 +26,6 @@ pub struct EnvironmentResourceDetectorConfig {}
 /// as per the OpenTelemetry specification.
 ///
 /// \[\#extension: envoy.tracers.opentelemetry.resource_detectors.static_config\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StaticConfigResourceDetectorConfig {
     /// Custom Resource attributes to be included.

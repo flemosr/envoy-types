@@ -24,7 +24,6 @@
 /// Using this PriorityFilter requires rebuilding the priority load, which runs in O(# of
 /// priorities), which might incur significant overhead for clusters with many priorities.
 /// \[\#extension: envoy.retry_priorities.previous_priorities\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct PreviousPrioritiesConfig {
     /// How often the priority load should be updated based on previously attempted priorities. Useful

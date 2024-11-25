@@ -2,7 +2,6 @@
 /// Wrapper around an existing extension that provides an associated matcher. This allows
 /// decorating an existing extension with a matcher, which can be used to match against
 /// relevant protocol data.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtensionWithMatcher {
     /// The associated matcher. This is deprecated in favor of xds_matcher.
@@ -23,7 +22,6 @@ pub struct ExtensionWithMatcher {
     >,
 }
 /// Extra settings on a per virtualhost/route/weighted-cluster level.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtensionWithMatcherPerRoute {
     /// Matcher override.

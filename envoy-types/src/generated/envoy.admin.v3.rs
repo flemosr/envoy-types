@@ -2,14 +2,12 @@
 /// Proto representation of certificate details. Admin endpoint uses this wrapper for `/certs` to
 /// display certificate information. See :ref:`/certs <operations_admin_interface_certs>` for more
 /// information.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Certificates {
     /// List of certificates known to an Envoy.
     #[prost(message, repeated, tag = "1")]
     pub certificates: ::prost::alloc::vec::Vec<Certificate>,
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Certificate {
     /// Details of CA certificate.
@@ -20,7 +18,6 @@ pub struct Certificate {
     pub cert_chain: ::prost::alloc::vec::Vec<CertificateDetails>,
 }
 /// \[\#next-free-field: 8\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CertificateDetails {
     /// Path of the certificate.
@@ -51,7 +48,6 @@ pub struct CertificateDetails {
 }
 /// Nested message and enum types in `CertificateDetails`.
 pub mod certificate_details {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct OcspDetails {
         /// Indicates the time from which the OCSP response is valid.
@@ -66,7 +62,6 @@ pub mod certificate_details {
         >,
     }
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SubjectAlternateName {
     /// Subject Alternate Name.
@@ -76,7 +71,6 @@ pub struct SubjectAlternateName {
 /// Nested message and enum types in `SubjectAlternateName`.
 pub mod subject_alternate_name {
     /// Subject Alternate Name.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Name {
         #[prost(string, tag = "1")]
@@ -88,7 +82,6 @@ pub mod subject_alternate_name {
     }
 }
 /// Proto representation of an Envoy Counter or Gauge value.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SimpleMetric {
     /// Type of the metric represented.
@@ -126,8 +119,8 @@ pub mod simple_metric {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Type::Counter => "COUNTER",
-                Type::Gauge => "GAUGE",
+                Self::Counter => "COUNTER",
+                Self::Gauge => "GAUGE",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -142,7 +135,6 @@ pub mod simple_metric {
 }
 /// Admin endpoint uses this wrapper for `/clusters` to display cluster status information.
 /// See :ref:`/clusters <operations_admin_interface_clusters>` for more information.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Clusters {
     /// Mapping from cluster name to each cluster's status.
@@ -151,7 +143,6 @@ pub struct Clusters {
 }
 /// Details an individual cluster's current status.
 /// \[\#next-free-field: 9\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterStatus {
     /// Name of the cluster.
@@ -160,16 +151,16 @@ pub struct ClusterStatus {
     /// Denotes whether this cluster was added via API or configured statically.
     #[prost(bool, tag = "2")]
     pub added_via_api: bool,
+    ///
     /// The success rate threshold used in the last interval.
     /// If
-    /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     /// is `false`, all errors: externally and locally generated were used to calculate the threshold.
     /// If
-    /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     /// is `true`, only externally generated errors were used to calculate the threshold.
     /// The threshold is used to eject hosts based on their success rate. See
-    /// :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for details.
-    ///
+    /// : ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for details.
     /// Note: this field may be omitted in any of the three following cases:
     ///
     /// 1. There were not enough hosts with enough request volume to proceed with success rate based
@@ -184,14 +175,14 @@ pub struct ClusterStatus {
     /// Mapping from host address to the host's current status.
     #[prost(message, repeated, tag = "4")]
     pub host_statuses: ::prost::alloc::vec::Vec<HostStatus>,
+    ///
     /// The success rate threshold used in the last interval when only locally originated failures were
     /// taken into account and externally originated errors were treated as success.
     /// This field should be interpreted only when
-    /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     /// is `true`. The threshold is used to eject hosts based on their success rate.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     /// details.
-    ///
     /// Note: this field may be omitted in any of the three following cases:
     ///
     /// 1. There were not enough hosts with enough request volume to proceed with success rate based
@@ -217,7 +208,6 @@ pub struct ClusterStatus {
 }
 /// Current state of a particular host.
 /// \[\#next-free-field: 10\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HostStatus {
     /// Address of this host.
@@ -229,16 +219,16 @@ pub struct HostStatus {
     /// The host's current health status.
     #[prost(message, optional, tag = "3")]
     pub health_status: ::core::option::Option<HostHealthStatus>,
+    ///
     /// Request success rate for this host over the last calculated interval.
     /// If
-    /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     /// is `false`, all errors: externally and locally generated were used in success rate
     /// calculation. If
-    /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     /// is `true`, only externally generated errors were used in success rate calculation.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     /// details.
-    ///
     /// Note: the message will not be present if host did not have enough request volume to calculate
     /// success rate or the cluster did not have enough hosts to run through success rate outlier
     /// ejection.
@@ -253,15 +243,15 @@ pub struct HostStatus {
     /// The host's priority. If not configured, the value defaults to 0 (highest priority).
     #[prost(uint32, tag = "7")]
     pub priority: u32,
+    ///
     /// Request success rate for this host over the last calculated
     /// interval when only locally originated errors are taken into account and externally originated
     /// errors were treated as success.
     /// This field should be interpreted only when
-    /// :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     /// is `true`.
     /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     /// details.
-    ///
     /// Note: the message will not be present if host did not have enough request volume to calculate
     /// success rate or the cluster did not have enough hosts to run through success rate outlier
     /// ejection.
@@ -275,7 +265,6 @@ pub struct HostStatus {
 }
 /// Health status for a host.
 /// \[\#next-free-field: 9\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct HostHealthStatus {
     /// The host is currently failing active health checks.
@@ -307,7 +296,6 @@ pub struct HostHealthStatus {
     #[prost(enumeration = "super::super::config::core::v3::HealthStatus", tag = "3")]
     pub eds_health_status: i32,
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdateFailureState {
     /// What the component configuration would have been if the update had succeeded.
@@ -332,7 +320,6 @@ pub struct UpdateFailureState {
 /// Envoy's listener manager fills this message with all currently known listeners. Listener
 /// configuration information can be used to recreate an Envoy configuration by populating all
 /// listeners as static listeners or by returning them in a LDS response.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListenersConfigDump {
     /// This is the :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` in the
@@ -354,7 +341,6 @@ pub struct ListenersConfigDump {
 /// Nested message and enum types in `ListenersConfigDump`.
 pub mod listeners_config_dump {
     /// Describes a statically loaded listener.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct StaticListener {
         /// The listener config.
@@ -368,11 +354,11 @@ pub mod listeners_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicListenerState {
+        ///
         /// This is the per-resource version information. This version is currently taken from the
-        /// :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time
+        /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time
         /// that the listener was loaded. In the future, discrete per-listener versions may be supported
         /// by the API.
         #[prost(string, tag = "1")]
@@ -390,7 +376,6 @@ pub mod listeners_config_dump {
     }
     /// Describes a dynamically loaded listener via the LDS API.
     /// \[\#next-free-field: 7\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicListener {
         /// The name or unique id of this listener, pulled from the DynamicListenerState config.
@@ -427,7 +412,6 @@ pub mod listeners_config_dump {
 /// Envoy's cluster manager fills this message with all currently known clusters. Cluster
 /// configuration information can be used to recreate an Envoy configuration by populating all
 /// clusters as static clusters or by returning them in a CDS response.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClustersConfigDump {
     /// This is the :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` in the
@@ -456,7 +440,6 @@ pub struct ClustersConfigDump {
 /// Nested message and enum types in `ClustersConfigDump`.
 pub mod clusters_config_dump {
     /// Describes a statically loaded cluster.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct StaticCluster {
         /// The cluster config.
@@ -472,11 +455,11 @@ pub mod clusters_config_dump {
     }
     /// Describes a dynamically loaded cluster via the CDS API.
     /// \[\#next-free-field: 6\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicCluster {
+        ///
         /// This is the per-resource version information. This version is currently taken from the
-        /// :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time
+        /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time
         /// that the cluster was loaded. In the future, discrete per-cluster versions may be supported by
         /// the API.
         #[prost(string, tag = "1")]
@@ -509,7 +492,6 @@ pub mod clusters_config_dump {
 /// or defined inline while configuring listeners are separated from those configured dynamically via RDS.
 /// Route configuration information can be used to recreate an Envoy configuration by populating all routes
 /// as static routes or by returning them in RDS responses.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RoutesConfigDump {
     /// The statically loaded route configs.
@@ -525,7 +507,6 @@ pub struct RoutesConfigDump {
 }
 /// Nested message and enum types in `RoutesConfigDump`.
 pub mod routes_config_dump {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct StaticRouteConfig {
         /// The route config.
@@ -540,11 +521,11 @@ pub mod routes_config_dump {
         >,
     }
     /// \[\#next-free-field: 6\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicRouteConfig {
+        ///
         /// This is the per-resource version information. This version is currently taken from the
-        /// :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
+        /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
         /// the route configuration was loaded.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
@@ -575,7 +556,6 @@ pub mod routes_config_dump {
 /// configuration scopes (defined via ScopedRouteConfigurationsSet protos). This message lists both
 /// the scopes defined inline with the higher order object (i.e., the HttpConnectionManager) and the
 /// dynamically obtained scopes via the SRDS API.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScopedRoutesConfigDump {
     /// The statically loaded scoped route configs.
@@ -591,7 +571,6 @@ pub struct ScopedRoutesConfigDump {
 }
 /// Nested message and enum types in `ScopedRoutesConfigDump`.
 pub mod scoped_routes_config_dump {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct InlineScopedRouteConfigs {
         /// The name assigned to the scoped route configurations.
@@ -609,14 +588,14 @@ pub mod scoped_routes_config_dump {
         >,
     }
     /// \[\#next-free-field: 7\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicScopedRouteConfigs {
         /// The name assigned to the scoped route configurations.
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
+        ///
         /// This is the per-resource version information. This version is currently taken from the
-        /// :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
+        /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
         /// the scoped routes configuration was loaded.
         #[prost(string, tag = "2")]
         pub version_info: ::prost::alloc::string::String,
@@ -646,7 +625,6 @@ pub mod scoped_routes_config_dump {
 /// Envoy's admin fill this message with all currently known endpoints. Endpoint
 /// configuration information can be used to recreate an Envoy configuration by populating all
 /// endpoints as static endpoints or by returning them in an EDS response.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EndpointsConfigDump {
     /// The statically loaded endpoint configs.
@@ -662,7 +640,6 @@ pub struct EndpointsConfigDump {
 }
 /// Nested message and enum types in `EndpointsConfigDump`.
 pub mod endpoints_config_dump {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct StaticEndpointConfig {
         /// The endpoint config.
@@ -677,11 +654,11 @@ pub mod endpoints_config_dump {
         >,
     }
     /// \[\#next-free-field: 6\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicEndpointConfig {
+        ///
         /// \[\#not-implemented-hide:\] This is the per-resource version information. This version is currently taken from the
-        /// :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
+        /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
         /// the endpoint configuration was loaded.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
@@ -712,7 +689,6 @@ pub mod endpoints_config_dump {
 /// configuration. Extension configuration information can be used to recreate
 /// an Envoy ECDS listener and HTTP filters as static filters or by returning
 /// them in ECDS response.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EcdsConfigDump {
     /// The ECDS filter configs.
@@ -722,11 +698,10 @@ pub struct EcdsConfigDump {
 /// Nested message and enum types in `EcdsConfigDump`.
 pub mod ecds_config_dump {
     /// \[\#next-free-field: 6\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct EcdsFilterConfig {
         /// This is the per-resource version information. This version is currently
-        /// taken from the :ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>`
+        /// taken from the :ref:`version_info  <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>`
         /// field at the time that the ECDS filter was loaded.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
@@ -767,7 +742,7 @@ pub enum ClientResourceStatus {
     /// This resource has been requested by the client but has either not been
     /// delivered by the server or was previously delivered by the server and then
     /// subsequently removed from resources provided by the server. For more
-    /// information, please refer to the :ref:`"Knowing When a Requested Resource Does Not Exist" <xds_protocol_resource_not_existed>` section.
+    /// information, please refer to the :ref:`"Knowing When a Requested Resource  Does Not Exist" <xds_protocol_resource_not_existed>` section.
     DoesNotExist = 2,
     /// Client received this resource and replied with ACK.
     Acked = 3,
@@ -781,11 +756,11 @@ impl ClientResourceStatus {
     /// (if the ProtoBuf definition does not change) and safe for programmatic use.
     pub fn as_str_name(&self) -> &'static str {
         match self {
-            ClientResourceStatus::Unknown => "UNKNOWN",
-            ClientResourceStatus::Requested => "REQUESTED",
-            ClientResourceStatus::DoesNotExist => "DOES_NOT_EXIST",
-            ClientResourceStatus::Acked => "ACKED",
-            ClientResourceStatus::Nacked => "NACKED",
+            Self::Unknown => "UNKNOWN",
+            Self::Requested => "REQUESTED",
+            Self::DoesNotExist => "DOES_NOT_EXIST",
+            Self::Acked => "ACKED",
+            Self::Nacked => "NACKED",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -802,12 +777,11 @@ impl ClientResourceStatus {
 }
 /// The :ref:`/config_dump <operations_admin_interface_config_dump>` admin endpoint uses this wrapper
 /// message to maintain and serve arbitrary configuration information from any component in Envoy.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConfigDump {
-    /// This list is serialized and dumped in its entirety at the
-    /// :ref:`/config_dump <operations_admin_interface_config_dump>` endpoint.
     ///
+    /// This list is serialized and dumped in its entirety at the
+    /// : ref:`/config_dump <operations_admin_interface_config_dump>` endpoint.
     /// The following configurations are currently supported and will be dumped in the order given
     /// below:
     ///
@@ -827,10 +801,11 @@ pub struct ConfigDump {
     /// Currently ECDS is supported in HTTP and listener filters. Note, ECDS configuration for
     /// either HTTP or listener filter will only be dumped if it is actually configured.
     ///
+    ///
     /// You can filter output with the resource and mask query parameters.
     /// See :ref:`/config_dump?resource={} <operations_admin_interface_config_dump_by_resource>`,
-    /// :ref:`/config_dump?mask={} <operations_admin_interface_config_dump_by_mask>`,
-    /// or :ref:`/config_dump?resource={},mask={} <operations_admin_interface_config_dump_by_resource_and_mask>` for more information.
+    /// : ref:`/config_dump?mask={} <operations_admin_interface_config_dump_by_mask>`,
+    /// or :ref:`/config_dump?resource={},mask={}  <operations_admin_interface_config_dump_by_resource_and_mask>` for more information.
     #[prost(message, repeated, tag = "1")]
     pub configs: ::prost::alloc::vec::Vec<super::super::super::google::protobuf::Any>,
 }
@@ -838,7 +813,6 @@ pub struct ConfigDump {
 /// any CLI overrides that were merged. Bootstrap configuration information can be used to recreate
 /// the static portions of an Envoy configuration by reusing the output as the bootstrap
 /// configuration for another Envoy.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BootstrapConfigDump {
     #[prost(message, optional, tag = "1")]
@@ -852,7 +826,6 @@ pub struct BootstrapConfigDump {
     >,
 }
 /// Envoys SDS implementation fills this message with all secrets fetched dynamically via SDS.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SecretsConfigDump {
     /// The statically loaded secrets.
@@ -875,7 +848,6 @@ pub struct SecretsConfigDump {
 pub mod secrets_config_dump {
     /// DynamicSecret contains secret information fetched via SDS.
     /// \[\#next-free-field: 7\]
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicSecret {
         /// The name assigned to the secret.
@@ -909,7 +881,6 @@ pub mod secrets_config_dump {
         pub client_status: i32,
     }
     /// StaticSecret specifies statically loaded secret in bootstrap.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct StaticSecret {
         /// The name assigned to the secret.
@@ -932,7 +903,6 @@ pub mod secrets_config_dump {
 /// Dumps of unready targets of envoy init managers. Envoy's admin fills this message with init managers,
 /// which provides the information of their unready targets.
 /// The :ref:`/init_dump <operations_admin_interface_init_dump>` will dump all unready targets information.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UnreadyTargetsDumps {
     /// You can choose specific component to dump unready targets with mask query parameter.
@@ -946,7 +916,6 @@ pub struct UnreadyTargetsDumps {
 /// Nested message and enum types in `UnreadyTargetsDumps`.
 pub mod unready_targets_dumps {
     /// Message of unready targets information of an init manager.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct UnreadyTargetsDump {
         /// Name of the init manager. Example: "init_manager_xxx".
@@ -959,7 +928,6 @@ pub mod unready_targets_dumps {
 }
 /// Admin endpoint uses this wrapper for `/listeners` to display listener status information.
 /// See :ref:`/listeners <operations_admin_interface_listeners>` for more information.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Listeners {
     /// List of listener statuses.
@@ -967,7 +935,6 @@ pub struct Listeners {
     pub listener_statuses: ::prost::alloc::vec::Vec<ListenerStatus>,
 }
 /// Details an individual listener's current status.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListenerStatus {
     /// Name of the listener
@@ -988,7 +955,6 @@ pub struct ListenerStatus {
 /// values extracted from an internal TCMalloc instance. For more information, see the section of the
 /// docs entitled ["Generic Tcmalloc Status"](<https://gperftools.github.io/gperftools/tcmalloc.html>).
 /// \[\#next-free-field: 7\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Memory {
     /// The number of bytes allocated by the heap for Envoy. This is an alias for
@@ -1025,7 +991,6 @@ pub struct Memory {
 /// *NB*: The wait cycles below are measured by `absl::base_internal::CycleClock`, and may not
 /// correspond to core clock frequency. For more information, see the `CycleClock`
 /// [docs](<https://github.com/abseil/abseil-cpp/blob/master/absl/base/internal/cycleclock.h>).
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct MutexStats {
     /// The number of individual mutex contentions which have occurred since startup.
@@ -1041,7 +1006,6 @@ pub struct MutexStats {
 /// Proto representation of the value returned by /server_info, containing
 /// server version/server status information.
 /// \[\#next-free-field: 8\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ServerInfo {
     /// Server version.
@@ -1101,10 +1065,10 @@ pub mod server_info {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                State::Live => "LIVE",
-                State::Draining => "DRAINING",
-                State::PreInitializing => "PRE_INITIALIZING",
-                State::Initializing => "INITIALIZING",
+                Self::Live => "LIVE",
+                Self::Draining => "DRAINING",
+                Self::PreInitializing => "PRE_INITIALIZING",
+                Self::Initializing => "INITIALIZING",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1120,7 +1084,6 @@ pub mod server_info {
     }
 }
 /// \[\#next-free-field: 41\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommandLineOptions {
     /// See :option:`--base-id` for details.
@@ -1263,8 +1226,8 @@ pub mod command_line_options {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                IpVersion::V4 => "v4",
-                IpVersion::V6 => "v6",
+                Self::V4 => "v4",
+                Self::V6 => "v6",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1303,9 +1266,9 @@ pub mod command_line_options {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Mode::Serve => "Serve",
-                Mode::Validate => "Validate",
-                Mode::InitOnly => "InitOnly",
+                Self::Serve => "Serve",
+                Self::Validate => "Validate",
+                Self::InitOnly => "InitOnly",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1343,8 +1306,8 @@ pub mod command_line_options {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                DrainStrategy::Gradual => "Gradual",
-                DrainStrategy::Immediate => "Immediate",
+                Self::Gradual => "Gradual",
+                Self::Immediate => "Immediate",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1358,7 +1321,6 @@ pub mod command_line_options {
     }
 }
 /// The /tap admin request body that is used to configure an active tap session.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TapRequest {
     /// The opaque configuration ID used to match the configuration to a loaded extension.

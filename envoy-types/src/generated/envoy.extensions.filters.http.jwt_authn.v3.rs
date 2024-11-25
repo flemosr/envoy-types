@@ -32,7 +32,6 @@
 /// ```
 ///
 /// \[\#next-free-field: 22\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtProvider {
     /// Specify the `principal <<https://tools.ietf.org/html/rfc7519#section-4.1.1>`\_> that issued
@@ -127,7 +126,7 @@ pub struct JwtProvider {
     ///
     /// If no explicit location is specified, the following default locations are tried in order:
     ///
-    /// 1. The Authorization header using the `Bearer schema <<https://tools.ietf.org/html/rfc6750#section-2.1>`\_.> Example::
+    /// 1. The Authorization header using the `Bearer schema  <<https://tools.ietf.org/html/rfc6750#section-2.1>`\_.> Example::
     ///
     ///    Authorization: Bearer <token>.
     ///
@@ -235,10 +234,10 @@ pub struct JwtProvider {
     /// kid: EF71iSaosbC5C4tC6Syq1Gm647M
     /// alg: PS256
     ///
-    /// When the metadata has `envoy.filters.http.jwt_authn` entry already (for example if
-    /// :ref:`payload_in_metadata <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtProvider.payload_in_metadata>`
-    /// is not empty), it will be inserted as a new entry in the same `namespace` as shown below:
     ///
+    /// When the metadata has `envoy.filters.http.jwt_authn` entry already (for example if
+    /// : ref:`payload_in_metadata <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtProvider.payload_in_metadata>`
+    /// is not empty), it will be inserted as a new entry in the same `namespace` as shown below:
     /// .. code-block:: yaml
     ///
     /// envoy.filters.http.jwt_authn:
@@ -313,15 +312,14 @@ pub struct JwtProvider {
 /// Nested message and enum types in `JwtProvider`.
 pub mod jwt_provider {
     /// Alters the payload representation in the request dynamic metadata to facilitate its use in matching.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct NormalizePayload {
         /// Each claim in this list will be interpreted as a space-delimited string
         /// and converted to a list of strings based on the delimited values.
-        /// Example: a token with a claim `scopes: "email profile"` is translated
-        /// to dynamic metadata  `scopes: \["email", "profile"\]` if this field is
-        /// set value `\["scopes"\]`. This special handling of `scopes` is
-        /// recommended by `RFC8693 <<https://datatracker.ietf.org/doc/html/rfc8693#name-scope-scopes-claim>`\_.>
+        /// Example: a token with a claim `scope: "email profile"` is translated
+        /// to dynamic metadata  `scope: \["email", "profile"\]` if this field is
+        /// set value `\["scope"\]`. This special handling of `scope` is
+        /// recommended by `RFC8693  <<https://datatracker.ietf.org/doc/html/rfc8693#name-scope-scopes-claim>`\_.>
         #[prost(string, repeated, tag = "1")]
         pub space_delimited_claims: ::prost::alloc::vec::Vec<
             ::prost::alloc::string::String,
@@ -329,7 +327,6 @@ pub mod jwt_provider {
     }
     /// `JSON Web Key Set (JWKS) <<https://tools.ietf.org/html/rfc7517#appendix-A>`\_> is needed to
     /// validate signature of a JWT. This field specifies where to fetch JWKS.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum JwksSourceSpecifier {
         /// JWKS can be fetched from remote server via HTTP/HTTPS. This field specifies the remote HTTP
@@ -377,7 +374,6 @@ pub mod jwt_provider {
     }
 }
 /// This message specifies JWT Cache configuration.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct JwtCacheConfig {
     /// The unit is number of JWT tokens, default to 100.
@@ -385,7 +381,6 @@ pub struct JwtCacheConfig {
     pub jwt_cache_size: u32,
 }
 /// This message specifies how to fetch JWKS from remote and how to cache it.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RemoteJwks {
     /// The HTTP URI to fetch the JWKS. For example:
@@ -459,7 +454,6 @@ pub struct RemoteJwks {
 /// The listener is activated only after the Jwks is fetched.
 /// When the Jwks is expired in the cache, it is fetched again in the main thread.
 /// The fetched Jwks from the main thread can be used by all worker threads.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct JwksAsyncFetch {
     /// If false, the listener is activated after the initial fetch is completed.
@@ -475,7 +469,6 @@ pub struct JwksAsyncFetch {
     >,
 }
 /// This message specifies a header location to extract JWT token.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtHeader {
     /// The HTTP header name.
@@ -488,7 +481,6 @@ pub struct JwtHeader {
     pub value_prefix: ::prost::alloc::string::String,
 }
 /// Specify a required provider with audiences.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProviderWithAudiences {
     /// Specify a required provider name.
@@ -562,7 +554,6 @@ pub struct ProviderWithAudiences {
 /// - provider_name: provider-B
 ///
 /// \[\#next-free-field: 7\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtRequirement {
     #[prost(oneof = "jwt_requirement::RequiresType", tags = "1, 2, 3, 4, 5, 6")]
@@ -570,7 +561,6 @@ pub struct JwtRequirement {
 }
 /// Nested message and enum types in `JwtRequirement`.
 pub mod jwt_requirement {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum RequiresType {
         /// Specify a required provider name.
@@ -607,7 +597,6 @@ pub mod jwt_requirement {
 }
 /// This message specifies a list of RequiredProvider.
 /// Their results are OR-ed; if any one of them passes, the result is passed
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtRequirementOrList {
     /// Specify a list of JwtRequirement.
@@ -616,7 +605,6 @@ pub struct JwtRequirementOrList {
 }
 /// This message specifies a list of RequiredProvider.
 /// Their results are AND-ed; all of them must pass, if one of them fails or missing, it fails.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtRequirementAndList {
     /// Specify a list of JwtRequirement.
@@ -648,7 +636,6 @@ pub struct JwtRequirementAndList {
 ///
 /// In above example, all requests matched the path prefix require jwt authentication
 /// from "provider-A".
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RequirementRule {
     /// The route matching parameter. Only when the match is satisfied, the "requires" field will
@@ -675,15 +662,15 @@ pub struct RequirementRule {
 pub mod requirement_rule {
     /// Specify a Jwt requirement.
     /// If not specified, Jwt verification is disabled.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum RequirementType {
         /// Specify a Jwt requirement. Please see detail comment in message JwtRequirement.
         #[prost(message, tag = "2")]
         Requires(super::JwtRequirement),
+        ///
         /// Use requirement_name to specify a Jwt requirement.
         /// This requirement_name MUST be specified at the
-        /// :ref:`requirement_map <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtAuthentication.requirement_map>`
+        /// : ref:`requirement_map <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtAuthentication.requirement_map>`
         /// in `JwtAuthentication`.
         #[prost(string, tag = "3")]
         RequirementName(::prost::alloc::string::String),
@@ -708,7 +695,6 @@ pub mod requirement_rule {
 ///
 /// If a filter set "jwt_selector" with "issuer_1" to FilterState for a request,
 /// jwt_authn filter will use JwtRequirement{"provider_name": "issuer1"} to verify.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilterStateRule {
     /// The filter state name to retrieve the `Router::StringAccessor` object.
@@ -767,7 +753,6 @@ pub struct FilterStateRule {
 /// ```
 ///
 /// \[\#next-free-field: 7\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtAuthentication {
     /// Map of provider names to JwtProviders.
@@ -830,12 +815,13 @@ pub struct JwtAuthentication {
     /// check this one.
     #[prost(message, optional, tag = "3")]
     pub filter_state_rules: ::core::option::Option<FilterStateRule>,
-    /// When set to true, bypass the `CORS preflight request <<http://www.w3.org/TR/cors/#cross-origin-request-with-preflight>`\_> regardless of JWT
+    /// When set to true, bypass the `CORS preflight request  <<http://www.w3.org/TR/cors/#cross-origin-request-with-preflight>`\_> regardless of JWT
     /// requirements specified in the rules.
     #[prost(bool, tag = "4")]
     pub bypass_cors_preflight: bool,
+    ///
     /// A map of unique requirement_names to JwtRequirements.
-    /// :ref:`requirement_name <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.PerRouteConfig.requirement_name>`
+    /// : ref:`requirement_name <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.PerRouteConfig.requirement_name>`
     /// in `PerRouteConfig` uses this map to specify a JwtRequirement.
     #[prost(map = "string, message", tag = "5")]
     pub requirement_map: ::std::collections::HashMap<
@@ -849,7 +835,6 @@ pub struct JwtAuthentication {
     pub strip_failure_response: bool,
 }
 /// Specify per-route config.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PerRouteConfig {
     #[prost(oneof = "per_route_config::RequirementSpecifier", tags = "1, 2")]
@@ -859,22 +844,21 @@ pub struct PerRouteConfig {
 }
 /// Nested message and enum types in `PerRouteConfig`.
 pub mod per_route_config {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum RequirementSpecifier {
         /// Disable Jwt Authentication for this route.
         #[prost(bool, tag = "1")]
         Disabled(bool),
+        ///
         /// Use requirement_name to specify a JwtRequirement.
         /// This requirement_name MUST be specified at the
-        /// :ref:`requirement_map <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtAuthentication.requirement_map>`
+        /// : ref:`requirement_map <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtAuthentication.requirement_map>`
         /// in `JwtAuthentication`. If no, the requests using this route will be rejected with 403.
         #[prost(string, tag = "2")]
         RequirementName(::prost::alloc::string::String),
     }
 }
 /// This message specifies a combination of header name and claim name.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtClaimToHeader {
     /// The HTTP header name to copy the claim to.

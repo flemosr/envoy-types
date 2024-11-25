@@ -5,7 +5,6 @@
 /// Note that the consistency of the match result relies on the internal hash function (xxhash) remaining
 /// unchanged. While this is unlikely to happen intentionally, this could cause inconsistent match results
 /// between deployments.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct ConsistentHashing {
     /// The threshold the resulting hash must be over in order for this matcher to evaluate to true.

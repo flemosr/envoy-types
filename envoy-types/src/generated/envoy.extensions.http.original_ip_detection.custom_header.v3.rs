@@ -2,12 +2,11 @@
 /// This extension allows for the original downstream remote IP to be detected
 /// by reading the value from a configured header name. If the value is successfully parsed
 /// as an IP, it'll be treated as the effective downstream remote address and seen as such
-/// by all filters. See :ref:`original_ip_detection_extensions <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.original_ip_detection_extensions>`
+/// by all filters. See :ref:`original_ip_detection_extensions  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.original_ip_detection_extensions>`
 /// for an overview of how extensions operate and what happens when an extension fails
 /// to detect the remote IP.
 ///
 /// \[\#extension: envoy.http.original_ip_detection.custom_header\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CustomHeaderConfig {
     /// The header name containing the original downstream remote address, if present.

@@ -14,7 +14,6 @@
 ///
 /// \[\#comment:TODO(yanavlasov): Put #extension: envoy.http.header_validators.envoy_default after it is not hidden any more\]
 /// \[\#next-free-field: 6\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct HeaderValidatorConfig {
     #[prost(message, optional, tag = "1")]
@@ -22,7 +21,7 @@ pub struct HeaderValidatorConfig {
         header_validator_config::Http1ProtocolOptions,
     >,
     /// The URI path normalization options.
-    /// By default Envoy normalizes URI path using the default values of the :ref:`UriPathNormalizationOptions <envoy_v3_api_msg_extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.UriPathNormalizationOptions>`.
+    /// By default Envoy normalizes URI path using the default values of the :ref:`UriPathNormalizationOptions  <envoy_v3_api_msg_extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.UriPathNormalizationOptions>`.
     /// URI path transformations specified by the `uri_path_normalization_options` configuration can be applied to a portion
     /// of requests by setting the `envoy_default_header_validator.uri_path_transformations` runtime value.
     /// Caution: disabling path normalization may lead to path confusion vulnerabilities in access control or incorrect service
@@ -50,16 +49,16 @@ pub struct HeaderValidatorConfig {
 }
 /// Nested message and enum types in `HeaderValidatorConfig`.
 pub mod header_validator_config {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct UriPathNormalizationOptions {
+        ///
         /// Should paths be normalized according to RFC 3986?
         /// This operation overwrites the original request URI path and the new path is used for processing of
         /// the request by HTTP filters and proxied to the upstream service.
         /// Envoy will respond with 400 to requests with malformed paths that fail path normalization.
         /// The default behavior is to normalize the path.
         /// This value may be overridden by the runtime variable
-        /// :ref:`http_connection_manager.normalize_path<config_http_conn_man_runtime_normalize_path>`.
+        /// : ref:`http_connection_manager.normalize_path<config_http_conn_man_runtime_normalize_path>`.
         /// See `Normalization and Comparison <<https://datatracker.ietf.org/doc/html/rfc3986#section-6>`\_>
         /// for details of normalization.
         /// Note that Envoy does not perform
@@ -133,17 +132,13 @@ pub mod header_validator_config {
             /// (if the ProtoBuf definition does not change) and safe for programmatic use.
             pub fn as_str_name(&self) -> &'static str {
                 match self {
-                    PathWithEscapedSlashesAction::ImplementationSpecificDefault => {
+                    Self::ImplementationSpecificDefault => {
                         "IMPLEMENTATION_SPECIFIC_DEFAULT"
                     }
-                    PathWithEscapedSlashesAction::KeepUnchanged => "KEEP_UNCHANGED",
-                    PathWithEscapedSlashesAction::RejectRequest => "REJECT_REQUEST",
-                    PathWithEscapedSlashesAction::UnescapeAndRedirect => {
-                        "UNESCAPE_AND_REDIRECT"
-                    }
-                    PathWithEscapedSlashesAction::UnescapeAndForward => {
-                        "UNESCAPE_AND_FORWARD"
-                    }
+                    Self::KeepUnchanged => "KEEP_UNCHANGED",
+                    Self::RejectRequest => "REJECT_REQUEST",
+                    Self::UnescapeAndRedirect => "UNESCAPE_AND_REDIRECT",
+                    Self::UnescapeAndForward => "UNESCAPE_AND_FORWARD",
                 }
             }
             /// Creates an enum from field names used in the ProtoBuf definition.
@@ -161,7 +156,6 @@ pub mod header_validator_config {
             }
         }
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct Http1ProtocolOptions {
         /// Allows Envoy to process HTTP/1 requests/responses with both `Content-Length` and `Transfer-Encoding`
@@ -195,14 +189,16 @@ pub mod header_validator_config {
     pub enum HeadersWithUnderscoresAction {
         /// Allow headers with underscores. This is the default behavior.
         Allow = 0,
+        ///
         /// Reject client request. HTTP/1 requests are rejected with the 400 status. HTTP/2 requests
         /// end with the stream reset. The
-        /// :ref:`httpN.requests_rejected_with_underscores_in_headers <config_http_conn_man_stats_per_codec>` counter
+        /// : ref:`httpN.requests_rejected_with_underscores_in_headers <config_http_conn_man_stats_per_codec>` counter
         /// is incremented for each rejected request.
         RejectRequest = 1,
+        ///
         /// Drop the client header with name containing underscores. The header is dropped before the filter chain is
         /// invoked and as such filters will not see dropped headers. The
-        /// :ref:`httpN.dropped_headers_with_underscores <config_http_conn_man_stats_per_codec>` is incremented for
+        /// : ref:`httpN.dropped_headers_with_underscores <config_http_conn_man_stats_per_codec>` is incremented for
         /// each dropped header.
         DropHeader = 2,
     }
@@ -213,9 +209,9 @@ pub mod header_validator_config {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                HeadersWithUnderscoresAction::Allow => "ALLOW",
-                HeadersWithUnderscoresAction::RejectRequest => "REJECT_REQUEST",
-                HeadersWithUnderscoresAction::DropHeader => "DROP_HEADER",
+                Self::Allow => "ALLOW",
+                Self::RejectRequest => "REJECT_REQUEST",
+                Self::DropHeader => "DROP_HEADER",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.

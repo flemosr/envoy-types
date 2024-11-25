@@ -2,22 +2,23 @@
 /// Optionally divide the endpoints in this cluster into subsets defined by
 /// endpoint metadata and selected by route and weighted cluster metadata.
 /// \[\#next-free-field: 11\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Subset {
+    ///
     /// The behavior used when no endpoint subset matches the selected route's
     /// metadata. The value defaults to
-    /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.NO_FALLBACK>`.
+    /// : ref:`NO_FALLBACK<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.NO_FALLBACK>`.
     #[prost(enumeration = "subset::LbSubsetFallbackPolicy", tag = "1")]
     pub fallback_policy: i32,
+    ///
     /// Specifies the default subset of endpoints used during fallback if
     /// fallback_policy is
-    /// :ref:`DEFAULT_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.DEFAULT_SUBSET>`.
+    /// : ref:`DEFAULT_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.DEFAULT_SUBSET>`.
     /// Each field in default_subset is
     /// compared to the matching LbEndpoint.Metadata under the `envoy.lb`
     /// namespace. It is valid for no hosts to match, in which case the behavior
     /// is the same as a fallback_policy of
-    /// :ref:`NO_FALLBACK<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.NO_FALLBACK>`.
+    /// : ref:`NO_FALLBACK<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.NO_FALLBACK>`.
     #[prost(message, optional, tag = "2")]
     pub default_subset: ::core::option::Option<
         super::super::super::super::super::google::protobuf::Struct,
@@ -70,10 +71,10 @@ pub struct Subset {
     /// .. note::
     /// If the keys of request metadata is superset of multiple different subset selectors keys, the subset
     /// selector with most keys to win. For example, given subset selectors
-    /// `{"subset_selectors": \["keys": ["A", "B", "C"\], \["A", "B"]\]}` and request metadata `{"A": "-", "B": "-", "C": "-", "D": "-"}`, keys `A`, `B`, `C` will be evaluated.
+    /// `{"subset_selectors": \["keys": ["A", "B", "C"\], \["A", "B"]\]}` and request metadata `{"A": "-",    "B": "-", "C": "-", "D": "-"}`, keys `A`, `B`, `C` will be evaluated.
     /// If the keys of request metadata is superset of multiple different subset selectors keys and the number
     /// of selector keys are same, then the one placed in front to win. For example, given subset selectors
-    /// `{"subset_selectors": \["keys": ["A", "B"\], \["C", "D"]\]}` and request metadata `{"A": "-", "B": "-", "C": "-", "D": "-"}`, keys `A`, `B` will be evaluated.
+    /// `{"subset_selectors": \["keys": ["A", "B"\], \["C", "D"]\]}` and request metadata `{"A": "-", "B": "-",    "C": "-", "D": "-"}`, keys `A`, `B` will be evaluated.
     #[prost(bool, tag = "10")]
     pub allow_redundant_keys: bool,
     /// If true, routing to subsets will take into account the localities and locality weights of the
@@ -107,13 +108,14 @@ pub struct Subset {
     /// and any of the elements in the list matches the criteria.
     #[prost(bool, tag = "7")]
     pub list_as_any: bool,
+    ///
     /// Fallback mechanism that allows to try different route metadata until a host is found.
     /// If load balancing process, including all its mechanisms (like
-    /// :ref:`fallback_policy<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.subset.fallback_policy>`)
+    /// : ref:`fallback_policy<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.subset.fallback_policy>`)
     /// fails to select a host, this policy decides if and how the process is repeated using another metadata.
     ///
     /// The value defaults to
-    /// :ref:`METADATA_NO_FALLBACK <envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.subset.LbSubsetMetadataFallbackPolicy.METADATA_NO_FALLBACK>`.
+    /// : ref:`METADATA_NO_FALLBACK  <envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.subset.LbSubsetMetadataFallbackPolicy.METADATA_NO_FALLBACK>`.
     #[prost(enumeration = "subset::LbSubsetMetadataFallbackPolicy", tag = "8")]
     pub metadata_fallback_policy: i32,
     /// The child LB policy to create for endpoint-picking within the chosen subset.
@@ -125,7 +127,6 @@ pub struct Subset {
 /// Nested message and enum types in `Subset`.
 pub mod subset {
     /// Specifications for subsets.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct LbSubsetSelector {
         /// List of keys to match with the weighted cluster metadata.
@@ -136,9 +137,10 @@ pub mod subset {
         ///
         /// If a match is found to a host, that host will be used regardless of priority levels.
         ///
+        ///
         /// When this mode is enabled, configurations that contain more than one host with the same metadata value for the single key in `keys`
         /// will use only one of the hosts with the given key; no requests will be routed to the others. The cluster gauge
-        /// :ref:`lb_subsets_single_host_per_subset_duplicate<config_cluster_manager_cluster_stats_subset_lb>` indicates how many duplicates are
+        /// : ref:`lb_subsets_single_host_per_subset_duplicate<config_cluster_manager_cluster_stats_subset_lb>` indicates how many duplicates are
         /// present in the current configuration.
         #[prost(bool, tag = "4")]
         pub single_host_per_subset: bool,
@@ -149,14 +151,15 @@ pub mod subset {
             tag = "2"
         )]
         pub fallback_policy: i32,
+        ///
         /// Subset of
-        /// :ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` used by
-        /// :ref:`KEYS_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.LbSubsetSelectorFallbackPolicy.KEYS_SUBSET>`
+        /// : ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` used by
+        /// : ref:`KEYS_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.LbSubsetSelectorFallbackPolicy.KEYS_SUBSET>`
         /// fallback policy.
         /// It has to be a non empty list if KEYS_SUBSET fallback policy is selected.
         /// For any other fallback policy the parameter is not used and should not be set.
         /// Only values also present in
-        /// :ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` are allowed, but
+        /// : ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` are allowed, but
         /// `fallback_keys_subset` cannot be equal to `keys`.
         #[prost(string, repeated, tag = "3")]
         pub fallback_keys_subset: ::prost::alloc::vec::Vec<
@@ -189,9 +192,10 @@ pub mod subset {
             /// If DEFAULT_SUBSET is selected, load balancing is performed over the
             /// endpoints matching the values from the default_subset field.
             DefaultSubset = 3,
+            ///
             /// If KEYS_SUBSET is selected, subset selector matching is performed again with metadata
             /// keys reduced to
-            /// :ref:`fallback_keys_subset<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.fallback_keys_subset>`.
+            /// : ref:`fallback_keys_subset<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.fallback_keys_subset>`.
             /// It allows for a fallback to a different, less specific selector if some of the keys of
             /// the selector are considered optional.
             KeysSubset = 4,
@@ -203,11 +207,11 @@ pub mod subset {
             /// (if the ProtoBuf definition does not change) and safe for programmatic use.
             pub fn as_str_name(&self) -> &'static str {
                 match self {
-                    LbSubsetSelectorFallbackPolicy::NotDefined => "NOT_DEFINED",
-                    LbSubsetSelectorFallbackPolicy::NoFallback => "NO_FALLBACK",
-                    LbSubsetSelectorFallbackPolicy::AnyEndpoint => "ANY_ENDPOINT",
-                    LbSubsetSelectorFallbackPolicy::DefaultSubset => "DEFAULT_SUBSET",
-                    LbSubsetSelectorFallbackPolicy::KeysSubset => "KEYS_SUBSET",
+                    Self::NotDefined => "NOT_DEFINED",
+                    Self::NoFallback => "NO_FALLBACK",
+                    Self::AnyEndpoint => "ANY_ENDPOINT",
+                    Self::DefaultSubset => "DEFAULT_SUBSET",
+                    Self::KeysSubset => "KEYS_SUBSET",
                 }
             }
             /// Creates an enum from field names used in the ProtoBuf definition.
@@ -252,9 +256,9 @@ pub mod subset {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                LbSubsetFallbackPolicy::NoFallback => "NO_FALLBACK",
-                LbSubsetFallbackPolicy::AnyEndpoint => "ANY_ENDPOINT",
-                LbSubsetFallbackPolicy::DefaultSubset => "DEFAULT_SUBSET",
+                Self::NoFallback => "NO_FALLBACK",
+                Self::AnyEndpoint => "ANY_ENDPOINT",
+                Self::DefaultSubset => "DEFAULT_SUBSET",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -330,10 +334,8 @@ pub mod subset {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                LbSubsetMetadataFallbackPolicy::MetadataNoFallback => {
-                    "METADATA_NO_FALLBACK"
-                }
-                LbSubsetMetadataFallbackPolicy::FallbackList => "FALLBACK_LIST",
+                Self::MetadataNoFallback => "METADATA_NO_FALLBACK",
+                Self::FallbackList => "FALLBACK_LIST",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.

@@ -7,7 +7,6 @@
 /// .. code-block:: cpp
 ///
 /// ("\<descriptor_key>", "\<expression_value>")
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Descriptor {
     /// The key to use in the descriptor entry.
@@ -22,7 +21,6 @@ pub struct Descriptor {
 }
 /// Nested message and enum types in `Descriptor`.
 pub mod descriptor {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ExprSpecifier {
         /// Expression in a text form, e.g. "connection.requested_server_name".

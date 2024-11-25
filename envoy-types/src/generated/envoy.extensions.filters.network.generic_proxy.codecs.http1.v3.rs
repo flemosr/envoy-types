@@ -8,7 +8,6 @@
 /// part of the HTTP1.1 features, such as upgrade, connect, etc.
 /// This codec is mainly designed for the features evaluation of the generic proxy filter. Please
 /// be cautious when using it in production.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Http1CodecConfig {
     /// If true, the codec will parse and serialize HTTP1 messages in a single frame per message.

@@ -47,7 +47,6 @@
 /// - destination_port: 443
 /// principals:
 /// - any: true
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rbac {
     /// The action to take if a policy matches. Every action either allows or denies a request,
@@ -78,7 +77,6 @@ pub struct Rbac {
 }
 /// Nested message and enum types in `RBAC`.
 pub mod rbac {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct AuditLoggingOptions {
         /// Condition for the audit logging to happen.
@@ -98,7 +96,6 @@ pub mod rbac {
     /// Nested message and enum types in `AuditLoggingOptions`.
     pub mod audit_logging_options {
         /// \[\#not-implemented-hide:\]
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct AuditLoggerConfig {
             /// Typed logger configuration.
@@ -142,10 +139,10 @@ pub mod rbac {
             /// (if the ProtoBuf definition does not change) and safe for programmatic use.
             pub fn as_str_name(&self) -> &'static str {
                 match self {
-                    AuditCondition::None => "NONE",
-                    AuditCondition::OnDeny => "ON_DENY",
-                    AuditCondition::OnAllow => "ON_ALLOW",
-                    AuditCondition::OnDenyAndAllow => "ON_DENY_AND_ALLOW",
+                    Self::None => "NONE",
+                    Self::OnDeny => "ON_DENY",
+                    Self::OnAllow => "ON_ALLOW",
+                    Self::OnDenyAndAllow => "ON_DENY_AND_ALLOW",
                 }
             }
             /// Creates an enum from field names used in the ProtoBuf definition.
@@ -191,9 +188,9 @@ pub mod rbac {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Action::Allow => "ALLOW",
-                Action::Deny => "DENY",
-                Action::Log => "LOG",
+                Self::Allow => "ALLOW",
+                Self::Deny => "DENY",
+                Self::Log => "LOG",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -211,7 +208,6 @@ pub mod rbac {
 /// A policy matches if and only if at least one of its permissions match the
 /// action taking place AND at least one of its principals match the downstream
 /// AND the condition is true if specified.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Policy {
     /// Required. The set of permissions that define a role. Each permission is
@@ -225,8 +221,9 @@ pub struct Policy {
     /// true should be used.
     #[prost(message, repeated, tag = "2")]
     pub principals: ::prost::alloc::vec::Vec<Principal>,
+    ///
     /// An optional symbolic expression specifying an access control
-    /// :ref:`condition <arch_overview_condition>`. The condition is combined
+    /// : ref:`condition <arch_overview_condition>`. The condition is combined
     /// with the permissions and the principals as a clause with AND semantics.
     /// Only be used when checked_condition is not used.
     #[prost(message, optional, tag = "3")]
@@ -241,14 +238,35 @@ pub struct Policy {
         super::super::super::super::google::api::expr::v1alpha1::CheckedExpr,
     >,
 }
+/// SourcedMetadata enables matching against metadata from different sources in the request processing
+/// pipeline. It extends the base MetadataMatcher functionality by allowing specification of where the
+/// metadata should be sourced from, rather than only matching against dynamic metadata.
+///
+/// The matcher can be configured to look up metadata from:
+///
+/// * Dynamic metadata: Runtime metadata added by filters during request processing
+/// * Route metadata: Static metadata configured on the route entry
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SourcedMetadata {
+    /// Metadata matcher configuration that defines what metadata to match against. This includes the filter name,
+    /// metadata key path, and expected value.
+    #[prost(message, optional, tag = "1")]
+    pub metadata_matcher: ::core::option::Option<
+        super::super::super::r#type::matcher::v3::MetadataMatcher,
+    >,
+    /// Specifies which metadata source should be used for matching. If not set,
+    /// defaults to DYNAMIC (dynamic metadata). Set to ROUTE to match against
+    /// static metadata configured on the route entry.
+    #[prost(enumeration = "MetadataSource", tag = "2")]
+    pub metadata_source: i32,
+}
 /// Permission defines an action (or actions) that a principal can take.
-/// \[\#next-free-field: 14\]
-#[allow(clippy::derive_partial_eq_without_eq)]
+/// \[\#next-free-field: 15\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Permission {
     #[prost(
         oneof = "permission::Rule",
-        tags = "1, 2, 3, 4, 10, 5, 6, 11, 7, 8, 9, 12, 13"
+        tags = "1, 2, 3, 4, 10, 5, 6, 11, 7, 8, 9, 12, 13, 14"
     )]
     pub rule: ::core::option::Option<permission::Rule>,
 }
@@ -256,13 +274,11 @@ pub struct Permission {
 pub mod permission {
     /// Used in the `and_rules` and `or_rules` fields in the `rule` oneof. Depending on the context,
     /// each are applied with the associated behavior.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Set {
         #[prost(message, repeated, tag = "1")]
         pub rules: ::prost::alloc::vec::Vec<super::Permission>,
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Rule {
         /// A set of rules that all must match in order to define the action.
@@ -292,7 +308,9 @@ pub mod permission {
         /// A port number range that describes a range of destination ports connecting to.
         #[prost(message, tag = "11")]
         DestinationPortRange(super::super::super::super::r#type::v3::Int32Range),
-        /// Metadata that describes additional information about the action.
+        ///
+        /// Metadata that describes additional information about the action. This field is deprecated; please use
+        /// : ref:`sourced_metadata<envoy_v3_api_field_config.rbac.v3.Permission.sourced_metadata>` instead.
         #[prost(message, tag = "7")]
         Metadata(super::super::super::super::r#type::matcher::v3::MetadataMatcher),
         /// Negates matching the provided permission. For instance, if the value of
@@ -331,17 +349,20 @@ pub mod permission {
         /// \[\#extension-category: envoy.path.match\]
         #[prost(message, tag = "13")]
         UriTemplate(super::super::super::core::v3::TypedExtensionConfig),
+        /// Matches against metadata from either dynamic state or route configuration. Preferred over the
+        /// `metadata` field as it provides more flexibility in metadata source selection.
+        #[prost(message, tag = "14")]
+        SourcedMetadata(super::SourcedMetadata),
     }
 }
 /// Principal defines an identity or a group of identities for a downstream
 /// subject.
-/// \[\#next-free-field: 13\]
-#[allow(clippy::derive_partial_eq_without_eq)]
+/// \[\#next-free-field: 14\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Principal {
     #[prost(
         oneof = "principal::Identifier",
-        tags = "1, 2, 3, 4, 5, 10, 11, 6, 9, 7, 12, 8"
+        tags = "1, 2, 3, 4, 5, 10, 11, 6, 9, 7, 12, 8, 13"
     )]
     pub identifier: ::core::option::Option<principal::Identifier>,
 }
@@ -349,14 +370,12 @@ pub struct Principal {
 pub mod principal {
     /// Used in the `and_ids` and `or_ids` fields in the `identifier` oneof.
     /// Depending on the context, each are applied with the associated behavior.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Set {
         #[prost(message, repeated, tag = "1")]
         pub ids: ::prost::alloc::vec::Vec<super::Principal>,
     }
     /// Authentication attributes for a downstream.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Authenticated {
         /// The name of the principal. If set, The URI SAN or DNS SAN in that order
@@ -367,7 +386,6 @@ pub mod principal {
             super::super::super::super::r#type::matcher::v3::StringMatcher,
         >,
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Identifier {
         /// A set of identifiers that all must match in order to define the
@@ -387,21 +405,24 @@ pub mod principal {
         /// A CIDR block that describes the downstream IP.
         /// This address will honor proxy protocol, but will not honor XFF.
         ///
-        /// This field is deprecated; either use :ref:`remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` for the same
+        ///
+        /// This field is deprecated; either use :ref:`remote_ip  <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` for the same
         /// behavior, or use
-        /// :ref:`direct_remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`.
+        /// : ref:`direct_remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`.
         #[prost(message, tag = "5")]
         SourceIp(super::super::super::core::v3::CidrRange),
+        ///
         /// A CIDR block that describes the downstream remote/origin address.
         /// Note: This is always the physical peer even if the
-        /// :ref:`remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` is
+        /// : ref:`remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` is
         /// inferred from for example the x-forwarder-for header, proxy protocol,
         /// etc.
         #[prost(message, tag = "10")]
         DirectRemoteIp(super::super::super::core::v3::CidrRange),
+        ///
         /// A CIDR block that describes the downstream remote/origin address.
         /// Note: This may not be the physical peer and could be different from the
-        /// :ref:`direct_remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`. E.g, if the
+        /// : ref:`direct_remote_ip  <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`. E.g, if the
         /// remote ip is inferred from for example the x-forwarder-for header, proxy
         /// protocol, etc.
         #[prost(message, tag = "11")]
@@ -415,7 +436,9 @@ pub mod principal {
         /// A URL path on the incoming HTTP request. Only available for HTTP.
         #[prost(message, tag = "9")]
         UrlPath(super::super::super::super::r#type::matcher::v3::PathMatcher),
-        /// Metadata that describes additional information about the principal.
+        ///
+        /// Metadata that describes additional information about the principal. This field is deprecated; please use
+        /// : ref:`sourced_metadata<envoy_v3_api_field_config.rbac.v3.Principal.sourced_metadata>` instead.
         #[prost(message, tag = "7")]
         Metadata(super::super::super::super::r#type::matcher::v3::MetadataMatcher),
         /// Identifies the principal using a filter state object.
@@ -426,10 +449,13 @@ pub mod principal {
         /// value of `not_id` would not match, this principal would match.
         #[prost(message, tag = "8")]
         NotId(::prost::alloc::boxed::Box<super::Principal>),
+        /// Matches against metadata from either dynamic state or route configuration. Preferred over the
+        /// `metadata` field as it provides more flexibility in metadata source selection.
+        #[prost(message, tag = "13")]
+        SourcedMetadata(super::SourcedMetadata),
     }
 }
 /// Action defines the result of allowance or denial when a request matches the matcher.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Action {
     /// The name indicates the policy name.
@@ -454,4 +480,32 @@ pub struct Action {
     /// get matched on the LOG action.
     #[prost(enumeration = "rbac::Action", tag = "2")]
     pub action: i32,
+}
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum MetadataSource {
+    /// Query :ref:`dynamic metadata <well_known_dynamic_metadata>`
+    Dynamic = 0,
+    /// Query :ref:`route metadata <envoy_v3_api_field_config.route.v3.Route.metadata>`
+    Route = 1,
+}
+impl MetadataSource {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Dynamic => "DYNAMIC",
+            Self::Route => "ROUTE",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "DYNAMIC" => Some(Self::Dynamic),
+            "ROUTE" => Some(Self::Route),
+            _ => None,
+        }
+    }
 }

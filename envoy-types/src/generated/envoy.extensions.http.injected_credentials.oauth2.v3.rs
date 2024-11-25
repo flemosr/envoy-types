@@ -3,7 +3,6 @@
 /// proxied requests.
 /// Currently, only the Client Credentials Grant flow is supported.
 /// The access token will be injected into the request headers using the `Authorization` header as a bearer token.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2 {
     /// Endpoint on the authorization server to retrieve the access token from.
@@ -29,7 +28,6 @@ pub struct OAuth2 {
 pub mod o_auth2 {
     /// Credentials to authenticate client to the authorization server.
     /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-2.3>) for details.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ClientCredentials {
         /// Client ID.
@@ -73,8 +71,8 @@ pub mod o_auth2 {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                AuthType::BasicAuth => "BASIC_AUTH",
-                AuthType::UrlEncodedBody => "URL_ENCODED_BODY",
+                Self::BasicAuth => "BASIC_AUTH",
+                Self::UrlEncodedBody => "URL_ENCODED_BODY",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -86,7 +84,6 @@ pub mod o_auth2 {
             }
         }
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum FlowType {
         /// Client Credentials Grant.

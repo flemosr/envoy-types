@@ -9,7 +9,6 @@
 /// inline_string: |-
 /// user1:{SHA}hashed_user1_password
 /// user2:{SHA}hashed_user2_password
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BasicAuth {
     /// Username-password pairs used to verify user credentials in the "Authorization" header.
@@ -25,10 +24,14 @@ pub struct BasicAuth {
     /// If it is not specified, the username will not be forwarded.
     #[prost(string, tag = "2")]
     pub forward_username_header: ::prost::alloc::string::String,
+    /// This field specifies the request header to load the basic credential from.
+    ///
+    /// If it is not specified, the filter loads the credential from  the "Authorization" header.
+    #[prost(string, tag = "3")]
+    pub authentication_header: ::prost::alloc::string::String,
 }
 /// Extra settings that may be added to per-route configuration for
 /// a virtual host or a cluster.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BasicAuthPerRoute {
     /// Username-password pairs for this route.

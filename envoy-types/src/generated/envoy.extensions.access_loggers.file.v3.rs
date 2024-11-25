@@ -3,7 +3,6 @@
 /// that writes log entries directly to a file. Configures the built-in `envoy.access_loggers.file`
 /// AccessLog.
 /// \[\#next-free-field: 6\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FileAccessLog {
     /// A path to a local file to which to write the access log entries.
@@ -14,12 +13,12 @@ pub struct FileAccessLog {
 }
 /// Nested message and enum types in `FileAccessLog`.
 pub mod file_access_log {
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum AccessLogFormat {
+        ///
         /// Access log :ref:`format string<config_access_log_format_strings>`.
         /// Envoy supports :ref:`custom access log formats <config_access_log_format>` as well as a
-        /// :ref:`default format <config_access_log_default_format>`.
+        /// : ref:`default format <config_access_log_default_format>`.
         /// This field is deprecated.
         /// Please use :ref:`log_format <envoy_v3_api_field_extensions.access_loggers.file.v3.FileAccessLog.log_format>`.
         #[prost(string, tag = "2")]

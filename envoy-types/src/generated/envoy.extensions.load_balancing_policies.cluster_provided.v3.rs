@@ -6,6 +6,5 @@
 /// .. note::
 /// Cluster provided load balancing policy could not be used as sub-policy of other hierarchical
 /// load balancing policies, such as subset load balancing policy.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct ClusterProvided {}

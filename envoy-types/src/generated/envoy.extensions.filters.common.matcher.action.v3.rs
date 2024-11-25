@@ -8,6 +8,5 @@
 ///
 /// As a result, if this match action is resolved before the first filter callback (e.g. HTTP request
 /// headers), the filter will be completely skipped.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct SkipFilter {}

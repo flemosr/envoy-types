@@ -5,13 +5,11 @@
 ///
 /// Please note that the :ref:`CorsPolicy <envoy_v3_api_msg_extensions.filters.http.cors.v3.CorsPolicy>`
 /// must be configured in the `RouteConfiguration` as `typed_per_filter_config` at some level to make the filter work.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Cors {}
 /// Per route configuration for the CORS filter. This configuration should be configured in the `RouteConfiguration` as `typed_per_filter_config` at some level to
 /// make the filter work.
 /// \[\#next-free-field: 11\]
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CorsPolicy {
     /// Specifies string patterns that match allowed origins. An origin is allowed if any of the

@@ -12,6 +12,12 @@
 ///
 /// Resolutions currently use a hard coded TTL of 60s because the getaddrinfo() API does not
 /// provide the actual TTL. Configuration for this can be added in the future if needed.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct GetAddrInfoDnsResolverConfig {}
+pub struct GetAddrInfoDnsResolverConfig {
+    /// Specifies the number of retries before the resolver gives up. If not specified, the resolver will
+    /// retry indefinitely until it succeeds or the DNS query times out.
+    #[prost(message, optional, tag = "1")]
+    pub num_retries: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::UInt32Value,
+    >,
+}

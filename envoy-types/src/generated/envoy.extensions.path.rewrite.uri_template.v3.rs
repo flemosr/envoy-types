@@ -5,12 +5,12 @@
 /// This is useful to allow application paths to be
 /// rewritten in a way that is aware of segments with variable content like
 /// identifiers. The router filter will place the original path as it was
-/// before the rewrite into the :ref:`x-envoy-original-path <config_http_filters_router_x-envoy-original-path>` header.
+/// before the rewrite into the :ref:`x-envoy-original-path  <config_http_filters_router_x-envoy-original-path>` header.
+///
 ///
 /// Only one of :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`,
-/// :ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>`,
+/// : ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>`,
 /// or *path_template_rewrite* may be specified.
-///
 /// Template pattern matching types:
 ///
 /// * `*` : Matches a single path component, up to the next path separator: /
@@ -37,7 +37,6 @@
 /// * The path pattern `/content/{format}/{lang}/{id}/{file}.vtt` paired with a substitution
 ///   string of `/{lang}/{format}/{file}.vtt` would transform `/content/hls/en-us/12345/en_193913.vtt`
 ///   into `/en-us/hls/en_193913.vtt`.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UriTemplateRewriteConfig {
     #[prost(string, tag = "1")]
