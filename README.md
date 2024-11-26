@@ -14,6 +14,12 @@ Among other use cases, this crate can be used to implement an
 
 ## Getting Started
 
+### Rust Version
+
+This project's MSRV is `1.71.1`.
+
+### Dependencies
+
 ```toml
 [dependencies]
 envoy-types = "<envoy-types-version>"
