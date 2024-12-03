@@ -106,6 +106,6 @@ terms or conditions.
 [examples]: https://github.com/flemosr/envoy-types/tree/main/examples
 [`Cargo.toml`]: https://github.com/flemosr/envoy-types/blob/main/envoy-types/Cargo.toml
 [previous version of `envoy-types`]: https://crates.io/crates/envoy-types/versions
-[Docs]: https://docs.rs/envoy-types/latest/envoy-types/
+[Docs]: https://docs.rs/envoy-types/latest/envoy_types
 [protoc-install]: https://grpc.io/docs/protoc-installation/
 [`tonic`]: https://github.com/hyperium/tonic
