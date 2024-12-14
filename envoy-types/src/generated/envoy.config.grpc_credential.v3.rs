@@ -5,6 +5,7 @@ pub struct AwsIamConfig {
     /// of the Grpc endpoint.
     ///
     /// Example: appmesh
+    #[deprecated]
     #[prost(string, tag = "1")]
     pub service_name: ::prost::alloc::string::String,
     /// The `region <<https://docs.aws.amazon.com/general/latest/gr/rande.html>`\_> hosting the Grpc
@@ -12,6 +13,7 @@ pub struct AwsIamConfig {
     /// variable.
     ///
     /// Example: us-west-2
+    #[deprecated]
     #[prost(string, tag = "2")]
     pub region: ::prost::alloc::string::String,
 }

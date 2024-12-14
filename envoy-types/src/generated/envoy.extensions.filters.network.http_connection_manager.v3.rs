@@ -620,14 +620,6 @@ pub mod http_connection_manager {
         >,
         /// Configuration for an external tracing provider.
         /// If not specified, no tracing will be performed.
-        ///
-        /// .. attention::
-        /// Please be aware that `envoy.tracers.opencensus` provider can only be configured once
-        /// in Envoy lifetime.
-        /// Any attempts to reconfigure it or to use different configurations for different HCM filters
-        /// will be rejected.
-        /// Such a constraint is inherent to OpenCensus itself. It cannot be overcome without changes
-        /// on OpenCensus side.
         #[prost(message, optional, tag = "9")]
         pub provider: ::core::option::Option<
             super::super::super::super::super::super::config::trace::v3::tracing::Http,

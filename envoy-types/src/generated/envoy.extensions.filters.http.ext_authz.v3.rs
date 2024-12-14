@@ -9,7 +9,7 @@ pub struct ExtAuthz {
         tag = "12"
     )]
     pub transport_api_version: i32,
-    /// Changes filter's behaviour on errors:
+    /// Changes filter's behavior on errors:
     ///
     /// 1. When set to true, the filter will `accept` client request even if the communication with
     ///    the authorization service has failed, or if the authorization service has returned a HTTP 5xx
@@ -180,12 +180,12 @@ pub struct ExtAuthz {
     ///
     /// .. note::
     ///
-    /// 1. For requests to an HTTP authorization server: in addition to the the user's supplied matchers, `Host`, `Method`, `Path`,
+    /// 1. For requests to an HTTP authorization server: in addition to the user's supplied matchers, `Host`, `Method`, `Path`,
     ///    `Content-Length`, and `Authorization` are **additionally included** in the list.
     ///
     /// .. note::
     ///
-    /// 2. For requests to an HTTP authorization server: *Content-Length* will be set to 0 and the request to the
+    /// 2. For requests to an HTTP authorization server: value of `Content-Length` will be set to 0 and the request to the
     ///    authorization server will not have a message body. However, the check request can include the buffered
     ///    client request body (controlled by :ref:`with_request_body   <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.with_request_body>` setting),
     ///    consequently the value of *Content-Length* of the authorization request reflects the size of
@@ -219,12 +219,12 @@ pub struct ExtAuthz {
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
     /// Whether to encode the raw headers (i.e. unsanitized values & unconcatenated multi-line headers)
-    /// in authentication request. Works with both HTTP and GRPC clients.
+    /// in authentication request. Works with both HTTP and gRPC clients.
     ///
     ///
     /// When this is set to true, header values are not sanitized. Headers with the same key will also
     /// not be combined into a single, comma-separated header.
-    /// Requests to GRPC services will populate the field
+    /// Requests to gRPC services will populate the field
     /// : ref:`header_map<envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.header_map>`.
     /// Requests to HTTP services will be constructed with the unsanitized header values and preserved
     /// multi-line headers with the same key.
@@ -232,7 +232,7 @@ pub struct ExtAuthz {
     /// If this field is set to false, header values will be sanitized, with any non-UTF-8-compliant
     /// bytes replaced with '!'. Headers with the same key will have their values concatenated into a
     /// single comma-separated header value.
-    /// Requests to GRPC services will populate the field
+    /// Requests to gRPC services will populate the field
     /// : ref:`headers<envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>`.
     /// Requests to HTTP services will have their header values sanitized and will not preserve
     /// multi-line headers with the same key.
@@ -282,8 +282,8 @@ pub struct ExtAuthz {
     /// When set to true, the filter will emit per-stream stats for access logging. The filter state
     /// key will be the same as the filter name.
     ///
-    /// If using Envoy GRPC, emits latency, bytes sent / received, upstream info, and upstream cluster
-    /// info. If not using Envoy GRPC, emits only latency. Note that stats are ONLY added to filter
+    /// If using Envoy gRPC, emits latency, bytes sent / received, upstream info, and upstream cluster
+    /// info. If not using Envoy gRPC, emits only latency. Note that stats are ONLY added to filter
     /// state if a check request is actually made to an ext_authz service.
     ///
     /// If this is false the filter will not emit stats, but filter_metadata will still be respected if
@@ -384,8 +384,8 @@ pub struct AuthorizationRequest {
     ///
     /// .. note::
     ///
-    /// In addition to the the user's supplied matchers, `Host`, `Method`, `Path`,
-    /// `Content-Length`, and `Authorization` are **automatically included** to the list.
+    /// In addition to the user's supplied matchers, `Host`, `Method`, `Path`,
+    /// `Content-Length`, and `Authorization` are **automatically included** in the list.
     ///
     /// .. note::
     ///
@@ -506,7 +506,7 @@ pub struct CheckSettings {
     /// : ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.with_request_body>`
     /// option for a specific route.
     ///
-    /// Please note that only only one of *with_request_body* or
+    /// Please note that only one of `with_request_body` or
     /// : ref:`disable_request_body_buffering <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.CheckSettings.disable_request_body_buffering>`
     /// may be specified.
     #[prost(message, optional, tag = "3")]

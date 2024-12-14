@@ -460,6 +460,11 @@ pub mod envoy {
                         include!("envoy.extensions.filters.http.grpc_http1_reverse_bridge.v3.rs");
                     }
                 }
+                pub mod grpc_json_reverse_transcoder {
+                    pub mod v3 {
+                        include!("envoy.extensions.filters.http.grpc_json_reverse_transcoder.v3.rs");
+                    }
+                }
                 pub mod grpc_json_transcoder {
                     pub mod v3 {
                         include!("envoy.extensions.filters.http.grpc_json_transcoder.v3.rs");
@@ -1517,11 +1522,6 @@ pub mod envoy {
                 include!("envoy.service.tap.v3.rs");
             }
         }
-        pub mod trace {
-            pub mod v3 {
-                include!("envoy.service.trace.v3.rs");
-            }
-        }
     }
     pub mod watchdog {
         pub mod v3 {
@@ -1549,20 +1549,6 @@ pub mod io {
     pub mod prometheus {
         pub mod client {
             include!("io.prometheus.client.rs");
-        }
-    }
-}
-pub mod opencensus {
-    pub mod proto {
-        pub mod resource {
-            pub mod v1 {
-                include!("opencensus.proto.resource.v1.rs");
-            }
-        }
-        pub mod trace {
-            pub mod v1 {
-                include!("opencensus.proto.trace.v1.rs");
-            }
         }
     }
 }

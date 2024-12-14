@@ -119,6 +119,8 @@ pub mod rate_limit_response {
             Hour = 3,
             /// The time unit representing a day.
             Day = 4,
+            /// The time unit representing a week.
+            Week = 7,
             /// The time unit representing a month.
             Month = 5,
             /// The time unit representing a year.
@@ -136,6 +138,7 @@ pub mod rate_limit_response {
                     Self::Minute => "MINUTE",
                     Self::Hour => "HOUR",
                     Self::Day => "DAY",
+                    Self::Week => "WEEK",
                     Self::Month => "MONTH",
                     Self::Year => "YEAR",
                 }
@@ -148,6 +151,7 @@ pub mod rate_limit_response {
                     "MINUTE" => Some(Self::Minute),
                     "HOUR" => Some(Self::Hour),
                     "DAY" => Some(Self::Day),
+                    "WEEK" => Some(Self::Week),
                     "MONTH" => Some(Self::Month),
                     "YEAR" => Some(Self::Year),
                     _ => None,
