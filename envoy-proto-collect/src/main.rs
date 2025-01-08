@@ -2,7 +2,7 @@ use glob::glob;
 use std::{
     fs::{self, File},
     io::{self, Write},
-    path::PathBuf,
+    path::{Path, PathBuf},
     process,
 };
 
@@ -29,16 +29,15 @@ fn apache_v2(year: u32, owner: &str) -> String {
 }
 
 fn collect_protos(
-    out_dir: &PathBuf,
+    out_dir: &Path,
     repo: &str,
     glob_patterns: Vec<&str>,
     add_license: Option<&String>,
 ) {
-    let repo = PathBuf::from(std::env!("CARGO_MANIFEST_DIR"))
-        .join("submodules")
-        .join(repo);
+    let manifest_dir = std::env!("CARGO_MANIFEST_DIR");
+    let repo_dir = Path::new(manifest_dir).join("submodules").join(repo);
 
-    if !repo.is_dir() {
+    if !repo_dir.is_dir() {
         eprintln!("Error: submodule repo {:?} not found.", repo);
         process::exit(1);
     }
@@ -46,7 +45,7 @@ fn collect_protos(
     let mut source_protos: Vec<PathBuf> = Vec::new();
 
     for pattern in glob_patterns {
-        let mut matches: Vec<PathBuf> = glob(repo.join(pattern).to_str().unwrap())
+        let mut matches: Vec<PathBuf> = glob(repo_dir.join(pattern).to_str().unwrap())
             .unwrap()
             .filter_map(Result::ok)
             .collect();
@@ -59,7 +58,7 @@ fn collect_protos(
 
         let target_name = out_dir.join(
             proto
-                .strip_prefix(repo.parent().expect("repo has parent"))
+                .strip_prefix(repo_dir.parent().expect("repo has parent"))
                 .expect("base is a prefix of proto"),
         );
 
@@ -84,7 +83,8 @@ fn collect_protos(
 }
 
 fn main() {
-    let out_dir = PathBuf::from(std::env!("CARGO_MANIFEST_DIR"))
+    let manifest_dir = std::env!("CARGO_MANIFEST_DIR");
+    let out_dir = Path::new(manifest_dir)
         .parent()
         .expect("envoy-proto-collect is inside a workspace")
         .join("envoy-types")
