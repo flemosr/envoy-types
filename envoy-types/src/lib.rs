@@ -96,6 +96,8 @@ using a [previous version of `envoy-types`].
 #![warn(missing_debug_implementations, rust_2018_idioms)]
 #![allow(missing_docs, rustdoc::invalid_html_tags, rustdoc::bare_urls)]
 
+#[rustfmt::skip]
+#[allow(clippy::all)]
 mod generated;
 
 /// Compiled protobuf types
