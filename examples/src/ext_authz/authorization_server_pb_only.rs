@@ -147,7 +147,7 @@ impl Authorization for MyServer {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let server_port = env::var("SERVER_PORT").unwrap_or("50051".into());
     let addr = format!("0.0.0.0:{server_port}").parse().unwrap();
-    let server = MyServer::default();
+    let server = MyServer;
 
     println!("AuthorizationServer listening on {}", addr);
 

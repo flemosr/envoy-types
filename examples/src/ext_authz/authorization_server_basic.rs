@@ -1,3 +1,4 @@
+use std::env;
 use tonic::{transport::Server, Request, Response, Status};
 
 use envoy_types::ext_authz::v3::pb::{
@@ -34,8 +35,9 @@ impl Authorization for MyServer {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = format!("0.0.0.0:50051").parse().unwrap();
-    let server = MyServer::default();
+    let server_port = env::var("SERVER_PORT").unwrap_or("50051".into());
+    let addr = format!("0.0.0.0:{server_port}").parse().unwrap();
+    let server = MyServer;
 
     println!("AuthorizationServer listening on {addr}");
 
