@@ -97,6 +97,7 @@ using a [previous version of `envoy-types`].
 #![allow(missing_docs, rustdoc::invalid_html_tags, rustdoc::bare_urls)]
 
 #[rustfmt::skip]
+#[allow(clippy::all)]
 mod generated;
 
 /// Compiled protobuf types
