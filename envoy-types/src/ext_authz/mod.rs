@@ -133,14 +133,17 @@ pub mod v3 {
         }
 
         fn with_status(status: tonic::Status) -> Self {
-            let mut check_response = CheckResponse::default();
-            check_response.status = Some(rpc::Status {
+            let status = Some(rpc::Status {
                 code: status.code().into(),
                 message: status.message().into(),
                 // `tonic::Status`'s details are not considered
                 details: Vec::new(),
             });
-            check_response
+
+            CheckResponse {
+                status,
+                ..Default::default()
+            }
         }
 
         fn set_status(&mut self, status: tonic::Status) -> &mut Self {
@@ -336,9 +339,9 @@ pub mod v3 {
         }
     }
 
-    impl Into<OkHttpResponse> for OkHttpResponseBuilder {
-        fn into(self) -> OkHttpResponse {
-            self.build()
+    impl From<OkHttpResponseBuilder> for OkHttpResponse {
+        fn from(val: OkHttpResponseBuilder) -> Self {
+            val.build()
         }
     }
 
@@ -437,9 +440,9 @@ pub mod v3 {
         }
     }
 
-    impl Into<DeniedHttpResponse> for DeniedHttpResponseBuilder {
-        fn into(self) -> DeniedHttpResponse {
-            self.build()
+    impl From<DeniedHttpResponseBuilder> for DeniedHttpResponse {
+        fn from(val: DeniedHttpResponseBuilder) -> Self {
+            val.build()
         }
     }
 
