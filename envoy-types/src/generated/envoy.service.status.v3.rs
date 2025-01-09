@@ -196,6 +196,10 @@ pub enum ClientConfigStatus {
     /// config dump is not the NACKed version, but the most recent accepted one. If
     /// no config is accepted yet, the attached config dump will be empty.
     ClientNacked = 3,
+    /// Client received an error from the control plane. The attached config
+    /// dump is the most recent accepted one. If no config is accepted yet,
+    /// the attached config dump will be empty.
+    ClientReceivedError = 4,
 }
 impl ClientConfigStatus {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -208,6 +212,7 @@ impl ClientConfigStatus {
             Self::ClientRequested => "CLIENT_REQUESTED",
             Self::ClientAcked => "CLIENT_ACKED",
             Self::ClientNacked => "CLIENT_NACKED",
+            Self::ClientReceivedError => "CLIENT_RECEIVED_ERROR",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -217,6 +222,7 @@ impl ClientConfigStatus {
             "CLIENT_REQUESTED" => Some(Self::ClientRequested),
             "CLIENT_ACKED" => Some(Self::ClientAcked),
             "CLIENT_NACKED" => Some(Self::ClientNacked),
+            "CLIENT_RECEIVED_ERROR" => Some(Self::ClientReceivedError),
             _ => None,
         }
     }

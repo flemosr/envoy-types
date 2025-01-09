@@ -151,273 +151,6 @@ pub mod rate_limit {
         }
     }
 }
-/// Global rate limiting :ref:`architecture overview <arch_overview_global_rate_limit>`.
-/// Also applies to Local rate limiting :ref:`using descriptors <config_http_filters_local_rate_limit_descriptors>`.
-/// \[\#not-implemented-hide:\]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct RateLimitConfig {
-    /// Refers to the stage set in the filter. The rate limit configuration only
-    /// applies to filters with the same stage number. The default stage number is
-    /// 0.
-    ///
-    /// .. note::
-    ///
-    /// The filter supports a range of 0 - 10 inclusively for stage numbers.
-    #[prost(uint32, tag = "1")]
-    pub stage: u32,
-    /// The key to be set in runtime to disable this rate limit configuration.
-    #[prost(string, tag = "2")]
-    pub disable_key: ::prost::alloc::string::String,
-    /// A list of actions that are to be applied for this rate limit configuration.
-    /// Order matters as the actions are processed sequentially and the descriptor
-    /// is composed by appending descriptor entries in that sequence. If an action
-    /// cannot append a descriptor entry, no descriptor is generated for the
-    /// configuration. See :ref:`composing actions  <config_http_filters_rate_limit_composing_actions>` for additional documentation.
-    #[prost(message, repeated, tag = "3")]
-    pub actions: ::prost::alloc::vec::Vec<rate_limit_config::Action>,
-    /// An optional limit override to be appended to the descriptor produced by this
-    /// rate limit configuration. If the override value is invalid or cannot be resolved
-    /// from metadata, no override is provided. See :ref:`rate limit override  <config_http_filters_rate_limit_rate_limit_override>` for more information.
-    #[prost(message, optional, tag = "4")]
-    pub limit: ::core::option::Option<rate_limit_config::Override>,
-}
-/// Nested message and enum types in `RateLimitConfig`.
-pub mod rate_limit_config {
-    /// \[\#next-free-field: 10\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Action {
-        #[prost(oneof = "action::ActionSpecifier", tags = "1, 2, 3, 4, 5, 6, 8, 9")]
-        pub action_specifier: ::core::option::Option<action::ActionSpecifier>,
-    }
-    /// Nested message and enum types in `Action`.
-    pub mod action {
-        /// The following descriptor entry is appended to the descriptor:
-        ///
-        /// .. code-block:: cpp
-        ///
-        /// ("source_cluster", "<local service cluster>")
-        ///
-        /// <local service cluster> is derived from the :option:`--service-cluster` option.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-        pub struct SourceCluster {}
-        /// The following descriptor entry is appended to the descriptor:
-        ///
-        /// .. code-block:: cpp
-        ///
-        /// ("destination_cluster", "<routed target cluster>")
-        ///
-        /// Once a request matches against a route table rule, a routed cluster is determined by one of
-        /// the following :ref:`route table configuration <envoy_v3_api_msg_config.route.v3.RouteConfiguration>`
-        /// settings:
-        ///
-        /// * :ref:`cluster <envoy_v3_api_field_config.route.v3.RouteAction.cluster>` indicates the upstream cluster
-        ///   to route to.
-        /// * :ref:`weighted_clusters <envoy_v3_api_field_config.route.v3.RouteAction.weighted_clusters>`
-        ///   chooses a cluster randomly from a set of clusters with attributed weight.
-        /// * :ref:`cluster_header <envoy_v3_api_field_config.route.v3.RouteAction.cluster_header>` indicates which
-        ///   header in the request contains the target cluster.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-        pub struct DestinationCluster {}
-        /// The following descriptor entry is appended when a header contains a key that matches the
-        /// `header_name`:
-        ///
-        /// .. code-block:: cpp
-        ///
-        /// ("\<descriptor_key>", "\<header_value_queried_from_header>")
-        #[derive(Clone, PartialEq, ::prost::Message)]
-        pub struct RequestHeaders {
-            /// The header name to be queried from the request headers. The header’s
-            /// value is used to populate the value of the descriptor entry for the
-            /// descriptor_key.
-            #[prost(string, tag = "1")]
-            pub header_name: ::prost::alloc::string::String,
-            /// The key to use in the descriptor entry.
-            #[prost(string, tag = "2")]
-            pub descriptor_key: ::prost::alloc::string::String,
-            /// If set to true, Envoy skips the descriptor while calling rate limiting service
-            /// when header is not present in the request. By default it skips calling the
-            /// rate limiting service if this header is not present in the request.
-            #[prost(bool, tag = "3")]
-            pub skip_if_absent: bool,
-        }
-        /// The following descriptor entry is appended to the descriptor and is populated using the
-        /// trusted address from :ref:`x-forwarded-for <config_http_conn_man_headers_x-forwarded-for>`:
-        ///
-        /// .. code-block:: cpp
-        ///
-        /// ("remote_address", "<trusted address from x-forwarded-for>")
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-        pub struct RemoteAddress {}
-        /// The following descriptor entry is appended to the descriptor:
-        ///
-        /// .. code-block:: cpp
-        ///
-        /// ("generic_key", "\<descriptor_value>")
-        #[derive(Clone, PartialEq, ::prost::Message)]
-        pub struct GenericKey {
-            /// The value to use in the descriptor entry.
-            #[prost(string, tag = "1")]
-            pub descriptor_value: ::prost::alloc::string::String,
-            /// An optional key to use in the descriptor entry. If not set it defaults
-            /// to 'generic_key' as the descriptor key.
-            #[prost(string, tag = "2")]
-            pub descriptor_key: ::prost::alloc::string::String,
-        }
-        /// The following descriptor entry is appended to the descriptor:
-        ///
-        /// .. code-block:: cpp
-        ///
-        /// ("header_match", "\<descriptor_value>")
-        #[derive(Clone, PartialEq, ::prost::Message)]
-        pub struct HeaderValueMatch {
-            /// The value to use in the descriptor entry.
-            #[prost(string, tag = "1")]
-            pub descriptor_value: ::prost::alloc::string::String,
-            /// If set to true, the action will append a descriptor entry when the
-            /// request matches the headers. If set to false, the action will append a
-            /// descriptor entry when the request does not match the headers. The
-            /// default value is true.
-            #[prost(bool, tag = "2")]
-            pub expect_match: bool,
-            /// Specifies a set of headers that the rate limit action should match
-            /// on. The action will check the request’s headers against all the
-            /// specified headers in the config. A match will happen if all the
-            /// headers in the config are present in the request with the same values
-            /// (or based on presence if the value field is not in the config).
-            #[prost(message, repeated, tag = "3")]
-            pub headers: ::prost::alloc::vec::Vec<
-                super::super::super::super::super::super::super::config::route::v3::HeaderMatcher,
-            >,
-        }
-        /// The following descriptor entry is appended when the metadata contains a key value:
-        ///
-        /// .. code-block:: cpp
-        ///
-        /// ("\<descriptor_key>", "\<value_queried_from_metadata>")
-        /// \[\#next-free-field: 6\]
-        #[derive(Clone, PartialEq, ::prost::Message)]
-        pub struct MetaData {
-            /// The key to use in the descriptor entry.
-            #[prost(string, tag = "1")]
-            pub descriptor_key: ::prost::alloc::string::String,
-            /// Metadata struct that defines the key and path to retrieve the string value. A match will
-            /// only happen if the value in the metadata is of type string.
-            #[prost(message, optional, tag = "2")]
-            pub metadata_key: ::core::option::Option<
-                super::super::super::super::super::super::super::r#type::metadata::v3::MetadataKey,
-            >,
-            /// An optional value to use if `metadata_key` is empty. If not set and
-            /// no value is present under the metadata_key then `skip_if_absent` is followed to
-            /// skip calling the rate limiting service or skip the descriptor.
-            #[prost(string, tag = "3")]
-            pub default_value: ::prost::alloc::string::String,
-            /// Source of metadata
-            #[prost(enumeration = "meta_data::Source", tag = "4")]
-            pub source: i32,
-            /// If set to true, Envoy skips the descriptor while calling rate limiting service
-            /// when `metadata_key` is empty and `default_value` is not set. By default it skips calling the
-            /// rate limiting service in that case.
-            #[prost(bool, tag = "5")]
-            pub skip_if_absent: bool,
-        }
-        /// Nested message and enum types in `MetaData`.
-        pub mod meta_data {
-            #[derive(
-                Clone,
-                Copy,
-                Debug,
-                PartialEq,
-                Eq,
-                Hash,
-                PartialOrd,
-                Ord,
-                ::prost::Enumeration
-            )]
-            #[repr(i32)]
-            pub enum Source {
-                /// Query :ref:`dynamic metadata <well_known_dynamic_metadata>`
-                Dynamic = 0,
-                /// Query :ref:`route entry metadata <envoy_v3_api_field_config.route.v3.Route.metadata>`
-                RouteEntry = 1,
-            }
-            impl Source {
-                /// String value of the enum field names used in the ProtoBuf definition.
-                ///
-                /// The values are not transformed in any way and thus are considered stable
-                /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-                pub fn as_str_name(&self) -> &'static str {
-                    match self {
-                        Self::Dynamic => "DYNAMIC",
-                        Self::RouteEntry => "ROUTE_ENTRY",
-                    }
-                }
-                /// Creates an enum from field names used in the ProtoBuf definition.
-                pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-                    match value {
-                        "DYNAMIC" => Some(Self::Dynamic),
-                        "ROUTE_ENTRY" => Some(Self::RouteEntry),
-                        _ => None,
-                    }
-                }
-            }
-        }
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
-        pub enum ActionSpecifier {
-            /// Rate limit on source cluster.
-            #[prost(message, tag = "1")]
-            SourceCluster(SourceCluster),
-            /// Rate limit on destination cluster.
-            #[prost(message, tag = "2")]
-            DestinationCluster(DestinationCluster),
-            /// Rate limit on request headers.
-            #[prost(message, tag = "3")]
-            RequestHeaders(RequestHeaders),
-            /// Rate limit on remote address.
-            #[prost(message, tag = "4")]
-            RemoteAddress(RemoteAddress),
-            /// Rate limit on a generic key.
-            #[prost(message, tag = "5")]
-            GenericKey(GenericKey),
-            /// Rate limit on the existence of request headers.
-            #[prost(message, tag = "6")]
-            HeaderValueMatch(HeaderValueMatch),
-            /// Rate limit on metadata.
-            #[prost(message, tag = "8")]
-            Metadata(MetaData),
-            /// Rate limit descriptor extension. See the rate limit descriptor extensions documentation.
-            /// \[\#extension-category: envoy.rate_limit_descriptors\]
-            #[prost(message, tag = "9")]
-            Extension(
-                super::super::super::super::super::super::super::config::core::v3::TypedExtensionConfig,
-            ),
-        }
-    }
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Override {
-        #[prost(oneof = "r#override::OverrideSpecifier", tags = "1")]
-        pub override_specifier: ::core::option::Option<r#override::OverrideSpecifier>,
-    }
-    /// Nested message and enum types in `Override`.
-    pub mod r#override {
-        /// Fetches the override from the dynamic metadata.
-        #[derive(Clone, PartialEq, ::prost::Message)]
-        pub struct DynamicMetadata {
-            /// Metadata struct that defines the key and path to retrieve the struct value.
-            /// The value must be a struct containing an integer "requests_per_unit" property
-            /// and a "unit" property with a value parseable to :ref:`RateLimitUnit  enum <envoy_v3_api_enum_type.v3.RateLimitUnit>`
-            #[prost(message, optional, tag = "1")]
-            pub metadata_key: ::core::option::Option<
-                super::super::super::super::super::super::super::r#type::metadata::v3::MetadataKey,
-            >,
-        }
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
-        pub enum OverrideSpecifier {
-            /// Limit override from dynamic metadata.
-            #[prost(message, tag = "1")]
-            DynamicMetadata(DynamicMetadata),
-        }
-    }
-}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitPerRoute {
     /// Specifies if the rate limit filter should include the virtual host rate limits.
@@ -429,12 +162,26 @@ pub struct RateLimitPerRoute {
     #[prost(enumeration = "rate_limit_per_route::OverrideOptions", tag = "2")]
     pub override_option: i32,
     ///
-    /// Rate limit configuration. If not set, uses the
+    /// Rate limit configuration that is used to generate a list of descriptor entries based on
+    /// the request context. The generated entries will be used to find one or multiple matched rate
+    /// limit rule from the `descriptors`.
+    /// If this is set, then
     /// : ref:`VirtualHost.rate_limits<envoy_v3_api_field_config.route.v3.VirtualHost.rate_limits>` or
-    /// : ref:`RouteAction.rate_limits<envoy_v3_api_field_config.route.v3.RouteAction.rate_limits>` fields instead.
-    /// \[\#not-implemented-hide:\]
+    /// : ref:`RouteAction.rate_limits<envoy_v3_api_field_config.route.v3.RouteAction.rate_limits>` fields
+    /// will be ignored.
+    ///
+    /// .. note::
+    /// Not all configuration fields of
+    /// : ref:`rate limit config <envoy_v3_api_msg_config.route.v3.RateLimit>` is supported at here.
+    /// Following fields are not supported:
+    /// 1. :ref:`rate limit stage <envoy_v3_api_field_config.route.v3.RateLimit.stage>`.
+    /// 1. :ref:`dynamic metadata <envoy_v3_api_field_config.route.v3.RateLimit.Action.dynamic_metadata>`.
+    /// 1. :ref:`disable_key <envoy_v3_api_field_config.route.v3.RateLimit.disable_key>`.
+    /// 1. :ref:`override limit <envoy_v3_api_field_config.route.v3.RateLimit.limit>`.
     #[prost(message, repeated, tag = "3")]
-    pub rate_limits: ::prost::alloc::vec::Vec<RateLimitConfig>,
+    pub rate_limits: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::route::v3::RateLimit,
+    >,
     /// Overrides the domain. If not set, uses the filter-level domain instead.
     #[prost(string, tag = "4")]
     pub domain: ::prost::alloc::string::String,

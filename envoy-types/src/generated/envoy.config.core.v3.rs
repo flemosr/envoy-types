@@ -680,20 +680,46 @@ pub struct RuntimeFeatureFlag {
     #[prost(string, tag = "2")]
     pub runtime_key: ::prost::alloc::string::String,
 }
+/// Please use :ref:`KeyValuePair <envoy_api_msg_config.core.v3.KeyValuePair>` instead.
+/// \[\#not-implemented-hide:\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct KeyValue {
+    /// The key of the key/value pair.
+    #[deprecated]
+    #[prost(string, tag = "1")]
+    pub key: ::prost::alloc::string::String,
+    /// The value of the key/value pair.
+    ///
+    /// The `bytes` type is used. This means if JSON or YAML is used to to represent the
+    /// configuration, the value must be base64 encoded. This is unfriendly for users in most
+    /// use scenarios of this message.
+    #[deprecated]
+    #[prost(bytes = "vec", tag = "2")]
+    pub value: ::prost::alloc::vec::Vec<u8>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct KeyValuePair {
     /// The key of the key/value pair.
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
     /// The value of the key/value pair.
-    #[prost(bytes = "vec", tag = "2")]
-    pub value: ::prost::alloc::vec::Vec<u8>,
+    #[prost(message, optional, tag = "2")]
+    pub value: ::core::option::Option<
+        super::super::super::super::google::protobuf::Value,
+    >,
 }
 /// Key/value pair plus option to control append behavior. This is used to specify
 /// key/value pairs that should be appended to a set of existing key/value pairs.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct KeyValueAppend {
-    /// Key/value pair entry that this option to append or overwrite.
+    /// The single key/value pair record to be appended or overridden. This field must be set.
+    #[prost(message, optional, tag = "3")]
+    pub record: ::core::option::Option<KeyValuePair>,
+    /// Key/value pair entry that this option to append or overwrite. This field is deprecated
+    /// and please use :ref:`record <envoy_v3_api_field_config.core.v3.KeyValueAppend.record>`
+    /// as replacement.
+    /// \[\#not-implemented-hide:\]
+    #[deprecated]
     #[prost(message, optional, tag = "1")]
     pub entry: ::core::option::Option<KeyValue>,
     /// Describes the action taken to append/overwrite the given value for an existing
@@ -764,10 +790,12 @@ pub mod key_value_append {
 /// Key/value pair to append or remove.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct KeyValueMutation {
-    /// Key/value pair to append or overwrite. Only one of `append` or `remove` can be set.
+    /// Key/value pair to append or overwrite. Only one of `append` or `remove` can be set or
+    /// the configuration will be rejected.
     #[prost(message, optional, tag = "1")]
     pub append: ::core::option::Option<KeyValueAppend>,
-    /// Key to remove. Only one of `append` or `remove` can be set.
+    /// Key to remove. Only one of `append` or `remove` can be set or the configuration will be
+    /// rejected.
     #[prost(string, tag = "2")]
     pub remove: ::prost::alloc::string::String,
 }

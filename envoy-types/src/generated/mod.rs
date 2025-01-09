@@ -184,6 +184,18 @@ pub mod envoy {
                     include!("envoy.extensions.clusters.aggregate.v3.rs");
                 }
             }
+            pub mod common {
+                pub mod dns {
+                    pub mod v3 {
+                        include!("envoy.extensions.clusters.common.dns.v3.rs");
+                    }
+                }
+            }
+            pub mod dns {
+                pub mod v3 {
+                    include!("envoy.extensions.clusters.dns.v3.rs");
+                }
+            }
             pub mod dynamic_forward_proxy {
                 pub mod v3 {
                     include!("envoy.extensions.clusters.dynamic_forward_proxy.v3.rs");

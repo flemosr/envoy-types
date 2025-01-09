@@ -254,6 +254,11 @@ pub mod udp_proxy_config {
             pub max_connect_attempts: ::core::option::Option<
                 super::super::super::super::super::super::super::super::google::protobuf::UInt32Value,
             >,
+            /// Sets the backoff strategy. If not set, the retries are performed without backoff.
+            #[prost(message, optional, tag = "2")]
+            pub backoff_options: ::core::option::Option<
+                super::super::super::super::super::super::super::config::core::v3::BackoffStrategy,
+            >,
         }
     }
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
