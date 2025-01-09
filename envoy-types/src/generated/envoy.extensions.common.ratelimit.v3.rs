@@ -52,6 +52,12 @@ pub struct RateLimitDescriptor {
     /// Optional rate limit override to supply to the ratelimit service.
     #[prost(message, optional, tag = "2")]
     pub limit: ::core::option::Option<rate_limit_descriptor::RateLimitOverride>,
+    /// Optional hits_addend for the rate limit descriptor. If set the value will override the
+    /// request level hits_addend.
+    #[prost(message, optional, tag = "3")]
+    pub hits_addend: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::UInt64Value,
+    >,
 }
 /// Nested message and enum types in `RateLimitDescriptor`.
 pub mod rate_limit_descriptor {
@@ -79,6 +85,12 @@ pub mod rate_limit_descriptor {
         pub unit: i32,
     }
 }
+/// Configuration used to enable local rate limiting.
+///
+/// .. note::
+/// The `LocalRateLimitDescriptor` is used to configure a local rate limit rule with a token
+/// bucket algorithm. The `RateLimitDescriptor` is used to represent a list of symbols that
+/// are used to match against the rate limit rule.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalRateLimitDescriptor {
     /// Descriptor entries.

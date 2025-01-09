@@ -6,6 +6,12 @@ pub struct Mutations {
     pub request_mutations: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::common::mutation_rules::v3::HeaderMutation,
     >,
+    /// The `path` header query parameter mutations are applied after `request_mutations` and before the request
+    /// is forwarded to the next filter in the filter chain.
+    #[prost(message, repeated, tag = "3")]
+    pub query_parameter_mutations: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::core::v3::KeyValueMutation,
+    >,
     /// The response mutations are applied before the response is sent to the downstream client.
     #[prost(message, repeated, tag = "2")]
     pub response_mutations: ::prost::alloc::vec::Vec<

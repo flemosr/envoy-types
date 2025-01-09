@@ -2110,6 +2110,7 @@ pub struct VirtualCluster {
 }
 /// Global rate limiting :ref:`architecture overview <arch_overview_global_rate_limit>`.
 /// Also applies to Local rate limiting :ref:`using descriptors <config_http_filters_local_rate_limit_descriptors>`.
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimit {
     /// Refers to the stage set in the filter. The rate limit configuration only
@@ -2119,11 +2120,23 @@ pub struct RateLimit {
     /// .. note::
     ///
     /// The filter supports a range of 0 - 10 inclusively for stage numbers.
+    ///
+    ///
+    /// .. note::
+    /// This is not supported if the rate limit action is configured in the `typed_per_filter_config` like
+    /// : ref:`VirtualHost.typed_per_filter_config<envoy_v3_api_field_config.route.v3.VirtualHost.typed_per_filter_config>` or
+    /// : ref:`Route.typed_per_filter_config<envoy_v3_api_field_config.route.v3.Route.typed_per_filter_config>`, etc.
     #[prost(message, optional, tag = "1")]
     pub stage: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// The key to be set in runtime to disable this rate limit configuration.
+    ///
+    ///
+    /// .. note::
+    /// This is not supported if the rate limit action is configured in the `typed_per_filter_config` like
+    /// : ref:`VirtualHost.typed_per_filter_config<envoy_v3_api_field_config.route.v3.VirtualHost.typed_per_filter_config>` or
+    /// : ref:`Route.typed_per_filter_config<envoy_v3_api_field_config.route.v3.Route.typed_per_filter_config>`, etc.
     #[prost(string, tag = "2")]
     pub disable_key: ::prost::alloc::string::String,
     /// A list of actions that are to be applied for this rate limit configuration.
@@ -2136,8 +2149,41 @@ pub struct RateLimit {
     /// An optional limit override to be appended to the descriptor produced by this
     /// rate limit configuration. If the override value is invalid or cannot be resolved
     /// from metadata, no override is provided. See :ref:`rate limit override  <config_http_filters_rate_limit_rate_limit_override>` for more information.
+    ///
+    ///
+    /// .. note::
+    /// This is not supported if the rate limit action is configured in the `typed_per_filter_config` like
+    /// : ref:`VirtualHost.typed_per_filter_config<envoy_v3_api_field_config.route.v3.VirtualHost.typed_per_filter_config>` or
+    /// : ref:`Route.typed_per_filter_config<envoy_v3_api_field_config.route.v3.Route.typed_per_filter_config>`, etc.
     #[prost(message, optional, tag = "4")]
     pub limit: ::core::option::Option<rate_limit::Override>,
+    /// An optional hits addend to be appended to the descriptor produced by this rate limit
+    /// configuration.
+    ///
+    ///
+    /// .. note::
+    /// This is only supported if the rate limit action is configured in the `typed_per_filter_config` like
+    /// : ref:`VirtualHost.typed_per_filter_config<envoy_v3_api_field_config.route.v3.VirtualHost.typed_per_filter_config>` or
+    /// : ref:`Route.typed_per_filter_config<envoy_v3_api_field_config.route.v3.Route.typed_per_filter_config>`, etc.
+    #[prost(message, optional, tag = "5")]
+    pub hits_addend: ::core::option::Option<rate_limit::HitsAddend>,
+    /// If true, the rate limit request will be applied when the stream completes. The default value is false.
+    /// This is useful when the rate limit budget needs to reflect the response context that is not available
+    /// on the request path.
+    ///
+    /// For example, let's say the upstream service calculates the usage statistics and returns them in the response body
+    /// and we want to utilize these numbers to apply the rate limit action for the subsequent requests.
+    /// Combined with another filter that can set the desired addend based on the response (e.g. Lua filter),
+    /// this can be used to subtract the usage statistics from the rate limit budget.
+    ///
+    /// A rate limit applied on the stream completion is "fire-and-forget" by nature, and rate limit is not enforced by this config.
+    /// In other words, the current request won't be blocked when this is true, but the budget will be updated for the subsequent
+    /// requests based on the action with this field set to true. Users should ensure that the rate limit is enforced by the actions
+    /// applied on the request path, i.e. the ones with this field set to false.
+    ///
+    /// Currently, this is only supported by the HTTP global rate filter.
+    #[prost(bool, tag = "6")]
+    pub apply_on_stream_done: bool,
 }
 /// Nested message and enum types in `RateLimit`.
 pub mod rate_limit {
@@ -2480,6 +2526,36 @@ pub mod rate_limit {
             #[prost(message, tag = "1")]
             DynamicMetadata(DynamicMetadata),
         }
+    }
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct HitsAddend {
+        /// Fixed number of hits to add to the rate limit descriptor.
+        ///
+        /// One of the `number` or `format` fields should be set but not both.
+        #[prost(message, optional, tag = "1")]
+        pub number: ::core::option::Option<
+            super::super::super::super::super::google::protobuf::UInt64Value,
+        >,
+        ///
+        /// Substitution format string to extract the number of hits to add to the rate limit descriptor.
+        /// The same :ref:`format specifier <config_access_log_format>` as used for
+        /// : ref:`HTTP access logging <config_access_log>` applies here.
+        /// .. note::
+        ///
+        /// The format string must contains only single valid substitution field. If the format string
+        /// not meets the requirement, the configuration will be rejected.
+        ///
+        /// The substitution field should generates a non-negative number or string representation of
+        /// a non-negative number. The value of the non-negative number should be less than or equal
+        /// to 1000000000 like the `number` field. If the output of the substitution field not meet
+        /// the requirement, this will be treated as an error and the current descriptor will be ignored.
+        ///
+        /// For example, the `%BYTES_RECEIVED%` format string will be replaced with the number of bytes
+        /// received in the request.
+        ///
+        /// One of the `number` or `format` fields should be set but not both.
+        #[prost(string, tag = "2")]
+        pub format: ::prost::alloc::string::String,
     }
 }
 /// .. attention::

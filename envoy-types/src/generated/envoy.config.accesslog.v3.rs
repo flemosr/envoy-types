@@ -159,34 +159,40 @@ pub struct NotHealthCheckFilter {}
 /// information on how a request becomes traceable.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct TraceableFilter {}
-/// Filters for random sampling of requests.
+/// Filters requests based on runtime-configurable sampling rates.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RuntimeFilter {
-    /// Runtime key to get an optional overridden numerator for use in the
-    /// `percent_sampled` field. If found in runtime, this value will replace the
-    /// default numerator.
+    /// Specifies a key used to look up a custom sampling rate from the runtime configuration. If a value is found for this
+    /// key, it will override the default sampling rate specified in `percent_sampled`.
     #[prost(string, tag = "1")]
     pub runtime_key: ::prost::alloc::string::String,
-    /// The default sampling percentage. If not specified, defaults to 0% with
-    /// denominator of 100.
+    /// Defines the default sampling percentage when no runtime override is present. If not specified, the default is
+    /// **0%** (with a denominator of 100).
     #[prost(message, optional, tag = "2")]
     pub percent_sampled: ::core::option::Option<
         super::super::super::r#type::v3::FractionalPercent,
     >,
+    /// Controls how sampling decisions are made.
     ///
-    /// By default, sampling pivots on the header
-    /// : ref:`x-request-id<config_http_conn_man_headers_x-request-id>` being
-    /// present. If :ref:`x-request-id<config_http_conn_man_headers_x-request-id>`
-    /// is present, the filter will consistently sample across multiple hosts based
-    /// on the runtime key value and the value extracted from
-    /// : ref:`x-request-id<config_http_conn_man_headers_x-request-id>`. If it is
-    /// missing, or `use_independent_randomness` is set to true, the filter will
-    /// randomly sample based on the runtime key value alone.
-    /// `use_independent_randomness` can be used for logging kill switches within
-    /// complex nested :ref:`AndFilter  <envoy_v3_api_msg_config.accesslog.v3.AndFilter>` and :ref:`OrFilter  <envoy_v3_api_msg_config.accesslog.v3.OrFilter>` blocks that are easier to
-    /// reason about from a probability perspective (i.e., setting to true will
-    /// cause the filter to behave like an independent random variable when
-    /// composed within logical operator filters).
+    /// * Default behavior (`false`):
+    ///
+    ///   * Uses the :ref:`x-request-id<config_http_conn_man_headers_x-request-id>` as a consistent sampling pivot.
+    ///   *
+    /// When :ref:`x-request-id<config_http_conn_man_headers_x-request-id>` is present, sampling will be consistent
+    ///     across multiple hosts based on both the `runtime_key` and
+    /// : ref:`x-request-id<config_http_conn_man_headers_x-request-id>`.
+    ///
+    ///   * Useful for tracking related requests across a distributed system.
+    /// * When set to `true` or :ref:`x-request-id<config_http_conn_man_headers_x-request-id>` is missing:
+    ///
+    ///   * Sampling decisions are made randomly based only on the `runtime_key`.
+    ///   *
+    /// Useful in complex filter configurations (like nested
+    /// : ref:`AndFilter<envoy_v3_api_msg_config.accesslog.v3.AndFilter>`/
+    /// : ref:`OrFilter<envoy_v3_api_msg_config.accesslog.v3.OrFilter>` blocks) where independent probability
+    ///     calculations are desired.
+    ///
+    ///   * Can be used to implement logging kill switches with predictable probability distributions.
     #[prost(bool, tag = "3")]
     pub use_independent_randomness: bool,
 }

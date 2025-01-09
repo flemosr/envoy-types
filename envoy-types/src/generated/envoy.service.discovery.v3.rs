@@ -27,6 +27,20 @@ pub struct ResourceName {
         DynamicParameterConstraints,
     >,
 }
+/// \[\#not-implemented-hide:\]
+/// An error associated with a specific resource name, returned to the
+/// client by the server.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ResourceError {
+    /// The name of the resource.
+    #[prost(message, optional, tag = "1")]
+    pub resource_name: ::core::option::Option<ResourceName>,
+    /// The error reported for the resource.
+    #[prost(message, optional, tag = "2")]
+    pub error_detail: ::core::option::Option<
+        super::super::super::super::google::rpc::Status,
+    >,
+}
 /// A DiscoveryRequest requests a set of versioned resources of the same type for
 /// a given Envoy node on some API.
 /// \[\#next-free-field: 8\]
@@ -83,7 +97,7 @@ pub struct DiscoveryRequest {
         super::super::super::super::google::rpc::Status,
     >,
 }
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DiscoveryResponse {
     /// The version of the response data.
@@ -129,6 +143,13 @@ pub struct DiscoveryResponse {
     pub control_plane: ::core::option::Option<
         super::super::super::config::core::v3::ControlPlane,
     >,
+    /// \[\#not-implemented-hide:\]
+    /// Errors associated with specific resources. Clients are expected to
+    /// remember the most recent error for a given resource across responses;
+    /// the error condition is not considered to be cleared until a response is
+    /// received that contains the resource in the 'resources' field.
+    #[prost(message, repeated, tag = "7")]
+    pub resource_errors: ::prost::alloc::vec::Vec<ResourceError>,
 }
 /// DeltaDiscoveryRequest and DeltaDiscoveryResponse are used in a new gRPC
 /// endpoint for Delta xDS.
@@ -245,7 +266,7 @@ pub struct DeltaDiscoveryRequest {
         super::super::super::super::google::rpc::Status,
     >,
 }
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeltaDiscoveryResponse {
     /// The version of the response data (used for debugging).
@@ -278,6 +299,13 @@ pub struct DeltaDiscoveryResponse {
     pub control_plane: ::core::option::Option<
         super::super::super::config::core::v3::ControlPlane,
     >,
+    /// \[\#not-implemented-hide:\]
+    /// Errors associated with specific resources. Note that a resource in
+    /// this field with a status of NOT_FOUND should be treated the same as
+    /// a resource listed in the 'removed_resources' or 'removed_resource_names'
+    /// fields.
+    #[prost(message, repeated, tag = "9")]
+    pub resource_errors: ::prost::alloc::vec::Vec<ResourceError>,
 }
 ///
 /// A set of dynamic parameter constraints associated with a variant of an individual xDS resource.
