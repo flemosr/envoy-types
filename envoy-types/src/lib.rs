@@ -30,6 +30,7 @@ query parameters and header manipulation, can be found at the [examples]
 directory.
 
 ```rust
+use std::env;
 use tonic::{transport::Server, Request, Response, Status};
 
 use envoy_types::ext_authz::v3::pb::{
@@ -66,8 +67,9 @@ impl Authorization for MyServer {
 
 // #[tokio::main]
 // async fn main() -> Result<(), Box<dyn std::error::Error>> {
-//     let addr = format!("0.0.0.0:50051").parse().unwrap();
-//     let server = MyServer::default();
+//     let server_port = env::var("SERVER_PORT").unwrap_or("50051".into());
+//     let addr = format!("0.0.0.0:{server_port}").parse().unwrap();
+//     let server = MyServer;
 
 //     println!("AuthorizationServer listening on {addr}");
 
@@ -80,17 +82,24 @@ impl Authorization for MyServer {
 // }
 ```
 
-You can check the currently supported version of [`tonic`] at this crate's
-[`Cargo.toml`] file. If you want to work with a previous version, consider
-using a [previous version of `envoy-types`].
+# Compatibility
+
+The table bellow outlines the correspondence between the versions of [`tonic`]
+and the compatible versions of [`envoy-types`].
+
+`tonic` | `envoy-types`
+:-      | :-
+v0.12   | [v0.5](https://crates.io/crates/envoy-types/0.5.3)
+v0.11   | [v0.4](https://crates.io/crates/envoy-types/0.4.0)
+v0.10   | [v0.3](https://crates.io/crates/envoy-types/0.3.0)
+v0.9    | [v0.2](https://crates.io/crates/envoy-types/0.2.0)
 
 [Envoy Proxy]: https://www.envoyproxy.io
 [Envoy External Authorization]: https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter
 [protoc-install]: https://grpc.io/docs/protoc-installation/
 [`tonic`]: https://github.com/hyperium/tonic
 [examples]: https://github.com/flemosr/envoy-types/tree/main/examples
-[`Cargo.toml`]: https://github.com/flemosr/envoy-types/blob/main/envoy-types/Cargo.toml
-[previous version of `envoy-types`]: https://crates.io/crates/envoy-types/versions
+[`envoy-types`]: https://crates.io/crates/envoy-types
 */
 
 #![warn(missing_debug_implementations, rust_2018_idioms)]
