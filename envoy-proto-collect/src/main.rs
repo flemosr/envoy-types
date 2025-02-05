@@ -123,6 +123,7 @@ fn main() {
         "xds",
         vec![
             "udpa/annotations/*.proto",
+            "xds/core/v3/cidr.proto",
             "xds/core/v3/context_params.proto",
             "xds/core/v3/extension.proto",
             "xds/core/v3/authority.proto",
