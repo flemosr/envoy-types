@@ -228,3 +228,16 @@ pub mod collection_entry {
         InlineEntry(InlineEntry),
     }
 }
+/// CidrRange specifies an IP Address and a prefix length to construct
+/// the subnet mask for a `CIDR <<https://tools.ietf.org/html/rfc4632>`\_> range.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CidrRange {
+    /// IPv4 or IPv6 address, e.g. `192.0.0.0` or `2001:db8::`.
+    #[prost(string, tag = "1")]
+    pub address_prefix: ::prost::alloc::string::String,
+    /// Length of prefix, e.g. 0, 32. Defaults to 0 when unset.
+    #[prost(message, optional, tag = "2")]
+    pub prefix_len: ::core::option::Option<
+        super::super::super::google::protobuf::UInt32Value,
+    >,
+}

@@ -3,55 +3,59 @@
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rbac {
-    /// Specify the RBAC rules to be applied globally.
-    /// If absent, no enforcing RBAC policy will be applied.
-    /// If present and empty, DENY.
-    /// If both rules and matcher are configured, rules will be ignored.
+    /// The primary RBAC policy which will be applied globally, to all the incoming requests.
+    ///
+    /// * If absent, no RBAC enforcement occurs.
+    /// * If set but empty, all requests are denied.
+    ///
+    /// .. note::
+    ///
+    /// When both `rules` and `matcher` are configured, `rules` will be ignored.
     #[prost(message, optional, tag = "1")]
     pub rules: ::core::option::Option<
         super::super::super::super::super::config::rbac::v3::Rbac,
     >,
     /// If specified, rules will emit stats with the given prefix.
-    /// This is useful to distinguish the stat when there are more than 1 RBAC filter configured with
-    /// rules.
+    /// This is useful for distinguishing metrics when multiple RBAC filters are configured.
     #[prost(string, tag = "6")]
     pub rules_stat_prefix: ::prost::alloc::string::String,
-    /// The match tree to use when resolving RBAC action for incoming requests. Requests do not
-    /// match any matcher will be denied.
-    /// If absent, no enforcing RBAC matcher will be applied.
-    /// If present and empty, deny all requests.
+    /// Match tree for evaluating RBAC actions on incoming requests. Requests not matching any matcher will be denied.
+    ///
+    /// * If absent, no RBAC enforcement occurs.
+    /// * If set but empty, all requests are denied.
     #[prost(message, optional, tag = "4")]
     pub matcher: ::core::option::Option<
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
-    /// Shadow rules are not enforced by the filter (i.e., returning a 403)
-    /// but will emit stats and logs and can be used for rule testing.
-    /// If absent, no shadow RBAC policy will be applied.
-    /// If both shadow rules and shadow matcher are configured, shadow rules will be ignored.
+    /// Shadow policy for testing RBAC rules without enforcing them. These rules generate stats and logs but do not deny
+    /// requests. If absent, no shadow RBAC policy will be applied.
+    ///
+    /// .. note::
+    ///
+    /// When both `shadow_rules` and `shadow_matcher` are configured, `shadow_rules` will be ignored.
     #[prost(message, optional, tag = "2")]
     pub shadow_rules: ::core::option::Option<
         super::super::super::super::super::config::rbac::v3::Rbac,
     >,
-    /// The match tree to use for emitting stats and logs which can be used for rule testing for
-    /// incoming requests.
     /// If absent, no shadow matcher will be applied.
+    /// Match tree for testing RBAC rules through stats and logs without enforcing them.
+    /// If absent, no shadow matching occurs.
     #[prost(message, optional, tag = "5")]
     pub shadow_matcher: ::core::option::Option<
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
     /// If specified, shadow rules will emit stats with the given prefix.
-    /// This is useful to distinguish the stat when there are more than 1 RBAC filter configured with
-    /// shadow rules.
+    /// This is useful for distinguishing metrics when multiple RBAC filters use shadow rules.
     #[prost(string, tag = "3")]
     pub shadow_rules_stat_prefix: ::prost::alloc::string::String,
-    /// If track_per_rule_stats is true, counters will be published for each rule and shadow rule.
+    /// If `track_per_rule_stats` is `true`, counters will be published for each rule and shadow rule.
     #[prost(bool, tag = "7")]
     pub track_per_rule_stats: bool,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RbacPerRoute {
-    /// Override the global configuration of the filter with this new config.
-    /// If absent, the global RBAC policy will be disabled for this route.
+    /// Per-route specific RBAC configuration that overrides the global RBAC configuration.
+    /// If absent, RBAC policy will be disabled for this route.
     #[prost(message, optional, tag = "2")]
     pub rbac: ::core::option::Option<Rbac>,
 }

@@ -1093,7 +1093,7 @@ pub mod server_info {
         }
     }
 }
-/// \[\#next-free-field: 41\]
+/// \[\#next-free-field: 42\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommandLineOptions {
     /// See :option:`--base-id` for details.
@@ -1129,6 +1129,9 @@ pub struct CommandLineOptions {
     /// See :option:`--ignore-unknown-dynamic-fields` for details.
     #[prost(bool, tag = "30")]
     pub ignore_unknown_dynamic_fields: bool,
+    /// See :option:`--skip-deprecated-logs` for details.
+    #[prost(bool, tag = "41")]
+    pub skip_deprecated_logs: bool,
     /// See :option:`--admin-address-path` for details.
     #[prost(string, tag = "6")]
     pub admin_address_path: ::prost::alloc::string::String,

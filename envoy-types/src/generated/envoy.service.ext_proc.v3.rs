@@ -395,7 +395,6 @@ pub struct HeaderMutation {
     #[prost(string, repeated, tag = "2")]
     pub remove_headers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
-/// \[\#not-implemented-hide:\]
 /// The body response message corresponding to FULL_DUPLEX_STREAMED body mode.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StreamedBodyResponse {
@@ -437,7 +436,6 @@ pub mod body_mutation {
         #[prost(bool, tag = "2")]
         ClearBody(bool),
         ///
-        /// \[\#not-implemented-hide:\]
         /// Must be used when the corresponding `BodySendMode` in the
         /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
         /// is set to `FULL_DUPLEX_STREAMED`.

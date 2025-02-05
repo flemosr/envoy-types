@@ -261,13 +261,23 @@ pub mod metadata_matcher {
         }
     }
 }
+/// Match an IP against a repeated CIDR range. This matcher is intended to be
+/// used in other matchers, for example in the filter state matcher to match a
+/// filter state object as an IP.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AddressMatcher {
+    #[prost(message, repeated, tag = "1")]
+    pub ranges: ::prost::alloc::vec::Vec<
+        super::super::super::super::xds::core::v3::CidrRange,
+    >,
+}
 /// FilterStateMatcher provides a general interface for matching the filter state objects.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilterStateMatcher {
     /// The filter state key to retrieve the object.
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
-    #[prost(oneof = "filter_state_matcher::Matcher", tags = "2")]
+    #[prost(oneof = "filter_state_matcher::Matcher", tags = "2, 3")]
     pub matcher: ::core::option::Option<filter_state_matcher::Matcher>,
 }
 /// Nested message and enum types in `FilterStateMatcher`.
@@ -277,6 +287,9 @@ pub mod filter_state_matcher {
         /// Matches the filter state object as a string value.
         #[prost(message, tag = "2")]
         StringMatch(super::StringMatcher),
+        /// Matches the filter state object as a ip Instance.
+        #[prost(message, tag = "3")]
+        AddressMatch(super::AddressMatcher),
     }
 }
 /// Specifies the way to match a path on HTTP request.

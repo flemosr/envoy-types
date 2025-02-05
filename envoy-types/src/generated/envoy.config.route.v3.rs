@@ -1122,7 +1122,10 @@ pub mod route_action {
         pub runtime_fraction: ::core::option::Option<
             super::super::super::core::v3::RuntimeFractionalPercent,
         >,
-        /// Determines if the trace span should be sampled. Defaults to true.
+        /// Specifies whether the trace span for the shadow request should be sampled. If this field is not explicitly set,
+        /// the shadow request will inherit the sampling decision of its parent span. This ensures consistency with the trace
+        /// sampling policy of the original request and prevents oversampling, especially in scenarios where runtime sampling
+        /// is disabled.
         #[prost(message, optional, tag = "4")]
         pub trace_sampled: ::core::option::Option<
             super::super::super::super::super::google::protobuf::BoolValue,
@@ -2187,12 +2190,12 @@ pub struct RateLimit {
 }
 /// Nested message and enum types in `RateLimit`.
 pub mod rate_limit {
-    /// \[\#next-free-field: 12\]
+    /// \[\#next-free-field: 13\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Action {
         #[prost(
             oneof = "action::ActionSpecifier",
-            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11"
+            tags = "1, 2, 3, 12, 4, 5, 6, 7, 8, 9, 10, 11"
         )]
         pub action_specifier: ::core::option::Option<action::ActionSpecifier>,
     }
@@ -2241,9 +2244,47 @@ pub mod rate_limit {
             /// The key to use in the descriptor entry.
             #[prost(string, tag = "2")]
             pub descriptor_key: ::prost::alloc::string::String,
-            /// If set to true, Envoy skips the descriptor while calling rate limiting service
-            /// when header is not present in the request. By default it skips calling the
-            /// rate limiting service if this header is not present in the request.
+            /// Controls the behavior when the specified header is not present in the request.
+            ///
+            /// If set to `false` (default):
+            ///
+            /// * Envoy does **NOT** call the rate limiting service for this descriptor.
+            /// * Useful if the header is optional and you prefer to skip rate limiting when it's absent.
+            ///
+            /// If set to `true`:
+            ///
+            /// * Envoy calls the rate limiting service but omits this descriptor if the header is missing.
+            /// * Useful if you want Envoy to enforce rate limiting even when the header is not present.
+            #[prost(bool, tag = "3")]
+            pub skip_if_absent: bool,
+        }
+        /// The following descriptor entry is appended when a query parameter contains a key that matches the
+        /// `query_parameter_name`:
+        ///
+        /// .. code-block:: cpp
+        ///
+        /// ("\<descriptor_key>", "\<query_parameter_value_queried_from_query_parameter>")
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct QueryParameters {
+            /// The name of the query parameter to use for rate limiting. Value of this query parameter is used to populate
+            /// the value of the descriptor entry for the descriptor_key.
+            #[prost(string, tag = "1")]
+            pub query_parameter_name: ::prost::alloc::string::String,
+            /// The key to use when creating the rate limit descriptor entry. his descriptor key will be used to identify the
+            /// rate limit rule in the rate limiting service.
+            #[prost(string, tag = "2")]
+            pub descriptor_key: ::prost::alloc::string::String,
+            /// Controls the behavior when the specified query parameter is not present in the request.
+            ///
+            /// If set to `false` (default):
+            ///
+            /// * Envoy does **NOT** call the rate limiting service for this descriptor.
+            /// * Useful if the query parameter is optional and you prefer to skip rate limiting when it's absent.
+            ///
+            /// If set to `true`:
+            ///
+            /// * Envoy calls the rate limiting service but omits this descriptor if the query parameter is missing.
+            /// * Useful if you want Envoy to enforce rate limiting even when the query parameter is not present.
             #[prost(bool, tag = "3")]
             pub skip_if_absent: bool,
         }
@@ -2376,9 +2417,18 @@ pub mod rate_limit {
             /// Source of metadata
             #[prost(enumeration = "meta_data::Source", tag = "4")]
             pub source: i32,
-            /// If set to true, Envoy skips the descriptor while calling rate limiting service
-            /// when `metadata_key` is empty and `default_value` is not set. By default it skips calling the
-            /// rate limiting service in that case.
+            /// Controls the behavior when the specified `metadata_key` is empty and `default_value` is not set.
+            ///
+            /// If set to `false` (default):
+            ///
+            /// * Envoy does **NOT** call the rate limiting service for this descriptor.
+            /// * Useful if the metadata is optional and you prefer to skip rate limiting when it's absent.
+            ///
+            /// If set to `true`:
+            ///
+            /// * Envoy calls the rate limiting service but omits this descriptor if the `metadata_key` is empty and
+            ///   `default_value` is missing.
+            /// * Useful if you want Envoy to enforce rate limiting even when the metadata is not present.
             #[prost(bool, tag = "5")]
             pub skip_if_absent: bool,
         }
@@ -2465,6 +2515,9 @@ pub mod rate_limit {
             /// Rate limit on request headers.
             #[prost(message, tag = "3")]
             RequestHeaders(RequestHeaders),
+            /// Rate limit on query parameters.
+            #[prost(message, tag = "12")]
+            QueryParameters(QueryParameters),
             /// Rate limit on remote address.
             #[prost(message, tag = "4")]
             RemoteAddress(RemoteAddress),
