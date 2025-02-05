@@ -32,7 +32,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: cargo clippy --workspace --all-features --all-targets
 
-  build_and_test:
+  cross_platform_tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -41,8 +41,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: hecrj/setup-rust-action@v2
+        with:
+          rust-version: ${{ matrix.toolchain }}
       - uses: taiki-e/install-action@protoc
       - uses: Swatinem/rust-cache@v2
-      - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
-      - run: cargo build --verbose
-      - run: cargo test --doc --all-features --verbose 
+      - run: cargo test --all-features
+      - uses: taiki-e/install-action@cargo-no-dev-deps
+      - run: cargo no-dev-deps --no-private check --all-features
+      - run: cargo no-dev-deps --no-private doc --no-deps --all-features
+        env:
+          RUSTDOCFLAGS: "-D warnings"
+
+  msrv:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: hecrj/setup-rust-action@v2
+    - run: cargo update
+      env:
+        CARGO_RESOLVER_INCOMPATIBLE_RUST_VERSIONS: fallback
+    - name: Get MSRV from metadata
+      id: msrv
+      run: |
+        MSRV=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].rust_version')
+        echo "version=${MSRV}" >> $GITHUB_OUTPUT
+    - uses: hecrj/setup-rust-action@v2
+      with:
+        rust-version: ${{ steps.msrv.outputs.version }}
+    - uses: Swatinem/rust-cache@v2
+    - run: cargo check --all-features
+    - uses: taiki-e/install-action@cargo-no-dev-deps
+    - run: cargo no-dev-deps --no-private check --all-features
+    - run: cargo no-dev-deps --no-private doc --no-deps --all-features
+      env:
+        RUSTDOCFLAGS: "-D warnings"

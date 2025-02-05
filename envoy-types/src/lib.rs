@@ -9,7 +9,7 @@ Among other use cases, this crate can be used to implement an
 
 ### Rust Version
 
-This project's MSRV is `1.71.1`.
+This project's MSRV is `1.75`.
 
 ### Dependencies
 
