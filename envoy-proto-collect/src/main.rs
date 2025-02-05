@@ -123,16 +123,16 @@ fn main() {
         "xds",
         vec![
             "udpa/annotations/*.proto",
+            "xds/annotations/v3/status.proto",
+            "xds/core/v3/authority.proto",
             "xds/core/v3/cidr.proto",
+            "xds/core/v3/collection_entry.proto",
             "xds/core/v3/context_params.proto",
             "xds/core/v3/extension.proto",
-            "xds/core/v3/authority.proto",
-            "xds/core/v3/collection_entry.proto",
             "xds/core/v3/resource_locator.proto",
-            "xds/annotations/v3/status.proto",
             "xds/type/matcher/v3/matcher.proto",
-            "xds/type/matcher/v3/string.proto",
             "xds/type/matcher/v3/regex.proto",
+            "xds/type/matcher/v3/string.proto",
         ],
         Some(&xds_license),
     );
@@ -150,12 +150,12 @@ fn main() {
         &out_dir,
         "googleapis",
         vec![
+            "google/api/annotations.proto",
             "google/api/expr/v1alpha1/checked.proto",
             "google/api/expr/v1alpha1/syntax.proto",
-            "google/rpc/status.proto",
-            "google/rpc/code.proto", // Optional proto
-            "google/api/annotations.proto",
             "google/api/http.proto",
+            "google/rpc/code.proto", // Optional proto
+            "google/rpc/status.proto",
         ],
         None,
     );
@@ -165,8 +165,8 @@ fn main() {
         &out_dir,
         "opencensus-proto",
         vec![
-            "**/opencensus/proto/trace/v1/*.proto",
             "**/opencensus/proto/resource/v1/resource.proto",
+            "**/opencensus/proto/trace/v1/*.proto",
         ],
         None,
     );
