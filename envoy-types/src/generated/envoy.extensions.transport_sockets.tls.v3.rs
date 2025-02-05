@@ -1169,6 +1169,15 @@ pub struct SpiffeCertValidatorConfig {
     pub trust_domains: ::prost::alloc::vec::Vec<
         spiffe_cert_validator_config::TrustDomain,
     >,
+    /// This field specifies all trust bundles as a single DataSource. If both
+    /// trust_bundles and trust_domains are specified, trust_bundles will
+    /// take precedence. Currently assumes file will be a SPIFFE Trust Bundle Map.
+    /// If DataSource is a file, dynamic file watching will be enabled,
+    /// and updates to the specified file will trigger a refresh of the trust_bundles.
+    #[prost(message, optional, tag = "2")]
+    pub trust_bundles: ::core::option::Option<
+        super::super::super::super::config::core::v3::DataSource,
+    >,
 }
 /// Nested message and enum types in `SPIFFECertValidatorConfig`.
 pub mod spiffe_cert_validator_config {

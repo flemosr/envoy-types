@@ -1819,13 +1819,14 @@ pub struct HealthCheck {
     pub healthy_edge_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+    /// Specifies the path to the :ref:`health check event log <arch_overview_health_check_logging>`.
+    ///
     ///
     /// .. attention::
     /// This field is deprecated in favor of the extension
     /// : ref:`event_logger <envoy_v3_api_field_config.core.v3.HealthCheck.event_logger>` and
     /// : ref:`event_log_path <envoy_v3_api_field_extensions.health_check.event_sinks.file.v3.HealthCheckEventFileSink.event_log_path>`
     /// in the file sink extension.
-    /// Specifies the path to the :ref:`health check event log <arch_overview_health_check_logging>`.
     #[deprecated]
     #[prost(string, tag = "17")]
     pub event_log_path: ::prost::alloc::string::String,
@@ -2969,7 +2970,7 @@ pub struct KeepaliveSettings {
         super::super::super::super::google::protobuf::Duration,
     >,
 }
-/// \[\#next-free-field: 17\]
+/// \[\#next-free-field: 18\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http2ProtocolOptions {
     /// `Maximum table size <<https://httpwg.org/specs/rfc7541.html#rfc.section.4.2>`\_>
@@ -3149,6 +3150,11 @@ pub struct Http2ProtocolOptions {
     #[prost(message, optional, tag = "16")]
     pub use_oghttp2_codec: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Configure the maximum amount of metadata than can be handled per stream. Defaults to 1 MB.
+    #[prost(message, optional, tag = "17")]
+    pub max_metadata_size: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt64Value,
     >,
 }
 /// Nested message and enum types in `Http2ProtocolOptions`.

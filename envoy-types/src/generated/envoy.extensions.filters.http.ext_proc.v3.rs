@@ -113,43 +113,6 @@ pub mod processing_mode {
         /// chunk. If the body exceeds the configured buffer limit, then the body contents
         /// up to the buffer limit will be sent.
         BufferedPartial = 3,
-        /// \[\#not-implemented-hide:\]
-        /// Envoy streams the body to the server in pieces as they arrive.
-        ///
-        /// 1. The server may choose to buffer any number chunks of data before processing them.
-        ///    After it finishes buffering, the server processes the buffered data. Then it splits the processed
-        ///    data into any number of chunks, and streams them back to Envoy one by one.
-        ///    The server may continuously do so until the complete body is processed.
-        ///    The individual response chunk size is recommended to be no greater than 64K bytes, or
-        ///
-        /// :ref:`max_receive_message_length <envoy_v3_api_field_config.core.v3.GrpcService.EnvoyGrpc.max_receive_message_length>`
-        /// if EnvoyGrpc is used.
-        ///
-        /// 2. The server may also choose to buffer the entire message, including the headers (if header mode is
-        ///    `SEND`), the entire body, and the trailers (if present), before sending back any response.
-        ///    The server response has to maintain the headers-body-trailers ordering.
-        ///
-        /// 2. Note that the server might also choose not to buffer data. That is, upon receiving a
-        ///    body request, it could process the data and send back a body response immediately.
-        ///
-        /// In this body mode:
-        ///
-        /// * The corresponding trailer mode has to be set to `SEND`.
-        /// *
-        /// Envoy will send body and trailers (if present) to the server as they arrive.
-        ///   Sending the trailers (if present) is to inform the server the complete body arrives.
-        ///   In case there are no trailers, then Envoy will set
-        /// : ref:`end_of_stream <envoy_v3_api_field_service.ext_proc.v3.HttpBody.end_of_stream>`
-        ///   to true as part of the last body chunk request to notify the server that no other data is to be sent.
-        ///
-        ///
-        /// *
-        /// The server needs to send
-        /// : ref:`StreamedBodyResponse <envoy_v3_api_msg_service.ext_proc.v3.StreamedBodyResponse>`
-        ///   to Envoy in the body response.
-        ///
-        ///
-        /// * Envoy will stream the body chunks in the responses from the server to the upstream/downstream as they arrive.
         FullDuplexStreamed = 4,
     }
     impl BodySendMode {
@@ -256,7 +219,6 @@ pub struct ExternalProcessor {
         super::super::super::super::super::config::core::v3::GrpcService,
     >,
     ///
-    /// \[\#not-implemented-hide:\]
     /// Configuration for the HTTP service that the filter will communicate with.
     /// Only one of `http_service` or
     /// : ref:`grpc_service <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.grpc_service>`.

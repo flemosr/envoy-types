@@ -554,6 +554,7 @@ pub struct Cluster {
     /// "envoy.filters.network.thrift_proxy". See the extension's documentation for details on
     /// specific options.
     /// \[\#next-major-version: make this a list of typed extensions.\]
+    /// \[\#extension-category: envoy.upstream_options\]
     #[prost(map = "string, message", tag = "36")]
     pub typed_extension_protocol_options: ::std::collections::HashMap<
         ::prost::alloc::string::String,

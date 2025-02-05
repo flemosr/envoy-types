@@ -10,7 +10,7 @@ pub struct DnsCacheCircuitBreakers {
     >,
 }
 /// Configuration for the dynamic forward proxy DNS cache. See the :ref:`architecture overview  <arch_overview_http_dynamic_forward_proxy>` for more information.
-/// \[\#next-free-field: 15\]
+/// \[\#next-free-field: 16\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DnsCacheConfig {
     /// The name of the cache. Multiple named caches allow independent dynamic forward proxy
@@ -77,6 +77,13 @@ pub struct DnsCacheConfig {
     pub max_hosts: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
+    ///
+    /// Disable the DNS refresh on failure. If this field is set to true, it will ignore the
+    /// : ref:`typed_dns_resolver_config <envoy_v3_api_field_extensions.common.dynamic_forward_proxy.v3.DnsCacheConfig.dns_failure_refresh_rate>`.
+    /// If not specified, it defaults to false. By enabling this feature, the failed hosts will now be treated as a cache miss,
+    /// allowing the failed hosts to be resolved on demand.
+    #[prost(bool, tag = "15")]
+    pub disable_dns_refresh_on_failure: bool,
     /// If the DNS failure refresh rate is specified,
     /// this is used as the cache's DNS refresh rate when DNS requests are failing. If this setting is
     /// not specified, the failure refresh rate defaults to the dns_refresh_rate.
@@ -129,7 +136,8 @@ pub struct DnsCacheConfig {
     /// The timeout used for DNS queries. This timeout is independent of any timeout and retry policy
     /// used by the underlying DNS implementation (e.g., c-areas and Apple DNS) which are opaque.
     /// Setting this timeout will ensure that queries succeed or fail within the specified time frame
-    /// and are then retried using the standard refresh rates. Defaults to 5s if not set.
+    /// and are then retried using the standard refresh rates. Setting it to 0 will disable the Envoy DNS
+    /// query timeout and use the underlying DNS implementation timeout. Defaults to 5s if not set.
     #[prost(message, optional, tag = "11")]
     pub dns_query_timeout: ::core::option::Option<
         super::super::super::super::super::google::protobuf::Duration,

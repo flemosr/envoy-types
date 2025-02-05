@@ -190,7 +190,6 @@ pub mod http_protocol_options {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum UpstreamProtocolOptions {
         /// To explicitly configure either HTTP/1 or HTTP/2 (but not both!) use `explicit_http_config`.
-        /// If the `explicit_http_config` is empty, HTTP/1.1 is used.
         #[prost(message, tag = "3")]
         ExplicitHttpConfig(ExplicitHttpConfig),
         /// This allows switching on protocol based on what protocol the downstream
