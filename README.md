@@ -26,8 +26,10 @@ This project's MSRV is `1.75`.
 envoy-types = "<envoy-types-version>"
 ```
 
-The protobuf types made available are already pre-compiled, so you only need to
-have the Protocol Buffer Compiler (`protoc`) installed to run the crate's tests.
+The protobuf types made available are already pre-compiled, so you only need the
+latest stable Protocol Buffer Compiler (`protoc`) to run the crate's tests.
+Generated code may vary across `protoc` versions, and the use of the latest
+stable version is enforced by CI.
 Installation instructions can be found [here][protoc-install].
 
 ## Examples
@@ -97,7 +99,7 @@ and the compatible versions of [`envoy-types`].
 
 `tonic` | `envoy-types`
 :-      | :-
-v0.12   | [v0.5](https://crates.io/crates/envoy-types/0.5.3)
+v0.12   | [v0.5](https://crates.io/crates/envoy-types/0.5.4)
 v0.11   | [v0.4](https://crates.io/crates/envoy-types/0.4.0)
 v0.10   | [v0.3](https://crates.io/crates/envoy-types/0.3.0)
 v0.9    | [v0.2](https://crates.io/crates/envoy-types/0.2.0)
