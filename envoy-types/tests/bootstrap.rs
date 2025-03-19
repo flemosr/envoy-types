@@ -28,14 +28,15 @@ fn bootstrap() {
         .compile_protos(
             &protos,
             &[
+                "proto/cel-spec/proto",
+                "proto/client_model",
                 "proto/data-plane-api",
-                "proto/xds",
-                "proto/protoc-gen-validate",
                 "proto/googleapis",
                 "proto/opencensus-proto/src",
                 "proto/opentelemetry-proto",
                 "proto/opentelemetry-proto",
-                "proto/client_model",
+                "proto/protoc-gen-validate",
+                "proto/xds",
             ],
         )
         .unwrap();
