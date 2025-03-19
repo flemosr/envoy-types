@@ -19,3 +19,6 @@
 [submodule "submodules/client_model"]
 	path = envoy-proto-collect/submodules/client_model
 	url = https://github.com/prometheus/client_model
+[submodule "envoy-proto-collect/submodules/cel-spec"]
+	path = envoy-proto-collect/submodules/cel-spec
+	url = https://github.com/google/cel-spec
