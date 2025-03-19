@@ -312,8 +312,8 @@ pub struct DeltaDiscoveryResponse {
 /// These constraints determine whether the resource matches a subscription based on the set of
 /// dynamic parameters in the subscription, as specified in the
 /// : ref:`ResourceLocator.dynamic_parameters<envoy_v3_api_field_service.discovery.v3.ResourceLocator.dynamic_parameters>`
-/// field. This allows xDS implementations (clients, servers, and caching proxies) to determine
-/// which variant of a resource is appropriate for a given client.
+///   field. This allows xDS implementations (clients, servers, and caching proxies) to determine
+///   which variant of a resource is appropriate for a given client.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicParameterConstraints {
     #[prost(oneof = "dynamic_parameter_constraints::Type", tags = "1, 2, 3, 4")]

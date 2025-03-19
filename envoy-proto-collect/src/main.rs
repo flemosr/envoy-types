@@ -105,7 +105,7 @@ fn main() {
 
     println!("Collecting protos to {:?}...", out_dir);
 
-    let envoy_license = apache_v2(2023, "Envoy Project Authors");
+    let envoy_license = apache_v2(2025, "Envoy Project Authors");
     collect_protos(
         &out_dir,
         "data-plane-api",
@@ -117,7 +117,18 @@ fn main() {
         Some(&envoy_license),
     );
 
-    let xds_license = apache_v2(2023, "CNCF xDS API Working Group (xDS-WG) Authors");
+    // Files from `cel-spec` already have an Apache-2.0 declaration
+    collect_protos(
+        &out_dir,
+        "cel-spec",
+        vec![
+            "proto/cel/expr/checked.proto",
+            "proto/cel/expr/syntax.proto",
+        ],
+        None,
+    );
+
+    let xds_license = apache_v2(2025, "CNCF xDS API Working Group (xDS-WG) Authors");
     collect_protos(
         &out_dir,
         "xds",
@@ -133,11 +144,12 @@ fn main() {
             "xds/type/matcher/v3/matcher.proto",
             "xds/type/matcher/v3/regex.proto",
             "xds/type/matcher/v3/string.proto",
+            "xds/type/v3/cel.proto",
         ],
         Some(&xds_license),
     );
 
-    let protoc_gen_validate_license = apache_v2(2023, "Buf Technologies, Inc.");
+    let protoc_gen_validate_license = apache_v2(2025, "Buf Technologies, Inc.");
     collect_protos(
         &out_dir,
         "protoc-gen-validate",

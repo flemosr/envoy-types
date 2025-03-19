@@ -17,7 +17,7 @@ pub mod fault_delay {
     ///
     /// Fault delays are controlled via an HTTP header (if applicable). See the
     /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
-    /// more information.
+    ///   more information.
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct HeaderDelay {}
     #[derive(
@@ -93,7 +93,7 @@ pub mod fault_rate_limit {
     ///
     /// Rate limits are controlled via an HTTP header (if applicable). See the
     /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
-    /// more information.
+    ///   more information.
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct HeaderLimit {}
     #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]

@@ -252,7 +252,9 @@ pub struct AccessLogCommon {
     /// long-live stream (TCP connection, long-live HTTP2 stream).
     /// And if it is necessary, unique ID or identifier can be added to the log entry
     /// : ref:`stream_id <envoy_v3_api_field_data.accesslog.v3.AccessLogCommon.stream_id>` to
-    /// correlate all these intermediate log entries and final log entry.
+    ///   correlate all these intermediate log entries and final log entry.
+    ///
+    ///
     /// .. attention::
     ///
     /// This field is deprecated in favor of `access_log_type` for better indication of the

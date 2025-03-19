@@ -3,6 +3,8 @@
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct ProcessingMode {
     /// How to handle the request header. Default is "SEND".
+    /// Note this field is ignored in :ref:`mode_override  <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`, since mode
+    /// overrides can only affect messages exchanged after the request header is processed.
     #[prost(enumeration = "processing_mode::HeaderSendMode", tag = "1")]
     pub request_header_mode: i32,
     /// How to handle the response header. Default is "SEND".
@@ -37,9 +39,15 @@ pub mod processing_mode {
     )]
     #[repr(i32)]
     pub enum HeaderSendMode {
-        /// The default HeaderSendMode depends on which part of the message is being
-        /// processed. By default, request and response headers are sent,
-        /// while trailers are skipped.
+        /// When used to configure the ext_proc filter :ref:`processing_mode  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`,
+        /// the default HeaderSendMode depends on which part of the message is being processed. By
+        /// default, request and response headers are sent, while trailers are skipped.
+        ///
+        ///
+        /// When used in :ref:`mode_override  <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>` or
+        /// : ref:`allowed_override_modes  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.allowed_override_modes>`,
+        ///   a value of DEFAULT indicates that there is no change from the behavior that is configured for
+        ///   the filter in :ref:`processing_mode  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`.
         Default = 0,
         /// Send the header or trailer.
         Send = 1,
@@ -202,12 +210,14 @@ pub mod processing_mode {
 /// The protocol itself is based on a bidirectional gRPC stream. Envoy will send the
 /// server
 /// : ref:`ProcessingRequest <envoy_v3_api_msg_service.ext_proc.v3.ProcessingRequest>`
-/// messages, and the server must reply with
+///   messages, and the server must reply with
 /// : ref:`ProcessingResponse <envoy_v3_api_msg_service.ext_proc.v3.ProcessingResponse>`.
+///
+///
 /// Stats about each gRPC call are recorded in a :ref:`dynamic filter state  <arch_overview_advanced_filter_state_sharing>` object in a namespace matching the filter
 /// name.
 ///
-/// \[\#next-free-field: 23\]
+/// \[\#next-free-field: 24\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExternalProcessor {
     /// Configuration for the gRPC service that the filter will communicate with.
@@ -222,12 +232,14 @@ pub struct ExternalProcessor {
     /// Configuration for the HTTP service that the filter will communicate with.
     /// Only one of `http_service` or
     /// : ref:`grpc_service <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.grpc_service>`.
-    /// can be set. It is required that one of them must be set.
+    ///   can be set. It is required that one of them must be set.
     ///
     /// If `http_service` is set, the
     /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
-    /// can not be configured to send any body or trailers. i.e, http_service only supports
-    /// sending request or response headers to the side stream server.
+    ///   can not be configured to send any body or trailers. i.e, http_service only supports
+    ///   sending request or response headers to the side stream server.
+    ///
+    ///
     /// With this configuration, Envoy behavior:
     ///
     /// 1. The headers are first put in a proto message
@@ -303,12 +315,12 @@ pub struct ExternalProcessor {
     /// for "host", ":authority", ":scheme", ":method", and headers that start
     /// with the header prefix set via
     /// : ref:`header_prefix <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.header_prefix>`
-    /// (which is usually "x-envoy").
-    /// Note that changing headers such as "host" or ":authority" may not in itself
-    /// change Envoy's routing decision, as routes can be cached. To also force the
-    /// route to be recomputed, set the
+    ///   (which is usually "x-envoy").
+    ///   Note that changing headers such as "host" or ":authority" may not in itself
+    ///   change Envoy's routing decision, as routes can be cached. To also force the
+    ///   route to be recomputed, set the
     /// : ref:`clear_route_cache <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.clear_route_cache>`
-    /// field to true in the same response.
+    ///   field to true in the same response.
     #[prost(message, optional, tag = "9")]
     pub mutation_rules: ::core::option::Option<
         super::super::super::super::super::config::common::mutation_rules::v3::HeaderMutationRules,
@@ -316,7 +328,7 @@ pub struct ExternalProcessor {
     ///
     /// Specify the upper bound of
     /// : ref:`override_message_timeout <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.override_message_timeout>`
-    /// If not specified, by default it is 0, which will effectively disable the `override_message_timeout` API.
+    ///   If not specified, by default it is 0, which will effectively disable the `override_message_timeout` API.
     #[prost(message, optional, tag = "10")]
     pub max_message_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -336,15 +348,15 @@ pub struct ExternalProcessor {
     /// If `allow_mode_override` is set to true, the filter config :ref:`processing_mode  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
     /// can be overridden by the response message from the external processing server
     /// : ref:`mode_override <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`.
-    /// If not set, `mode_override` API in the response message will be ignored.
+    ///   If not set, `mode_override` API in the response message will be ignored.
     #[prost(bool, tag = "14")]
     pub allow_mode_override: bool,
     ///
     /// If set to true, ignore the
     /// : ref:`immediate_response <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.immediate_response>`
-    /// message in an external processor response. In such case, no local reply will be sent.
-    /// Instead, the stream to the external processor will be closed. There will be no
-    /// more external processing for this stream from now on.
+    ///   message in an external processor response. In such case, no local reply will be sent.
+    ///   Instead, the stream to the external processor will be closed. There will be no
+    ///   more external processing for this stream from now on.
     #[prost(bool, tag = "15")]
     pub disable_immediate_response: bool,
     /// Options related to the sending and receiving of dynamic metadata.
@@ -379,16 +391,16 @@ pub struct ExternalProcessor {
     ///
     /// Prevents clearing the route-cache when the
     /// : ref:`clear_route_cache <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.clear_route_cache>`
-    /// field is set in an external processor response.
-    /// Only one of `disable_clear_route_cache` or `route_cache_action` can be set.
-    /// It is recommended to set `route_cache_action` which supersedes `disable_clear_route_cache`.
+    ///   field is set in an external processor response.
+    ///   Only one of `disable_clear_route_cache` or `route_cache_action` can be set.
+    ///   It is recommended to set `route_cache_action` which supersedes `disable_clear_route_cache`.
     #[prost(bool, tag = "11")]
     pub disable_clear_route_cache: bool,
     ///
     /// Specifies the action to be taken when an external processor response is
     /// received in response to request headers. It is recommended to set this field than set
     /// : ref:`disable_clear_route_cache <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.disable_clear_route_cache>`.
-    /// Only one of `disable_clear_route_cache` or `route_cache_action` can be set.
+    ///   Only one of `disable_clear_route_cache` or `route_cache_action` can be set.
     #[prost(enumeration = "external_processor::RouteCacheAction", tag = "18")]
     pub route_cache_action: i32,
     /// Specifies the deferred closure timeout for gRPC stream that connects to external processor. Currently, the deferred stream closure
@@ -413,8 +425,8 @@ pub struct ExternalProcessor {
     ///
     /// If enabled Envoy will ignore the
     /// : ref:`mode_override <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`
-    /// value that the server sends in the header response. This is because Envoy may have already
-    /// sent the body to the server, prior to processing the header response.
+    ///   value that the server sends in the header response. This is because Envoy may have already
+    ///   sent the body to the server, prior to processing the header response.
     #[prost(bool, tag = "21")]
     pub send_body_without_waiting_for_header_response: bool,
     ///
@@ -422,9 +434,17 @@ pub struct ExternalProcessor {
     /// `allowed_override_modes` is configured, the filter config :ref:`processing_mode  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
     /// can only be overridden by the response message from the external processing server iff the
     /// : ref:`mode_override <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>` is allowed by
-    /// the `allowed_override_modes` allow-list below.
+    ///   the `allowed_override_modes` allow-list below.
+    ///   Since request_header_mode is not applicable in any way, it's ignored in comparison.
     #[prost(message, repeated, tag = "22")]
     pub allowed_override_modes: ::prost::alloc::vec::Vec<ProcessingMode>,
+    /// Decorator to introduce custom logic that runs after a message received from
+    /// the External Processor is processed.
+    /// \[\#extension-category: envoy.http.ext_proc.response_processors\]
+    #[prost(message, optional, tag = "23")]
+    pub on_processing_response: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
 }
 /// Nested message and enum types in `ExternalProcessor`.
 pub mod external_processor {
@@ -446,7 +466,7 @@ pub mod external_processor {
         ///
         /// The default behavior is to clear the route cache only when the
         /// : ref:`clear_route_cache <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.clear_route_cache>`
-        /// field is set in an external processor response.
+        ///   field is set in an external processor response.
         Default = 0,
         /// Always clear the route cache irrespective of the clear_route_cache bit in
         /// the external processor response.
@@ -455,7 +475,7 @@ pub mod external_processor {
         /// Do not clear the route cache irrespective of the clear_route_cache bit in
         /// the external processor response. Setting to RETAIN is equivalent to set the
         /// : ref:`disable_clear_route_cache <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.disable_clear_route_cache>`
-        /// to true.
+        ///   to true.
         Retain = 2,
     }
     impl RouteCacheAction {

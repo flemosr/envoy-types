@@ -6,7 +6,7 @@
 /// of the `AttributeContext`. The `AttributeContext` is a collection of individual attributes
 /// supported by Envoy authorization system.
 /// \[\#comment: The following items are left out of this proto
-/// Request.Auth field for jwt tokens
+/// Request.Auth field for JWTs
 /// Request.Api for api management
 /// Origin peer that originated the request
 /// Caching Protocol
@@ -141,7 +141,7 @@ pub mod attribute_context {
         /// Header value is encoded as UTF-8 string. Non-UTF-8 characters will be replaced by "!".
         /// This field will not be set if
         /// : ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
-        /// is set to true.
+        ///   is set to true.
         #[prost(map = "string, string", tag = "3")]
         pub headers: ::std::collections::HashMap<
             ::prost::alloc::string::String,
@@ -151,7 +151,9 @@ pub mod attribute_context {
         /// A list of the raw HTTP request headers. This is used instead of
         /// : ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>` when
         /// : ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
-        /// is set to true.
+        ///   is set to true.
+        ///
+        ///
         /// Note that this is not actually a map type. `header_map` contains a single repeated field
         /// `headers`.
         ///
@@ -159,11 +161,11 @@ pub mod attribute_context {
         /// Here, only the `key` and `raw_value` fields will be populated for each HeaderValue, and
         /// that is only when
         /// : ref:`encode_raw_headers <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.encode_raw_headers>`
-        /// is set to true.
+        ///   is set to true.
         ///
         /// Also, unlike the
         /// : ref:`headers <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>`
-        /// field, headers with the same key are not combined into a single comma separated header.
+        ///   field, headers with the same key are not combined into a single comma separated header.
         #[prost(message, optional, tag = "13")]
         pub header_map: ::core::option::Option<
             super::super::super::super::config::core::v3::HeaderMap,
@@ -202,7 +204,7 @@ pub mod attribute_context {
         /// The HTTP request body in bytes. This is used instead of
         /// : ref:`body <envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.body>` when
         /// : ref:`pack_as_bytes <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.BufferSettings.pack_as_bytes>`
-        /// is set to true.
+        ///   is set to true.
         #[prost(bytes = "vec", tag = "12")]
         pub raw_body: ::prost::alloc::vec::Vec<u8>,
     }

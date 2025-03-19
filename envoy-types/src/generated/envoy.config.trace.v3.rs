@@ -23,7 +23,7 @@ pub mod tracing {
     /// The configuration is defined by the
     /// : ref:`HttpConnectionManager.Tracing <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing>`
     /// : ref:`provider <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.provider>`
-    /// field.
+    ///   field.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Http {
         /// The name of the HTTP trace driver to instantiate. The name must match a
@@ -191,8 +191,8 @@ pub struct OpenTelemetryConfig {
     /// Note: The `request_headers_to_add` property in the OTLP HTTP exporter service
     /// does not support the :ref:`format specifier <config_access_log_format>` as used for
     /// : ref:`HTTP access logging <config_access_log>`.
-    /// The values configured are added as HTTP headers on the OTLP export request
-    /// without any formatting applied.
+    ///   The values configured are added as HTTP headers on the OTLP export request
+    ///   without any formatting applied.
     #[prost(message, optional, tag = "3")]
     pub http_service: ::core::option::Option<super::super::core::v3::HttpService>,
     /// The name for the service. This will be populated in the ResourceSpan Resource attributes.
@@ -225,9 +225,9 @@ pub struct TraceServiceConfig {
 /// Configuration for the SkyWalking tracer. Please note that if SkyWalking tracer is used as the
 /// provider of tracing, then
 /// : ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`
-/// in the tracing config must be set to true to get the correct topology and tracing data. Moreover, SkyWalking
-/// Tracer does not support SkyWalking extension header (`sw8-x`) temporarily.
-/// \[\#extension: envoy.tracers.skywalking\]
+///   in the tracing config must be set to true to get the correct topology and tracing data. Moreover, SkyWalking
+///   Tracer does not support SkyWalking extension header (`sw8-x`) temporarily.
+///   \[\#extension: envoy.tracers.skywalking\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SkyWalkingConfig {
     /// SkyWalking collector service.
@@ -251,7 +251,7 @@ pub struct ClientConfig {
     /// that configured by :ref:`Bootstrap node <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.node>`
     /// message's :ref:`id <envoy_v3_api_field_config.core.v3.Node.id>` field or command line  option
     /// : option:`--service-node` will be used. If both this field and local service node are empty,
-    /// `EnvoyProxy` is used as the instance name by default.
+    ///   `EnvoyProxy` is used as the instance name by default.
     #[prost(string, tag = "2")]
     pub instance_name: ::prost::alloc::string::String,
     /// Envoy caches the segment in memory when the SkyWalking backend service is temporarily unavailable.
@@ -325,11 +325,11 @@ pub struct ZipkinConfig {
     ///
     /// If this is set to true, then the
     /// : ref:`start_child_span of router <envoy_v3_api_field_extensions.filters.http.router.v3.Router.start_child_span>`
-    /// SHOULD be set to true also to ensure the correctness of trace chain.
+    ///   SHOULD be set to true also to ensure the correctness of trace chain.
     ///
     /// Both this field and `start_child_span` are deprecated by the
     /// : ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`.
-    /// Please use that `spawn_upstream_span` field to control the span creation.
+    ///   Please use that `spawn_upstream_span` field to control the span creation.
     #[deprecated]
     #[prost(bool, tag = "7")]
     pub split_spans_for_request: bool,

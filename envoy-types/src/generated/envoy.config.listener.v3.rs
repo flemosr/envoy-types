@@ -253,7 +253,7 @@ pub struct FilterChain {
     ///
     /// This field is deprecated. Add a
     /// : ref:`PROXY protocol listener filter <config_listener_filters_proxy_protocol>`
-    /// explicitly instead.
+    ///   explicitly instead.
     #[deprecated]
     #[prost(message, optional, tag = "4")]
     pub use_proxy_proto: ::core::option::Option<
@@ -266,9 +266,9 @@ pub struct FilterChain {
     /// Optional custom transport socket implementation to use for downstream connections.
     /// To setup TLS, set a transport socket with name `envoy.transport_sockets.tls` and
     /// : ref:`DownstreamTlsContext <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.DownstreamTlsContext>` in the `typed_config`.
-    /// If no transport socket configuration is specified, new connections
-    /// will be set up with plaintext.
-    /// \[\#extension-category: envoy.transport_sockets.downstream\]
+    ///   If no transport socket configuration is specified, new connections
+    ///   will be set up with plaintext.
+    ///   \[\#extension-category: envoy.transport_sockets.downstream\]
     #[prost(message, optional, tag = "6")]
     pub transport_socket: ::core::option::Option<
         super::super::core::v3::TransportSocket,
@@ -482,8 +482,8 @@ pub struct UdpListenerConfig {
     ///
     /// UDP socket configuration for the listener. The default for
     /// : ref:`prefer_gro <envoy_v3_api_field_config.core.v3.UdpSocketConfig.prefer_gro>` is false for
-    /// listener sockets. If receiving a large amount of datagrams from a small number of sources, it
-    /// may be worthwhile to enable this option after performance testing.
+    ///   listener sockets. If receiving a large amount of datagrams from a small number of sources, it
+    ///   may be worthwhile to enable this option after performance testing.
     #[prost(message, optional, tag = "5")]
     pub downstream_socket_config: ::core::option::Option<
         super::super::core::v3::UdpSocketConfig,
@@ -514,10 +514,10 @@ pub struct AdditionalAddress {
     /// Additional socket options that may not be present in Envoy source code or
     /// precompiled binaries. If specified, this will override the
     /// : ref:`socket_options <envoy_v3_api_field_config.listener.v3.Listener.socket_options>`
-    /// in the listener. If specified with no
+    ///   in the listener. If specified with no
     /// : ref:`socket_options <envoy_v3_api_field_config.core.v3.SocketOptionsOverride.socket_options>`
-    /// or an empty list of :ref:`socket_options <envoy_v3_api_field_config.core.v3.SocketOptionsOverride.socket_options>`,
-    /// it means no socket option will apply.
+    ///   or an empty list of :ref:`socket_options <envoy_v3_api_field_config.core.v3.SocketOptionsOverride.socket_options>`,
+    ///   it means no socket option will apply.
     #[prost(message, optional, tag = "2")]
     pub socket_options: ::core::option::Option<
         super::super::core::v3::SocketOptionsOverride,
@@ -560,7 +560,7 @@ pub struct Listener {
     /// A list of filter chains to consider for this listener. The
     /// : ref:`FilterChain <envoy_v3_api_msg_config.listener.v3.FilterChain>` with the most specific
     /// : ref:`FilterChainMatch <envoy_v3_api_msg_config.listener.v3.FilterChainMatch>` criteria is used on a
-    /// connection.
+    ///   connection.
     ///
     /// Example using SNI for filter chain selection can be found in the
     /// : ref:`FAQ entry <faq_how_to_setup_sni>`.
@@ -571,8 +571,10 @@ pub struct Listener {
     /// network properties. This matcher is used as a replacement for the filter chain match condition
     /// : ref:`filter_chain_match  <envoy_v3_api_field_config.listener.v3.FilterChain.filter_chain_match>`. If specified, all
     /// : ref:`filter_chains <envoy_v3_api_field_config.listener.v3.Listener.filter_chains>` must have a
-    /// non-empty and unique :ref:`name <envoy_v3_api_field_config.listener.v3.FilterChain.name>` field
-    /// and not specify :ref:`filter_chain_match  <envoy_v3_api_field_config.listener.v3.FilterChain.filter_chain_match>` field.
+    ///   non-empty and unique :ref:`name <envoy_v3_api_field_config.listener.v3.FilterChain.name>` field
+    ///   and not specify :ref:`filter_chain_match  <envoy_v3_api_field_config.listener.v3.FilterChain.filter_chain_match>` field.
+    ///
+    ///
     /// .. note::
     ///
     /// Once matched, each connection is permanently bound to its filter chain.
@@ -617,14 +619,14 @@ pub struct Listener {
     /// Listener filters have the opportunity to manipulate and augment the connection metadata that
     /// is used in connection filter chain matching, for example. These filters are run before any in
     /// : ref:`filter_chains <envoy_v3_api_field_config.listener.v3.Listener.filter_chains>`. Order matters as the
-    /// filters are processed sequentially right after a socket has been accepted by the listener, and
-    /// before a connection is created.
-    /// UDP Listener filters can be specified when the protocol in the listener socket address in
+    ///   filters are processed sequentially right after a socket has been accepted by the listener, and
+    ///   before a connection is created.
+    ///   UDP Listener filters can be specified when the protocol in the listener socket address in
     /// : ref:`protocol <envoy_v3_api_field_config.core.v3.SocketAddress.protocol>` is :ref:`UDP  <envoy_v3_api_enum_value_config.core.v3.SocketAddress.Protocol.UDP>` and no
     /// : ref:`quic_options <envoy_v3_api_field_config.listener.v3.UdpListenerConfig.quic_options>` is specified in :ref:`udp_listener_config <envoy_v3_api_field_config.listener.v3.Listener.udp_listener_config>`.
-    /// QUIC listener filters can be specified when :ref:`quic_options  <envoy_v3_api_field_config.listener.v3.UdpListenerConfig.quic_options>` is
-    /// specified in :ref:`udp_listener_config <envoy_v3_api_field_config.listener.v3.Listener.udp_listener_config>`.
-    /// They are processed sequentially right before connection creation. And like TCP Listener filters, they can be used to manipulate the connection metadata and socket. But the difference is that they can't be used to pause connection creation.
+    ///   QUIC listener filters can be specified when :ref:`quic_options  <envoy_v3_api_field_config.listener.v3.UdpListenerConfig.quic_options>` is
+    ///   specified in :ref:`udp_listener_config <envoy_v3_api_field_config.listener.v3.Listener.udp_listener_config>`.
+    ///   They are processed sequentially right before connection creation. And like TCP Listener filters, they can be used to manipulate the connection metadata and socket. But the difference is that they can't be used to pause connection creation.
     #[prost(message, repeated, tag = "9")]
     pub listener_filters: ::prost::alloc::vec::Vec<ListenerFilter>,
     /// The timeout to wait for all listener filters to complete operation. If the timeout is reached,
@@ -649,14 +651,14 @@ pub struct Listener {
     /// `iptables` `TPROXY` target, in which case the original source and destination addresses and
     /// ports are preserved on accepted connections. This flag should be used in combination with
     /// : ref:`an original_dst <config_listener_filters_original_dst>` :ref:`listener filter  <envoy_v3_api_field_config.listener.v3.Listener.listener_filters>` to mark the connections' local addresses as
-    /// "restored." This can be used to hand off each redirected connection to another listener
-    /// associated with the connection's destination address. Direct connections to the socket without
-    /// using `TPROXY` cannot be distinguished from connections redirected using `TPROXY` and are
-    /// therefore treated as if they were redirected.
-    /// When this flag is set to false, the listener's socket is explicitly reset as non-transparent.
-    /// Setting this flag requires Envoy to run with the `CAP_NET_ADMIN` capability.
-    /// When this flag is not set (default), the socket is not modified, i.e. the transparent option
-    /// is neither set nor reset.
+    ///   "restored." This can be used to hand off each redirected connection to another listener
+    ///   associated with the connection's destination address. Direct connections to the socket without
+    ///   using `TPROXY` cannot be distinguished from connections redirected using `TPROXY` and are
+    ///   therefore treated as if they were redirected.
+    ///   When this flag is set to false, the listener's socket is explicitly reset as non-transparent.
+    ///   Setting this flag requires Envoy to run with the `CAP_NET_ADMIN` capability.
+    ///   When this flag is not set (default), the socket is not modified, i.e. the transparent option
+    ///   is neither set nor reset.
     #[prost(message, optional, tag = "10")]
     pub transparent: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
@@ -673,10 +675,10 @@ pub struct Listener {
     >,
     ///
     /// Additional socket options that may not be present in Envoy source code or
-    /// precompiled binaries. The socket options can be updated for a listener when
+    /// precompiled binaries.
+    /// It is not allowed to update the socket options for any existing address if
     /// : ref:`enable_reuse_port <envoy_v3_api_field_config.listener.v3.Listener.enable_reuse_port>`
-    /// is `true`. Otherwise, if socket options change during a listener update the update will be rejected
-    /// to make it clear that the options were not updated.
+    ///   is `false` to avoid the conflict when creating new sockets for the listener.
     #[prost(message, repeated, tag = "13")]
     pub socket_options: ::prost::alloc::vec::Vec<super::super::core::v3::SocketOption>,
     /// Whether the listener should accept TCP Fast Open (TFO) connections.
@@ -793,7 +795,7 @@ pub struct Listener {
     /// Whether the listener should bind to the port. A listener that doesn't
     /// bind can only receive connections redirected from other listeners that set
     /// : ref:`use_original_dst <envoy_v3_api_field_config.listener.v3.Listener.use_original_dst>`
-    /// to true. Default is true.
+    ///   to true. Default is true.
     #[prost(message, optional, tag = "26")]
     pub bind_to_port: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
@@ -907,8 +909,10 @@ pub mod listener {
         ///
         /// Used to represent an internal listener which does not listen on OSI L4 address but can be used by the
         /// : ref:`envoy cluster <envoy_v3_api_msg_config.cluster.v3.Cluster>` to create a user space connection to.
-        /// The internal listener acts as a TCP listener. It supports listener filters and network filter chains.
-        /// Upstream clusters refer to the internal listeners by their :ref:`name  <envoy_v3_api_field_config.listener.v3.Listener.name>`. :ref:`Address  <envoy_v3_api_field_config.listener.v3.Listener.address>` must not be set on the internal listeners.
+        ///   The internal listener acts as a TCP listener. It supports listener filters and network filter chains.
+        ///   Upstream clusters refer to the internal listeners by their :ref:`name  <envoy_v3_api_field_config.listener.v3.Listener.name>`. :ref:`Address  <envoy_v3_api_field_config.listener.v3.Listener.address>` must not be set on the internal listeners.
+        ///
+        ///
         /// There are some limitations that are derived from the implementation. The known limitations include:
         ///
         /// * :ref:`ConnectionBalanceConfig <envoy_v3_api_msg_config.listener.v3.Listener.ConnectionBalanceConfig>` is not

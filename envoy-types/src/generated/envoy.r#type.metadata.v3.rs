@@ -2,6 +2,8 @@
 ///
 /// MetadataKey provides a general interface using `key` and `path` to retrieve value from
 /// : ref:`Metadata <envoy_v3_api_msg_config.core.v3.Metadata>`.
+///
+///
 /// For example, for the following Metadata:
 ///
 /// .. code-block:: yaml

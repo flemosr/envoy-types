@@ -10,7 +10,9 @@
 ///
 /// Only one of :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`,
 /// : ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>`,
-/// or *path_template_rewrite* may be specified.
+///   or *path_template_rewrite* may be specified.
+///
+///
 /// Template pattern matching types:
 ///
 /// * `*` : Matches a single path component, up to the next path separator: /

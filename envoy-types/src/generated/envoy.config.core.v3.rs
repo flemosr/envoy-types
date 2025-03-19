@@ -39,6 +39,8 @@ pub struct TypedExtensionConfig {
 /// can be enabled in socket with Linux, which can be used in
 /// : ref:`listener's<envoy_v3_api_field_config.listener.v3.Listener.socket_options>` or
 /// : ref:`admin's <envoy_v3_api_field_config.bootstrap.v3.Admin.socket_options>` socket_options etc.
+///
+///
 /// It should be noted that the name or level may have different values on different platforms.
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -296,10 +298,10 @@ pub struct ExtraSourceAddress {
     /// Additional socket options that may not be present in Envoy source code or
     /// precompiled binaries. If specified, this will override the
     /// : ref:`socket_options <envoy_v3_api_field_config.core.v3.BindConfig.socket_options>`
-    /// in the BindConfig. If specified with no
+    ///   in the BindConfig. If specified with no
     /// : ref:`socket_options <envoy_v3_api_field_config.core.v3.SocketOptionsOverride.socket_options>`
-    /// or an empty list of :ref:`socket_options <envoy_v3_api_field_config.core.v3.SocketOptionsOverride.socket_options>`,
-    /// it means no socket option will apply.
+    ///   or an empty list of :ref:`socket_options <envoy_v3_api_field_config.core.v3.SocketOptionsOverride.socket_options>`,
+    ///   it means no socket option will apply.
     #[prost(message, optional, tag = "2")]
     pub socket_options: ::core::option::Option<SocketOptionsOverride>,
 }
@@ -337,7 +339,7 @@ pub struct BindConfig {
     ///
     /// Custom local address selector to override the default (i.e.
     /// : ref:`DefaultLocalAddressSelector  <envoy_v3_api_msg_config.upstream.local_address_selector.v3.DefaultLocalAddressSelector>`).
-    /// \[\#extension-category: envoy.upstream.local_address_selector\]
+    ///   \[\#extension-category: envoy.upstream.local_address_selector\]
     #[prost(message, optional, tag = "6")]
     pub local_address_selector: ::core::option::Option<TypedExtensionConfig>,
 }
@@ -617,8 +619,8 @@ pub struct Metadata {
     /// namespace is reserved for Envoy's built-in filters.
     /// If both `filter_metadata` and
     /// : ref:`typed_filter_metadata <envoy_v3_api_field_config.core.v3.Metadata.typed_filter_metadata>`
-    /// fields are present in the metadata with same keys,
-    /// only `typed_filter_metadata` field will be parsed.
+    ///   fields are present in the metadata with same keys,
+    ///   only `typed_filter_metadata` field will be parsed.
     #[prost(map = "string, message", tag = "1")]
     pub filter_metadata: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -820,9 +822,9 @@ pub struct HeaderValue {
     ///
     /// The same :ref:`format specifier <config_access_log_format>` as used for
     /// : ref:`HTTP access logging <config_access_log>` applies here, however
-    /// unknown header values are replaced with the empty string instead of `-`.
-    /// Header value is encoded as string. This does not work for non-utf8 characters.
-    /// Only one of `value` or `raw_value` can be set.
+    ///   unknown header values are replaced with the empty string instead of `-`.
+    ///   Header value is encoded as string. This does not work for non-utf8 characters.
+    ///   Only one of `value` or `raw_value` can be set.
     #[prost(string, tag = "2")]
     pub value: ::prost::alloc::string::String,
     /// Header value is encoded as bytes which can support non-utf8 characters.
@@ -845,7 +847,7 @@ pub struct HeaderValueOption {
     /// .. note::
     /// The :ref:`external authorization service <envoy_v3_api_msg_service.auth.v3.CheckResponse>` and
     /// : ref:`external processor service <envoy_v3_api_msg_service.ext_proc.v3.ProcessingResponse>` have
-    /// default value (`false`) for this field.
+    ///   default value (`false`) for this field.
     #[deprecated]
     #[prost(message, optional, tag = "2")]
     pub append: ::core::option::Option<
@@ -1073,8 +1075,8 @@ pub mod async_data_source {
 ///
 /// Configuration for transport socket in :ref:`listeners <config_listeners>` and
 /// : ref:`clusters <envoy_v3_api_msg_config.cluster.v3.Cluster>`. If the configuration is
-/// empty, a default transport socket implementation and configuration will be
-/// chosen based on the platform and existence of tls_context.
+///   empty, a default transport socket implementation and configuration will be
+///   chosen based on the platform and existence of tls_context.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TransportSocket {
     /// The name of the transport socket to instantiate. The name must match a supported transport
@@ -1104,9 +1106,9 @@ pub mod transport_socket {
 ///
 /// Parsing of the runtime key's data is implemented such that it may be represented as a
 /// : ref:`FractionalPercent <envoy_v3_api_msg_type.v3.FractionalPercent>` proto represented as JSON/YAML
-/// and may also be represented as an integer with the assumption that the value is an integral
-/// percentage out of 100. For instance, a runtime key lookup returning the value "42" would parse
-/// as a `FractionalPercent` whose numerator is 42 and denominator is HUNDRED.
+///   and may also be represented as an integer with the assumption that the value is an integral
+///   percentage out of 100. For instance, a runtime key lookup returning the value "42" would parse
+///   as a `FractionalPercent` whose numerator is 42 and denominator is HUNDRED.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RuntimeFractionalPercent {
     /// Default value if the runtime value's for the numerator/denominator keys are not available.
@@ -1643,6 +1645,16 @@ pub mod proxy_protocol_pass_through_tl_vs {
         }
     }
 }
+/// Represents a single Type-Length-Value (TLV) entry.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TlvEntry {
+    /// The type of the TLV. Must be a uint8 (0-255) as per the Proxy Protocol v2 specification.
+    #[prost(uint32, tag = "1")]
+    pub r#type: u32,
+    /// The value of the TLV. Must be at least one byte long.
+    #[prost(bytes = "vec", tag = "2")]
+    pub value: ::prost::alloc::vec::Vec<u8>,
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProxyProtocolConfig {
     /// The PROXY protocol version to use. See <https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt> for details
@@ -1652,6 +1664,32 @@ pub struct ProxyProtocolConfig {
     /// V2 header. If there is no setting for this field, no TLVs will be passed through.
     #[prost(message, optional, tag = "2")]
     pub pass_through_tlvs: ::core::option::Option<ProxyProtocolPassThroughTlVs>,
+    /// This config allows additional TLVs to be included in the upstream PROXY protocol
+    /// V2 header. Unlike `pass_through_tlvs`, which passes TLVs from the downstream request,
+    /// `added_tlvs` provides an extension mechanism for defining new TLVs that are included
+    /// with the upstream request. These TLVs may not be present in the downstream request and
+    /// can be defined at either the transport socket level or the host level to provide more
+    /// granular control over the TLVs that are included in the upstream request.
+    ///
+    /// Host-level TLVs are specified in the `metadata.typed_filter_metadata` field under the
+    /// `envoy.transport_sockets.proxy_protocol` namespace.
+    ///
+    /// .. literalinclude:: /\_configs/repo/proxy_protocol.yaml
+    /// :language: yaml
+    /// :lines: 49-57
+    /// :linenos:
+    /// :lineno-start: 49
+    /// :caption: :download:`proxy_protocol.yaml </_configs/repo/proxy_protocol.yaml>`
+    ///
+    /// **Precedence behavior**:
+    ///
+    /// * When a TLV is defined at both the host level and the transport socket level, the value
+    ///   from the host level configuration takes precedence. This allows users to define default TLVs
+    ///   at the transport socket level and override them at the host level.
+    /// * Any TLV defined in the `pass_through_tlvs` field will be overridden by either the host-level
+    ///   or transport socket-level TLV.
+    #[prost(message, repeated, tag = "3")]
+    pub added_tlvs: ::prost::alloc::vec::Vec<TlvEntry>,
 }
 /// Nested message and enum types in `ProxyProtocolConfig`.
 pub mod proxy_protocol_config {
@@ -1693,6 +1731,12 @@ pub mod proxy_protocol_config {
             }
         }
     }
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PerHostConfig {
+    /// Enables per-host configuration for Proxy Protocol.
+    #[prost(message, repeated, tag = "1")]
+    pub added_tlvs: ::prost::alloc::vec::Vec<TlvEntry>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthStatusSet {
@@ -1739,8 +1783,8 @@ pub struct HealthCheck {
     /// The number of unhealthy health checks required before a host is marked
     /// unhealthy. Note that for `http` health checking if a host responds with a code not in
     /// : ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`
-    /// or :ref:`retriable_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.retriable_statuses>`,
-    /// this threshold is ignored and the host is considered immediately unhealthy.
+    ///   or :ref:`retriable_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.retriable_statuses>`,
+    ///   this threshold is ignored and the host is considered immediately unhealthy.
     #[prost(message, optional, tag = "4")]
     pub unhealthy_threshold: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -1826,7 +1870,7 @@ pub struct HealthCheck {
     /// This field is deprecated in favor of the extension
     /// : ref:`event_logger <envoy_v3_api_field_config.core.v3.HealthCheck.event_logger>` and
     /// : ref:`event_log_path <envoy_v3_api_field_extensions.health_check.event_sinks.file.v3.HealthCheckEventFileSink.event_log_path>`
-    /// in the file sink extension.
+    ///   in the file sink extension.
     #[deprecated]
     #[prost(string, tag = "17")]
     pub event_log_path: ::prost::alloc::string::String,
@@ -1855,7 +1899,9 @@ pub struct HealthCheck {
     ///
     /// Optional key/value pairs that will be used to match a transport socket from those specified in the cluster's
     /// : ref:`tranport socket matches <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket_matches>`.
-    /// For example, the following match criteria
+    ///   For example, the following match criteria
+    ///
+    ///
     /// .. code-block:: yaml
     ///
     /// transport_socket_match_criteria:
@@ -1877,13 +1923,13 @@ pub struct HealthCheck {
     ///
     /// If this field is set, then for health checks it will supersede an entry of `envoy.transport_socket` in the
     /// : ref:`LbEndpoint.Metadata <envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`.
-    /// This allows using different transport socket capabilities for health checking versus proxying to the
-    /// endpoint.
+    ///   This allows using different transport socket capabilities for health checking versus proxying to the
+    ///   endpoint.
     ///
     /// If the key/values pairs specified do not match any
     /// : ref:`transport socket matches <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket_matches>`,
-    /// the cluster's :ref:`transport socket <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket>`
-    /// will be used for health check socket configuration.
+    ///   the cluster's :ref:`transport socket <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket>`
+    ///   will be used for health check socket configuration.
     #[prost(message, optional, tag = "23")]
     pub transport_socket_match_criteria: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
@@ -1969,12 +2015,12 @@ pub mod health_check {
         /// will count towards the configured :ref:`unhealthy_threshold <envoy_v3_api_field_config.core.v3.HealthCheck.unhealthy_threshold>`,
         /// but will not result in the host being considered immediately unhealthy. Ranges follow half-open semantics of
         /// : ref:`Int64Range <envoy_v3_api_msg_type.v3.Int64Range>`. The start and end of each range are required.
-        /// Only statuses in the range \[100, 600) are allowed. The :ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`
-        /// field takes precedence for any range overlaps with this field i.e. if status code 200 is both retriable and expected, a 200 response will
-        /// be considered a successful health check. By default all responses not in
+        ///   Only statuses in the range \[100, 600) are allowed. The :ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`
+        ///   field takes precedence for any range overlaps with this field i.e. if status code 200 is both retriable and expected, a 200 response will
+        ///   be considered a successful health check. By default all responses not in
         /// : ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>` will result in
-        /// the host being considered immediately unhealthy i.e. if status code 200 is expected and there are no configured retriable statuses, any
-        /// non-200 response will result in the host being marked unhealthy.
+        ///   the host being considered immediately unhealthy i.e. if status code 200 is expected and there are no configured retriable statuses, any
+        ///   non-200 response will result in the host being marked unhealthy.
         #[prost(message, repeated, tag = "12")]
         pub retriable_statuses: ::prost::alloc::vec::Vec<
             super::super::super::super::r#type::v3::Int64Range,
@@ -2399,13 +2445,13 @@ pub mod config_source {
         /// When set, the client will access the resources from the same server it got the
         /// ConfigSource from, although not necessarily from the same stream. This is similar to the
         /// : ref:`ads<envoy_v3_api_field.ConfigSource.ads>` field, except that the client may use a
-        /// different stream to the same server. As a result, this field can be used for things
-        /// like LRS that cannot be sent on an ADS stream. It can also be used to link from (e.g.)
-        /// LDS to RDS on the same server without requiring the management server to know its name
-        /// or required credentials.
-        /// \[\#next-major-version: In xDS v3, consider replacing the ads field with this one, since
-        /// this field can implicitly mean to use the same stream in the case where the ConfigSource
-        /// is provided via ADS and the specified data can also be obtained via ADS.\]
+        ///   different stream to the same server. As a result, this field can be used for things
+        ///   like LRS that cannot be sent on an ADS stream. It can also be used to link from (e.g.)
+        ///   LDS to RDS on the same server without requiring the management server to know its name
+        ///   or required credentials.
+        ///   \[\#next-major-version: In xDS v3, consider replacing the ads field with this one, since
+        ///   this field can implicitly mean to use the same stream in the case where the ConfigSource
+        ///   is provided via ADS and the specified data can also be obtained via ADS.\]
         #[prost(message, tag = "5")]
         Self_(super::SelfConfigSource),
     }
@@ -2598,11 +2644,11 @@ pub struct UpstreamHttpProtocolOptions {
     /// An optional alternative to the host/authority header to be used for setting the SNI value.
     /// It should be a valid downstream HTTP header, as seen by the
     /// : ref:`router filter <config_http_filters_router>`.
-    /// If unset, host/authority header will be used for populating the SNI. If the specified header
-    /// is not found or the value is empty, host/authority header will be used instead.
-    /// This field is intended to be set with `auto_sni` and/or `auto_san_validation` fields.
-    /// If none of these fields are set then setting this would be a no-op.
-    /// Does nothing if a filter before the http router filter sets the corresponding metadata.
+    ///   If unset, host/authority header will be used for populating the SNI. If the specified header
+    ///   is not found or the value is empty, host/authority header will be used instead.
+    ///   This field is intended to be set with `auto_sni` and/or `auto_san_validation` fields.
+    ///   If none of these fields are set then setting this would be a no-op.
+    ///   Does nothing if a filter before the http router filter sets the corresponding metadata.
     #[prost(string, tag = "3")]
     pub override_auto_sni_header: ::prost::alloc::string::String,
 }
@@ -2634,9 +2680,9 @@ pub struct AlternateProtocolsCacheOptions {
     ///
     /// Allows configuring a persistent
     /// : ref:`key value store <envoy_v3_api_msg_config.common.key_value.v3.KeyValueStoreConfig>` to flush
-    /// alternate protocols entries to disk.
-    /// This function is currently only supported if concurrency is 1
-    /// Cached entries will take precedence over pre-populated entries below.
+    ///   alternate protocols entries to disk.
+    ///   This function is currently only supported if concurrency is 1
+    ///   Cached entries will take precedence over pre-populated entries below.
     #[prost(message, optional, tag = "3")]
     pub key_value_store_config: ::core::option::Option<TypedExtensionConfig>,
     /// Allows pre-populating the cache with entries, as described above.
@@ -2686,8 +2732,10 @@ pub struct HttpProtocolOptions {
     /// idle timeout is reached the connection will be closed. If the connection is an HTTP/2
     /// downstream connection a drain sequence will occur prior to closing the connection, see
     /// : ref:`drain_timeout  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
-    /// Note that request based timeouts mean that HTTP/2 PINGs will not keep the connection alive.
-    /// If not specified, this defaults to 1 hour. To disable idle timeouts explicitly set this to 0.
+    ///   Note that request based timeouts mean that HTTP/2 PINGs will not keep the connection alive.
+    ///   If not specified, this defaults to 1 hour. To disable idle timeouts explicitly set this to 0.
+    ///
+    ///
     /// .. warning::
     /// Disabling this timeout has a highly likelihood of yielding connection leaks due to lost TCP
     /// FIN packets, etc.
@@ -2728,6 +2776,8 @@ pub struct HttpProtocolOptions {
     /// Responses that exceed this limit will result in a 503 response.
     /// In Envoy, this setting is only valid when configured on an upstream cluster, not on the
     /// : ref:`HTTP Connection Manager  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.common_http_protocol_options>`.
+    ///
+    ///
     /// Note: currently some protocol codecs impose limits on the maximum size of a single header:
     /// HTTP/2 (when using nghttp2) limits a single header to around 100kb.
     /// HTTP/3 limits a single header to around 1024kb.
@@ -2814,7 +2864,7 @@ pub mod http_protocol_options {
         }
     }
 }
-/// \[\#next-free-field: 11\]
+/// \[\#next-free-field: 12\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http1ProtocolOptions {
     /// Handle HTTP requests with absolute URLs in the requests. These requests
@@ -2865,7 +2915,7 @@ pub struct Http1ProtocolOptions {
     /// is proxied via multiple layers of proxies.
     /// \[\#comment:TODO: This field is ignored when the
     /// : ref:`header validation configuration <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.typed_header_validation_config>`
-    /// is present.\]
+    ///   is present.\]
     #[prost(bool, tag = "6")]
     pub allow_chunked_length: bool,
     /// Allows invalid HTTP messaging. When this option is false, then Envoy will terminate
@@ -2905,6 +2955,16 @@ pub struct Http1ProtocolOptions {
     /// to reject custom methods.
     #[prost(bool, tag = "10")]
     pub allow_custom_methods: bool,
+    /// Ignore HTTP/1.1 upgrade values matching any of the supplied matchers.
+    ///
+    /// .. note::
+    ///
+    /// `h2c` upgrades are always removed for backwards compatibility, regardless of the
+    /// value in this setting.
+    #[prost(message, repeated, tag = "11")]
+    pub ignore_http_11_upgrade: ::prost::alloc::vec::Vec<
+        super::super::super::r#type::matcher::v3::StringMatcher,
+    >,
 }
 /// Nested message and enum types in `Http1ProtocolOptions`.
 pub mod http1_protocol_options {
@@ -3336,6 +3396,10 @@ pub struct HttpService {
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct JsonFormatOptions {
     /// The output JSON string properties will be sorted.
+    ///
+    /// .. note::
+    /// As the properties are always sorted, this option has no effect and is deprecated.
+    #[deprecated]
     #[prost(bool, tag = "1")]
     pub sort_properties: bool,
 }
@@ -3349,6 +3413,11 @@ pub struct SubstitutionFormatString {
     /// * for `text_format`, the output of the empty operator is changed from `-` to an
     ///   empty string, so that empty values are omitted entirely.
     /// * for `json_format` the keys with null values are omitted in the output structure.
+    ///
+    /// .. note::
+    /// This option does not work perfectly with `json_format` as keys with `null` values
+    /// will still be included in the output. See <https://github.com/envoyproxy/envoy/issues/37941>
+    /// for more details.
     #[prost(bool, tag = "3")]
     pub omit_empty_values: bool,
     /// Specify a `content_type` field.
@@ -3358,6 +3427,8 @@ pub struct SubstitutionFormatString {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+    ///
+    ///
     /// content_type: "text/html; charset=UTF-8"
     #[prost(string, tag = "4")]
     pub content_type: ::prost::alloc::string::String,
@@ -3384,6 +3455,8 @@ pub mod substitution_format_string {
         ///
         /// .. validated-code-block:: yaml
         /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+        ///
+        ///
         /// text_format: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
         ///
         /// generates plain text similar to:
@@ -3404,6 +3477,8 @@ pub mod substitution_format_string {
         ///
         /// .. validated-code-block:: yaml
         /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+        ///
+        ///
         /// json_format:
         /// status: "%RESPONSE_CODE%"
         /// message: "%LOCAL_REPLY_BODY%"
@@ -3426,6 +3501,8 @@ pub mod substitution_format_string {
         ///
         /// .. validated-code-block:: yaml
         /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+        ///
+        ///
         /// text_format_source:
         /// inline_string: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
         ///

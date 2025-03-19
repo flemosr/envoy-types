@@ -11,7 +11,7 @@ pub struct StatsSink {
     ///
     /// Stats sink specific configuration which depends on the sink being instantiated. See
     /// : ref:`StatsdSink <envoy_v3_api_msg_config.metrics.v3.StatsdSink>` for an example.
-    /// \[\#extension-category: envoy.stats_sinks\]
+    ///   \[\#extension-category: envoy.stats_sinks\]
     #[prost(oneof = "stats_sink::ConfigType", tags = "3")]
     pub config_type: ::core::option::Option<stats_sink::ConfigType>,
 }
@@ -20,7 +20,7 @@ pub mod stats_sink {
     ///
     /// Stats sink specific configuration which depends on the sink being instantiated. See
     /// : ref:`StatsdSink <envoy_v3_api_msg_config.metrics.v3.StatsdSink>` for an example.
-    /// \[\#extension-category: envoy.stats_sinks\]
+    ///   \[\#extension-category: envoy.stats_sinks\]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ConfigType {
         #[prost(message, tag = "3")]
@@ -34,8 +34,8 @@ pub struct StatsConfig {
     /// Each stat name is independently processed through these tag specifiers. When a tag is
     /// matched, the first capture group is not immediately removed from the name, so later
     /// : ref:`TagSpecifiers <envoy_v3_api_msg_config.metrics.v3.TagSpecifier>` can also match that
-    /// same portion of the match. After all tag matching is complete, a tag-extracted version of
-    /// the name is produced and is used in stats sinks that represent tags, such as Prometheus.
+    ///   same portion of the match. After all tag matching is complete, a tag-extracted version of
+    ///   the name is produced and is used in stats sinks that represent tags, such as Prometheus.
     #[prost(message, repeated, tag = "1")]
     pub stats_tags: ::prost::alloc::vec::Vec<TagSpecifier>,
     /// Use all default tag regexes specified in Envoy. These can be combined with
@@ -202,7 +202,9 @@ pub struct TagSpecifier {
     /// portions of existing stats, which can be found in :repo:`well_known_names.h  <source/common/config/well_known_names.h>` in the Envoy repository. If a :ref:`tag_name  <envoy_v3_api_field_config.metrics.v3.TagSpecifier.tag_name>` is provided in the config and
     /// neither :ref:`regex <envoy_v3_api_field_config.metrics.v3.TagSpecifier.regex>` or
     /// : ref:`fixed_value <envoy_v3_api_field_config.metrics.v3.TagSpecifier.fixed_value>` were specified,
-    /// Envoy will attempt to find that name in its set of defaults and use the accompanying regex.
+    ///   Envoy will attempt to find that name in its set of defaults and use the accompanying regex.
+    ///
+    ///
     /// .. note::
     ///
     /// A stat name may be spelled in such a way that it matches two different

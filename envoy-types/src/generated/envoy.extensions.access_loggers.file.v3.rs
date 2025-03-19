@@ -19,8 +19,8 @@ pub mod file_access_log {
         /// Access log :ref:`format string<config_access_log_format_strings>`.
         /// Envoy supports :ref:`custom access log formats <config_access_log_format>` as well as a
         /// : ref:`default format <config_access_log_default_format>`.
-        /// This field is deprecated.
-        /// Please use :ref:`log_format <envoy_v3_api_field_extensions.access_loggers.file.v3.FileAccessLog.log_format>`.
+        ///   This field is deprecated.
+        ///   Please use :ref:`log_format <envoy_v3_api_field_extensions.access_loggers.file.v3.FileAccessLog.log_format>`.
         #[prost(string, tag = "2")]
         Format(::prost::alloc::string::String),
         /// Access log :ref:`format dictionary<config_access_log_format_dictionaries>`. All values

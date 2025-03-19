@@ -3,8 +3,8 @@
 /// External Authorization filter calls out to an external service over the
 /// gRPC Authorization API defined by
 /// : ref:`CheckRequest <envoy_v3_api_msg_service.auth.v3.CheckRequest>`.
-/// A failed check will cause this filter to close the TCP connection.
-/// \[\#next-free-field: 9\]
+///   A failed check will cause this filter to close the TCP connection.
+///   \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {
     /// The prefix to use when emitting statistics.
@@ -45,7 +45,7 @@ pub struct ExtAuthz {
     ///
     /// Optional labels that will be passed to :ref:`labels<envoy_v3_api_field_service.auth.v3.AttributeContext.Peer.labels>` in
     /// : ref:`destination<envoy_v3_api_field_service.auth.v3.AttributeContext.destination>`.
-    /// The labels will be read from :ref:`metadata<envoy_v3_api_msg_config.core.v3.Node>` with the specified key.
+    ///   The labels will be read from :ref:`metadata<envoy_v3_api_msg_config.core.v3.Node>` with the specified key.
     #[prost(string, tag = "7")]
     pub bootstrap_metadata_labels_key: ::prost::alloc::string::String,
     /// Specifies if the TLS session level details like SNI are sent to the external service.

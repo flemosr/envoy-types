@@ -82,7 +82,9 @@ pub mod rate_limit_quota_response {
         /// The data plane should stop applying the rate limiting strategy to the bucket, and transition
         /// the bucket to the "expired assignment" state. This activates the behavior configured in the
         /// : ref:`expired_assignment_behavior <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.expired_assignment_behavior>`
-        /// field.
+        ///   field.
+        ///
+        ///
         /// **Replacing the assignment**
         ///
         /// * If the rate limiting strategy is different from bucket's `active` assignment, or
@@ -100,11 +102,11 @@ pub mod rate_limit_quota_response {
             ///
             /// * If unset, the assignment has no expiration date.
             /// *
-            /// If set to `0`, the assignment expires immediately, forcing the client into the
-            /// : ref:`"expired assignment" <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.expired_assignment_behavior_timeout>`
-            ///   state. This may be used by the RLQS server in cases when it needs clients to proactively
-            ///   fall back to the pre-configured :ref:`ExpiredAssignmentBehavior <envoy_v3_api_msg_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior>`,
-            ///   f.e. before the server going into restart.
+            ///   If set to `0`, the assignment expires immediately, forcing the client into the
+            ///   : ref:`"expired assignment" <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.expired_assignment_behavior_timeout>`
+            ///     state. This may be used by the RLQS server in cases when it needs clients to proactively
+            ///     fall back to the pre-configured :ref:`ExpiredAssignmentBehavior <envoy_v3_api_msg_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior>`,
+            ///     f.e. before the server going into restart.
             ///
             ///
             /// .. attention::
@@ -160,7 +162,7 @@ pub mod rate_limit_quota_response {
             /// Commands the data plane to apply a rate limiting strategy to the bucket.
             /// The process of applying and expiring the rate limiting strategy is detailed in the
             /// : ref:`QuotaAssignmentAction  <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`
-            /// message.
+            ///   message.
             #[prost(message, tag = "2")]
             QuotaAssignmentAction(QuotaAssignmentAction),
             /// Abandon the bucket.
@@ -186,6 +188,8 @@ pub mod rate_limit_quota_response {
 ///
 /// .. validated-code-block:: yaml
 /// : type-name: envoy.service.rate_limit_quota.v3.BucketId
+///
+///
 /// bucket:
 /// name: my_bucket
 /// env: staging

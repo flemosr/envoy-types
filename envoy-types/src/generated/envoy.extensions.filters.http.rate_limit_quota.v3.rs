@@ -23,6 +23,8 @@ pub struct RateLimitQuotaFilterConfig {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: xds.type.matcher.v3.Matcher
+    ///
+    ///
     /// matcher_list:
     /// matchers:
     /// \# Assign requests with header\['env'\] set to 'staging' to the bucket { name: 'staging' }
@@ -152,11 +154,11 @@ pub struct RateLimitQuotaOverride {
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitQuotaBucketSettings {
-    ///
-    /// `BucketId` builder.
+    /// `BucketId`
+    /// builder.
     /// : ref:`BucketId <envoy_v3_api_msg_service.rate_limit_quota.v3.BucketId>` is a map from
-    /// the string key to the string value which serves as bucket identifier common for on
-    /// the control plane and the data plane.
+    ///   the string key to the string value which serves as bucket identifier common for on
+    ///   the control plane and the data plane.
     ///
     ///
     /// While `BucketId` is always static, `BucketIdBuilder` allows to populate map values
@@ -169,6 +171,8 @@ pub struct RateLimitQuotaBucketSettings {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.BucketIdBuilder
+    ///
+    ///
     /// bucket_id_builder:
     /// name:
     /// string_value: my_bucket
@@ -180,6 +184,8 @@ pub struct RateLimitQuotaBucketSettings {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: envoy.service.rate_limit_quota.v3.BucketId
+    ///
+    ///
     /// bucket:
     /// name: my_bucket
     /// hello: world
@@ -189,6 +195,8 @@ pub struct RateLimitQuotaBucketSettings {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.BucketIdBuilder
+    ///
+    ///
     /// bucket_id_builder:
     /// name:
     /// string_value: my_bucket
@@ -216,6 +224,8 @@ pub struct RateLimitQuotaBucketSettings {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: envoy.service.rate_limit_quota.v3.BucketId
+    ///
+    ///
     /// bucket:
     /// name: my_bucket
     /// env: staging
@@ -225,6 +235,8 @@ pub struct RateLimitQuotaBucketSettings {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: envoy.service.rate_limit_quota.v3.BucketId
+    ///
+    ///
     /// bucket:
     /// name: my_bucket
     /// env: prod
@@ -282,7 +294,7 @@ pub struct RateLimitQuotaBucketSettings {
     /// If not set, the bucket is abandoned when its `active` assignment expires.
     /// The process of abandoning the bucket, and restarting the subscription is described in the
     /// : ref:`AbandonAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
-    /// message.
+    ///   message.
     #[prost(message, optional, tag = "5")]
     pub expired_assignment_behavior: ::core::option::Option<
         rate_limit_quota_bucket_settings::ExpiredAssignmentBehavior,
@@ -319,9 +331,9 @@ pub mod rate_limit_quota_bucket_settings {
         ///
         /// 1. Selected `ExpiredAssignmentBehavior` is no longer applied.
         /// 1.
-        /// The bucket is abandoned. The process of abandoning the bucket is described in the
-        /// : ref:`AbandonAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
-        ///    message.
+        ///    The bucket is abandoned. The process of abandoning the bucket is described in the
+        ///    : ref:`AbandonAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
+        ///      message.
         ///
         ///
         /// 3. If a new request is matched into the bucket that has become abandoned,
@@ -361,7 +373,7 @@ pub mod rate_limit_quota_bucket_settings {
             ///
             /// Reuse the last `active` assignment until the RLQS server sends a new assignment, or the
             /// : ref:`expired_assignment_behavior_timeout  <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.expired_assignment_behavior_timeout>`
-            /// runs out.
+            ///   runs out.
             #[prost(message, tag = "3")]
             ReuseLastAssignment(ReuseLastAssignment),
         }

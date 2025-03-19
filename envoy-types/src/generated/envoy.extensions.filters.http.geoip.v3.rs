@@ -24,8 +24,8 @@ pub mod geoip {
         ///
         /// The number of additional ingress proxy hops from the right side of the
         /// : ref:`config_http_conn_man_headers_x-forwarded-for` HTTP header to trust when
-        /// determining the origin client's IP address. The default is zero if this option
-        /// is not specified. See the documentation for
+        ///   determining the origin client's IP address. The default is zero if this option
+        ///   is not specified. See the documentation for
         /// : ref:`config_http_conn_man_headers_x-forwarded-for` for more information.
         #[prost(uint32, tag = "1")]
         pub xff_num_trusted_hops: u32,

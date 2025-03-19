@@ -51,8 +51,8 @@ pub mod per_route_config {
         /// Note: this rewrite affects both DNS lookup and host header forwarding. However, this
         /// option shouldn't be used with
         /// : ref:`HCM host rewrite <envoy_v3_api_field_config.route.v3.RouteAction.host_rewrite_literal>` given that the
-        /// value set here would be used for DNS lookups whereas the value set in the HCM would be used
-        /// for host header forwarding which is not the desired outcome.
+        ///   value set here would be used for DNS lookups whereas the value set in the HCM would be used
+        ///   for host header forwarding which is not the desired outcome.
         #[prost(string, tag = "1")]
         HostRewriteLiteral(::prost::alloc::string::String),
         /// Indicates that before DNS lookup, the host header will be swapped with
@@ -63,8 +63,10 @@ pub mod per_route_config {
         /// Note: this rewrite affects both DNS lookup and host header forwarding. However, this
         /// option shouldn't be used with
         /// : ref:`HCM host rewrite header <envoy_v3_api_field_config.route.v3.RouteAction.auto_host_rewrite>`
-        /// given that the value set here would be used for DNS lookups whereas the value set in the HCM
-        /// would be used for host header forwarding which is not the desired outcome.
+        ///   given that the value set here would be used for DNS lookups whereas the value set in the HCM
+        ///   would be used for host header forwarding which is not the desired outcome.
+        ///
+        ///
         /// .. note::
         ///
         /// If the header appears multiple times only the first value is used.

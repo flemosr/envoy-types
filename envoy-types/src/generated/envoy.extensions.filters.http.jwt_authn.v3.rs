@@ -10,7 +10,7 @@
 /// * issuer: the principal that issues the JWT. If specified, it has to match the `iss` field in JWT.
 /// * allowed audiences: the ones in the token have to be listed here.
 /// * how to fetch public key JWKS to verify the token signature.
-/// * how to extract JWT token in the request.
+/// * how to extract the JWT in the request.
 /// * how to pass successfully verified token payload.
 ///
 /// Example:
@@ -135,7 +135,7 @@ pub struct JwtProvider {
     /// Multiple JWTs can be verified for a request. Each JWT has to be extracted from the locations
     /// its provider specified or from the default locations.
     ///
-    /// Specify the HTTP headers to extract JWT token. For examples, following config:
+    /// Specify the HTTP headers to extract the JWT. For examples, following config:
     ///
     /// .. code-block:: yaml
     ///
@@ -237,7 +237,9 @@ pub struct JwtProvider {
     ///
     /// When the metadata has `envoy.filters.http.jwt_authn` entry already (for example if
     /// : ref:`payload_in_metadata <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtProvider.payload_in_metadata>`
-    /// is not empty), it will be inserted as a new entry in the same `namespace` as shown below:
+    ///   is not empty), it will be inserted as a new entry in the same `namespace` as shown below:
+    ///
+    ///
     /// .. code-block:: yaml
     ///
     /// envoy.filters.http.jwt_authn:
@@ -278,7 +280,7 @@ pub struct JwtProvider {
     #[prost(uint32, tag = "10")]
     pub clock_skew_seconds: u32,
     /// Enables JWT cache, its size is specified by `jwt_cache_size`.
-    /// Only valid JWT tokens are cached.
+    /// Only valid JWTs are cached.
     #[prost(message, optional, tag = "12")]
     pub jwt_cache_config: ::core::option::Option<JwtCacheConfig>,
     /// Add JWT claim to HTTP Header
@@ -295,7 +297,7 @@ pub struct JwtProvider {
     /// This header is only reserved for jwt claim; any other value will be overwritten.
     #[prost(message, repeated, tag = "15")]
     pub claim_to_headers: ::prost::alloc::vec::Vec<JwtClaimToHeader>,
-    /// Clears route cache in order to allow JWT token to correctly affect
+    /// Clears route cache in order to allow the JWT to correctly affect
     /// routing decisions. Filter clears all cached routes when:
     ///
     /// 1. The field is set to `true`.
@@ -376,9 +378,14 @@ pub mod jwt_provider {
 /// This message specifies JWT Cache configuration.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct JwtCacheConfig {
-    /// The unit is number of JWT tokens, default to 100.
+    /// The unit is number of JWTs, default to 100.
     #[prost(uint32, tag = "1")]
     pub jwt_cache_size: u32,
+    /// The maximum size of a single cached token in bytes.
+    /// If this field is not set or is set to 0, then the default value 4096 bytes is used.
+    /// The maximum value for a token is inclusive.
+    #[prost(uint32, tag = "2")]
+    pub jwt_max_token_size: u32,
 }
 /// This message specifies how to fetch JWKS from remote and how to cache it.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -468,7 +475,7 @@ pub struct JwksAsyncFetch {
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }
-/// This message specifies a header location to extract JWT token.
+/// This message specifies a header location to extract the JWT.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtHeader {
     /// The HTTP header name.
@@ -580,7 +587,7 @@ pub mod jwt_requirement {
         /// The requirement is always satisfied even if JWT is missing or the JWT
         /// verification fails. A typical usage is: this filter is used to only verify
         /// JWTs and pass the verified JWT payloads to another filter, the other filter
-        /// will make decision. In this mode, all JWT tokens will be verified.
+        /// will make decision. In this mode, all JWTs will be verified.
         #[prost(message, tag = "5")]
         AllowMissingOrFailed(
             super::super::super::super::super::super::super::google::protobuf::Empty,
@@ -671,7 +678,7 @@ pub mod requirement_rule {
         /// Use requirement_name to specify a Jwt requirement.
         /// This requirement_name MUST be specified at the
         /// : ref:`requirement_map <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtAuthentication.requirement_map>`
-        /// in `JwtAuthentication`.
+        ///   in `JwtAuthentication`.
         #[prost(string, tag = "3")]
         RequirementName(::prost::alloc::string::String),
     }
@@ -822,7 +829,7 @@ pub struct JwtAuthentication {
     ///
     /// A map of unique requirement_names to JwtRequirements.
     /// : ref:`requirement_name <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.PerRouteConfig.requirement_name>`
-    /// in `PerRouteConfig` uses this map to specify a JwtRequirement.
+    ///   in `PerRouteConfig` uses this map to specify a JwtRequirement.
     #[prost(map = "string, message", tag = "5")]
     pub requirement_map: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -853,7 +860,7 @@ pub mod per_route_config {
         /// Use requirement_name to specify a JwtRequirement.
         /// This requirement_name MUST be specified at the
         /// : ref:`requirement_map <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtAuthentication.requirement_map>`
-        /// in `JwtAuthentication`. If no, the requests using this route will be rejected with 403.
+        ///   in `JwtAuthentication`. If no, the requests using this route will be rejected with 403.
         #[prost(string, tag = "2")]
         RequirementName(::prost::alloc::string::String),
     }

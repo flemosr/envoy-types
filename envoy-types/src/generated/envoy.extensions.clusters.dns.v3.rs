@@ -30,21 +30,21 @@ pub struct DnsCluster {
     /// or any other DNS resolver types and the related parameters.
     /// For example, an object of
     /// : ref:`CaresDnsResolverConfig<envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
-    /// can be packed into this `typed_dns_resolver_config`. This configuration replaces the
+    ///   can be packed into this `typed_dns_resolver_config`. This configuration replaces the
     /// : ref:`Cluster.typed_dns_resolver_config<envoy_v3_api_field_config.cluster.v3.Cluster.typed_dns_resolver_config>`
-    /// configuration which replaces :ref:`Cluster.dns_resolution_config<envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolution_config>`.
-    /// During the transition period when
+    ///   configuration which replaces :ref:`Cluster.dns_resolution_config<envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolution_config>`.
+    ///   During the transition period when
     /// : ref:`DnsCluster.typed_dns_resolver_config<envoy_v3_api_field_extensions.clusters.dns.v3.DnsCluster.typed_dns_resolver_config>`,
     /// : ref:`Cluster.typed_dns_resolver_config<envoy_v3_api_field_config.cluster.v3.Cluster.typed_dns_resolver_config>`,
-    /// and :ref:`Cluster.dns_resolution_config<envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolution_config>`
-    /// exist, Envoy will use
+    ///   and :ref:`Cluster.dns_resolution_config<envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolution_config>`
+    ///   exist, Envoy will use
     /// : ref:`DnsCluster.typed_dns_resolver_config<envoy_v3_api_field_extensions.clusters.dns.v3.DnsCluster.typed_dns_resolver_config>`
-    /// and ignore
-    /// DNS resolver-related fields in :ref:`Cluster<envoy_v3_api_msg_config.cluster.v3.Cluster>` if the cluster is configured via the
+    ///   and ignore
+    ///   DNS resolver-related fields in :ref:`Cluster<envoy_v3_api_msg_config.cluster.v3.Cluster>` if the cluster is configured via the
     /// : ref:`Cluster.cluster_type<envoy_v3_api_field_config.cluster.v3.Cluster.cluster_type>` extension point with the
     /// : ref:`DnsCluster<envoy_v3_api_msg_extensions.clusters.dns.v3.DnsCluster>` extension type.
-    /// Otherwise, see  :ref:`Cluster.typed_dns_resolver_config<envoy_v3_api_field_config.cluster.v3.Cluster.typed_dns_resolver_config>`.
-    /// \[\#extension-category: envoy.network.dns_resolver\]
+    ///   Otherwise, see  :ref:`Cluster.typed_dns_resolver_config<envoy_v3_api_field_config.cluster.v3.Cluster.typed_dns_resolver_config>`.
+    ///   \[\#extension-category: envoy.network.dns_resolver\]
     #[prost(message, optional, tag = "7")]
     pub typed_dns_resolver_config: ::core::option::Option<
         super::super::super::super::config::core::v3::TypedExtensionConfig,
@@ -79,7 +79,7 @@ pub mod dns_cluster {
         /// Specifies the maximum interval between refreshes. This parameter is optional, but must be
         /// greater than or equal to the
         /// : ref:`base_interval <envoy_v3_api_field_extensions.clusters.dns.v3.DnsCluster.RefreshRate.base_interval>`  if set. The default
-        /// is 10 times the :ref:`base_interval <envoy_v3_api_field_extensions.clusters.dns.v3.DnsCluster.RefreshRate.base_interval>`.
+        ///   is 10 times the :ref:`base_interval <envoy_v3_api_field_extensions.clusters.dns.v3.DnsCluster.RefreshRate.base_interval>`.
         #[prost(message, optional, tag = "2")]
         pub max_interval: ::core::option::Option<
             super::super::super::super::super::super::google::protobuf::Duration,

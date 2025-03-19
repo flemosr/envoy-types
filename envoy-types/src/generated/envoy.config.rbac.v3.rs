@@ -224,8 +224,8 @@ pub struct Policy {
     ///
     /// An optional symbolic expression specifying an access control
     /// : ref:`condition <arch_overview_condition>`. The condition is combined
-    /// with the permissions and the principals as a clause with AND semantics.
-    /// Only be used when checked_condition is not used.
+    ///   with the permissions and the principals as a clause with AND semantics.
+    ///   Only be used when checked_condition is not used.
     #[prost(message, optional, tag = "3")]
     pub condition: ::core::option::Option<
         super::super::super::super::google::api::expr::v1alpha1::Expr,
@@ -415,16 +415,16 @@ pub mod principal {
         /// A CIDR block that describes the downstream remote/origin address.
         /// Note: This is always the physical peer even if the
         /// : ref:`remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` is
-        /// inferred from for example the x-forwarder-for header, proxy protocol,
-        /// etc.
+        ///   inferred from for example the x-forwarder-for header, proxy protocol,
+        ///   etc.
         #[prost(message, tag = "10")]
         DirectRemoteIp(super::super::super::core::v3::CidrRange),
         ///
         /// A CIDR block that describes the downstream remote/origin address.
         /// Note: This may not be the physical peer and could be different from the
         /// : ref:`direct_remote_ip  <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`. E.g, if the
-        /// remote ip is inferred from for example the x-forwarder-for header, proxy
-        /// protocol, etc.
+        ///   remote ip is inferred from for example the x-forwarder-for header, proxy
+        ///   protocol, etc.
         #[prost(message, tag = "11")]
         RemoteIp(super::super::super::core::v3::CidrRange),
         /// A header (or pseudo-header such as :path or :method) on the incoming HTTP

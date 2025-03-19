@@ -39,7 +39,7 @@ pub mod ip_tagging {
         ///
         /// This header will be sanitized based on the config in
         /// : ref:`action <envoy_v3_api_field_extensions.filters.http.ip_tagging.v3.IPTagging.IpTagHeader.action>`
-        /// rather than the defaults for x-envoy prefixed headers.
+        ///   rather than the defaults for x-envoy prefixed headers.
         #[prost(string, tag = "1")]
         pub header: ::prost::alloc::string::String,
         /// Control if the :ref:`header <envoy_v3_api_field_extensions.filters.http.ip_tagging.v3.IPTagging.IpTagHeader.header>`
@@ -73,6 +73,8 @@ pub mod ip_tagging {
             ///
             /// Tags will be appended to the header specified in
             /// : ref:`ip_tag_header <envoy_v3_api_field_extensions.filters.http.ip_tagging.v3.IPTagging.ip_tag_header>`.
+            ///
+            ///
             /// Please note that this could cause the header to retain values set by the http client regardless of whether the request is internal or external.
             AppendIfExistsOrAdd = 1,
         }
@@ -101,9 +103,9 @@ pub mod ip_tagging {
     /// The type of requests the filter should apply to. The supported types
     /// are internal, external or both. The
     /// : ref:`x-forwarded-for<config_http_conn_man_headers_x-forwarded-for_internal_origin>` header is
-    /// used to determine if a request is internal and will result in
+    ///   used to determine if a request is internal and will result in
     /// : ref:`x-envoy-internal<config_http_conn_man_headers_x-envoy-internal>`
-    /// being set. The filter defaults to both, and it will apply to all request types.
+    ///   being set. The filter defaults to both, and it will apply to all request types.
     #[derive(
         Clone,
         Copy,

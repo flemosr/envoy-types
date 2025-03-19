@@ -66,7 +66,9 @@ pub mod rate_limit_descriptor {
         /// Descriptor key.
         #[prost(string, tag = "1")]
         pub key: ::prost::alloc::string::String,
-        /// Descriptor value.
+        /// Descriptor value. Blank value is treated as wildcard to create dynamic token buckets for each unique value.
+        /// Blank Values as wild card is currently supported only with envoy server instance level HTTP local rate limiting
+        /// and will not work if HTTP local rate limiting is enabled per connection level.
         #[prost(string, tag = "2")]
         pub value: ::prost::alloc::string::String,
     }

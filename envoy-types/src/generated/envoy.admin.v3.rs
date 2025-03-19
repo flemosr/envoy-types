@@ -155,12 +155,14 @@ pub struct ClusterStatus {
     /// The success rate threshold used in the last interval.
     /// If
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `false`, all errors: externally and locally generated were used to calculate the threshold.
-    /// If
+    ///   is `false`, all errors: externally and locally generated were used to calculate the threshold.
+    ///   If
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `true`, only externally generated errors were used to calculate the threshold.
-    /// The threshold is used to eject hosts based on their success rate. See
+    ///   is `true`, only externally generated errors were used to calculate the threshold.
+    ///   The threshold is used to eject hosts based on their success rate. See
     /// : ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for details.
+    ///
+    ///
     /// Note: this field may be omitted in any of the three following cases:
     ///
     /// 1. There were not enough hosts with enough request volume to proceed with success rate based
@@ -180,9 +182,11 @@ pub struct ClusterStatus {
     /// taken into account and externally originated errors were treated as success.
     /// This field should be interpreted only when
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `true`. The threshold is used to eject hosts based on their success rate.
-    /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
-    /// details.
+    ///   is `true`. The threshold is used to eject hosts based on their success rate.
+    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
+    ///   details.
+    ///
+    ///
     /// Note: this field may be omitted in any of the three following cases:
     ///
     /// 1. There were not enough hosts with enough request volume to proceed with success rate based
@@ -223,12 +227,14 @@ pub struct HostStatus {
     /// Request success rate for this host over the last calculated interval.
     /// If
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `false`, all errors: externally and locally generated were used in success rate
-    /// calculation. If
+    ///   is `false`, all errors: externally and locally generated were used in success rate
+    ///   calculation. If
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `true`, only externally generated errors were used in success rate calculation.
-    /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
-    /// details.
+    ///   is `true`, only externally generated errors were used in success rate calculation.
+    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
+    ///   details.
+    ///
+    ///
     /// Note: the message will not be present if host did not have enough request volume to calculate
     /// success rate or the cluster did not have enough hosts to run through success rate outlier
     /// ejection.
@@ -249,9 +255,11 @@ pub struct HostStatus {
     /// errors were treated as success.
     /// This field should be interpreted only when
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `true`.
-    /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
-    /// details.
+    ///   is `true`.
+    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
+    ///   details.
+    ///
+    ///
     /// Note: the message will not be present if host did not have enough request volume to calculate
     /// success rate or the cluster did not have enough hosts to run through success rate outlier
     /// ejection.
@@ -359,8 +367,8 @@ pub mod listeners_config_dump {
         ///
         /// This is the per-resource version information. This version is currently taken from the
         /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time
-        /// that the listener was loaded. In the future, discrete per-listener versions may be supported
-        /// by the API.
+        ///   that the listener was loaded. In the future, discrete per-listener versions may be supported
+        ///   by the API.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
         /// The listener config.
@@ -460,8 +468,8 @@ pub mod clusters_config_dump {
         ///
         /// This is the per-resource version information. This version is currently taken from the
         /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time
-        /// that the cluster was loaded. In the future, discrete per-cluster versions may be supported by
-        /// the API.
+        ///   that the cluster was loaded. In the future, discrete per-cluster versions may be supported by
+        ///   the API.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
         /// The cluster config.
@@ -526,7 +534,7 @@ pub mod routes_config_dump {
         ///
         /// This is the per-resource version information. This version is currently taken from the
         /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
-        /// the route configuration was loaded.
+        ///   the route configuration was loaded.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
         /// The route config.
@@ -596,7 +604,7 @@ pub mod scoped_routes_config_dump {
         ///
         /// This is the per-resource version information. This version is currently taken from the
         /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
-        /// the scoped routes configuration was loaded.
+        ///   the scoped routes configuration was loaded.
         #[prost(string, tag = "2")]
         pub version_info: ::prost::alloc::string::String,
         /// The scoped route configurations.
@@ -659,7 +667,7 @@ pub mod endpoints_config_dump {
         ///
         /// \[\#not-implemented-hide:\] This is the per-resource version information. This version is currently taken from the
         /// : ref:`version_info <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>` field at the time that
-        /// the endpoint configuration was loaded.
+        ///   the endpoint configuration was loaded.
         #[prost(string, tag = "1")]
         pub version_info: ::prost::alloc::string::String,
         /// The endpoint config.
@@ -792,6 +800,8 @@ pub struct ConfigDump {
     ///
     /// This list is serialized and dumped in its entirety at the
     /// : ref:`/config_dump <operations_admin_interface_config_dump>` endpoint.
+    ///
+    ///
     /// The following configurations are currently supported and will be dumped in the order given
     /// below:
     ///
@@ -815,7 +825,7 @@ pub struct ConfigDump {
     /// You can filter output with the resource and mask query parameters.
     /// See :ref:`/config_dump?resource={} <operations_admin_interface_config_dump_by_resource>`,
     /// : ref:`/config_dump?mask={} <operations_admin_interface_config_dump_by_mask>`,
-    /// or :ref:`/config_dump?resource={},mask={}  <operations_admin_interface_config_dump_by_resource_and_mask>` for more information.
+    ///   or :ref:`/config_dump?resource={},mask={}  <operations_admin_interface_config_dump_by_resource_and_mask>` for more information.
     #[prost(message, repeated, tag = "1")]
     pub configs: ::prost::alloc::vec::Vec<super::super::super::google::protobuf::Any>,
 }

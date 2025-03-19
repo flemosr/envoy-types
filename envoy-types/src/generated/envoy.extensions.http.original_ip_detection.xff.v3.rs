@@ -8,9 +8,11 @@ pub struct XffConfig {
     ///
     /// The number of additional ingress proxy hops from the right side of the
     /// : ref:`config_http_conn_man_headers_x-forwarded-for` HTTP header to trust when
-    /// determining the origin client's IP address. The default is zero if this option
-    /// is not specified. See the documentation for
+    ///   determining the origin client's IP address. The default is zero if this option
+    ///   is not specified. See the documentation for
     /// : ref:`config_http_conn_man_headers_x-forwarded-for` for more information.
+    ///
+    ///
     /// Only one of `xff_num_trusted_hops` and `xff_trusted_cidrs` can be set.
     #[prost(uint32, tag = "1")]
     pub xff_num_trusted_hops: u32,
@@ -19,12 +21,14 @@ pub struct XffConfig {
     /// evaluating the remote IP address to determine the original client's IP address.
     /// This is used instead of
     /// : ref:`use_remote_address <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.use_remote_address>`.
-    /// When the remote IP address matches a trusted CIDR and the
+    ///   When the remote IP address matches a trusted CIDR and the
     /// : ref:`config_http_conn_man_headers_x-forwarded-for` header was sent, each entry
-    /// in the `x-forwarded-for` header is evaluated from right to left and the first
-    /// public non-trusted address is used as the original client address. If all
-    /// addresses in `x-forwarded-for` are within the trusted list, the first (leftmost)
-    /// entry is used.
+    ///   in the `x-forwarded-for` header is evaluated from right to left and the first
+    ///   public non-trusted address is used as the original client address. If all
+    ///   addresses in `x-forwarded-for` are within the trusted list, the first (leftmost)
+    ///   entry is used.
+    ///
+    ///
     /// This is typically used when requests are proxied by a
     /// `CDN <<https://en.wikipedia.org/wiki/Content_delivery_network>`\_.>
     ///
@@ -34,6 +38,8 @@ pub struct XffConfig {
     ///
     /// If set, Envoy will not append the remote address to the
     /// : ref:`config_http_conn_man_headers_x-forwarded-for` HTTP header.
+    ///
+    ///
     /// .. attention::
     ///
     /// For proper proxy behaviour it is not recommended to set this option.

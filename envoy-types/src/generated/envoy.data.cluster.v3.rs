@@ -77,9 +77,9 @@ pub enum OutlierEjectionType {
     /// In case upstream host returns certain number of consecutive 5xx.
     /// If
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `false`, all type of errors are treated as HTTP 5xx errors.
-    /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
-    /// details.
+    ///   is `false`, all type of errors are treated as HTTP 5xx errors.
+    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
+    ///   details.
     Consecutive5xx = 0,
     /// In case upstream host returns certain number of consecutive gateway errors
     ConsecutiveGatewayFailure = 1,
@@ -89,24 +89,24 @@ pub enum OutlierEjectionType {
     /// in the cluster.
     /// If
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is `false`, all errors (externally and locally generated) are used to calculate success rate
-    /// statistics. See :ref:`Cluster outlier detection <arch_overview_outlier_detection>`
-    /// documentation for details.
+    ///   is `false`, all errors (externally and locally generated) are used to calculate success rate
+    ///   statistics. See :ref:`Cluster outlier detection <arch_overview_outlier_detection>`
+    ///   documentation for details.
     SuccessRate = 2,
     ///
     /// Consecutive local origin failures: Connection failures, resets, timeouts, etc
     /// This type of ejection happens only when
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is set to `true`.
-    /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
+    ///   is set to `true`.
+    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     ConsecutiveLocalOriginFailure = 3,
     ///
     /// Runs over aggregated success rate statistics for local origin failures
     /// for all hosts in the cluster and selects hosts for which success rate deviates from other
     /// hosts in the cluster. This type of ejection happens only when
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    /// is set to `true`.
-    /// See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
+    ///   is set to `true`.
+    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
     SuccessRateLocalOrigin = 4,
     /// Runs over aggregated success rate statistics from every host in cluster and selects hosts for
     /// which ratio of failed replies is above configured value.

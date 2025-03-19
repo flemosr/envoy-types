@@ -16,7 +16,7 @@ pub mod fault_abort {
     ///
     /// Fault aborts are controlled via an HTTP header (if applicable). See the
     /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
-    /// more information.
+    ///   more information.
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct HeaderAbort {}
     #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]

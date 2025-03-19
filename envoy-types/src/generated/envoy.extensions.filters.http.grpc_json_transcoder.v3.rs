@@ -21,7 +21,7 @@ pub struct GrpcJsonTranscoder {
     /// If the list of services is empty, filter is considered disabled.
     /// However, this behavior changes if
     /// : ref:`reject_unknown_method <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.RequestValidationOptions.reject_unknown_method>`
-    /// is enabled.
+    ///   is enabled.
     #[prost(string, repeated, tag = "2")]
     pub services: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Control options for response JSON. These options are passed directly to
@@ -233,8 +233,8 @@ pub mod grpc_json_transcoder {
         ///
         /// By default, a request that cannot be mapped to any specified gRPC
         /// : ref:`services <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.services>`
-        /// will pass-through this filter.
-        /// When set to true, the request will be rejected with a `HTTP 404 Not Found`.
+        ///   will pass-through this filter.
+        ///   When set to true, the request will be rejected with a `HTTP 404 Not Found`.
         #[prost(bool, tag = "1")]
         pub reject_unknown_method: bool,
         /// By default, a request with query parameters that cannot be mapped to the gRPC request message
@@ -245,9 +245,9 @@ pub mod grpc_json_transcoder {
         /// The fields
         /// : ref:`ignore_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignore_unknown_query_parameters>`,
         /// : ref:`capture_unknown_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.capture_unknown_query_parameters>`,
-        /// and
+        ///   and
         /// : ref:`ignored_query_parameters <envoy_v3_api_field_extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.ignored_query_parameters>`
-        /// have priority over this strict validation behavior.
+        ///   have priority over this strict validation behavior.
         #[prost(bool, tag = "2")]
         pub reject_unknown_query_parameters: bool,
         /// "id: 456" in the body will override "id=123" in the binding.
@@ -311,13 +311,13 @@ pub mod grpc_json_transcoder {
         ///
         /// Supplies the filename of
         /// : ref:`the proto descriptor set <config_grpc_json_generate_proto_descriptor_set>` for the gRPC
-        /// services.
+        ///   services.
         #[prost(string, tag = "1")]
         ProtoDescriptor(::prost::alloc::string::String),
         ///
         /// Supplies the binary content of
         /// : ref:`the proto descriptor set <config_grpc_json_generate_proto_descriptor_set>` for the gRPC
-        /// services.
+        ///   services.
         #[prost(bytes, tag = "4")]
         ProtoDescriptorBin(::prost::alloc::vec::Vec<u8>),
     }

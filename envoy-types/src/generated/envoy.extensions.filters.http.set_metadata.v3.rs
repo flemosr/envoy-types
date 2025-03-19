@@ -11,9 +11,9 @@ pub struct Metadata {
     /// The value to place at the namespace. If `allow_overwrite`, this will
     /// overwrite or merge with any existing values in that namespace. See
     /// : ref:`the filter documentation <config_http_filters_set_metadata>` for
-    /// more information on how this value is merged with potentially existing
-    /// ones if `allow_overwrite` is configured. Only one of `value` and
-    /// `typed_value` may be set.
+    ///   more information on how this value is merged with potentially existing
+    ///   ones if `allow_overwrite` is configured. Only one of `value` and
+    ///   `typed_value` may be set.
     #[prost(message, optional, tag = "3")]
     pub value: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Struct,
@@ -36,9 +36,9 @@ pub struct Config {
     ///
     /// The untyped value to update the dynamic metadata namespace with. See
     /// : ref:`the filter documentation <config_http_filters_set_metadata>` for
-    /// more information on how this value is merged with potentially existing
-    /// ones.
-    /// This field is deprecated; please use `metadata` as replacement.
+    ///   more information on how this value is merged with potentially existing
+    ///   ones.
+    ///   This field is deprecated; please use `metadata` as replacement.
     #[deprecated]
     #[prost(message, optional, tag = "2")]
     pub value: ::core::option::Option<

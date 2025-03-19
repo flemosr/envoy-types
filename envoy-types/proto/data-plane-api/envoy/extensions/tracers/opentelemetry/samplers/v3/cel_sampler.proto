@@ -1,0 +1,39 @@
+// Copyright 2025 Envoy Project Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package envoy.extensions.tracers.opentelemetry.samplers.v3;
+
+import "xds/annotations/v3/status.proto";
+import "xds/type/v3/cel.proto";
+
+import "udpa/annotations/status.proto";
+
+option java_package = "io.envoyproxy.envoy.extensions.tracers.opentelemetry.samplers.v3";
+option java_outer_classname = "CelSamplerProto";
+option java_multiple_files = true;
+option go_package = "github.com/envoyproxy/go-control-plane/envoy/extensions/tracers/opentelemetry/samplers/v3;samplersv3";
+option (udpa.annotations.file_status).package_version_status = ACTIVE;
+
+// [#protodoc-title: "CEL" Sampler config]
+// Configuration for the "CEL" Sampler extension.
+//
+// [#extension: envoy.tracers.opentelemetry.samplers.cel]
+
+message CELSamplerConfig {
+  // Expression that, when evaluated, will be used to make sample decision.
+  xds.type.v3.CelExpression expression = 1
+      [(xds.annotations.v3.field_status).work_in_progress = true];
+}

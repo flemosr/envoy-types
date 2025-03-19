@@ -33,7 +33,7 @@ pub struct ScaledTrigger {
     ///
     /// If the resource pressure is greater than this value, the trigger will be in the
     /// : ref:`scaling <arch_overview_overload_manager-triggers-state>` state with value
-    /// `(pressure - scaling_threshold) / (saturation_threshold - scaling_threshold)`.
+    ///   `(pressure - scaling_threshold) / (saturation_threshold - scaling_threshold)`.
     #[prost(double, tag = "1")]
     pub scaling_threshold: f64,
     /// If the resource pressure is greater than this value, the trigger will enter saturation.
@@ -61,7 +61,7 @@ pub mod trigger {
 ///
 /// Typed configuration for the "envoy.overload_actions.reduce_timeouts" action. See
 /// : ref:`the docs <config_overload_manager_reducing_timeouts>` for an example of how to configure
-/// the action with different timeouts and minimum values.
+///   the action with different timeouts and minimum values.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScaleTimersOverloadActionConfig {
     /// A set of timer scaling rules to be applied.

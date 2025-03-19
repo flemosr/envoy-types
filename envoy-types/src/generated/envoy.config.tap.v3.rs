@@ -9,7 +9,7 @@ pub struct TapConfig {
     /// occur, with the result written to the configured output.
     /// Exactly one of :ref:`match <envoy_v3_api_field_config.tap.v3.TapConfig.match>` and
     /// : ref:`match_config <envoy_v3_api_field_config.tap.v3.TapConfig.match_config>` must be set. If both
-    /// are set, the :ref:`match <envoy_v3_api_field_config.tap.v3.TapConfig.match>` will be used.
+    ///   are set, the :ref:`match <envoy_v3_api_field_config.tap.v3.TapConfig.match>` will be used.
     #[deprecated]
     #[prost(message, optional, tag = "1")]
     pub match_config: ::core::option::Option<MatchPredicate>,
@@ -18,7 +18,7 @@ pub struct TapConfig {
     /// occur, with the result written to the configured output.
     /// Exactly one of :ref:`match <envoy_v3_api_field_config.tap.v3.TapConfig.match>` and
     /// : ref:`match_config <envoy_v3_api_field_config.tap.v3.TapConfig.match_config>` must be set. If both
-    /// are set, the :ref:`match <envoy_v3_api_field_config.tap.v3.TapConfig.match>` will be used.
+    ///   are set, the :ref:`match <envoy_v3_api_field_config.tap.v3.TapConfig.match>` will be used.
     #[prost(message, optional, tag = "4")]
     pub r#match: ::core::option::Option<
         super::super::common::matcher::v3::MatchPredicate,

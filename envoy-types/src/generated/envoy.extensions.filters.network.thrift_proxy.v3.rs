@@ -22,8 +22,8 @@ pub struct RouteConfiguration {
     /// is statically defined via the :ref:`route_config  <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.ThriftProxy.route_config>`
     /// option. This setting default to false if the route table is loaded dynamically via the
     /// : ref:`trds  <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.ThriftProxy.trds>`
-    /// option. Users may wish to override the default behavior in certain cases (for example when
-    /// using CDS with a static route table).
+    ///   option. Users may wish to override the default behavior in certain cases (for example when
+    ///   using CDS with a static route table).
     #[prost(message, optional, tag = "3")]
     pub validate_clusters: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
@@ -43,7 +43,9 @@ pub struct RouteMatch {
     ///
     /// Inverts whatever matching is done in the :ref:`method_name  <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.method_name>` or
     /// : ref:`service_name  <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.service_name>` fields.
-    /// Cannot be combined with wildcard matching as that would result in routes never being matched.
+    ///   Cannot be combined with wildcard matching as that would result in routes never being matched.
+    ///
+    ///
     /// .. note::
     ///
     /// This does not invert matching done as part of the :ref:`headers field    <envoy_v3_api_field_extensions.filters.network.thrift_proxy.v3.RouteMatch.headers>` field. To
@@ -291,21 +293,21 @@ pub mod thrift_filter {
 /// ThriftProtocolOptions specifies Thrift upstream protocol options. This object is used in
 /// in
 /// : ref:`typed_extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`,
-/// keyed by the name `envoy.filters.network.thrift_proxy`.
+///   keyed by the name `envoy.filters.network.thrift_proxy`.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct ThriftProtocolOptions {
     ///
     /// Supplies the type of transport that the Thrift proxy should use for upstream connections.
     /// Selecting
     /// : ref:`AUTO_TRANSPORT<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.TransportType.AUTO_TRANSPORT>`,
-    /// which is the default, causes the proxy to use the same transport as the downstream connection.
+    ///   which is the default, causes the proxy to use the same transport as the downstream connection.
     #[prost(enumeration = "TransportType", tag = "1")]
     pub transport: i32,
     ///
     /// Supplies the type of protocol that the Thrift proxy should use for upstream connections.
     /// Selecting
     /// : ref:`AUTO_PROTOCOL<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.AUTO_PROTOCOL>`,
-    /// which is the default, causes the proxy to use the same protocol as the downstream connection.
+    ///   which is the default, causes the proxy to use the same protocol as the downstream connection.
     #[prost(enumeration = "ProtocolType", tag = "2")]
     pub protocol: i32,
 }
