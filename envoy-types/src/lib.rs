@@ -91,7 +91,7 @@ and the compatible versions of [`envoy-types`].
 
 `tonic` | `envoy-types`
 :-      | :-
-v0.12   | [v0.5](https://crates.io/crates/envoy-types/0.5.4)
+v0.12   | [v0.5](https://crates.io/crates/envoy-types/0.5.5)
 v0.11   | [v0.4](https://crates.io/crates/envoy-types/0.4.0)
 v0.10   | [v0.3](https://crates.io/crates/envoy-types/0.3.0)
 v0.9    | [v0.2](https://crates.io/crates/envoy-types/0.2.0)
