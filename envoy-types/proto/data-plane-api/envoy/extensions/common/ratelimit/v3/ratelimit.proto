@@ -1,4 +1,4 @@
-// Copyright 2023 Envoy Project Authors
+// Copyright 2025 Envoy Project Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -117,8 +117,10 @@ message RateLimitDescriptor {
     // Descriptor key.
     string key = 1 [(validate.rules).string = {min_len: 1}];
 
-    // Descriptor value.
-    string value = 2 [(validate.rules).string = {min_len: 1}];
+    // Descriptor value. Blank value is treated as wildcard to create dynamic token buckets for each unique value.
+    // Blank Values as wild card is currently supported only with envoy server instance level HTTP local rate limiting
+    // and will not work if HTTP local rate limiting is enabled per connection level.
+    string value = 2 [(validate.rules).string = {min_len: 0}];
   }
 
   // Override rate limit to apply to this descriptor instead of the limit

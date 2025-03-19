@@ -1,4 +1,4 @@
-// Copyright 2023 Envoy Project Authors
+// Copyright 2025 Envoy Project Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -133,10 +133,10 @@ message Router {
   // for more details.
   bool suppress_grpc_request_failure_code_stats = 7;
 
+  // Optional HTTP filters for the upstream HTTP filter chain.
+  //
   // .. note::
   //   Upstream HTTP filters are currently in alpha.
-  //
-  // Optional HTTP filters for the upstream HTTP filter chain.
   //
   // These filters will be applied for all requests that pass through the router.
   // They will also be applied to shadowed requests.
