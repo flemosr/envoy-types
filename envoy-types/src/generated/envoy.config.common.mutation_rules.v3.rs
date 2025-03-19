@@ -40,7 +40,7 @@ pub struct HeaderMutationRules {
     /// start with `x-envoy` but this may be overridden in the `Bootstrap`
     /// configuration using the
     /// : ref:`header_prefix <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.header_prefix>`
-    /// field. Default is false.
+    ///   field. Default is false.
     #[prost(message, optional, tag = "2")]
     pub allow_envoy: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,

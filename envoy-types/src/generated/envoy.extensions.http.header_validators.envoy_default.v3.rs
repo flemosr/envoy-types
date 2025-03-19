@@ -59,12 +59,12 @@ pub mod header_validator_config {
         /// The default behavior is to normalize the path.
         /// This value may be overridden by the runtime variable
         /// : ref:`http_connection_manager.normalize_path<config_http_conn_man_runtime_normalize_path>`.
-        /// See `Normalization and Comparison <<https://datatracker.ietf.org/doc/html/rfc3986#section-6>`\_>
-        /// for details of normalization.
-        /// Note that Envoy does not perform
-        /// `case normalization <<https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.2.1>`\_>
-        /// URI path normalization can be applied to a portion of requests by setting the
-        /// `envoy_default_header_validator.path_normalization` runtime value.
+        ///   See `Normalization and Comparison <<https://datatracker.ietf.org/doc/html/rfc3986#section-6>`\_>
+        ///   for details of normalization.
+        ///   Note that Envoy does not perform
+        ///   `case normalization <<https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.2.1>`\_>
+        ///   URI path normalization can be applied to a portion of requests by setting the
+        ///   `envoy_default_header_validator.path_normalization` runtime value.
         #[prost(bool, tag = "1")]
         pub skip_path_normalization: bool,
         /// Determines if adjacent slashes in the path are merged into one.
@@ -193,13 +193,13 @@ pub mod header_validator_config {
         /// Reject client request. HTTP/1 requests are rejected with the 400 status. HTTP/2 requests
         /// end with the stream reset. The
         /// : ref:`httpN.requests_rejected_with_underscores_in_headers <config_http_conn_man_stats_per_codec>` counter
-        /// is incremented for each rejected request.
+        ///   is incremented for each rejected request.
         RejectRequest = 1,
         ///
         /// Drop the client header with name containing underscores. The header is dropped before the filter chain is
         /// invoked and as such filters will not see dropped headers. The
         /// : ref:`httpN.dropped_headers_with_underscores <config_http_conn_man_stats_per_codec>` is incremented for
-        /// each dropped header.
+        ///   each dropped header.
         DropHeader = 2,
     }
     impl HeadersWithUnderscoresAction {

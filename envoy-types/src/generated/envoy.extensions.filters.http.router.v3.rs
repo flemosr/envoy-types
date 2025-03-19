@@ -17,7 +17,7 @@ pub struct Router {
     /// .. attention::
     /// This field is deprecated by the
     /// : ref:`spawn_upstream_span <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.spawn_upstream_span>`.
-    /// Please use that `spawn_upstream_span` field to control the span creation.
+    ///   Please use that `spawn_upstream_span` field to control the span creation.
     #[deprecated]
     #[prost(bool, tag = "2")]
     pub start_child_span: bool,
@@ -58,7 +58,7 @@ pub struct Router {
     ///
     /// If not set, ingress Envoy will ignore
     /// : ref:`config_http_filters_router_x-envoy-expected-rq-timeout-ms` header, populated by egress
-    /// Envoy, when deriving timeout for upstream cluster.
+    ///   Envoy, when deriving timeout for upstream cluster.
     #[prost(bool, tag = "6")]
     pub respect_expected_rq_timeout: bool,
     ///
@@ -69,13 +69,13 @@ pub struct Router {
     /// stats filter to define success and failure metrics for gRPC requests
     /// as not all failed gRPC requests charge HTTP status code metrics. See
     /// : ref:`gRPC stats filter<config_http_filters_grpc_stats>` documentation
-    /// for more details.
+    ///   for more details.
     #[prost(bool, tag = "7")]
     pub suppress_grpc_request_failure_code_stats: bool,
+    /// Optional HTTP filters for the upstream HTTP filter chain.
+    ///
     /// .. note::
     /// Upstream HTTP filters are currently in alpha.
-    ///
-    /// Optional HTTP filters for the upstream HTTP filter chain.
     ///
     /// These filters will be applied for all requests that pass through the router.
     /// They will also be applied to shadowed requests.

@@ -55,8 +55,8 @@ pub mod endpoint {
         /// By default, the host header for L7 health checks is controlled by cluster level configuration
         /// (see: :ref:`host <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.host>` and
         /// : ref:`authority <envoy_v3_api_field_config.core.v3.HealthCheck.GrpcHealthCheck.authority>`). Setting this
-        /// to a non-empty value allows overriding the cluster level configuration for a specific
-        /// endpoint.
+        ///   to a non-empty value allows overriding the cluster level configuration for a specific
+        ///   endpoint.
         #[prost(string, tag = "2")]
         pub hostname: ::prost::alloc::string::String,
         /// Optional alternative health check host address.
@@ -92,7 +92,7 @@ pub struct LbEndpoint {
     /// is `canary`, providing the optional canary status of the upstream host.
     /// This may be matched against in a route's
     /// : ref:`RouteAction <envoy_v3_api_msg_config.route.v3.RouteAction>` metadata_match field
-    /// to subset the endpoints considered in cluster load balancing.
+    ///   to subset the endpoints considered in cluster load balancing.
     #[prost(message, optional, tag = "3")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
     /// The optional load balancing weight of the upstream host; at least 1.
@@ -336,8 +336,8 @@ pub mod cluster_load_assignment {
 ///
 /// These are stats Envoy reports to the management server at a frequency defined by
 /// : ref:`LoadStatsResponse.load_reporting_interval<envoy_v3_api_field_service.load_stats.v3.LoadStatsResponse.load_reporting_interval>`.
-/// Stats per upstream region/zone and optionally per subzone.
-/// \[\#next-free-field: 15\]
+///   Stats per upstream region/zone and optionally per subzone.
+///   \[\#next-free-field: 15\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpstreamLocalityStats {
     /// Name of zone, region and optionally endpoint group these metrics were
@@ -481,8 +481,8 @@ pub struct UnnamedEndpointLoadMetricStats {
 ///
 /// Per cluster load stats. Envoy reports these stats a management server in a
 /// : ref:`LoadStatsRequest<envoy_v3_api_msg_service.load_stats.v3.LoadStatsRequest>`
-/// Next ID: 7
-/// \[\#next-free-field: 7\]
+///   Next ID: 7
+///   \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterStats {
     /// The name of the cluster.

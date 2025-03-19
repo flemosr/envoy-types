@@ -36,8 +36,8 @@ pub struct AwsRequestSigning {
     /// Note: this rewrite affects both signing and host header forwarding. However, this
     /// option shouldn't be used with
     /// : ref:`HCM host rewrite <envoy_v3_api_field_config.route.v3.RouteAction.host_rewrite_literal>` given that the
-    /// value set here would be used for signing whereas the value set in the HCM would be used
-    /// for host header forwarding which is not the desired outcome.
+    ///   value set here would be used for signing whereas the value set in the HCM would be used
+    ///   for host header forwarding which is not the desired outcome.
     #[prost(string, tag = "3")]
     pub host_rewrite: ::prost::alloc::string::String,
     /// Instead of buffering the request to calculate the payload hash, use the literal string `UNSIGNED-PAYLOAD`

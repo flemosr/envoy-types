@@ -7,9 +7,9 @@
 ///
 /// This is intended to be used with
 /// : ref:`ExtensionWithMatcher <envoy_v3_api_msg_extensions.common.matching.v3.ExtensionWithMatcher>`
-/// where a match tree is specified that indicates (via
+///   where a match tree is specified that indicates (via
 /// : ref:`ExecuteFilterAction <envoy_v3_api_msg_extensions.filters.http.composite.v3.ExecuteFilterAction>`)
-/// which filter configuration to create and delegate to.
+///   which filter configuration to create and delegate to.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Composite {}
 /// Configuration for an extension configuration discovery service with name.
@@ -47,9 +47,9 @@ pub struct ExecuteFilterAction {
     /// This allows sampling behavior for the configured actions.
     /// For example, if
     /// : ref:`default_value <envoy_v3_api_field_config.core.v3.RuntimeFractionalPercent.default_value>`
-    /// under the `sample_percent` is configured with 30%, a dice roll with that
-    /// probability is done. The underline action will only be executed if the
-    /// dice roll returns positive. Otherwise, the action is skipped.
+    ///   under the `sample_percent` is configured with 30%, a dice roll with that
+    ///   probability is done. The underline action will only be executed if the
+    ///   dice roll returns positive. Otherwise, the action is skipped.
     #[prost(message, optional, tag = "3")]
     pub sample_percent: ::core::option::Option<
         super::super::super::super::super::config::core::v3::RuntimeFractionalPercent,

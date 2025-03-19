@@ -41,6 +41,8 @@ pub struct Rule {
     ///
     /// It's a thrift over http version of
     /// : ref:`field_selector<envoy_v3_api_field_extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata.Rule.field_selector>`.
+    ///
+    ///
     /// See also `payload-to-metadata <<https://www.envoyproxy.io/docs/envoy/latest/configuration/other_protocols/thrift_filters/payload_to_metadata_filter>`\_>
     /// for more reference.
     ///
@@ -62,7 +64,9 @@ pub struct Rule {
     /// The above yaml will match on value of `info.version` in the below thrift schema as input of
     /// : ref:`on_present<envoy_v3_api_field_extensions.filters.http.thrift_to_metadata.v3.Rule.on_present>` or
     /// : ref:`on_missing<envoy_v3_api_field_extensions.filters.http.thrift_to_metadata.v3.Rule.on_missing>`
-    /// while we are processing `foo` method. This rule won't be applied to `bar` method.
+    ///   while we are processing `foo` method. This rule won't be applied to `bar` method.
+    ///
+    ///
     /// .. code-block:: thrift
     ///
     /// ```text
@@ -117,11 +121,11 @@ pub struct ThriftToMetadata {
     ///
     /// Supplies the type of protocol that the Thrift proxy should use. Defaults to
     /// : ref:`AUTO_PROTOCOL<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.AUTO_PROTOCOL>`.
-    /// Note that :ref:`LAX_BINARY<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.LAX_BINARY>`
-    /// is not distinguished by :ref:`AUTO_PROTOCOL<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.AUTO_PROTOCOL>`,
-    /// which is the same with :ref:`thrift_proxy network filter <envoy_v3_api_msg_extensions.filters.network.thrift_proxy.v3.ThriftProxy>`.
-    /// Note that :ref:`TWITTER<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.TWITTER>` is
-    /// not supported due to deprecation in envoy.
+    ///   Note that :ref:`LAX_BINARY<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.LAX_BINARY>`
+    ///   is not distinguished by :ref:`AUTO_PROTOCOL<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.AUTO_PROTOCOL>`,
+    ///   which is the same with :ref:`thrift_proxy network filter <envoy_v3_api_msg_extensions.filters.network.thrift_proxy.v3.ThriftProxy>`.
+    ///   Note that :ref:`TWITTER<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.TWITTER>` is
+    ///   not supported due to deprecation in envoy.
     #[prost(
         enumeration = "super::super::super::network::thrift_proxy::v3::ProtocolType",
         tag = "4"
@@ -158,12 +162,12 @@ pub enum Field {
     ///
     /// The Thrift protocol name, string value. Values are "binary", "binary/non-strict", and "compact", with "(auto)" suffix if
     /// : ref:`protocol <envoy_v3_api_field_extensions.filters.http.thrift_to_metadata.v3.ThriftToMetadata.protocol>`
-    /// is set to :ref:`AUTO_PROTOCOL<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.AUTO_PROTOCOL>`
+    ///   is set to :ref:`AUTO_PROTOCOL<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.ProtocolType.AUTO_PROTOCOL>`
     Protocol = 1,
     ///
     /// The Thrift transport name, string value. Values are "framed", "header", and "unframed", with "(auto)" suffix if
     /// : ref:`transport <envoy_v3_api_field_extensions.filters.http.thrift_to_metadata.v3.ThriftToMetadata.transport>`
-    /// is set to :ref:`AUTO_TRANSPORT<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.TransportType.AUTO_TRANSPORT>`
+    ///   is set to :ref:`AUTO_TRANSPORT<envoy_v3_api_enum_value_extensions.filters.network.thrift_proxy.v3.TransportType.AUTO_TRANSPORT>`
     Transport = 2,
     /// The Thrift message type, singed 16-bit integer value.
     HeaderFlags = 3,

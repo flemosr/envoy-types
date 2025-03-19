@@ -42,7 +42,7 @@ pub struct UdpProxyConfig {
     ///
     /// UDP socket configuration for upstream sockets. The default for
     /// : ref:`prefer_gro <envoy_v3_api_field_config.core.v3.UdpSocketConfig.prefer_gro>` is true for upstream
-    /// sockets as the assumption is datagrams will be received from a single source.
+    ///   sockets as the assumption is datagrams will be received from a single source.
     #[prost(message, optional, tag = "6")]
     pub upstream_socket_config: ::core::option::Option<
         super::super::super::super::super::config::core::v3::UdpSocketConfig,

@@ -8,12 +8,14 @@ pub struct CustomResponse {
     ///
     /// Matcher to match against the original response to select a
     /// : ref:`Custom Response Policy <extension_category_envoy.http.custom_response>`
-    /// that will override the original response. The matching is done by matching
-    /// against :ref:`response header values<extension_category_envoy.matching.http.input>`
-    /// Example:
+    ///   that will override the original response. The matching is done by matching
+    ///   against :ref:`response header values<extension_category_envoy.matching.http.input>`
+    ///   Example:
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: xds.type.matcher.v3.Matcher
+    ///
+    ///
     /// matcher_list:
     /// matchers:
     /// \# Apply a locally stored custom response to any 4xx response.

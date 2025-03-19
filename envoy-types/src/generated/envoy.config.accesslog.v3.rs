@@ -178,19 +178,21 @@ pub struct RuntimeFilter {
     ///
     ///   * Uses the :ref:`x-request-id<config_http_conn_man_headers_x-request-id>` as a consistent sampling pivot.
     ///   *
-    /// When :ref:`x-request-id<config_http_conn_man_headers_x-request-id>` is present, sampling will be consistent
+    ///     When :ref:`x-request-id<config_http_conn_man_headers_x-request-id>` is present, sampling will be consistent
     ///     across multiple hosts based on both the `runtime_key` and
-    /// : ref:`x-request-id<config_http_conn_man_headers_x-request-id>`.
+    ///     : ref:`x-request-id<config_http_conn_man_headers_x-request-id>`.
+    ///
     ///
     ///   * Useful for tracking related requests across a distributed system.
     /// * When set to `true` or :ref:`x-request-id<config_http_conn_man_headers_x-request-id>` is missing:
     ///
     ///   * Sampling decisions are made randomly based only on the `runtime_key`.
     ///   *
-    /// Useful in complex filter configurations (like nested
-    /// : ref:`AndFilter<envoy_v3_api_msg_config.accesslog.v3.AndFilter>`/
-    /// : ref:`OrFilter<envoy_v3_api_msg_config.accesslog.v3.OrFilter>` blocks) where independent probability
-    ///     calculations are desired.
+    ///     Useful in complex filter configurations (like nested
+    ///     : ref:`AndFilter<envoy_v3_api_msg_config.accesslog.v3.AndFilter>`/
+    ///         : ref:`OrFilter<envoy_v3_api_msg_config.accesslog.v3.OrFilter>` blocks) where independent probability
+    ///       calculations are desired.
+    ///
     ///
     ///   * Can be used to implement logging kill switches with predictable probability distributions.
     #[prost(bool, tag = "3")]

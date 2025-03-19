@@ -46,9 +46,9 @@ pub mod custom_tag {
     ///
     /// Metadata type custom tag using
     /// : ref:`MetadataKey <envoy_v3_api_msg_type.metadata.v3.MetadataKey>` to retrieve the protobuf value
-    /// from :ref:`Metadata <envoy_v3_api_msg_config.core.v3.Metadata>`, and populate the tag value with
-    /// `the canonical JSON <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_>
-    /// representation of it.
+    ///   from :ref:`Metadata <envoy_v3_api_msg_config.core.v3.Metadata>`, and populate the tag value with
+    ///   `the canonical JSON <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_>
+    ///   representation of it.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Metadata {
         /// Specify what kind of metadata to obtain tag value from.

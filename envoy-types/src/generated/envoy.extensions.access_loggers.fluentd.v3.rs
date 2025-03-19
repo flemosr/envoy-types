@@ -40,6 +40,8 @@ pub struct FluentdAccessLogConfig {
     ///
     /// .. validated-code-block:: yaml
     /// : type-name: envoy.extensions.access_loggers.fluentd.v3.FluentdAccessLogConfig
+    ///
+    ///
     /// record:
     /// status: "%RESPONSE_CODE%"
     /// message: "%LOCAL_REPLY_BODY%"

@@ -169,7 +169,7 @@ pub struct ExtAuthz {
     ///
     /// Optional labels that will be passed to :ref:`labels<envoy_v3_api_field_service.auth.v3.AttributeContext.Peer.labels>` in
     /// : ref:`destination<envoy_v3_api_field_service.auth.v3.AttributeContext.destination>`.
-    /// The labels will be read from :ref:`metadata<envoy_v3_api_msg_config.core.v3.Node>` with the specified key.
+    ///   The labels will be read from :ref:`metadata<envoy_v3_api_msg_config.core.v3.Node>` with the specified key.
     #[prost(string, tag = "15")]
     pub bootstrap_metadata_labels_key: ::prost::alloc::string::String,
     /// Check request to authorization server will include the client request headers that have a correspondent match
@@ -226,16 +226,18 @@ pub struct ExtAuthz {
     /// not be combined into a single, comma-separated header.
     /// Requests to gRPC services will populate the field
     /// : ref:`header_map<envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.header_map>`.
-    /// Requests to HTTP services will be constructed with the unsanitized header values and preserved
-    /// multi-line headers with the same key.
+    ///   Requests to HTTP services will be constructed with the unsanitized header values and preserved
+    ///   multi-line headers with the same key.
     ///
     /// If this field is set to false, header values will be sanitized, with any non-UTF-8-compliant
     /// bytes replaced with '!'. Headers with the same key will have their values concatenated into a
     /// single comma-separated header value.
     /// Requests to gRPC services will populate the field
     /// : ref:`headers<envoy_v3_api_field_service.auth.v3.AttributeContext.HttpRequest.headers>`.
-    /// Requests to HTTP services will have their header values sanitized and will not preserve
-    /// multi-line headers with the same key.
+    ///   Requests to HTTP services will have their header values sanitized and will not preserve
+    ///   multi-line headers with the same key.
+    ///
+    ///
     /// It's recommended you set this to true unless you already rely on the old behavior. False is the
     /// default only for backwards compatibility.
     #[prost(bool, tag = "23")]
@@ -246,8 +248,10 @@ pub struct ExtAuthz {
     ///
     /// If set to anything, enables header mutation checking against configured rules. Note that
     /// : ref:`HeaderMutationRules <envoy_v3_api_msg_config.common.mutation_rules.v3.HeaderMutationRules>`
-    /// has defaults that change ext_authz behavior. Also note that if this field is set to anything,
-    /// ext_authz can no longer append to :-prefixed headers.
+    ///   has defaults that change ext_authz behavior. Also note that if this field is set to anything,
+    ///   ext_authz can no longer append to :-prefixed headers.
+    ///
+    ///
     /// If empty, header mutation rule checking is completely disabled.
     ///
     /// Regardless of what is configured here, ext_authz cannot remove :-prefixed headers.
@@ -345,16 +349,18 @@ pub struct BufferSettings {
 ///
 /// *On authorization request*, a list of allowed request headers may be supplied. See
 /// : ref:`allowed_headers  <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.AuthorizationRequest.allowed_headers>`
-/// for details. Additional headers metadata may be added to the authorization request. See
+///   for details. Additional headers metadata may be added to the authorization request. See
 /// : ref:`headers_to_add  <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.AuthorizationRequest.headers_to_add>` for
-/// details.
+///   details.
 ///
 /// On authorization response status HTTP 200 OK, the filter will allow traffic to the upstream and
 /// additional headers metadata may be added to the original client request. See
 /// : ref:`allowed_upstream_headers  <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.AuthorizationResponse.allowed_upstream_headers>`
-/// for details. Additionally, the filter may add additional headers to the client's response. See
+///   for details. Additionally, the filter may add additional headers to the client's response. See
 /// : ref:`allowed_client_headers_on_success  <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.AuthorizationResponse.allowed_client_headers_on_success>`
-/// for details.
+///   for details.
+///
+///
 /// On other authorization response statuses, the filter will not allow traffic. Additional headers
 /// metadata as well as body may be added to the client's response. See :ref:`allowed_client_headers  <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.AuthorizationResponse.allowed_client_headers>`
 /// for details.
@@ -462,6 +468,8 @@ pub mod ext_authz_per_route {
     pub enum Override {
         /// Disable the ext auth filter for this particular vhost or route.
         /// If disabled is specified in multiple per-filter-configs, the most specific one will be used.
+        /// If the filter is disabled by default and this is set to false, the filter will be enabled
+        /// for this vhost or route.
         #[prost(bool, tag = "1")]
         Disabled(bool),
         /// Check request settings for this route.
@@ -475,6 +483,8 @@ pub struct CheckSettings {
     ///
     /// Context extensions to set on the CheckRequest's
     /// : ref:`AttributeContext.context_extensions<envoy_v3_api_field_service.auth.v3.AttributeContext.context_extensions>`
+    ///
+    ///
     /// You can use this to provide extra context for the external authorization server on specific
     /// virtual hosts/routes. For example, adding a context extension on the virtual host level can
     /// give the ext-authz server information on what virtual host is used without needing to parse the
@@ -498,17 +508,17 @@ pub struct CheckSettings {
     ///
     /// Please note that only one of *disable_request_body_buffering* or
     /// : ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.CheckSettings.with_request_body>`
-    /// may be specified.
+    ///   may be specified.
     #[prost(bool, tag = "2")]
     pub disable_request_body_buffering: bool,
     ///
     /// Enable or override request body buffering, which is configured using the
     /// : ref:`with_request_body <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.with_request_body>`
-    /// option for a specific route.
+    ///   option for a specific route.
     ///
     /// Please note that only one of `with_request_body` or
     /// : ref:`disable_request_body_buffering <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.CheckSettings.disable_request_body_buffering>`
-    /// may be specified.
+    ///   may be specified.
     #[prost(message, optional, tag = "3")]
     pub with_request_body: ::core::option::Option<BufferSettings>,
 }

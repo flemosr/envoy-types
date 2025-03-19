@@ -44,8 +44,8 @@ pub struct Compressor {
     ///
     /// A compressor library to use for compression. Currently only
     /// : ref:`envoy.compression.gzip.compressor<envoy_v3_api_msg_extensions.compression.gzip.compressor.v3.Gzip>`
-    /// is included in Envoy.
-    /// \[\#extension-category: envoy.compression.compressor\]
+    ///   is included in Envoy.
+    ///   \[\#extension-category: envoy.compression.compressor\]
     #[prost(message, optional, tag = "6")]
     pub compressor_library: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,

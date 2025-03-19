@@ -24,7 +24,9 @@ pub mod config {
         ///
         /// When used for a
         /// : ref:`on_header_present <envoy_v3_api_field_extensions.filters.http.header_to_metadata.v3.Config.Rule.on_header_present>`
-        /// case, if value is non-empty it'll be used instead of the header value. If both are empty, no metadata is added.
+        ///   case, if value is non-empty it'll be used instead of the header value. If both are empty, no metadata is added.
+        ///
+        ///
         /// When used for a :ref:`on_header_missing <envoy_v3_api_field_extensions.filters.http.header_to_metadata.v3.Config.Rule.on_header_missing>`
         /// case, a non-empty value must be provided otherwise no metadata is added.
         #[prost(string, tag = "3")]

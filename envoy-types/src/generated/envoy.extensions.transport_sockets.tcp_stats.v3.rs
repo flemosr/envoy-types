@@ -5,6 +5,8 @@
 ///
 /// The stats are documented :ref:`here <config_listener_stats_tcp>` for listeners and
 /// : ref:`here <config_cluster_manager_cluster_stats_tcp>` for clusters.
+///
+///
 /// This transport socket is currently only supported on Linux.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {

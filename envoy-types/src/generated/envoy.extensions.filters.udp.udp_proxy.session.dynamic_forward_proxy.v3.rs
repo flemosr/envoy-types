@@ -2,10 +2,10 @@
 ///
 /// Configuration for the filter state based dynamic forward proxy filter. See the
 /// : ref:`architecture overview <arch_overview_http_dynamic_forward_proxy>` for
-/// more information. Note this filter must be used in conjunction to another filter that
-/// sets the 'envoy.upstream.dynamic_host' and the 'envoy.upstream.dynamic_port' filter
-/// state keys for the required upstream UDP session.
-/// \[\#extension: envoy.filters.udp.session.dynamic_forward_proxy\]
+///   more information. Note this filter must be used in conjunction to another filter that
+///   sets the 'envoy.upstream.dynamic_host' and the 'envoy.upstream.dynamic_port' filter
+///   state keys for the required upstream UDP session.
+///   \[\#extension: envoy.filters.udp.session.dynamic_forward_proxy\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilterConfig {
     /// The prefix to use when emitting :ref:`statistics <config_udp_session_filters_dynamic_forward_proxy_stats>`.

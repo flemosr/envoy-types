@@ -2,10 +2,10 @@
 ///
 /// Configuration for the SNI-based dynamic forward proxy filter. See the
 /// : ref:`architecture overview <arch_overview_http_dynamic_forward_proxy>` for
-/// more information. Note this filter must be configured along with
+///   more information. Note this filter must be configured along with
 /// : ref:`TLS inspector listener filter <config_listener_filters_tls_inspector>`
-/// to work.
-/// \[\#extension: envoy.filters.network.sni_dynamic_forward_proxy\]
+///   to work.
+///   \[\#extension: envoy.filters.network.sni_dynamic_forward_proxy\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FilterConfig {
     /// The DNS cache configuration that the filter will attach to. Note this

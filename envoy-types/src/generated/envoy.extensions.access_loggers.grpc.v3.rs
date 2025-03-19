@@ -2,8 +2,8 @@
 ///
 /// Configuration for the built-in `envoy.access_loggers.http_grpc`
 /// : ref:`AccessLog <envoy_v3_api_msg_config.accesslog.v3.AccessLog>`. This configuration will
-/// populate :ref:`StreamAccessLogsMessage.http_logs  <envoy_v3_api_field_service.accesslog.v3.StreamAccessLogsMessage.http_logs>`.
-/// \[\#extension: envoy.access_loggers.http_grpc\]
+///   populate :ref:`StreamAccessLogsMessage.http_logs  <envoy_v3_api_field_service.accesslog.v3.StreamAccessLogsMessage.http_logs>`.
+///   \[\#extension: envoy.access_loggers.http_grpc\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpGrpcAccessLogConfig {
     #[prost(message, optional, tag = "1")]

@@ -114,8 +114,8 @@ pub struct Bootstrap {
     /// Note that this records a value for each iteration of the event loop on every thread. This
     /// should normally be minimal overhead, but when using
     /// : ref:`statsd <envoy_v3_api_msg_config.metrics.v3.StatsdSink>`, it will send each observed value
-    /// over the wire individually because the statsd protocol doesn't have any way to represent a
-    /// histogram summary. Be aware that this can be a very large volume of data.
+    ///   over the wire individually because the statsd protocol doesn't have any way to represent a
+    ///   histogram summary. Be aware that this can be a very large volume of data.
     #[prost(bool, tag = "16")]
     pub enable_dispatcher_stats: bool,
     /// Optional string which will be used in lieu of x-envoy in prefixing headers.
@@ -141,9 +141,9 @@ pub struct Bootstrap {
     /// This may be overridden on a per-cluster basis in cds_config,
     /// when :ref:`dns_resolvers <envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolvers>` and
     /// : ref:`use_tcp_for_dns_lookups <envoy_v3_api_field_config.cluster.v3.Cluster.use_tcp_for_dns_lookups>` are
-    /// specified.
-    /// This field is deprecated in favor of `dns_resolution_config`
-    /// which aggregates all of the DNS resolver configuration in a single message.
+    ///   specified.
+    ///   This field is deprecated in favor of `dns_resolution_config`
+    ///   which aggregates all of the DNS resolver configuration in a single message.
     #[deprecated]
     #[prost(bool, tag = "20")]
     pub use_tcp_for_dns_lookups: bool,
@@ -151,8 +151,8 @@ pub struct Bootstrap {
     /// DNS resolution configuration which includes the underlying dns resolver addresses and options.
     /// This may be overridden on a per-cluster basis in cds_config, when
     /// : ref:`dns_resolution_config <envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolution_config>`
-    /// is specified.
-    /// This field is deprecated in favor of
+    ///   is specified.
+    ///   This field is deprecated in favor of
     /// : ref:`typed_dns_resolver_config <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.typed_dns_resolver_config>`.
     #[deprecated]
     #[prost(message, optional, tag = "30")]
@@ -164,13 +164,13 @@ pub struct Bootstrap {
     /// or any other DNS resolver types and the related parameters.
     /// For example, an object of
     /// : ref:`CaresDnsResolverConfig <envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
-    /// can be packed into this `typed_dns_resolver_config`. This configuration replaces the
+    ///   can be packed into this `typed_dns_resolver_config`. This configuration replaces the
     /// : ref:`dns_resolution_config <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.dns_resolution_config>`
-    /// configuration.
-    /// During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
-    /// when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
-    /// When `typed_dns_resolver_config` is missing, the default behavior is in place.
-    /// \[\#extension-category: envoy.network.dns_resolver\]
+    ///   configuration.
+    ///   During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
+    ///   when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
+    ///   When `typed_dns_resolver_config` is missing, the default behavior is in place.
+    ///   \[\#extension-category: envoy.network.dns_resolver\]
     #[prost(message, optional, tag = "31")]
     pub typed_dns_resolver_config: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -220,8 +220,8 @@ pub struct Bootstrap {
     ///
     /// Global map of CertificateProvider instances. These instances are referred to by name in the
     /// : ref:`CommonTlsContext.CertificateProviderInstance.instance_name  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProviderInstance.instance_name>`
-    /// field.
-    /// \[\#not-implemented-hide:\]
+    ///   field.
+    ///   \[\#not-implemented-hide:\]
     #[prost(map = "string, message", tag = "25")]
     pub certificate_provider_instances: ::std::collections::HashMap<
         ::prost::alloc::string::String,
@@ -347,8 +347,8 @@ pub mod bootstrap {
         /// A single :ref:`ADS <config_overview_ads>` source may be optionally
         /// specified. This must have :ref:`api_type  <envoy_v3_api_field_config.core.v3.ApiConfigSource.api_type>` :ref:`GRPC  <envoy_v3_api_enum_value_config.core.v3.ApiConfigSource.ApiType.GRPC>`. Only
         /// : ref:`ConfigSources <envoy_v3_api_msg_config.core.v3.ConfigSource>` that have
-        /// the :ref:`ads <envoy_v3_api_field_config.core.v3.ConfigSource.ads>` field set will be
-        /// streamed on the ADS channel.
+        ///   the :ref:`ads <envoy_v3_api_field_config.core.v3.ConfigSource.ads>` field set will be
+        ///   streamed on the ADS channel.
         #[prost(message, optional, tag = "3")]
         pub ads_config: ::core::option::Option<
             super::super::super::core::v3::ApiConfigSource,
@@ -432,7 +432,7 @@ pub struct Admin {
     /// The path to write the access log for the administration server. If no
     /// access log is desired specify ‘/dev/null’. This is only required if
     /// : ref:`address <envoy_v3_api_field_config.bootstrap.v3.Admin.address>` is set.
-    /// Deprecated in favor of `access_log` which offers more options.
+    ///   Deprecated in favor of `access_log` which offers more options.
     #[deprecated]
     #[prost(string, tag = "1")]
     pub access_log_path: ::prost::alloc::string::String,

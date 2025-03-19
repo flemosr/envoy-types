@@ -207,10 +207,10 @@ pub mod virtual_host_discovery_service_client {
     /// a given RouteConfiguration. If VHDS is configured a virtual host list update will be triggered
     /// during the processing of an HTTP request if a route for the request cannot be resolved. The
     /// : ref:`resource_names_subscribe <envoy_v3_api_field_service.discovery.v3.DeltaDiscoveryRequest.resource_names_subscribe>`
-    /// field contains a list of virtual host names or aliases to track. The contents of an alias would
-    /// be the contents of a `host` or `authority` header used to make an http request. An xDS server
-    /// will match an alias to a virtual host based on the content of :ref:`domains'  <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The `resource_names_unsubscribe` field
-    /// contains a list of virtual host names that have been :ref:`unsubscribed  <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
+    ///  field contains a list of virtual host names or aliases to track. The contents of an alias would
+    ///  be the contents of a `host` or `authority` header used to make an http request. An xDS server
+    ///  will match an alias to a virtual host based on the content of :ref:`domains'  <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The `resource_names_unsubscribe` field
+    ///  contains a list of virtual host names that have been :ref:`unsubscribed  <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
     #[derive(Debug, Clone)]
     pub struct VirtualHostDiscoveryServiceClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -690,10 +690,10 @@ pub mod virtual_host_discovery_service_server {
     /// a given RouteConfiguration. If VHDS is configured a virtual host list update will be triggered
     /// during the processing of an HTTP request if a route for the request cannot be resolved. The
     /// : ref:`resource_names_subscribe <envoy_v3_api_field_service.discovery.v3.DeltaDiscoveryRequest.resource_names_subscribe>`
-    /// field contains a list of virtual host names or aliases to track. The contents of an alias would
-    /// be the contents of a `host` or `authority` header used to make an http request. An xDS server
-    /// will match an alias to a virtual host based on the content of :ref:`domains'  <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The `resource_names_unsubscribe` field
-    /// contains a list of virtual host names that have been :ref:`unsubscribed  <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
+    ///  field contains a list of virtual host names or aliases to track. The contents of an alias would
+    ///  be the contents of a `host` or `authority` header used to make an http request. An xDS server
+    ///  will match an alias to a virtual host based on the content of :ref:`domains'  <envoy_v3_api_field_config.route.v3.VirtualHost.domains>` field. The `resource_names_unsubscribe` field
+    ///  contains a list of virtual host names that have been :ref:`unsubscribed  <xds_protocol_unsubscribe>` from the routing table associated with the RouteConfiguration.
     #[derive(Debug)]
     pub struct VirtualHostDiscoveryServiceServer<T> {
         inner: Arc<T>,
@@ -884,11 +884,11 @@ pub mod scoped_routes_discovery_service_client {
     ///
     /// The Scoped Routes Discovery Service (SRDS) API distributes
     /// : ref:`ScopedRouteConfiguration<envoy_v3_api_msg.ScopedRouteConfiguration>`
-    /// resources. Each ScopedRouteConfiguration resource represents a "routing
-    /// scope" containing a mapping that allows the HTTP connection manager to
-    /// dynamically assign a routing table (specified via a
+    ///  resources. Each ScopedRouteConfiguration resource represents a "routing
+    ///  scope" containing a mapping that allows the HTTP connection manager to
+    ///  dynamically assign a routing table (specified via a
     /// : ref:`RouteConfiguration<envoy_v3_api_msg_config.route.v3.RouteConfiguration>` message) to each
-    /// HTTP request.
+    ///  HTTP request.
     #[derive(Debug, Clone)]
     pub struct ScopedRoutesDiscoveryServiceClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -1125,11 +1125,11 @@ pub mod scoped_routes_discovery_service_server {
     ///
     /// The Scoped Routes Discovery Service (SRDS) API distributes
     /// : ref:`ScopedRouteConfiguration<envoy_v3_api_msg.ScopedRouteConfiguration>`
-    /// resources. Each ScopedRouteConfiguration resource represents a "routing
-    /// scope" containing a mapping that allows the HTTP connection manager to
-    /// dynamically assign a routing table (specified via a
+    ///  resources. Each ScopedRouteConfiguration resource represents a "routing
+    ///  scope" containing a mapping that allows the HTTP connection manager to
+    ///  dynamically assign a routing table (specified via a
     /// : ref:`RouteConfiguration<envoy_v3_api_msg_config.route.v3.RouteConfiguration>` message) to each
-    /// HTTP request.
+    ///  HTTP request.
     #[derive(Debug)]
     pub struct ScopedRoutesDiscoveryServiceServer<T> {
         inner: Arc<T>,

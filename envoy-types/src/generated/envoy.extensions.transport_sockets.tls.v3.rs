@@ -226,10 +226,10 @@ pub struct TlsCertificate {
     /// This can't be marked as `oneof` due to API compatibility reasons. Setting
     /// both :ref:`private_key <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.private_key>`,
     /// : ref:`certificate_chain <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.certificate_chain>`,
-    /// or :ref:`private_key_provider <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.private_key_provider>`
-    /// and :ref:`pkcs12 <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.pkcs12>`
-    /// fields will result in an error. Use :ref:`password  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.password>`
-    /// to specify the password to unprotect the `PKCS12` data, if necessary.
+    ///   or :ref:`private_key_provider <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.private_key_provider>`
+    ///   and :ref:`pkcs12 <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.pkcs12>`
+    ///   fields will result in an error. Use :ref:`password  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.password>`
+    ///   to specify the password to unprotect the `PKCS12` data, if necessary.
     #[prost(message, optional, tag = "8")]
     pub pkcs12: ::core::option::Option<
         super::super::super::super::config::core::v3::DataSource,
@@ -251,9 +251,9 @@ pub struct TlsCertificate {
     /// BoringSSL private key method provider. This is an alternative to :ref:`private_key  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.private_key>` field.
     /// When both :ref:`private_key <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.private_key>` and
     /// : ref:`private_key_provider <envoy_v3_api_field_extensions.transport_sockets.tls.v3.TlsCertificate.private_key_provider>` fields are set,
-    /// `private_key_provider` takes precedence.
-    /// If `private_key_provider` is unavailable and :ref:`fallback  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.PrivateKeyProvider.fallback>`
-    /// is enabled, `private_key` will be used.
+    ///   `private_key_provider` takes precedence.
+    ///   If `private_key_provider` is unavailable and :ref:`fallback  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.PrivateKeyProvider.fallback>`
+    ///   is enabled, `private_key` will be used.
     #[prost(message, optional, tag = "6")]
     pub private_key_provider: ::core::option::Option<PrivateKeyProvider>,
     /// The password to decrypt the TLS private key. If this field is not set, it is assumed that the
@@ -420,7 +420,9 @@ pub struct CertificateValidationContext {
     /// : ref:`verify_certificate_spki  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.verify_certificate_spki>`,
     /// : ref:`verify_certificate_hash  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.verify_certificate_hash>`, or
     /// : ref:`match_typed_subject_alt_names  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.match_typed_subject_alt_names>`) is also
-    /// specified.
+    ///   specified.
+    ///
+    ///
     /// It can optionally contain certificate revocation lists, in which case Envoy will verify
     /// that the presented peer certificate has not been revoked by one of the included CRLs. Note
     /// that if a CRL is provided for any certificate authority in a trust chain, a CRL must be
@@ -495,7 +497,9 @@ pub struct CertificateValidationContext {
     /// When both:
     /// : ref:`verify_certificate_hash  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.verify_certificate_hash>` and
     /// : ref:`verify_certificate_spki  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.verify_certificate_spki>` are specified,
-    /// a hash matching value from either of the lists will result in the certificate being accepted.
+    ///   a hash matching value from either of the lists will result in the certificate being accepted.
+    ///
+    ///
     /// .. attention::
     ///
     /// This option is preferred over :ref:`verify_certificate_hash    <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.verify_certificate_hash>`,
@@ -529,7 +533,7 @@ pub struct CertificateValidationContext {
     /// When both:
     /// : ref:`verify_certificate_hash  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.verify_certificate_hash>` and
     /// : ref:`verify_certificate_spki  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.verify_certificate_spki>` are specified,
-    /// a hash matching value from either of the lists will result in the certificate being accepted.
+    ///   a hash matching value from either of the lists will result in the certificate being accepted.
     #[prost(string, repeated, tag = "2")]
     pub verify_certificate_hash: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
@@ -561,8 +565,8 @@ pub struct CertificateValidationContext {
     ///
     /// This field is deprecated in favor of
     /// : ref:`match_typed_subject_alt_names  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.match_typed_subject_alt_names>`.
-    /// Note that if both this field and :ref:`match_typed_subject_alt_names  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.match_typed_subject_alt_names>`
-    /// are specified, the former (deprecated field) is ignored.
+    ///   Note that if both this field and :ref:`match_typed_subject_alt_names  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.match_typed_subject_alt_names>`
+    ///   are specified, the former (deprecated field) is ignored.
     #[deprecated]
     #[prost(message, repeated, tag = "9")]
     pub match_subject_alt_names: ::prost::alloc::vec::Vec<
@@ -583,7 +587,9 @@ pub struct CertificateValidationContext {
     /// result in verification failure for both revoked and unrevoked certificates
     /// from that chain. This default behavior can be altered by setting
     /// : ref:`only_verify_leaf_cert_crl <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.only_verify_leaf_cert_crl>` to
-    /// true.
+    ///   true.
+    ///
+    ///
     /// If `crl` is a filesystem path, a watch will be added to the parent
     /// directory for any file moves to support rotation. This currently only
     /// applies to dynamic secrets, when the `CertificateValidationContext` is
@@ -673,9 +679,17 @@ pub mod certificate_validation_context {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenericSecret {
-    /// Secret of generic type and is available to filters.
+    /// Secret of generic type and is available to filters. It is expected
+    /// that only only one of secret and secrets is set.
     #[prost(message, optional, tag = "1")]
     pub secret: ::core::option::Option<
+        super::super::super::super::config::core::v3::DataSource,
+    >,
+    /// For cases where multiple associated secrets need to be distributed together. It is expected
+    /// that only only one of secret and secrets is set.
+    #[prost(map = "string, message", tag = "2")]
+    pub secrets: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
         super::super::super::super::config::core::v3::DataSource,
     >,
 }
@@ -733,7 +747,9 @@ pub struct UpstreamTlsContext {
     /// If true, replaces the SNI for the connection with the hostname of the upstream host, if
     /// the hostname is known due to either a DNS cluster type or the
     /// : ref:`hostname <envoy_v3_api_field_config.endpoint.v3.Endpoint.hostname>` is set on
-    /// the host.
+    ///   the host.
+    ///
+    ///
     /// See :ref:`SNI configuration <start_quick_start_securing_sni_client>` for details on how this
     /// interacts with other validation options.
     #[prost(bool, tag = "6")]
@@ -930,7 +946,9 @@ pub struct CommonTlsContext {
     ///
     /// Only a single TLS certificate is supported in client contexts. In server contexts,
     /// : ref:`Multiple TLS certificates <arch_overview_ssl_cert_select>` can be associated with the
-    /// same context to allow both RSA and ECDSA certificates and support SNI-based selection.
+    ///   same context to allow both RSA and ECDSA certificates and support SNI-based selection.
+    ///
+    ///
     /// If `tls_certificate_provider_instance` is set, this field is ignored.
     /// If this field is set, `tls_certificate_sds_secret_configs` is ignored.
     #[prost(message, repeated, tag = "2")]
@@ -981,7 +999,9 @@ pub struct CommonTlsContext {
     /// Supplies the list of ALPN protocols that the listener should expose. In
     /// practice this is likely to be set to one of two values (see the
     /// : ref:`codec_type  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.codec_type>`
-    /// parameter in the HTTP connection manager for more information):
+    ///   parameter in the HTTP connection manager for more information):
+    ///
+    ///
     /// * "h2,http/1.1" If the listener is going to support both HTTP/2 and HTTP/1.1.
     /// * "http/1.1" If the listener is only going to support HTTP/1.1.
     ///
@@ -1141,6 +1161,8 @@ pub mod common_tls_context {
 ///
 /// .. validated-code-block:: yaml
 /// : type-name: envoy.extensions.transport_sockets.tls.v3.CertificateValidationContext
+///
+///
 /// custom_validator_config:
 /// name: envoy.tls.cert_validator.spiffe
 /// typed_config:

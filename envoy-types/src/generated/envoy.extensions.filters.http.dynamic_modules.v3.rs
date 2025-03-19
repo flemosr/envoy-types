@@ -27,6 +27,26 @@ pub struct DynamicModuleFilter {
     /// For example, if a module has two filter implementations, one for logging and one for header manipulation,
     /// filter_name is used to choose either logging or header manipulation. The filter_config can be used to
     /// configure the logging level or the header manipulation behavior.
-    #[prost(string, tag = "3")]
-    pub filter_config: ::prost::alloc::string::String,
+    ///
+    /// `google.protobuf.Struct` is serialized as JSON before
+    /// passing it to the plugin. `google.protobuf.BytesValue` and
+    /// `google.protobuf.StringValue` are passed directly without the wrapper.
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// # Passing in a string
+    ///
+    /// filter_config:
+    /// "@type": "type.googleapis.com/google.protobuf.StringValue"
+    /// value: hello
+    ///
+    /// # Passing in raw bytes
+    ///
+    /// filter_config:
+    /// "@type": "type.googleapis.com/google.protobuf.BytesValue"
+    /// value: aGVsbG8= # echo -n "hello" | base64
+    #[prost(message, optional, tag = "3")]
+    pub filter_config: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Any,
+    >,
 }

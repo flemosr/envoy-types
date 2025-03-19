@@ -71,6 +71,8 @@ pub struct RateLimitResponse {
     /// If quota is not available (i.e., a cached entry doesn't exist for a RLS descriptor set), a RLS request will be triggered.
     /// If the server did not provide a quota, such as the quota message is empty then the request admission is determined by the
     /// : ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
+    ///
+    ///
     /// If there is not sufficient quota and the cached entry exists for a RLS descriptor set is out-of-quota but not expired,
     /// the request will be treated as OVER_LIMIT.
     /// \[\#not-implemented-hide:\]
@@ -226,23 +228,24 @@ pub mod rate_limit_response {
         /// 1. A cached entry exists for a RLS descriptor that is out-of-quota, but not expired.
         ///    In this case, the request will be treated as OVER_LIMIT.
         /// 1.
-        /// Some RLS descriptors have a cached entry that has valid quota but some RLS descriptors
+        ///    Some RLS descriptors have a cached entry that has valid quota but some RLS descriptors
         ///    have no cached entry. This will trigger a new RLS request.
         ///    When the result is returned, a single unit will be consumed from the quota for all
         ///    matching descriptors.
         ///    If the server did not provide a quota, such as the quota message is empty for some of
         ///    the descriptors, then the request admission is determined by the
-        /// : ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
+        ///    : ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
         ///
         ///
         /// 3.
-        /// All RLS descriptors lack a cached entry, this will trigger a new RLS request,
+        ///    All RLS descriptors lack a cached entry, this will trigger a new RLS request,
         ///    When the result is returned, a single unit will be consumed from the quota for all
         ///    matching descriptors.
         ///    If the server did not provide a quota, such as the quota message is empty for some of
         ///    the descriptors, then the request admission is determined by the
-        /// : ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
-        ///    \[\#not-implemented-hide:\]
+        ///    : ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
+        ///      \[\#not-implemented-hide:\]
+        ///
         #[prost(message, optional, tag = "5")]
         pub quota: ::core::option::Option<Quota>,
     }

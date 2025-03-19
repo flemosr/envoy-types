@@ -3,7 +3,9 @@
 /// HttpProtocolOptions specifies Http upstream protocol options. This object
 /// is used in
 /// : ref:`typed_extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`,
-/// keyed by the name `envoy.extensions.upstreams.http.v3.HttpProtocolOptions`.
+///   keyed by the name `envoy.extensions.upstreams.http.v3.HttpProtocolOptions`.
+///
+///
 /// This controls what protocol(s) should be used for upstream and how said protocol(s) are configured.
 ///
 /// This replaces the prior pattern of explicit protocol configuration directly
@@ -53,10 +55,10 @@ pub struct HttpProtocolOptions {
     pub upstream_http_protocol_options: ::core::option::Option<
         super::super::super::super::config::core::v3::UpstreamHttpProtocolOptions,
     >,
+    /// Optional HTTP filters for the upstream HTTP filter chain.
+    ///
     /// .. note::
     /// Upstream HTTP filters are currently in alpha.
-    ///
-    /// Optional HTTP filters for the upstream HTTP filter chain.
     ///
     /// These filters will be applied for all HTTP streams which flow through this
     /// cluster. Unlike downstream HTTP filters, they will *not* be applied to terminated CONNECT requests.

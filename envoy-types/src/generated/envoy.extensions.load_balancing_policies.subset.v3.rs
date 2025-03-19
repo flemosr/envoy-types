@@ -14,10 +14,10 @@ pub struct Subset {
     /// Specifies the default subset of endpoints used during fallback if
     /// fallback_policy is
     /// : ref:`DEFAULT_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.DEFAULT_SUBSET>`.
-    /// Each field in default_subset is
-    /// compared to the matching LbEndpoint.Metadata under the `envoy.lb`
-    /// namespace. It is valid for no hosts to match, in which case the behavior
-    /// is the same as a fallback_policy of
+    ///   Each field in default_subset is
+    ///   compared to the matching LbEndpoint.Metadata under the `envoy.lb`
+    ///   namespace. It is valid for no hosts to match, in which case the behavior
+    ///   is the same as a fallback_policy of
     /// : ref:`NO_FALLBACK<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetFallbackPolicy.NO_FALLBACK>`.
     #[prost(message, optional, tag = "2")]
     pub default_subset: ::core::option::Option<
@@ -112,7 +112,7 @@ pub struct Subset {
     /// Fallback mechanism that allows to try different route metadata until a host is found.
     /// If load balancing process, including all its mechanisms (like
     /// : ref:`fallback_policy<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.subset.fallback_policy>`)
-    /// fails to select a host, this policy decides if and how the process is repeated using another metadata.
+    ///   fails to select a host, this policy decides if and how the process is repeated using another metadata.
     ///
     /// The value defaults to
     /// : ref:`METADATA_NO_FALLBACK  <envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.subset.LbSubsetMetadataFallbackPolicy.METADATA_NO_FALLBACK>`.
@@ -141,7 +141,7 @@ pub mod subset {
         /// When this mode is enabled, configurations that contain more than one host with the same metadata value for the single key in `keys`
         /// will use only one of the hosts with the given key; no requests will be routed to the others. The cluster gauge
         /// : ref:`lb_subsets_single_host_per_subset_duplicate<config_cluster_manager_cluster_stats_subset_lb>` indicates how many duplicates are
-        /// present in the current configuration.
+        ///   present in the current configuration.
         #[prost(bool, tag = "4")]
         pub single_host_per_subset: bool,
         /// The behavior used when no endpoint subset matches the selected route's
@@ -155,12 +155,12 @@ pub mod subset {
         /// Subset of
         /// : ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` used by
         /// : ref:`KEYS_SUBSET<envoy_v3_api_enum_value_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.LbSubsetSelectorFallbackPolicy.KEYS_SUBSET>`
-        /// fallback policy.
-        /// It has to be a non empty list if KEYS_SUBSET fallback policy is selected.
-        /// For any other fallback policy the parameter is not used and should not be set.
-        /// Only values also present in
+        ///   fallback policy.
+        ///   It has to be a non empty list if KEYS_SUBSET fallback policy is selected.
+        ///   For any other fallback policy the parameter is not used and should not be set.
+        ///   Only values also present in
         /// : ref:`keys<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.keys>` are allowed, but
-        /// `fallback_keys_subset` cannot be equal to `keys`.
+        ///   `fallback_keys_subset` cannot be equal to `keys`.
         #[prost(string, repeated, tag = "3")]
         pub fallback_keys_subset: ::prost::alloc::vec::Vec<
             ::prost::alloc::string::String,
@@ -196,8 +196,8 @@ pub mod subset {
             /// If KEYS_SUBSET is selected, subset selector matching is performed again with metadata
             /// keys reduced to
             /// : ref:`fallback_keys_subset<envoy_v3_api_field_extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector.fallback_keys_subset>`.
-            /// It allows for a fallback to a different, less specific selector if some of the keys of
-            /// the selector are considered optional.
+            ///   It allows for a fallback to a different, less specific selector if some of the keys of
+            ///   the selector are considered optional.
             KeysSubset = 4,
         }
         impl LbSubsetSelectorFallbackPolicy {

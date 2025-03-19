@@ -80,8 +80,8 @@ pub struct DnsCacheConfig {
     ///
     /// Disable the DNS refresh on failure. If this field is set to true, it will ignore the
     /// : ref:`typed_dns_resolver_config <envoy_v3_api_field_extensions.common.dynamic_forward_proxy.v3.DnsCacheConfig.dns_failure_refresh_rate>`.
-    /// If not specified, it defaults to false. By enabling this feature, the failed hosts will now be treated as a cache miss,
-    /// allowing the failed hosts to be resolved on demand.
+    ///   If not specified, it defaults to false. By enabling this feature, the failed hosts will now be treated as a cache miss,
+    ///   allowing the failed hosts to be resolved on demand.
     #[prost(bool, tag = "15")]
     pub disable_dns_refresh_on_failure: bool,
     /// If the DNS failure refresh rate is specified,
@@ -115,13 +115,13 @@ pub struct DnsCacheConfig {
     /// or any other DNS resolver types and the related parameters.
     /// For example, an object of
     /// : ref:`CaresDnsResolverConfig <envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
-    /// can be packed into this `typed_dns_resolver_config`. This configuration replaces the
+    ///   can be packed into this `typed_dns_resolver_config`. This configuration replaces the
     /// : ref:`dns_resolution_config <envoy_v3_api_field_extensions.common.dynamic_forward_proxy.v3.DnsCacheConfig.dns_resolution_config>`
-    /// configuration.
-    /// During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
-    /// when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
-    /// When `typed_dns_resolver_config` is missing, the default behavior is in place.
-    /// \[\#extension-category: envoy.network.dns_resolver\]
+    ///   configuration.
+    ///   During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
+    ///   when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
+    ///   When `typed_dns_resolver_config` is missing, the default behavior is in place.
+    ///   \[\#extension-category: envoy.network.dns_resolver\]
     #[prost(message, optional, tag = "12")]
     pub typed_dns_resolver_config: ::core::option::Option<
         super::super::super::super::config::core::v3::TypedExtensionConfig,

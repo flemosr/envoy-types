@@ -31,8 +31,8 @@ pub struct SourceTypeInput {}
 ///
 /// Input that matches by the requested server name (e.g. SNI in TLS).
 /// : ref:`TLS Inspector <config_listener_filters_tls_inspector>` provides the requested server name based on SNI,
-/// when TLS protocol is detected.
-/// \[\#extension: envoy.matching.inputs.server_name\]
+///   when TLS protocol is detected.
+///   \[\#extension: envoy.matching.inputs.server_name\]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct ServerNameInput {}
 /// Input that matches by the transport protocol.
@@ -83,6 +83,8 @@ pub struct FilterStateInput {
 /// Input that matches dynamic metadata by key.
 /// DynamicMetadataInput provides a general interface using `filter` and `path` to retrieve value from
 /// : ref:`Metadata <envoy_v3_api_msg_config.core.v3.Metadata>`.
+///
+///
 /// For example, for the following Metadata:
 ///
 /// .. code-block:: yaml

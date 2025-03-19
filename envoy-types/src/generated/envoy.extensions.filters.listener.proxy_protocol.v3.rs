@@ -30,7 +30,7 @@ pub struct ProxyProtocol {
     ///
     /// If this is configured, you likely also want to set
     /// : ref:`core.v3.ProxyProtocolConfig.pass_through_tlvs <envoy_v3_api_field_config.core.v3.ProxyProtocolConfig.pass_through_tlvs>`,
-    /// which controls pass-through for the upstream.
+    ///   which controls pass-through for the upstream.
     #[prost(message, optional, tag = "3")]
     pub pass_through_tlvs: ::core::option::Option<
         super::super::super::super::super::config::core::v3::ProxyProtocolPassThroughTlVs,

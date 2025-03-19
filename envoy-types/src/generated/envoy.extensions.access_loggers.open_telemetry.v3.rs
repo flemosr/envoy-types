@@ -2,10 +2,10 @@
 ///
 /// Configuration for the built-in `envoy.access_loggers.open_telemetry`
 /// : ref:`AccessLog <envoy_v3_api_msg_config.accesslog.v3.AccessLog>`. This configuration will
-/// populate `opentelemetry.proto.collector.v1.logs.ExportLogsServiceRequest.resource_logs <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/collector/logs/v1/logs_service.proto>`\_.>
-/// In addition, the request start time is set in the dedicated field.
-/// \[\#extension: envoy.access_loggers.open_telemetry\]
-/// \[\#next-free-field: 8\]
+///   populate `opentelemetry.proto.collector.v1.logs.ExportLogsServiceRequest.resource_logs <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/collector/logs/v1/logs_service.proto>`\_.>
+///   In addition, the request start time is set in the dedicated field.
+///   \[\#extension: envoy.access_loggers.open_telemetry\]
+///   \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryAccessLogConfig {
     /// \[\#comment:TODO(itamarkam): add 'filter_state_objects_to_log' to logs.\]

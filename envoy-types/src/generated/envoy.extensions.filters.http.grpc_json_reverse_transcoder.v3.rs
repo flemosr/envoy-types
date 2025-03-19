@@ -7,19 +7,19 @@
 /// for the HTTP backend and the HTTP/JSON response back to gRPC for the gRPC
 /// client. This effectively reverses the behavior of the
 /// : ref:`grpc_json_transcoder filter <config_http_filters_grpc_json_transcoder>`,
-/// allowing a gRPC client to communicate with an HTTP/JSON server.
+///   allowing a gRPC client to communicate with an HTTP/JSON server.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcJsonReverseTranscoder {
     ///
     /// Supplies the filename of
     /// : ref:`the proto descriptor set  <config_grpc_json_reverse_transcoder_generate_proto_descriptor_set>` for the gRPC services.
-    /// If set, takes precedence over the `descriptor_binary` field.
+    ///   If set, takes precedence over the `descriptor_binary` field.
     #[prost(string, tag = "1")]
     pub descriptor_path: ::prost::alloc::string::String,
     ///
     /// Supplies the binary content of
     /// : ref:`the proto descriptor set  <config_grpc_json_reverse_transcoder_generate_proto_descriptor_set>` for the gRPC services.
-    /// If `descriptor_path` is set, this field is not used.
+    ///   If `descriptor_path` is set, this field is not used.
     #[prost(bytes = "vec", tag = "2")]
     pub descriptor_binary: ::prost::alloc::vec::Vec<u8>,
     /// The maximum size of a request body to be transcoded, in bytes. A body exceeding this size will

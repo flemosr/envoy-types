@@ -30,7 +30,7 @@ pub mod data_source_server_preferred_address_config {
         ///
         /// Note: Envoy currently must receive all packets for a QUIC connection on the same port, so unless
         /// : ref:`dnat_address <envoy_v3_api_field_extensions.quic.server_preferred_address.v3.DataSourceServerPreferredAddressConfig.AddressFamilyConfig.dnat_address>`
-        /// is configured, this must be left unset.
+        ///   is configured, this must be left unset.
         #[prost(message, optional, tag = "2")]
         pub port: ::core::option::Option<
             super::super::super::super::super::config::core::v3::DataSource,
@@ -83,8 +83,8 @@ pub mod fixed_server_preferred_address_config {
         ///
         /// Note: Envoy currently must receive all packets for a QUIC connection on the same port, so unless
         /// : ref:`dnat_address <envoy_v3_api_field_extensions.quic.server_preferred_address.v3.FixedServerPreferredAddressConfig.AddressFamilyConfig.dnat_address>`
-        /// is configured, the port for this address must be zero, and the listener's
-        /// port will be used instead.
+        ///   is configured, the port for this address must be zero, and the listener's
+        ///   port will be used instead.
         #[prost(message, optional, tag = "1")]
         pub address: ::core::option::Option<
             super::super::super::super::super::config::core::v3::SocketAddress,
