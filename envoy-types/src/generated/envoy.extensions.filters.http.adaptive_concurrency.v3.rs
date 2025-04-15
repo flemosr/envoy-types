@@ -34,13 +34,19 @@ pub mod gradient_controller_config {
         >,
     }
     /// Parameters controlling the periodic minRTT recalculation.
-    /// \[\#next-free-field: 6\]
+    /// \[\#next-free-field: 7\]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct MinimumRttCalculationParams {
         /// The time interval between recalculating the minimum request round-trip time. Has to be
-        /// positive.
+        /// positive. If set to zero, dynamic sampling of the minRTT is disabled.
         #[prost(message, optional, tag = "1")]
         pub interval: ::core::option::Option<
+            super::super::super::super::super::super::super::google::protobuf::Duration,
+        >,
+        /// The fixed value for the minRTT. This value is used when minRTT is not sampled dynamically.
+        /// If dynamic sampling of the minRTT is disabled, this field must be set.
+        #[prost(message, optional, tag = "6")]
+        pub fixed_value: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
         /// The number of requests to aggregate/sample during the minRTT recalculation window before

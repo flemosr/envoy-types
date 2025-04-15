@@ -130,6 +130,10 @@ pub mod compressor {
         /// ```
         #[prost(bool, tag = "3")]
         pub remove_accept_encoding_header: bool,
+        /// Set of response codes for which compression is disabled, e.g. 206 Partial Content should not
+        /// be compressed.
+        #[prost(uint32, repeated, packed = "false", tag = "4")]
+        pub uncompressible_response_codes: ::prost::alloc::vec::Vec<u32>,
     }
 }
 /// Per-route overrides of `ResponseDirectionConfig`. Anything added here should be optional,

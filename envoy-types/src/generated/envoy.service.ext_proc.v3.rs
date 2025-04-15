@@ -105,9 +105,19 @@ pub mod processing_request {
         ResponseTrailers(super::HttpTrailers),
     }
 }
-/// For every ProcessingRequest received by the server with the `observability_mode` field
-/// set to false, the server must send back exactly one ProcessingResponse message.
-/// \[\#next-free-field: 11\]
+/// This represents the different types of messages the server may send back to Envoy
+/// when the `observability_mode` field in the received ProcessingRequest is set to false.
+///
+/// *
+///   If the corresponding `BodySendMode` in the
+///   : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
+///     is not set to `FULL_DUPLEX_STREAMED`, then for every received ProcessingRequest,
+///     the server must send back exactly one ProcessingResponse message.
+///
+///
+/// * If it is set to `FULL_DUPLEX_STREAMED`, the server must follow the API defined
+///   for this mode to send the ProcessingResponse messages.
+///   \[\#next-free-field: 11\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingResponse {
     /// Optional metadata that will be emitted as dynamic metadata to be consumed by
@@ -490,9 +500,10 @@ pub mod external_processor_client {
     /// 1. The service sends back a ProcessingResponse message that directs Envoy
     ///   to either stop processing, continue without it, or send it the
     ///   next chunk of the message body.
-    /// 1. If so requested, Envoy sends the server chunks of the message body,
-    ///   or the entire body at once. In either case, the server sends back
-    ///   a ProcessingResponse after each message it receives.
+    /// 1. If so requested, Envoy sends the server the message body in chunks,
+    ///   or the entire body at once. In either case, the server may send back
+    ///   a ProcessingResponse for each message it receives, or wait for certain amount
+    ///   of body chunks received before streams back the ProcessingResponse messages.
     /// 1. If so requested, Envoy sends the server the HTTP trailers,
     ///   and the server sends back a ProcessingResponse.
     /// 1. At this point, request processing is done, and we pick up again
@@ -646,9 +657,10 @@ pub mod external_processor_server {
     /// 1. The service sends back a ProcessingResponse message that directs Envoy
     ///   to either stop processing, continue without it, or send it the
     ///   next chunk of the message body.
-    /// 1. If so requested, Envoy sends the server chunks of the message body,
-    ///   or the entire body at once. In either case, the server sends back
-    ///   a ProcessingResponse after each message it receives.
+    /// 1. If so requested, Envoy sends the server the message body in chunks,
+    ///   or the entire body at once. In either case, the server may send back
+    ///   a ProcessingResponse for each message it receives, or wait for certain amount
+    ///   of body chunks received before streams back the ProcessingResponse messages.
     /// 1. If so requested, Envoy sends the server the HTTP trailers,
     ///   and the server sends back a ProcessingResponse.
     /// 1. At this point, request processing is done, and we pick up again

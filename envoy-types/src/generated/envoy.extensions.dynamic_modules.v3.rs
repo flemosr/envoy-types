@@ -15,8 +15,6 @@
 /// this restriction and hopefully provide a wider compatibility guarantee. Until then, Envoy
 /// checks the hash of the ABI header files to ensure that the dynamic modules are built against the
 /// same version of the ABI.
-///
-/// Currently, the implementation is work in progress and not usable.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleConfig {
     /// The name of the dynamic module. The client is expected to have some configuration indicating where to search for the module.

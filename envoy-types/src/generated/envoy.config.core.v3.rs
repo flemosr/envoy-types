@@ -186,7 +186,7 @@ pub mod envoy_internal_address {
         ServerListenerName(::prost::alloc::string::String),
     }
 }
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketAddress {
     #[prost(enumeration = "socket_address::Protocol", tag = "1")]
@@ -215,6 +215,11 @@ pub struct SocketAddress {
     /// IPv6 space as `::FFFF:<IPv4-address>`.
     #[prost(bool, tag = "6")]
     pub ipv4_compat: bool,
+    /// The Linux network namespace to bind the socket to. If this is set, Envoy will
+    /// create the socket in the specified network namespace. Only supported on Linux.
+    /// \[\#not-implemented-hide:\]
+    #[prost(string, tag = "7")]
+    pub network_namespace_filepath: ::prost::alloc::string::String,
     #[prost(oneof = "socket_address::PortSpecifier", tags = "3, 4")]
     pub port_specifier: ::core::option::Option<socket_address::PortSpecifier>,
 }
@@ -3242,7 +3247,7 @@ pub struct GrpcProtocolOptions {
     pub http2_protocol_options: ::core::option::Option<Http2ProtocolOptions>,
 }
 /// A message which allows using HTTP/3.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http3ProtocolOptions {
     #[prost(message, optional, tag = "1")]
@@ -3270,6 +3275,14 @@ pub struct Http3ProtocolOptions {
     /// information.
     #[prost(bool, tag = "6")]
     pub allow_metadata: bool,
+    /// \[\#not-implemented-hide:\] Hiding until Envoy has full HTTP/3 upstream support.
+    /// Still under implementation. DO NOT USE.
+    ///
+    /// Disables QPACK compression related features for HTTP/3 including:
+    /// No huffman encoding, zero dynamic table capacity and no cookie crumbing.
+    /// This can be useful for trading off CPU vs bandwidth when an upstream HTTP/3 connection multiplexes multiple downstream connections.
+    #[prost(bool, tag = "7")]
+    pub disable_qpack: bool,
 }
 /// A message to control transformations to the :scheme header
 #[derive(Clone, PartialEq, ::prost::Message)]

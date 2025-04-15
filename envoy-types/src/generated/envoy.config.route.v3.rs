@@ -540,7 +540,7 @@ pub struct ClusterSpecifierPlugin {
     #[prost(bool, tag = "2")]
     pub is_optional: bool,
 }
-/// \[\#next-free-field: 16\]
+/// \[\#next-free-field: 17\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteMatch {
     /// Indicates that prefix/path matching should be case sensitive. The default
@@ -613,6 +613,14 @@ pub struct RouteMatch {
     #[prost(message, repeated, tag = "13")]
     pub dynamic_metadata: ::prost::alloc::vec::Vec<
         super::super::super::r#type::matcher::v3::MetadataMatcher,
+    >,
+    /// Specifies a set of filter state matchers on which the route should match.
+    /// The router will check the filter state against all the specified filter state matchers.
+    /// If the number of specified filter state matchers is nonzero, they all must match the
+    /// filter state for a match to occur.
+    #[prost(message, repeated, tag = "16")]
+    pub filter_state: ::prost::alloc::vec::Vec<
+        super::super::super::r#type::matcher::v3::FilterStateMatcher,
     >,
     #[prost(oneof = "route_match::PathSpecifier", tags = "1, 2, 10, 12, 14, 15")]
     pub path_specifier: ::core::option::Option<route_match::PathSpecifier>,

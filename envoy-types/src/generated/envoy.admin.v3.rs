@@ -151,24 +151,25 @@ pub struct ClusterStatus {
     /// Denotes whether this cluster was added via API or configured statically.
     #[prost(bool, tag = "2")]
     pub added_via_api: bool,
-    ///
     /// The success rate threshold used in the last interval.
-    /// If
-    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    ///
+    /// * If :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     ///   is `false`, all errors: externally and locally generated were used to calculate the threshold.
-    ///   If
-    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// * If :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     ///   is `true`, only externally generated errors were used to calculate the threshold.
-    ///   The threshold is used to eject hosts based on their success rate. See
-    /// : ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for details.
     ///
     ///
-    /// Note: this field may be omitted in any of the three following cases:
+    /// The threshold is used to eject hosts based on their success rate. For more information, see the
+    /// : ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation.
     ///
-    /// 1. There were not enough hosts with enough request volume to proceed with success rate based
-    ///    outlier ejection.
-    /// 1. The threshold is computed to be \< 0 because a negative value implies that there was no
-    ///    threshold for that interval.
+    ///
+    /// .. note::
+    ///
+    /// This field may be omitted in any of the three following cases:
+    ///
+    /// 1. There were not enough hosts with enough request volume to proceed with success rate based outlier ejection.
+    /// 1. The threshold is computed to be \< 0 because a negative value implies that there was no threshold for that
+    ///    interval.
     /// 1. Outlier detection is not enabled for this cluster.
     #[prost(message, optional, tag = "3")]
     pub success_rate_ejection_threshold: ::core::option::Option<
@@ -183,16 +184,17 @@ pub struct ClusterStatus {
     /// This field should be interpreted only when
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     ///   is `true`. The threshold is used to eject hosts based on their success rate.
-    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
-    ///   details.
     ///
     ///
-    /// Note: this field may be omitted in any of the three following cases:
+    /// For more information, see the :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation.
     ///
-    /// 1. There were not enough hosts with enough request volume to proceed with success rate based
-    ///    outlier ejection.
-    /// 1. The threshold is computed to be \< 0 because a negative value implies that there was no
-    ///    threshold for that interval.
+    /// .. note::
+    ///
+    /// This field may be omitted in any of the three following cases:
+    ///
+    /// 1. There were not enough hosts with enough request volume to proceed with success rate based outlier ejection.
+    /// 1. The threshold is computed to be \< 0 because a negative value implies that there was no threshold for that
+    ///    interval.
     /// 1. Outlier detection is not enabled for this cluster.
     #[prost(message, optional, tag = "5")]
     pub local_origin_success_rate_ejection_threshold: ::core::option::Option<
@@ -223,21 +225,19 @@ pub struct HostStatus {
     /// The host's current health status.
     #[prost(message, optional, tag = "3")]
     pub health_status: ::core::option::Option<HostHealthStatus>,
+    /// The success rate for this host during the last measurement interval.
     ///
-    /// Request success rate for this host over the last calculated interval.
-    /// If
-    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    ///   is `false`, all errors: externally and locally generated were used in success rate
-    ///   calculation. If
-    /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    /// * If :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
+    ///   is `false`, all errors: externally and locally generated were used in success rate calculation.
+    /// * If :ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     ///   is `true`, only externally generated errors were used in success rate calculation.
-    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
-    ///   details.
     ///
+    /// For more information, see the :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation.
     ///
-    /// Note: the message will not be present if host did not have enough request volume to calculate
-    /// success rate or the cluster did not have enough hosts to run through success rate outlier
-    /// ejection.
+    /// .. note::
+    ///
+    /// The message will be missing if the host didn't receive enough traffic to calculate a reliable success rate, or
+    /// if the cluster had too few hosts to apply outlier ejection based on success rate.
     #[prost(message, optional, tag = "4")]
     pub success_rate: ::core::option::Option<super::super::r#type::v3::Percent>,
     /// The host's weight. If not configured, the value defaults to 1.
@@ -249,20 +249,21 @@ pub struct HostStatus {
     /// The host's priority. If not configured, the value defaults to 0 (highest priority).
     #[prost(uint32, tag = "7")]
     pub priority: u32,
+    /// The success rate for this host during the last interval, considering only locally generated errors. Externally
+    /// generated errors are treated as successes.
     ///
-    /// Request success rate for this host over the last calculated
-    /// interval when only locally originated errors are taken into account and externally originated
-    /// errors were treated as success.
-    /// This field should be interpreted only when
+    ///
+    /// This field is only relevant when
     /// : ref:`outlier_detection.split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
-    ///   is `true`.
-    ///   See :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation for
-    ///   details.
+    ///   is set to `true`.
     ///
     ///
-    /// Note: the message will not be present if host did not have enough request volume to calculate
-    /// success rate or the cluster did not have enough hosts to run through success rate outlier
-    /// ejection.
+    /// For more information, see the :ref:`Cluster outlier detection <arch_overview_outlier_detection>` documentation.
+    ///
+    /// .. note::
+    ///
+    /// The message will be missing if the host didn’t receive enough traffic to compute a success rate, or if the
+    /// cluster didn’t have enough hosts to perform outlier ejection based on success rate.
     #[prost(message, optional, tag = "8")]
     pub local_origin_success_rate: ::core::option::Option<
         super::super::r#type::v3::Percent,

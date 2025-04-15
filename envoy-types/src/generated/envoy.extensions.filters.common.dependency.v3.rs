@@ -58,10 +58,10 @@ pub struct FilterDependencies {
     /// A list of dependencies required on the decode path.
     #[prost(message, repeated, tag = "1")]
     pub decode_required: ::prost::alloc::vec::Vec<Dependency>,
-    /// A list of dependencies provided on the encode path.
+    /// A list of dependencies provided on the decode path.
     #[prost(message, repeated, tag = "2")]
     pub decode_provided: ::prost::alloc::vec::Vec<Dependency>,
-    /// A list of dependencies required on the decode path.
+    /// A list of dependencies required on the encode path.
     #[prost(message, repeated, tag = "3")]
     pub encode_required: ::prost::alloc::vec::Vec<Dependency>,
     /// A list of dependencies provided on the encode path.

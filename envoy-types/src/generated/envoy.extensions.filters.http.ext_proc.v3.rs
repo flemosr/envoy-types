@@ -439,7 +439,11 @@ pub struct ExternalProcessor {
     #[prost(message, repeated, tag = "22")]
     pub allowed_override_modes: ::prost::alloc::vec::Vec<ProcessingMode>,
     /// Decorator to introduce custom logic that runs after a message received from
-    /// the External Processor is processed.
+    /// the External Processor is processed, but before continuing filter chain iteration.
+    ///
+    /// .. note::
+    /// Response processors are currently in alpha.
+    ///
     /// \[\#extension-category: envoy.http.ext_proc.response_processors\]
     #[prost(message, optional, tag = "23")]
     pub on_processing_response: ::core::option::Option<

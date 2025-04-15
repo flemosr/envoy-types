@@ -759,7 +759,7 @@ pub struct FilterStateRule {
 ///           - provider_name: provider2
 /// ```
 ///
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtAuthentication {
     /// Map of provider names to JwtProviders.
@@ -840,6 +840,9 @@ pub struct JwtAuthentication {
     /// the response details will be stripped and only a 401 response code will be returned. Default value is false
     #[prost(bool, tag = "6")]
     pub strip_failure_response: bool,
+    /// Optional additional prefix to use when emitting statistics.
+    #[prost(string, tag = "7")]
+    pub stat_prefix: ::prost::alloc::string::String,
 }
 /// Specify per-route config.
 #[derive(Clone, PartialEq, ::prost::Message)]
