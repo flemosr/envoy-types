@@ -8,12 +8,12 @@ through Rust gRPC services.
 """
 edition = "2021"
 homepage = "https://github.com/flemosr/envoy-types"
-keywords = ["rpc", "grpc", "async", "envoy", "extauthz"]
+keywords = ["rpc", "grpc", "async", "envoy", "extauthz", "protobuf"]
 license = "Apache-2.0"
 readme = "../README.md"
 repository = "https://github.com/flemosr/envoy-types"
 rust-version = { workspace = true }
-version = "0.5.6"
+version = "0.6.0"
 
 [dependencies]
 futures-core = "0.3"
