@@ -8,7 +8,7 @@ through Rust gRPC services.
 """
 edition = "2021"
 homepage = "https://github.com/flemosr/envoy-types"
-keywords = ["rpc", "grpc", "async", "envoy", "extauthz", "protobuf"]
+keywords = ["rpc", "grpc", "envoy", "extauthz", "protobuf"]
 license = "Apache-2.0"
 readme = "../README.md"
 repository = "https://github.com/flemosr/envoy-types"
