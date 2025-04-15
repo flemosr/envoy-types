@@ -35,6 +35,9 @@ pub mod locality_lb_config {
         /// failing service.
         #[prost(bool, tag = "3")]
         pub fail_traffic_on_panic: bool,
+        /// If set to true, Envoy will force LocalityDirect routing if a local locality exists.
+        #[prost(bool, tag = "4")]
+        pub force_locality_direct_routing: bool,
     }
     /// Configuration for :ref:`locality weighted load balancing  <arch_overview_load_balancing_locality_weighted_lb>`
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]

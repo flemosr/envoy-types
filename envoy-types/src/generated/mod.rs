@@ -1211,6 +1211,13 @@ pub mod envoy {
                     }
                 }
             }
+            pub mod principals {
+                pub mod mtls_authenticated {
+                    pub mod v3 {
+                        include!("envoy.extensions.rbac.principals.mtls_authenticated.v3.rs");
+                    }
+                }
+            }
         }
         pub mod regex_engines {
             pub mod v3 {
@@ -1306,6 +1313,11 @@ pub mod envoy {
             }
         }
         pub mod tracers {
+            pub mod fluentd {
+                pub mod v3 {
+                    include!("envoy.extensions.tracers.fluentd.v3.rs");
+                }
+            }
             pub mod opentelemetry {
                 pub mod resource_detectors {
                     pub mod v3 {

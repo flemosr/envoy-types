@@ -16,6 +16,13 @@ pub struct CelExpression {
     pub cel_expr_checked: ::core::option::Option<
         super::super::super::cel::expr::CheckedExpr,
     >,
+    /// Unparsed expression in string form. For example, `request.headers\['x-env'\] == 'prod'` will
+    /// get `x-env` header value and compare it with `prod`.
+    /// Check the `Common Expression Language <<https://github.com/google/cel-spec>`\_> for more details.
+    ///
+    /// If set, takes precedence over `cel_expr_parsed` and `cel_expr_checked`.
+    #[prost(string, tag = "5")]
+    pub cel_expr_string: ::prost::alloc::string::String,
     #[prost(oneof = "cel_expression::ExprSpecifier", tags = "1, 2")]
     pub expr_specifier: ::core::option::Option<cel_expression::ExprSpecifier>,
 }

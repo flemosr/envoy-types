@@ -124,15 +124,28 @@ pub mod lb_endpoint {
         EndpointName(::prost::alloc::string::String),
     }
 }
+/// LbEndpoint list collection. Entries are `LbEndpoint` resources or references.
 /// \[\#not-implemented-hide:\]
-/// A configuration for a LEDS collection.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct LbEndpointCollection {
+    #[prost(message, optional, tag = "1")]
+    pub entries: ::core::option::Option<
+        super::super::super::super::xds::core::v3::CollectionEntry,
+    >,
+}
+/// A configuration for an LEDS collection.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LedsClusterLocalityConfig {
     /// Configuration for the source of LEDS updates for a Locality.
     #[prost(message, optional, tag = "1")]
     pub leds_config: ::core::option::Option<super::super::core::v3::ConfigSource>,
-    /// The xDS transport protocol glob collection resource name.
-    /// The service is only supported in delta xDS (incremental) mode.
+    /// The name of the LbEndpoint collection resource.
+    ///
+    /// If the name ends in `/*`, it indicates an LbEndpoint glob collection,
+    /// which is supported only in the xDS incremental protocol variants.
+    /// Otherwise, it indicates an LbEndpointCollection list collection.
+    ///
+    /// Envoy currently supports only glob collections.
     #[prost(string, tag = "2")]
     pub leds_collection_name: ::prost::alloc::string::String,
 }
@@ -149,8 +162,7 @@ pub struct LocalityLbEndpoints {
     #[prost(message, optional, tag = "9")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
     /// The group of endpoints belonging to the locality specified.
-    /// \[\#comment:TODO(adisuissa): Once LEDS is implemented this field needs to be
-    /// deprecated and replaced by `load_balancer_endpoints`.\]
+    /// This is ignored if :ref:`leds_cluster_locality_config  <envoy_v3_api_field_config.endpoint.v3.LocalityLbEndpoints.leds_cluster_locality_config>` is set.
     #[prost(message, repeated, tag = "2")]
     pub lb_endpoints: ::prost::alloc::vec::Vec<LbEndpoint>,
     /// Optional: Per priority/region/zone/sub_zone weight; at least 1. The load
@@ -188,7 +200,6 @@ pub struct LocalityLbEndpoints {
     pub proximity: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// \[\#not-implemented-hide:\]
     #[prost(oneof = "locality_lb_endpoints::LbConfig", tags = "7, 8")]
     pub lb_config: ::core::option::Option<locality_lb_endpoints::LbConfig>,
 }
@@ -201,15 +212,15 @@ pub mod locality_lb_endpoints {
         #[prost(message, repeated, tag = "1")]
         pub lb_endpoints: ::prost::alloc::vec::Vec<super::LbEndpoint>,
     }
-    /// \[\#not-implemented-hide:\]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum LbConfig {
-        /// The group of endpoints belonging to the locality.
-        /// \[\#comment:TODO(adisuissa): Once LEDS is implemented the `lb_endpoints` field
-        /// needs to be deprecated.\]
+        /// \[\#not-implemented-hide:\]
+        /// Not implemented and deprecated.
         #[prost(message, tag = "7")]
         LoadBalancerEndpoints(LbEndpointList),
         /// LEDS Configuration for the current locality.
+        /// If this is set, the :ref:`lb_endpoints  <envoy_v3_api_field_config.endpoint.v3.LocalityLbEndpoints.lb_endpoints>`
+        /// field is ignored.
         #[prost(message, tag = "8")]
         LedsClusterLocalityConfig(super::LedsClusterLocalityConfig),
     }

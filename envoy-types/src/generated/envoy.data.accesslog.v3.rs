@@ -91,8 +91,10 @@ pub struct AccessLogCommon {
     #[prost(double, tag = "1")]
     pub sample_rate: f64,
     /// This field is the remote/origin address on which the request from the user was received.
-    /// Note: This may not be the physical peer. E.g, if the remote address is inferred from for
-    /// example the x-forwarder-for header, proxy protocol, etc.
+    ///
+    /// .. note::
+    /// This may not be the actual peer address. For example, it might be derived from headers like `x-forwarded-for`,
+    /// the proxy protocol, or similar sources.
     #[prost(message, optional, tag = "2")]
     pub downstream_remote_address: ::core::option::Option<
         super::super::super::config::core::v3::Address,
@@ -102,7 +104,7 @@ pub struct AccessLogCommon {
     pub downstream_local_address: ::core::option::Option<
         super::super::super::config::core::v3::Address,
     >,
-    /// If the connection is secure,S this field will contain TLS properties.
+    /// If the connection is secure, this field will contain TLS properties.
     #[prost(message, optional, tag = "4")]
     pub tls_properties: ::core::option::Option<TlsProperties>,
     /// The time that Envoy started servicing this request. This is effectively the time that the first
@@ -118,7 +120,7 @@ pub struct AccessLogCommon {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Interval between the first downstream byte received and the first upstream byte sent. There may
-    /// by considerable delta between `time_to_last_rx_byte` and this value due to filters.
+    /// be considerable delta between `time_to_last_rx_byte` and this value due to filters.
     /// Additionally, the same caveats apply as documented in `time_to_last_downstream_tx_byte` about
     /// not accounting for kernel socket buffer time, etc.
     #[prost(message, optional, tag = "7")]
@@ -196,7 +198,7 @@ pub struct AccessLogCommon {
     /// If upstream connection failed due to transport socket (e.g. TLS handshake), provides the
     /// failure reason from the transport socket. The format of this field depends on the configured
     /// upstream transport socket. Common TLS failures are in
-    /// : ref:`TLS trouble shooting <arch_overview_ssl_trouble_shooting>`.
+    /// : ref:`TLS troubleshooting <arch_overview_ssl_trouble_shooting>`.
     #[prost(string, tag = "18")]
     pub upstream_transport_failure_reason: ::prost::alloc::string::String,
     /// The name of the route
@@ -219,7 +221,7 @@ pub struct AccessLogCommon {
     >,
     ///
     /// A list of custom tags, which annotate logs with additional information.
-    /// To configure this value, users should configure
+    /// To configure this value, see the documentation for
     /// : ref:`custom_tags <envoy_v3_api_field_extensions.access_loggers.grpc.v3.CommonGrpcAccessLogConfig.custom_tags>`.
     #[prost(map = "string, string", tag = "22")]
     pub custom_tags: ::std::collections::HashMap<
@@ -245,42 +247,41 @@ pub struct AccessLogCommon {
     /// This could be any format string that could be used to identify one stream.
     #[prost(string, tag = "26")]
     pub stream_id: ::prost::alloc::string::String,
+    /// Indicates whether this log entry is the final entry (flushed after the stream completed) or an intermediate entry
+    /// (flushed periodically during the stream).
     ///
-    /// If this log entry is final log entry that flushed after the stream completed or
-    /// intermediate log entry that flushed periodically during the stream.
-    /// There may be multiple intermediate log entries and only one final log entry for each
-    /// long-live stream (TCP connection, long-live HTTP2 stream).
-    /// And if it is necessary, unique ID or identifier can be added to the log entry
-    /// : ref:`stream_id <envoy_v3_api_field_data.accesslog.v3.AccessLogCommon.stream_id>` to
-    ///   correlate all these intermediate log entries and final log entry.
+    /// For long-lived streams (e.g., TCP connections or long-lived HTTP/2 streams), there may be multiple intermediate
+    /// entries and only one final entry.
     ///
+    /// If needed, a unique identifier (see :ref:`stream_id <envoy_v3_api_field_data.accesslog.v3.AccessLogCommon.stream_id>`)
+    /// can be used to correlate all intermediate and final log entries for the same stream.
     ///
     /// .. attention::
     ///
-    /// This field is deprecated in favor of `access_log_type` for better indication of the
-    /// type of the access log record.
+    /// This field is deprecated in favor of `access_log_type`, which provides a clearer indication of the log entry
+    /// type.
     #[deprecated]
     #[prost(bool, tag = "27")]
     pub intermediate_log_entry: bool,
     /// If downstream connection in listener failed due to transport socket (e.g. TLS handshake), provides the
     /// failure reason from the transport socket. The format of this field depends on the configured downstream
-    /// transport socket. Common TLS failures are in :ref:`TLS trouble shooting <arch_overview_ssl_trouble_shooting>`.
+    /// transport socket. Common TLS failures are in :ref:`TLS troubleshooting <arch_overview_ssl_trouble_shooting>`.
     #[prost(string, tag = "28")]
     pub downstream_transport_failure_reason: ::prost::alloc::string::String,
     /// For HTTP: Total number of bytes sent to the downstream by the http stream.
-    /// For TCP: Total number of bytes sent to the downstream by the tcp proxy.
+    /// For TCP: Total number of bytes sent to the downstream by the :ref:`TCP Proxy <config_network_filters_tcp_proxy>`.
     #[prost(uint64, tag = "29")]
     pub downstream_wire_bytes_sent: u64,
     /// For HTTP: Total number of bytes received from the downstream by the http stream. Envoy over counts sizes of received HTTP/1.1 pipelined requests by adding up bytes of requests in the pipeline to the one currently being processed.
-    /// For TCP: Total number of bytes received from the downstream by the tcp proxy.
+    /// For TCP: Total number of bytes received from the downstream by the :ref:`TCP Proxy <config_network_filters_tcp_proxy>`.
     #[prost(uint64, tag = "30")]
     pub downstream_wire_bytes_received: u64,
     /// For HTTP: Total number of bytes sent to the upstream by the http stream. This value accumulates during upstream retries.
-    /// For TCP: Total number of bytes sent to the upstream by the tcp proxy.
+    /// For TCP: Total number of bytes sent to the upstream by the :ref:`TCP Proxy <config_network_filters_tcp_proxy>`.
     #[prost(uint64, tag = "31")]
     pub upstream_wire_bytes_sent: u64,
     /// For HTTP: Total number of bytes received from the upstream by the http stream.
-    /// For TCP: Total number of bytes sent to the upstream by the tcp proxy.
+    /// For TCP: Total number of bytes sent to the upstream by the :ref:`TCP Proxy <config_network_filters_tcp_proxy>`.
     #[prost(uint64, tag = "32")]
     pub upstream_wire_bytes_received: u64,
     /// The type of the access log, which indicates when the log was recorded.
@@ -302,7 +303,7 @@ pub struct ResponseFlags {
     /// Indicates there was no healthy upstream.
     #[prost(bool, tag = "2")]
     pub no_healthy_upstream: bool,
-    /// Indicates an there was an upstream request timeout.
+    /// Indicates there was an upstream request timeout.
     #[prost(bool, tag = "3")]
     pub upstream_request_timeout: bool,
     /// Indicates local codec level reset was sent on the stream.
@@ -363,7 +364,7 @@ pub struct ResponseFlags {
     /// Indicates that a filter configuration is not available.
     #[prost(bool, tag = "22")]
     pub no_filter_config_found: bool,
-    /// Indicates that request or connection exceeded the downstream connection duration.
+    /// Indicates that the request or connection exceeded the downstream connection duration.
     #[prost(bool, tag = "23")]
     pub duration_timeout: bool,
     /// Indicates there was an HTTP protocol error in the upstream response.
@@ -588,7 +589,7 @@ pub struct HttpRequestProperties {
     /// do not already have a request ID.
     #[prost(string, tag = "9")]
     pub request_id: ::prost::alloc::string::String,
-    /// Value of the `X-Envoy-Original-Path` request header.
+    /// Value of the `x-envoy-original-path` request header.
     #[prost(string, tag = "10")]
     pub original_path: ::prost::alloc::string::String,
     /// Size of the HTTP request headers in bytes.

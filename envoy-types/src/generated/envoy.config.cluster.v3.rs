@@ -2068,7 +2068,7 @@ pub struct TrackClusterStats {
     #[prost(bool, tag = "1")]
     pub timeout_budgets: bool,
     /// If request_response_sizes is true, then the :ref:`histograms  <config_cluster_manager_cluster_stats_request_response_sizes>`  tracking header and body sizes
-    /// of requests and responses will be published.
+    /// of requests and responses will be published. Additionally, number of headers in the requests and responses will be tracked.
     #[prost(bool, tag = "2")]
     pub request_response_sizes: bool,
     /// If true, some stats will be emitted per-endpoint, similar to the stats in admin `/clusters`

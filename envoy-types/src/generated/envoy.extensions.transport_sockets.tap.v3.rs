@@ -13,4 +13,15 @@ pub struct Tap {
     pub transport_socket: ::core::option::Option<
         super::super::super::super::config::core::v3::TransportSocket,
     >,
+    /// Additional configurations for the transport socket tap
+    #[prost(message, optional, tag = "3")]
+    pub socket_tap_config: ::core::option::Option<SocketTapConfig>,
+}
+/// Additional configurations for the transport socket tap
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct SocketTapConfig {
+    /// Indicates to whether output the connection information per event
+    /// This is only applicable if the streamed trace is enabled
+    #[prost(bool, tag = "1")]
+    pub set_connection_per_event: bool,
 }

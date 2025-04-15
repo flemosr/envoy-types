@@ -4,6 +4,10 @@
 /// "envoy.http.ext_proc.response_processors.save_processing_response\[.:ref:`filter_state_name_suffix  <envoy_v3_api_field_extensions.http.ext_proc.response_processors.save_processing_response.v3.SaveProcessingResponse.filter_state_name>`\].
 /// This extension supports saving of request and response headers and trailers,
 /// and immediate response.
+///
+/// .. note::
+/// Response processors are currently in alpha.
+///
 /// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SaveProcessingResponse {

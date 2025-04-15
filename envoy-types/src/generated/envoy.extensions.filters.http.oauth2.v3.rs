@@ -51,7 +51,7 @@ pub mod cookie_config {
         }
     }
 }
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct CookieConfigs {
     /// Configuration for the bearer token cookie.
@@ -72,6 +72,9 @@ pub struct CookieConfigs {
     /// Configuration for the OAuth nonce cookie.
     #[prost(message, optional, tag = "6")]
     pub oauth_nonce_cookie_config: ::core::option::Option<CookieConfig>,
+    /// Configuration for the code verifier cookie.
+    #[prost(message, optional, tag = "7")]
+    pub code_verifier_cookie_config: ::core::option::Option<CookieConfig>,
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -97,7 +100,7 @@ pub struct OAuth2Credentials {
 }
 /// Nested message and enum types in `OAuth2Credentials`.
 pub mod o_auth2_credentials {
-    /// \[\#next-free-field: 7\]
+    /// \[\#next-free-field: 8\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CookieNames {
         /// Cookie name to hold OAuth bearer token value. When the authentication server validates the
@@ -122,6 +125,9 @@ pub mod o_auth2_credentials {
         /// Cookie name to hold the nonce value. Defaults to `OauthNonce`.
         #[prost(string, tag = "6")]
         pub oauth_nonce: ::prost::alloc::string::String,
+        /// Cookie name to hold the PKCE code verifier. Defaults to `OauthCodeVerifier`.
+        #[prost(string, tag = "7")]
+        pub code_verifier: ::prost::alloc::string::String,
     }
     /// Configures how the secret token should be created.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
@@ -135,7 +141,7 @@ pub mod o_auth2_credentials {
 }
 /// OAuth config
 ///
-/// \[\#next-free-field: 22\]
+/// \[\#next-free-field: 23\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
     /// Endpoint on the authorization server to retrieve the access token from.
@@ -250,6 +256,9 @@ pub struct OAuth2Config {
     /// Controls for attributes that can be set on the cookies.
     #[prost(message, optional, tag = "21")]
     pub cookie_configs: ::core::option::Option<CookieConfigs>,
+    /// Optional additional prefix to use when emitting statistics.
+    #[prost(string, tag = "22")]
+    pub stat_prefix: ::prost::alloc::string::String,
 }
 /// Nested message and enum types in `OAuth2Config`.
 pub mod o_auth2_config {

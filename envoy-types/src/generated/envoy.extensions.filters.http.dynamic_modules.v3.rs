@@ -4,8 +4,6 @@
 ///
 /// A module can be loaded by multiple HTTP filters, hence the program can be structured in a way that
 /// the module is loaded only once and shared across multiple filters providing multiple functionalities.
-///
-/// Currently, the implementation is work in progress and not usable.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleFilter {
     /// Specifies the shared-object level configuration.

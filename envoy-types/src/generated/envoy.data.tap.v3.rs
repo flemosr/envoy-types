@@ -117,6 +117,7 @@ pub mod http_streamed_trace_segment {
     }
 }
 /// Event in a socket trace.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketEvent {
     /// Timestamp for event.
@@ -124,6 +125,9 @@ pub struct SocketEvent {
     pub timestamp: ::core::option::Option<
         super::super::super::super::google::protobuf::Timestamp,
     >,
+    /// Connection information per event
+    #[prost(message, optional, tag = "5")]
+    pub connection: ::core::option::Option<Connection>,
     /// Read or write with content as bytes string.
     #[prost(oneof = "socket_event::EventSelector", tags = "2, 3, 4")]
     pub event_selector: ::core::option::Option<socket_event::EventSelector>,

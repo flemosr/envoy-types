@@ -357,12 +357,12 @@ pub mod permission {
 }
 /// Principal defines an identity or a group of identities for a downstream
 /// subject.
-/// \[\#next-free-field: 14\]
+/// \[\#next-free-field: 15\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Principal {
     #[prost(
         oneof = "principal::Identifier",
-        tags = "1, 2, 3, 4, 5, 10, 11, 6, 9, 7, 12, 8, 13"
+        tags = "1, 2, 3, 4, 5, 10, 11, 6, 9, 7, 12, 8, 13, 14"
     )]
     pub identifier: ::core::option::Option<principal::Identifier>,
 }
@@ -375,12 +375,21 @@ pub mod principal {
         #[prost(message, repeated, tag = "1")]
         pub ids: ::prost::alloc::vec::Vec<super::Principal>,
     }
+    ///
     /// Authentication attributes for a downstream.
+    /// It is recommended to NOT use this type, but instead use
+    /// : ref:`MTlsAuthenticated <envoy_v3_api_msg_extensions.rbac.principals.mtls_authenticated.v3.Config>`,
+    ///   configured via :ref:`custom <envoy_v3_api_field_config.rbac.v3.Principal.custom>`,
+    ///   which should be used for most use cases due to its improved security.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Authenticated {
         /// The name of the principal. If set, The URI SAN or DNS SAN in that order
         /// is used from the certificate, otherwise the subject field is used. If
-        /// unset, it applies to any user that is authenticated.
+        /// unset, it applies to any user that is allowed by the downstream TLS configuration.
+        /// If :ref:`require_client_certificate <envoy_v3_api_field_extensions.transport_sockets.tls.v3.DownstreamTlsContext.require_client_certificate>`
+        /// is false or :ref:`trust_chain_verification <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.trust_chain_verification>`
+        /// is set to :ref:`ACCEPT_UNTRUSTED <envoy_v3_api_enum_value_extensions.transport_sockets.tls.v3.CertificateValidationContext.TrustChainVerification.ACCEPT_UNTRUSTED>`,
+        /// then no authentication is required.
         #[prost(message, optional, tag = "2")]
         pub principal_name: ::core::option::Option<
             super::super::super::super::r#type::matcher::v3::StringMatcher,
@@ -399,7 +408,12 @@ pub mod principal {
         /// When any is set, it matches any downstream.
         #[prost(bool, tag = "3")]
         Any(bool),
+        ///
         /// Authenticated attributes that identify the downstream.
+        /// It is recommended to NOT use this field, but instead use
+        /// : ref:`MTlsAuthenticated <envoy_v3_api_msg_extensions.rbac.principals.mtls_authenticated.v3.Config>`,
+        ///   configured via :ref:`custom <envoy_v3_api_field_config.rbac.v3.Principal.custom>`,
+        ///   which should be used for most use cases due to its improved security.
         #[prost(message, tag = "4")]
         Authenticated(Authenticated),
         /// A CIDR block that describes the downstream IP.
@@ -453,6 +467,10 @@ pub mod principal {
         /// `metadata` field as it provides more flexibility in metadata source selection.
         #[prost(message, tag = "13")]
         SourcedMetadata(super::SourcedMetadata),
+        /// Extension for configuring custom principals for RBAC.
+        /// \[\#extension-category: envoy.rbac.principals\]
+        #[prost(message, tag = "14")]
+        Custom(super::super::super::core::v3::TypedExtensionConfig),
     }
 }
 /// Action defines the result of allowance or denial when a request matches the matcher.
