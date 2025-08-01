@@ -15,7 +15,7 @@
 /// Set `typed_filter_metadata` in :ref:`LbEndpoint.Metadata <envoy_v3_api_field_config.endpoint.v3.lbendpoint.metadata>` or :ref:`LocalityLbEndpoints.Metadata <envoy_v3_api_field_config.endpoint.v3.LocalityLbEndpoints.metadata>`.
 /// using the key `envoy.http11_proxy_transport_socket.proxy_address` and the
 /// proxy address in `config::core::v3::Address` format.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Http11ProxyUpstreamTransport {
     /// The underlying transport socket being wrapped. Defaults to plaintext (raw_buffer) if unset.
     #[prost(message, optional, tag = "1")]

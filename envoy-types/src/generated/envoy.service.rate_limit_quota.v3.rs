@@ -95,7 +95,7 @@ pub mod rate_limit_quota_response {
         ///   assignment, the data plane should extend the duration of the `active` assignment
         ///   for the duration of the new assignment provided in the :ref:`assignment_time_to_live <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction.assignment_time_to_live>`
         ///   field. The `active` assignment is considered unchanged.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct QuotaAssignmentAction {
             /// A duration after which the assignment is be considered `expired`. The process of the
             /// expiration is described :ref:`above  <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`.
@@ -152,9 +152,9 @@ pub mod rate_limit_quota_response {
         ///
         /// 1. Once the new assignment is received, it's applied per
         ///    "Applying the first assignment to the bucket" section of the :ref:`QuotaAssignmentAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct AbandonAction {}
-        #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum BucketAction {
             /// Apply the quota assignment to the bucket.
             ///
@@ -220,6 +220,17 @@ pub mod rate_limit_quota_service_client {
     #[derive(Debug, Clone)]
     pub struct RateLimitQuotaServiceClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl RateLimitQuotaServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> RateLimitQuotaServiceClient<T>
     where
@@ -305,7 +316,7 @@ pub mod rate_limit_quota_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.rate_limit_quota.v3.RateLimitQuotaService/StreamRateLimitQuotas",
             );
@@ -467,7 +478,7 @@ pub mod rate_limit_quota_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StreamRateLimitQuotasSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

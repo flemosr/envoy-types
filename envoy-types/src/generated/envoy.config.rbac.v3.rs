@@ -96,7 +96,7 @@ pub mod rbac {
     /// Nested message and enum types in `AuditLoggingOptions`.
     pub mod audit_logging_options {
         /// \[\#not-implemented-hide:\]
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct AuditLoggerConfig {
             /// Typed logger configuration.
             ///
@@ -382,7 +382,7 @@ pub mod principal {
     /// : ref:`MTlsAuthenticated <envoy_v3_api_msg_extensions.rbac.principals.mtls_authenticated.v3.Config>`,
     ///   configured via :ref:`custom <envoy_v3_api_field_config.rbac.v3.Principal.custom>`,
     ///   which should be used for most use cases due to its improved security.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Authenticated {
         /// The name of the principal. If set, The URI SAN or DNS SAN in that order
         /// is used from the certificate, otherwise the subject field is used. If
@@ -478,7 +478,7 @@ pub mod principal {
     }
 }
 /// Action defines the result of allowance or denial when a request matches the matcher.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Action {
     /// The name indicates the policy name.
     #[prost(string, tag = "1")]

@@ -12,5 +12,5 @@
 ///   version with the target host's address IP version will be used as bind address.
 ///   If there is no same IP version address found, the address in the `source_address` field will
 ///   be returned.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DefaultLocalAddressSelector {}

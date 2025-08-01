@@ -28,7 +28,7 @@ pub struct HealthCheckEvent {
 }
 /// Nested message and enum types in `HealthCheckEvent`.
 pub mod health_check_event {
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Event {
         /// Host ejection.
         #[prost(message, tag = "4")]
@@ -53,13 +53,13 @@ pub mod health_check_event {
         NoLongerDegradedHost(super::NoLongerDegradedHost),
     }
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckEjectUnhealthy {
     /// The type of failure that caused this ejection.
     #[prost(enumeration = "HealthCheckFailureType", tag = "1")]
     pub failure_type: i32,
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckAddHealthy {
     /// Whether this addition is the result of the first ever health check on a host, in which case
     /// the configured :ref:`healthy threshold <envoy_v3_api_field_config.core.v3.HealthCheck.healthy_threshold>`
@@ -67,9 +67,9 @@ pub struct HealthCheckAddHealthy {
     #[prost(bool, tag = "1")]
     pub first_check: bool,
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckSuccessful {}
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckFailure {
     /// The type of failure that caused this event.
     #[prost(enumeration = "HealthCheckFailureType", tag = "1")]
@@ -78,9 +78,9 @@ pub struct HealthCheckFailure {
     #[prost(bool, tag = "2")]
     pub first_check: bool,
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DegradedHealthyHost {}
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct NoLongerDegradedHost {}
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

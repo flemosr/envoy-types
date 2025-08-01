@@ -92,7 +92,7 @@ pub struct LuaPerRoute {
 }
 /// Nested message and enum types in `LuaPerRoute`.
 pub mod lua_per_route {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Override {
         /// Disable the Lua filter for this particular vhost or route. If disabled is specified in
         /// multiple per-filter-configs, the most specific one will be used.

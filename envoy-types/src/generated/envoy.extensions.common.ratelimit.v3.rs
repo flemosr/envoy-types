@@ -61,7 +61,7 @@ pub struct RateLimitDescriptor {
 }
 /// Nested message and enum types in `RateLimitDescriptor`.
 pub mod rate_limit_descriptor {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Entry {
         /// Descriptor key.
         #[prost(string, tag = "1")]
@@ -74,7 +74,7 @@ pub mod rate_limit_descriptor {
     }
     /// Override rate limit to apply to this descriptor instead of the limit
     /// configured in the rate limit service. See :ref:`rate limit override  <config_http_filters_rate_limit_rate_limit_override>` for more information.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RateLimitOverride {
         /// The number of requests per unit of time.
         #[prost(uint32, tag = "1")]
@@ -112,7 +112,7 @@ pub struct LocalRateLimitDescriptor {
 ///
 /// See :ref:`local cluster name  <envoy_v3_api_field_config.bootstrap.v3.ClusterManager.local_cluster_name>` for more context
 /// about local cluster.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LocalClusterRateLimit {}
 /// Defines the version of the standard to use for X-RateLimit headers.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

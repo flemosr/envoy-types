@@ -4,7 +4,7 @@
 ///
 /// A module can be loaded by multiple HTTP filters, hence the program can be structured in a way that
 /// the module is loaded only once and shared across multiple filters providing multiple functionalities.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DynamicModuleFilter {
     /// Specifies the shared-object level configuration.
     #[prost(message, optional, tag = "1")]
@@ -50,7 +50,7 @@ pub struct DynamicModuleFilter {
 }
 /// Configuration of the HTTP per-route filter for dynamic modules. This filter allows loading shared object files
 /// that can be loaded via dlopen by the HTTP filter.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DynamicModuleFilterPerRoute {
     /// Specifies the shared-object level configuration.
     #[prost(message, optional, tag = "1")]

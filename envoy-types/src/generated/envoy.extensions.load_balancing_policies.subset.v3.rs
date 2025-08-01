@@ -127,7 +127,7 @@ pub struct Subset {
 /// Nested message and enum types in `Subset`.
 pub mod subset {
     /// Specifications for subsets.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct LbSubsetSelector {
         /// List of keys to match with the weighted cluster metadata.
         #[prost(string, repeated, tag = "1")]

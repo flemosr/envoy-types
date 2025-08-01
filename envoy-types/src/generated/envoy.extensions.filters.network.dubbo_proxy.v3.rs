@@ -98,7 +98,7 @@ pub struct MethodMatch {
 /// Nested message and enum types in `MethodMatch`.
 pub mod method_match {
     /// The parameter matching type.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ParameterMatchSpecifier {
         #[prost(
             oneof = "parameter_match_specifier::ParameterMatchSpecifier",
@@ -110,7 +110,7 @@ pub mod method_match {
     }
     /// Nested message and enum types in `ParameterMatchSpecifier`.
     pub mod parameter_match_specifier {
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ParameterMatchSpecifier {
             /// If specified, header match will be performed based on the value of the header.
             #[prost(string, tag = "3")]
@@ -197,7 +197,7 @@ pub mod dubbo_proxy {
     }
 }
 /// DubboFilter configures a Dubbo filter.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DubboFilter {
     /// The name of the filter to instantiate. The name must match a supported
     /// filter.

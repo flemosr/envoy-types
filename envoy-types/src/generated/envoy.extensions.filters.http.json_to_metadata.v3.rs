@@ -49,14 +49,14 @@ pub mod json_to_metadata {
             ),
         }
     }
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Selector {
         #[prost(oneof = "selector::Selector", tags = "1")]
         pub selector: ::core::option::Option<selector::Selector>,
     }
     /// Nested message and enum types in `Selector`.
     pub mod selector {
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum Selector {
             /// key to match
             #[prost(string, tag = "1")]

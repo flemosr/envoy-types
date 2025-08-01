@@ -48,7 +48,7 @@ pub struct CertificateDetails {
 }
 /// Nested message and enum types in `CertificateDetails`.
 pub mod certificate_details {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct OcspDetails {
         /// Indicates the time from which the OCSP response is valid.
         #[prost(message, optional, tag = "1")]
@@ -62,7 +62,7 @@ pub mod certificate_details {
         >,
     }
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SubjectAlternateName {
     /// Subject Alternate Name.
     #[prost(oneof = "subject_alternate_name::Name", tags = "1, 2, 3")]
@@ -71,7 +71,7 @@ pub struct SubjectAlternateName {
 /// Nested message and enum types in `SubjectAlternateName`.
 pub mod subject_alternate_name {
     /// Subject Alternate Name.
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Name {
         #[prost(string, tag = "1")]
         Dns(::prost::alloc::string::String),
@@ -82,7 +82,7 @@ pub mod subject_alternate_name {
     }
 }
 /// Proto representation of an Envoy Counter or Gauge value.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SimpleMetric {
     /// Type of the metric represented.
     #[prost(enumeration = "simple_metric::Type", tag = "1")]
@@ -274,7 +274,7 @@ pub struct HostStatus {
 }
 /// Health status for a host.
 /// \[\#next-free-field: 9\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HostHealthStatus {
     /// The host is currently failing active health checks.
     #[prost(bool, tag = "1")]
@@ -309,7 +309,7 @@ pub struct HostHealthStatus {
     #[prost(enumeration = "super::super::config::core::v3::HealthStatus", tag = "3")]
     pub eds_health_status: i32,
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UpdateFailureState {
     /// What the component configuration would have been if the update had succeeded.
     /// This field may not be populated by xDS clients due to storage overhead.
@@ -354,7 +354,7 @@ pub struct ListenersConfigDump {
 /// Nested message and enum types in `ListenersConfigDump`.
 pub mod listeners_config_dump {
     /// Describes a statically loaded listener.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct StaticListener {
         /// The listener config.
         #[prost(message, optional, tag = "1")]
@@ -367,7 +367,7 @@ pub mod listeners_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicListenerState {
         ///
         /// This is the per-resource version information. This version is currently taken from the
@@ -389,7 +389,7 @@ pub mod listeners_config_dump {
     }
     /// Describes a dynamically loaded listener via the LDS API.
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicListener {
         /// The name or unique id of this listener, pulled from the DynamicListenerState config.
         #[prost(string, tag = "1")]
@@ -453,7 +453,7 @@ pub struct ClustersConfigDump {
 /// Nested message and enum types in `ClustersConfigDump`.
 pub mod clusters_config_dump {
     /// Describes a statically loaded cluster.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct StaticCluster {
         /// The cluster config.
         #[prost(message, optional, tag = "1")]
@@ -468,7 +468,7 @@ pub mod clusters_config_dump {
     }
     /// Describes a dynamically loaded cluster via the CDS API.
     /// \[\#next-free-field: 6\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicCluster {
         ///
         /// This is the per-resource version information. This version is currently taken from the
@@ -520,7 +520,7 @@ pub struct RoutesConfigDump {
 }
 /// Nested message and enum types in `RoutesConfigDump`.
 pub mod routes_config_dump {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct StaticRouteConfig {
         /// The route config.
         #[prost(message, optional, tag = "1")]
@@ -534,7 +534,7 @@ pub mod routes_config_dump {
         >,
     }
     /// \[\#next-free-field: 6\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicRouteConfig {
         ///
         /// This is the per-resource version information. This version is currently taken from the
@@ -653,7 +653,7 @@ pub struct EndpointsConfigDump {
 }
 /// Nested message and enum types in `EndpointsConfigDump`.
 pub mod endpoints_config_dump {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct StaticEndpointConfig {
         /// The endpoint config.
         #[prost(message, optional, tag = "1")]
@@ -667,7 +667,7 @@ pub mod endpoints_config_dump {
         >,
     }
     /// \[\#next-free-field: 6\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicEndpointConfig {
         ///
         /// \[\#not-implemented-hide:\] This is the per-resource version information. This version is currently taken from the
@@ -711,7 +711,7 @@ pub struct EcdsConfigDump {
 /// Nested message and enum types in `EcdsConfigDump`.
 pub mod ecds_config_dump {
     /// \[\#next-free-field: 6\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct EcdsFilterConfig {
         /// This is the per-resource version information. This version is currently
         /// taken from the :ref:`version_info  <envoy_v3_api_field_service.discovery.v3.DiscoveryResponse.version_info>`
@@ -873,7 +873,7 @@ pub struct SecretsConfigDump {
 pub mod secrets_config_dump {
     /// DynamicSecret contains secret information fetched via SDS.
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicSecret {
         /// The name assigned to the secret.
         #[prost(string, tag = "1")]
@@ -906,7 +906,7 @@ pub mod secrets_config_dump {
         pub client_status: i32,
     }
     /// StaticSecret specifies statically loaded secret in bootstrap.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct StaticSecret {
         /// The name assigned to the secret.
         #[prost(string, tag = "1")]
@@ -941,7 +941,7 @@ pub struct UnreadyTargetsDumps {
 /// Nested message and enum types in `UnreadyTargetsDumps`.
 pub mod unready_targets_dumps {
     /// Message of unready targets information of an init manager.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct UnreadyTargetsDump {
         /// Name of the init manager. Example: "init_manager_xxx".
         #[prost(string, tag = "1")]
@@ -980,7 +980,7 @@ pub struct ListenerStatus {
 /// values extracted from an internal TCMalloc instance. For more information, see the section of the
 /// docs entitled ["Generic Tcmalloc Status"](<https://gperftools.github.io/gperftools/tcmalloc.html>).
 /// \[\#next-free-field: 7\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Memory {
     /// The number of bytes allocated by the heap for Envoy. This is an alias for
     /// `generic.current_allocated_bytes`.
@@ -1016,7 +1016,7 @@ pub struct Memory {
 /// *NB*: The wait cycles below are measured by `absl::base_internal::CycleClock`, and may not
 /// correspond to core clock frequency. For more information, see the `CycleClock`
 /// [docs](<https://github.com/abseil/abseil-cpp/blob/master/absl/base/internal/cycleclock.h>).
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MutexStats {
     /// The number of individual mutex contentions which have occurred since startup.
     #[prost(uint64, tag = "1")]
@@ -1109,7 +1109,7 @@ pub mod server_info {
     }
 }
 /// \[\#next-free-field: 42\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CommandLineOptions {
     /// See :option:`--base-id` for details.
     #[prost(uint64, tag = "1")]

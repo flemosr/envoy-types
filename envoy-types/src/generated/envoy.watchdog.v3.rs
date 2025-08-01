@@ -4,7 +4,7 @@
 /// thread since we would run signal handlers on that thread. By default
 /// this will be registered to run as the last watchdog action on KILL and
 /// MULTIKILL events if those are enabled.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AbortActionConfig {
     /// How long to wait for the thread to respond to the thread kill function
     /// before killing the process from this action. This is a blocking action.

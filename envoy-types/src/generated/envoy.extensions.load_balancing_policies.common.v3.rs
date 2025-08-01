@@ -55,7 +55,7 @@ pub mod locality_lb_config {
         ///
         /// * :ref:`runtime values <config_cluster_manager_cluster_runtime_zone_routing>`.
         /// * :ref:`Zone aware routing support <arch_overview_load_balancing_zone_aware_routing>`.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ForceLocalZone {
             /// Configures the minimum number of upstream hosts in the local zone required when force_local_zone
             /// is enabled. If the number of upstream hosts in the local zone is less than the specified value,
@@ -71,7 +71,7 @@ pub mod locality_lb_config {
         }
     }
     /// Configuration for :ref:`locality weighted load balancing  <arch_overview_load_balancing_locality_weighted_lb>`
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct LocalityWeightedLbConfig {}
     #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
     pub enum LocalityConfigSpecifier {

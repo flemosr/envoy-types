@@ -40,7 +40,7 @@ pub struct Expr {
 /// Nested message and enum types in `Expr`.
 pub mod expr {
     /// An identifier expression. e.g. `request`.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Ident {
         /// Required. Holds a single, unqualified identifier, possibly preceded by a
         /// '.'.
@@ -388,7 +388,7 @@ pub struct SourceInfo {
 /// Nested message and enum types in `SourceInfo`.
 pub mod source_info {
     /// An extension that was requested for the source expression.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Extension {
         /// Identifier for the extension. Example: constant_folding
         #[prost(string, tag = "1")]
@@ -407,7 +407,7 @@ pub mod source_info {
     /// Nested message and enum types in `Extension`.
     pub mod extension {
         /// Version
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct Version {
             /// Major version changes indicate different required support level from
             /// the required components.
@@ -470,7 +470,7 @@ pub mod source_info {
     }
 }
 /// A specific position in source.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SourcePosition {
     /// The soucre location name (e.g. file name).
     #[prost(string, tag = "1")]

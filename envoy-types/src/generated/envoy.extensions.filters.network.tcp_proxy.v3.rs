@@ -249,7 +249,7 @@ pub mod tcp_proxy {
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct TcpAccessLogOptions {
         /// The interval to flush access log. The TCP proxy will flush only one access log when the connection
         /// is closed by default. If this field is set, the TCP proxy will flush access log periodically with

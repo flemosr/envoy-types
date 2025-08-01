@@ -9,7 +9,7 @@
 /// Response processors are currently in alpha.
 ///
 /// \[\#next-free-field: 7\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SaveProcessingResponse {
     /// The default filter state name is
     /// "envoy.http.ext_proc.response_processors.save_processing_response".
@@ -46,7 +46,7 @@ pub struct SaveProcessingResponse {
 }
 /// Nested message and enum types in `SaveProcessingResponse`.
 pub mod save_processing_response {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct SaveOptions {
         /// Whether or not to save the response for the response type.
         #[prost(bool, tag = "1")]

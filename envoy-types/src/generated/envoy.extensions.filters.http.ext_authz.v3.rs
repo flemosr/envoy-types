@@ -317,7 +317,7 @@ pub mod ext_authz {
     }
 }
 /// Configuration for buffering the request data.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BufferSettings {
     /// Sets the maximum size of a message body that the filter will hold in memory. Envoy will return
     /// `HTTP 413` and will *not* initiate the authorization process when buffer reaches the number

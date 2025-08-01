@@ -15,7 +15,7 @@
 /// this restriction and hopefully provide a wider compatibility guarantee. Until then, Envoy
 /// checks the hash of the ABI header files to ensure that the dynamic modules are built against the
 /// same version of the ABI.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DynamicModuleConfig {
     /// The name of the dynamic module. The client is expected to have some configuration indicating where to search for the module.
     /// In Envoy, the search path can only be configured via the environment variable `ENVOY_DYNAMIC_MODULES_SEARCH_PATH`.

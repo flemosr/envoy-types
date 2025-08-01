@@ -13,7 +13,7 @@ pub struct LoadStatsRequest {
 }
 /// The management server sends envoy a LoadStatsResponse with all clusters it
 /// is interested in learning load stats about.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LoadStatsResponse {
     /// Clusters to report stats for.
     /// Not populated if `send_all_clusters` is true.
@@ -56,6 +56,17 @@ pub mod load_reporting_service_client {
     #[derive(Debug, Clone)]
     pub struct LoadReportingServiceClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl LoadReportingServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> LoadReportingServiceClient<T>
     where
@@ -166,7 +177,7 @@ pub mod load_reporting_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.load_stats.v3.LoadReportingService/StreamLoadStats",
             );
@@ -352,7 +363,7 @@ pub mod load_reporting_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StreamLoadStatsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

@@ -137,7 +137,7 @@ pub struct DoubleRules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// Int32Rules describes the constraints applied to `int32` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int32Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(int32, optional, tag = "1")]
@@ -174,7 +174,7 @@ pub struct Int32Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// Int64Rules describes the constraints applied to `int64` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int64Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(int64, optional, tag = "1")]
@@ -211,7 +211,7 @@ pub struct Int64Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// UInt32Rules describes the constraints applied to `uint32` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UInt32Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(uint32, optional, tag = "1")]
@@ -248,7 +248,7 @@ pub struct UInt32Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// UInt64Rules describes the constraints applied to `uint64` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UInt64Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(uint64, optional, tag = "1")]
@@ -285,7 +285,7 @@ pub struct UInt64Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// SInt32Rules describes the constraints applied to `sint32` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SInt32Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(sint32, optional, tag = "1")]
@@ -322,7 +322,7 @@ pub struct SInt32Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// SInt64Rules describes the constraints applied to `sint64` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SInt64Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(sint64, optional, tag = "1")]
@@ -359,7 +359,7 @@ pub struct SInt64Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// Fixed32Rules describes the constraints applied to `fixed32` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Fixed32Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(fixed32, optional, tag = "1")]
@@ -396,7 +396,7 @@ pub struct Fixed32Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// Fixed64Rules describes the constraints applied to `fixed64` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Fixed64Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(fixed64, optional, tag = "1")]
@@ -433,7 +433,7 @@ pub struct Fixed64Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// SFixed32Rules describes the constraints applied to `sfixed32` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SFixed32Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(sfixed32, optional, tag = "1")]
@@ -470,7 +470,7 @@ pub struct SFixed32Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// SFixed64Rules describes the constraints applied to `sfixed64` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SFixed64Rules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(sfixed64, optional, tag = "1")]
@@ -507,14 +507,14 @@ pub struct SFixed64Rules {
     pub ignore_empty: ::core::option::Option<bool>,
 }
 /// BoolRules describes the constraints applied to `bool` values
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BoolRules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(bool, optional, tag = "1")]
     pub r#const: ::core::option::Option<bool>,
 }
 /// StringRules describe the constraints applied to `string` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StringRules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(string, optional, tag = "1")]
@@ -597,7 +597,7 @@ pub struct StringRules {
 pub mod string_rules {
     /// WellKnown rules provide advanced constraints against common string
     /// patterns
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum WellKnown {
         /// Email specifies that the field must be a valid email address as
         /// defined by RFC 5322
@@ -642,7 +642,7 @@ pub mod string_rules {
     }
 }
 /// BytesRules describe the constraints applied to `bytes` values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BytesRules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(bytes = "vec", optional, tag = "1")]
@@ -696,7 +696,7 @@ pub struct BytesRules {
 pub mod bytes_rules {
     /// WellKnown rules provide advanced constraints against common byte
     /// patterns
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum WellKnown {
         /// Ip specifies that the field must be a valid IP (v4 or v6) address in
         /// byte format
@@ -713,7 +713,7 @@ pub mod bytes_rules {
     }
 }
 /// EnumRules describe the constraints applied to enum values
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EnumRules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(int32, optional, tag = "1")]
@@ -733,7 +733,7 @@ pub struct EnumRules {
 }
 /// MessageRules describe the constraints applied to embedded message values.
 /// For message-type fields, validation is performed recursively.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MessageRules {
     /// Skip specifies that the validation rules of this field should not be
     /// evaluated
@@ -799,7 +799,7 @@ pub struct MapRules {
 }
 /// AnyRules describe constraints applied exclusively to the
 /// `google.protobuf.Any` well-known type
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AnyRules {
     /// Required specifies that this field must be set
     #[prost(bool, optional, tag = "1")]
@@ -850,7 +850,7 @@ pub struct DurationRules {
 }
 /// TimestampRules describe the constraints applied exclusively to the
 /// `google.protobuf.Timestamp` well-known type
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TimestampRules {
     /// Required specifies that this field must be set
     #[prost(bool, optional, tag = "1")]

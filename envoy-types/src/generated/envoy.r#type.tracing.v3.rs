@@ -13,14 +13,14 @@ pub struct CustomTag {
 /// Nested message and enum types in `CustomTag`.
 pub mod custom_tag {
     /// Literal type custom tag with static value for the tag value.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Literal {
         /// Static literal value to populate the tag value.
         #[prost(string, tag = "1")]
         pub value: ::prost::alloc::string::String,
     }
     /// Environment type custom tag with environment name and default value.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Environment {
         /// Environment variable name to obtain the value to populate the tag value.
         #[prost(string, tag = "1")]
@@ -32,7 +32,7 @@ pub mod custom_tag {
         pub default_value: ::prost::alloc::string::String,
     }
     /// Header type custom tag with header name and default value.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Header {
         /// Header name to obtain the value to populate the tag value.
         #[prost(string, tag = "1")]

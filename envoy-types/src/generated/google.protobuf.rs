@@ -98,7 +98,7 @@
 /// [`strftime`](<https://docs.python.org/2/library/time.html#time.strftime>) with
 /// the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
 /// the Joda Time's [`ISODateTimeFormat.dateTime()`](<http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime(>)) to obtain a formatter capable of generating timestamps in this format.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Timestamp {
     /// Represents seconds of UTC time since Unix epoch
     /// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
@@ -220,7 +220,7 @@ pub mod descriptor_proto {
     /// Range of reserved tag numbers. Reserved tag numbers may not be used by
     /// fields or extension ranges in the same message. Reserved ranges may
     /// not overlap.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ReservedRange {
         /// Inclusive.
         #[prost(int32, optional, tag = "1")]
@@ -256,7 +256,7 @@ pub struct ExtensionRangeOptions {
 }
 /// Nested message and enum types in `ExtensionRangeOptions`.
 pub mod extension_range_options {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Declaration {
         /// The extension number declared within the extension range.
         #[prost(int32, optional, tag = "1")]
@@ -570,7 +570,7 @@ pub mod enum_descriptor_proto {
     /// Note that this is distinct from DescriptorProto.ReservedRange in that it
     /// is inclusive such that it can appropriately represent the entire int32
     /// domain.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct EnumReservedRange {
         /// Inclusive.
         #[prost(int32, optional, tag = "1")]
@@ -980,7 +980,7 @@ pub struct FieldOptions {
 }
 /// Nested message and enum types in `FieldOptions`.
 pub mod field_options {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct EditionDefault {
         #[prost(enumeration = "super::Edition", optional, tag = "3")]
         pub edition: ::core::option::Option<i32>,
@@ -989,7 +989,7 @@ pub mod field_options {
         pub value: ::core::option::Option<::prost::alloc::string::String>,
     }
     /// Information about the support window of a feature.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct FeatureSupport {
         /// The edition that this feature was first available in.  In editions
         /// earlier than this one, the default assigned to EDITION_LEGACY will be
@@ -1393,7 +1393,7 @@ pub mod uninterpreted_option {
     /// extension (denoted with parentheses in options specs in .proto files).
     /// E.g.,{ \["foo", false\], \["bar.baz", true\], \["moo", false\] } represents
     /// "foo.(bar.baz).moo".
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct NamePart {
         #[prost(string, required, tag = "1")]
         pub name_part: ::prost::alloc::string::String,
@@ -1407,7 +1407,7 @@ pub mod uninterpreted_option {
 /// readability, but leave us very open to this scenario.  A future feature will
 /// be designed and implemented to handle this, hopefully before we ever hit a
 /// conflict here.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FeatureSet {
     #[prost(enumeration = "feature_set::FieldPresence", optional, tag = "1")]
     pub field_presence: ::core::option::Option<i32>,
@@ -1432,7 +1432,7 @@ pub struct FeatureSet {
 }
 /// Nested message and enum types in `FeatureSet`.
 pub mod feature_set {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct VisibilityFeature {}
     /// Nested message and enum types in `VisibilityFeature`.
     pub mod visibility_feature {
@@ -1790,7 +1790,7 @@ pub mod feature_set_defaults {
     /// defaults. Not all editions may be contained here.  For a given edition,
     /// the defaults at the closest matching edition ordered at or before it should
     /// be used.  This field must be in strict ascending order by edition.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct FeatureSetEditionDefault {
         #[prost(enumeration = "super::Edition", optional, tag = "3")]
         pub edition: ::core::option::Option<i32>,
@@ -1855,7 +1855,7 @@ pub struct SourceCodeInfo {
 }
 /// Nested message and enum types in `SourceCodeInfo`.
 pub mod source_code_info {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Location {
         /// Identifies which part of the FileDescriptorProto was defined at this
         /// location.
@@ -1958,7 +1958,7 @@ pub struct GeneratedCodeInfo {
 }
 /// Nested message and enum types in `GeneratedCodeInfo`.
 pub mod generated_code_info {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Annotation {
         /// Identifies the element in the original source .proto file. This field
         /// is formatted the same as SourceCodeInfo.Location.path.
@@ -2230,7 +2230,7 @@ impl SymbolVisibility {
 ///    "value": "1.212s"
 /// }
 /// ```
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Any {
     /// A URL/resource name that uniquely identifies the type of the serialized
     /// protocol buffer message. This string must contain at least
@@ -2330,7 +2330,7 @@ pub struct Any {
 /// encoded in JSON format as "3s", while 3 seconds and 1 nanosecond should
 /// be expressed in JSON format as "3.000000001s", and 3 seconds and 1
 /// microsecond should be expressed in JSON format as "3.000001s".
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Duration {
     /// Signed seconds of the span of time. Must be from -315,576,000,000
     /// to +315,576,000,000 inclusive. Note: these bounds are computed from:
@@ -2376,7 +2376,7 @@ pub struct FloatValue {
 ///
 /// Not recommended for use in new APIs, but still useful for legacy APIs and
 /// has no plan to be removed.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int64Value {
     /// The int64 value.
     #[prost(int64, tag = "1")]
@@ -2388,7 +2388,7 @@ pub struct Int64Value {
 ///
 /// Not recommended for use in new APIs, but still useful for legacy APIs and
 /// has no plan to be removed.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UInt64Value {
     /// The uint64 value.
     #[prost(uint64, tag = "1")]
@@ -2400,7 +2400,7 @@ pub struct UInt64Value {
 ///
 /// Not recommended for use in new APIs, but still useful for legacy APIs and
 /// has no plan to be removed.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int32Value {
     /// The int32 value.
     #[prost(int32, tag = "1")]
@@ -2412,7 +2412,7 @@ pub struct Int32Value {
 ///
 /// Not recommended for use in new APIs, but still useful for legacy APIs and
 /// has no plan to be removed.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UInt32Value {
     /// The uint32 value.
     #[prost(uint32, tag = "1")]
@@ -2424,7 +2424,7 @@ pub struct UInt32Value {
 ///
 /// Not recommended for use in new APIs, but still useful for legacy APIs and
 /// has no plan to be removed.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BoolValue {
     /// The bool value.
     #[prost(bool, tag = "1")]
@@ -2436,7 +2436,7 @@ pub struct BoolValue {
 ///
 /// Not recommended for use in new APIs, but still useful for legacy APIs and
 /// has no plan to be removed.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StringValue {
     /// The string value.
     #[prost(string, tag = "1")]
@@ -2448,7 +2448,7 @@ pub struct StringValue {
 ///
 /// Not recommended for use in new APIs, but still useful for legacy APIs and
 /// has no plan to be removed.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BytesValue {
     /// The bytes value.
     #[prost(bytes = "vec", tag = "1")]
@@ -2551,5 +2551,5 @@ impl NullValue {
 ///    rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
 /// }
 /// ```
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Empty {}

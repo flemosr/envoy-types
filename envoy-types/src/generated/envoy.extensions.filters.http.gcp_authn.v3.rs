@@ -44,13 +44,13 @@ pub struct GcpAuthnFilterConfig {
 }
 /// Audience is the URL of the receiving service that performs token authentication.
 /// It will be provided to the filter through cluster's typed_filter_metadata.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Audience {
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
 }
 /// Token Cache configuration.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TokenCacheConfig {
     /// The number of cache entries. The maximum number of entries is INT64_MAX as it is constrained by underlying cache implementation.
     /// Default value 0 (i.e., proto3 defaults) disables the cache by default. Other default values will enable the cache.
@@ -59,7 +59,7 @@ pub struct TokenCacheConfig {
         super::super::super::super::super::super::google::protobuf::UInt64Value,
     >,
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TokenHeader {
     /// The HTTP header's name.
     #[prost(string, tag = "1")]

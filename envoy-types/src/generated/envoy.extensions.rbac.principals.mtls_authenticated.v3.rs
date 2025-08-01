@@ -9,7 +9,7 @@
 /// If `any_validated_client_certificate` is set in addition to `san_matcher` or a future field
 /// which specifies additional validation, the other field always takes precedence over
 /// `any_validated_client_certificate` and all specified validation is performed.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Config {
     /// Specifies a SAN that must be present in the validated peer certificate.
     #[prost(message, optional, tag = "1")]

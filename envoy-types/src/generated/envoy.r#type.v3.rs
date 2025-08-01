@@ -11,7 +11,7 @@ pub struct Percent {
 ///
 /// * **Example**: 1/100 = 1%.
 /// * **Example**: 3/10000 = 0.03%.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FractionalPercent {
     /// Specifies the numerator. Defaults to 0.
     #[prost(uint32, tag = "1")]
@@ -76,7 +76,7 @@ pub mod fractional_percent {
 /// Envoy uses SemVer (<https://semver.org/>). Major/minor versions indicate
 /// expected behaviors and APIs, the patch version field is used only
 /// for security fixes and can be generally ignored.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SemanticVersion {
     #[prost(uint32, tag = "1")]
     pub major_number: u32,
@@ -119,7 +119,7 @@ impl CodecClientType {
 }
 /// Specifies the int64 start and end of the range using half-open interval semantics \[start,
 /// end).
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int64Range {
     /// start of the range (inclusive)
     #[prost(int64, tag = "1")]
@@ -130,7 +130,7 @@ pub struct Int64Range {
 }
 /// Specifies the int32 start and end of the range using half-open interval semantics \[start,
 /// end).
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int32Range {
     /// start of the range (inclusive)
     #[prost(int32, tag = "1")]
@@ -200,7 +200,7 @@ impl RateLimitUnit {
     }
 }
 /// Configures a token bucket, typically used for rate limiting.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TokenBucket {
     /// The maximum tokens that the bucket can hold. This is also the number of tokens that the bucket
     /// initially contains.
@@ -221,7 +221,7 @@ pub struct TokenBucket {
     >,
 }
 /// HTTP status.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HttpStatus {
     /// Supplies HTTP response code.
     #[prost(enumeration = "StatusCode", tag = "1")]
@@ -478,7 +478,7 @@ impl StatusCode {
         }
     }
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RateLimitStrategy {
     #[prost(oneof = "rate_limit_strategy::Strategy", tags = "1, 2, 3")]
     pub strategy: ::core::option::Option<rate_limit_strategy::Strategy>,
@@ -499,7 +499,7 @@ pub mod rate_limit_strategy {
     /// strategy, and may be chosen to enforce the rate limit. However, there's no guarantee it will be
     /// the `TokenBucket` in particular, and not the Leaky Bucket, the Sliding Window, or any other
     /// rate limiting algorithm that fulfills the requirements.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RequestsPerTimeUnit {
         /// The desired number of requests per :ref:`time_unit  <envoy_v3_api_field_type.v3.RateLimitStrategy.RequestsPerTimeUnit.time_unit>` to allow.
         /// If set to `0`, deny all (equivalent to `BlanketRule.DENY_ALL`).
@@ -553,7 +553,7 @@ pub mod rate_limit_strategy {
             }
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Strategy {
         /// Allow or Deny the requests.
         /// If unset, allow all.
@@ -571,7 +571,7 @@ pub mod rate_limit_strategy {
     }
 }
 /// Specifies the hash policy
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HashPolicy {
     #[prost(oneof = "hash_policy::PolicySpecifier", tags = "1, 2")]
     pub policy_specifier: ::core::option::Option<hash_policy::PolicySpecifier>,
@@ -580,11 +580,11 @@ pub struct HashPolicy {
 pub mod hash_policy {
     /// The source IP will be used to compute the hash used by hash-based load balancing
     /// algorithms.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct SourceIp {}
     /// An Object in the :ref:`filterState <arch_overview_data_sharing_between_filters>` will be used
     /// to compute the hash used by hash-based load balancing algorithms.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct FilterState {
         /// The name of the Object in the filterState, which is an Envoy::Hashable object. If there is no
         /// data associated with the key, or the stored object is not Envoy::Hashable, no hash will be
@@ -592,7 +592,7 @@ pub mod hash_policy {
         #[prost(string, tag = "1")]
         pub key: ::prost::alloc::string::String,
     }
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum PolicySpecifier {
         #[prost(message, tag = "1")]
         SourceIp(SourceIp),

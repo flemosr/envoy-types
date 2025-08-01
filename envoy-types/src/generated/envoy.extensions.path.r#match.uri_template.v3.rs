@@ -23,7 +23,7 @@
 /// * `/videos/{file}` would match `/videos/1080p5000_00001.m4s`
 ///
 /// * `/**.mpd` would match `/content/123/india/dash/55/manifest.mpd`
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UriTemplateMatchConfig {
     #[prost(string, tag = "1")]
     pub path_template: ::prost::alloc::string::String,

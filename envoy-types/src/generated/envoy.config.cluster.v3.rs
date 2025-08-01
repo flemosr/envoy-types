@@ -921,7 +921,7 @@ pub mod cluster {
         >,
     }
     /// Extended cluster type.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct CustomClusterType {
         /// The type of the cluster to instantiate. The name must match a supported cluster type.
         #[prost(string, tag = "1")]
@@ -1038,7 +1038,7 @@ pub mod cluster {
     /// Nested message and enum types in `LbSubsetConfig`.
     pub mod lb_subset_config {
         /// Specifications for subsets.
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct LbSubsetSelector {
             /// List of keys to match with the weighted cluster metadata.
             #[prost(string, repeated, tag = "1")]
@@ -1344,7 +1344,7 @@ pub mod cluster {
     }
     /// Specific configuration for the :ref:`RingHash<arch_overview_load_balancing_types_ring_hash>`
     /// load balancing policy.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RingHashLbConfig {
         ///
         /// Minimum hash ring size. The larger the ring is (that is, the more hashes there are for each
@@ -1415,7 +1415,7 @@ pub mod cluster {
     }
     /// Specific configuration for the :ref:`Maglev<arch_overview_load_balancing_types_maglev>`
     /// load balancing policy.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct MaglevLbConfig {
         /// The table size for Maglev hashing. Maglev aims for "minimal disruption" rather than an absolute guarantee.
         /// Minimal disruption means that when the set of upstream hosts change, a connection will likely be sent to the same
@@ -1561,10 +1561,10 @@ pub mod cluster {
             pub fail_traffic_on_panic: bool,
         }
         /// Configuration for :ref:`locality weighted load balancing  <arch_overview_load_balancing_locality_weighted_lb>`
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct LocalityWeightedLbConfig {}
         /// Common Configuration for all consistent hashing load balancers (MaglevLb, RingHashLb, etc.)
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ConsistentHashingLbConfig {
             /// If set to `true`, the cluster will use hostname instead of the resolved
             /// address as the key to consistently hash to an upstream host. Only valid for StrictDNS clusters with hostnames which resolve to a single IP address.
@@ -1601,7 +1601,7 @@ pub mod cluster {
             LocalityWeightedLbConfig(LocalityWeightedLbConfig),
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RefreshRate {
         ///
         /// Specifies the base interval between refreshes. This parameter is required and must be greater
@@ -1911,7 +1911,7 @@ pub mod cluster {
             }
         }
     }
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum ClusterDiscoveryType {
         /// The :ref:`service discovery type <arch_overview_service_discovery_types>`
         /// to use for resolving the cluster.
@@ -1978,7 +1978,7 @@ pub struct LoadBalancingPolicy {
 }
 /// Nested message and enum types in `LoadBalancingPolicy`.
 pub mod load_balancing_policy {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Policy {
         /// \[\#extension-category: envoy.load_balancing_policies\]
         #[prost(message, optional, tag = "4")]
@@ -1987,7 +1987,7 @@ pub mod load_balancing_policy {
         >,
     }
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UpstreamConnectionOptions {
     /// If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
     #[prost(message, optional, tag = "1")]
@@ -2007,7 +2007,7 @@ pub struct UpstreamConnectionOptions {
 }
 /// Nested message and enum types in `UpstreamConnectionOptions`.
 pub mod upstream_connection_options {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HappyEyeballsConfig {
         /// Specify the IP address family to attempt connection first in happy
         /// eyeballs algorithm according to RFC8305#section-4.
@@ -2062,7 +2062,7 @@ pub mod upstream_connection_options {
         }
     }
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TrackClusterStats {
     /// If timeout_budgets is true, the :ref:`timeout budget histograms  <config_cluster_manager_cluster_stats_timeout_budgets>` will be published for each
     /// request. These show what percentage of a request's per try and global timeout was used. A value

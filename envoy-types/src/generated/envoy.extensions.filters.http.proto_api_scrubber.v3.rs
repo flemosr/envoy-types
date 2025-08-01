@@ -51,7 +51,7 @@ pub mod proto_api_scrubber_config {
     }
 }
 /// Specifies the descriptor set for proto services.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DescriptorSet {
     /// It could be passed by a local file through `Datasource.filename` or
     /// embedded in the `Datasource.inline_bytes`.
@@ -108,5 +108,5 @@ pub struct RestrictionConfig {
 }
 /// Specifies an :ref:`Unified Matcher API <envoy_v3_api_msg_.xds.type.matcher.v3.Matcher>` action to remove a field.
 /// This actual action needs to be implemented by the filter using it.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RemoveFieldAction {}

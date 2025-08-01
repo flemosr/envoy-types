@@ -48,14 +48,14 @@ pub struct MetadataKey {
 pub mod metadata_key {
     /// Specifies a segment in a path for retrieving values from Metadata.
     /// Currently, only key-based segments (field names) are supported.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct PathSegment {
         #[prost(oneof = "path_segment::Segment", tags = "1")]
         pub segment: ::core::option::Option<path_segment::Segment>,
     }
     /// Nested message and enum types in `PathSegment`.
     pub mod path_segment {
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum Segment {
             /// If specified, use this key to retrieve the value in a Struct.
             #[prost(string, tag = "1")]
@@ -64,7 +64,7 @@ pub mod metadata_key {
     }
 }
 /// Describes different types of metadata sources.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MetadataKind {
     #[prost(oneof = "metadata_kind::Kind", tags = "1, 2, 3, 4")]
     pub kind: ::core::option::Option<metadata_kind::Kind>,
@@ -72,18 +72,18 @@ pub struct MetadataKind {
 /// Nested message and enum types in `MetadataKind`.
 pub mod metadata_kind {
     /// Represents dynamic metadata associated with the request.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Request {}
     /// Represents metadata from :ref:`the route<envoy_v3_api_field_config.route.v3.Route.metadata>`.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Route {}
     /// Represents metadata from :ref:`the upstream cluster<envoy_v3_api_field_config.cluster.v3.Cluster.metadata>`.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Cluster {}
     /// Represents metadata from :ref:`the upstream  host<envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Host {}
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Kind {
         /// Request kind of metadata.
         #[prost(message, tag = "1")]

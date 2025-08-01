@@ -24,7 +24,7 @@
 /// Using this PriorityFilter requires rebuilding the priority load, which runs in O(# of
 /// priorities), which might incur significant overhead for clusters with many priorities.
 /// \[\#extension: envoy.retry_priorities.previous_priorities\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PreviousPrioritiesConfig {
     /// How often the priority load should be updated based on previously attempted priorities. Useful
     /// to allow each priorities to receive more than one request before being excluded or to reduce

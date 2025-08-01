@@ -32,7 +32,7 @@ pub mod ip_tagging {
         >,
     }
     /// Specify to which header the tags will be written.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct IpTagHeader {
         /// Header to use for ip-tagging.
         ///

@@ -120,14 +120,14 @@ pub struct HttpGenericBodyMatch {
 }
 /// Nested message and enum types in `HttpGenericBodyMatch`.
 pub mod http_generic_body_match {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GenericTextMatch {
         #[prost(oneof = "generic_text_match::Rule", tags = "1, 2")]
         pub rule: ::core::option::Option<generic_text_match::Rule>,
     }
     /// Nested message and enum types in `GenericTextMatch`.
     pub mod generic_text_match {
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum Rule {
             /// Text string to be located in HTTP body.
             #[prost(string, tag = "1")]
@@ -288,13 +288,13 @@ pub mod output_sink {
     }
 }
 /// Streaming admin sink configuration.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamingAdminSink {}
 /// BufferedAdminSink configures a tap output to collect traces without returning them until
 /// one of multiple criteria are satisfied.
 /// Similar to StreamingAdminSink, it is only allowed to specify the buffered admin output
 /// sink if the tap is being configured from the `/tap` admin endpoint.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BufferedAdminSink {
     /// Stop collecting traces when the specified number are collected.
     /// If other criteria for ending collection are reached first, this value will not be used.
@@ -311,7 +311,7 @@ pub struct BufferedAdminSink {
     >,
 }
 /// The file per tap sink outputs a discrete file for every tapped stream.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilePerTapSink {
     /// Path prefix. The output file will be of the form \<path_prefix>\_<id>.pb, where <id> is an
     /// identifier distinguishing the recorded trace for stream instances (the Envoy

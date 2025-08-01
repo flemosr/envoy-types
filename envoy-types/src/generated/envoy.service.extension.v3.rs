@@ -2,7 +2,7 @@
 /// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue
 /// with importing services: <https://github.com/google/protobuf/issues/4221> and
 /// protoxform to upgrade the file.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EcdsDummy {}
 /// Generated client implementations.
 pub mod extension_config_discovery_service_client {
@@ -45,6 +45,17 @@ pub mod extension_config_discovery_service_client {
     #[derive(Debug, Clone)]
     pub struct ExtensionConfigDiscoveryServiceClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl ExtensionConfigDiscoveryServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> ExtensionConfigDiscoveryServiceClient<T>
     where
@@ -134,7 +145,7 @@ pub mod extension_config_discovery_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.extension.v3.ExtensionConfigDiscoveryService/StreamExtensionConfigs",
             );
@@ -169,7 +180,7 @@ pub mod extension_config_discovery_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.extension.v3.ExtensionConfigDiscoveryService/DeltaExtensionConfigs",
             );
@@ -200,7 +211,7 @@ pub mod extension_config_discovery_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.extension.v3.ExtensionConfigDiscoveryService/FetchExtensionConfigs",
             );
@@ -421,7 +432,7 @@ pub mod extension_config_discovery_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StreamExtensionConfigsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -478,7 +489,7 @@ pub mod extension_config_discovery_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeltaExtensionConfigsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -532,7 +543,7 @@ pub mod extension_config_discovery_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = FetchExtensionConfigsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

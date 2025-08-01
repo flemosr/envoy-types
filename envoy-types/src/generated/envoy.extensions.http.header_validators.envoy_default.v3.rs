@@ -19,7 +19,7 @@
 ///
 /// \[\#comment:TODO(yanavlasov): Put #extension: envoy.http.header_validators.envoy_default after it is not hidden any more\]
 /// \[\#next-free-field: 6\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderValidatorConfig {
     /// HTTP/1 protocol specific options.
     /// These settings control HTTP/1 specific validation behaviors.
@@ -79,7 +79,7 @@ pub mod header_validator_config {
     /// These options control how Envoy processes and normalizes incoming request URI paths
     /// to ensure consistent behavior and security. Path normalization helps prevent
     /// path traversal attacks and ensures that equivalent paths are handled consistently.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct UriPathNormalizationOptions {
         /// Should paths be normalized according to RFC 3986?
         ///
@@ -222,7 +222,7 @@ pub mod header_validator_config {
     ///
     /// These options control how Envoy handles HTTP/1 specific behaviors and edge cases
     /// that may not apply to HTTP/2 or HTTP/3 protocols.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Http1ProtocolOptions {
         /// Allows Envoy to process HTTP/1 requests/responses with both `Content-Length` and `Transfer-Encoding`
         /// headers set. By default such messages are rejected, but if option is enabled - Envoy will

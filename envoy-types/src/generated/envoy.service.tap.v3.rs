@@ -30,7 +30,7 @@ pub mod stream_taps_request {
     }
 }
 /// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamTapsResponse {}
 /// Generated client implementations.
 pub mod tap_sink_service_client {
@@ -48,6 +48,17 @@ pub mod tap_sink_service_client {
     #[derive(Debug, Clone)]
     pub struct TapSinkServiceClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl TapSinkServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> TapSinkServiceClient<T>
     where
@@ -132,7 +143,7 @@ pub mod tap_sink_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.tap.v3.TapSinkService/StreamTaps",
             );
@@ -279,7 +290,7 @@ pub mod tap_sink_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StreamTapsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

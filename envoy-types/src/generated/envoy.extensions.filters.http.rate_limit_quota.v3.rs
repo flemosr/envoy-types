@@ -304,7 +304,7 @@ pub struct RateLimitQuotaBucketSettings {
 pub mod rate_limit_quota_bucket_settings {
     /// Configures the behavior after the first request has been matched to the bucket, and before the
     /// the RLQS server returns the first quota assignment.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct NoAssignmentBehavior {
         #[prost(oneof = "no_assignment_behavior::NoAssignmentBehavior", tags = "1")]
         pub no_assignment_behavior: ::core::option::Option<
@@ -313,7 +313,7 @@ pub mod rate_limit_quota_bucket_settings {
     }
     /// Nested message and enum types in `NoAssignmentBehavior`.
     pub mod no_assignment_behavior {
-        #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum NoAssignmentBehavior {
             /// Apply pre-configured rate limiting strategy until the server sends the first assignment.
             #[prost(message, tag = "1")]
@@ -324,7 +324,7 @@ pub mod rate_limit_quota_bucket_settings {
     }
     /// Specifies the behavior when the bucket's assignment has expired, and cannot be refreshed for
     /// any reason.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ExpiredAssignmentBehavior {
         /// Limit the time :ref:`ExpiredAssignmentBehavior  <envoy_v3_api_msg_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior>`
         /// is applied. If the server doesn't respond within this duration:
@@ -336,7 +336,7 @@ pub mod rate_limit_quota_bucket_settings {
         ///      message.
         ///
         ///
-        /// 3. If a new request is matched into the bucket that has become abandoned,
+        /// 1. If a new request is matched into the bucket that has become abandoned,
         ///    the data plane restarts the subscription to the bucket. The process of restarting the
         ///    subscription is described in the :ref:`AbandonAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction>`
         ///    message.
@@ -359,9 +359,9 @@ pub mod rate_limit_quota_bucket_settings {
         /// Reuse the last known quota assignment, effectively extending it for the duration
         /// specified in the :ref:`expired_assignment_behavior_timeout  <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.expired_assignment_behavior_timeout>`
         /// field.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ReuseLastAssignment {}
-        #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ExpiredAssignmentBehavior {
             /// Apply the rate limiting strategy to all requests matched into the bucket until the RLQS
             /// server sends a new assignment, or the :ref:`expired_assignment_behavior_timeout  <envoy_v3_api_field_extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.expired_assignment_behavior_timeout>`
@@ -442,14 +442,14 @@ pub mod rate_limit_quota_bucket_settings {
     /// Nested message and enum types in `BucketIdBuilder`.
     pub mod bucket_id_builder {
         /// Produces the value of the :ref:`BucketId  <envoy_v3_api_msg_service.rate_limit_quota.v3.BucketId>` map.
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ValueBuilder {
             #[prost(oneof = "value_builder::ValueSpecifier", tags = "1, 2")]
             pub value_specifier: ::core::option::Option<value_builder::ValueSpecifier>,
         }
         /// Nested message and enum types in `ValueBuilder`.
         pub mod value_builder {
-            #[derive(Clone, PartialEq, ::prost::Oneof)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
             pub enum ValueSpecifier {
                 /// Static string value — becomes the value in the :ref:`BucketId  <envoy_v3_api_msg_service.rate_limit_quota.v3.BucketId>` map as is.
                 #[prost(string, tag = "1")]

@@ -386,7 +386,7 @@ pub mod bootstrap {
             }
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DeferredStatOptions {
         /// When the flag is enabled, Envoy will lazily initialize a subset of the stats (see below).
         /// This will save memory and CPU cycles when creating the objects that own these stats, if those
@@ -400,7 +400,7 @@ pub mod bootstrap {
         #[prost(bool, tag = "1")]
         pub enable_deferred_creation_stats: bool,
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GrpcAsyncClientManagerConfig {
         /// Optional field to set the expiration time for the cached gRPC client object.
         /// The minimal value is 5s and the default is 50s.
@@ -409,7 +409,7 @@ pub mod bootstrap {
             super::super::super::super::super::google::protobuf::Duration,
         >,
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum StatsFlush {
         /// Flush stats to sinks only when queried for on the admin interface. If set,
         /// a flush timer is not created. Only one of `stats_flush_on_admin` or
@@ -564,7 +564,7 @@ pub struct Watchdog {
 }
 /// Nested message and enum types in `Watchdog`.
 pub mod watchdog {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct WatchdogAction {
         /// Extension specific configuration for the action.
         #[prost(message, optional, tag = "1")]
@@ -637,7 +637,7 @@ pub mod watchdog {
 /// The interface for the extension is `Envoy::Server::Configuration::FatalAction`.
 /// `FatalAction` extensions live in the `envoy.extensions.fatal_actions` API
 /// namespace.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FatalAction {
     /// Extension specific configuration for the action. It's expected to conform
     /// to the `Envoy::Server::Configuration::FatalAction` interface.
@@ -689,7 +689,7 @@ pub struct RuntimeLayer {
 /// Nested message and enum types in `RuntimeLayer`.
 pub mod runtime_layer {
     /// :ref:`Disk runtime <config_runtime_local_disk>` layer.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DiskLayer {
         /// The implementation assumes that the file system tree is accessed via a
         /// symbolic link. An atomic link swap is used when a new tree should be
@@ -710,7 +710,7 @@ pub mod runtime_layer {
         pub append_service_cluster: bool,
     }
     /// :ref:`Admin console runtime <config_runtime_admin>` layer.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct AdminLayer {}
     /// :ref:`Runtime Discovery Service (RTDS) <config_runtime_rtds>` layer.
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -771,7 +771,7 @@ pub struct LayeredRuntime {
 /// Inline headers provide O(1) search performance, but each inline header imposes
 /// an additional memory overhead on all instances of the corresponding type of
 /// HeaderMap or TrailerMap.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CustomInlineHeader {
     /// The name of the header that is expected to be set as the inline header.
     #[prost(string, tag = "1")]
@@ -825,7 +825,7 @@ pub mod custom_inline_header {
         }
     }
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MemoryAllocatorManager {
     /// Configures tcmalloc to perform background release of free memory in amount of bytes per `memory_release_interval` interval.
     /// If equals to `0`, no memory release will occur. Defaults to `0`.

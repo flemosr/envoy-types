@@ -9,7 +9,7 @@
 /// : repo:`upstream_address.h<source/common/stream_info/upstream_address.h>`).
 ///   Also, See :repo:`proxy_filter.cc<source/extensions/filters/http/dynamic_forward_proxy/proxy_filter.cc>`
 ///   for an example of a filter which populates the FilterState.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UpstreamIpPortMatcher {
     /// A CIDR block that will be used to match the upstream IP.
     /// Both Ipv4 and Ipv6 ranges can be matched.

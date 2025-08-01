@@ -77,7 +77,7 @@ pub struct AwsRequestSigning {
 }
 /// Nested message and enum types in `AwsRequestSigning`.
 pub mod aws_request_signing {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct QueryString {
         /// Optional expiration time for the query string parameters. As query string parameter based requests are replayable, in effect representing
         /// an API call that has already been authenticated, it is recommended to keep this expiration time as short as feasible.

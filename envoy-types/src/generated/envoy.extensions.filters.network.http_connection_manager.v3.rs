@@ -721,7 +721,7 @@ pub mod http_connection_manager {
         >,
     }
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct SetCurrentClientCertDetails {
         /// Whether to forward the subject of the client cert. Defaults to false.
         #[prost(message, optional, tag = "1")]
@@ -830,7 +830,7 @@ pub mod http_connection_manager {
     ///
     /// "\<server_name>; error=\<error_type>; details=<details>"
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ProxyStatusConfig {
         /// If true, the details field of the Proxy-Status header is not populated with stream_info.response_code_details.
         /// This value defaults to `false`, i.e. the `details` field is populated by default.
@@ -867,7 +867,7 @@ pub mod http_connection_manager {
         ///
         /// If neither of these values are set, this value defaults to `server_name`,
         /// which itself defaults to "envoy".
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ProxyName {
             /// If `use_node_id` is set, Proxy-Status headers will use the Envoy's node
             /// ID as the name of the proxy.
@@ -879,7 +879,7 @@ pub mod http_connection_manager {
             LiteralProxyName(::prost::alloc::string::String),
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HcmAccessLogOptions {
         /// The interval to flush the above access logs. By default, the HCM will flush exactly one access log
         /// on stream close, when the HTTP request is complete. If this field is set, the HCM will flush access
@@ -1146,7 +1146,7 @@ pub mod http_connection_manager {
         #[prost(message, tag = "31")]
         ScopedRoutes(super::ScopedRoutes),
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum StripPortMode {
         /// Determines if the port part should be removed from host/authority header before any processing
         /// of request by HTTP filters or routing.
@@ -1310,7 +1310,7 @@ pub mod scoped_routes {
     /// Nested message and enum types in `ScopeKeyBuilder`.
     pub mod scope_key_builder {
         /// Specifies the mechanism for constructing key fragments which are composed into scope keys.
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct FragmentBuilder {
             #[prost(oneof = "fragment_builder::Type", tags = "1")]
             pub r#type: ::core::option::Option<fragment_builder::Type>,
@@ -1336,7 +1336,7 @@ pub mod scoped_routes {
             ///
             /// Each 'a=b' key-value pair constitutes an 'element' of the header field.
             /// ```
-            #[derive(Clone, PartialEq, ::prost::Message)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
             pub struct HeaderValueExtractor {
                 /// The name of the header field to extract the value from.
                 ///
@@ -1359,7 +1359,7 @@ pub mod scoped_routes {
             /// Nested message and enum types in `HeaderValueExtractor`.
             pub mod header_value_extractor {
                 /// Specifies a header field's key value pair to match on.
-                #[derive(Clone, PartialEq, ::prost::Message)]
+                #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
                 pub struct KvElement {
                     /// The separator between key and value (e.g., '=' separates 'k=v;...').
                     /// If an element is an empty string, the element is ignored.
@@ -1372,7 +1372,7 @@ pub mod scoped_routes {
                     #[prost(string, tag = "2")]
                     pub key: ::prost::alloc::string::String,
                 }
-                #[derive(Clone, PartialEq, ::prost::Oneof)]
+                #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
                 pub enum ExtractType {
                     /// Specifies the zero based index of the element to extract.
                     /// Note Envoy concatenates multiple values of the same header key into a comma separated
@@ -1384,7 +1384,7 @@ pub mod scoped_routes {
                     Element(KvElement),
                 }
             }
-            #[derive(Clone, PartialEq, ::prost::Oneof)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
             pub enum Type {
                 /// Specifies how a header field's value should be extracted.
                 #[prost(message, tag = "1")]
@@ -1477,7 +1477,7 @@ pub mod http_filter {
         ),
     }
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RequestIdExtension {
     /// Request ID extension specific configuration.
     #[prost(message, optional, tag = "1")]

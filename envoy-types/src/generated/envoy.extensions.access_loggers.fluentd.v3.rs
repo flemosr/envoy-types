@@ -73,7 +73,7 @@ pub struct FluentdAccessLogConfig {
 }
 /// Nested message and enum types in `FluentdAccessLogConfig`.
 pub mod fluentd_access_log_config {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RetryOptions {
         /// The number of times the logger will attempt to connect to the upstream during reconnects.
         /// By default, there is no limit. The logger will attempt to reconnect to the upstream each time

@@ -39,7 +39,7 @@ pub struct RedirectPolicy {
 }
 /// Nested message and enum types in `RedirectPolicy`.
 pub mod redirect_policy {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum RedirectActionSpecifier {
         /// The Http URI to redirect the original request to, to get the custom
         /// response.

@@ -3,7 +3,7 @@
 /// server in a :ref:`ProcessingRequest <envoy_v3_api_msg_service.ext_proc.v3.ProcessingRequest>`.
 /// If the server does not support these protocol configurations, it may choose to close the gRPC stream.
 /// If the server supports these protocol configurations, it should respond based on the API specifications.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ProtocolConfiguration {
     /// Specify the filter configuration :ref:`request_body_mode  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ProcessingMode.request_body_mode>`
     #[prost(
@@ -233,7 +233,7 @@ pub struct HttpHeaders {
 }
 /// This message is sent to the external server when the HTTP request and
 /// response bodies are received.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HttpBody {
     /// The contents of the body in the HTTP request/response. Note that in
     /// streaming mode multiple `HttpBody` messages may be sent.
@@ -408,7 +408,7 @@ pub struct ImmediateResponse {
     pub details: ::prost::alloc::string::String,
 }
 /// This message specifies a gRPC status for an ImmediateResponse message.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GrpcStatus {
     /// The actual gRPC status.
     #[prost(uint32, tag = "1")]
@@ -434,7 +434,7 @@ pub struct HeaderMutation {
     pub remove_headers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// The body response message corresponding to FULL_DUPLEX_STREAMED body mode.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamedBodyResponse {
     /// The body response chunk that will be passed to the upstream/downstream by Envoy.
     #[prost(bytes = "vec", tag = "1")]
@@ -447,7 +447,7 @@ pub struct StreamedBodyResponse {
     pub end_of_stream: bool,
 }
 /// This message specifies the body mutation the server sends to Envoy.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BodyMutation {
     /// The type of mutation for the body.
     #[prost(oneof = "body_mutation::Mutation", tags = "1, 2, 3")]
@@ -456,7 +456,7 @@ pub struct BodyMutation {
 /// Nested message and enum types in `BodyMutation`.
 pub mod body_mutation {
     /// The type of mutation for the body.
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Mutation {
         ///
         /// The entire body to replace.
@@ -520,6 +520,17 @@ pub mod external_processor_client {
     #[derive(Debug, Clone)]
     pub struct ExternalProcessorClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl ExternalProcessorClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> ExternalProcessorClient<T>
     where
@@ -605,7 +616,7 @@ pub mod external_processor_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.ext_proc.v3.ExternalProcessor/Process",
             );
@@ -783,7 +794,7 @@ pub mod external_processor_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = ProcessSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

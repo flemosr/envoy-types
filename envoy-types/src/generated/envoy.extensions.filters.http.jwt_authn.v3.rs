@@ -314,7 +314,7 @@ pub struct JwtProvider {
 /// Nested message and enum types in `JwtProvider`.
 pub mod jwt_provider {
     /// Alters the payload representation in the request dynamic metadata to facilitate its use in matching.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct NormalizePayload {
         /// Each claim in this list will be interpreted as a space-delimited string
         /// and converted to a list of strings based on the delimited values.
@@ -376,7 +376,7 @@ pub mod jwt_provider {
     }
 }
 /// This message specifies JWT Cache configuration.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JwtCacheConfig {
     /// The unit is number of JWTs, default to 100.
     #[prost(uint32, tag = "1")]
@@ -461,7 +461,7 @@ pub struct RemoteJwks {
 /// The listener is activated only after the Jwks is fetched.
 /// When the Jwks is expired in the cache, it is fetched again in the main thread.
 /// The fetched Jwks from the main thread can be used by all worker threads.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JwksAsyncFetch {
     /// If false, the listener is activated after the initial fetch is completed.
     /// The initial fetch result can be either successful or failed.
@@ -476,7 +476,7 @@ pub struct JwksAsyncFetch {
     >,
 }
 /// This message specifies a header location to extract the JWT.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JwtHeader {
     /// The HTTP header name.
     #[prost(string, tag = "1")]
@@ -488,7 +488,7 @@ pub struct JwtHeader {
     pub value_prefix: ::prost::alloc::string::String,
 }
 /// Specify a required provider with audiences.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ProviderWithAudiences {
     /// Specify a required provider name.
     #[prost(string, tag = "1")]
@@ -845,7 +845,7 @@ pub struct JwtAuthentication {
     pub stat_prefix: ::prost::alloc::string::String,
 }
 /// Specify per-route config.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PerRouteConfig {
     #[prost(oneof = "per_route_config::RequirementSpecifier", tags = "1, 2")]
     pub requirement_specifier: ::core::option::Option<
@@ -854,7 +854,7 @@ pub struct PerRouteConfig {
 }
 /// Nested message and enum types in `PerRouteConfig`.
 pub mod per_route_config {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum RequirementSpecifier {
         /// Disable Jwt Authentication for this route.
         #[prost(bool, tag = "1")]
@@ -869,7 +869,7 @@ pub mod per_route_config {
     }
 }
 /// This message specifies a combination of header name and claim name.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JwtClaimToHeader {
     /// The HTTP header name to copy the claim to.
     /// The header name will be sanitized and replaced.

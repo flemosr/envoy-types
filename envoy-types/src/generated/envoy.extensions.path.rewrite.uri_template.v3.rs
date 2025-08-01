@@ -39,7 +39,7 @@
 /// * The path pattern `/content/{format}/{lang}/{id}/{file}.vtt` paired with a substitution
 ///   string of `/{lang}/{format}/{file}.vtt` would transform `/content/hls/en-us/12345/en_193913.vtt`
 ///   into `/en-us/hls/en_193913.vtt`.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UriTemplateRewriteConfig {
     #[prost(string, tag = "1")]
     pub path_template_rewrite: ::prost::alloc::string::String,

@@ -20,7 +20,7 @@ pub mod common_extension_config {
 }
 /// Configuration for the admin handler. See :ref:`here <config_http_filters_tap_admin_handler>` for
 /// more information.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AdminConfig {
     /// Opaque configuration ID. When requests are made to the admin handler, the passed opaque ID is
     /// matched to the configured filter opaque ID to determine which filter to configure.

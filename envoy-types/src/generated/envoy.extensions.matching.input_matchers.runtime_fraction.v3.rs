@@ -6,7 +6,7 @@
 /// numerator N, the matcher evaluates to true. A runtime_fraction input matcher can be used to gradually
 /// roll out matcher changes without requiring full code or configuration deployments.
 /// Note that distribution of matching results is only as good as one of the input.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RuntimeFraction {
     /// Match the input against the given runtime key. The specified default value is used if key is not
     /// present in the runtime configuration.

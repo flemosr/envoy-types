@@ -6,7 +6,7 @@
 ///
 /// Resolutions currently use a hard coded TTL of 60s because the getaddrinfo() API does not
 /// provide the actual TTL. Configuration for this can be added in the future if needed.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GetAddrInfoDnsResolverConfig {
     /// Specifies the number of retries before the resolver gives up. If not specified, the resolver will
     /// retry indefinitely until it succeeds or the DNS query times out.

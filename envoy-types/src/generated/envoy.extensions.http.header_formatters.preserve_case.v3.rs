@@ -2,7 +2,7 @@
 /// Configuration for the preserve case header formatter.
 /// See the :ref:`header casing <config_http_conn_man_header_casing>` configuration guide for more
 /// information.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PreserveCaseFormatterConfig {
     /// Allows forwarding reason phrase text.
     /// This is off by default, and a standard reason phrase is used for a corresponding HTTP response code.
