@@ -48,3 +48,49 @@ pub struct DynamicModuleFilter {
         super::super::super::super::super::super::google::protobuf::Any,
     >,
 }
+/// Configuration of the HTTP per-route filter for dynamic modules. This filter allows loading shared object files
+/// that can be loaded via dlopen by the HTTP filter.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DynamicModuleFilterPerRoute {
+    /// Specifies the shared-object level configuration.
+    #[prost(message, optional, tag = "1")]
+    pub dynamic_module_config: ::core::option::Option<
+        super::super::super::super::dynamic_modules::v3::DynamicModuleConfig,
+    >,
+    /// The name for this filter configuration. This can be used to distinguish between different filter implementations
+    /// inside a dynamic module. For example, a module can have completely different filter implementations.
+    /// When Envoy receives this configuration, it passes the filter_name to the dynamic module's HTTP per-route filter config init function
+    /// together with the filter_config.
+    /// That way a module can decide which in-module filter implementation to use based on the name at load time.
+    #[prost(string, tag = "2")]
+    pub per_route_config_name: ::prost::alloc::string::String,
+    /// The configuration for the filter chosen by filter_name. This is passed to the module's HTTP per-route filter initialization function.
+    /// Together with the filter_name, the module can decide which in-module filter implementation to use and
+    /// fine-tune the behavior of the filter on a specific route.
+    ///
+    /// For example, if a module has two filter implementations, one for logging and one for header manipulation,
+    /// filter_name is used to choose either logging or header manipulation. The filter_config can be used to
+    /// configure the logging level or the header manipulation behavior.
+    ///
+    /// `google.protobuf.Struct` is serialized as JSON before
+    /// passing it to the plugin. `google.protobuf.BytesValue` and
+    /// `google.protobuf.StringValue` are passed directly without the wrapper.
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// # Passing in a string
+    ///
+    /// filter_config:
+    /// "@type": "type.googleapis.com/google.protobuf.StringValue"
+    /// value: hello
+    ///
+    /// # Passing in raw bytes
+    ///
+    /// filter_config:
+    /// "@type": "type.googleapis.com/google.protobuf.BytesValue"
+    /// value: aGVsbG8= # echo -n "hello" | base64
+    #[prost(message, optional, tag = "3")]
+    pub filter_config: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Any,
+    >,
+}

@@ -30,7 +30,8 @@ pub struct CapabilityRestrictionConfig {
 }
 /// Configuration for sanitization of inputs to an allowed capability.
 ///
-/// NOTE: This is currently unimplemented.
+/// .. note::
+/// This is currently unimplemented.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct SanitizationConfig {}
 /// Configuration for a Wasm VM.
@@ -77,7 +78,7 @@ pub struct VmConfig {
         super::super::super::config::core::v3::AsyncDataSource,
     >,
     /// The Wasm configuration used in initialization of a new VM
-    /// (proxy_on_start). `google.protobuf.Struct` is serialized as JSON before
+    /// (`proxy_on_start`). `google.protobuf.Struct` is serialized as JSON before
     /// passing it to the plugin. `google.protobuf.BytesValue` and
     /// `google.protobuf.StringValue` are passed directly without the wrapper.
     #[prost(message, optional, tag = "4")]
@@ -85,7 +86,9 @@ pub struct VmConfig {
         super::super::super::super::google::protobuf::Any,
     >,
     /// Allow the wasm file to include pre-compiled code on VMs which support it.
-    /// Warning: this should only be enable for trusted sources as the precompiled code is not
+    ///
+    /// .. warning::
+    /// This should only be enabled for trusted sources as the precompiled code is not
     /// verified.
     #[prost(bool, tag = "5")]
     pub allow_precompiled: bool,
@@ -99,7 +102,9 @@ pub struct VmConfig {
     /// are generally called implicitly by your language's standard library. Therefore, you do not
     /// need to call them directly. You can access environment variables in the same way you would
     /// on native platforms.
-    /// Warning: Envoy rejects the configuration if there's conflict of key space.
+    ///
+    /// .. warning::
+    /// Envoy rejects the configuration if there's conflict of key space.
     #[prost(message, optional, tag = "7")]
     pub environment_variables: ::core::option::Option<EnvironmentVariables>,
 }
@@ -117,7 +122,7 @@ pub struct EnvironmentVariables {
     >,
 }
 /// Base Configuration for Wasm Plugins e.g. filters and services.
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PluginConfig {
     /// A unique name for a filters/services in a VM for use in identifying the filter/service if
@@ -139,11 +144,14 @@ pub struct PluginConfig {
     pub configuration: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,
     >,
-    /// If there is a fatal error on the VM (e.g. exception, abort(), on_start or on_configure return false),
+    /// If there is a fatal error on the VM (e.g. exception, `abort()`, `on_start` or `on_configure` return false),
     /// then all plugins associated with the VM will either fail closed (by default), e.g. by returning an HTTP 503 error,
-    /// or fail open (if 'fail_open' is set to true) by bypassing the filter. Note: when on_start or on_configure return false
-    /// during xDS updates the xDS configuration will be rejected and when on_start or on_configuration return false on initial
-    /// startup the proxy will not start.
+    /// or fail open (if 'fail_open' is set to true) by bypassing the filter.
+    ///
+    /// .. note::
+    /// When `on_start` or `on_configure` return `false` during xDS updates the xDS configuration will be rejected and when `on_start` or `on_configure` return `false` on
+    /// initial startup the proxy will not start.
+    ///
     /// This field is deprecated in favor of the `failure_policy` field.
     #[deprecated]
     #[prost(bool, tag = "5")]
@@ -158,6 +166,12 @@ pub struct PluginConfig {
     #[prost(message, optional, tag = "6")]
     pub capability_restriction_config: ::core::option::Option<
         CapabilityRestrictionConfig,
+    >,
+    /// Whether or not to allow plugin onRequestHeaders and onResponseHeaders callbacks to return
+    /// FilterHeadersStatus::StopIteration.
+    #[prost(message, optional, tag = "9")]
+    pub allow_on_headers_stop_iteration: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
     >,
     /// Configuration for finding or starting VM.
     #[prost(oneof = "plugin_config::Vm", tags = "3")]
@@ -184,13 +198,13 @@ pub struct WasmService {
     #[prost(bool, tag = "2")]
     pub singleton: bool,
 }
-/// If there is a fatal error on the VM (e.g. exception, abort()), then the policy will be applied.
+/// If there is a fatal error on the VM (e.g. exception, `abort()`), then the policy will be applied.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum FailurePolicy {
     /// No policy is specified. The default policy will be used. The default policy is `FAIL_CLOSED`.
     Unspecified = 0,
-    /// New plugin instance will be created for the new request if the VM is failed. Note this only
+    /// New plugin instance will be created for the new request if the VM is failed. Note this will only
     /// be applied to the following failures:
     ///
     /// * `proxy_wasm::FailState::RuntimeError`

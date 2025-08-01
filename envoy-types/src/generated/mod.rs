@@ -562,6 +562,11 @@ pub mod envoy {
                         include!("envoy.extensions.filters.http.original_src.v3.rs");
                     }
                 }
+                pub mod proto_api_scrubber {
+                    pub mod v3 {
+                        include!("envoy.extensions.filters.http.proto_api_scrubber.v3.rs");
+                    }
+                }
                 pub mod proto_message_extraction {
                     pub mod v3 {
                         include!("envoy.extensions.filters.http.proto_message_extraction.v3.rs");
@@ -971,6 +976,11 @@ pub mod envoy {
                         include!("envoy.extensions.http.stateful_session.cookie.v3.rs");
                     }
                 }
+                pub mod envelope {
+                    pub mod v3 {
+                        include!("envoy.extensions.http.stateful_session.envelope.v3.rs");
+                    }
+                }
                 pub mod header {
                     pub mod v3 {
                         include!("envoy.extensions.http.stateful_session.header.v3.rs");
@@ -1026,6 +1036,11 @@ pub mod envoy {
             pub mod maglev {
                 pub mod v3 {
                     include!("envoy.extensions.load_balancing_policies.maglev.v3.rs");
+                }
+            }
+            pub mod override_host {
+                pub mod v3 {
+                    include!("envoy.extensions.load_balancing_policies.override_host.v3.rs");
                 }
             }
             pub mod pick_first {
@@ -1232,6 +1247,11 @@ pub mod envoy {
             }
         }
         pub mod resource_monitors {
+            pub mod cgroup_memory {
+                pub mod v3 {
+                    include!("envoy.extensions.resource_monitors.cgroup_memory.v3.rs");
+                }
+            }
             pub mod cpu_utilization {
                 pub mod v3 {
                     include!("envoy.extensions.resource_monitors.cpu_utilization.v3.rs");
@@ -1284,6 +1304,11 @@ pub mod envoy {
                 pub mod lua {
                     pub mod v3 {
                         include!("envoy.extensions.router.cluster_specifiers.lua.v3.rs");
+                    }
+                }
+                pub mod matcher {
+                    pub mod v3 {
+                        include!("envoy.extensions.router.cluster_specifiers.matcher.v3.rs");
                     }
                 }
             }

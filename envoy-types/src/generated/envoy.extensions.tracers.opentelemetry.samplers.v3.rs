@@ -51,3 +51,26 @@ pub struct DynatraceSamplerConfig {
     #[prost(uint32, tag = "4")]
     pub root_spans_per_minute: u32,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ParentBasedSamplerConfig {
+    /// Specifies the sampler to be used by this sampler.
+    /// The configured sampler will be used if the parent trace ID is not passed to Envoy
+    ///
+    /// required
+    /// \[\#extension-category: envoy.tracers.opentelemetry.samplers\]
+    #[prost(message, optional, tag = "1")]
+    pub wrapped_sampler: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
+}
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct TraceIdRatioBasedSamplerConfig {
+    /// If the given trace_id falls into a given percentage of all possible
+    /// trace_id values, ShouldSample will return RECORD_AND_SAMPLE.
+    /// required
+    /// \[\#extension-category: envoy.tracers.opentelemetry.samplers\]
+    #[prost(message, optional, tag = "1")]
+    pub sampling_percentage: ::core::option::Option<
+        super::super::super::super::super::r#type::v3::FractionalPercent,
+    >,
+}

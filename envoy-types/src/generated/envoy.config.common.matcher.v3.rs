@@ -9,8 +9,8 @@
 /// Please use the syntactically equivalent :ref:`matching API <envoy_v3_api_msg_.xds.type.matcher.v3.Matcher>`
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Matcher {
-    /// Optional OnMatch to use if the matcher failed.
-    /// If specified, the OnMatch is used, and the matcher is considered
+    /// Optional `OnMatch` to use if the matcher failed.
+    /// If specified, the `OnMatch` is used, and the matcher is considered
     /// to have matched.
     /// If not specified, the matcher is considered not to have matched.
     #[prost(message, optional, boxed, tag = "3")]
@@ -25,6 +25,17 @@ pub mod matcher {
     /// What to do if a match is successful.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct OnMatch {
+        /// If true, the action will be taken but the caller will behave as if no
+        /// match was found. This applies both to actions directly encoded in the
+        /// action field and to actions returned from a nested matcher tree in the
+        /// matcher field. A subsequent matcher on_no_match action will be used
+        /// instead.
+        ///
+        /// This field is not supported in all contexts in which the matcher API is
+        /// used. If this field is set in a context in which it's not supported,
+        /// the resource will be rejected.
+        #[prost(bool, tag = "3")]
+        pub keep_matching: bool,
         #[prost(oneof = "on_match::OnMatch", tags = "1, 2")]
         pub on_match: ::core::option::Option<on_match::OnMatch>,
     }
@@ -109,7 +120,7 @@ pub mod matcher {
                 /// A list of predicates to be AND-ed together.
                 #[prost(message, tag = "3")]
                 AndMatcher(PredicateList),
-                /// The invert of a predicate
+                /// The inverse of a predicate
                 #[prost(message, tag = "4")]
                 NotMatcher(::prost::alloc::boxed::Box<super::Predicate>),
             }
@@ -243,9 +254,9 @@ pub struct HttpHeadersMatch {
 ///
 /// .. attention::
 ///
-/// Searching for patterns in HTTP body is potentially cpu intensive. For each specified pattern, http body is scanned byte by byte to find a match.
+/// Searching for patterns in HTTP body is potentially CPU-intensive. For each specified pattern, HTTP body is scanned byte by byte to find a match.
 /// If multiple patterns are specified, the process is repeated for each pattern. If location of a pattern is known, `bytes_limit` should be specified
-/// to scan only part of the http body.
+/// to scan only part of the HTTP body.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpGenericBodyMatch {
     /// Limits search to specified number of bytes - default zero (no limit - match entire captured buffer).

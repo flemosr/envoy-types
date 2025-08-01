@@ -138,6 +138,10 @@ pub struct FileDescriptorProto {
     /// For Google-internal migration only. Do not use.
     #[prost(int32, repeated, packed = "false", tag = "11")]
     pub weak_dependency: ::prost::alloc::vec::Vec<i32>,
+    /// Names of files imported by this file purely for the purpose of providing
+    /// option extensions. These are excluded from the dependency list above.
+    #[prost(string, repeated, tag = "15")]
+    pub option_dependency: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// All top-level definitions in this file.
     #[prost(message, repeated, tag = "4")]
     pub message_type: ::prost::alloc::vec::Vec<DescriptorProto>,
@@ -196,6 +200,9 @@ pub struct DescriptorProto {
     /// A given name may only be reserved once.
     #[prost(string, repeated, tag = "10")]
     pub reserved_name: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Support for `export` and `local` keywords on enums.
+    #[prost(enumeration = "SymbolVisibility", optional, tag = "11")]
+    pub visibility: ::core::option::Option<i32>,
 }
 /// Nested message and enum types in `DescriptorProto`.
 pub mod descriptor_proto {
@@ -551,6 +558,9 @@ pub struct EnumDescriptorProto {
     /// be reserved once.
     #[prost(string, repeated, tag = "5")]
     pub reserved_name: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Support for `export` and `local` keywords on enums.
+    #[prost(enumeration = "SymbolVisibility", optional, tag = "6")]
+    pub visibility: ::core::option::Option<i32>,
 }
 /// Nested message and enum types in `EnumDescriptorProto`.
 pub mod enum_descriptor_proto {
@@ -1413,9 +1423,71 @@ pub struct FeatureSet {
     pub json_format: ::core::option::Option<i32>,
     #[prost(enumeration = "feature_set::EnforceNamingStyle", optional, tag = "7")]
     pub enforce_naming_style: ::core::option::Option<i32>,
+    #[prost(
+        enumeration = "feature_set::visibility_feature::DefaultSymbolVisibility",
+        optional,
+        tag = "8"
+    )]
+    pub default_symbol_visibility: ::core::option::Option<i32>,
 }
 /// Nested message and enum types in `FeatureSet`.
 pub mod feature_set {
+    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    pub struct VisibilityFeature {}
+    /// Nested message and enum types in `VisibilityFeature`.
+    pub mod visibility_feature {
+        #[derive(
+            Clone,
+            Copy,
+            Debug,
+            PartialEq,
+            Eq,
+            Hash,
+            PartialOrd,
+            Ord,
+            ::prost::Enumeration
+        )]
+        #[repr(i32)]
+        pub enum DefaultSymbolVisibility {
+            Unknown = 0,
+            /// Default pre-EDITION_2024, all UNSET visibility are export.
+            ExportAll = 1,
+            /// All top-level symbols default to export, nested default to local.
+            ExportTopLevel = 2,
+            /// All symbols default to local.
+            LocalAll = 3,
+            /// All symbols local by default. Nested types cannot be exported.
+            /// With special case caveat for message { enum {} reserved 1 to max; }
+            /// This is the recommended setting for new protos.
+            Strict = 4,
+        }
+        impl DefaultSymbolVisibility {
+            /// String value of the enum field names used in the ProtoBuf definition.
+            ///
+            /// The values are not transformed in any way and thus are considered stable
+            /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+            pub fn as_str_name(&self) -> &'static str {
+                match self {
+                    Self::Unknown => "DEFAULT_SYMBOL_VISIBILITY_UNKNOWN",
+                    Self::ExportAll => "EXPORT_ALL",
+                    Self::ExportTopLevel => "EXPORT_TOP_LEVEL",
+                    Self::LocalAll => "LOCAL_ALL",
+                    Self::Strict => "STRICT",
+                }
+            }
+            /// Creates an enum from field names used in the ProtoBuf definition.
+            pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+                match value {
+                    "DEFAULT_SYMBOL_VISIBILITY_UNKNOWN" => Some(Self::Unknown),
+                    "EXPORT_ALL" => Some(Self::ExportAll),
+                    "EXPORT_TOP_LEVEL" => Some(Self::ExportTopLevel),
+                    "LOCAL_ALL" => Some(Self::LocalAll),
+                    "STRICT" => Some(Self::Strict),
+                    _ => None,
+                }
+            }
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -2023,6 +2095,40 @@ impl Edition {
             "EDITION_99998_TEST_ONLY" => Some(Self::Edition99998TestOnly),
             "EDITION_99999_TEST_ONLY" => Some(Self::Edition99999TestOnly),
             "EDITION_MAX" => Some(Self::Max),
+            _ => None,
+        }
+    }
+}
+/// Describes the 'visibility' of a symbol with respect to the proto import
+/// system. Symbols can only be imported when the visibility rules do not prevent
+/// it (ex: local symbols cannot be imported).  Visibility modifiers can only set
+/// on `message` and `enum` as they are the only types available to be referenced
+/// from other files.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum SymbolVisibility {
+    VisibilityUnset = 0,
+    VisibilityLocal = 1,
+    VisibilityExport = 2,
+}
+impl SymbolVisibility {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::VisibilityUnset => "VISIBILITY_UNSET",
+            Self::VisibilityLocal => "VISIBILITY_LOCAL",
+            Self::VisibilityExport => "VISIBILITY_EXPORT",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "VISIBILITY_UNSET" => Some(Self::VisibilityUnset),
+            "VISIBILITY_LOCAL" => Some(Self::VisibilityLocal),
+            "VISIBILITY_EXPORT" => Some(Self::VisibilityExport),
             _ => None,
         }
     }

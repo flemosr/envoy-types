@@ -172,7 +172,7 @@ pub mod lightstep_config {
 }
 /// Configuration for the OpenTelemetry tracer.
 /// \[\#extension: envoy.tracers.opentelemetry\]
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryConfig {
     /// The upstream gRPC cluster that will receive OTLP traces.
@@ -213,6 +213,13 @@ pub struct OpenTelemetryConfig {
     /// \[\#extension-category: envoy.tracers.opentelemetry.samplers\]
     #[prost(message, optional, tag = "5")]
     pub sampler: ::core::option::Option<super::super::core::v3::TypedExtensionConfig>,
+    /// Envoy caches the span in memory when the OpenTelemetry backend service is temporarily unavailable.
+    /// This field specifies the maximum number of spans that can be cached. If not specified, the
+    /// default is 1024.
+    #[prost(message, optional, tag = "6")]
+    pub max_cache_size: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt32Value,
+    >,
 }
 /// Configuration structure.
 #[derive(Clone, PartialEq, ::prost::Message)]

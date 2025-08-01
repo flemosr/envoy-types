@@ -9,6 +9,7 @@ pub struct LocalityLbConfig {
 /// Nested message and enum types in `LocalityLbConfig`.
 pub mod locality_lb_config {
     /// Configuration for :ref:`zone aware routing  <arch_overview_load_balancing_zone_aware_routing>`.
+    /// \[\#next-free-field: 6\]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct ZoneAwareLbConfig {
         /// Configures percentage of requests that will be considered for zone aware routing
@@ -36,8 +37,38 @@ pub mod locality_lb_config {
         #[prost(bool, tag = "3")]
         pub fail_traffic_on_panic: bool,
         /// If set to true, Envoy will force LocalityDirect routing if a local locality exists.
+        #[deprecated]
         #[prost(bool, tag = "4")]
         pub force_locality_direct_routing: bool,
+        #[prost(message, optional, tag = "5")]
+        pub force_local_zone: ::core::option::Option<
+            zone_aware_lb_config::ForceLocalZone,
+        >,
+    }
+    /// Nested message and enum types in `ZoneAwareLbConfig`.
+    pub mod zone_aware_lb_config {
+        /// Configures Envoy to always route requests to the local zone regardless of the
+        /// upstream zone structure. In Envoy's default configuration, traffic is distributed proportionally
+        /// across all upstream hosts while trying to maximize local routing when possible. The approach
+        /// with force_local_zone aims to be more predictable and if there are upstream hosts in the local
+        /// zone, they will receive all traffic.
+        ///
+        /// * :ref:`runtime values <config_cluster_manager_cluster_runtime_zone_routing>`.
+        /// * :ref:`Zone aware routing support <arch_overview_load_balancing_zone_aware_routing>`.
+        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        pub struct ForceLocalZone {
+            /// Configures the minimum number of upstream hosts in the local zone required when force_local_zone
+            /// is enabled. If the number of upstream hosts in the local zone is less than the specified value,
+            /// Envoy will fall back to the default proportional-based distribution across localities.
+            /// If not specified, the default is 1.
+            ///
+            /// * :ref:`runtime values <config_cluster_manager_cluster_runtime_zone_routing>`.
+            /// * :ref:`Zone aware routing support <arch_overview_load_balancing_zone_aware_routing>`.
+            #[prost(message, optional, tag = "1")]
+            pub min_size: ::core::option::Option<
+                super::super::super::super::super::super::super::google::protobuf::UInt32Value,
+            >,
+        }
     }
     /// Configuration for :ref:`locality weighted load balancing  <arch_overview_load_balancing_locality_weighted_lb>`
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -87,7 +118,7 @@ pub struct SlowStartConfig {
     >,
 }
 /// Common Configuration for all consistent hashing load balancers (MaglevLb, RingHashLb, etc.)
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConsistentHashingLbConfig {
     /// If set to `true`, the cluster will use hostname instead of the resolved
     /// address as the key to consistently hash to an upstream host. Only valid for StrictDNS clusters with hostnames which resolve to a single IP address.
@@ -114,5 +145,14 @@ pub struct ConsistentHashingLbConfig {
     #[prost(message, optional, tag = "2")]
     pub hash_balance_factor: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
+    >,
+    ///
+    /// Specifies a list of hash policies to use for ring hash load balancing. If `hash_policy` is
+    /// set, then
+    /// : ref:`route level hash policy <envoy_v3_api_field_config.route.v3.RouteAction.hash_policy>`
+    ///   will be ignored.
+    #[prost(message, repeated, tag = "3")]
+    pub hash_policy: ::prost::alloc::vec::Vec<
+        super::super::super::super::config::route::v3::route_action::HashPolicy,
     >,
 }

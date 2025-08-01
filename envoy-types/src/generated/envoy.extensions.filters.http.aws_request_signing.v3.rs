@@ -69,7 +69,7 @@ pub struct AwsRequestSigning {
     #[prost(message, optional, tag = "7")]
     pub query_string: ::core::option::Option<aws_request_signing::QueryString>,
     /// The credential provider for signing the request. This is optional and if not set,
-    /// it will be retrieved from the procedure described in :ref:`config_http_filters_aws_request_signing`.
+    /// it will be retrieved using the procedure described in :ref:`config_http_filters_aws_request_signing`.
     #[prost(message, optional, tag = "8")]
     pub credential_provider: ::core::option::Option<
         super::super::super::super::common::aws::v3::AwsCredentialProvider,

@@ -7,4 +7,9 @@ pub struct Redis {
     /// by setting the specified key to any value and waiting for traffic to drain.
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
+    /// Use AWS IAM for health checker authentication
+    #[prost(message, optional, tag = "2")]
+    pub aws_iam: ::core::option::Option<
+        super::super::super::filters::network::redis_proxy::v3::AwsIam,
+    >,
 }

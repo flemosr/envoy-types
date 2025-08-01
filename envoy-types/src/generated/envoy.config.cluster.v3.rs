@@ -429,11 +429,13 @@ pub struct Cluster {
     pub name: ::prost::alloc::string::String,
     ///
     /// An optional alternative to the cluster name to be used for observability. This name is used
-    /// emitting stats for the cluster and access logging the cluster name. This will appear as
+    /// for emitting stats for the cluster and access logging the cluster name. This will appear as
     /// additional information in configuration dumps of a cluster's current status as
     /// : ref:`observability_name <envoy_v3_api_field_admin.v3.ClusterStatus.observability_name>`
-    ///   and as an additional tag "upstream_cluster.name" while tracing. Note: Any `:` in the name
-    ///   will be converted to `_` when emitting statistics. This should not be confused with
+    ///   and as an additional tag "upstream_cluster.name" while tracing.
+    ///
+    /// .. note::
+    /// Any `:` in the name will be converted to `_` when emitting statistics. This should not be confused with
     /// : ref:`Router Filter Header <config_http_filters_router_x-envoy-upstream-alt-stat-name>`.
     #[prost(string, tag = "28")]
     pub alt_stat_name: ::prost::alloc::string::String,
@@ -1489,7 +1491,8 @@ pub mod cluster {
         /// If this is not set, we default to a merge window of 1000ms. To disable it, set the merge
         /// window to 0.
         ///
-        /// Note: merging does not apply to cluster membership changes (e.g.: adds/removes); this is
+        /// .. note::
+        /// Merging does not apply to cluster membership changes (e.g.: adds/removes); this is
         /// because merging those updates isn't currently safe. See
         /// <https://github.com/envoyproxy/envoy/pull/3941.>
         #[prost(message, optional, tag = "4")]

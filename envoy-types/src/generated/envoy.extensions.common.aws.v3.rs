@@ -2,6 +2,7 @@
 /// Configuration for AWS credential provider. This is optional and the credentials are normally
 /// retrieved from the environment or AWS configuration files by following the default credential
 /// provider chain. However, this configuration can be used to override the default behavior.
+/// \[\#next-free-field: 11\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AwsCredentialProvider {
     /// The option to use `AssumeRoleWithWebIdentity <<https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html>`\_.>
@@ -25,6 +26,34 @@ pub struct AwsCredentialProvider {
     /// This has no effect if inline_credential is provided.
     #[prost(bool, tag = "4")]
     pub custom_credential_provider_chain: bool,
+    /// The option to use `IAM Roles Anywhere <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html>`\_.>
+    #[prost(message, optional, tag = "5")]
+    pub iam_roles_anywhere_credential_provider: ::core::option::Option<
+        IamRolesAnywhereCredentialProvider,
+    >,
+    /// The option to use credentials sourced from standard `AWS configuration files <<https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html>`\_.>
+    #[prost(message, optional, tag = "6")]
+    pub config_credential_provider: ::core::option::Option<ConfigCredentialProvider>,
+    /// The option to use credentials sourced from `container environment variables <<https://docs.aws.amazon.com/sdkref/latest/guide/feature-container-credentials.html>`\_.>
+    #[prost(message, optional, tag = "7")]
+    pub container_credential_provider: ::core::option::Option<
+        ContainerCredentialProvider,
+    >,
+    /// The option to use credentials sourced from `environment variables <<https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html>`\_.>
+    #[prost(message, optional, tag = "8")]
+    pub environment_credential_provider: ::core::option::Option<
+        EnvironmentCredentialProvider,
+    >,
+    /// The option to use credentials sourced from an EC2 `Instance Profile <<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html>`\_.>
+    #[prost(message, optional, tag = "9")]
+    pub instance_profile_credential_provider: ::core::option::Option<
+        InstanceProfileCredentialProvider,
+    >,
+    /// The option to use `STS:AssumeRole aka Role Chaining <<https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html>`\_.>
+    #[prost(message, optional, boxed, tag = "10")]
+    pub assume_role_credential_provider: ::core::option::Option<
+        ::prost::alloc::boxed::Box<AssumeRoleCredentialProvider>,
+    >,
 }
 /// Configuration to use an inline AWS credential. This is an equivalent to setting the well-known
 /// environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and the optional `AWS_SESSION_TOKEN`.
@@ -70,4 +99,91 @@ pub struct CredentialsFileCredentialProvider {
     /// The profile within the credentials_file data source. If not provided, the default profile will be used.
     #[prost(string, tag = "2")]
     pub profile: ::prost::alloc::string::String,
+}
+/// Configuration to use `IAM Roles Anywhere <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html>`\_>
+/// to retrieve AWS credentials.
+/// \[\#next-free-field: 9\]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct IamRolesAnywhereCredentialProvider {
+    /// The ARN of the role to assume via the IAM Roles Anywhere sessions API. See `Configure Roles <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/getting-started.html#getting-started-step2>`\_> for more details.
+    #[prost(string, tag = "1")]
+    pub role_arn: ::prost::alloc::string::String,
+    /// The certificate used for authenticating to the IAM Roles Anywhere service.
+    /// This certificate must match one configured in the IAM Roles Anywhere profile. See `Configure Roles <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/getting-started.html#getting-started-step2>`\_> for more details.
+    #[prost(message, optional, tag = "2")]
+    pub certificate: ::core::option::Option<
+        super::super::super::super::config::core::v3::DataSource,
+    >,
+    /// The optional certificate chain, required when you are using a subordinate certificate authority for certificate issuance.
+    /// A certificate chain can contain a maximum of 5 elements, see `The IAM Roles Anywhere authentication process <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication.html>`\_> for more details.
+    #[prost(message, optional, tag = "3")]
+    pub certificate_chain: ::core::option::Option<
+        super::super::super::super::config::core::v3::DataSource,
+    >,
+    /// The TLS private key matching the certificate provided.
+    #[prost(message, optional, tag = "4")]
+    pub private_key: ::core::option::Option<
+        super::super::super::super::config::core::v3::DataSource,
+    >,
+    /// The arn of the IAM Roles Anywhere trust anchor configured in your AWS account. A trust anchor in IAM Roles anywhere establishes
+    /// trust between your certificate authority (CA) and AWS. See `Establish trust <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/getting-started.html#getting-started-step1>`\_> for more details.
+    #[prost(string, tag = "5")]
+    pub trust_anchor_arn: ::prost::alloc::string::String,
+    /// The IAM Roles Anywhere profile ARN configured in your AWS account.
+    #[prost(string, tag = "6")]
+    pub profile_arn: ::prost::alloc::string::String,
+    /// An optional role session name, used when identifying the role in subsequent AWS API calls.
+    #[prost(string, tag = "7")]
+    pub role_session_name: ::prost::alloc::string::String,
+    /// An optional session duration, used when calculating the maximum time before vended credentials expire. This value cannot exceed the value configured
+    /// in the IAM Roles Anywhere profile and the resultant session duration is calculate by the formula `here <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/authentication-create-session.html#credentials-object>`\_.>
+    /// If no session duration is provided here, the session duration is sourced from the IAM Roles Anywhere profile.
+    #[prost(message, optional, tag = "8")]
+    pub session_duration: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Duration,
+    >,
+}
+/// The Config Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
+/// credential provider.
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct ConfigCredentialProvider {}
+/// The Container Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
+/// credential provider.
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct ContainerCredentialProvider {}
+/// The Environment Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
+/// credential provider.
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct EnvironmentCredentialProvider {}
+/// The Instance Profile Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
+/// credential provider.
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct InstanceProfileCredentialProvider {}
+/// Configuration to use `AssumeRole <<https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html>`\_> for retrieving new credentials, via role chaining.
+/// \[\#next-free-field: 6\]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AssumeRoleCredentialProvider {
+    /// The ARN of the role to assume.
+    #[prost(string, tag = "1")]
+    pub role_arn: ::prost::alloc::string::String,
+    /// Optional string value to use as the role session name
+    #[prost(string, tag = "2")]
+    pub role_session_name: ::prost::alloc::string::String,
+    /// Optional string value to use as the externalId
+    #[prost(string, tag = "3")]
+    pub external_id: ::prost::alloc::string::String,
+    /// An optional duration, in seconds, of the role session. Minimum role duration is 900s (5 minutes) and maximum is 43200s (12 hours).
+    /// If the session duration is not provided, the default will be determined using the `table described here <<https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage-assume.html>`\_.>
+    #[prost(message, optional, tag = "4")]
+    pub session_duration: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Duration,
+    >,
+    /// The credential provider for signing the AssumeRole request. This is optional and if not set,
+    /// it will be retrieved from the procedure described in :ref:`config_http_filters_aws_request_signing`.
+    /// This list of credential providers cannot include an AssumeRole credential provider and if one is provided
+    /// it will be ignored.
+    #[prost(message, optional, boxed, tag = "5")]
+    pub credential_provider: ::core::option::Option<
+        ::prost::alloc::boxed::Box<AwsCredentialProvider>,
+    >,
 }

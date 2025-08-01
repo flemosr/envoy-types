@@ -305,9 +305,7 @@ pub mod bootstrap {
         >,
         /// If a network based configuration source is specified for :ref:`cds_config  <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.DynamicResources.cds_config>`, it's necessary
         /// to have some initial cluster definitions available to allow Envoy to know
-        /// how to speak to the management server. These cluster definitions may not
-        /// use :ref:`EDS <arch_overview_dynamic_config_eds>` (i.e. they should be static
-        /// IP or DNS-based).
+        /// how to speak to the management server.
         #[prost(message, repeated, tag = "2")]
         pub clusters: ::prost::alloc::vec::Vec<
             super::super::super::cluster::v3::Cluster,

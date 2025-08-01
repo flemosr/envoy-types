@@ -139,6 +139,7 @@ pub mod http_generic_body_match {
     }
 }
 /// Tap output configuration.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutputConfig {
     /// Output sinks for tap data. Currently a single sink is allowed in the list. Once multiple
@@ -165,6 +166,14 @@ pub struct OutputConfig {
     /// match can be determined. See the HTTP tap filter :ref:`streaming  <config_http_filters_tap_streaming>` documentation for more information.
     #[prost(bool, tag = "4")]
     pub streaming: bool,
+    /// Tapped messages will be sent on each read/write event for streamed tapping by default.
+    /// But this behavior could be controlled by setting this field.
+    /// If set then the tapped messages will be send once the threshold is reached.
+    /// This could be used to avoid high frequent sending.
+    #[prost(message, optional, tag = "5")]
+    pub min_streamed_sent_bytes: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt32Value,
+    >,
 }
 /// Tap output sink configuration.
 /// \[\#next-free-field: 7\]

@@ -36,7 +36,9 @@ pub mod config {
         ///
         /// This is only used for :ref:`on_header_present <envoy_v3_api_field_extensions.filters.http.header_to_metadata.v3.Config.Rule.on_header_present>`.
         ///
-        /// Note: if the `value` field is non-empty this field should be empty.
+        /// .. note::
+        ///
+        /// If the `value` field is non-empty this field should be empty.
         #[prost(message, optional, tag = "6")]
         pub regex_value_rewrite: ::core::option::Option<
             super::super::super::super::super::super::r#type::matcher::v3::RegexMatchAndSubstitute,
@@ -61,15 +63,15 @@ pub mod config {
         /// The cookie to be extracted.
         #[prost(string, tag = "5")]
         pub cookie: ::prost::alloc::string::String,
-        /// If the header or cookie is present, apply this metadata KeyValuePair.
+        /// If the header or cookie is present, apply this metadata `KeyValuePair`.
         ///
-        /// If the value in the KeyValuePair is non-empty, it'll be used instead
+        /// If the value in the `KeyValuePair` is non-empty, it'll be used instead
         /// of the header or cookie value.
         #[prost(message, optional, tag = "2")]
         pub on_header_present: ::core::option::Option<KeyValuePair>,
-        /// If the header or cookie is not present, apply this metadata KeyValuePair.
+        /// If the header or cookie is not present, apply this metadata `KeyValuePair`.
         ///
-        /// The value in the KeyValuePair must be set, since it'll be used in lieu
+        /// The value in the `KeyValuePair` must be set, since it'll be used in lieu
         /// of the missing header or cookie value.
         #[prost(message, optional, tag = "3")]
         pub on_header_missing: ::core::option::Option<KeyValuePair>,
@@ -80,6 +82,7 @@ pub mod config {
         #[prost(bool, tag = "4")]
         pub remove: bool,
     }
+    /// Specifies the value type to use in metadata.
     #[derive(
         Clone,
         Copy,
@@ -120,7 +123,7 @@ pub mod config {
             }
         }
     }
-    /// ValueEncode defines the encoding algorithm.
+    /// Specifies the encoding scheme for the value.
     #[derive(
         Clone,
         Copy,
@@ -134,10 +137,13 @@ pub mod config {
     )]
     #[repr(i32)]
     pub enum ValueEncode {
-        /// The value is not encoded.
+        /// No encoding is applied.
         None = 0,
         /// The value is encoded in `Base64 <<https://tools.ietf.org/html/rfc4648#section-4>`\_.>
-        /// Note: this is mostly used for STRING and PROTOBUF_VALUE to escape the
+        ///
+        /// .. note::
+        ///
+        /// This is mostly used for `STRING` and `PROTOBUF_VALUE` to escape the
         /// non-ASCII characters in the header.
         Base64 = 1,
     }

@@ -72,6 +72,21 @@ pub struct Lua {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LuaPerRoute {
+    /// Optional filter context for Lua script. This could be used to pass configuration
+    /// to Lua script. The Lua script can access the filter context using `handle:filterContext()`.
+    /// For example:
+    ///
+    /// .. code-block:: lua
+    ///
+    /// function envoy_on_request(request_handle)
+    /// local filter_context = request_handle:filterContext()
+    /// local filter_context_value = filter_context\["key"\]
+    /// -- Do something with filter_context_value.
+    /// end
+    #[prost(message, optional, tag = "4")]
+    pub filter_context: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Struct,
+    >,
     #[prost(oneof = "lua_per_route::Override", tags = "1, 2, 3")]
     pub r#override: ::core::option::Option<lua_per_route::Override>,
 }

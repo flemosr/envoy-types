@@ -118,6 +118,20 @@ pub struct LocalRateLimit {
     >,
     /// Defines the standard version to use for X-RateLimit headers emitted by the filter.
     ///
+    /// * `X-RateLimit-Limit` - indicates the request-quota associated to the
+    ///   client in the current time-window followed by the description of the
+    ///   quota policy.
+    /// * `X-RateLimit-Remaining` - indicates the remaining requests in the
+    ///   current time-window.
+    /// * `X-RateLimit-Reset` - indicates the number of seconds until reset of
+    ///   the current time-window.
+    ///
+    /// In case rate limiting policy specifies more then one time window, the values
+    /// above represent the window that is closest to reaching its limit.
+    ///
+    /// For more information about the headers specification see selected version of
+    /// the `draft RFC <<https://tools.ietf.org/id/draft-polli-ratelimit-headers-03.html>`\_.>
+    ///
     /// Disabled by default.
     #[prost(
         enumeration = "super::super::super::super::common::ratelimit::v3::XRateLimitHeadersRfcVersion",
