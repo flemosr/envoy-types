@@ -530,6 +530,8 @@ pub mod weighted_cluster {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClusterSpecifierPlugin {
     /// The name of the plugin and its opaque configuration.
+    ///
+    /// \[\#extension-category: envoy.router.cluster_specifier_plugin\]
     #[prost(message, optional, tag = "1")]
     pub extension: ::core::option::Option<super::super::core::v3::TypedExtensionConfig>,
     /// If is_optional is not set or is set to false and the plugin defined by this message is not a
@@ -1090,6 +1092,16 @@ pub struct RouteAction {
     pub max_stream_duration: ::core::option::Option<route_action::MaxStreamDuration>,
     #[prost(oneof = "route_action::ClusterSpecifier", tags = "1, 2, 3, 37, 39")]
     pub cluster_specifier: ::core::option::Option<route_action::ClusterSpecifier>,
+    ///
+    /// If one of the host rewrite specifiers is set and the
+    /// : ref:`suppress_envoy_headers  <envoy_v3_api_field_extensions.filters.http.router.v3.Router.suppress_envoy_headers>` flag is not
+    ///   set to true, the router filter will place the original host header value before
+    ///   rewriting into the :ref:`x-envoy-original-host  <config_http_filters_router_x-envoy-original-host>` header.
+    ///
+    /// And if the
+    /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
+    ///   is set to true, the original host value will also be appended to the
+    /// : ref:`config_http_conn_man_headers_x-forwarded-host` header.
     #[prost(oneof = "route_action::HostRewriteSpecifier", tags = "6, 7, 29, 35")]
     pub host_rewrite_specifier: ::core::option::Option<
         route_action::HostRewriteSpecifier,
@@ -1488,37 +1500,34 @@ pub mod route_action {
         #[prost(message, tag = "39")]
         InlineClusterSpecifierPlugin(super::ClusterSpecifierPlugin),
     }
+    ///
+    /// If one of the host rewrite specifiers is set and the
+    /// : ref:`suppress_envoy_headers  <envoy_v3_api_field_extensions.filters.http.router.v3.Router.suppress_envoy_headers>` flag is not
+    ///   set to true, the router filter will place the original host header value before
+    ///   rewriting into the :ref:`x-envoy-original-host  <config_http_filters_router_x-envoy-original-host>` header.
+    ///
+    /// And if the
+    /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
+    ///   is set to true, the original host value will also be appended to the
+    /// : ref:`config_http_conn_man_headers_x-forwarded-host` header.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum HostRewriteSpecifier {
-        ///
         /// Indicates that during forwarding, the host header will be swapped with
-        /// this value. Using this option will append the
-        /// : ref:`config_http_conn_man_headers_x-forwarded-host` header if
-        /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
-        ///   is set.
+        /// this value.
         #[prost(string, tag = "6")]
         HostRewriteLiteral(::prost::alloc::string::String),
-        ///
         /// Indicates that during forwarding, the host header will be swapped with
         /// the hostname of the upstream host chosen by the cluster manager. This
         /// option is applicable only when the destination cluster for a route is of
         /// type `strict_dns` or `logical_dns`,
         /// or when :ref:`hostname <envoy_v3_api_field_config.endpoint.v3.Endpoint.hostname>`
         /// field is not empty. Setting this to true with other cluster types
-        /// has no effect. Using this option will append the
-        /// : ref:`config_http_conn_man_headers_x-forwarded-host` header if
-        /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
-        ///   is set.
+        /// has no effect.
         #[prost(message, tag = "7")]
         AutoHostRewrite(super::super::super::super::super::google::protobuf::BoolValue),
-        ///
         /// Indicates that during forwarding, the host header will be swapped with the content of given
         /// downstream or :ref:`custom <config_http_conn_man_headers_custom_request_headers>` header.
-        /// If header value is empty, host header is left intact. Using this option will append the
-        /// : ref:`config_http_conn_man_headers_x-forwarded-host` header if
-        /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
-        ///   is set.
-        ///
+        /// If header value is empty, host header is left intact.
         ///
         /// .. attention::
         ///
@@ -1530,15 +1539,9 @@ pub mod route_action {
         /// If the header appears multiple times only the first value is used.
         #[prost(string, tag = "29")]
         HostRewriteHeader(::prost::alloc::string::String),
-        ///
         /// Indicates that during forwarding, the host header will be swapped with
         /// the result of the regex substitution executed on path value with query and fragment removed.
         /// This is useful for transitioning variable content between path segment and subdomain.
-        /// Using this option will append the
-        /// : ref:`config_http_conn_man_headers_x-forwarded-host` header if
-        /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
-        ///   is set.
-        ///
         ///
         /// For example with the following config:
         ///

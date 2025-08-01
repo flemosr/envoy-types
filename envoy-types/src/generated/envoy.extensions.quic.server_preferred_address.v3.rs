@@ -80,22 +80,25 @@ pub mod fixed_server_preferred_address_config {
     pub struct AddressFamilyConfig {
         /// The server preferred address sent to clients.
         ///
+        /// .. note::
         ///
-        /// Note: Envoy currently must receive all packets for a QUIC connection on the same port, so unless
+        ///
+        /// Envoy currently requires all packets for a QUIC connection to arrive on the same port. Therefore, unless a
         /// : ref:`dnat_address <envoy_v3_api_field_extensions.quic.server_preferred_address.v3.FixedServerPreferredAddressConfig.AddressFamilyConfig.dnat_address>`
-        ///   is configured, the port for this address must be zero, and the listener's
-        ///   port will be used instead.
+        ///   is explicitly configured, the port specified here must be set to zero. In such cases, Envoy will automatically
+        ///   use the listener's port.
         #[prost(message, optional, tag = "1")]
         pub address: ::core::option::Option<
             super::super::super::super::super::config::core::v3::SocketAddress,
         >,
-        /// If there is a DNAT between the client and Envoy, the address that Envoy will observe
-        /// server preferred address packets being sent to. If this is not specified, it is assumed
-        /// there is no DNAT and the server preferred address packets will be sent to the address advertised
-        /// to clients for server preferred address.
+        /// If a DNAT exists between the client and Envoy, this is the address where Envoy will observe incoming server
+        /// preferred address packets. If unspecified, Envoy assumes there is no DNAT, and packets will be sent directly
+        /// to the address advertised to clients as the server preferred address.
         ///
-        /// Note: Envoy currently must receive all packets for a QUIC connection on the same port, so the
-        /// port for this address must be zero, and the listener's port will be used instead.
+        /// .. note::
+        ///
+        /// Envoy currently requires all packets for a QUIC connection to arrive on the same port. Consequently, the
+        /// port for this address must be set to zero, with Envoy defaulting to the listener's port instead.
         #[prost(message, optional, tag = "2")]
         pub dnat_address: ::core::option::Option<
             super::super::super::super::super::config::core::v3::SocketAddress,

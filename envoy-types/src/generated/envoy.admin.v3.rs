@@ -262,8 +262,8 @@ pub struct HostStatus {
     ///
     /// .. note::
     ///
-    /// The message will be missing if the host didn’t receive enough traffic to compute a success rate, or if the
-    /// cluster didn’t have enough hosts to perform outlier ejection based on success rate.
+    /// The message will be missing if the host didn't receive enough traffic to compute a success rate, or if the
+    /// cluster didn't have enough hosts to perform outlier ejection based on success rate.
     #[prost(message, optional, tag = "8")]
     pub local_origin_success_rate: ::core::option::Option<
         super::super::r#type::v3::Percent,
@@ -289,18 +289,22 @@ pub struct HostHealthStatus {
     /// health checking.
     #[prost(bool, tag = "5")]
     pub pending_dynamic_removal: bool,
-    /// The host has not yet been health checked.
+    /// The host is awaiting first health check.
     #[prost(bool, tag = "6")]
     pub pending_active_hc: bool,
     /// The host should be excluded from panic, spillover, etc. calculations because it was explicitly
     /// taken out of rotation via protocol signal and is not meant to be routed to.
     #[prost(bool, tag = "7")]
     pub excluded_via_immediate_hc_fail: bool,
-    /// The host failed active HC due to timeout.
+    /// The host failed active health check due to timeout.
     #[prost(bool, tag = "8")]
     pub active_hc_timeout: bool,
-    /// Health status as reported by EDS. Note: only HEALTHY and UNHEALTHY are currently supported
-    /// here.
+    /// Health status as reported by EDS.
+    ///
+    /// .. note::
+    ///
+    /// Currently, only `HEALTHY` and `UNHEALTHY` are supported.
+    ///
     /// \[\#comment:TODO(mrice32): pipe through remaining EDS health status possibilities.\]
     #[prost(enumeration = "super::super::config::core::v3::HealthStatus", tag = "3")]
     pub eds_health_status: i32,

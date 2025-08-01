@@ -428,15 +428,47 @@ pub mod redis_proxy {
 pub struct RedisProtocolOptions {
     /// Upstream server password as defined by the `requirepass` directive
     /// `<<https://redis.io/topics/config>`\_> in the server's configuration file.
+    /// If `aws_iam` is set, this field is ignored.
     #[prost(message, optional, tag = "1")]
     pub auth_password: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
     /// Upstream server username as defined by the `user` directive
     /// `<<https://redis.io/topics/acl>`\_> in the server's configuration file.
+    /// If ````aws_iam``` is set, this field will be used as the authenticating user for redis IAM authentication.  See ````Create a new IAM-enabled user\`` under `Setup <<https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/auth-iam.html#auth-iam-setup>`\_> for more details.
     #[prost(message, optional, tag = "2")]
     pub auth_username: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
+    >,
+    /// The cluster level configuration for AWS IAM authentication
+    #[prost(message, optional, tag = "3")]
+    pub aws_iam: ::core::option::Option<AwsIam>,
+}
+/// \[\#next-free-field: 6\]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AwsIam {
+    /// An AwsCredentialProvider, allowing the use of a specific credential provider chain or specific provider settings
+    #[prost(message, optional, tag = "1")]
+    pub credential_provider: ::core::option::Option<
+        super::super::super::super::common::aws::v3::AwsCredentialProvider,
+    >,
+    /// The name of the cache, used when generating the authentication token.
+    #[prost(string, tag = "2")]
+    pub cache_name: ::prost::alloc::string::String,
+    /// The optional service name to be used in AWS IAM authentication. If not provided, the service name will be set to `elasticache`. For Amazon MemoryDB
+    /// the service name should be set to `memorydb`.
+    #[prost(string, tag = "3")]
+    pub service_name: ::prost::alloc::string::String,
+    /// The optional AWS region that your cache is located in. If not provided, the region will be deduced using the region provider chain
+    /// as described in :ref:`config_http_filters_aws_request_signing_region`.
+    #[prost(string, tag = "4")]
+    pub region: ::prost::alloc::string::String,
+    /// Number of seconds before the IAM authentication token will expire. If not set, defaults to 60s (1 minute). Maximum of 900s (15 minutes)
+    /// Expiration of the current authentication token will automatically trigger generation of a new token.
+    /// As envoy will automatically continue to generate new tokens as required, there is no substantial benefit to using a long expiration value here.
+    #[prost(message, optional, tag = "5")]
+    pub expiration_time: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }
 /// RedisExternalAuthProvider specifies a gRPC service that can be used to authenticate Redis clients.

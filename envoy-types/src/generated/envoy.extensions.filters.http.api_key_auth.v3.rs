@@ -3,7 +3,8 @@
 ///
 /// For example, the following configuration configures the filter to authenticate the clients using
 /// the API key from the header `X-API-KEY`. And only the clients with the key `real-key` are
-/// considered as authenticated.
+/// considered as authenticated. The client information is configured to be forwarded
+/// in the header `x-client-id`.
 ///
 /// .. code-block:: yaml
 ///
@@ -13,6 +14,9 @@
 ///   client: user
 /// key_sources:
 /// - header: "X-API-KEY"
+/// forwarding:
+///   header: "x-client-id"
+///   hide_credentials: false
 /// ```
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiKeyAuth {
@@ -22,6 +26,9 @@ pub struct ApiKeyAuth {
     /// The key sources to fetch the key from the coming request.
     #[prost(message, repeated, tag = "2")]
     pub key_sources: ::prost::alloc::vec::Vec<KeySource>,
+    /// Optional configuration to control what information should be propagated to upstream services.
+    #[prost(message, optional, tag = "3")]
+    pub forwarding: ::core::option::Option<Forwarding>,
 }
 /// API key auth configuration of per route or per virtual host or per route configuration.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -50,6 +57,11 @@ pub struct ApiKeyAuthPerRoute {
     /// route.
     #[prost(string, repeated, tag = "3")]
     pub allowed_clients: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Optional configuration to control what information should be propagated to upstream services.
+    /// If this field is non-empty, then the forwarding information in the filter level configuration
+    /// will be ignored and the forwarding in this configuration will be used.
+    #[prost(message, optional, tag = "4")]
+    pub forwarding: ::core::option::Option<Forwarding>,
 }
 /// Single credential entry that contains the API key and the related client id.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -81,4 +93,17 @@ pub struct KeySource {
     /// The field will be used if the `header` and `query` are not set.
     #[prost(string, tag = "3")]
     pub cookie: ::prost::alloc::string::String,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Forwarding {
+    /// The header name in which to store the client information. If this field is non-empty,
+    /// the client string associated with the matched credential will be injected into
+    /// the request before forwarding upstream.
+    #[prost(string, tag = "1")]
+    pub header: ::prost::alloc::string::String,
+    /// If true, remove the API key from the request before forwarding upstream.
+    ///
+    /// This applies to all configured key sources: `header`, `query`, and `cookie`.
+    #[prost(bool, tag = "2")]
+    pub hide_credentials: bool,
 }

@@ -290,10 +290,13 @@ pub mod permission {
         /// When any is set, it matches any action.
         #[prost(bool, tag = "3")]
         Any(bool),
-        /// A header (or pseudo-header such as :path or :method) on the incoming HTTP request. Only
-        /// available for HTTP request.
-        /// Note: the pseudo-header :path includes the query and fragment string. Use the `url_path`
-        /// field if you want to match the URL path without the query and fragment string.
+        /// A header (or pseudo-header such as `:path` or `:method`) on the incoming HTTP request. Only available
+        /// for HTTP request.
+        ///
+        /// .. note::
+        ///
+        /// The pseudo-header `:path` includes the query and fragment string. Use the `url_path` field if you
+        /// want to match the URL path without the query and fragment string.
         #[prost(message, tag = "4")]
         Header(super::super::super::route::v3::HeaderMatcher),
         /// A URL path on the incoming HTTP request. Only available for HTTP.
@@ -318,8 +321,7 @@ pub mod permission {
         /// the value of `not_rule` would not match, this permission would match.
         #[prost(message, tag = "8")]
         NotRule(::prost::alloc::boxed::Box<super::Permission>),
-        /// The request server from the client's connection request. This is
-        /// typically TLS SNI.
+        /// The request server from the client's connection request. This is typically TLS SNI.
         ///
         /// .. attention::
         ///
@@ -335,8 +337,7 @@ pub mod permission {
         /// * A :ref:`listener filter <arch_overview_listener_filters>` may
         ///   overwrite a connection's requested server name within Envoy.
         ///
-        /// Please refer to :ref:`this FAQ entry <faq_how_to_setup_sni>` to learn to
-        /// setup SNI.
+        /// Please refer to :ref:`this FAQ entry <faq_how_to_setup_sni>` to learn how to setup SNI.
         #[prost(message, tag = "9")]
         RequestedServerName(
             super::super::super::super::r#type::matcher::v3::StringMatcher,
@@ -397,12 +398,10 @@ pub mod principal {
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Identifier {
-        /// A set of identifiers that all must match in order to define the
-        /// downstream.
+        /// A set of identifiers that all must match in order to define the downstream.
         #[prost(message, tag = "1")]
         AndIds(Set),
-        /// A set of identifiers at least one must match in order to define the
-        /// downstream.
+        /// A set of identifiers at least one must match in order to define the downstream.
         #[prost(message, tag = "2")]
         OrIds(Set),
         /// When any is set, it matches any downstream.
@@ -425,25 +424,30 @@ pub mod principal {
         /// : ref:`direct_remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`.
         #[prost(message, tag = "5")]
         SourceIp(super::super::super::core::v3::CidrRange),
-        ///
         /// A CIDR block that describes the downstream remote/origin address.
-        /// Note: This is always the physical peer even if the
-        /// : ref:`remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` is
-        ///   inferred from for example the x-forwarder-for header, proxy protocol,
-        ///   etc.
+        ///
+        /// .. note::
+        ///
+        ///
+        /// This is always the physical peer even if the
+        /// : ref:`remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` is inferred from the
+        ///   x-forwarder-for header, the proxy protocol, etc.
         #[prost(message, tag = "10")]
         DirectRemoteIp(super::super::super::core::v3::CidrRange),
-        ///
         /// A CIDR block that describes the downstream remote/origin address.
-        /// Note: This may not be the physical peer and could be different from the
-        /// : ref:`direct_remote_ip  <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`. E.g, if the
-        ///   remote ip is inferred from for example the x-forwarder-for header, proxy
-        ///   protocol, etc.
+        ///
+        /// .. note::
+        ///
+        /// This may not be the physical peer and could be different from the :ref:`direct_remote_ip    <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`. E.g, if the remote ip is inferred from
+        /// the x-forwarder-for header, the proxy protocol, etc.
         #[prost(message, tag = "11")]
         RemoteIp(super::super::super::core::v3::CidrRange),
-        /// A header (or pseudo-header such as :path or :method) on the incoming HTTP
-        /// request. Only available for HTTP request. Note: the pseudo-header :path
-        /// includes the query and fragment string. Use the `url_path` field if you
+        /// A header (or pseudo-header such as `:path` or `:method`) on the incoming HTTP request. Only available
+        /// for HTTP request.
+        ///
+        /// .. note::
+        ///
+        /// The pseudo-header `:path` includes the query and fragment string. Use the `url_path` field if you
         /// want to match the URL path without the query and fragment string.
         #[prost(message, tag = "6")]
         Header(super::super::super::route::v3::HeaderMatcher),
@@ -482,7 +486,7 @@ pub struct Action {
     /// The action to take if the matcher matches. Every action either allows or denies a request,
     /// and can also carry out action-specific operations.
     ///
-    /// Actions:
+    /// **Actions:**
     ///
     /// * `ALLOW`: If the request gets matched on ALLOW, it is permitted.
     /// * `DENY`: If the request gets matched on DENY, it is not permitted.
@@ -491,7 +495,7 @@ pub struct Action {
     ///   `envoy.common` will be set to the value `true`.
     /// * If the request cannot get matched, it will fallback to `DENY`.
     ///
-    /// Log behavior:
+    /// **Log behavior:**
     ///
     /// If the RBAC matcher contains at least one LOG action, the dynamic
     /// metadata key `access_log_hint` will be set based on if the request

@@ -4,12 +4,6 @@
 ///
 /// .. attention::
 ///
-/// This resolver uses a single background thread to do resolutions. As such, it is not currently
-/// advised for use in situations requiring a high resolution rate. A thread pool can be added
-/// in the future if needed.
-///
-/// .. attention::
-///
 /// Resolutions currently use a hard coded TTL of 60s because the getaddrinfo() API does not
 /// provide the actual TTL. Configuration for this can be added in the future if needed.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -18,6 +12,11 @@ pub struct GetAddrInfoDnsResolverConfig {
     /// retry indefinitely until it succeeds or the DNS query times out.
     #[prost(message, optional, tag = "1")]
     pub num_retries: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Specifies the number of threads used to resolve pending DNS queries. If not specified, one thread is used.
+    #[prost(message, optional, tag = "2")]
+    pub num_resolver_threads: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }

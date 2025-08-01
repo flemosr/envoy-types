@@ -121,6 +121,14 @@ pub mod matcher {
     /// What to do if a match is successful.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct OnMatch {
+        /// If true and the Matcher matches, the action will be taken but the caller
+        /// will behave as if the Matcher did not match. A subsequent matcher or
+        /// on_no_match action will be used instead.
+        /// This field is not supported in all contexts in which the matcher API is
+        /// used. If this field is set in a context in which it's not supported,
+        /// the resource will be rejected.
+        #[prost(bool, tag = "3")]
+        pub keep_matching: bool,
         #[prost(oneof = "on_match::OnMatch", tags = "1, 2")]
         pub on_match: ::core::option::Option<on_match::OnMatch>,
     }

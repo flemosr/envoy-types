@@ -10,6 +10,19 @@ pub struct FilterConfig {
     /// : repo:`upstream_address.h<source/common/stream_info/upstream_address.h>`).
     #[prost(bool, tag = "2")]
     pub save_upstream_address: bool,
+    ///
+    /// When this flag is set, the filter will check for the `envoy.upstream.dynamic_host`
+    /// and/or `envoy.upstream.dynamic_port` filter state values before using the HTTP
+    /// Host header for DNS resolution. This provides consistency with the
+    /// : ref:`SNI dynamic forward proxy <envoy_v3_api_msg_extensions.filters.network.sni_dynamic_forward_proxy.v3.FilterConfig>` and
+    /// : ref:`UDP dynamic forward proxy <envoy_v3_api_msg_extensions.filters.udp.udp_proxy.session.dynamic_forward_proxy.v3.FilterConfig>`
+    ///   filters behavior when enabled.
+    ///
+    ///
+    /// If the flag is not set (default), the filter will use the HTTP Host header
+    /// for DNS resolution, maintaining backward compatibility.
+    #[prost(bool, tag = "4")]
+    pub allow_dynamic_host_from_filter_state: bool,
     #[prost(oneof = "filter_config::ImplementationSpecifier", tags = "1, 3")]
     pub implementation_specifier: ::core::option::Option<
         filter_config::ImplementationSpecifier,
@@ -47,24 +60,26 @@ pub mod per_route_config {
         /// this value. If not set or empty, the original host header value
         /// will be used and no rewrite will happen.
         ///
+        /// .. note::
         ///
-        /// Note: this rewrite affects both DNS lookup and host header forwarding. However, this
-        /// option shouldn't be used with
-        /// : ref:`HCM host rewrite <envoy_v3_api_field_config.route.v3.RouteAction.host_rewrite_literal>` given that the
-        ///   value set here would be used for DNS lookups whereas the value set in the HCM would be used
-        ///   for host header forwarding which is not the desired outcome.
+        ///
+        /// This rewrite affects both DNS lookup and host header forwarding. However, this option shouldn't be used with
+        /// : ref:`HCM host rewrite header <envoy_v3_api_field_config.route.v3.RouteAction.auto_host_rewrite>` given that
+        ///   the value set here would be used for DNS lookups whereas the value set in the HCM would be used for host
+        ///   header forwarding which might not be the desired outcome.
         #[prost(string, tag = "1")]
         HostRewriteLiteral(::prost::alloc::string::String),
         /// Indicates that before DNS lookup, the host header will be swapped with
         /// the value of this header. If not set or empty, the original host header
         /// value will be used and no rewrite will happen.
         ///
+        /// .. note::
         ///
-        /// Note: this rewrite affects both DNS lookup and host header forwarding. However, this
-        /// option shouldn't be used with
-        /// : ref:`HCM host rewrite header <envoy_v3_api_field_config.route.v3.RouteAction.auto_host_rewrite>`
-        ///   given that the value set here would be used for DNS lookups whereas the value set in the HCM
-        ///   would be used for host header forwarding which is not the desired outcome.
+        ///
+        /// This rewrite affects both DNS lookup and host header forwarding. However, this option shouldn't be used with
+        /// : ref:`HCM host rewrite header <envoy_v3_api_field_config.route.v3.RouteAction.auto_host_rewrite>` given that
+        ///   the value set here would be used for DNS lookups whereas the value set in the HCM would be used for host
+        ///   header forwarding which might not be the desired outcome.
         ///
         ///
         /// .. note::
@@ -76,7 +91,7 @@ pub mod per_route_config {
 }
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct SubClusterConfig {
-    /// The timeout used for sub cluster initialization. Defaults to 5s if not set.
+    /// The timeout used for sub cluster initialization. Defaults to **5s** if not set.
     #[prost(message, optional, tag = "3")]
     pub cluster_init_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,

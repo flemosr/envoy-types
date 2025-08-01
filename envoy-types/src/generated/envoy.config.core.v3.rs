@@ -215,9 +215,14 @@ pub struct SocketAddress {
     /// IPv6 space as `::FFFF:<IPv4-address>`.
     #[prost(bool, tag = "6")]
     pub ipv4_compat: bool,
-    /// The Linux network namespace to bind the socket to. If this is set, Envoy will
-    /// create the socket in the specified network namespace. Only supported on Linux.
-    /// \[\#not-implemented-hide:\]
+    /// Filepath that specifies the Linux network namespace this socket will be created in (see `man 7  network_namespaces`). If this field is set, Envoy will create the socket in the specified
+    /// network namespace.
+    ///
+    /// .. note::
+    /// Setting this parameter requires Envoy to run with the `CAP_NET_ADMIN` capability.
+    ///
+    /// .. attention::
+    /// Network namespaces are only configurable on Linux. Otherwise, this field has no effect.
     #[prost(string, tag = "7")]
     pub network_namespace_filepath: ::prost::alloc::string::String,
     #[prost(oneof = "socket_address::PortSpecifier", tags = "3, 4")]
@@ -1976,7 +1981,8 @@ pub mod health_check {
         /// `/healthcheck`.
         #[prost(string, tag = "2")]
         pub path: ::prost::alloc::string::String,
-        /// \[\#not-implemented-hide:\] HTTP specific payload.
+        /// HTTP specific payload to be sent as the request body during health checking.
+        /// If specified, the method should support a request body (POST, PUT, PATCH, etc.).
         #[prost(message, optional, tag = "3")]
         pub send: ::core::option::Option<Payload>,
         /// Specifies a list of HTTP expected responses to match in the first `response_buffer_size` bytes of the response body.
@@ -2043,7 +2049,8 @@ pub mod health_check {
             super::super::super::super::r#type::matcher::v3::StringMatcher,
         >,
         /// HTTP Method that will be used for health checking, default is "GET".
-        /// GET, HEAD, POST, PUT, DELETE, OPTIONS, TRACE, PATCH methods are supported, but making request body is not supported.
+        /// GET, HEAD, POST, PUT, DELETE, OPTIONS, TRACE, PATCH methods are supported.
+        /// Request body payloads are supported for POST, PUT, PATCH, and OPTIONS methods only.
         /// CONNECT method is disallowed because it is not appropriate for health check request.
         /// If a non-200 response is expected by the method, it needs to be set in :ref:`expected_statuses <envoy_v3_api_field_config.core.v3.HealthCheck.HttpHealthCheck.expected_statuses>`.
         #[prost(enumeration = "super::RequestMethod", tag = "13")]
@@ -2568,8 +2575,11 @@ pub struct QuicProtocolOptions {
     /// `Initial stream-level flow-control receive window  <<https://tools.ietf.org/html/draft-ietf-quic-transport-34#section-4.1>`\_> size. Valid values range from
     /// 1 to 16777216 (2^24, maximum supported by QUICHE) and defaults to 16777216 (16 * 1024 * 1024).
     ///
-    /// NOTE: 16384 (2^14) is the minimum window size supported in Google QUIC. If configured smaller than it, we will use 16384 instead.
-    /// QUICHE IETF Quic implementation supports 1 bytes window. We only support increasing the default window size now, so it's also the minimum.
+    /// .. note::
+    ///
+    /// 16384 (2^14) is the minimum window size supported in Google QUIC. If configured smaller than it, we will use
+    /// 16384 instead. QUICHE IETF Quic implementation supports 1 bytes window. We only support increasing the default
+    /// window size now, so it's also the minimum.
     ///
     /// This field also acts as a soft limit on the number of bytes Envoy will buffer per-stream in the
     /// QUIC stream send and receive buffers. Once the buffer reaches this pointer, watermark callbacks will fire to
@@ -2579,10 +2589,12 @@ pub struct QuicProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Similar to `initial_stream_window_size`, but for connection-level
-    /// flow-control. Valid values rage from 1 to 25165824 (24MB, maximum supported by QUICHE) and defaults
+    /// flow-control. Valid values range from 1 to 25165824 (24MB, maximum supported by QUICHE) and defaults
     /// to 25165824 (24 * 1024 * 1024).
     ///
-    /// NOTE: 16384 (2^14) is the minimum window size supported in Google QUIC. We only support increasing the default
+    /// .. note::
+    ///
+    /// 16384 (2^14) is the minimum window size supported in Google QUIC. We only support increasing the default
     /// window size now, so it's also the minimum.
     #[prost(message, optional, tag = "3")]
     pub initial_connection_window_size: ::core::option::Option<
@@ -2768,7 +2780,7 @@ pub struct HttpProtocolOptions {
     /// The default value for responses can be overridden by setting runtime key `envoy.reloadable_features.max_response_headers_count`.
     /// Downstream requests that exceed this limit will receive a 431 response for HTTP/1.x and cause a stream
     /// reset for HTTP/2.
-    /// Upstream responses that exceed this limit will result in a 503 response.
+    /// Upstream responses that exceed this limit will result in a 502 response.
     #[prost(message, optional, tag = "2")]
     pub max_headers_count: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -2783,9 +2795,12 @@ pub struct HttpProtocolOptions {
     /// : ref:`HTTP Connection Manager  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.common_http_protocol_options>`.
     ///
     ///
-    /// Note: currently some protocol codecs impose limits on the maximum size of a single header:
-    /// HTTP/2 (when using nghttp2) limits a single header to around 100kb.
-    /// HTTP/3 limits a single header to around 1024kb.
+    /// .. note::
+    ///
+    /// Currently some protocol codecs impose limits on the maximum size of a single header.
+    ///
+    /// * HTTP/2 (when using nghttp2) limits a single header to around 100kb.
+    /// * HTTP/3 limits a single header to around 1024kb.
     #[prost(message, optional, tag = "7")]
     pub max_response_headers_kb: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -2798,9 +2813,15 @@ pub struct HttpProtocolOptions {
     >,
     /// Action to take when a client request with a header name containing underscore characters is received.
     /// If this setting is not specified, the value defaults to ALLOW.
-    /// Note: upstream responses are not affected by this setting.
-    /// Note: this only affects client headers. It does not affect headers added
-    /// by Envoy filters and does not have any impact if added to cluster config.
+    ///
+    /// .. note::
+    ///
+    /// Upstream responses are not affected by this setting.
+    ///
+    /// .. note::
+    ///
+    /// This only affects client headers. It does not affect headers added by Envoy filters and does not have any
+    /// impact if added to cluster config.
     #[prost(
         enumeration = "http_protocol_options::HeadersWithUnderscoresAction",
         tag = "5"
@@ -2944,6 +2965,7 @@ pub struct Http1ProtocolOptions {
     /// If unset, HTTP/1 parser is selected based on
     /// envoy.reloadable_features.http1_use_balsa_parser.
     /// See issue #21245.
+    #[deprecated]
     #[prost(message, optional, tag = "9")]
     pub use_balsa_parser: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
@@ -3065,8 +3087,10 @@ pub struct Http2ProtocolOptions {
     /// (2^16 - 1, HTTP/2 default) to 2147483647 (2^31 - 1, HTTP/2 maximum) and defaults to 268435456
     /// (256 * 1024 * 1024).
     ///
-    /// NOTE: 65535 is the initial window size from HTTP/2 spec. We only support increasing the default
-    /// window size now, so it's also the minimum.
+    /// .. note::
+    ///
+    /// 65535 is the initial window size from HTTP/2 spec. We only support increasing the default window size now,
+    /// so it's also the minimum.
     ///
     /// This field also acts as a soft limit on the number of bytes Envoy will buffer per-stream in the
     /// HTTP/2 codec buffers. Once the buffer reaches this pointer, watermark callbacks will fire to
@@ -3247,7 +3271,7 @@ pub struct GrpcProtocolOptions {
     pub http2_protocol_options: ::core::option::Option<Http2ProtocolOptions>,
 }
 /// A message which allows using HTTP/3.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http3ProtocolOptions {
     #[prost(message, optional, tag = "1")]
@@ -3283,6 +3307,10 @@ pub struct Http3ProtocolOptions {
     /// This can be useful for trading off CPU vs bandwidth when an upstream HTTP/3 connection multiplexes multiple downstream connections.
     #[prost(bool, tag = "7")]
     pub disable_qpack: bool,
+    /// Disables connection level flow control for HTTP/3 streams. This is useful in situations where the streams share the same connection
+    /// but originate from different end-clients, so that each stream can make progress independently at non-front-line proxies.
+    #[prost(bool, tag = "8")]
+    pub disable_connection_flow_control_for_streams: bool,
 }
 /// A message to control transformations to the :scheme header
 #[derive(Clone, PartialEq, ::prost::Message)]

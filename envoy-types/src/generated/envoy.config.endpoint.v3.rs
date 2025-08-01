@@ -324,7 +324,8 @@ pub mod cluster_load_assignment {
         /// this calculation.
         ///
         ///
-        /// Note: this is not currently implemented for
+        /// .. note::
+        /// This is not currently implemented for
         /// : ref:`locality weighted load balancing <arch_overview_load_balancing_locality_weighted_lb>`.
         #[prost(bool, tag = "6")]
         pub weighted_priority_health: bool,

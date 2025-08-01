@@ -2,7 +2,7 @@
 /// This configuration allows the built-in RING_HASH LB policy to be configured via the LB policy
 /// extension point. See the :ref:`load balancing architecture overview  <arch_overview_load_balancing_types>` for more information.
 /// \[\#next-free-field: 8\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RingHash {
     ///
     /// The hash function used to hash hosts onto the ketama ring. The value defaults to

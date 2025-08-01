@@ -532,7 +532,7 @@ pub struct ListenerCollection {
         super::super::super::super::xds::core::v3::CollectionEntry,
     >,
 }
-/// \[\#next-free-field: 36\]
+/// \[\#next-free-field: 37\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Listener {
     /// The unique name by which this listener is known. If no name is provided,
@@ -566,6 +566,12 @@ pub struct Listener {
     /// : ref:`FAQ entry <faq_how_to_setup_sni>`.
     #[prost(message, repeated, tag = "3")]
     pub filter_chains: ::prost::alloc::vec::Vec<FilterChain>,
+    /// Discover filter chains configurations by external service. Dynamic discovery of filter chains is allowed
+    /// while having statically configured filter chains, however, a filter chain name must be unique within a
+    /// listener. If a discovered filter chain matches a name of an existing filter chain, it is discarded.
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "36")]
+    pub fcds_config: ::core::option::Option<listener::FcdsConfig>,
     ///
     /// :ref:`Matcher API <arch_overview_matching_listener>` resolving the filter chain name from the
     /// network properties. This matcher is used as a replacement for the filter chain match condition
@@ -787,6 +793,11 @@ pub struct Listener {
     /// accepted in later event loop iterations.
     /// If no value is provided Envoy will accept all connections pending accept
     /// from the kernel.
+    ///
+    /// .. note::
+    ///
+    /// It is recommended to lower this value for better overload management and reduced per-event cost.
+    /// Setting it to 1 is a viable option with no noticeable impact on performance.
     #[prost(message, optional, tag = "34")]
     pub max_connections_to_accept_per_socket_event: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -862,6 +873,23 @@ pub mod listener {
     /// Configuration for envoy internal listener. All the future internal listener features should be added here.
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct InternalListenerConfig {}
+    /// Configuration for filter chains discovery.
+    /// \[\#not-implemented-hide:\]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct FcdsConfig {
+        /// Optional name to present to the filter chain discovery service. This may be an arbitrary name with arbitrary
+        /// length. If a name is not provided, the listener's name is used. Refer to :ref:`filter_chains <envoy_v3_api_field_config.listener.v3.Listener.name>`.
+        /// for details on how listener name is determined if unspecified. In addition, this may be a xdstp:// URL.
+        #[prost(string, tag = "1")]
+        pub name: ::prost::alloc::string::String,
+        /// Configuration for the source of FCDS updates for this listener.
+        /// .. note::
+        /// This discovery service only supports `AGGREGATED_GRPC` API type.
+        #[prost(message, optional, tag = "2")]
+        pub config_source: ::core::option::Option<
+            super::super::super::core::v3::ConfigSource,
+        >,
+    }
     #[derive(
         Clone,
         Copy,

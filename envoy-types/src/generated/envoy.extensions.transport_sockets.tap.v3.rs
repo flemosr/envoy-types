@@ -18,10 +18,13 @@ pub struct Tap {
     pub socket_tap_config: ::core::option::Option<SocketTapConfig>,
 }
 /// Additional configurations for the transport socket tap
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketTapConfig {
     /// Indicates to whether output the connection information per event
     /// This is only applicable if the streamed trace is enabled
     #[prost(bool, tag = "1")]
     pub set_connection_per_event: bool,
+    /// The contents of the transport tap's statistics prefix.
+    #[prost(string, tag = "2")]
+    pub stats_prefix: ::prost::alloc::string::String,
 }

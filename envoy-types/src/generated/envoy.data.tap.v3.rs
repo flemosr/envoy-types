@@ -190,6 +190,12 @@ pub struct SocketBufferedTrace {
     #[prost(bool, tag = "5")]
     pub write_truncated: bool,
 }
+/// A message for the sequence of observed events
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SocketEvents {
+    #[prost(message, repeated, tag = "1")]
+    pub events: ::prost::alloc::vec::Vec<SocketEvent>,
+}
 /// A streamed socket trace segment. Multiple segments make up a full trace.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketStreamedTraceSegment {
@@ -197,7 +203,7 @@ pub struct SocketStreamedTraceSegment {
     /// for long term stable uniqueness. Matches connection IDs used in Envoy logs.
     #[prost(uint64, tag = "1")]
     pub trace_id: u64,
-    #[prost(oneof = "socket_streamed_trace_segment::MessagePiece", tags = "2, 3")]
+    #[prost(oneof = "socket_streamed_trace_segment::MessagePiece", tags = "2, 3, 4")]
     pub message_piece: ::core::option::Option<
         socket_streamed_trace_segment::MessagePiece,
     >,
@@ -212,6 +218,9 @@ pub mod socket_streamed_trace_segment {
         /// Socket event.
         #[prost(message, tag = "3")]
         Event(super::SocketEvent),
+        /// Sequence of observed events.
+        #[prost(message, tag = "4")]
+        Events(super::SocketEvents),
     }
 }
 /// Wrapper for all fully buffered and streamed tap traces that Envoy emits. This is required for

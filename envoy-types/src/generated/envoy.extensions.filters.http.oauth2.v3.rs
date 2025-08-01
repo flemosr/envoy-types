@@ -141,7 +141,7 @@ pub mod o_auth2_credentials {
 }
 /// OAuth config
 ///
-/// \[\#next-free-field: 23\]
+/// \[\#next-free-field: 26\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
     /// Endpoint on the authorization server to retrieve the access token from.
@@ -157,6 +157,14 @@ pub struct OAuth2Config {
     /// The endpoint redirect to for authorization in response to unauthorized requests.
     #[prost(string, tag = "2")]
     pub authorization_endpoint: ::prost::alloc::string::String,
+    /// The endpoint at the authorization server to request the user be logged out of the Authorization server.
+    /// This field is optional and should be set only if openid is in the auth_scopes and the authorization server
+    /// supports the OpenID Connect RP-Initiated Logout specification.
+    /// For more information, see <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>
+    ///
+    /// If configured, the OAuth2 filter will redirect users to this endpoint when they access the signout_path.
+    #[prost(string, tag = "23")]
+    pub end_session_endpoint: ::prost::alloc::string::String,
     /// Credentials used for OAuth.
     #[prost(message, optional, tag = "3")]
     pub credentials: ::core::option::Option<OAuth2Credentials>,
@@ -259,6 +267,22 @@ pub struct OAuth2Config {
     /// Optional additional prefix to use when emitting statistics.
     #[prost(string, tag = "22")]
     pub stat_prefix: ::prost::alloc::string::String,
+    /// Optional expiration time for the CSRF protection token cookie.
+    /// The CSRF token prevents cross-site request forgery attacks during the OAuth2 flow.
+    /// If not specified, defaults to `600s` (10 minutes), which should provide sufficient time
+    /// for users to complete the OAuth2 authorization flow.
+    #[prost(message, optional, tag = "24")]
+    pub csrf_token_expires_in: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
+    /// Optional expiration time for the code verifier cookie.
+    /// The code verifier is stored in a secure, HTTP-only cookie during the OAuth2 authorization process.
+    /// If not specified, defaults to `600s` (10 minutes), which should provide sufficient time
+    /// for users to complete the OAuth2 authorization flow.
+    #[prost(message, optional, tag = "25")]
+    pub code_verifier_token_expires_in: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
 }
 /// Nested message and enum types in `OAuth2Config`.
 pub mod o_auth2_config {

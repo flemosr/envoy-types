@@ -4,8 +4,8 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CaresDnsResolverConfig {
     ///
-    /// A list of dns resolver addresses.
-    /// : ref:`use_resolvers_as_fallback<envoy_v3_api_field_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig.use_resolvers_as_fallback>`
+    /// A list of DNS resolver addresses.
+    /// : ref:`use_resolvers_as_fallback <envoy_v3_api_field_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig.use_resolvers_as_fallback>`
     ///   below dictates if the DNS client should override system defaults or only use the provided
     ///   resolvers if the system defaults are not available, i.e., as a fallback.
     #[prost(message, repeated, tag = "1")]
@@ -14,9 +14,9 @@ pub struct CaresDnsResolverConfig {
     >,
     ///
     /// If true use the resolvers listed in the
-    /// : ref:`resolvers<envoy_v3_api_field_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig.resolvers>`
+    /// : ref:`resolvers <envoy_v3_api_field_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig.resolvers>`
     ///   field only if c-ares is unable to obtain a
-    ///   nameserver from the system (e.g., /etc/resolv.conf).
+    ///   nameserver from the system (e.g., `/etc/resolv.conf`).
     ///   Otherwise, the resolvers listed in the resolvers list will override the default system
     ///   resolvers. Defaults to false.
     #[prost(bool, tag = "3")]
@@ -32,15 +32,18 @@ pub struct CaresDnsResolverConfig {
     pub dns_resolver_options: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DnsResolverOptions,
     >,
-    /// This option allows for number of UDP based DNS queries to be capped. Note, this
-    /// is only applicable to c-ares DNS resolver currently.
+    /// This option allows the number of UDP based DNS queries to be capped.
+    ///
+    /// .. note::
+    /// This is only applicable to c-ares DNS resolver currently.
     #[prost(message, optional, tag = "5")]
     pub udp_max_queries: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// The number of seconds each name server is given to respond to a query on the first try of any given server.
     ///
-    /// Note: While the c-ares library defaults to 2 seconds, Envoy's default (if this field is unset) is 5 seconds.
+    /// .. note::
+    /// While the c-ares library defaults to 2 seconds, Envoy's default (if this field is unset) is 5 seconds.
     /// This adjustment was made to maintain the previous behavior after users reported an increase in DNS resolution times.
     #[prost(message, optional, tag = "6")]
     pub query_timeout_seconds: ::core::option::Option<
@@ -49,7 +52,8 @@ pub struct CaresDnsResolverConfig {
     /// The maximum number of query attempts the resolver will make before giving up.
     /// Each attempt may use a different name server.
     ///
-    /// Note: While the c-ares library defaults to 3 attempts, Envoy's default (if this field is unset) is 4 attempts.
+    /// .. note::
+    /// While the c-ares library defaults to 3 attempts, Envoy's default (if this field is unset) is 4 attempts.
     /// This adjustment was made to maintain the previous behavior after users reported an increase in DNS resolution times.
     #[prost(message, optional, tag = "7")]
     pub query_tries: ::core::option::Option<
@@ -59,7 +63,8 @@ pub struct CaresDnsResolverConfig {
     /// list of name servers for each resolution request. This can help distribute the query load across multiple name
     /// servers. If disabled (default), the resolver will try name servers in the order they are configured.
     ///
-    /// Note: This setting overrides any system configuration for name server rotation.
+    /// .. note::
+    /// This setting overrides any system configuration for name server rotation.
     #[prost(bool, tag = "8")]
     pub rotate_nameservers: bool,
 }

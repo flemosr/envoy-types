@@ -8,3 +8,22 @@ pub struct ClusterConfig {
     #[prost(string, repeated, tag = "1")]
     pub clusters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+///
+/// Configures an aggregate cluster whose
+/// : ref:`ClusterConfig <envoy_v3_api_msg_extensions.clusters.aggregate.v3.ClusterConfig>`
+///   is to be fetched from a separate xDS resource.
+///   \[\#extension: envoy.clusters.aggregate_resource\]
+///   \[\#not-implemented-hide:\]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AggregateClusterResource {
+    /// Configuration source specifier for the ClusterConfig resource.
+    /// Only the aggregated protocol variants are supported; if configured
+    /// otherwise, the cluster resource will be NACKed.
+    #[prost(message, optional, tag = "1")]
+    pub config_source: ::core::option::Option<
+        super::super::super::super::config::core::v3::ConfigSource,
+    >,
+    /// The name of the ClusterConfig resource to subscribe to.
+    #[prost(string, tag = "2")]
+    pub resource_name: ::prost::alloc::string::String,
+}

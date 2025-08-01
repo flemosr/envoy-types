@@ -11,7 +11,7 @@ pub struct CommonGeoipProviderConfig {
 pub mod common_geoip_provider_config {
     /// The set of geolocation headers to add to request. If any of the configured headers is present
     /// in the incoming request, it will be overridden by the :ref:`Geoip filter <config_http_filters_geoip>`.
-    /// \[\#next-free-field: 10\]
+    /// \[\#next-free-field: 13\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GeolocationHeadersToAdd {
         /// If set, the header will be used to populate the country ISO code associated with the IP address.
@@ -27,10 +27,14 @@ pub mod common_geoip_provider_config {
         /// If set, the header will be used to populate the ASN associated with the IP address.
         #[prost(string, tag = "4")]
         pub asn: ::prost::alloc::string::String,
-        /// If set, the IP address will be checked if it belongs to any type of anonymization network (e.g. VPN, public proxy etc)
-        /// and header will be populated with the check result. Header value will be set to either "true" or "false" depending on the check result.
+        /// This field is being deprecated, use `anon` instead.
+        #[deprecated]
         #[prost(string, tag = "5")]
         pub is_anon: ::prost::alloc::string::String,
+        /// If set, the IP address will be checked if it belongs to any type of anonymization network (e.g. VPN, public proxy etc)
+        /// and header will be populated with the check result. Header value will be set to either "true" or "false" depending on the check result.
+        #[prost(string, tag = "12")]
+        pub anon: ::prost::alloc::string::String,
         /// If set, the IP address will be checked if it belongs to a VPN and header will be populated with the check result.
         /// Header value will be set to either "true" or "false" depending on the check result.
         #[prost(string, tag = "6")]
@@ -47,5 +51,12 @@ pub mod common_geoip_provider_config {
         /// Header value will be set to either "true" or "false" depending on the check result.
         #[prost(string, tag = "9")]
         pub anon_proxy: ::prost::alloc::string::String,
+        /// If set, the header will be used to populate the ISP associated with the IP address.
+        #[prost(string, tag = "10")]
+        pub isp: ::prost::alloc::string::String,
+        /// If set, the IP address will be checked if it belongs to the ISP named iCloud Private Relay and header will be populated with the check result.
+        /// Header value will be set to either "true" or "false" depending on the check result.
+        #[prost(string, tag = "11")]
+        pub apple_private_relay: ::prost::alloc::string::String,
     }
 }

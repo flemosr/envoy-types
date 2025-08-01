@@ -57,4 +57,17 @@ pub struct Cookie {
     /// If no path is specified here, no path will be set for the cookie.
     #[prost(string, tag = "3")]
     pub path: ::prost::alloc::string::String,
+    /// Additional attributes for the cookie. They will be used when generating a new cookie.
+    #[prost(message, repeated, tag = "4")]
+    pub attributes: ::prost::alloc::vec::Vec<CookieAttribute>,
+}
+/// CookieAttribute defines an API for adding additional attributes for a HTTP cookie.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CookieAttribute {
+    /// The name of the cookie attribute.
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+    /// The optional value of the cookie attribute.
+    #[prost(string, tag = "2")]
+    pub value: ::prost::alloc::string::String,
 }

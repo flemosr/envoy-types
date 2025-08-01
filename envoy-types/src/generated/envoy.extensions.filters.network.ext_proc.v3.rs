@@ -5,12 +5,13 @@
 ///
 /// The filter communicates with an external gRPC service that can:
 ///
-/// * Inspect traffic in both directions
-/// * Modify the network traffic
-/// * Control connection lifecycle (continue, close, or reset)
+/// 1. Inspect traffic in both directions
+/// 1. Modify the network traffic
+/// 1. Control connection lifecycle (continue, close, or reset)
 ///
 /// By using the filter's processing mode, you can selectively choose which data
 /// directions to process (read, write or both), allowing for efficient processing.
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NetworkExternalProcessor {
     /// The gRPC service that will process network traffic.
@@ -41,6 +42,11 @@ pub struct NetworkExternalProcessor {
     pub message_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
+    #[prost(string, tag = "5")]
+    pub stat_prefix: ::prost::alloc::string::String,
+    /// Options related to the sending and receiving of dynamic metadata.
+    #[prost(message, optional, tag = "6")]
+    pub metadata_options: ::core::option::Option<MetadataOptions>,
 }
 /// Options for controlling processing behavior.
 /// Filter will reject the config if both read and write are SKIP mode.
@@ -95,5 +101,32 @@ pub mod processing_mode {
                 _ => None,
             }
         }
+    }
+}
+/// The MetadataOptions structure defines options for sending dynamic metadata. Specifically,
+/// which namespaces to send to the server.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MetadataOptions {
+    /// Describes which typed or untyped dynamic metadata namespaces to forward to
+    /// the external processing server.
+    #[prost(message, optional, tag = "1")]
+    pub forwarding_namespaces: ::core::option::Option<
+        metadata_options::MetadataNamespaces,
+    >,
+}
+/// Nested message and enum types in `MetadataOptions`.
+pub mod metadata_options {
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct MetadataNamespaces {
+        /// Specifies a list of metadata namespaces whose values, if present,
+        /// will be passed to the ext_proc service as an opaque *protobuf::Struct*.
+        #[prost(string, repeated, tag = "1")]
+        pub untyped: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+        /// Specifies a list of metadata namespaces whose values, if present,
+        /// will be passed to the ext_proc service as a *protobuf::Any*. This allows
+        /// envoy and the external processing server to share the protobuf message
+        /// definition for safe parsing.
+        #[prost(string, repeated, tag = "2")]
+        pub typed: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
 }

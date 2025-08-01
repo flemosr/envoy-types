@@ -6,6 +6,13 @@ pub struct TlsInspector {
     pub enable_ja3_fingerprinting: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// Populate `JA4` fingerprint hash using data from the TLS Client Hello packet.
+    /// `JA4` is an improved version of `JA3` that includes TLS version, ciphers, extensions,
+    /// and ALPN information in a hex format. Default is false.
+    #[prost(message, optional, tag = "3")]
+    pub enable_ja4_fingerprinting: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
     /// The size in bytes of the initial buffer requested by the tls_inspector.
     /// If the filter needs to read additional bytes from the socket, the
     /// filter will double the buffer up to it's default maximum of 64KiB.

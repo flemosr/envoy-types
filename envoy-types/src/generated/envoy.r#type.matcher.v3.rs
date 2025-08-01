@@ -81,9 +81,10 @@ pub struct RegexMatchAndSubstitute {
 /// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StringMatcher {
-    /// If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. This
-    /// has no effect for the safe_regex match.
-    /// For example, the matcher `data` will match both input string `Data` and `data` if set to true.
+    /// If `true`, indicates the exact/prefix/suffix/contains matching should be case insensitive. This
+    /// has no effect for the `safe_regex` match.
+    /// For example, the matcher `data` will match both input string `Data` and `data` if this option
+    /// is set to `true`.
     #[prost(bool, tag = "6")]
     pub ignore_case: bool,
     #[prost(oneof = "string_matcher::MatchPattern", tags = "1, 2, 3, 5, 7, 8")]
@@ -101,7 +102,10 @@ pub mod string_matcher {
         #[prost(string, tag = "1")]
         Exact(::prost::alloc::string::String),
         /// The input string must have the prefix specified here.
-        /// Note: empty prefix is not allowed, please use regex instead.
+        ///
+        /// .. note::
+        ///
+        /// Empty prefix match is not allowed, please use `safe_regex` instead.
         ///
         /// Examples:
         ///
@@ -109,7 +113,10 @@ pub mod string_matcher {
         #[prost(string, tag = "2")]
         Prefix(::prost::alloc::string::String),
         /// The input string must have the suffix specified here.
-        /// Note: empty prefix is not allowed, please use regex instead.
+        ///
+        /// .. note::
+        ///
+        /// Empty suffix match is not allowed, please use `safe_regex` instead.
         ///
         /// Examples:
         ///
@@ -120,7 +127,10 @@ pub mod string_matcher {
         #[prost(message, tag = "5")]
         SafeRegex(super::RegexMatcher),
         /// The input string must have the substring specified here.
-        /// Note: empty contains match is not allowed, please use regex instead.
+        ///
+        /// .. note::
+        ///
+        /// Empty contains match is not allowed, please use `safe_regex` instead.
         ///
         /// Examples:
         ///
@@ -259,13 +269,13 @@ pub struct OrMatcher {
 /// \[\#next-major-version: MetadataMatcher should use StructMatcher\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MetadataMatcher {
-    /// The filter name to retrieve the Struct from the Metadata.
+    /// The filter name to retrieve the `Struct` from the `Metadata`.
     #[prost(string, tag = "1")]
     pub filter: ::prost::alloc::string::String,
-    /// The path to retrieve the Value from the Struct.
+    /// The path to retrieve the `Value` from the `Struct`.
     #[prost(message, repeated, tag = "2")]
     pub path: ::prost::alloc::vec::Vec<metadata_matcher::PathSegment>,
-    /// The MetadataMatcher is matched if the value retrieved by path is matched to this value.
+    /// The `MetadataMatcher` is matched if the value retrieved by path is matched to this value.
     #[prost(message, optional, tag = "3")]
     pub value: ::core::option::Option<ValueMatcher>,
     /// If true, the match result will be inverted.
@@ -274,8 +284,10 @@ pub struct MetadataMatcher {
 }
 /// Nested message and enum types in `MetadataMatcher`.
 pub mod metadata_matcher {
-    /// Specifies the segment in a path to retrieve value from Metadata.
-    /// Note: Currently it's not supported to retrieve a value from a list in Metadata. This means that
+    /// Specifies the segment in a path to retrieve value from `Metadata`.
+    ///
+    /// .. note::
+    /// Currently it's not supported to retrieve a value from a list in `Metadata`. This means that
     /// if the segment key refers to a list, it has to be the last segment in a path.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct PathSegment {
@@ -286,7 +298,7 @@ pub mod metadata_matcher {
     pub mod path_segment {
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Segment {
-            /// If specified, use the key to retrieve the value in a Struct.
+            /// If specified, use the key to retrieve the value in a `Struct`.
             #[prost(string, tag = "1")]
             Key(::prost::alloc::string::String),
         }

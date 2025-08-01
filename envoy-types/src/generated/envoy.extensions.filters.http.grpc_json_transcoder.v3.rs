@@ -201,7 +201,7 @@ pub struct GrpcJsonTranscoder {
 }
 /// Nested message and enum types in `GrpcJsonTranscoder`.
 pub mod grpc_json_transcoder {
-    /// \[\#next-free-field: 6\]
+    /// \[\#next-free-field: 7\]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct PrintOptions {
         /// Whether to add spaces, line breaks and indentation to make the JSON
@@ -227,6 +227,10 @@ pub mod grpc_json_transcoder {
         /// If true, return all streams as newline-delimited JSON messages instead of as a comma-separated array
         #[prost(bool, tag = "5")]
         pub stream_newline_delimited: bool,
+        /// If true, enforces Server-Sent Events (SSE) message framing (`data:  <message>\n\n`) and, `stream_newline_delimited` is ignored. If false,
+        /// message framing is determined by `stream_newline_delimited`.
+        #[prost(bool, tag = "6")]
+        pub stream_sse_style_delimited: bool,
     }
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct RequestValidationOptions {
