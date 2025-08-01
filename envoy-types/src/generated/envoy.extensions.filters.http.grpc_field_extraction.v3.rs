@@ -49,7 +49,7 @@ pub struct FieldExtractions {
         RequestFieldValueDisposition,
     >,
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RequestFieldValueDisposition {
     #[prost(oneof = "request_field_value_disposition::Disposition", tags = "1")]
     pub disposition: ::core::option::Option<
@@ -58,7 +58,7 @@ pub struct RequestFieldValueDisposition {
 }
 /// Nested message and enum types in `RequestFieldValueDisposition`.
 pub mod request_field_value_disposition {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Disposition {
         /// The dynamic metadata namespace. If empty, "envoy.filters.http.grpc_field_extraction" will be used by default.
         ///

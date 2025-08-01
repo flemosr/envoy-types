@@ -7,7 +7,7 @@
 /// to detect the remote IP.
 ///
 /// \[\#extension: envoy.http.original_ip_detection.custom_header\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CustomHeaderConfig {
     /// The header name containing the original downstream remote address, if present.
     ///

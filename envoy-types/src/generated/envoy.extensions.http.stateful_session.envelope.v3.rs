@@ -13,7 +13,7 @@
 /// upstream host from the session context.
 ///
 /// \[\#extension: envoy.http.stateful_session.envelope\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EnvelopeSessionState {
     /// Set the header config to track the session state.
     #[prost(message, optional, tag = "1")]
@@ -21,7 +21,7 @@ pub struct EnvelopeSessionState {
 }
 /// Nested message and enum types in `EnvelopeSessionState`.
 pub mod envelope_session_state {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Header {
         /// Iff the header specified by the `name` field is present in the response (assume the `name`
         /// is set to `session-header` and original header value is `xxxxxx`), then the upstream host

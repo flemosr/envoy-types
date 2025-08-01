@@ -321,7 +321,7 @@ pub mod redis_proxy {
             /// implementation is "fire and forget," meaning Envoy will not wait for the shadow cluster to
             /// respond before returning the response from the primary cluster. All normal statistics are
             /// collected for the shadow cluster making this feature useful for testing.
-            #[derive(Clone, PartialEq, ::prost::Message)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
             pub struct RequestMirrorPolicy {
                 /// Specifies the cluster that requests will be mirrored to. The cluster must
                 /// exist in the cluster manager configuration.
@@ -342,7 +342,7 @@ pub mod redis_proxy {
                 pub exclude_read_commands: bool,
             }
             /// ReadCommandPolicy specifies that Envoy should route read commands to another cluster.
-            #[derive(Clone, PartialEq, ::prost::Message)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
             pub struct ReadCommandPolicy {
                 #[prost(string, tag = "1")]
                 pub cluster: ::prost::alloc::string::String,
@@ -350,7 +350,7 @@ pub mod redis_proxy {
         }
     }
     /// RedisFault defines faults used for fault injection.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RedisFault {
         /// Fault type.
         #[prost(enumeration = "redis_fault::RedisFaultType", tag = "1")]
@@ -413,7 +413,7 @@ pub mod redis_proxy {
     }
     /// Configuration to limit reconnection rate to redis server to protect redis server
     /// from client reconnection storm.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ConnectionRateLimit {
         /// Reconnection rate per sec. Rate limiting is implemented with TokenBucket.
         #[prost(uint32, tag = "1")]

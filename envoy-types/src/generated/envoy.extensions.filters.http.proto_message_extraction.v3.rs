@@ -63,7 +63,7 @@ pub mod proto_message_extraction_config {
         }
     }
     /// The proto descriptor set binary for the gRPC services.
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum DescriptorSet {
         /// It could be passed by a local file through `Datasource.filename` or
         /// embedded in the `Datasource.inline_bytes`.

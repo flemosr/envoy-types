@@ -81,7 +81,7 @@ pub mod client_config {
     /// of any xDS resource identified by their type URL. It is the generalized
     /// version of the now deprecated ListenersConfigDump, ClustersConfigDump etc
     /// \[\#next-free-field: 10\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GenericXdsConfig {
         /// Type_url represents the fully qualified name of xDS resource type
         /// like envoy.v3.Cluster, envoy.v3.ClusterLoadAssignment etc.
@@ -245,6 +245,17 @@ pub mod client_status_discovery_service_client {
     pub struct ClientStatusDiscoveryServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
+    impl ClientStatusDiscoveryServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
     impl<T> ClientStatusDiscoveryServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
@@ -329,7 +340,7 @@ pub mod client_status_discovery_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.status.v3.ClientStatusDiscoveryService/StreamClientStatus",
             );
@@ -358,7 +369,7 @@ pub mod client_status_discovery_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.status.v3.ClientStatusDiscoveryService/FetchClientStatus",
             );
@@ -527,7 +538,7 @@ pub mod client_status_discovery_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StreamClientStatusSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -578,7 +589,7 @@ pub mod client_status_discovery_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = FetchClientStatusSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

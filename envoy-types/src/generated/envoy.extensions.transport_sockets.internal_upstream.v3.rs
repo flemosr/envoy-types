@@ -29,7 +29,7 @@ pub mod internal_upstream_transport {
     /// Describes the location of the imported metadata value.
     /// If the metadata with the given name is not present at the source location,
     /// then no metadata is passed through for this particular instance.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct MetadataValueSource {
         /// Specifies what kind of metadata.
         #[prost(message, optional, tag = "1")]

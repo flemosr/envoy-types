@@ -82,7 +82,7 @@ pub struct RateLimitResponse {
 /// Nested message and enum types in `RateLimitResponse`.
 pub mod rate_limit_response {
     /// Defines an actual rate limit in terms of requests per unit of time and the unit itself.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RateLimit {
         /// A name or description of this limit.
         #[prost(string, tag = "3")]
@@ -171,7 +171,7 @@ pub mod rate_limit_response {
     /// The implementation may choose to preemptively query the rate limit server for more quota on or
     /// before expiration or before the available quota runs out.
     /// \[\#not-implemented-hide:\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Quota {
         /// Number of matching requests granted in quota. Must be 1 or more.
         #[prost(uint32, tag = "1")]
@@ -190,7 +190,7 @@ pub mod rate_limit_response {
     }
     /// Nested message and enum types in `Quota`.
     pub mod quota {
-        #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ExpirationSpecifier {
             /// Point in time at which the quota expires.
             #[prost(message, tag = "2")]
@@ -200,7 +200,7 @@ pub mod rate_limit_response {
         }
     }
     /// \[\#next-free-field: 6\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DescriptorStatus {
         /// The response code for an individual descriptor.
         #[prost(enumeration = "Code", tag = "1")]
@@ -237,7 +237,7 @@ pub mod rate_limit_response {
         ///    : ref:`overall_code <envoy_v3_api_field_service.ratelimit.v3.RateLimitResponse.overall_code>`.
         ///
         ///
-        /// 3.
+        /// 1.
         ///    All RLS descriptors lack a cached entry, this will trigger a new RLS request,
         ///    When the result is returned, a single unit will be consumed from the quota for all
         ///    matching descriptors.
@@ -306,6 +306,17 @@ pub mod rate_limit_service_client {
     #[derive(Debug, Clone)]
     pub struct RateLimitServiceClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl RateLimitServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> RateLimitServiceClient<T>
     where
@@ -388,7 +399,7 @@ pub mod rate_limit_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.ratelimit.v3.RateLimitService/ShouldRateLimit",
             );
@@ -533,7 +544,7 @@ pub mod rate_limit_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = ShouldRateLimitSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

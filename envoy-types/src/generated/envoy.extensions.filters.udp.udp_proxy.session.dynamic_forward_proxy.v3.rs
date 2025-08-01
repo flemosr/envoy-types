@@ -25,7 +25,7 @@ pub struct FilterConfig {
 /// Nested message and enum types in `FilterConfig`.
 pub mod filter_config {
     /// Configuration for UDP datagrams buffering.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct BufferOptions {
         /// If set, the filter will only buffer datagrams up to the requested limit, and will drop
         /// new UDP datagrams if the buffer contains the max_buffered_datagrams value at the time

@@ -2,5 +2,5 @@
 /// Custom configuration for the RBAC audit logger that writes log entries
 /// directly to the operating system's standard output.
 /// The logger outputs in JSON format and is currently not configurable.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StdoutAuditLog {}

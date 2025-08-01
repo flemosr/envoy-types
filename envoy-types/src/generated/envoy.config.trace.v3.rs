@@ -9,7 +9,7 @@
 ///
 /// Use of this message type has been deprecated in favor of direct use of
 /// : ref:`Tracing.Http <envoy_v3_api_msg_config.trace.v3.Tracing.Http>`.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Tracing {
     /// Provides configuration for the HTTP tracer.
     #[prost(message, optional, tag = "1")]
@@ -24,7 +24,7 @@ pub mod tracing {
     /// : ref:`HttpConnectionManager.Tracing <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing>`
     /// : ref:`provider <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.provider>`
     ///   field.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Http {
         /// The name of the HTTP trace driver to instantiate. The name must match a
         /// supported HTTP trace driver.
@@ -40,7 +40,7 @@ pub mod tracing {
     pub mod http {
         /// Trace driver specific configuration which must be set according to the driver being instantiated.
         /// \[\#extension-category: envoy.tracers\]
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ConfigType {
             #[prost(message, tag = "3")]
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
@@ -48,7 +48,7 @@ pub mod tracing {
     }
 }
 /// Configuration for the Remote Configuration feature.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DatadogRemoteConfig {
     /// Frequency at which new configuration updates are queried.
     /// If no value is provided, the default value is delegated to the Datadog tracing library.
@@ -59,7 +59,7 @@ pub struct DatadogRemoteConfig {
 }
 /// Configuration for the Datadog tracer.
 /// \[\#extension: envoy.tracers.datadog\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DatadogConfig {
     /// The cluster to use for submitting traces to the Datadog agent.
     #[prost(string, tag = "1")]
@@ -99,7 +99,7 @@ pub struct DynamicOtConfig {
 /// Configuration for the LightStep tracer.
 /// \[\#extension: envoy.tracers.lightstep\]
 /// \[\#not-implemented-hide:\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LightstepConfig {
     /// The cluster manager cluster that hosts the LightStep collectors.
     #[prost(string, tag = "1")]
@@ -244,7 +244,7 @@ pub struct SkyWalkingConfig {
     pub client_config: ::core::option::Option<ClientConfig>,
 }
 /// Client config for SkyWalking tracer.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ClientConfig {
     /// Service name for SkyWalking tracer. If this field is empty, then local service cluster name
     /// that configured by :ref:`Bootstrap node <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.node>`
@@ -283,7 +283,7 @@ pub mod client_config {
     /// that monitoring application data can be trusted. In current version, Token is considered as a
     /// simple string.
     /// \[\#comment:TODO(wbpcode): Get backend token through the SDS API.\]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum BackendTokenSpecifier {
         /// Inline authentication token string.
         #[prost(string, tag = "3")]
@@ -293,7 +293,7 @@ pub mod client_config {
 /// Configuration for the Zipkin tracer.
 /// \[\#extension: envoy.tracers.zipkin\]
 /// \[\#next-free-field: 8\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ZipkinConfig {
     /// The cluster manager cluster that hosts the Zipkin collectors.
     #[prost(string, tag = "1")]

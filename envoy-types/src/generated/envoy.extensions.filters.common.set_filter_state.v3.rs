@@ -68,7 +68,7 @@ pub mod filter_state_value {
             }
         }
     }
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Key {
         ///
         /// Filter state object key. The key is used to lookup the object factory, unless :ref:`factory_key  <envoy_v3_api_field_extensions.filters.common.set_filter_state.v3.FilterStateValue.factory_key>` is set. See

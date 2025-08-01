@@ -72,7 +72,7 @@ pub mod http_access_log_entry {
     }
 }
 /// Defines fields for a connection
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ConnectionProperties {
     /// Number of bytes received from downstream.
     #[prost(uint64, tag = "1")]
@@ -295,7 +295,7 @@ pub struct AccessLogCommon {
 }
 /// Flags indicating occurrences during request/response processing.
 /// \[\#next-free-field: 29\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ResponseFlags {
     /// Indicates local server healthcheck failed.
     #[prost(bool, tag = "1")]
@@ -385,7 +385,7 @@ pub struct ResponseFlags {
 }
 /// Nested message and enum types in `ResponseFlags`.
 pub mod response_flags {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Unauthorized {
         #[prost(enumeration = "unauthorized::Reason", tag = "1")]
         pub reason: i32,
@@ -486,14 +486,14 @@ pub mod tls_properties {
     }
     /// Nested message and enum types in `CertificateProperties`.
     pub mod certificate_properties {
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct SubjectAltName {
             #[prost(oneof = "subject_alt_name::San", tags = "1, 2")]
             pub san: ::core::option::Option<subject_alt_name::San>,
         }
         /// Nested message and enum types in `SubjectAltName`.
         pub mod subject_alt_name {
-            #[derive(Clone, PartialEq, ::prost::Oneof)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
             pub enum San {
                 #[prost(string, tag = "1")]
                 Uri(::prost::alloc::string::String),

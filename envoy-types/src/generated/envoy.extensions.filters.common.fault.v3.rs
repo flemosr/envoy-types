@@ -2,7 +2,7 @@
 /// Delay specification is used to inject latency into the
 /// HTTP/Mongo operation.
 /// \[\#next-free-field: 6\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FaultDelay {
     /// The percentage of operations/connections/requests on which the delay will be injected.
     #[prost(message, optional, tag = "4")]
@@ -18,7 +18,7 @@ pub mod fault_delay {
     /// Fault delays are controlled via an HTTP header (if applicable). See the
     /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
     ///   more information.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HeaderDelay {}
     #[derive(
         Clone,
@@ -54,7 +54,7 @@ pub mod fault_delay {
             }
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum FaultDelaySecifier {
         /// Add a fixed delay before forwarding the operation upstream. See
         /// <https://developers.google.com/protocol-buffers/docs/proto3#json> for
@@ -71,7 +71,7 @@ pub mod fault_delay {
     }
 }
 /// Describes a rate limit to be applied.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FaultRateLimit {
     /// The percentage of operations/connections/requests on which the rate limit will be injected.
     #[prost(message, optional, tag = "2")]
@@ -84,7 +84,7 @@ pub struct FaultRateLimit {
 /// Nested message and enum types in `FaultRateLimit`.
 pub mod fault_rate_limit {
     /// Describes a fixed/constant rate limit.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct FixedLimit {
         /// The limit supplied in KiB/s.
         #[prost(uint64, tag = "1")]
@@ -94,9 +94,9 @@ pub mod fault_rate_limit {
     /// Rate limits are controlled via an HTTP header (if applicable). See the
     /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
     ///   more information.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HeaderLimit {}
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum LimitType {
         /// A fixed rate limit.
         #[prost(message, tag = "1")]

@@ -5,5 +5,5 @@
 /// scheme is HTTPS, both HTTPS and HTTP redirect targets are allowed, but if the
 /// downstream scheme is HTTP, only HTTP redirect targets are allowed.
 /// \[\#extension: envoy.internal_redirect_predicates.safe_cross_scheme\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SafeCrossSchemeConfig {}

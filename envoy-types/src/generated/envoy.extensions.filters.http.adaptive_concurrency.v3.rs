@@ -20,7 +20,7 @@ pub struct GradientControllerConfig {
 pub mod gradient_controller_config {
     /// Parameters controlling the periodic recalculation of the concurrency limit from sampled request
     /// latencies.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ConcurrencyLimitCalculationParams {
         /// The allowed upper-bound on the calculated concurrency limit. Defaults to 1000.
         #[prost(message, optional, tag = "2")]

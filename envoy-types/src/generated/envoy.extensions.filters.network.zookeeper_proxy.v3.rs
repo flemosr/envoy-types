@@ -50,7 +50,7 @@ pub struct ZooKeeperProxy {
     #[prost(bool, tag = "9")]
     pub enable_per_opcode_decoder_error_metrics: bool,
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LatencyThresholdOverride {
     /// The ZooKeeper opcodes. Can be found as part of the ZooKeeper source code:
     ///

@@ -11,7 +11,7 @@ pub struct Config {
 /// Nested message and enum types in `Config`.
 pub mod config {
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct KeyValuePair {
         /// The namespace — if this is empty, the filter's namespace will be used.
         #[prost(string, tag = "1")]
@@ -53,7 +53,7 @@ pub mod config {
     }
     /// A Rule defines what metadata to apply when a header is present or missing.
     /// \[\#next-free-field: 6\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Rule {
         /// Specifies that a match will be performed on the value of a header or a cookie.
         ///

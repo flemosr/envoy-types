@@ -340,7 +340,7 @@ pub struct DynamicParameterConstraints {
 /// Nested message and enum types in `DynamicParameterConstraints`.
 pub mod dynamic_parameter_constraints {
     /// A single constraint for a given key.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct SingleConstraint {
         /// The key to match against.
         #[prost(string, tag = "1")]
@@ -350,9 +350,9 @@ pub mod dynamic_parameter_constraints {
     }
     /// Nested message and enum types in `SingleConstraint`.
     pub mod single_constraint {
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct Exists {}
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ConstraintType {
             /// Matches this exact value.
             #[prost(string, tag = "2")]
@@ -444,7 +444,7 @@ pub struct Resource {
 pub mod resource {
     /// Cache control properties for the resource.
     /// \[\#not-implemented-hide:\]
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct CacheControl {
         /// If true, xDS proxies may not cache this resource.
         ///
@@ -457,7 +457,7 @@ pub mod resource {
 }
 /// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221>
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AdsDummy {}
 /// Generated client implementations.
 pub mod aggregated_discovery_service_client {
@@ -479,6 +479,17 @@ pub mod aggregated_discovery_service_client {
     #[derive(Debug, Clone)]
     pub struct AggregatedDiscoveryServiceClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl AggregatedDiscoveryServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> AggregatedDiscoveryServiceClient<T>
     where
@@ -563,7 +574,7 @@ pub mod aggregated_discovery_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.discovery.v3.AggregatedDiscoveryService/StreamAggregatedResources",
             );
@@ -594,7 +605,7 @@ pub mod aggregated_discovery_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.discovery.v3.AggregatedDiscoveryService/DeltaAggregatedResources",
             );
@@ -773,7 +784,7 @@ pub mod aggregated_discovery_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StreamAggregatedResourcesSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -827,7 +838,7 @@ pub mod aggregated_discovery_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeltaAggregatedResourcesSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

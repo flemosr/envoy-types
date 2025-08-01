@@ -5,7 +5,7 @@
 /// Note that the consistency of the match result relies on the internal hash function (xxhash) remaining
 /// unchanged. While this is unlikely to happen intentionally, this could cause inconsistent match results
 /// between deployments.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ConsistentHashing {
     /// The threshold the resulting hash must be over in order for this matcher to evaluate to true.
     /// This value must be below the configured modulo value.

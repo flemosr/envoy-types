@@ -36,7 +36,7 @@ pub mod stream_events_request {
 /// is interested in. In future, with aggregated event reporting service, this message will
 /// contain, for example, clusters the envoy should send events for, or event types the server
 /// wants to process.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamEventsResponse {}
 /// Generated client implementations.
 pub mod event_reporting_service_client {
@@ -55,6 +55,17 @@ pub mod event_reporting_service_client {
     #[derive(Debug, Clone)]
     pub struct EventReportingServiceClient<T> {
         inner: tonic::client::Grpc<T>,
+    }
+    impl EventReportingServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
     }
     impl<T> EventReportingServiceClient<T>
     where
@@ -141,7 +152,7 @@ pub mod event_reporting_service_client {
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/envoy.service.event_reporting.v3.EventReportingService/StreamEvents",
             );
@@ -301,7 +312,7 @@ pub mod event_reporting_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StreamEventsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,

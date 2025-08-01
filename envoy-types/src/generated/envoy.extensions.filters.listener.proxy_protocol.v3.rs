@@ -63,7 +63,7 @@ pub struct ProxyProtocol {
 }
 /// Nested message and enum types in `ProxyProtocol`.
 pub mod proxy_protocol {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct KeyValuePair {
         /// The namespace — if this is empty, the filter's namespace will be used.
         #[prost(string, tag = "1")]
@@ -73,7 +73,7 @@ pub mod proxy_protocol {
         pub key: ::prost::alloc::string::String,
     }
     /// A Rule defines what metadata to apply when a header is present or missing.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Rule {
         /// The type that triggers the rule - required
         /// TLV type is defined as uint8_t in proxy protocol. See `the spec  <<https://www.haproxy.org/download/2.1/doc/proxy-protocol.txt>`\_> for details.

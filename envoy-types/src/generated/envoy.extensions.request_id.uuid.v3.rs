@@ -16,7 +16,7 @@
 ///
 ///    See the :ref:`x-request-id <config_http_conn_man_headers_x-request-id>` documentation for
 ///    more information.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UuidRequestIdConfig {
     /// Whether the implementation alters the UUID to contain the trace sampling decision as per the
     /// `UuidRequestIdConfig` message documentation. This defaults to true. If disabled no

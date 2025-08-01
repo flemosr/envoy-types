@@ -8,7 +8,7 @@
 /// client. This effectively reverses the behavior of the
 /// : ref:`grpc_json_transcoder filter <config_http_filters_grpc_json_transcoder>`,
 ///   allowing a gRPC client to communicate with an HTTP/JSON server.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GrpcJsonReverseTranscoder {
     ///
     /// Supplies the filename of
@@ -56,7 +56,7 @@ pub struct GrpcJsonReverseTranscoder {
 }
 /// Nested message and enum types in `GrpcJsonReverseTranscoder`.
 pub mod grpc_json_reverse_transcoder {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct PrintOptions {
         /// Whether to always print primitive fields. By default primitive
         /// fields with default values will be omitted in JSON output. For

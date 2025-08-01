@@ -21,7 +21,7 @@
 /// response headers (via the `session-header` response header).
 ///
 /// \[\#extension: envoy.http.stateful_session.header\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderBasedSessionState {
     /// The name that will be used to obtain header value from downstream HTTP request or generate
     /// new header for downstream.

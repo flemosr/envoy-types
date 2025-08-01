@@ -66,7 +66,7 @@ pub struct RouteMatch {
 }
 /// Nested message and enum types in `RouteMatch`.
 pub mod route_match {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum MatchSpecifier {
         /// If specified, the route must exactly match the request method name. As a special case, an
         /// empty string matches any request method name.
@@ -120,7 +120,7 @@ pub mod route_action {
     /// .. note::
     ///
     /// Shadowing will not be triggered if the primary cluster does not exist.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RequestMirrorPolicy {
         /// Specifies the cluster that requests will be mirrored to. The cluster must
         /// exist in the cluster manager configuration when the route configuration is loaded.
@@ -261,7 +261,7 @@ pub struct ThriftProxy {
     pub header_keys_preserve_case: bool,
 }
 /// ThriftFilter configures a Thrift filter.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ThriftFilter {
     /// The name of the filter to instantiate. The name must match a supported
     /// filter. The built-in filters are:
@@ -281,7 +281,7 @@ pub struct ThriftFilter {
 pub mod thrift_filter {
     /// Filter specific configuration which depends on the filter being instantiated. See the supported
     /// filters for further documentation.
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum ConfigType {
         #[prost(message, tag = "3")]
         TypedConfig(
@@ -294,7 +294,7 @@ pub mod thrift_filter {
 /// in
 /// : ref:`typed_extension_protocol_options<envoy_v3_api_field_config.cluster.v3.Cluster.typed_extension_protocol_options>`,
 ///   keyed by the name `envoy.filters.network.thrift_proxy`.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ThriftProtocolOptions {
     ///
     /// Supplies the type of transport that the Thrift proxy should use for upstream connections.

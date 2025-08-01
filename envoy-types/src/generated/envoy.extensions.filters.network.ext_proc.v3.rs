@@ -50,7 +50,7 @@ pub struct NetworkExternalProcessor {
 }
 /// Options for controlling processing behavior.
 /// Filter will reject the config if both read and write are SKIP mode.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ProcessingMode {
     /// Controls whether inbound (read) data from the client is sent to the external processor.
     /// Default: STREAMED
@@ -105,7 +105,7 @@ pub mod processing_mode {
 }
 /// The MetadataOptions structure defines options for sending dynamic metadata. Specifically,
 /// which namespaces to send to the server.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MetadataOptions {
     /// Describes which typed or untyped dynamic metadata namespaces to forward to
     /// the external processing server.
@@ -116,7 +116,7 @@ pub struct MetadataOptions {
 }
 /// Nested message and enum types in `MetadataOptions`.
 pub mod metadata_options {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct MetadataNamespaces {
         /// Specifies a list of metadata namespaces whose values, if present,
         /// will be passed to the ext_proc service as an opaque *protobuf::Struct*.

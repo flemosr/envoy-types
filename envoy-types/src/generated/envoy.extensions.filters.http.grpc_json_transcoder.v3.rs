@@ -8,7 +8,7 @@
 /// filter is applied. It matters when specifying the route configuration and paths to match the
 /// request - for per-route grpc transcoder configs, the original path should be matched, while
 /// in other cases, the grpc-like path is expected (the one AFTER the filter is applied).
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GrpcJsonTranscoder {
     /// A list of strings that
     /// supplies the fully qualified service names (i.e. "package_name.service_name") that
@@ -202,7 +202,7 @@ pub struct GrpcJsonTranscoder {
 /// Nested message and enum types in `GrpcJsonTranscoder`.
 pub mod grpc_json_transcoder {
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct PrintOptions {
         /// Whether to add spaces, line breaks and indentation to make the JSON
         /// output easy to read. Defaults to false.
@@ -232,7 +232,7 @@ pub mod grpc_json_transcoder {
         #[prost(bool, tag = "6")]
         pub stream_sse_style_delimited: bool,
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RequestValidationOptions {
         ///
         /// By default, a request that cannot be mapped to any specified gRPC
@@ -310,7 +310,7 @@ pub mod grpc_json_transcoder {
             }
         }
     }
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum DescriptorSet {
         ///
         /// Supplies the filename of
@@ -340,7 +340,7 @@ pub struct UnknownQueryParams {
 }
 /// Nested message and enum types in `UnknownQueryParams`.
 pub mod unknown_query_params {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Values {
         #[prost(string, repeated, tag = "1")]
         pub values: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,

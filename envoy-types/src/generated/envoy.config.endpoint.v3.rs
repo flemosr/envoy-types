@@ -41,7 +41,7 @@ pub struct Endpoint {
 /// Nested message and enum types in `Endpoint`.
 pub mod endpoint {
     /// The optional health check configuration.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HealthCheckConfig {
         /// Optional alternative health check port value.
         ///
@@ -71,7 +71,7 @@ pub mod endpoint {
         #[prost(bool, tag = "4")]
         pub disable_active_health_check: bool,
     }
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct AdditionalAddress {
         /// Additional address that is associated with the endpoint.
         #[prost(message, optional, tag = "1")]
@@ -332,7 +332,7 @@ pub mod cluster_load_assignment {
     }
     /// Nested message and enum types in `Policy`.
     pub mod policy {
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct DropOverload {
             /// Identifier for the policy specifying the drop.
             #[prost(string, tag = "1")]
@@ -531,7 +531,7 @@ pub struct ClusterStats {
 }
 /// Nested message and enum types in `ClusterStats`.
 pub mod cluster_stats {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DroppedRequests {
         /// Identifier for the policy specifying the drop.
         #[prost(string, tag = "1")]

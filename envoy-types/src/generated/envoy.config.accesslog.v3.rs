@@ -16,7 +16,7 @@ pub struct AccessLog {
 pub mod access_log {
     /// Custom configuration that must be set according to the access logger extension being instantiated.
     /// \[\#extension-category: envoy.access_loggers\]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum ConfigType {
         #[prost(message, tag = "4")]
         TypedConfig(super::super::super::super::super::google::protobuf::Any),
@@ -78,7 +78,7 @@ pub mod access_log_filter {
     }
 }
 /// Filter on an integer comparison.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ComparisonFilter {
     /// Comparison operator.
     #[prost(enumeration = "comparison_filter::Op", tag = "1")]
@@ -135,7 +135,7 @@ pub mod comparison_filter {
     }
 }
 /// Filters on HTTP response/status code.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StatusCodeFilter {
     /// Comparison.
     #[prost(message, optional, tag = "1")]
@@ -145,7 +145,7 @@ pub struct StatusCodeFilter {
 /// For end of stream access logs, the total duration of the stream will be used.
 /// For :ref:`periodic access logs<arch_overview_access_log_periodic>`,
 /// the duration of the stream at the time of log recording will be used.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DurationFilter {
     /// Comparison.
     #[prost(message, optional, tag = "1")]
@@ -153,14 +153,14 @@ pub struct DurationFilter {
 }
 /// Filters for requests that are not health check requests. A health check
 /// request is marked by the health check filter.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct NotHealthCheckFilter {}
 /// Filters for requests that are traceable. See the tracing overview for more
 /// information on how a request becomes traceable.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TraceableFilter {}
 /// Filters requests based on runtime-configurable sampling rates.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RuntimeFilter {
     /// Specifies a key used to look up a custom sampling rate from the runtime configuration. If a value is found for this
     /// key, it will override the default sampling rate specified in `percent_sampled`.
@@ -215,7 +215,7 @@ pub struct OrFilter {
     pub filters: ::prost::alloc::vec::Vec<AccessLogFilter>,
 }
 /// Filters requests based on the presence or value of a request header.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderFilter {
     /// Only requests with a header which matches the specified HeaderMatcher will
     /// pass the filter check.
@@ -227,7 +227,7 @@ pub struct HeaderFilter {
 /// A list of the response flags can be found
 /// in the access log formatter
 /// : ref:`documentation<config_access_log_format_response_flags>`.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ResponseFlagFilter {
     /// Only responses with the any of the flags listed in this field will be
     /// logged. This field is optional. If it is not specified, then any response
@@ -237,7 +237,7 @@ pub struct ResponseFlagFilter {
 }
 /// Filters gRPC requests based on their response status. If a gRPC status is not
 /// provided, the filter will infer the status from the HTTP status code.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GrpcStatusFilter {
     /// Logs only responses that have any one of the gRPC statuses in this field.
     #[prost(
@@ -360,7 +360,7 @@ pub struct MetadataFilter {
     >,
 }
 /// Filters based on access log type.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LogTypeFilter {
     /// Logs only records which their type is one of the types defined in this field.
     #[prost(
@@ -376,7 +376,7 @@ pub struct LogTypeFilter {
     pub exclude: bool,
 }
 /// Extension filter is statically registered at runtime.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ExtensionFilter {
     /// The name of the filter implementation to instantiate. The name must
     /// match a statically registered filter.
@@ -389,7 +389,7 @@ pub struct ExtensionFilter {
 /// Nested message and enum types in `ExtensionFilter`.
 pub mod extension_filter {
     /// Custom configuration that depends on the filter being instantiated.
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum ConfigType {
         #[prost(message, tag = "3")]
         TypedConfig(super::super::super::super::super::google::protobuf::Any),

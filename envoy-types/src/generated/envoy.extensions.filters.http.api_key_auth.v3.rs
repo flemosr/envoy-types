@@ -64,7 +64,7 @@ pub struct ApiKeyAuthPerRoute {
     pub forwarding: ::core::option::Option<Forwarding>,
 }
 /// Single credential entry that contains the API key and the related client id.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Credential {
     /// The value of the unique API key.
     #[prost(string, tag = "1")]
@@ -73,7 +73,7 @@ pub struct Credential {
     #[prost(string, tag = "2")]
     pub client: ::prost::alloc::string::String,
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct KeySource {
     /// The header name to fetch the key. If multiple header values are present, the first one will be
     /// used. If the header value starts with 'Bearer ', this prefix will be stripped to get the
@@ -94,7 +94,7 @@ pub struct KeySource {
     #[prost(string, tag = "3")]
     pub cookie: ::prost::alloc::string::String,
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Forwarding {
     /// The header name in which to store the client information. If this field is non-empty,
     /// the client string associated with the matched credential will be injected into

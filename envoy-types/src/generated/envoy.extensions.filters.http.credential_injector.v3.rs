@@ -51,7 +51,7 @@
 ///   generic_secret:
 ///   secret:
 ///   inline_string: "Bearer myToken"
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CredentialInjector {
     /// Whether to overwrite the value or not if the injected headers already exist.
     /// Value defaults to false.

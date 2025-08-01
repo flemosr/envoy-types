@@ -75,7 +75,7 @@ pub mod matcher {
         /// Nested message and enum types in `Predicate`.
         pub mod predicate {
             /// Predicate for a single input field.
-            #[derive(Clone, PartialEq, ::prost::Message)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
             pub struct SinglePredicate {
                 /// Protocol-specific specification of input field to match on.
                 /// \[\#extension-category: envoy.matching.common_inputs\]
@@ -88,7 +88,7 @@ pub mod matcher {
             }
             /// Nested message and enum types in `SinglePredicate`.
             pub mod single_predicate {
-                #[derive(Clone, PartialEq, ::prost::Oneof)]
+                #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
                 pub enum Matcher {
                     /// Built-in string matcher.
                     #[prost(message, tag = "2")]
@@ -268,14 +268,14 @@ pub struct HttpGenericBodyMatch {
 }
 /// Nested message and enum types in `HttpGenericBodyMatch`.
 pub mod http_generic_body_match {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GenericTextMatch {
         #[prost(oneof = "generic_text_match::Rule", tags = "1, 2")]
         pub rule: ::core::option::Option<generic_text_match::Rule>,
     }
     /// Nested message and enum types in `GenericTextMatch`.
     pub mod generic_text_match {
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum Rule {
             /// Text string to be located in HTTP body.
             #[prost(string, tag = "1")]

@@ -45,7 +45,7 @@ pub mod filter_config {
     }
 }
 /// Per route Configuration for the dynamic forward proxy HTTP filter.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PerRouteConfig {
     #[prost(oneof = "per_route_config::HostRewriteSpecifier", tags = "1, 2")]
     pub host_rewrite_specifier: ::core::option::Option<
@@ -54,7 +54,7 @@ pub struct PerRouteConfig {
 }
 /// Nested message and enum types in `PerRouteConfig`.
 pub mod per_route_config {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum HostRewriteSpecifier {
         /// Indicates that before DNS lookup, the host header will be swapped with
         /// this value. If not set or empty, the original host header value
@@ -89,7 +89,7 @@ pub mod per_route_config {
         HostRewriteHeader(::prost::alloc::string::String),
     }
 }
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SubClusterConfig {
     /// The timeout used for sub cluster initialization. Defaults to **5s** if not set.
     #[prost(message, optional, tag = "3")]

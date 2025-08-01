@@ -8,7 +8,7 @@ pub struct HeaderToMetadata {
 /// Nested message and enum types in `HeaderToMetadata`.
 pub mod header_to_metadata {
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct KeyValuePair {
         /// The namespace — if this is empty, the filter's namespace will be used.
         #[prost(string, tag = "1")]
@@ -28,7 +28,7 @@ pub mod header_to_metadata {
     }
     /// Nested message and enum types in `KeyValuePair`.
     pub mod key_value_pair {
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ValueType {
             /// The value to pair with the given key.
             ///
@@ -49,7 +49,7 @@ pub mod header_to_metadata {
         }
     }
     /// A Rule defines what metadata to apply when a header is present or missing.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Rule {
         /// Specifies that a match will be performed on the value of a header.
         ///

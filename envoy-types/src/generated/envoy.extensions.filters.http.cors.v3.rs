@@ -7,7 +7,7 @@
 ///
 /// Please note that the :ref:`CorsPolicy <envoy_v3_api_msg_extensions.filters.http.cors.v3.CorsPolicy>`
 /// must be configured in the `RouteConfiguration` as `typed_per_filter_config` at some level to make the filter work.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Cors {}
 /// Per route configuration for the CORS filter. This configuration should be configured in the `RouteConfiguration` as `typed_per_filter_config` at some level to
 /// make the filter work.

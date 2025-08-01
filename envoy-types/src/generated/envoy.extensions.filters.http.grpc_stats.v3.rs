@@ -58,7 +58,7 @@ pub mod filter_config {
     }
 }
 /// gRPC statistics filter state object in protobuf form.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterObject {
     /// Count of request messages in the request stream.
     #[prost(uint64, tag = "1")]

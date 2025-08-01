@@ -18,7 +18,7 @@ pub struct Tap {
     pub socket_tap_config: ::core::option::Option<SocketTapConfig>,
 }
 /// Additional configurations for the transport socket tap
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SocketTapConfig {
     /// Indicates to whether output the connection information per event
     /// This is only applicable if the streamed trace is enabled

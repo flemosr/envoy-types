@@ -9,7 +9,7 @@
 /// inline_string: |-
 /// user1:{SHA}hashed_user1_password
 /// user2:{SHA}hashed_user2_password
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BasicAuth {
     /// Username-password pairs used to verify user credentials in the "Authorization" header.
     /// The value needs to be the htpasswd format.
@@ -32,7 +32,7 @@ pub struct BasicAuth {
 }
 /// Extra settings that may be added to per-route configuration for
 /// a virtual host or a cluster.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BasicAuthPerRoute {
     /// Username-password pairs for this route.
     #[prost(message, optional, tag = "1")]

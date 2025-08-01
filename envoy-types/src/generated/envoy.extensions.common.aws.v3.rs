@@ -57,7 +57,7 @@ pub struct AwsCredentialProvider {
 }
 /// Configuration to use an inline AWS credential. This is an equivalent to setting the well-known
 /// environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and the optional `AWS_SESSION_TOKEN`.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct InlineCredentialProvider {
     /// The AWS access key ID.
     #[prost(string, tag = "1")]
@@ -71,7 +71,7 @@ pub struct InlineCredentialProvider {
 }
 /// Configuration to use `AssumeRoleWithWebIdentity <<https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html>`\_>
 /// to retrieve AWS credentials.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AssumeRoleWithWebIdentityCredentialProvider {
     /// Data source for a web identity token that is provided by the identity provider to assume the role.
     /// When using this data source, even if a `watched_directory` is provided, the token file will only be re-read when the credentials
@@ -87,7 +87,7 @@ pub struct AssumeRoleWithWebIdentityCredentialProvider {
     #[prost(string, tag = "3")]
     pub role_session_name: ::prost::alloc::string::String,
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CredentialsFileCredentialProvider {
     /// Data source from which to retrieve AWS credentials
     /// When using this data source, if a `watched_directory` is provided, the credential file will be re-read when a file move is detected.
@@ -103,7 +103,7 @@ pub struct CredentialsFileCredentialProvider {
 /// Configuration to use `IAM Roles Anywhere <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html>`\_>
 /// to retrieve AWS credentials.
 /// \[\#next-free-field: 9\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct IamRolesAnywhereCredentialProvider {
     /// The ARN of the role to assume via the IAM Roles Anywhere sessions API. See `Configure Roles <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/getting-started.html#getting-started-step2>`\_> for more details.
     #[prost(string, tag = "1")]
@@ -145,19 +145,19 @@ pub struct IamRolesAnywhereCredentialProvider {
 }
 /// The Config Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ConfigCredentialProvider {}
 /// The Container Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ContainerCredentialProvider {}
 /// The Environment Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EnvironmentCredentialProvider {}
 /// The Instance Profile Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct InstanceProfileCredentialProvider {}
 /// Configuration to use `AssumeRole <<https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html>`\_> for retrieving new credentials, via role chaining.
 /// \[\#next-free-field: 6\]

@@ -25,7 +25,7 @@
 /// rejected. In the ext_proc filter, that counter is named
 /// `rejected_header_mutations`.
 /// \[\#next-free-field: 8\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderMutationRules {
     /// By default, certain headers that could affect processing of subsequent
     /// filters or request routing cannot be modified. These headers are
@@ -86,14 +86,14 @@ pub struct HeaderMutationRules {
 }
 /// The HeaderMutation structure specifies an action that may be taken on HTTP
 /// headers.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderMutation {
     #[prost(oneof = "header_mutation::Action", tags = "1, 2")]
     pub action: ::core::option::Option<header_mutation::Action>,
 }
 /// Nested message and enum types in `HeaderMutation`.
 pub mod header_mutation {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Action {
         /// Remove the specified header if it exists.
         #[prost(string, tag = "1")]

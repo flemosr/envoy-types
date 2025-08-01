@@ -227,7 +227,7 @@ pub mod virtual_host {
     }
 }
 /// A filter-defined action type.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterAction {
     #[prost(message, optional, tag = "1")]
     pub action: ::core::option::Option<
@@ -507,7 +507,7 @@ pub mod weighted_cluster {
     }
     /// Nested message and enum types in `ClusterWeight`.
     pub mod cluster_weight {
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum HostRewriteSpecifier {
             /// Indicates that during forwarding, the host header will be swapped with
             /// this value.
@@ -515,7 +515,7 @@ pub mod weighted_cluster {
             HostRewriteLiteral(::prost::alloc::string::String),
         }
     }
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum RandomValueSpecifier {
         /// Specifies the header name that is used to look up the random value passed in the request header.
         /// This is used to ensure consistent cluster picking across multiple proxy levels for weighted traffic.
@@ -527,7 +527,7 @@ pub mod weighted_cluster {
     }
 }
 /// Configuration for a cluster specifier plugin.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ClusterSpecifierPlugin {
     /// The name of the plugin and its opaque configuration.
     ///
@@ -629,9 +629,9 @@ pub struct RouteMatch {
 }
 /// Nested message and enum types in `RouteMatch`.
 pub mod route_match {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GrpcRouteMatchOptions {}
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct TlsContextMatchOptions {
         /// If specified, the route will match against whether or not a certificate is presented.
         /// If not specified, certificate presentation status (true or false) will not be considered when route matching.
@@ -659,9 +659,9 @@ pub mod route_match {
         >,
     }
     /// An extensible message for matching CONNECT or CONNECT-UDP requests.
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ConnectMatcher {}
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum PathSpecifier {
         /// If specified, the route is a prefix rule meaning that the prefix must
         /// match the beginning of the `:path` header.
@@ -779,7 +779,7 @@ pub struct CorsPolicy {
 }
 /// Nested message and enum types in `CorsPolicy`.
 pub mod cors_policy {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum EnabledSpecifier {
         /// Specifies the % of requests for which the CORS filter is enabled.
         ///
@@ -1126,7 +1126,7 @@ pub mod route_action {
     ///
     /// Shadowing doesn't support Http CONNECT and upgrades.
     /// \[\#next-free-field: 7\]
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RequestMirrorPolicy {
         /// Only one of `cluster` and `cluster_header` can be specified.
         /// \[\#next-major-version: Need to add back the validation rule: (validate.rules).string = {min_len: 1}\]
@@ -1204,7 +1204,7 @@ pub mod route_action {
     }
     /// Nested message and enum types in `HashPolicy`.
     pub mod hash_policy {
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct Header {
             /// The name of the request header that will be used to obtain the hash
             /// key. If the request header is not present, no hash will be produced.
@@ -1218,7 +1218,7 @@ pub mod route_action {
             >,
         }
         /// CookieAttribute defines an API for adding additional attributes for a HTTP cookie.
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct CookieAttribute {
             /// The name of the cookie attribute.
             #[prost(string, tag = "1")]
@@ -1263,13 +1263,13 @@ pub mod route_action {
             #[prost(message, repeated, tag = "4")]
             pub attributes: ::prost::alloc::vec::Vec<CookieAttribute>,
         }
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ConnectionProperties {
             /// Hash on source IP address.
             #[prost(bool, tag = "1")]
             pub source_ip: bool,
         }
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct QueryParameter {
             /// The name of the URL query parameter that will be used to obtain the hash
             /// key. If the parameter is not present, no hash will be produced. Query
@@ -1278,7 +1278,7 @@ pub mod route_action {
             #[prost(string, tag = "1")]
             pub name: ::prost::alloc::string::String,
         }
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct FilterState {
             /// The name of the Object in the per-request filterState, which is an
             /// Envoy::Hashable object. If there is no data associated with the key,
@@ -1346,7 +1346,7 @@ pub mod route_action {
             pub allow_post: bool,
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct MaxStreamDuration {
         ///
         /// Specifies the maximum duration allowed for streams on the route. If not specified, the value
@@ -1510,7 +1510,7 @@ pub mod route_action {
     /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
     ///   is set to true, the original host value will also be appended to the
     /// : ref:`config_http_conn_man_headers_x-forwarded-host` header.
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum HostRewriteSpecifier {
         /// Indicates that during forwarding, the host header will be swapped with
         /// this value.
@@ -1677,7 +1677,7 @@ pub struct RetryPolicy {
 }
 /// Nested message and enum types in `RetryPolicy`.
 pub mod retry_policy {
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RetryPriority {
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
@@ -1688,13 +1688,13 @@ pub mod retry_policy {
     /// Nested message and enum types in `RetryPriority`.
     pub mod retry_priority {
         /// \[\#extension-category: envoy.retry_priorities\]
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ConfigType {
             #[prost(message, tag = "3")]
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
         }
     }
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RetryHostPredicate {
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
@@ -1705,13 +1705,13 @@ pub mod retry_policy {
     /// Nested message and enum types in `RetryHostPredicate`.
     pub mod retry_host_predicate {
         /// \[\#extension-category: envoy.retry_host_predicates\]
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ConfigType {
             #[prost(message, tag = "3")]
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RetryBackOff {
         /// Specifies the base interval between retries. This parameter is required and must be greater
         /// than zero. Values less than 1 ms are rounded up to 1 ms.
@@ -1730,7 +1730,7 @@ pub mod retry_policy {
             super::super::super::super::super::google::protobuf::Duration,
         >,
     }
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ResetHeader {
         /// The name of the reset header.
         ///
@@ -1842,7 +1842,7 @@ pub mod retry_policy {
     }
 }
 /// HTTP request hedging :ref:`architecture overview <arch_overview_http_routing_hedging>`.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HedgePolicy {
     /// Specifies the number of initial requests that should be sent upstream.
     /// Must be at least 1.
@@ -1877,7 +1877,7 @@ pub struct HedgePolicy {
     pub hedge_on_per_try_timeout: bool,
 }
 /// \[\#next-free-field: 10\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RedirectAction {
     /// The host portion of the URL will be swapped with this value.
     #[prost(string, tag = "1")]
@@ -1966,7 +1966,7 @@ pub mod redirect_action {
     ///    set to `:80`, the port will be removed after the redirection
     /// 1. If the source URI scheme is `https` and the port is explicitly
     ///    set to `:443`, the port will be removed after the redirection
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum SchemeRewriteSpecifier {
         /// The scheme portion of the URL will be swapped with "https".
         #[prost(bool, tag = "4")]
@@ -1975,7 +1975,7 @@ pub mod redirect_action {
         #[prost(string, tag = "7")]
         SchemeRedirect(::prost::alloc::string::String),
     }
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum PathRewriteSpecifier {
         /// The path portion of the URL will be swapped with this value.
         /// Please note that query string in path_redirect will override the
@@ -2035,7 +2035,7 @@ pub mod redirect_action {
         ),
     }
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DirectResponseAction {
     /// Specifies the HTTP response status to be returned.
     #[prost(uint32, tag = "1")]
@@ -2053,9 +2053,9 @@ pub struct DirectResponseAction {
     pub body: ::core::option::Option<super::super::core::v3::DataSource>,
 }
 /// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct NonForwardingAction {}
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Decorator {
     /// The operation name associated with the request matched to this route. If tracing is
     /// enabled, this information will be used as the span name reported for this request.
@@ -2245,7 +2245,7 @@ pub mod rate_limit {
         /// ("source_cluster", "<local service cluster>")
         ///
         /// <local service cluster> is derived from the :option:`--service-cluster` option.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct SourceCluster {}
         /// The following descriptor entry is appended to the descriptor:
         ///
@@ -2263,7 +2263,7 @@ pub mod rate_limit {
         ///   chooses a cluster randomly from a set of clusters with attributed weight.
         /// * :ref:`cluster_header <envoy_v3_api_field_config.route.v3.RouteAction.cluster_header>` indicates which
         ///   header in the request contains the target cluster.
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct DestinationCluster {}
         /// The following descriptor entry is appended when a header contains a key that matches the
         /// `header_name`:
@@ -2271,7 +2271,7 @@ pub mod rate_limit {
         /// .. code-block:: cpp
         ///
         /// ("\<descriptor_key>", "\<header_value_queried_from_header>")
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct RequestHeaders {
             /// The header name to be queried from the request headers. The header’s
             /// value is used to populate the value of the descriptor entry for the
@@ -2301,7 +2301,7 @@ pub mod rate_limit {
         /// .. code-block:: cpp
         ///
         /// ("\<descriptor_key>", "\<query_parameter_value_queried_from_query_parameter>")
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct QueryParameters {
             /// The name of the query parameter to use for rate limiting. Value of this query parameter is used to populate
             /// the value of the descriptor entry for the descriptor_key.
@@ -2331,7 +2331,7 @@ pub mod rate_limit {
         /// .. code-block:: cpp
         ///
         /// ("remote_address", "<trusted address from x-forwarded-for>")
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct RemoteAddress {}
         /// The following descriptor entry is appended to the descriptor and is populated using the
         /// masked address from :ref:`x-forwarded-for <config_http_conn_man_headers_x-forwarded-for>`:
@@ -2339,7 +2339,7 @@ pub mod rate_limit {
         /// .. code-block:: cpp
         ///
         /// ("masked_remote_address", "<masked address from x-forwarded-for>")
-        #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct MaskedRemoteAddress {
             /// Length of prefix mask len for IPv4 (e.g. 0, 32).
             /// Defaults to 32 when unset.
@@ -2365,7 +2365,7 @@ pub mod rate_limit {
         /// .. code-block:: cpp
         ///
         /// ("generic_key", "\<descriptor_value>")
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct GenericKey {
             /// The value to use in the descriptor entry.
             #[prost(string, tag = "1")]
@@ -2619,7 +2619,7 @@ pub mod rate_limit {
             DynamicMetadata(DynamicMetadata),
         }
     }
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HitsAddend {
         /// Fixed number of hits to add to the rate limit descriptor.
         ///
@@ -2679,7 +2679,7 @@ pub mod rate_limit {
 ///
 /// \[\#next-major-version: HeaderMatcher should be refactored to use StringMatcher.\]
 /// \[\#next-free-field: 15\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderMatcher {
     /// Specifies the name of the header in the request.
     #[prost(string, tag = "1")]
@@ -2743,7 +2743,7 @@ pub struct HeaderMatcher {
 /// Nested message and enum types in `HeaderMatcher`.
 pub mod header_matcher {
     /// Specifies how the header match will be performed to route the request.
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum HeaderMatchSpecifier {
         /// If specified, header match will be performed based on the value of the header.
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
@@ -2808,7 +2808,7 @@ pub mod header_matcher {
 /// Query parameter matching treats the query string of a request's :path header
 /// as an ampersand-separated list of keys and/or key=value elements.
 /// \[\#next-free-field: 7\]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct QueryParameterMatcher {
     /// Specifies the name of a key that must be present in the requested
     /// `path`'s query string.
@@ -2824,7 +2824,7 @@ pub struct QueryParameterMatcher {
 }
 /// Nested message and enum types in `QueryParameterMatcher`.
 pub mod query_parameter_matcher {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum QueryParameterMatchSpecifier {
         /// Specifies whether a query parameter value should match against a string.
         #[prost(message, tag = "5")]
@@ -2881,7 +2881,7 @@ pub struct InternalRedirectPolicy {
 /// : ref:`Route.typed_per_filter_config<envoy_v3_api_field_config.route.v3.Route.typed_per_filter_config>`,
 ///   or :ref:`WeightedCluster.ClusterWeight.typed_per_filter_config<envoy_v3_api_field_config.route.v3.WeightedCluster.ClusterWeight.typed_per_filter_config>`
 ///   to add additional flags to the filter.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterConfig {
     /// The filter config.
     #[prost(message, optional, tag = "1")]
@@ -3163,14 +3163,14 @@ pub mod scoped_route_configuration {
     }
     /// Nested message and enum types in `Key`.
     pub mod key {
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct Fragment {
             #[prost(oneof = "fragment::Type", tags = "1")]
             pub r#type: ::core::option::Option<fragment::Type>,
         }
         /// Nested message and enum types in `Fragment`.
         pub mod fragment {
-            #[derive(Clone, PartialEq, ::prost::Oneof)]
+            #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
             pub enum Type {
                 /// A string to match against.
                 #[prost(string, tag = "1")]

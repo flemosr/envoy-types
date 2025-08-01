@@ -99,7 +99,7 @@ pub mod admission_control {
                 super::super::super::super::super::super::super::r#type::v3::Int32Range,
             >,
         }
-        #[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct GrpcCriteria {
             /// Status codes that constitute a successful request.
             /// Mappings can be found at: <https://github.com/grpc/grpc/blob/master/doc/statuscodes.md.>

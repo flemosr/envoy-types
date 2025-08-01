@@ -10,7 +10,7 @@
 ///   where a match tree is specified that indicates (via
 /// : ref:`ExecuteFilterAction <envoy_v3_api_msg_extensions.filters.http.composite.v3.ExecuteFilterAction>`)
 ///   which filter configuration to create and delegate to.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Composite {}
 /// Configuration for an extension configuration discovery service with name.
 #[derive(Clone, PartialEq, ::prost::Message)]

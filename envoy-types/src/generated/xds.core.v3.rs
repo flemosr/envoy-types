@@ -15,7 +15,7 @@ pub struct ContextParams {
     >,
 }
 /// Message type for extension configuration.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TypedExtensionConfig {
     /// The name of an extension. This is not used to select the extension, instead
     /// it serves the role of an opaque identifier.
@@ -32,7 +32,7 @@ pub struct TypedExtensionConfig {
 }
 /// CidrRange specifies an IP Address and a prefix length to construct
 /// the subnet mask for a `CIDR <<https://tools.ietf.org/html/rfc4632>`\_> range.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CidrRange {
     /// IPv4 or IPv6 address, e.g. `192.0.0.0` or `2001:db8::`.
     #[prost(string, tag = "1")]
@@ -44,7 +44,7 @@ pub struct CidrRange {
     >,
 }
 /// xDS authority information.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Authority {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
@@ -213,7 +213,7 @@ pub struct CollectionEntry {
 /// Nested message and enum types in `CollectionEntry`.
 pub mod collection_entry {
     /// Inlined resource entry.
-    #[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct InlineEntry {
         /// Optional name to describe the inlined resource. Resource names must match
         /// `\[a-zA-Z0-9_-\./\]+` (TODO(htuch): turn this into a PGV constraint once

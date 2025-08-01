@@ -8,5 +8,5 @@
 ///
 /// As a result, if this match action is resolved before the first filter callback (e.g. HTTP request
 /// headers), the filter will be completely skipped.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SkipFilter {}

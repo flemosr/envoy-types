@@ -26,7 +26,7 @@ pub struct FilterConfig {
 }
 /// Nested message and enum types in `FilterConfig`.
 pub mod filter_config {
-    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum PortSpecifier {
         /// The port number to connect to the upstream.
         #[prost(uint32, tag = "2")]

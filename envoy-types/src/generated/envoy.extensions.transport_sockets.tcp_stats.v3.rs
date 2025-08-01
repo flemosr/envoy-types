@@ -8,7 +8,7 @@
 ///
 ///
 /// This transport socket is currently only supported on Linux.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Config {
     /// The underlying transport socket being wrapped.
     #[prost(message, optional, tag = "1")]

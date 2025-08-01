@@ -2,34 +2,34 @@
 /// Used to match request service of the downstream request. Only applicable if a service provided
 /// by the application protocol.
 /// This is deprecated and should be replaced by HostMatchInput. This is kept for backward compatibility.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ServiceMatchInput {}
 /// Used to match request host of the generic downstream request. Only applicable if a host provided
 /// by the application protocol.
 /// This is same with the ServiceMatchInput and this should be preferred over ServiceMatchInput.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HostMatchInput {}
 /// Used to match request path of the generic downstream request. Only applicable if a path provided
 /// by the application protocol.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PathMatchInput {}
 /// Used to match request method of the generic downstream request. Only applicable if a method provided
 /// by the application protocol.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MethodMatchInput {}
 /// Used to match an arbitrary property of the generic downstream request.
 /// These properties are populated by the codecs of application protocols.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PropertyMatchInput {
     /// The property name to match on.
     #[prost(string, tag = "1")]
     pub property_name: ::prost::alloc::string::String,
 }
 /// Used to match an whole generic downstream request.
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RequestMatchInput {}
 /// Used to match an arbitrary key-value pair for headers, trailers or properties.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct KeyValueMatchEntry {
     /// The key name to match on.
     #[prost(string, tag = "1")]

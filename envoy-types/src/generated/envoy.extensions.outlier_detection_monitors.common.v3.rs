@@ -2,7 +2,7 @@
 /// \[\#protodoc-title: Outlier detection error buckets\]
 /// Error bucket for HTTP codes.
 /// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HttpErrors {
     #[prost(message, optional, tag = "1")]
     pub range: ::core::option::Option<
@@ -11,12 +11,12 @@ pub struct HttpErrors {
 }
 /// Error bucket for locally originated errors.
 /// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LocalOriginErrors {}
 /// Error bucket for database errors.
 /// Sub-parameters may be added later, like malformed response, error on write, etc.
 /// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DatabaseErrors {}
 /// Union of possible error buckets.
 /// \[\#not-implemented-hide:\]

@@ -93,7 +93,7 @@ pub struct Router {
 }
 /// Nested message and enum types in `Router`.
 pub mod router {
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct UpstreamAccessLogOptions {
         /// If set to true, an upstream access log will be recorded when an upstream stream is
         /// associated to an http request. Note: Each HTTP request received for an already established

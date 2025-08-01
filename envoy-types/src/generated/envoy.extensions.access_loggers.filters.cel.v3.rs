@@ -2,7 +2,7 @@
 /// ExpressionFilter is an access logging filter that evaluates configured
 /// symbolic Common Expression Language expressions to inform the decision
 /// to generate an access log.
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ExpressionFilter {
     /// Expression that, when evaluated, will be used to filter access logs.
     /// Expressions are based on the set of Envoy :ref:`attributes <arch_overview_attributes>`.

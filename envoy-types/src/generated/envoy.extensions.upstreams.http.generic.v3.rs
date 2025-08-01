@@ -2,5 +2,5 @@
 /// A connection pool which forwards downstream HTTP as TCP, UDP or HTTP to upstream,
 /// based on CONNECT configuration.
 /// \[\#extension: envoy.upstreams.http.generic\]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GenericConnectionPoolProto {}
