@@ -2,3 +2,14 @@
 /// Configuration for the default QUIC proof source.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ProofSourceConfig {}
+impl ::prost::Name for ProofSourceConfig {
+    const NAME: &'static str = "ProofSourceConfig";
+    const PACKAGE: &'static str = "envoy.extensions.quic.proof_source.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.proof_source.v3.ProofSourceConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.proof_source.v3.ProofSourceConfig"
+            .into()
+    }
+}

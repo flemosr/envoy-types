@@ -6,6 +6,16 @@ pub struct HttpStatus {
     #[prost(enumeration = "StatusCode", tag = "1")]
     pub code: i32,
 }
+impl ::prost::Name for HttpStatus {
+    const NAME: &'static str = "HttpStatus";
+    const PACKAGE: &'static str = "envoy.type";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.HttpStatus".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.HttpStatus".into()
+    }
+}
 /// HTTP response codes supported in Envoy.
 /// For more details: <https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

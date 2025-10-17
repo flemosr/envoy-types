@@ -15,3 +15,14 @@ pub struct RoundRobin {
         super::super::common::v3::LocalityLbConfig,
     >,
 }
+impl ::prost::Name for RoundRobin {
+    const NAME: &'static str = "RoundRobin";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.round_robin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.round_robin.v3.RoundRobin".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.round_robin.v3.RoundRobin"
+            .into()
+    }
+}

@@ -7,3 +7,15 @@
 /// \[\#extension: envoy.internal_redirect_predicates.safe_cross_scheme\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SafeCrossSchemeConfig {}
+impl ::prost::Name for SafeCrossSchemeConfig {
+    const NAME: &'static str = "SafeCrossSchemeConfig";
+    const PACKAGE: &'static str = "envoy.extensions.internal_redirect.safe_cross_scheme.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.internal_redirect.safe_cross_scheme.v3.SafeCrossSchemeConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.internal_redirect.safe_cross_scheme.v3.SafeCrossSchemeConfig"
+            .into()
+    }
+}

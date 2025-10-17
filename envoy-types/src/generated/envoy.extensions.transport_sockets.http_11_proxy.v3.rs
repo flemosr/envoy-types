@@ -23,3 +23,15 @@ pub struct Http11ProxyUpstreamTransport {
         super::super::super::super::config::core::v3::TransportSocket,
     >,
 }
+impl ::prost::Name for Http11ProxyUpstreamTransport {
+    const NAME: &'static str = "Http11ProxyUpstreamTransport";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.http_11_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.http_11_proxy.v3.Http11ProxyUpstreamTransport"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.http_11_proxy.v3.Http11ProxyUpstreamTransport"
+            .into()
+    }
+}

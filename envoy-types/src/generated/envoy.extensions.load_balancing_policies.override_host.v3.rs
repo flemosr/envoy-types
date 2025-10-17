@@ -67,4 +67,27 @@ pub mod override_host {
             super::super::super::super::super::r#type::metadata::v3::MetadataKey,
         >,
     }
+    impl ::prost::Name for OverrideHostSource {
+        const NAME: &'static str = "OverrideHostSource";
+        const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.override_host.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.load_balancing_policies.override_host.v3.OverrideHost.OverrideHostSource"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.load_balancing_policies.override_host.v3.OverrideHost.OverrideHostSource"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for OverrideHost {
+    const NAME: &'static str = "OverrideHost";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.override_host.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.override_host.v3.OverrideHost".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.override_host.v3.OverrideHost"
+            .into()
+    }
 }

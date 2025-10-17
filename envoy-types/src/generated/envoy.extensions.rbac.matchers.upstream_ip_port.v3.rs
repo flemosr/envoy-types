@@ -23,3 +23,14 @@ pub struct UpstreamIpPortMatcher {
         super::super::super::super::super::r#type::v3::Int64Range,
     >,
 }
+impl ::prost::Name for UpstreamIpPortMatcher {
+    const NAME: &'static str = "UpstreamIpPortMatcher";
+    const PACKAGE: &'static str = "envoy.extensions.rbac.matchers.upstream_ip_port.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.rbac.matchers.upstream_ip_port.v3.UpstreamIpPortMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.rbac.matchers.upstream_ip_port.v3.UpstreamIpPortMatcher"
+            .into()
+    }
+}

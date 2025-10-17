@@ -23,6 +23,16 @@ pub struct Status {
     #[prost(message, repeated, tag = "3")]
     pub details: ::prost::alloc::vec::Vec<super::protobuf::Any>,
 }
+impl ::prost::Name for Status {
+    const NAME: &'static str = "Status";
+    const PACKAGE: &'static str = "google.rpc";
+    fn full_name() -> ::prost::alloc::string::String {
+        "google.rpc.Status".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/google.rpc.Status".into()
+    }
+}
 /// The canonical error codes for gRPC APIs.
 ///
 /// Sometimes multiple error codes may apply.  Services should return

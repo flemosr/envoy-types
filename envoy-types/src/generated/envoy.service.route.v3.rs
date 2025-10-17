@@ -3,6 +3,16 @@
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RdsDummy {}
+impl ::prost::Name for RdsDummy {
+    const NAME: &'static str = "RdsDummy";
+    const PACKAGE: &'static str = "envoy.service.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.route.v3.RdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.route.v3.RdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod route_discovery_service_client {
     #![allow(
@@ -896,6 +906,16 @@ pub mod virtual_host_discovery_service_server {
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SrdsDummy {}
+impl ::prost::Name for SrdsDummy {
+    const NAME: &'static str = "SrdsDummy";
+    const PACKAGE: &'static str = "envoy.service.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.route.v3.SrdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.route.v3.SrdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod scoped_routes_discovery_service_client {
     #![allow(

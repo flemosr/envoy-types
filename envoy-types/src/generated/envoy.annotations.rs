@@ -6,3 +6,13 @@ pub struct ResourceAnnotation {
     #[prost(string, tag = "1")]
     pub r#type: ::prost::alloc::string::String,
 }
+impl ::prost::Name for ResourceAnnotation {
+    const NAME: &'static str = "ResourceAnnotation";
+    const PACKAGE: &'static str = "envoy.annotations";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.annotations.ResourceAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.annotations.ResourceAnnotation".into()
+    }
+}

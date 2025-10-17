@@ -29,3 +29,14 @@ pub struct CookieBasedSessionState {
         super::super::super::super::super::r#type::http::v3::Cookie,
     >,
 }
+impl ::prost::Name for CookieBasedSessionState {
+    const NAME: &'static str = "CookieBasedSessionState";
+    const PACKAGE: &'static str = "envoy.extensions.http.stateful_session.cookie.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.stateful_session.cookie.v3.CookieBasedSessionState".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.stateful_session.cookie.v3.CookieBasedSessionState"
+            .into()
+    }
+}

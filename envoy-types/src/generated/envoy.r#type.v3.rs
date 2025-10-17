@@ -5,6 +5,16 @@ pub struct Percent {
     #[prost(double, tag = "1")]
     pub value: f64,
 }
+impl ::prost::Name for Percent {
+    const NAME: &'static str = "Percent";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.Percent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.Percent".into()
+    }
+}
 /// A fractional percentage is used in cases in which for performance reasons performing floating
 /// point to integer conversions during randomness calculations is undesirable. The message includes
 /// both a numerator and denominator that together determine the final fractional value.
@@ -73,6 +83,16 @@ pub mod fractional_percent {
         }
     }
 }
+impl ::prost::Name for FractionalPercent {
+    const NAME: &'static str = "FractionalPercent";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.FractionalPercent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.FractionalPercent".into()
+    }
+}
 /// Envoy uses SemVer (<https://semver.org/>). Major/minor versions indicate
 /// expected behaviors and APIs, the patch version field is used only
 /// for security fixes and can be generally ignored.
@@ -84,6 +104,16 @@ pub struct SemanticVersion {
     pub minor_number: u32,
     #[prost(uint32, tag = "3")]
     pub patch: u32,
+}
+impl ::prost::Name for SemanticVersion {
+    const NAME: &'static str = "SemanticVersion";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.SemanticVersion".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.SemanticVersion".into()
+    }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
@@ -128,6 +158,16 @@ pub struct Int64Range {
     #[prost(int64, tag = "2")]
     pub end: i64,
 }
+impl ::prost::Name for Int64Range {
+    const NAME: &'static str = "Int64Range";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.Int64Range".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.Int64Range".into()
+    }
+}
 /// Specifies the int32 start and end of the range using half-open interval semantics \[start,
 /// end).
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -139,6 +179,16 @@ pub struct Int32Range {
     #[prost(int32, tag = "2")]
     pub end: i32,
 }
+impl ::prost::Name for Int32Range {
+    const NAME: &'static str = "Int32Range";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.Int32Range".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.Int32Range".into()
+    }
+}
 /// Specifies the double start and end of the range using half-open interval semantics \[start,
 /// end).
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -149,6 +199,16 @@ pub struct DoubleRange {
     /// end of the range (exclusive)
     #[prost(double, tag = "2")]
     pub end: f64,
+}
+impl ::prost::Name for DoubleRange {
+    const NAME: &'static str = "DoubleRange";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.DoubleRange".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.DoubleRange".into()
+    }
 }
 /// Identifies the unit of of time for rate limit.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -220,12 +280,32 @@ pub struct TokenBucket {
         super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for TokenBucket {
+    const NAME: &'static str = "TokenBucket";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.TokenBucket".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.TokenBucket".into()
+    }
+}
 /// HTTP status.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HttpStatus {
     /// Supplies HTTP response code.
     #[prost(enumeration = "StatusCode", tag = "1")]
     pub code: i32,
+}
+impl ::prost::Name for HttpStatus {
+    const NAME: &'static str = "HttpStatus";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.HttpStatus".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.HttpStatus".into()
+    }
 }
 /// HTTP response codes supported in Envoy.
 /// For more details: <https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>
@@ -516,6 +596,17 @@ pub mod rate_limit_strategy {
         #[prost(enumeration = "super::RateLimitUnit", tag = "2")]
         pub time_unit: i32,
     }
+    impl ::prost::Name for RequestsPerTimeUnit {
+        const NAME: &'static str = "RequestsPerTimeUnit";
+        const PACKAGE: &'static str = "envoy.type.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.v3.RateLimitStrategy.RequestsPerTimeUnit".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.v3.RateLimitStrategy.RequestsPerTimeUnit"
+                .into()
+        }
+    }
     /// Choose between allow all and deny all.
     #[derive(
         Clone,
@@ -570,6 +661,16 @@ pub mod rate_limit_strategy {
         TokenBucket(super::TokenBucket),
     }
 }
+impl ::prost::Name for RateLimitStrategy {
+    const NAME: &'static str = "RateLimitStrategy";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.RateLimitStrategy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.RateLimitStrategy".into()
+    }
+}
 /// Specifies the hash policy
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HashPolicy {
@@ -582,6 +683,16 @@ pub mod hash_policy {
     /// algorithms.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct SourceIp {}
+    impl ::prost::Name for SourceIp {
+        const NAME: &'static str = "SourceIp";
+        const PACKAGE: &'static str = "envoy.type.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.v3.HashPolicy.SourceIp".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.v3.HashPolicy.SourceIp".into()
+        }
+    }
     /// An Object in the :ref:`filterState <arch_overview_data_sharing_between_filters>` will be used
     /// to compute the hash used by hash-based load balancing algorithms.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -592,11 +703,31 @@ pub mod hash_policy {
         #[prost(string, tag = "1")]
         pub key: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for FilterState {
+        const NAME: &'static str = "FilterState";
+        const PACKAGE: &'static str = "envoy.type.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.v3.HashPolicy.FilterState".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.v3.HashPolicy.FilterState".into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum PolicySpecifier {
         #[prost(message, tag = "1")]
         SourceIp(SourceIp),
         #[prost(message, tag = "2")]
         FilterState(FilterState),
+    }
+}
+impl ::prost::Name for HashPolicy {
+    const NAME: &'static str = "HashPolicy";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.HashPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.HashPolicy".into()
     }
 }

@@ -22,3 +22,15 @@ pub struct ConsecutiveErrors {
     #[prost(message, optional, tag = "4")]
     pub error_buckets: ::core::option::Option<super::super::common::v3::ErrorBuckets>,
 }
+impl ::prost::Name for ConsecutiveErrors {
+    const NAME: &'static str = "ConsecutiveErrors";
+    const PACKAGE: &'static str = "envoy.extensions.outlier_detection_monitors.consecutive_errors.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.outlier_detection_monitors.consecutive_errors.v3.ConsecutiveErrors"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.outlier_detection_monitors.consecutive_errors.v3.ConsecutiveErrors"
+            .into()
+    }
+}

@@ -20,3 +20,14 @@ pub struct CdnLoopConfig {
     #[prost(uint32, tag = "2")]
     pub max_allowed_occurrences: u32,
 }
+impl ::prost::Name for CdnLoopConfig {
+    const NAME: &'static str = "CdnLoopConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.cdn_loop.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.cdn_loop.v3.CdnLoopConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.cdn_loop.v3.CdnLoopConfig"
+            .into()
+    }
+}

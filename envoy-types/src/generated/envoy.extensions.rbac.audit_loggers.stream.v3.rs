@@ -4,3 +4,14 @@
 /// The logger outputs in JSON format and is currently not configurable.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StdoutAuditLog {}
+impl ::prost::Name for StdoutAuditLog {
+    const NAME: &'static str = "StdoutAuditLog";
+    const PACKAGE: &'static str = "envoy.extensions.rbac.audit_loggers.stream.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.rbac.audit_loggers.stream.v3.StdoutAuditLog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.rbac.audit_loggers.stream.v3.StdoutAuditLog"
+            .into()
+    }
+}

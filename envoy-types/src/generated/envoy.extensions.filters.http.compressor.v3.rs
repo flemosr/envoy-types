@@ -104,11 +104,35 @@ pub mod compressor {
         #[prost(string, repeated, tag = "3")]
         pub content_type: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
+    impl ::prost::Name for CommonDirectionConfig {
+        const NAME: &'static str = "CommonDirectionConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.compressor.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.compressor.v3.Compressor.CommonDirectionConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.compressor.v3.Compressor.CommonDirectionConfig"
+                .into()
+        }
+    }
     /// Configuration for filter behavior on the request direction.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RequestDirectionConfig {
         #[prost(message, optional, tag = "1")]
         pub common_config: ::core::option::Option<CommonDirectionConfig>,
+    }
+    impl ::prost::Name for RequestDirectionConfig {
+        const NAME: &'static str = "RequestDirectionConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.compressor.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.compressor.v3.Compressor.RequestDirectionConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.compressor.v3.Compressor.RequestDirectionConfig"
+                .into()
+        }
     }
     /// Configuration for filter behavior on the response direction.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -135,6 +159,29 @@ pub mod compressor {
         #[prost(uint32, repeated, packed = "false", tag = "4")]
         pub uncompressible_response_codes: ::prost::alloc::vec::Vec<u32>,
     }
+    impl ::prost::Name for ResponseDirectionConfig {
+        const NAME: &'static str = "ResponseDirectionConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.compressor.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.compressor.v3.Compressor.ResponseDirectionConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.compressor.v3.Compressor.ResponseDirectionConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Compressor {
+    const NAME: &'static str = "Compressor";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.compressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.compressor.v3.Compressor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.compressor.v3.Compressor"
+            .into()
+    }
 }
 /// Per-route overrides of `ResponseDirectionConfig`. Anything added here should be optional,
 /// to allow overriding arbitrary subsets of configuration. Omitted fields must have no effect.
@@ -148,6 +195,17 @@ pub struct ResponseDirectionOverrides {
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for ResponseDirectionOverrides {
+    const NAME: &'static str = "ResponseDirectionOverrides";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.compressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.compressor.v3.ResponseDirectionOverrides".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.compressor.v3.ResponseDirectionOverrides"
+            .into()
+    }
+}
 /// Per-route overrides. As per-route overrides are needed, they should be
 /// added here, mirroring the structure of `Compressor`. All fields should be
 /// optional, to allow overriding arbitrary subsets of configuration.
@@ -156,6 +214,17 @@ pub struct CompressorOverrides {
     /// If present, response compression is enabled.
     #[prost(message, optional, tag = "1")]
     pub response_direction_config: ::core::option::Option<ResponseDirectionOverrides>,
+}
+impl ::prost::Name for CompressorOverrides {
+    const NAME: &'static str = "CompressorOverrides";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.compressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.compressor.v3.CompressorOverrides".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.compressor.v3.CompressorOverrides"
+            .into()
+    }
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CompressorPerRoute {
@@ -173,5 +242,16 @@ pub mod compressor_per_route {
         /// Per-route overrides. Fields set here will override corresponding fields in `Compressor`.
         #[prost(message, tag = "2")]
         Overrides(super::CompressorOverrides),
+    }
+}
+impl ::prost::Name for CompressorPerRoute {
+    const NAME: &'static str = "CompressorPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.compressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.compressor.v3.CompressorPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.compressor.v3.CompressorPerRoute"
+            .into()
     }
 }

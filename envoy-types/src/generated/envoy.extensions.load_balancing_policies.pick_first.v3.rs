@@ -8,3 +8,14 @@ pub struct PickFirst {
     #[prost(bool, tag = "1")]
     pub shuffle_address_list: bool,
 }
+impl ::prost::Name for PickFirst {
+    const NAME: &'static str = "PickFirst";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.pick_first.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.pick_first.v3.PickFirst".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.pick_first.v3.PickFirst"
+            .into()
+    }
+}

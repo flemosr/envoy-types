@@ -47,3 +47,14 @@ pub mod sink_config {
         GrpcService(super::super::super::super::super::config::core::v3::GrpcService),
     }
 }
+impl ::prost::Name for SinkConfig {
+    const NAME: &'static str = "SinkConfig";
+    const PACKAGE: &'static str = "envoy.extensions.stat_sinks.open_telemetry.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.stat_sinks.open_telemetry.v3.SinkConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.stat_sinks.open_telemetry.v3.SinkConfig"
+            .into()
+    }
+}

@@ -37,3 +37,13 @@ pub struct CsrfPolicy {
         super::super::super::super::super::r#type::matcher::v3::StringMatcher,
     >,
 }
+impl ::prost::Name for CsrfPolicy {
+    const NAME: &'static str = "CsrfPolicy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.csrf.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.csrf.v3.CsrfPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.csrf.v3.CsrfPolicy".into()
+    }
+}

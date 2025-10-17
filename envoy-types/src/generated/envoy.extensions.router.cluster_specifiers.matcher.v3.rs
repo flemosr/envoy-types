@@ -6,6 +6,17 @@ pub struct ClusterAction {
     #[prost(string, tag = "1")]
     pub cluster: ::prost::alloc::string::String,
 }
+impl ::prost::Name for ClusterAction {
+    const NAME: &'static str = "ClusterAction";
+    const PACKAGE: &'static str = "envoy.extensions.router.cluster_specifiers.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.router.cluster_specifiers.matcher.v3.ClusterAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.router.cluster_specifiers.matcher.v3.ClusterAction"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MatcherClusterSpecifier {
     /// The matcher for cluster selection after the route has been selected. This is used when the
@@ -64,4 +75,16 @@ pub struct MatcherClusterSpecifier {
     pub cluster_matcher: ::core::option::Option<
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
+}
+impl ::prost::Name for MatcherClusterSpecifier {
+    const NAME: &'static str = "MatcherClusterSpecifier";
+    const PACKAGE: &'static str = "envoy.extensions.router.cluster_specifiers.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.router.cluster_specifiers.matcher.v3.MatcherClusterSpecifier"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.router.cluster_specifiers.matcher.v3.MatcherClusterSpecifier"
+            .into()
+    }
 }

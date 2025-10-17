@@ -46,6 +46,16 @@ pub mod cel_expression {
         ),
     }
 }
+impl ::prost::Name for CelExpression {
+    const NAME: &'static str = "CelExpression";
+    const PACKAGE: &'static str = "xds.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.type.v3.CelExpression".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.type.v3.CelExpression".into()
+    }
+}
 ///
 /// Extracts a string by evaluating a `Common Expression Language  <<https://github.com/google/cel-spec>`\_> (CEL) expression against the standardized set of
 /// : ref:`HTTP attributes <arch_overview_attributes>`.
@@ -69,4 +79,14 @@ pub struct CelExtractString {
     pub default_value: ::core::option::Option<
         super::super::super::google::protobuf::StringValue,
     >,
+}
+impl ::prost::Name for CelExtractString {
+    const NAME: &'static str = "CelExtractString";
+    const PACKAGE: &'static str = "xds.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.type.v3.CelExtractString".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.type.v3.CelExtractString".into()
+    }
 }

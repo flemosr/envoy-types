@@ -7,3 +7,15 @@ pub struct HeaderMutation {
         super::super::super::super::super::config::common::mutation_rules::v3::HeaderMutation,
     >,
 }
+impl ::prost::Name for HeaderMutation {
+    const NAME: &'static str = "HeaderMutation";
+    const PACKAGE: &'static str = "envoy.extensions.http.early_header_mutation.header_mutation.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.early_header_mutation.header_mutation.v3.HeaderMutation"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.early_header_mutation.header_mutation.v3.HeaderMutation"
+            .into()
+    }
+}

@@ -22,6 +22,18 @@ pub mod path_transformation {
         /// this options does not perform `case normalization  <<https://tools.ietf.org/html/rfc3986#section-6.2.2.1>`\_>
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct NormalizePathRfc3986 {}
+        impl ::prost::Name for NormalizePathRfc3986 {
+            const NAME: &'static str = "NormalizePathRFC3986";
+            const PACKAGE: &'static str = "envoy.type.http.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.type.http.v3.PathTransformation.Operation.NormalizePathRFC3986"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.type.http.v3.PathTransformation.Operation.NormalizePathRFC3986"
+                    .into()
+            }
+        }
         /// Determines if adjacent slashes are merged into one. A common use case is for a request path
         /// header. Using this option in `:ref: PathNormalizationOptions  <envoy_v3_api_msg_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.PathNormalizationOptions>`
         /// will allow incoming requests with path `//dir///file` to match against route with `prefix`
@@ -29,6 +41,17 @@ pub mod path_transformation {
         /// part of `HTTP spec <<https://tools.ietf.org/html/rfc3986>`\_> and is provided for convenience.
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct MergeSlashes {}
+        impl ::prost::Name for MergeSlashes {
+            const NAME: &'static str = "MergeSlashes";
+            const PACKAGE: &'static str = "envoy.type.http.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.type.http.v3.PathTransformation.Operation.MergeSlashes".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.type.http.v3.PathTransformation.Operation.MergeSlashes"
+                    .into()
+            }
+        }
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum OperationSpecifier {
             /// Enable path normalization per RFC 3986.
@@ -38,6 +61,26 @@ pub mod path_transformation {
             #[prost(message, tag = "3")]
             MergeSlashes(MergeSlashes),
         }
+    }
+    impl ::prost::Name for Operation {
+        const NAME: &'static str = "Operation";
+        const PACKAGE: &'static str = "envoy.type.http.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.http.v3.PathTransformation.Operation".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.http.v3.PathTransformation.Operation".into()
+        }
+    }
+}
+impl ::prost::Name for PathTransformation {
+    const NAME: &'static str = "PathTransformation";
+    const PACKAGE: &'static str = "envoy.type.http.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.http.v3.PathTransformation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.http.v3.PathTransformation".into()
     }
 }
 /// Cookie defines an API for obtaining or generating HTTP cookie.
@@ -61,6 +104,16 @@ pub struct Cookie {
     #[prost(message, repeated, tag = "4")]
     pub attributes: ::prost::alloc::vec::Vec<CookieAttribute>,
 }
+impl ::prost::Name for Cookie {
+    const NAME: &'static str = "Cookie";
+    const PACKAGE: &'static str = "envoy.type.http.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.http.v3.Cookie".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.http.v3.Cookie".into()
+    }
+}
 /// CookieAttribute defines an API for adding additional attributes for a HTTP cookie.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CookieAttribute {
@@ -70,4 +123,14 @@ pub struct CookieAttribute {
     /// The optional value of the cookie attribute.
     #[prost(string, tag = "2")]
     pub value: ::prost::alloc::string::String,
+}
+impl ::prost::Name for CookieAttribute {
+    const NAME: &'static str = "CookieAttribute";
+    const PACKAGE: &'static str = "envoy.type.http.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.http.v3.CookieAttribute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.http.v3.CookieAttribute".into()
+    }
 }

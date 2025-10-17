@@ -28,3 +28,14 @@ pub struct UriTemplateMatchConfig {
     #[prost(string, tag = "1")]
     pub path_template: ::prost::alloc::string::String,
 }
+impl ::prost::Name for UriTemplateMatchConfig {
+    const NAME: &'static str = "UriTemplateMatchConfig";
+    const PACKAGE: &'static str = "envoy.extensions.path.match.uri_template.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.path.match.uri_template.v3.UriTemplateMatchConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.path.match.uri_template.v3.UriTemplateMatchConfig"
+            .into()
+    }
+}

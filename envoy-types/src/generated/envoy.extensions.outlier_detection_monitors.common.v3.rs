@@ -9,15 +9,48 @@ pub struct HttpErrors {
         super::super::super::super::r#type::v3::Int32Range,
     >,
 }
+impl ::prost::Name for HttpErrors {
+    const NAME: &'static str = "HttpErrors";
+    const PACKAGE: &'static str = "envoy.extensions.outlier_detection_monitors.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.outlier_detection_monitors.common.v3.HttpErrors".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.outlier_detection_monitors.common.v3.HttpErrors"
+            .into()
+    }
+}
 /// Error bucket for locally originated errors.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LocalOriginErrors {}
+impl ::prost::Name for LocalOriginErrors {
+    const NAME: &'static str = "LocalOriginErrors";
+    const PACKAGE: &'static str = "envoy.extensions.outlier_detection_monitors.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.outlier_detection_monitors.common.v3.LocalOriginErrors".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.outlier_detection_monitors.common.v3.LocalOriginErrors"
+            .into()
+    }
+}
 /// Error bucket for database errors.
 /// Sub-parameters may be added later, like malformed response, error on write, etc.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DatabaseErrors {}
+impl ::prost::Name for DatabaseErrors {
+    const NAME: &'static str = "DatabaseErrors";
+    const PACKAGE: &'static str = "envoy.extensions.outlier_detection_monitors.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.outlier_detection_monitors.common.v3.DatabaseErrors".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.outlier_detection_monitors.common.v3.DatabaseErrors"
+            .into()
+    }
+}
 /// Union of possible error buckets.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -31,4 +64,15 @@ pub struct ErrorBuckets {
     /// List of buckets "catching" database errors.
     #[prost(message, repeated, tag = "3")]
     pub database_errors: ::prost::alloc::vec::Vec<DatabaseErrors>,
+}
+impl ::prost::Name for ErrorBuckets {
+    const NAME: &'static str = "ErrorBuckets";
+    const PACKAGE: &'static str = "envoy.extensions.outlier_detection_monitors.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.outlier_detection_monitors.common.v3.ErrorBuckets".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.outlier_detection_monitors.common.v3.ErrorBuckets"
+            .into()
+    }
 }

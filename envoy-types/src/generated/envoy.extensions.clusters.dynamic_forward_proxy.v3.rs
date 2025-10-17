@@ -56,6 +56,17 @@ pub mod cluster_config {
         SubClustersConfig(super::SubClustersConfig),
     }
 }
+impl ::prost::Name for ClusterConfig {
+    const NAME: &'static str = "ClusterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.clusters.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.clusters.dynamic_forward_proxy.v3.ClusterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.clusters.dynamic_forward_proxy.v3.ClusterConfig"
+            .into()
+    }
+}
 /// Configuration for sub clusters. Hard code STRICT_DNS cluster type now.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SubClustersConfig {
@@ -84,4 +95,15 @@ pub struct SubClustersConfig {
     pub preresolve_clusters: ::prost::alloc::vec::Vec<
         super::super::super::super::config::core::v3::SocketAddress,
     >,
+}
+impl ::prost::Name for SubClustersConfig {
+    const NAME: &'static str = "SubClustersConfig";
+    const PACKAGE: &'static str = "envoy.extensions.clusters.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.clusters.dynamic_forward_proxy.v3.SubClustersConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.clusters.dynamic_forward_proxy.v3.SubClustersConfig"
+            .into()
+    }
 }

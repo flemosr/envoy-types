@@ -38,3 +38,15 @@ pub struct RateLimit {
         super::super::super::super::super::super::super::config::ratelimit::v3::RateLimitServiceConfig,
     >,
 }
+impl ::prost::Name for RateLimit {
+    const NAME: &'static str = "RateLimit";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.filters.ratelimit.v3.RateLimit"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.ratelimit.v3.RateLimit"
+            .into()
+    }
+}

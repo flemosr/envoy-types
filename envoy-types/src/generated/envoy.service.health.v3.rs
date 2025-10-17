@@ -50,12 +50,32 @@ pub mod capability {
         }
     }
 }
+impl ::prost::Name for Capability {
+    const NAME: &'static str = "Capability";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.Capability".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.Capability".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheckRequest {
     #[prost(message, optional, tag = "1")]
     pub node: ::core::option::Option<super::super::super::config::core::v3::Node>,
     #[prost(message, optional, tag = "2")]
     pub capability: ::core::option::Option<Capability>,
+}
+impl ::prost::Name for HealthCheckRequest {
+    const NAME: &'static str = "HealthCheckRequest";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.HealthCheckRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.HealthCheckRequest".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EndpointHealth {
@@ -69,6 +89,16 @@ pub struct EndpointHealth {
     )]
     pub health_status: i32,
 }
+impl ::prost::Name for EndpointHealth {
+    const NAME: &'static str = "EndpointHealth";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.EndpointHealth".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.EndpointHealth".into()
+    }
+}
 /// Group endpoint health by locality under each cluster.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalityEndpointsHealth {
@@ -79,6 +109,16 @@ pub struct LocalityEndpointsHealth {
     #[prost(message, repeated, tag = "2")]
     pub endpoints_health: ::prost::alloc::vec::Vec<EndpointHealth>,
 }
+impl ::prost::Name for LocalityEndpointsHealth {
+    const NAME: &'static str = "LocalityEndpointsHealth";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.LocalityEndpointsHealth".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.LocalityEndpointsHealth".into()
+    }
+}
 /// The health status of endpoints in a cluster. The cluster name and locality
 /// should match the corresponding fields in ClusterHealthCheck message.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -87,6 +127,16 @@ pub struct ClusterEndpointsHealth {
     pub cluster_name: ::prost::alloc::string::String,
     #[prost(message, repeated, tag = "2")]
     pub locality_endpoints_health: ::prost::alloc::vec::Vec<LocalityEndpointsHealth>,
+}
+impl ::prost::Name for ClusterEndpointsHealth {
+    const NAME: &'static str = "ClusterEndpointsHealth";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.ClusterEndpointsHealth".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.ClusterEndpointsHealth".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EndpointHealthResponse {
@@ -97,6 +147,16 @@ pub struct EndpointHealthResponse {
     /// Organize Endpoint health information by cluster.
     #[prost(message, repeated, tag = "2")]
     pub cluster_endpoints_health: ::prost::alloc::vec::Vec<ClusterEndpointsHealth>,
+}
+impl ::prost::Name for EndpointHealthResponse {
+    const NAME: &'static str = "EndpointHealthResponse";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.EndpointHealthResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.EndpointHealthResponse".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheckRequestOrEndpointHealthResponse {
@@ -118,6 +178,17 @@ pub mod health_check_request_or_endpoint_health_response {
         EndpointHealthResponse(super::EndpointHealthResponse),
     }
 }
+impl ::prost::Name for HealthCheckRequestOrEndpointHealthResponse {
+    const NAME: &'static str = "HealthCheckRequestOrEndpointHealthResponse";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.HealthCheckRequestOrEndpointHealthResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.HealthCheckRequestOrEndpointHealthResponse"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalityEndpoints {
     #[prost(message, optional, tag = "1")]
@@ -128,6 +199,16 @@ pub struct LocalityEndpoints {
     pub endpoints: ::prost::alloc::vec::Vec<
         super::super::super::config::endpoint::v3::Endpoint,
     >,
+}
+impl ::prost::Name for LocalityEndpoints {
+    const NAME: &'static str = "LocalityEndpoints";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.LocalityEndpoints".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.LocalityEndpoints".into()
+    }
 }
 /// The cluster name and locality is provided to Envoy for the endpoints that it
 /// health checks to support statistics reporting, logging and debugging by the
@@ -159,6 +240,16 @@ pub struct ClusterHealthCheck {
         super::super::super::config::core::v3::BindConfig,
     >,
 }
+impl ::prost::Name for ClusterHealthCheck {
+    const NAME: &'static str = "ClusterHealthCheck";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.ClusterHealthCheck".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.ClusterHealthCheck".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HealthCheckSpecifier {
     #[prost(message, repeated, tag = "1")]
@@ -169,10 +260,30 @@ pub struct HealthCheckSpecifier {
         super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for HealthCheckSpecifier {
+    const NAME: &'static str = "HealthCheckSpecifier";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.HealthCheckSpecifier".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.HealthCheckSpecifier".into()
+    }
+}
 /// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HdsDummy {}
+impl ::prost::Name for HdsDummy {
+    const NAME: &'static str = "HdsDummy";
+    const PACKAGE: &'static str = "envoy.service.health.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.health.v3.HdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.health.v3.HdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod health_discovery_service_client {
     #![allow(

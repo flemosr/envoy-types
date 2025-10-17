@@ -54,3 +54,14 @@ pub mod kill_request {
         }
     }
 }
+impl ::prost::Name for KillRequest {
+    const NAME: &'static str = "KillRequest";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.kill_request.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.kill_request.v3.KillRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.kill_request.v3.KillRequest"
+            .into()
+    }
+}

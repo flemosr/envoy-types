@@ -2,3 +2,14 @@
 /// Configuration for raw buffer transport socket.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RawBuffer {}
+impl ::prost::Name for RawBuffer {
+    const NAME: &'static str = "RawBuffer";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.raw_buffer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.raw_buffer.v3.RawBuffer".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.raw_buffer.v3.RawBuffer"
+            .into()
+    }
+}

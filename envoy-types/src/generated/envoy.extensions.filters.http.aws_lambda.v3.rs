@@ -91,6 +91,16 @@ pub mod config {
         }
     }
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.aws_lambda.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.aws_lambda.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.aws_lambda.v3.Config".into()
+    }
+}
 /// AWS Lambda Credentials config.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Credentials {
@@ -106,10 +116,32 @@ pub struct Credentials {
     #[prost(string, tag = "3")]
     pub session_token: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Credentials {
+    const NAME: &'static str = "Credentials";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.aws_lambda.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.aws_lambda.v3.Credentials".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.aws_lambda.v3.Credentials"
+            .into()
+    }
+}
 /// Per-route configuration for AWS Lambda. This can be useful when invoking a different Lambda function or a different
 /// version of the same Lambda depending on the route.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PerRouteConfig {
     #[prost(message, optional, tag = "1")]
     pub invoke_config: ::core::option::Option<Config>,
+}
+impl ::prost::Name for PerRouteConfig {
+    const NAME: &'static str = "PerRouteConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.aws_lambda.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.aws_lambda.v3.PerRouteConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.aws_lambda.v3.PerRouteConfig"
+            .into()
+    }
 }

@@ -4,3 +4,15 @@
 /// \[\#extension: envoy.internal_redirect_predicates.previous_routes\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PreviousRoutesConfig {}
+impl ::prost::Name for PreviousRoutesConfig {
+    const NAME: &'static str = "PreviousRoutesConfig";
+    const PACKAGE: &'static str = "envoy.extensions.internal_redirect.previous_routes.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.internal_redirect.previous_routes.v3.PreviousRoutesConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.internal_redirect.previous_routes.v3.PreviousRoutesConfig"
+            .into()
+    }
+}

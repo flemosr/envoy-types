@@ -41,4 +41,27 @@ pub mod envelope_session_state {
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Header {
+        const NAME: &'static str = "Header";
+        const PACKAGE: &'static str = "envoy.extensions.http.stateful_session.envelope.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.http.stateful_session.envelope.v3.EnvelopeSessionState.Header"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.http.stateful_session.envelope.v3.EnvelopeSessionState.Header"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for EnvelopeSessionState {
+    const NAME: &'static str = "EnvelopeSessionState";
+    const PACKAGE: &'static str = "envoy.extensions.http.stateful_session.envelope.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.stateful_session.envelope.v3.EnvelopeSessionState".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.stateful_session.envelope.v3.EnvelopeSessionState"
+            .into()
+    }
 }

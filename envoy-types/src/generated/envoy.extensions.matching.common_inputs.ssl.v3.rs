@@ -3,12 +3,45 @@
 /// \[\#extension: envoy.matching.inputs.uri_san\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UriSanInput {}
+impl ::prost::Name for UriSanInput {
+    const NAME: &'static str = "UriSanInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.ssl.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.ssl.v3.UriSanInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.ssl.v3.UriSanInput"
+            .into()
+    }
+}
 /// List of comma-delimited DNS entries in the SAN field of the peer certificate for a downstream.
 /// \[\#extension: envoy.matching.inputs.dns_san\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DnsSanInput {}
+impl ::prost::Name for DnsSanInput {
+    const NAME: &'static str = "DnsSanInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.ssl.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.ssl.v3.DnsSanInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.ssl.v3.DnsSanInput"
+            .into()
+    }
+}
 /// Input that matches the subject field of the peer certificate in RFC 2253 format for a
 /// downstream.
 /// \[\#extension: envoy.matching.inputs.subject\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SubjectInput {}
+impl ::prost::Name for SubjectInput {
+    const NAME: &'static str = "SubjectInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.ssl.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.ssl.v3.SubjectInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.ssl.v3.SubjectInput"
+            .into()
+    }
+}

@@ -6,10 +6,30 @@ pub struct LabelPair {
     #[prost(string, optional, tag = "2")]
     pub value: ::core::option::Option<::prost::alloc::string::String>,
 }
+impl ::prost::Name for LabelPair {
+    const NAME: &'static str = "LabelPair";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.LabelPair".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.LabelPair".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Gauge {
     #[prost(double, optional, tag = "1")]
     pub value: ::core::option::Option<f64>,
+}
+impl ::prost::Name for Gauge {
+    const NAME: &'static str = "Gauge";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Gauge".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Gauge".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Counter {
@@ -22,12 +42,32 @@ pub struct Counter {
         super::super::super::google::protobuf::Timestamp,
     >,
 }
+impl ::prost::Name for Counter {
+    const NAME: &'static str = "Counter";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Counter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Counter".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Quantile {
     #[prost(double, optional, tag = "1")]
     pub quantile: ::core::option::Option<f64>,
     #[prost(double, optional, tag = "2")]
     pub value: ::core::option::Option<f64>,
+}
+impl ::prost::Name for Quantile {
+    const NAME: &'static str = "Quantile";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Quantile".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Quantile".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Summary {
@@ -42,10 +82,30 @@ pub struct Summary {
         super::super::super::google::protobuf::Timestamp,
     >,
 }
+impl ::prost::Name for Summary {
+    const NAME: &'static str = "Summary";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Summary".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Summary".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Untyped {
     #[prost(double, optional, tag = "1")]
     pub value: ::core::option::Option<f64>,
+}
+impl ::prost::Name for Untyped {
+    const NAME: &'static str = "Untyped";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Untyped".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Untyped".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Histogram {
@@ -114,6 +174,16 @@ pub struct Histogram {
     #[prost(message, repeated, tag = "16")]
     pub exemplars: ::prost::alloc::vec::Vec<Exemplar>,
 }
+impl ::prost::Name for Histogram {
+    const NAME: &'static str = "Histogram";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Histogram".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Histogram".into()
+    }
+}
 /// A Bucket of a conventional histogram, each of which is treated as
 /// an individual counter-like time series by Prometheus.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -130,6 +200,16 @@ pub struct Bucket {
     #[prost(message, optional, tag = "3")]
     pub exemplar: ::core::option::Option<Exemplar>,
 }
+impl ::prost::Name for Bucket {
+    const NAME: &'static str = "Bucket";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Bucket".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Bucket".into()
+    }
+}
 /// A BucketSpan defines a number of consecutive buckets in a native
 /// histogram with their offset. Logically, it would be more
 /// straightforward to include the bucket counts in the Span. However,
@@ -145,6 +225,16 @@ pub struct BucketSpan {
     #[prost(uint32, optional, tag = "2")]
     pub length: ::core::option::Option<u32>,
 }
+impl ::prost::Name for BucketSpan {
+    const NAME: &'static str = "BucketSpan";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.BucketSpan".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.BucketSpan".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Exemplar {
     #[prost(message, repeated, tag = "1")]
@@ -156,6 +246,16 @@ pub struct Exemplar {
     pub timestamp: ::core::option::Option<
         super::super::super::google::protobuf::Timestamp,
     >,
+}
+impl ::prost::Name for Exemplar {
+    const NAME: &'static str = "Exemplar";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Exemplar".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Exemplar".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Metric {
@@ -174,6 +274,16 @@ pub struct Metric {
     #[prost(int64, optional, tag = "6")]
     pub timestamp_ms: ::core::option::Option<i64>,
 }
+impl ::prost::Name for Metric {
+    const NAME: &'static str = "Metric";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.Metric".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.Metric".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MetricFamily {
     #[prost(string, optional, tag = "1")]
@@ -186,6 +296,16 @@ pub struct MetricFamily {
     pub metric: ::prost::alloc::vec::Vec<Metric>,
     #[prost(string, optional, tag = "5")]
     pub unit: ::core::option::Option<::prost::alloc::string::String>,
+}
+impl ::prost::Name for MetricFamily {
+    const NAME: &'static str = "MetricFamily";
+    const PACKAGE: &'static str = "io.prometheus.client";
+    fn full_name() -> ::prost::alloc::string::String {
+        "io.prometheus.client.MetricFamily".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/io.prometheus.client.MetricFamily".into()
+    }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

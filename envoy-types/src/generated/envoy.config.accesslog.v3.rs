@@ -22,6 +22,16 @@ pub mod access_log {
         TypedConfig(super::super::super::super::super::google::protobuf::Any),
     }
 }
+impl ::prost::Name for AccessLog {
+    const NAME: &'static str = "AccessLog";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.AccessLog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.AccessLog".into()
+    }
+}
 /// \[\#next-free-field: 14\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccessLogFilter {
@@ -75,6 +85,16 @@ pub mod access_log_filter {
         /// Log Type Filter
         #[prost(message, tag = "13")]
         LogTypeFilter(super::LogTypeFilter),
+    }
+}
+impl ::prost::Name for AccessLogFilter {
+    const NAME: &'static str = "AccessLogFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.AccessLogFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.AccessLogFilter".into()
     }
 }
 /// Filter on an integer comparison.
@@ -134,12 +154,32 @@ pub mod comparison_filter {
         }
     }
 }
+impl ::prost::Name for ComparisonFilter {
+    const NAME: &'static str = "ComparisonFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.ComparisonFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.ComparisonFilter".into()
+    }
+}
 /// Filters on HTTP response/status code.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StatusCodeFilter {
     /// Comparison.
     #[prost(message, optional, tag = "1")]
     pub comparison: ::core::option::Option<ComparisonFilter>,
+}
+impl ::prost::Name for StatusCodeFilter {
+    const NAME: &'static str = "StatusCodeFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.StatusCodeFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.StatusCodeFilter".into()
+    }
 }
 /// Filters based on the duration of the request or stream, in milliseconds.
 /// For end of stream access logs, the total duration of the stream will be used.
@@ -151,14 +191,44 @@ pub struct DurationFilter {
     #[prost(message, optional, tag = "1")]
     pub comparison: ::core::option::Option<ComparisonFilter>,
 }
+impl ::prost::Name for DurationFilter {
+    const NAME: &'static str = "DurationFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.DurationFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.DurationFilter".into()
+    }
+}
 /// Filters for requests that are not health check requests. A health check
 /// request is marked by the health check filter.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct NotHealthCheckFilter {}
+impl ::prost::Name for NotHealthCheckFilter {
+    const NAME: &'static str = "NotHealthCheckFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.NotHealthCheckFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.NotHealthCheckFilter".into()
+    }
+}
 /// Filters for requests that are traceable. See the tracing overview for more
 /// information on how a request becomes traceable.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TraceableFilter {}
+impl ::prost::Name for TraceableFilter {
+    const NAME: &'static str = "TraceableFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.TraceableFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.TraceableFilter".into()
+    }
+}
 /// Filters requests based on runtime-configurable sampling rates.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RuntimeFilter {
@@ -198,6 +268,16 @@ pub struct RuntimeFilter {
     #[prost(bool, tag = "3")]
     pub use_independent_randomness: bool,
 }
+impl ::prost::Name for RuntimeFilter {
+    const NAME: &'static str = "RuntimeFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.RuntimeFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.RuntimeFilter".into()
+    }
+}
 /// Performs a logical “and” operation on the result of each filter in filters.
 /// Filters are evaluated sequentially and if one of them returns false, the
 /// filter returns false immediately.
@@ -205,6 +285,16 @@ pub struct RuntimeFilter {
 pub struct AndFilter {
     #[prost(message, repeated, tag = "1")]
     pub filters: ::prost::alloc::vec::Vec<AccessLogFilter>,
+}
+impl ::prost::Name for AndFilter {
+    const NAME: &'static str = "AndFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.AndFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.AndFilter".into()
+    }
 }
 /// Performs a logical “or” operation on the result of each individual filter.
 /// Filters are evaluated sequentially and if one of them returns true, the
@@ -214,6 +304,16 @@ pub struct OrFilter {
     #[prost(message, repeated, tag = "2")]
     pub filters: ::prost::alloc::vec::Vec<AccessLogFilter>,
 }
+impl ::prost::Name for OrFilter {
+    const NAME: &'static str = "OrFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.OrFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.OrFilter".into()
+    }
+}
 /// Filters requests based on the presence or value of a request header.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderFilter {
@@ -221,6 +321,16 @@ pub struct HeaderFilter {
     /// pass the filter check.
     #[prost(message, optional, tag = "1")]
     pub header: ::core::option::Option<super::super::route::v3::HeaderMatcher>,
+}
+impl ::prost::Name for HeaderFilter {
+    const NAME: &'static str = "HeaderFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.HeaderFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.HeaderFilter".into()
+    }
 }
 ///
 /// Filters requests that received responses with an Envoy response flag set.
@@ -234,6 +344,16 @@ pub struct ResponseFlagFilter {
     /// flag will pass the filter check.
     #[prost(string, repeated, tag = "1")]
     pub flags: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for ResponseFlagFilter {
+    const NAME: &'static str = "ResponseFlagFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.ResponseFlagFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.ResponseFlagFilter".into()
+    }
 }
 /// Filters gRPC requests based on their response status. If a gRPC status is not
 /// provided, the filter will infer the status from the HTTP status code.
@@ -337,6 +457,16 @@ pub mod grpc_status_filter {
         }
     }
 }
+impl ::prost::Name for GrpcStatusFilter {
+    const NAME: &'static str = "GrpcStatusFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.GrpcStatusFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.GrpcStatusFilter".into()
+    }
+}
 /// Filters based on matching dynamic metadata.
 /// If the matcher path and key correspond to an existing key in dynamic
 /// metadata, the request is logged only if the matcher value is equal to the
@@ -359,6 +489,16 @@ pub struct MetadataFilter {
         super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for MetadataFilter {
+    const NAME: &'static str = "MetadataFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.MetadataFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.MetadataFilter".into()
+    }
+}
 /// Filters based on access log type.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LogTypeFilter {
@@ -374,6 +514,16 @@ pub struct LogTypeFilter {
     /// with a access log type in types field, and allow all other records.
     #[prost(bool, tag = "2")]
     pub exclude: bool,
+}
+impl ::prost::Name for LogTypeFilter {
+    const NAME: &'static str = "LogTypeFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.LogTypeFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.LogTypeFilter".into()
+    }
 }
 /// Extension filter is statically registered at runtime.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -393,5 +543,15 @@ pub mod extension_filter {
     pub enum ConfigType {
         #[prost(message, tag = "3")]
         TypedConfig(super::super::super::super::super::google::protobuf::Any),
+    }
+}
+impl ::prost::Name for ExtensionFilter {
+    const NAME: &'static str = "ExtensionFilter";
+    const PACKAGE: &'static str = "envoy.config.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.accesslog.v3.ExtensionFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.accesslog.v3.ExtensionFilter".into()
     }
 }

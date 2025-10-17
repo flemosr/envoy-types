@@ -68,3 +68,14 @@ pub mod redirect_policy {
         ),
     }
 }
+impl ::prost::Name for RedirectPolicy {
+    const NAME: &'static str = "RedirectPolicy";
+    const PACKAGE: &'static str = "envoy.extensions.http.custom_response.redirect_policy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.custom_response.redirect_policy.v3.RedirectPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.custom_response.redirect_policy.v3.RedirectPolicy"
+            .into()
+    }
+}

@@ -217,6 +217,16 @@ pub mod rate_limit {
         }
     }
 }
+impl ::prost::Name for RateLimit {
+    const NAME: &'static str = "RateLimit";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ratelimit.v3.RateLimit".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitPerRoute {
     /// Specifies if the rate limit filter should include the virtual host rate limits.
@@ -347,5 +357,16 @@ pub mod rate_limit_per_route {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for RateLimitPerRoute {
+    const NAME: &'static str = "RateLimitPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ratelimit.v3.RateLimitPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimitPerRoute"
+            .into()
     }
 }

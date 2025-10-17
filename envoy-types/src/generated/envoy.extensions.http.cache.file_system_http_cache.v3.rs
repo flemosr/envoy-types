@@ -119,3 +119,15 @@ pub struct FileSystemHttpCacheConfig {
     #[prost(bool, tag = "10")]
     pub create_cache_path: bool,
 }
+impl ::prost::Name for FileSystemHttpCacheConfig {
+    const NAME: &'static str = "FileSystemHttpCacheConfig";
+    const PACKAGE: &'static str = "envoy.extensions.http.cache.file_system_http_cache.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.cache.file_system_http_cache.v3.FileSystemHttpCacheConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.cache.file_system_http_cache.v3.FileSystemHttpCacheConfig"
+            .into()
+    }
+}

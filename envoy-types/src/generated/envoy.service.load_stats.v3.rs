@@ -11,6 +11,16 @@ pub struct LoadStatsRequest {
         super::super::super::config::endpoint::v3::ClusterStats,
     >,
 }
+impl ::prost::Name for LoadStatsRequest {
+    const NAME: &'static str = "LoadStatsRequest";
+    const PACKAGE: &'static str = "envoy.service.load_stats.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.load_stats.v3.LoadStatsRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.load_stats.v3.LoadStatsRequest".into()
+    }
+}
 /// The management server sends envoy a LoadStatsResponse with all clusters it
 /// is interested in learning load stats about.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -41,6 +51,16 @@ pub struct LoadStatsResponse {
     /// report.
     #[prost(bool, tag = "3")]
     pub report_endpoint_granularity: bool,
+}
+impl ::prost::Name for LoadStatsResponse {
+    const NAME: &'static str = "LoadStatsResponse";
+    const PACKAGE: &'static str = "envoy.service.load_stats.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.load_stats.v3.LoadStatsResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.load_stats.v3.LoadStatsResponse".into()
+    }
 }
 /// Generated client implementations.
 pub mod load_reporting_service_client {

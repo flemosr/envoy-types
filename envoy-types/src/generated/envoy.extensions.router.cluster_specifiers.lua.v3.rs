@@ -10,3 +10,14 @@ pub struct LuaConfig {
     #[prost(string, tag = "2")]
     pub default_cluster: ::prost::alloc::string::String,
 }
+impl ::prost::Name for LuaConfig {
+    const NAME: &'static str = "LuaConfig";
+    const PACKAGE: &'static str = "envoy.extensions.router.cluster_specifiers.lua.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.router.cluster_specifiers.lua.v3.LuaConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.router.cluster_specifiers.lua.v3.LuaConfig"
+            .into()
+    }
+}

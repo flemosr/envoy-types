@@ -7,3 +7,15 @@ pub struct HealthCheckEventFileSink {
     #[prost(string, tag = "1")]
     pub event_log_path: ::prost::alloc::string::String,
 }
+impl ::prost::Name for HealthCheckEventFileSink {
+    const NAME: &'static str = "HealthCheckEventFileSink";
+    const PACKAGE: &'static str = "envoy.extensions.health_check.event_sinks.file.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.health_check.event_sinks.file.v3.HealthCheckEventFileSink"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.health_check.event_sinks.file.v3.HealthCheckEventFileSink"
+            .into()
+    }
+}

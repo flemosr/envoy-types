@@ -14,3 +14,14 @@ pub struct ExpressionFilter {
     #[prost(string, tag = "1")]
     pub expression: ::prost::alloc::string::String,
 }
+impl ::prost::Name for ExpressionFilter {
+    const NAME: &'static str = "ExpressionFilter";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.filters.cel.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.filters.cel.v3.ExpressionFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.filters.cel.v3.ExpressionFilter"
+            .into()
+    }
+}

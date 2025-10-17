@@ -72,3 +72,14 @@ pub struct CredentialInjector {
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
 }
+impl ::prost::Name for CredentialInjector {
+    const NAME: &'static str = "CredentialInjector";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.credential_injector.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.credential_injector.v3.CredentialInjector".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.credential_injector.v3.CredentialInjector"
+            .into()
+    }
+}

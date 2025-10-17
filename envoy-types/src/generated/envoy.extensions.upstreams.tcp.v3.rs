@@ -15,3 +15,13 @@ pub struct TcpProtocolOptions {
         super::super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for TcpProtocolOptions {
+    const NAME: &'static str = "TcpProtocolOptions";
+    const PACKAGE: &'static str = "envoy.extensions.upstreams.tcp.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.upstreams.tcp.v3.TcpProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.upstreams.tcp.v3.TcpProtocolOptions".into()
+    }
+}

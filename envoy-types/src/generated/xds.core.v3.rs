@@ -14,6 +14,16 @@ pub struct ContextParams {
         ::prost::alloc::string::String,
     >,
 }
+impl ::prost::Name for ContextParams {
+    const NAME: &'static str = "ContextParams";
+    const PACKAGE: &'static str = "xds.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.core.v3.ContextParams".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.core.v3.ContextParams".into()
+    }
+}
 /// Message type for extension configuration.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TypedExtensionConfig {
@@ -30,6 +40,16 @@ pub struct TypedExtensionConfig {
     #[prost(message, optional, tag = "2")]
     pub typed_config: ::core::option::Option<super::super::super::google::protobuf::Any>,
 }
+impl ::prost::Name for TypedExtensionConfig {
+    const NAME: &'static str = "TypedExtensionConfig";
+    const PACKAGE: &'static str = "xds.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.core.v3.TypedExtensionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.core.v3.TypedExtensionConfig".into()
+    }
+}
 /// CidrRange specifies an IP Address and a prefix length to construct
 /// the subnet mask for a `CIDR <<https://tools.ietf.org/html/rfc4632>`\_> range.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -43,11 +63,31 @@ pub struct CidrRange {
         super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for CidrRange {
+    const NAME: &'static str = "CidrRange";
+    const PACKAGE: &'static str = "xds.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.core.v3.CidrRange".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.core.v3.CidrRange".into()
+    }
+}
 /// xDS authority information.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Authority {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for Authority {
+    const NAME: &'static str = "Authority";
+    const PACKAGE: &'static str = "xds.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.core.v3.Authority".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.core.v3.Authority".into()
+    }
 }
 /// xDS resource locators identify a xDS resource name and instruct the
 /// data-plane load balancer on how the resource may be located.
@@ -147,6 +187,16 @@ pub mod resource_locator {
             Entry(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for Directive {
+        const NAME: &'static str = "Directive";
+        const PACKAGE: &'static str = "xds.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "xds.core.v3.ResourceLocator.Directive".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/xds.core.v3.ResourceLocator.Directive".into()
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -196,6 +246,16 @@ pub mod resource_locator {
         ExactContext(super::ContextParams),
     }
 }
+impl ::prost::Name for ResourceLocator {
+    const NAME: &'static str = "ResourceLocator";
+    const PACKAGE: &'static str = "xds.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.core.v3.ResourceLocator".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.core.v3.ResourceLocator".into()
+    }
+}
 /// xDS collection resource wrapper. This encapsulates a xDS resource when
 /// appearing inside a list collection resource. List collection resources are
 /// regular Resource messages of type:
@@ -231,6 +291,16 @@ pub mod collection_entry {
             super::super::super::super::google::protobuf::Any,
         >,
     }
+    impl ::prost::Name for InlineEntry {
+        const NAME: &'static str = "InlineEntry";
+        const PACKAGE: &'static str = "xds.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "xds.core.v3.CollectionEntry.InlineEntry".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/xds.core.v3.CollectionEntry.InlineEntry".into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ResourceSpecifier {
         /// A resource locator describing how the member resource is to be located.
@@ -239,5 +309,15 @@ pub mod collection_entry {
         /// The resource is inlined in the list collection.
         #[prost(message, tag = "2")]
         InlineEntry(InlineEntry),
+    }
+}
+impl ::prost::Name for CollectionEntry {
+    const NAME: &'static str = "CollectionEntry";
+    const PACKAGE: &'static str = "xds.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.core.v3.CollectionEntry".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.core.v3.CollectionEntry".into()
     }
 }

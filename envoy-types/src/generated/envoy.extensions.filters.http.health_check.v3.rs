@@ -37,3 +37,14 @@ pub struct HealthCheck {
         super::super::super::super::super::config::route::v3::HeaderMatcher,
     >,
 }
+impl ::prost::Name for HealthCheck {
+    const NAME: &'static str = "HealthCheck";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.health_check.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.health_check.v3.HealthCheck".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.health_check.v3.HealthCheck"
+            .into()
+    }
+}

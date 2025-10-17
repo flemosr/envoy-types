@@ -7,3 +7,14 @@ pub struct WasmAccessLog {
     #[prost(message, optional, tag = "1")]
     pub config: ::core::option::Option<super::super::super::wasm::v3::PluginConfig>,
 }
+impl ::prost::Name for WasmAccessLog {
+    const NAME: &'static str = "WasmAccessLog";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.wasm.v3.WasmAccessLog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.wasm.v3.WasmAccessLog"
+            .into()
+    }
+}

@@ -19,6 +19,16 @@ pub mod custom_tag {
         #[prost(string, tag = "1")]
         pub value: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Literal {
+        const NAME: &'static str = "Literal";
+        const PACKAGE: &'static str = "envoy.type.tracing.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.tracing.v3.CustomTag.Literal".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.tracing.v3.CustomTag.Literal".into()
+        }
+    }
     /// Environment type custom tag with environment name and default value.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Environment {
@@ -31,6 +41,16 @@ pub mod custom_tag {
         #[prost(string, tag = "2")]
         pub default_value: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Environment {
+        const NAME: &'static str = "Environment";
+        const PACKAGE: &'static str = "envoy.type.tracing.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.tracing.v3.CustomTag.Environment".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.tracing.v3.CustomTag.Environment".into()
+        }
+    }
     /// Header type custom tag with header name and default value.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Header {
@@ -42,6 +62,16 @@ pub mod custom_tag {
         /// otherwise no tag will be populated.
         #[prost(string, tag = "2")]
         pub default_value: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for Header {
+        const NAME: &'static str = "Header";
+        const PACKAGE: &'static str = "envoy.type.tracing.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.tracing.v3.CustomTag.Header".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.tracing.v3.CustomTag.Header".into()
+        }
     }
     ///
     /// Metadata type custom tag using
@@ -67,6 +97,16 @@ pub mod custom_tag {
         #[prost(string, tag = "3")]
         pub default_value: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Metadata {
+        const NAME: &'static str = "Metadata";
+        const PACKAGE: &'static str = "envoy.type.tracing.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.tracing.v3.CustomTag.Metadata".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.tracing.v3.CustomTag.Metadata".into()
+        }
+    }
     /// Used to specify what kind of custom tag.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Type {
@@ -82,5 +122,15 @@ pub mod custom_tag {
         /// A custom tag to obtain tag value from the metadata.
         #[prost(message, tag = "5")]
         Metadata(Metadata),
+    }
+}
+impl ::prost::Name for CustomTag {
+    const NAME: &'static str = "CustomTag";
+    const PACKAGE: &'static str = "envoy.type.tracing.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.tracing.v3.CustomTag".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.tracing.v3.CustomTag".into()
     }
 }

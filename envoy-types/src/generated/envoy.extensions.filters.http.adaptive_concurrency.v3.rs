@@ -33,6 +33,18 @@ pub mod gradient_controller_config {
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for ConcurrencyLimitCalculationParams {
+        const NAME: &'static str = "ConcurrencyLimitCalculationParams";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.adaptive_concurrency.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.adaptive_concurrency.v3.GradientControllerConfig.ConcurrencyLimitCalculationParams"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.adaptive_concurrency.v3.GradientControllerConfig.ConcurrencyLimitCalculationParams"
+                .into()
+        }
+    }
     /// Parameters controlling the periodic minRTT recalculation.
     /// \[\#next-free-field: 7\]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -79,6 +91,30 @@ pub mod gradient_controller_config {
             super::super::super::super::super::super::r#type::v3::Percent,
         >,
     }
+    impl ::prost::Name for MinimumRttCalculationParams {
+        const NAME: &'static str = "MinimumRTTCalculationParams";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.adaptive_concurrency.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.adaptive_concurrency.v3.GradientControllerConfig.MinimumRTTCalculationParams"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.adaptive_concurrency.v3.GradientControllerConfig.MinimumRTTCalculationParams"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for GradientControllerConfig {
+    const NAME: &'static str = "GradientControllerConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.adaptive_concurrency.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.adaptive_concurrency.v3.GradientControllerConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.adaptive_concurrency.v3.GradientControllerConfig"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AdaptiveConcurrency {
@@ -110,5 +146,17 @@ pub mod adaptive_concurrency {
         /// Gradient concurrency control will be used.
         #[prost(message, tag = "1")]
         GradientControllerConfig(super::GradientControllerConfig),
+    }
+}
+impl ::prost::Name for AdaptiveConcurrency {
+    const NAME: &'static str = "AdaptiveConcurrency";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.adaptive_concurrency.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.adaptive_concurrency.v3.AdaptiveConcurrency"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.adaptive_concurrency.v3.AdaptiveConcurrency"
+            .into()
     }
 }

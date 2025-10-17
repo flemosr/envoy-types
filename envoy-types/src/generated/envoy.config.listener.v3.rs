@@ -17,6 +17,16 @@ pub struct ApiListener {
         super::super::super::super::google::protobuf::Any,
     >,
 }
+impl ::prost::Name for ApiListener {
+    const NAME: &'static str = "ApiListener";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ApiListener".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ApiListener".into()
+    }
+}
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Filter {
@@ -40,6 +50,16 @@ pub mod filter {
         /// listener closes the connections.
         #[prost(message, tag = "5")]
         ConfigDiscovery(super::super::super::core::v3::ExtensionConfigSource),
+    }
+}
+impl ::prost::Name for Filter {
+    const NAME: &'static str = "Filter";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.Filter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.Filter".into()
     }
 }
 /// Specifies the match criteria for selecting a specific filter chain for a
@@ -223,6 +243,16 @@ pub mod filter_chain_match {
         }
     }
 }
+impl ::prost::Name for FilterChainMatch {
+    const NAME: &'static str = "FilterChainMatch";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.FilterChainMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.FilterChainMatch".into()
+    }
+}
 /// A filter chain wraps a set of match criteria, an option TLS context, a set of filters, and
 /// various other parameters.
 /// \[\#next-free-field: 10\]
@@ -286,6 +316,16 @@ pub struct FilterChain {
     #[prost(string, tag = "7")]
     pub name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for FilterChain {
+    const NAME: &'static str = "FilterChain";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.FilterChain".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.FilterChain".into()
+    }
+}
 /// Listener filter chain match configuration. This is a recursive structure which allows complex
 /// nested match configurations to be built using various logical operators.
 ///
@@ -330,6 +370,17 @@ pub mod listener_filter_chain_match_predicate {
         #[prost(message, repeated, tag = "1")]
         pub rules: ::prost::alloc::vec::Vec<super::ListenerFilterChainMatchPredicate>,
     }
+    impl ::prost::Name for MatchSet {
+        const NAME: &'static str = "MatchSet";
+        const PACKAGE: &'static str = "envoy.config.listener.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.listener.v3.ListenerFilterChainMatchPredicate.MatchSet".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.listener.v3.ListenerFilterChainMatchPredicate.MatchSet"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Rule {
         /// A set that describes a logical OR. If any member of the set matches, the match configuration
@@ -350,6 +401,17 @@ pub mod listener_filter_chain_match_predicate {
         /// the owning listener filter is after :ref:`an original_dst listener filter <config_listener_filters_original_dst>`.
         #[prost(message, tag = "5")]
         DestinationPortRange(super::super::super::super::r#type::v3::Int32Range),
+    }
+}
+impl ::prost::Name for ListenerFilterChainMatchPredicate {
+    const NAME: &'static str = "ListenerFilterChainMatchPredicate";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ListenerFilterChainMatchPredicate".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ListenerFilterChainMatchPredicate"
+            .into()
     }
 }
 /// \[\#next-free-field: 6\]
@@ -380,6 +442,16 @@ pub mod listener_filter {
         /// listener closes the connections.
         #[prost(message, tag = "5")]
         ConfigDiscovery(super::super::super::core::v3::ExtensionConfigSource),
+    }
+}
+impl ::prost::Name for ListenerFilter {
+    const NAME: &'static str = "ListenerFilter";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ListenerFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ListenerFilter".into()
     }
 }
 /// Configuration specific to the UDP QUIC listener.
@@ -476,6 +548,16 @@ pub struct QuicProtocolOptions {
     #[prost(bool, tag = "13")]
     pub reject_new_connections: bool,
 }
+impl ::prost::Name for QuicProtocolOptions {
+    const NAME: &'static str = "QuicProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.QuicProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.QuicProtocolOptions".into()
+    }
+}
 /// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UdpListenerConfig {
@@ -503,8 +585,28 @@ pub struct UdpListenerConfig {
         super::super::core::v3::TypedExtensionConfig,
     >,
 }
+impl ::prost::Name for UdpListenerConfig {
+    const NAME: &'static str = "UdpListenerConfig";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.UdpListenerConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.UdpListenerConfig".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ActiveRawUdpListenerConfig {}
+impl ::prost::Name for ActiveRawUdpListenerConfig {
+    const NAME: &'static str = "ActiveRawUdpListenerConfig";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ActiveRawUdpListenerConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ActiveRawUdpListenerConfig".into()
+    }
+}
 /// The additional address the listener is listening on.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AdditionalAddress {
@@ -523,6 +625,16 @@ pub struct AdditionalAddress {
         super::super::core::v3::SocketOptionsOverride,
     >,
 }
+impl ::prost::Name for AdditionalAddress {
+    const NAME: &'static str = "AdditionalAddress";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.AdditionalAddress".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.AdditionalAddress".into()
+    }
+}
 /// Listener list collections. Entries are `Listener` resources or references.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -531,6 +643,16 @@ pub struct ListenerCollection {
     pub entries: ::prost::alloc::vec::Vec<
         super::super::super::super::xds::core::v3::CollectionEntry,
     >,
+}
+impl ::prost::Name for ListenerCollection {
+    const NAME: &'static str = "ListenerCollection";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ListenerCollection".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ListenerCollection".into()
+    }
 }
 /// \[\#next-free-field: 37\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -842,6 +964,16 @@ pub mod listener {
             super::super::super::super::super::google::protobuf::BoolValue,
         >,
     }
+    impl ::prost::Name for DeprecatedV1 {
+        const NAME: &'static str = "DeprecatedV1";
+        const PACKAGE: &'static str = "envoy.config.listener.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.listener.v3.Listener.DeprecatedV1".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.listener.v3.Listener.DeprecatedV1".into()
+        }
+    }
     /// Configuration for listener connection balancing.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ConnectionBalanceConfig {
@@ -858,6 +990,18 @@ pub mod listener {
         /// connections that rarely cycle (e.g., service mesh gRPC egress).
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ExactBalance {}
+        impl ::prost::Name for ExactBalance {
+            const NAME: &'static str = "ExactBalance";
+            const PACKAGE: &'static str = "envoy.config.listener.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.listener.v3.Listener.ConnectionBalanceConfig.ExactBalance"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.listener.v3.Listener.ConnectionBalanceConfig.ExactBalance"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum BalanceType {
             /// If specified, the listener will use the exact connection balancer.
@@ -870,9 +1014,31 @@ pub mod listener {
             ExtendBalance(super::super::super::super::core::v3::TypedExtensionConfig),
         }
     }
+    impl ::prost::Name for ConnectionBalanceConfig {
+        const NAME: &'static str = "ConnectionBalanceConfig";
+        const PACKAGE: &'static str = "envoy.config.listener.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.listener.v3.Listener.ConnectionBalanceConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.listener.v3.Listener.ConnectionBalanceConfig"
+                .into()
+        }
+    }
     /// Configuration for envoy internal listener. All the future internal listener features should be added here.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct InternalListenerConfig {}
+    impl ::prost::Name for InternalListenerConfig {
+        const NAME: &'static str = "InternalListenerConfig";
+        const PACKAGE: &'static str = "envoy.config.listener.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.listener.v3.Listener.InternalListenerConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.listener.v3.Listener.InternalListenerConfig"
+                .into()
+        }
+    }
     /// Configuration for filter chains discovery.
     /// \[\#not-implemented-hide:\]
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -889,6 +1055,16 @@ pub mod listener {
         pub config_source: ::core::option::Option<
             super::super::super::core::v3::ConfigSource,
         >,
+    }
+    impl ::prost::Name for FcdsConfig {
+        const NAME: &'static str = "FcdsConfig";
+        const PACKAGE: &'static str = "envoy.config.listener.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.listener.v3.Listener.FcdsConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.listener.v3.Listener.FcdsConfig".into()
+        }
     }
     #[derive(
         Clone,
@@ -952,18 +1128,58 @@ pub mod listener {
         InternalListener(InternalListenerConfig),
     }
 }
+impl ::prost::Name for Listener {
+    const NAME: &'static str = "Listener";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.Listener".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.Listener".into()
+    }
+}
 /// A placeholder proto so that users can explicitly configure the standard
 /// Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ListenerManager {}
+impl ::prost::Name for ListenerManager {
+    const NAME: &'static str = "ListenerManager";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ListenerManager".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ListenerManager".into()
+    }
+}
 /// A placeholder proto so that users can explicitly configure the standard
 /// Validation Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ValidationListenerManager {}
+impl ::prost::Name for ValidationListenerManager {
+    const NAME: &'static str = "ValidationListenerManager";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ValidationListenerManager".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ValidationListenerManager".into()
+    }
+}
 /// A placeholder proto so that users can explicitly configure the API
 /// Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ApiListenerManager {}
+impl ::prost::Name for ApiListenerManager {
+    const NAME: &'static str = "ApiListenerManager";
+    const PACKAGE: &'static str = "envoy.config.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.listener.v3.ApiListenerManager".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.listener.v3.ApiListenerManager".into()
+    }
+}

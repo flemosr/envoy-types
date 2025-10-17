@@ -20,6 +20,17 @@ pub mod fault_delay {
     ///   more information.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HeaderDelay {}
+    impl ::prost::Name for HeaderDelay {
+        const NAME: &'static str = "HeaderDelay";
+        const PACKAGE: &'static str = "envoy.extensions.filters.common.fault.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.common.fault.v3.FaultDelay.HeaderDelay".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.common.fault.v3.FaultDelay.HeaderDelay"
+                .into()
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -70,6 +81,16 @@ pub mod fault_delay {
         HeaderDelay(HeaderDelay),
     }
 }
+impl ::prost::Name for FaultDelay {
+    const NAME: &'static str = "FaultDelay";
+    const PACKAGE: &'static str = "envoy.extensions.filters.common.fault.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.common.fault.v3.FaultDelay".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.common.fault.v3.FaultDelay".into()
+    }
+}
 /// Describes a rate limit to be applied.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FaultRateLimit {
@@ -90,12 +111,34 @@ pub mod fault_rate_limit {
         #[prost(uint64, tag = "1")]
         pub limit_kbps: u64,
     }
+    impl ::prost::Name for FixedLimit {
+        const NAME: &'static str = "FixedLimit";
+        const PACKAGE: &'static str = "envoy.extensions.filters.common.fault.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.common.fault.v3.FaultRateLimit.FixedLimit".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.common.fault.v3.FaultRateLimit.FixedLimit"
+                .into()
+        }
+    }
     ///
     /// Rate limits are controlled via an HTTP header (if applicable). See the
     /// : ref:`HTTP fault filter <config_http_filters_fault_injection_http_header>` documentation for
     ///   more information.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HeaderLimit {}
+    impl ::prost::Name for HeaderLimit {
+        const NAME: &'static str = "HeaderLimit";
+        const PACKAGE: &'static str = "envoy.extensions.filters.common.fault.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.common.fault.v3.FaultRateLimit.HeaderLimit".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.common.fault.v3.FaultRateLimit.HeaderLimit"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum LimitType {
         /// A fixed rate limit.
@@ -104,5 +147,16 @@ pub mod fault_rate_limit {
         /// Rate limits are controlled via an HTTP header (if applicable).
         #[prost(message, tag = "3")]
         HeaderLimit(HeaderLimit),
+    }
+}
+impl ::prost::Name for FaultRateLimit {
+    const NAME: &'static str = "FaultRateLimit";
+    const PACKAGE: &'static str = "envoy.extensions.filters.common.fault.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.common.fault.v3.FaultRateLimit".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.common.fault.v3.FaultRateLimit"
+            .into()
     }
 }

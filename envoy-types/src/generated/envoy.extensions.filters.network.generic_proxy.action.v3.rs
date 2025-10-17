@@ -55,3 +55,14 @@ pub mod route_action {
         ),
     }
 }
+impl ::prost::Name for RouteAction {
+    const NAME: &'static str = "RouteAction";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.action.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.action.v3.RouteAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.action.v3.RouteAction"
+            .into()
+    }
+}

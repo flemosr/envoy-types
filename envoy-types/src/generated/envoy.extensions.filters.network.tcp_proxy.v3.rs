@@ -167,6 +167,30 @@ pub mod tcp_proxy {
                 super::super::super::super::super::super::super::config::core::v3::Metadata,
             >,
         }
+        impl ::prost::Name for ClusterWeight {
+            const NAME: &'static str = "ClusterWeight";
+            const PACKAGE: &'static str = "envoy.extensions.filters.network.tcp_proxy.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.WeightedCluster.ClusterWeight"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.WeightedCluster.ClusterWeight"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for WeightedCluster {
+        const NAME: &'static str = "WeightedCluster";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.tcp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.WeightedCluster"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.WeightedCluster"
+                .into()
+        }
     }
     /// Configuration for tunneling TCP over other transports or application layers.
     /// Tunneling is supported over both HTTP/1.1 and HTTP/2. Upstream protocol is
@@ -225,6 +249,18 @@ pub mod tcp_proxy {
         #[prost(bool, tag = "6")]
         pub propagate_response_trailers: bool,
     }
+    impl ::prost::Name for TunnelingConfig {
+        const NAME: &'static str = "TunnelingConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.tcp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.TunnelingConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.TunnelingConfig"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct OnDemand {
         /// An optional configuration for on-demand cluster discovery
@@ -249,6 +285,17 @@ pub mod tcp_proxy {
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for OnDemand {
+        const NAME: &'static str = "OnDemand";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.tcp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.OnDemand".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.OnDemand"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct TcpAccessLogOptions {
         /// The interval to flush access log. The TCP proxy will flush only one access log when the connection
@@ -264,6 +311,18 @@ pub mod tcp_proxy {
         #[prost(bool, tag = "2")]
         pub flush_access_log_on_connected: bool,
     }
+    impl ::prost::Name for TcpAccessLogOptions {
+        const NAME: &'static str = "TcpAccessLogOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.tcp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy.TcpAccessLogOptions"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ClusterSpecifier {
         /// The upstream cluster to connect to.
@@ -274,5 +333,16 @@ pub mod tcp_proxy {
         /// assigned to each cluster.
         #[prost(message, tag = "10")]
         WeightedClusters(WeightedCluster),
+    }
+}
+impl ::prost::Name for TcpProxy {
+    const NAME: &'static str = "TcpProxy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.tcp_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy"
+            .into()
     }
 }

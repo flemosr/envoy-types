@@ -109,6 +109,17 @@ pub mod rbac {
             #[prost(bool, tag = "2")]
             pub is_optional: bool,
         }
+        impl ::prost::Name for AuditLoggerConfig {
+            const NAME: &'static str = "AuditLoggerConfig";
+            const PACKAGE: &'static str = "envoy.config.rbac.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.rbac.v3.RBAC.AuditLoggingOptions.AuditLoggerConfig".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.rbac.v3.RBAC.AuditLoggingOptions.AuditLoggerConfig"
+                    .into()
+            }
+        }
         /// Deny and allow here refer to RBAC decisions, not actions.
         #[derive(
             Clone,
@@ -155,6 +166,16 @@ pub mod rbac {
                     _ => None,
                 }
             }
+        }
+    }
+    impl ::prost::Name for AuditLoggingOptions {
+        const NAME: &'static str = "AuditLoggingOptions";
+        const PACKAGE: &'static str = "envoy.config.rbac.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.rbac.v3.RBAC.AuditLoggingOptions".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.rbac.v3.RBAC.AuditLoggingOptions".into()
         }
     }
     /// Should we do safe-list or block-list style access control?
@@ -204,6 +225,16 @@ pub mod rbac {
         }
     }
 }
+impl ::prost::Name for Rbac {
+    const NAME: &'static str = "RBAC";
+    const PACKAGE: &'static str = "envoy.config.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.rbac.v3.RBAC".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.rbac.v3.RBAC".into()
+    }
+}
 /// Policy specifies a role and the principals that are assigned/denied the role.
 /// A policy matches if and only if at least one of its permissions match the
 /// action taking place AND at least one of its principals match the downstream
@@ -238,6 +269,16 @@ pub struct Policy {
         super::super::super::super::google::api::expr::v1alpha1::CheckedExpr,
     >,
 }
+impl ::prost::Name for Policy {
+    const NAME: &'static str = "Policy";
+    const PACKAGE: &'static str = "envoy.config.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.rbac.v3.Policy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.rbac.v3.Policy".into()
+    }
+}
 /// SourcedMetadata enables matching against metadata from different sources in the request processing
 /// pipeline. It extends the base MetadataMatcher functionality by allowing specification of where the
 /// metadata should be sourced from, rather than only matching against dynamic metadata.
@@ -260,6 +301,16 @@ pub struct SourcedMetadata {
     #[prost(enumeration = "MetadataSource", tag = "2")]
     pub metadata_source: i32,
 }
+impl ::prost::Name for SourcedMetadata {
+    const NAME: &'static str = "SourcedMetadata";
+    const PACKAGE: &'static str = "envoy.config.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.rbac.v3.SourcedMetadata".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.rbac.v3.SourcedMetadata".into()
+    }
+}
 /// Permission defines an action (or actions) that a principal can take.
 /// \[\#next-free-field: 15\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -278,6 +329,16 @@ pub mod permission {
     pub struct Set {
         #[prost(message, repeated, tag = "1")]
         pub rules: ::prost::alloc::vec::Vec<super::Permission>,
+    }
+    impl ::prost::Name for Set {
+        const NAME: &'static str = "Set";
+        const PACKAGE: &'static str = "envoy.config.rbac.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.rbac.v3.Permission.Set".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.rbac.v3.Permission.Set".into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Rule {
@@ -356,6 +417,16 @@ pub mod permission {
         SourcedMetadata(super::SourcedMetadata),
     }
 }
+impl ::prost::Name for Permission {
+    const NAME: &'static str = "Permission";
+    const PACKAGE: &'static str = "envoy.config.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.rbac.v3.Permission".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.rbac.v3.Permission".into()
+    }
+}
 /// Principal defines an identity or a group of identities for a downstream
 /// subject.
 /// \[\#next-free-field: 15\]
@@ -376,6 +447,16 @@ pub mod principal {
         #[prost(message, repeated, tag = "1")]
         pub ids: ::prost::alloc::vec::Vec<super::Principal>,
     }
+    impl ::prost::Name for Set {
+        const NAME: &'static str = "Set";
+        const PACKAGE: &'static str = "envoy.config.rbac.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.rbac.v3.Principal.Set".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.rbac.v3.Principal.Set".into()
+        }
+    }
     ///
     /// Authentication attributes for a downstream.
     /// It is recommended to NOT use this type, but instead use
@@ -395,6 +476,16 @@ pub mod principal {
         pub principal_name: ::core::option::Option<
             super::super::super::super::r#type::matcher::v3::StringMatcher,
         >,
+    }
+    impl ::prost::Name for Authenticated {
+        const NAME: &'static str = "Authenticated";
+        const PACKAGE: &'static str = "envoy.config.rbac.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.rbac.v3.Principal.Authenticated".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.rbac.v3.Principal.Authenticated".into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Identifier {
@@ -477,6 +568,16 @@ pub mod principal {
         Custom(super::super::super::core::v3::TypedExtensionConfig),
     }
 }
+impl ::prost::Name for Principal {
+    const NAME: &'static str = "Principal";
+    const PACKAGE: &'static str = "envoy.config.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.rbac.v3.Principal".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.rbac.v3.Principal".into()
+    }
+}
 /// Action defines the result of allowance or denial when a request matches the matcher.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Action {
@@ -502,6 +603,16 @@ pub struct Action {
     /// get matched on the LOG action.
     #[prost(enumeration = "rbac::Action", tag = "2")]
     pub action: i32,
+}
+impl ::prost::Name for Action {
+    const NAME: &'static str = "Action";
+    const PACKAGE: &'static str = "envoy.config.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.rbac.v3.Action".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.rbac.v3.Action".into()
+    }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

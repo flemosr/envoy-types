@@ -103,3 +103,14 @@ pub mod bandwidth_limit {
         }
     }
 }
+impl ::prost::Name for BandwidthLimit {
+    const NAME: &'static str = "BandwidthLimit";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.bandwidth_limit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.bandwidth_limit.v3.BandwidthLimit".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.bandwidth_limit.v3.BandwidthLimit"
+            .into()
+    }
+}

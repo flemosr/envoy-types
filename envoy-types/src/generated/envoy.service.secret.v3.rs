@@ -3,6 +3,16 @@
 /// services: <https://github.com/google/protobuf/issues/4221>
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SdsDummy {}
+impl ::prost::Name for SdsDummy {
+    const NAME: &'static str = "SdsDummy";
+    const PACKAGE: &'static str = "envoy.service.secret.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.secret.v3.SdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.secret.v3.SdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod secret_discovery_service_client {
     #![allow(

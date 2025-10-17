@@ -33,3 +33,15 @@ pub mod filter_config {
         PortValue(u32),
     }
 }
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.sni_dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.sni_dynamic_forward_proxy.v3.FilterConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.sni_dynamic_forward_proxy.v3.FilterConfig"
+            .into()
+    }
+}

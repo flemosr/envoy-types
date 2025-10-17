@@ -30,6 +30,17 @@ pub struct BasicAuth {
     #[prost(string, tag = "3")]
     pub authentication_header: ::prost::alloc::string::String,
 }
+impl ::prost::Name for BasicAuth {
+    const NAME: &'static str = "BasicAuth";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.basic_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.basic_auth.v3.BasicAuth".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.basic_auth.v3.BasicAuth"
+            .into()
+    }
+}
 /// Extra settings that may be added to per-route configuration for
 /// a virtual host or a cluster.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -39,4 +50,15 @@ pub struct BasicAuthPerRoute {
     pub users: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
+}
+impl ::prost::Name for BasicAuthPerRoute {
+    const NAME: &'static str = "BasicAuthPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.basic_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.basic_auth.v3.BasicAuthPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.basic_auth.v3.BasicAuthPerRoute"
+            .into()
+    }
 }

@@ -50,6 +50,17 @@ pub struct ZooKeeperProxy {
     #[prost(bool, tag = "9")]
     pub enable_per_opcode_decoder_error_metrics: bool,
 }
+impl ::prost::Name for ZooKeeperProxy {
+    const NAME: &'static str = "ZooKeeperProxy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.zookeeper_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.zookeeper_proxy.v3.ZooKeeperProxy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.zookeeper_proxy.v3.ZooKeeperProxy"
+            .into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LatencyThresholdOverride {
     /// The ZooKeeper opcodes. Can be found as part of the ZooKeeper source code:
@@ -175,5 +186,17 @@ pub mod latency_threshold_override {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for LatencyThresholdOverride {
+    const NAME: &'static str = "LatencyThresholdOverride";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.zookeeper_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.zookeeper_proxy.v3.LatencyThresholdOverride"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.zookeeper_proxy.v3.LatencyThresholdOverride"
+            .into()
     }
 }

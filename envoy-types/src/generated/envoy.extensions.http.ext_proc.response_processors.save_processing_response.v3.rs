@@ -56,4 +56,28 @@ pub mod save_processing_response {
         #[prost(bool, tag = "2")]
         pub save_on_error: bool,
     }
+    impl ::prost::Name for SaveOptions {
+        const NAME: &'static str = "SaveOptions";
+        const PACKAGE: &'static str = "envoy.extensions.http.ext_proc.response_processors.save_processing_response.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.http.ext_proc.response_processors.save_processing_response.v3.SaveProcessingResponse.SaveOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.http.ext_proc.response_processors.save_processing_response.v3.SaveProcessingResponse.SaveOptions"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for SaveProcessingResponse {
+    const NAME: &'static str = "SaveProcessingResponse";
+    const PACKAGE: &'static str = "envoy.extensions.http.ext_proc.response_processors.save_processing_response.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.ext_proc.response_processors.save_processing_response.v3.SaveProcessingResponse"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.ext_proc.response_processors.save_processing_response.v3.SaveProcessingResponse"
+            .into()
+    }
 }

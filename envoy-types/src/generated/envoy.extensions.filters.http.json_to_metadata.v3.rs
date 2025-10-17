@@ -49,6 +49,18 @@ pub mod json_to_metadata {
             ),
         }
     }
+    impl ::prost::Name for KeyValuePair {
+        const NAME: &'static str = "KeyValuePair";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.json_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.KeyValuePair"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.KeyValuePair"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Selector {
         #[prost(oneof = "selector::Selector", tags = "1")]
@@ -61,6 +73,18 @@ pub mod json_to_metadata {
             /// key to match
             #[prost(string, tag = "1")]
             Key(::prost::alloc::string::String),
+        }
+    }
+    impl ::prost::Name for Selector {
+        const NAME: &'static str = "Selector";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.json_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.Selector"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.Selector"
+                .into()
         }
     }
     /// A Rule defines what metadata to apply when a key-value is present, missing in the json
@@ -90,6 +114,18 @@ pub mod json_to_metadata {
         #[prost(message, optional, tag = "4")]
         pub on_error: ::core::option::Option<KeyValuePair>,
     }
+    impl ::prost::Name for Rule {
+        const NAME: &'static str = "Rule";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.json_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.Rule"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.Rule"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MatchRules {
         /// The list of rules to apply.
@@ -114,6 +150,18 @@ pub mod json_to_metadata {
         pub allow_content_types_regex: ::core::option::Option<
             super::super::super::super::super::super::r#type::matcher::v3::RegexMatcher,
         >,
+    }
+    impl ::prost::Name for MatchRules {
+        const NAME: &'static str = "MatchRules";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.json_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.MatchRules"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata.MatchRules"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -154,5 +202,16 @@ pub mod json_to_metadata {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for JsonToMetadata {
+    const NAME: &'static str = "JsonToMetadata";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.json_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.json_to_metadata.v3.JsonToMetadata"
+            .into()
     }
 }

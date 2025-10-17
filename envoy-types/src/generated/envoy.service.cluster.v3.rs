@@ -3,6 +3,16 @@
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CdsDummy {}
+impl ::prost::Name for CdsDummy {
+    const NAME: &'static str = "CdsDummy";
+    const PACKAGE: &'static str = "envoy.service.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.cluster.v3.CdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.cluster.v3.CdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod cluster_discovery_service_client {
     #![allow(

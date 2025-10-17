@@ -6,3 +6,14 @@ pub struct Config {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.environment_variable.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.environment_variable.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.environment_variable.v3.Config"
+            .into()
+    }
+}

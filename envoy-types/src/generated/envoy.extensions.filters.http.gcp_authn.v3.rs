@@ -42,12 +42,33 @@ pub struct GcpAuthnFilterConfig {
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for GcpAuthnFilterConfig {
+    const NAME: &'static str = "GcpAuthnFilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.gcp_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.gcp_authn.v3.GcpAuthnFilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.gcp_authn.v3.GcpAuthnFilterConfig"
+            .into()
+    }
+}
 /// Audience is the URL of the receiving service that performs token authentication.
 /// It will be provided to the filter through cluster's typed_filter_metadata.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Audience {
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
+}
+impl ::prost::Name for Audience {
+    const NAME: &'static str = "Audience";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.gcp_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.gcp_authn.v3.Audience".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.gcp_authn.v3.Audience".into()
+    }
 }
 /// Token Cache configuration.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -59,6 +80,17 @@ pub struct TokenCacheConfig {
         super::super::super::super::super::super::google::protobuf::UInt64Value,
     >,
 }
+impl ::prost::Name for TokenCacheConfig {
+    const NAME: &'static str = "TokenCacheConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.gcp_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.gcp_authn.v3.TokenCacheConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.gcp_authn.v3.TokenCacheConfig"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TokenHeader {
     /// The HTTP header's name.
@@ -69,4 +101,15 @@ pub struct TokenHeader {
     /// end.
     #[prost(string, tag = "2")]
     pub value_prefix: ::prost::alloc::string::String,
+}
+impl ::prost::Name for TokenHeader {
+    const NAME: &'static str = "TokenHeader";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.gcp_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.gcp_authn.v3.TokenHeader".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.gcp_authn.v3.TokenHeader"
+            .into()
+    }
 }

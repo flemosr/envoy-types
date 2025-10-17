@@ -316,6 +316,16 @@ pub mod ext_authz {
         HttpService(super::HttpService),
     }
 }
+impl ::prost::Name for ExtAuthz {
+    const NAME: &'static str = "ExtAuthz";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_authz.v3.ExtAuthz".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthz".into()
+    }
+}
 /// Configuration for buffering the request data.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BufferSettings {
@@ -339,6 +349,17 @@ pub struct BufferSettings {
     /// has no effect.
     #[prost(bool, tag = "3")]
     pub pack_as_bytes: bool,
+}
+impl ::prost::Name for BufferSettings {
+    const NAME: &'static str = "BufferSettings";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_authz.v3.BufferSettings".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.BufferSettings"
+            .into()
+    }
 }
 /// HttpService is used for raw HTTP communication between the filter and the authorization service.
 /// When configured, the filter will parse the client request and use these attributes to call the
@@ -382,6 +403,17 @@ pub struct HttpService {
     #[prost(message, optional, tag = "8")]
     pub authorization_response: ::core::option::Option<AuthorizationResponse>,
 }
+impl ::prost::Name for HttpService {
+    const NAME: &'static str = "HttpService";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_authz.v3.HttpService".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.HttpService"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AuthorizationRequest {
     /// Authorization request includes the client request headers that have a correspondent match
@@ -410,6 +442,17 @@ pub struct AuthorizationRequest {
     pub headers_to_add: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::core::v3::HeaderValue,
     >,
+}
+impl ::prost::Name for AuthorizationRequest {
+    const NAME: &'static str = "AuthorizationRequest";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_authz.v3.AuthorizationRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.AuthorizationRequest"
+            .into()
+    }
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -456,6 +499,17 @@ pub struct AuthorizationResponse {
         super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
     >,
 }
+impl ::prost::Name for AuthorizationResponse {
+    const NAME: &'static str = "AuthorizationResponse";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_authz.v3.AuthorizationResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.AuthorizationResponse"
+            .into()
+    }
+}
 /// Extra settings on a per virtualhost/route/weighted-cluster level.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthzPerRoute {
@@ -475,6 +529,17 @@ pub mod ext_authz_per_route {
         /// Check request settings for this route.
         #[prost(message, tag = "2")]
         CheckSettings(super::CheckSettings),
+    }
+}
+impl ::prost::Name for ExtAuthzPerRoute {
+    const NAME: &'static str = "ExtAuthzPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_authz.v3.ExtAuthzPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.ExtAuthzPerRoute"
+            .into()
     }
 }
 /// Extra settings for the check request.
@@ -521,4 +586,15 @@ pub struct CheckSettings {
     ///   may be specified.
     #[prost(message, optional, tag = "3")]
     pub with_request_body: ::core::option::Option<BufferSettings>,
+}
+impl ::prost::Name for CheckSettings {
+    const NAME: &'static str = "CheckSettings";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_authz.v3.CheckSettings".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_authz.v3.CheckSettings"
+            .into()
+    }
 }

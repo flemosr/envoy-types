@@ -14,3 +14,13 @@ pub struct AbortActionConfig {
         super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for AbortActionConfig {
+    const NAME: &'static str = "AbortActionConfig";
+    const PACKAGE: &'static str = "envoy.watchdog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.watchdog.v3.AbortActionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.watchdog.v3.AbortActionConfig".into()
+    }
+}

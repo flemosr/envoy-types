@@ -19,3 +19,15 @@ pub struct RuntimeFraction {
     #[prost(uint64, tag = "2")]
     pub seed: u64,
 }
+impl ::prost::Name for RuntimeFraction {
+    const NAME: &'static str = "RuntimeFraction";
+    const PACKAGE: &'static str = "envoy.extensions.matching.input_matchers.runtime_fraction.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.input_matchers.runtime_fraction.v3.RuntimeFraction"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.input_matchers.runtime_fraction.v3.RuntimeFraction"
+            .into()
+    }
+}

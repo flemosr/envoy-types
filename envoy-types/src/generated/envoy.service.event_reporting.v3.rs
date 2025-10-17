@@ -30,6 +30,27 @@ pub mod stream_events_request {
             super::super::super::super::config::core::v3::Node,
         >,
     }
+    impl ::prost::Name for Identifier {
+        const NAME: &'static str = "Identifier";
+        const PACKAGE: &'static str = "envoy.service.event_reporting.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.event_reporting.v3.StreamEventsRequest.Identifier".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.event_reporting.v3.StreamEventsRequest.Identifier"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for StreamEventsRequest {
+    const NAME: &'static str = "StreamEventsRequest";
+    const PACKAGE: &'static str = "envoy.service.event_reporting.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.event_reporting.v3.StreamEventsRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.event_reporting.v3.StreamEventsRequest".into()
+    }
 }
 /// \[\#not-implemented-hide:\]
 /// The management server may send envoy a StreamEventsResponse to tell which events the server
@@ -38,6 +59,17 @@ pub mod stream_events_request {
 /// wants to process.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamEventsResponse {}
+impl ::prost::Name for StreamEventsResponse {
+    const NAME: &'static str = "StreamEventsResponse";
+    const PACKAGE: &'static str = "envoy.service.event_reporting.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.event_reporting.v3.StreamEventsResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.event_reporting.v3.StreamEventsResponse"
+            .into()
+    }
+}
 /// Generated client implementations.
 pub mod event_reporting_service_client {
     #![allow(

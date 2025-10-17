@@ -59,4 +59,27 @@ pub mod common_geoip_provider_config {
         #[prost(string, tag = "11")]
         pub apple_private_relay: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for GeolocationHeadersToAdd {
+        const NAME: &'static str = "GeolocationHeadersToAdd";
+        const PACKAGE: &'static str = "envoy.extensions.geoip_providers.common.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.GeolocationHeadersToAdd"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for CommonGeoipProviderConfig {
+    const NAME: &'static str = "CommonGeoipProviderConfig";
+    const PACKAGE: &'static str = "envoy.extensions.geoip_providers.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.geoip_providers.common.v3.CommonGeoipProviderConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.geoip_providers.common.v3.CommonGeoipProviderConfig"
+            .into()
+    }
 }

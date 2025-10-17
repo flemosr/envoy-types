@@ -29,11 +29,33 @@ pub struct Mutations {
         super::super::super::super::super::config::common::mutation_rules::v3::HeaderMutation,
     >,
 }
+impl ::prost::Name for Mutations {
+    const NAME: &'static str = "Mutations";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.header_mutation.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.header_mutation.v3.Mutations".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.header_mutation.v3.Mutations"
+            .into()
+    }
+}
 /// Per route configuration for the header mutation filter.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderMutationPerRoute {
     #[prost(message, optional, tag = "1")]
     pub mutations: ::core::option::Option<Mutations>,
+}
+impl ::prost::Name for HeaderMutationPerRoute {
+    const NAME: &'static str = "HeaderMutationPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.header_mutation.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.header_mutation.v3.HeaderMutationPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.header_mutation.v3.HeaderMutationPerRoute"
+            .into()
+    }
 }
 /// Configuration for the header mutation filter. The mutation rules in the filter configuration will
 /// always be applied first and then the per-route mutation rules, if both are specified.
@@ -49,4 +71,15 @@ pub struct HeaderMutation {
     /// is evaluated last.
     #[prost(bool, tag = "2")]
     pub most_specific_header_mutations_wins: bool,
+}
+impl ::prost::Name for HeaderMutation {
+    const NAME: &'static str = "HeaderMutation";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.header_mutation.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.header_mutation.v3.HeaderMutation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.header_mutation.v3.HeaderMutation"
+            .into()
+    }
 }

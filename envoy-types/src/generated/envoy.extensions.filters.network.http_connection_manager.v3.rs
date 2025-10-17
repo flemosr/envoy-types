@@ -708,6 +708,18 @@ pub mod http_connection_manager {
             }
         }
     }
+    impl ::prost::Name for Tracing {
+        const NAME: &'static str = "Tracing";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct InternalAddressConfig {
         /// Whether unix socket addresses should be considered internal.
@@ -719,6 +731,18 @@ pub mod http_connection_manager {
         pub cidr_ranges: ::prost::alloc::vec::Vec<
             super::super::super::super::super::super::config::core::v3::CidrRange,
         >,
+    }
+    impl ::prost::Name for InternalAddressConfig {
+        const NAME: &'static str = "InternalAddressConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.InternalAddressConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.InternalAddressConfig"
+                .into()
+        }
     }
     /// \[\#next-free-field: 7\]
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -747,6 +771,18 @@ pub mod http_connection_manager {
         /// false.
         #[prost(bool, tag = "5")]
         pub uri: bool,
+    }
+    impl ::prost::Name for SetCurrentClientCertDetails {
+        const NAME: &'static str = "SetCurrentClientCertDetails";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.SetCurrentClientCertDetails"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.SetCurrentClientCertDetails"
+                .into()
+        }
     }
     /// The configuration for HTTP upgrades.
     /// For each upgrade type desired, an UpgradeConfig must be added.
@@ -781,6 +817,18 @@ pub mod http_connection_manager {
         pub enabled: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::BoolValue,
         >,
+    }
+    impl ::prost::Name for UpgradeConfig {
+        const NAME: &'static str = "UpgradeConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.UpgradeConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.UpgradeConfig"
+                .into()
+        }
     }
     /// \[\#not-implemented-hide:\] Transformations that apply to path headers. Transformations are applied
     /// before any processing of requests by HTTP filters, routing, and matching. Only the normalized
@@ -818,6 +866,18 @@ pub mod http_connection_manager {
         pub http_filter_transformation: ::core::option::Option<
             super::super::super::super::super::super::r#type::http::v3::PathTransformation,
         >,
+    }
+    impl ::prost::Name for PathNormalizationOptions {
+        const NAME: &'static str = "PathNormalizationOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.PathNormalizationOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.PathNormalizationOptions"
+                .into()
+        }
     }
     /// Configures the manner in which the Proxy-Status HTTP response header is
     /// populated.
@@ -879,6 +939,18 @@ pub mod http_connection_manager {
             LiteralProxyName(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for ProxyStatusConfig {
+        const NAME: &'static str = "ProxyStatusConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.ProxyStatusConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.ProxyStatusConfig"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HcmAccessLogOptions {
         /// The interval to flush the above access logs. By default, the HCM will flush exactly one access log
@@ -903,6 +975,18 @@ pub mod http_connection_manager {
         /// has returned 200 to a CONNECT request.
         #[prost(bool, tag = "3")]
         pub flush_log_on_tunnel_successfully_established: bool,
+    }
+    impl ::prost::Name for HcmAccessLogOptions {
+        const NAME: &'static str = "HcmAccessLogOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.HcmAccessLogOptions"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -1160,6 +1244,18 @@ pub mod http_connection_manager {
         StripAnyHostPort(bool),
     }
 }
+impl ::prost::Name for HttpConnectionManager {
+    const NAME: &'static str = "HttpConnectionManager";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager"
+            .into()
+    }
+}
 /// The configuration to customize local reply returned by Envoy.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LocalReplyConfig {
@@ -1213,6 +1309,18 @@ pub struct LocalReplyConfig {
         super::super::super::super::super::config::core::v3::SubstitutionFormatString,
     >,
 }
+impl ::prost::Name for LocalReplyConfig {
+    const NAME: &'static str = "LocalReplyConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.LocalReplyConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.LocalReplyConfig"
+            .into()
+    }
+}
 /// The configuration to filter and change local response.
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1246,6 +1354,18 @@ pub struct ResponseMapper {
         super::super::super::super::super::config::core::v3::HeaderValueOption,
     >,
 }
+impl ::prost::Name for ResponseMapper {
+    const NAME: &'static str = "ResponseMapper";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.ResponseMapper"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ResponseMapper"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rds {
     /// Configuration source specifier for RDS.
@@ -1260,6 +1380,17 @@ pub struct Rds {
     #[prost(string, tag = "2")]
     pub route_config_name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Rds {
+    const NAME: &'static str = "Rds";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.Rds".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.Rds"
+            .into()
+    }
+}
 /// This message is used to work around the limitations with 'oneof' and repeated fields.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScopedRouteConfigurationsList {
@@ -1267,6 +1398,18 @@ pub struct ScopedRouteConfigurationsList {
     pub scoped_route_configurations: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::route::v3::ScopedRouteConfiguration,
     >,
+}
+impl ::prost::Name for ScopedRouteConfigurationsList {
+    const NAME: &'static str = "ScopedRouteConfigurationsList";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.ScopedRouteConfigurationsList"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ScopedRouteConfigurationsList"
+            .into()
+    }
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1372,6 +1515,18 @@ pub mod scoped_routes {
                     #[prost(string, tag = "2")]
                     pub key: ::prost::alloc::string::String,
                 }
+                impl ::prost::Name for KvElement {
+                    const NAME: &'static str = "KvElement";
+                    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+                    fn full_name() -> ::prost::alloc::string::String {
+                        "envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder.FragmentBuilder.HeaderValueExtractor.KvElement"
+                            .into()
+                    }
+                    fn type_url() -> ::prost::alloc::string::String {
+                        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder.FragmentBuilder.HeaderValueExtractor.KvElement"
+                            .into()
+                    }
+                }
                 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
                 pub enum ExtractType {
                     /// Specifies the zero based index of the element to extract.
@@ -1384,12 +1539,48 @@ pub mod scoped_routes {
                     Element(KvElement),
                 }
             }
+            impl ::prost::Name for HeaderValueExtractor {
+                const NAME: &'static str = "HeaderValueExtractor";
+                const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder.FragmentBuilder.HeaderValueExtractor"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder.FragmentBuilder.HeaderValueExtractor"
+                        .into()
+                }
+            }
             #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
             pub enum Type {
                 /// Specifies how a header field's value should be extracted.
                 #[prost(message, tag = "1")]
                 HeaderValueExtractor(HeaderValueExtractor),
             }
+        }
+        impl ::prost::Name for FragmentBuilder {
+            const NAME: &'static str = "FragmentBuilder";
+            const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder.FragmentBuilder"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder.FragmentBuilder"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for ScopeKeyBuilder {
+        const NAME: &'static str = "ScopeKeyBuilder";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes.ScopeKeyBuilder"
+                .into()
         }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
@@ -1412,6 +1603,17 @@ pub mod scoped_routes {
         ScopedRds(super::ScopedRds),
     }
 }
+impl ::prost::Name for ScopedRoutes {
+    const NAME: &'static str = "ScopedRoutes";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ScopedRoutes"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScopedRds {
     /// Configuration source specifier for scoped RDS.
@@ -1423,6 +1625,17 @@ pub struct ScopedRds {
     /// \[\#not-implemented-hide:\]
     #[prost(string, tag = "2")]
     pub srds_resources_locator: ::prost::alloc::string::String,
+}
+impl ::prost::Name for ScopedRds {
+    const NAME: &'static str = "ScopedRds";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.ScopedRds".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.ScopedRds"
+            .into()
+    }
 }
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1477,6 +1690,17 @@ pub mod http_filter {
         ),
     }
 }
+impl ::prost::Name for HttpFilter {
+    const NAME: &'static str = "HttpFilter";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.HttpFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpFilter"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RequestIdExtension {
     /// Request ID extension specific configuration.
@@ -1484,6 +1708,18 @@ pub struct RequestIdExtension {
     pub typed_config: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Any,
     >,
+}
+impl ::prost::Name for RequestIdExtension {
+    const NAME: &'static str = "RequestIDExtension";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.RequestIDExtension"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.RequestIDExtension"
+            .into()
+    }
 }
 /// \[\#protodoc-title: Envoy Mobile HTTP connection manager\]
 /// HTTP connection manager for use in Envoy mobile.
@@ -1494,4 +1730,16 @@ pub struct EnvoyMobileHttpConnectionManager {
     /// instantiated for Envoy mobile.
     #[prost(message, optional, tag = "1")]
     pub config: ::core::option::Option<HttpConnectionManager>,
+}
+impl ::prost::Name for EnvoyMobileHttpConnectionManager {
+    const NAME: &'static str = "EnvoyMobileHttpConnectionManager";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.http_connection_manager.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.http_connection_manager.v3.EnvoyMobileHttpConnectionManager"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.EnvoyMobileHttpConnectionManager"
+            .into()
+    }
 }

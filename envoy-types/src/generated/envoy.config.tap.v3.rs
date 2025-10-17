@@ -39,6 +39,16 @@ pub struct TapConfig {
         super::super::core::v3::RuntimeFractionalPercent,
     >,
 }
+impl ::prost::Name for TapConfig {
+    const NAME: &'static str = "TapConfig";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.TapConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.TapConfig".into()
+    }
+}
 /// Tap match configuration. This is a recursive structure which allows complex nested match
 /// configurations to be built using various logical operators.
 /// \[\#next-free-field: 11\]
@@ -55,6 +65,16 @@ pub mod match_predicate {
         /// The list of rules that make up the set.
         #[prost(message, repeated, tag = "1")]
         pub rules: ::prost::alloc::vec::Vec<super::MatchPredicate>,
+    }
+    impl ::prost::Name for MatchSet {
+        const NAME: &'static str = "MatchSet";
+        const PACKAGE: &'static str = "envoy.config.tap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.tap.v3.MatchPredicate.MatchSet".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.tap.v3.MatchPredicate.MatchSet".into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Rule {
@@ -92,12 +112,32 @@ pub mod match_predicate {
         HttpResponseGenericBodyMatch(super::HttpGenericBodyMatch),
     }
 }
+impl ::prost::Name for MatchPredicate {
+    const NAME: &'static str = "MatchPredicate";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.MatchPredicate".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.MatchPredicate".into()
+    }
+}
 /// HTTP headers match configuration.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpHeadersMatch {
     /// HTTP headers to match.
     #[prost(message, repeated, tag = "1")]
     pub headers: ::prost::alloc::vec::Vec<super::super::route::v3::HeaderMatcher>,
+}
+impl ::prost::Name for HttpHeadersMatch {
+    const NAME: &'static str = "HttpHeadersMatch";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.HttpHeadersMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.HttpHeadersMatch".into()
+    }
 }
 /// HTTP generic body match configuration.
 /// List of text strings and hex strings to be located in HTTP body.
@@ -137,6 +177,27 @@ pub mod http_generic_body_match {
             BinaryMatch(::prost::alloc::vec::Vec<u8>),
         }
     }
+    impl ::prost::Name for GenericTextMatch {
+        const NAME: &'static str = "GenericTextMatch";
+        const PACKAGE: &'static str = "envoy.config.tap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.tap.v3.HttpGenericBodyMatch.GenericTextMatch".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.tap.v3.HttpGenericBodyMatch.GenericTextMatch"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for HttpGenericBodyMatch {
+    const NAME: &'static str = "HttpGenericBodyMatch";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.HttpGenericBodyMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.HttpGenericBodyMatch".into()
+    }
 }
 /// Tap output configuration.
 /// \[\#next-free-field: 6\]
@@ -174,6 +235,16 @@ pub struct OutputConfig {
     pub min_streamed_sent_bytes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
+}
+impl ::prost::Name for OutputConfig {
+    const NAME: &'static str = "OutputConfig";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.OutputConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.OutputConfig".into()
+    }
 }
 /// Tap output sink configuration.
 /// \[\#next-free-field: 7\]
@@ -287,9 +358,29 @@ pub mod output_sink {
         CustomSink(super::super::super::core::v3::TypedExtensionConfig),
     }
 }
+impl ::prost::Name for OutputSink {
+    const NAME: &'static str = "OutputSink";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.OutputSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.OutputSink".into()
+    }
+}
 /// Streaming admin sink configuration.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamingAdminSink {}
+impl ::prost::Name for StreamingAdminSink {
+    const NAME: &'static str = "StreamingAdminSink";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.StreamingAdminSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.StreamingAdminSink".into()
+    }
+}
 /// BufferedAdminSink configures a tap output to collect traces without returning them until
 /// one of multiple criteria are satisfied.
 /// Similar to StreamingAdminSink, it is only allowed to specify the buffered admin output
@@ -310,6 +401,16 @@ pub struct BufferedAdminSink {
         super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for BufferedAdminSink {
+    const NAME: &'static str = "BufferedAdminSink";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.BufferedAdminSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.BufferedAdminSink".into()
+    }
+}
 /// The file per tap sink outputs a discrete file for every tapped stream.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilePerTapSink {
@@ -318,6 +419,16 @@ pub struct FilePerTapSink {
     /// connection ID, HTTP stream ID, etc.).
     #[prost(string, tag = "1")]
     pub path_prefix: ::prost::alloc::string::String,
+}
+impl ::prost::Name for FilePerTapSink {
+    const NAME: &'static str = "FilePerTapSink";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.FilePerTapSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.FilePerTapSink".into()
+    }
 }
 /// \[\#not-implemented-hide:\] Streaming gRPC sink configuration sends the taps to an external gRPC
 /// server.
@@ -329,4 +440,14 @@ pub struct StreamingGrpcSink {
     /// The gRPC server that hosts the Tap Sink Service.
     #[prost(message, optional, tag = "2")]
     pub grpc_service: ::core::option::Option<super::super::core::v3::GrpcService>,
+}
+impl ::prost::Name for StreamingGrpcSink {
+    const NAME: &'static str = "StreamingGrpcSink";
+    const PACKAGE: &'static str = "envoy.config.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.tap.v3.StreamingGrpcSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.tap.v3.StreamingGrpcSink".into()
+    }
 }

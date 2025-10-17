@@ -99,6 +99,18 @@ pub mod admission_control {
                 super::super::super::super::super::super::super::r#type::v3::Int32Range,
             >,
         }
+        impl ::prost::Name for HttpCriteria {
+            const NAME: &'static str = "HttpCriteria";
+            const PACKAGE: &'static str = "envoy.extensions.filters.http.admission_control.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.http.admission_control.v3.AdmissionControl.SuccessCriteria.HttpCriteria"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.http.admission_control.v3.AdmissionControl.SuccessCriteria.HttpCriteria"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct GrpcCriteria {
             /// Status codes that constitute a successful request.
@@ -106,11 +118,46 @@ pub mod admission_control {
             #[prost(uint32, repeated, packed = "false", tag = "1")]
             pub grpc_success_status: ::prost::alloc::vec::Vec<u32>,
         }
+        impl ::prost::Name for GrpcCriteria {
+            const NAME: &'static str = "GrpcCriteria";
+            const PACKAGE: &'static str = "envoy.extensions.filters.http.admission_control.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.http.admission_control.v3.AdmissionControl.SuccessCriteria.GrpcCriteria"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.http.admission_control.v3.AdmissionControl.SuccessCriteria.GrpcCriteria"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for SuccessCriteria {
+        const NAME: &'static str = "SuccessCriteria";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.admission_control.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.admission_control.v3.AdmissionControl.SuccessCriteria"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.admission_control.v3.AdmissionControl.SuccessCriteria"
+                .into()
+        }
     }
     /// Defines how a request is considered a success/failure.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum EvaluationCriteria {
         #[prost(message, tag = "2")]
         SuccessCriteria(SuccessCriteria),
+    }
+}
+impl ::prost::Name for AdmissionControl {
+    const NAME: &'static str = "AdmissionControl";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.admission_control.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.admission_control.v3.AdmissionControl".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.admission_control.v3.AdmissionControl"
+            .into()
     }
 }

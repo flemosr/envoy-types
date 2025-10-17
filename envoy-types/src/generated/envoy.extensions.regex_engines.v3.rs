@@ -8,3 +8,13 @@
 /// each time the program size exceeds the warn level threshold.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GoogleRe2 {}
+impl ::prost::Name for GoogleRe2 {
+    const NAME: &'static str = "GoogleRE2";
+    const PACKAGE: &'static str = "envoy.extensions.regex_engines.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.regex_engines.v3.GoogleRE2".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.regex_engines.v3.GoogleRE2".into()
+    }
+}

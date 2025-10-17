@@ -3,6 +3,16 @@
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EdsDummy {}
+impl ::prost::Name for EdsDummy {
+    const NAME: &'static str = "EdsDummy";
+    const PACKAGE: &'static str = "envoy.service.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.endpoint.v3.EdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.endpoint.v3.EdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod endpoint_discovery_service_client {
     #![allow(
@@ -545,6 +555,16 @@ pub mod endpoint_discovery_service_server {
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LedsDummy {}
+impl ::prost::Name for LedsDummy {
+    const NAME: &'static str = "LedsDummy";
+    const PACKAGE: &'static str = "envoy.service.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.endpoint.v3.LedsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.endpoint.v3.LedsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod locality_endpoint_discovery_service_client {
     #![allow(

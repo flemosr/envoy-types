@@ -46,6 +46,26 @@ pub mod tracing {
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
         }
     }
+    impl ::prost::Name for Http {
+        const NAME: &'static str = "Http";
+        const PACKAGE: &'static str = "envoy.config.trace.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.trace.v3.Tracing.Http".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.trace.v3.Tracing.Http".into()
+        }
+    }
+}
+impl ::prost::Name for Tracing {
+    const NAME: &'static str = "Tracing";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.Tracing".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.Tracing".into()
+    }
 }
 /// Configuration for the Remote Configuration feature.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -56,6 +76,16 @@ pub struct DatadogRemoteConfig {
     pub polling_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+}
+impl ::prost::Name for DatadogRemoteConfig {
+    const NAME: &'static str = "DatadogRemoteConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.DatadogRemoteConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.DatadogRemoteConfig".into()
+    }
 }
 /// Configuration for the Datadog tracer.
 /// \[\#extension: envoy.tracers.datadog\]
@@ -79,6 +109,16 @@ pub struct DatadogConfig {
     #[prost(message, optional, tag = "4")]
     pub remote_config: ::core::option::Option<DatadogRemoteConfig>,
 }
+impl ::prost::Name for DatadogConfig {
+    const NAME: &'static str = "DatadogConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.DatadogConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.DatadogConfig".into()
+    }
+}
 /// DynamicOtConfig was used to dynamically load a tracer from a shared library
 /// that implements the `OpenTracing dynamic loading API  <<https://github.com/opentracing/opentracing-cpp>`\_.>
 /// \[\#not-implemented-hide:\]
@@ -95,6 +135,16 @@ pub struct DynamicOtConfig {
     pub config: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
     >,
+}
+impl ::prost::Name for DynamicOtConfig {
+    const NAME: &'static str = "DynamicOtConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.DynamicOtConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.DynamicOtConfig".into()
+    }
 }
 /// Configuration for the LightStep tracer.
 /// \[\#extension: envoy.tracers.lightstep\]
@@ -170,6 +220,16 @@ pub mod lightstep_config {
         }
     }
 }
+impl ::prost::Name for LightstepConfig {
+    const NAME: &'static str = "LightstepConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.LightstepConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.LightstepConfig".into()
+    }
+}
 /// Configuration for the OpenTelemetry tracer.
 /// \[\#extension: envoy.tracers.opentelemetry\]
 /// \[\#next-free-field: 7\]
@@ -221,12 +281,32 @@ pub struct OpenTelemetryConfig {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for OpenTelemetryConfig {
+    const NAME: &'static str = "OpenTelemetryConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.OpenTelemetryConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.OpenTelemetryConfig".into()
+    }
+}
 /// Configuration structure.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TraceServiceConfig {
     /// The upstream gRPC cluster that hosts the metrics service.
     #[prost(message, optional, tag = "1")]
     pub grpc_service: ::core::option::Option<super::super::core::v3::GrpcService>,
+}
+impl ::prost::Name for TraceServiceConfig {
+    const NAME: &'static str = "TraceServiceConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.TraceServiceConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.TraceServiceConfig".into()
+    }
 }
 ///
 /// Configuration for the SkyWalking tracer. Please note that if SkyWalking tracer is used as the
@@ -242,6 +322,16 @@ pub struct SkyWalkingConfig {
     pub grpc_service: ::core::option::Option<super::super::core::v3::GrpcService>,
     #[prost(message, optional, tag = "2")]
     pub client_config: ::core::option::Option<ClientConfig>,
+}
+impl ::prost::Name for SkyWalkingConfig {
+    const NAME: &'static str = "SkyWalkingConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.SkyWalkingConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.SkyWalkingConfig".into()
+    }
 }
 /// Client config for SkyWalking tracer.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -288,6 +378,16 @@ pub mod client_config {
         /// Inline authentication token string.
         #[prost(string, tag = "3")]
         BackendToken(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for ClientConfig {
+    const NAME: &'static str = "ClientConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.ClientConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.ClientConfig".into()
     }
 }
 /// Configuration for the Zipkin tracer.
@@ -401,6 +501,16 @@ pub mod zipkin_config {
         }
     }
 }
+impl ::prost::Name for ZipkinConfig {
+    const NAME: &'static str = "ZipkinConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.ZipkinConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.ZipkinConfig".into()
+    }
+}
 /// \[\#extension: envoy.tracers.xray\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct XRayConfig {
@@ -436,5 +546,25 @@ pub mod x_ray_config {
         pub aws: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Struct,
         >,
+    }
+    impl ::prost::Name for SegmentFields {
+        const NAME: &'static str = "SegmentFields";
+        const PACKAGE: &'static str = "envoy.config.trace.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.trace.v3.XRayConfig.SegmentFields".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.trace.v3.XRayConfig.SegmentFields".into()
+        }
+    }
+}
+impl ::prost::Name for XRayConfig {
+    const NAME: &'static str = "XRayConfig";
+    const PACKAGE: &'static str = "envoy.config.trace.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.trace.v3.XRayConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.trace.v3.XRayConfig".into()
     }
 }

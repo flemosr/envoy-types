@@ -21,12 +21,32 @@ pub mod resource_monitor {
         TypedConfig(super::super::super::super::super::google::protobuf::Any),
     }
 }
+impl ::prost::Name for ResourceMonitor {
+    const NAME: &'static str = "ResourceMonitor";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.ResourceMonitor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.ResourceMonitor".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct ThresholdTrigger {
     /// If the resource pressure is greater than or equal to this value, the trigger
     /// will enter saturation.
     #[prost(double, tag = "1")]
     pub value: f64,
+}
+impl ::prost::Name for ThresholdTrigger {
+    const NAME: &'static str = "ThresholdTrigger";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.ThresholdTrigger".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.ThresholdTrigger".into()
+    }
 }
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct ScaledTrigger {
@@ -39,6 +59,16 @@ pub struct ScaledTrigger {
     /// If the resource pressure is greater than this value, the trigger will enter saturation.
     #[prost(double, tag = "2")]
     pub saturation_threshold: f64,
+}
+impl ::prost::Name for ScaledTrigger {
+    const NAME: &'static str = "ScaledTrigger";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.ScaledTrigger".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.ScaledTrigger".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Trigger {
@@ -56,6 +86,16 @@ pub mod trigger {
         Threshold(super::ThresholdTrigger),
         #[prost(message, tag = "3")]
         Scaled(super::ScaledTrigger),
+    }
+}
+impl ::prost::Name for Trigger {
+    const NAME: &'static str = "Trigger";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.Trigger".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.Trigger".into()
     }
 }
 ///
@@ -92,6 +132,17 @@ pub mod scale_timers_overload_action_config {
             /// Sets the minimum duration as a percentage of the maximum value.
             #[prost(message, tag = "3")]
             MinScale(super::super::super::super::super::r#type::v3::Percent),
+        }
+    }
+    impl ::prost::Name for ScaleTimer {
+        const NAME: &'static str = "ScaleTimer";
+        const PACKAGE: &'static str = "envoy.config.overload.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.overload.v3.ScaleTimersOverloadActionConfig.ScaleTimer".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.overload.v3.ScaleTimersOverloadActionConfig.ScaleTimer"
+                .into()
         }
     }
     #[derive(
@@ -160,6 +211,17 @@ pub mod scale_timers_overload_action_config {
         }
     }
 }
+impl ::prost::Name for ScaleTimersOverloadActionConfig {
+    const NAME: &'static str = "ScaleTimersOverloadActionConfig";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.ScaleTimersOverloadActionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.ScaleTimersOverloadActionConfig"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OverloadAction {
     /// The name of the overload action. This is just a well-known string that listeners can
@@ -181,6 +243,16 @@ pub struct OverloadAction {
         super::super::super::super::google::protobuf::Any,
     >,
 }
+impl ::prost::Name for OverloadAction {
+    const NAME: &'static str = "OverloadAction";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.OverloadAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.OverloadAction".into()
+    }
+}
 /// A point within the connection or request lifecycle that provides context on
 /// whether to shed load at that given stage for the current entity at the
 /// point.
@@ -199,6 +271,16 @@ pub struct LoadShedPoint {
     /// this list.
     #[prost(message, repeated, tag = "2")]
     pub triggers: ::prost::alloc::vec::Vec<Trigger>,
+}
+impl ::prost::Name for LoadShedPoint {
+    const NAME: &'static str = "LoadShedPoint";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.LoadShedPoint".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.LoadShedPoint".into()
+    }
 }
 /// Configuration for which accounts the WatermarkBuffer Factories should
 /// track.
@@ -223,6 +305,16 @@ pub struct BufferFactoryConfig {
     #[prost(uint32, tag = "1")]
     pub minimum_account_to_track_power_of_two: u32,
 }
+impl ::prost::Name for BufferFactoryConfig {
+    const NAME: &'static str = "BufferFactoryConfig";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.BufferFactoryConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.BufferFactoryConfig".into()
+    }
+}
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OverloadManager {
@@ -243,4 +335,14 @@ pub struct OverloadManager {
     /// Configuration for buffer factory.
     #[prost(message, optional, tag = "4")]
     pub buffer_factory_config: ::core::option::Option<BufferFactoryConfig>,
+}
+impl ::prost::Name for OverloadManager {
+    const NAME: &'static str = "OverloadManager";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.OverloadManager".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.OverloadManager".into()
+    }
 }

@@ -30,6 +30,17 @@ pub struct ApiKeyAuth {
     #[prost(message, optional, tag = "3")]
     pub forwarding: ::core::option::Option<Forwarding>,
 }
+impl ::prost::Name for ApiKeyAuth {
+    const NAME: &'static str = "ApiKeyAuth";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.api_key_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.api_key_auth.v3.ApiKeyAuth".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.api_key_auth.v3.ApiKeyAuth"
+            .into()
+    }
+}
 /// API key auth configuration of per route or per virtual host or per route configuration.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiKeyAuthPerRoute {
@@ -63,6 +74,17 @@ pub struct ApiKeyAuthPerRoute {
     #[prost(message, optional, tag = "4")]
     pub forwarding: ::core::option::Option<Forwarding>,
 }
+impl ::prost::Name for ApiKeyAuthPerRoute {
+    const NAME: &'static str = "ApiKeyAuthPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.api_key_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.api_key_auth.v3.ApiKeyAuthPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.api_key_auth.v3.ApiKeyAuthPerRoute"
+            .into()
+    }
+}
 /// Single credential entry that contains the API key and the related client id.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Credential {
@@ -72,6 +94,17 @@ pub struct Credential {
     /// The unique id or identity that used to identify the client or consumer.
     #[prost(string, tag = "2")]
     pub client: ::prost::alloc::string::String,
+}
+impl ::prost::Name for Credential {
+    const NAME: &'static str = "Credential";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.api_key_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.api_key_auth.v3.Credential".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.api_key_auth.v3.Credential"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct KeySource {
@@ -94,6 +127,17 @@ pub struct KeySource {
     #[prost(string, tag = "3")]
     pub cookie: ::prost::alloc::string::String,
 }
+impl ::prost::Name for KeySource {
+    const NAME: &'static str = "KeySource";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.api_key_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.api_key_auth.v3.KeySource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.api_key_auth.v3.KeySource"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Forwarding {
     /// The header name in which to store the client information. If this field is non-empty,
@@ -106,4 +150,15 @@ pub struct Forwarding {
     /// This applies to all configured key sources: `header`, `query`, and `cookie`.
     #[prost(bool, tag = "2")]
     pub hide_credentials: bool,
+}
+impl ::prost::Name for Forwarding {
+    const NAME: &'static str = "Forwarding";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.api_key_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.api_key_auth.v3.Forwarding".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.api_key_auth.v3.Forwarding"
+            .into()
+    }
 }

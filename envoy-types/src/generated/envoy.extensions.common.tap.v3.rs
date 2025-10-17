@@ -18,6 +18,16 @@ pub mod common_extension_config {
         StaticConfig(super::super::super::super::super::config::tap::v3::TapConfig),
     }
 }
+impl ::prost::Name for CommonExtensionConfig {
+    const NAME: &'static str = "CommonExtensionConfig";
+    const PACKAGE: &'static str = "envoy.extensions.common.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.tap.v3.CommonExtensionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.tap.v3.CommonExtensionConfig".into()
+    }
+}
 /// Configuration for the admin handler. See :ref:`here <config_http_filters_tap_admin_handler>` for
 /// more information.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -26,4 +36,14 @@ pub struct AdminConfig {
     /// matched to the configured filter opaque ID to determine which filter to configure.
     #[prost(string, tag = "1")]
     pub config_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for AdminConfig {
+    const NAME: &'static str = "AdminConfig";
+    const PACKAGE: &'static str = "envoy.extensions.common.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.tap.v3.AdminConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.tap.v3.AdminConfig".into()
+    }
 }

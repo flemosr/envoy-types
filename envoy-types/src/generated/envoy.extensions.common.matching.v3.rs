@@ -21,6 +21,17 @@ pub struct ExtensionWithMatcher {
         super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
 }
+impl ::prost::Name for ExtensionWithMatcher {
+    const NAME: &'static str = "ExtensionWithMatcher";
+    const PACKAGE: &'static str = "envoy.extensions.common.matching.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.matching.v3.ExtensionWithMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.matching.v3.ExtensionWithMatcher"
+            .into()
+    }
+}
 /// Extra settings on a per virtualhost/route/weighted-cluster level.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtensionWithMatcherPerRoute {
@@ -29,4 +40,15 @@ pub struct ExtensionWithMatcherPerRoute {
     pub xds_matcher: ::core::option::Option<
         super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
+}
+impl ::prost::Name for ExtensionWithMatcherPerRoute {
+    const NAME: &'static str = "ExtensionWithMatcherPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.common.matching.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.matching.v3.ExtensionWithMatcherPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.matching.v3.ExtensionWithMatcherPerRoute"
+            .into()
+    }
 }

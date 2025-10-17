@@ -21,3 +21,14 @@ pub struct LocalRateLimit {
         super::super::super::super::super::config::core::v3::RuntimeFeatureFlag,
     >,
 }
+impl ::prost::Name for LocalRateLimit {
+    const NAME: &'static str = "LocalRateLimit";
+    const PACKAGE: &'static str = "envoy.extensions.filters.listener.local_ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.listener.local_ratelimit.v3.LocalRateLimit".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.listener.local_ratelimit.v3.LocalRateLimit"
+            .into()
+    }
+}

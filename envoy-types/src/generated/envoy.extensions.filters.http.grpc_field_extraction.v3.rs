@@ -21,6 +21,18 @@ pub struct GrpcFieldExtractionConfig {
         FieldExtractions,
     >,
 }
+impl ::prost::Name for GrpcFieldExtractionConfig {
+    const NAME: &'static str = "GrpcFieldExtractionConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_field_extraction.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_field_extraction.v3.GrpcFieldExtractionConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_field_extraction.v3.GrpcFieldExtractionConfig"
+            .into()
+    }
+}
 /// This message can be used to support per route config approach later even
 /// though the Istio doesn't support that so far.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -49,6 +61,17 @@ pub struct FieldExtractions {
         RequestFieldValueDisposition,
     >,
 }
+impl ::prost::Name for FieldExtractions {
+    const NAME: &'static str = "FieldExtractions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_field_extraction.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_field_extraction.v3.FieldExtractions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_field_extraction.v3.FieldExtractions"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RequestFieldValueDisposition {
     #[prost(oneof = "request_field_value_disposition::Disposition", tags = "1")]
@@ -65,5 +88,17 @@ pub mod request_field_value_disposition {
         /// Unimplemented. Uses "envoy.filters.http.grpc_field_extraction" for now.
         #[prost(string, tag = "1")]
         DynamicMetadata(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for RequestFieldValueDisposition {
+    const NAME: &'static str = "RequestFieldValueDisposition";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_field_extraction.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_field_extraction.v3.RequestFieldValueDisposition"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_field_extraction.v3.RequestFieldValueDisposition"
+            .into()
     }
 }

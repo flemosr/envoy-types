@@ -16,3 +16,14 @@ pub struct ProfileActionConfig {
     #[prost(uint64, tag = "3")]
     pub max_profiles: u64,
 }
+impl ::prost::Name for ProfileActionConfig {
+    const NAME: &'static str = "ProfileActionConfig";
+    const PACKAGE: &'static str = "envoy.extensions.watchdog.profile_action.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.watchdog.profile_action.v3.ProfileActionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.watchdog.profile_action.v3.ProfileActionConfig"
+            .into()
+    }
+}

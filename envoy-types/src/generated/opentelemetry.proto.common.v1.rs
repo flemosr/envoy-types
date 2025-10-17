@@ -31,6 +31,16 @@ pub mod any_value {
         BytesValue(::prost::alloc::vec::Vec<u8>),
     }
 }
+impl ::prost::Name for AnyValue {
+    const NAME: &'static str = "AnyValue";
+    const PACKAGE: &'static str = "opentelemetry.proto.common.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "opentelemetry.proto.common.v1.AnyValue".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/opentelemetry.proto.common.v1.AnyValue".into()
+    }
+}
 /// ArrayValue is a list of AnyValue messages. We need ArrayValue as a message
 /// since oneof in AnyValue does not allow repeated fields.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -38,6 +48,16 @@ pub struct ArrayValue {
     /// Array of values. The array may be empty (contain 0 elements).
     #[prost(message, repeated, tag = "1")]
     pub values: ::prost::alloc::vec::Vec<AnyValue>,
+}
+impl ::prost::Name for ArrayValue {
+    const NAME: &'static str = "ArrayValue";
+    const PACKAGE: &'static str = "opentelemetry.proto.common.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "opentelemetry.proto.common.v1.ArrayValue".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/opentelemetry.proto.common.v1.ArrayValue".into()
+    }
 }
 /// KeyValueList is a list of KeyValue messages. We need KeyValueList as a message
 /// since `oneof` in AnyValue does not allow repeated fields. Everywhere else where we need
@@ -53,6 +73,16 @@ pub struct KeyValueList {
     #[prost(message, repeated, tag = "1")]
     pub values: ::prost::alloc::vec::Vec<KeyValue>,
 }
+impl ::prost::Name for KeyValueList {
+    const NAME: &'static str = "KeyValueList";
+    const PACKAGE: &'static str = "opentelemetry.proto.common.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "opentelemetry.proto.common.v1.KeyValueList".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/opentelemetry.proto.common.v1.KeyValueList".into()
+    }
+}
 /// KeyValue is a key-value pair that is used to store Span attributes, Link
 /// attributes, etc.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -61,6 +91,16 @@ pub struct KeyValue {
     pub key: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
     pub value: ::core::option::Option<AnyValue>,
+}
+impl ::prost::Name for KeyValue {
+    const NAME: &'static str = "KeyValue";
+    const PACKAGE: &'static str = "opentelemetry.proto.common.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "opentelemetry.proto.common.v1.KeyValue".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/opentelemetry.proto.common.v1.KeyValue".into()
+    }
 }
 /// InstrumentationScope is a message representing the instrumentation scope information
 /// such as the fully qualified name and version.
@@ -78,6 +118,16 @@ pub struct InstrumentationScope {
     pub attributes: ::prost::alloc::vec::Vec<KeyValue>,
     #[prost(uint32, tag = "4")]
     pub dropped_attributes_count: u32,
+}
+impl ::prost::Name for InstrumentationScope {
+    const NAME: &'static str = "InstrumentationScope";
+    const PACKAGE: &'static str = "opentelemetry.proto.common.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "opentelemetry.proto.common.v1.InstrumentationScope".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/opentelemetry.proto.common.v1.InstrumentationScope".into()
+    }
 }
 /// A reference to an Entity.
 /// Entity represents an object of interest associated with produced telemetry: e.g spans, metrics, profiles, or logs.
@@ -113,4 +163,14 @@ pub struct EntityRef {
     /// These keys MUST exist in the containing {message}.attributes.
     #[prost(string, repeated, tag = "4")]
     pub description_keys: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for EntityRef {
+    const NAME: &'static str = "EntityRef";
+    const PACKAGE: &'static str = "opentelemetry.proto.common.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "opentelemetry.proto.common.v1.EntityRef".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/opentelemetry.proto.common.v1.EntityRef".into()
+    }
 }

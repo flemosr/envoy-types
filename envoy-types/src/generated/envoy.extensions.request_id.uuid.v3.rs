@@ -35,3 +35,14 @@ pub struct UuidRequestIdConfig {
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for UuidRequestIdConfig {
+    const NAME: &'static str = "UuidRequestIdConfig";
+    const PACKAGE: &'static str = "envoy.extensions.request_id.uuid.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.request_id.uuid.v3.UuidRequestIdConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.request_id.uuid.v3.UuidRequestIdConfig"
+            .into()
+    }
+}

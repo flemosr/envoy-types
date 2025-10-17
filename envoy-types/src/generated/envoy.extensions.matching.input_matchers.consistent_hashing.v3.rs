@@ -23,3 +23,15 @@ pub struct ConsistentHashing {
     #[prost(uint64, tag = "3")]
     pub seed: u64,
 }
+impl ::prost::Name for ConsistentHashing {
+    const NAME: &'static str = "ConsistentHashing";
+    const PACKAGE: &'static str = "envoy.extensions.matching.input_matchers.consistent_hashing.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.input_matchers.consistent_hashing.v3.ConsistentHashing"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.input_matchers.consistent_hashing.v3.ConsistentHashing"
+            .into()
+    }
+}

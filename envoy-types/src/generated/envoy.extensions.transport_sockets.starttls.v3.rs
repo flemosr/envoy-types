@@ -17,6 +17,17 @@ pub struct StartTlsConfig {
         super::super::tls::v3::DownstreamTlsContext,
     >,
 }
+impl ::prost::Name for StartTlsConfig {
+    const NAME: &'static str = "StartTlsConfig";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.starttls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.starttls.v3.StartTlsConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.starttls.v3.StartTlsConfig"
+            .into()
+    }
+}
 /// Configuration for an upstream StartTls transport socket.
 /// StartTls transport socket wraps two sockets:
 ///
@@ -34,4 +45,15 @@ pub struct UpstreamStartTlsConfig {
     pub tls_socket_config: ::core::option::Option<
         super::super::tls::v3::UpstreamTlsContext,
     >,
+}
+impl ::prost::Name for UpstreamStartTlsConfig {
+    const NAME: &'static str = "UpstreamStartTlsConfig";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.starttls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.starttls.v3.UpstreamStartTlsConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.starttls.v3.UpstreamStartTlsConfig"
+            .into()
+    }
 }

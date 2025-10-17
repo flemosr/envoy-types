@@ -12,3 +12,13 @@ pub struct RateLimitServiceConfig {
     #[prost(enumeration = "super::super::core::v3::ApiVersion", tag = "4")]
     pub transport_api_version: i32,
 }
+impl ::prost::Name for RateLimitServiceConfig {
+    const NAME: &'static str = "RateLimitServiceConfig";
+    const PACKAGE: &'static str = "envoy.config.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.ratelimit.v3.RateLimitServiceConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.ratelimit.v3.RateLimitServiceConfig".into()
+    }
+}

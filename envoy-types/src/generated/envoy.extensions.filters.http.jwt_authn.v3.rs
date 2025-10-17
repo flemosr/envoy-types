@@ -327,6 +327,18 @@ pub mod jwt_provider {
             ::prost::alloc::string::String,
         >,
     }
+    impl ::prost::Name for NormalizePayload {
+        const NAME: &'static str = "NormalizePayload";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.jwt_authn.v3.JwtProvider.NormalizePayload"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtProvider.NormalizePayload"
+                .into()
+        }
+    }
     /// `JSON Web Key Set (JWKS) <<https://tools.ietf.org/html/rfc7517#appendix-A>`\_> is needed to
     /// validate signature of a JWT. This field specifies where to fetch JWKS.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
@@ -375,6 +387,17 @@ pub mod jwt_provider {
         ),
     }
 }
+impl ::prost::Name for JwtProvider {
+    const NAME: &'static str = "JwtProvider";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtProvider"
+            .into()
+    }
+}
 /// This message specifies JWT Cache configuration.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JwtCacheConfig {
@@ -386,6 +409,17 @@ pub struct JwtCacheConfig {
     /// The maximum value for a token is inclusive.
     #[prost(uint32, tag = "2")]
     pub jwt_max_token_size: u32,
+}
+impl ::prost::Name for JwtCacheConfig {
+    const NAME: &'static str = "JwtCacheConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtCacheConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtCacheConfig"
+            .into()
+    }
 }
 /// This message specifies how to fetch JWKS from remote and how to cache it.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -457,6 +491,17 @@ pub struct RemoteJwks {
         super::super::super::super::super::config::core::v3::RetryPolicy,
     >,
 }
+impl ::prost::Name for RemoteJwks {
+    const NAME: &'static str = "RemoteJwks";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.RemoteJwks".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.RemoteJwks"
+            .into()
+    }
+}
 /// Fetch Jwks asynchronously in the main thread when the filter config is parsed.
 /// The listener is activated only after the Jwks is fetched.
 /// When the Jwks is expired in the cache, it is fetched again in the main thread.
@@ -475,6 +520,17 @@ pub struct JwksAsyncFetch {
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for JwksAsyncFetch {
+    const NAME: &'static str = "JwksAsyncFetch";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwksAsyncFetch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwksAsyncFetch"
+            .into()
+    }
+}
 /// This message specifies a header location to extract the JWT.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JwtHeader {
@@ -487,6 +543,16 @@ pub struct JwtHeader {
     #[prost(string, tag = "2")]
     pub value_prefix: ::prost::alloc::string::String,
 }
+impl ::prost::Name for JwtHeader {
+    const NAME: &'static str = "JwtHeader";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtHeader".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtHeader".into()
+    }
+}
 /// Specify a required provider with audiences.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ProviderWithAudiences {
@@ -496,6 +562,17 @@ pub struct ProviderWithAudiences {
     /// This field overrides the one specified in the JwtProvider.
     #[prost(string, repeated, tag = "2")]
     pub audiences: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for ProviderWithAudiences {
+    const NAME: &'static str = "ProviderWithAudiences";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.ProviderWithAudiences".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.ProviderWithAudiences"
+            .into()
+    }
 }
 /// This message specifies a Jwt requirement. An empty message means JWT verification is not
 /// required. Here are some config examples:
@@ -602,6 +679,17 @@ pub mod jwt_requirement {
         ),
     }
 }
+impl ::prost::Name for JwtRequirement {
+    const NAME: &'static str = "JwtRequirement";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtRequirement".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtRequirement"
+            .into()
+    }
+}
 /// This message specifies a list of RequiredProvider.
 /// Their results are OR-ed; if any one of them passes, the result is passed
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -610,6 +698,17 @@ pub struct JwtRequirementOrList {
     #[prost(message, repeated, tag = "1")]
     pub requirements: ::prost::alloc::vec::Vec<JwtRequirement>,
 }
+impl ::prost::Name for JwtRequirementOrList {
+    const NAME: &'static str = "JwtRequirementOrList";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtRequirementOrList".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtRequirementOrList"
+            .into()
+    }
+}
 /// This message specifies a list of RequiredProvider.
 /// Their results are AND-ed; all of them must pass, if one of them fails or missing, it fails.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -617,6 +716,17 @@ pub struct JwtRequirementAndList {
     /// Specify a list of JwtRequirement.
     #[prost(message, repeated, tag = "1")]
     pub requirements: ::prost::alloc::vec::Vec<JwtRequirement>,
+}
+impl ::prost::Name for JwtRequirementAndList {
+    const NAME: &'static str = "JwtRequirementAndList";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtRequirementAndList".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtRequirementAndList"
+            .into()
+    }
 }
 /// This message specifies a Jwt requirement for a specific Route condition.
 /// Example 1:
@@ -683,6 +793,17 @@ pub mod requirement_rule {
         RequirementName(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for RequirementRule {
+    const NAME: &'static str = "RequirementRule";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.RequirementRule".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.RequirementRule"
+            .into()
+    }
+}
 /// This message specifies Jwt requirements based on stream_info.filterState.
 /// This FilterState should use `Router::StringAccessor` object to set a string value.
 /// Other HTTP filters can use it to specify Jwt requirements dynamically.
@@ -714,6 +835,17 @@ pub struct FilterStateRule {
         ::prost::alloc::string::String,
         JwtRequirement,
     >,
+}
+impl ::prost::Name for FilterStateRule {
+    const NAME: &'static str = "FilterStateRule";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.FilterStateRule".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.FilterStateRule"
+            .into()
+    }
 }
 /// This is the Envoy HTTP filter config for JWT authentication.
 ///
@@ -844,6 +976,17 @@ pub struct JwtAuthentication {
     #[prost(string, tag = "7")]
     pub stat_prefix: ::prost::alloc::string::String,
 }
+impl ::prost::Name for JwtAuthentication {
+    const NAME: &'static str = "JwtAuthentication";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtAuthentication".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtAuthentication"
+            .into()
+    }
+}
 /// Specify per-route config.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PerRouteConfig {
@@ -868,6 +1011,17 @@ pub mod per_route_config {
         RequirementName(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for PerRouteConfig {
+    const NAME: &'static str = "PerRouteConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.PerRouteConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.PerRouteConfig"
+            .into()
+    }
+}
 /// This message specifies a combination of header name and claim name.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JwtClaimToHeader {
@@ -880,4 +1034,15 @@ pub struct JwtClaimToHeader {
     /// the JSON name path.
     #[prost(string, tag = "2")]
     pub claim_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for JwtClaimToHeader {
+    const NAME: &'static str = "JwtClaimToHeader";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.JwtClaimToHeader".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtClaimToHeader"
+            .into()
+    }
 }

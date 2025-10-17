@@ -56,3 +56,14 @@ pub struct ExtAuthz {
     #[prost(bool, tag = "8")]
     pub include_tls_session: bool,
 }
+impl ::prost::Name for ExtAuthz {
+    const NAME: &'static str = "ExtAuthz";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.ext_authz.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.ext_authz.v3.ExtAuthz".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.ext_authz.v3.ExtAuthz"
+            .into()
+    }
+}

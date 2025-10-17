@@ -5,6 +5,16 @@ pub struct Route {
     #[prost(string, tag = "1")]
     pub cluster: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Route {
+    const NAME: &'static str = "Route";
+    const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.udp.udp_proxy.v3.Route".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.Route".into()
+    }
+}
 /// Configuration for the UDP proxy filter.
 /// \[\#next-free-field: 14\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -105,6 +115,17 @@ pub mod udp_proxy_config {
             Key(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for HashPolicy {
+        const NAME: &'static str = "HashPolicy";
+        const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.HashPolicy".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.HashPolicy"
+                .into()
+        }
+    }
     /// Configuration for UDP session filters.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SessionFilter {
@@ -131,6 +152,18 @@ pub mod udp_proxy_config {
             ConfigDiscovery(
                 super::super::super::super::super::super::super::config::core::v3::ExtensionConfigSource,
             ),
+        }
+    }
+    impl ::prost::Name for SessionFilter {
+        const NAME: &'static str = "SessionFilter";
+        const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.SessionFilter"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.SessionFilter"
+                .into()
         }
     }
     /// Configuration for tunneling UDP over other transports or application layers.
@@ -246,6 +279,18 @@ pub mod udp_proxy_config {
                 super::super::super::super::super::super::super::super::google::protobuf::UInt64Value,
             >,
         }
+        impl ::prost::Name for BufferOptions {
+            const NAME: &'static str = "BufferOptions";
+            const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpTunnelingConfig.BufferOptions"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpTunnelingConfig.BufferOptions"
+                    .into()
+            }
+        }
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct RetryOptions {
             /// The maximum number of unsuccessful connection attempts that will be made before giving up.
@@ -259,6 +304,30 @@ pub mod udp_proxy_config {
             pub backoff_options: ::core::option::Option<
                 super::super::super::super::super::super::super::config::core::v3::BackoffStrategy,
             >,
+        }
+        impl ::prost::Name for RetryOptions {
+            const NAME: &'static str = "RetryOptions";
+            const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpTunnelingConfig.RetryOptions"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpTunnelingConfig.RetryOptions"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for UdpTunnelingConfig {
+        const NAME: &'static str = "UdpTunnelingConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpTunnelingConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpTunnelingConfig"
+                .into()
         }
     }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -277,6 +346,18 @@ pub mod udp_proxy_config {
         #[prost(bool, tag = "2")]
         pub flush_access_log_on_tunnel_connected: bool,
     }
+    impl ::prost::Name for UdpAccessLogOptions {
+        const NAME: &'static str = "UdpAccessLogOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpAccessLogOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.UdpAccessLogOptions"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum RouteSpecifier {
         ///
@@ -291,5 +372,16 @@ pub mod udp_proxy_config {
         Matcher(
             super::super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
         ),
+    }
+}
+impl ::prost::Name for UdpProxyConfig {
+    const NAME: &'static str = "UdpProxyConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig"
+            .into()
     }
 }

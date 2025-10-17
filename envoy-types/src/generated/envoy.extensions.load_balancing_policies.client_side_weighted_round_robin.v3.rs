@@ -80,3 +80,15 @@ pub struct ClientSideWeightedRoundRobin {
         ::prost::alloc::string::String,
     >,
 }
+impl ::prost::Name for ClientSideWeightedRoundRobin {
+    const NAME: &'static str = "ClientSideWeightedRoundRobin";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.client_side_weighted_round_robin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.client_side_weighted_round_robin.v3.ClientSideWeightedRoundRobin"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.client_side_weighted_round_robin.v3.ClientSideWeightedRoundRobin"
+            .into()
+    }
+}

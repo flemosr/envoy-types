@@ -7,3 +7,13 @@ pub struct Lua {
         super::super::super::super::config::core::v3::DataSource,
     >,
 }
+impl ::prost::Name for Lua {
+    const NAME: &'static str = "Lua";
+    const PACKAGE: &'static str = "envoy.extensions.string_matcher.lua.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.string_matcher.lua.v3.Lua".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.string_matcher.lua.v3.Lua".into()
+    }
+}

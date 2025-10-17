@@ -33,3 +33,14 @@ pub mod descriptor {
         ),
     }
 }
+impl ::prost::Name for Descriptor {
+    const NAME: &'static str = "Descriptor";
+    const PACKAGE: &'static str = "envoy.extensions.rate_limit_descriptors.expr.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.rate_limit_descriptors.expr.v3.Descriptor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.rate_limit_descriptors.expr.v3.Descriptor"
+            .into()
+    }
+}

@@ -22,10 +22,33 @@ pub mod async_file_manager_config {
         #[prost(uint32, tag = "1")]
         pub thread_count: u32,
     }
+    impl ::prost::Name for ThreadPool {
+        const NAME: &'static str = "ThreadPool";
+        const PACKAGE: &'static str = "envoy.extensions.common.async_files.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.common.async_files.v3.AsyncFileManagerConfig.ThreadPool"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.common.async_files.v3.AsyncFileManagerConfig.ThreadPool"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum ManagerType {
         /// Configuration for a thread-pool based async file manager.
         #[prost(message, tag = "2")]
         ThreadPool(ThreadPool),
+    }
+}
+impl ::prost::Name for AsyncFileManagerConfig {
+    const NAME: &'static str = "AsyncFileManagerConfig";
+    const PACKAGE: &'static str = "envoy.extensions.common.async_files.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.async_files.v3.AsyncFileManagerConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.async_files.v3.AsyncFileManagerConfig"
+            .into()
     }
 }

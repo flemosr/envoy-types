@@ -48,6 +48,17 @@ pub struct DynamicModuleFilter {
         super::super::super::super::super::super::google::protobuf::Any,
     >,
 }
+impl ::prost::Name for DynamicModuleFilter {
+    const NAME: &'static str = "DynamicModuleFilter";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.dynamic_modules.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter"
+            .into()
+    }
+}
 /// Configuration of the HTTP per-route filter for dynamic modules. This filter allows loading shared object files
 /// that can be loaded via dlopen by the HTTP filter.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -93,4 +104,16 @@ pub struct DynamicModuleFilterPerRoute {
     pub filter_config: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Any,
     >,
+}
+impl ::prost::Name for DynamicModuleFilterPerRoute {
+    const NAME: &'static str = "DynamicModuleFilterPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.dynamic_modules.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.dynamic_modules.v3.DynamicModuleFilterPerRoute"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.dynamic_modules.v3.DynamicModuleFilterPerRoute"
+            .into()
+    }
 }

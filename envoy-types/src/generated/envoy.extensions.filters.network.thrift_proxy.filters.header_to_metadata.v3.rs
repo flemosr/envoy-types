@@ -48,6 +48,18 @@ pub mod header_to_metadata {
             ),
         }
     }
+    impl ::prost::Name for KeyValuePair {
+        const NAME: &'static str = "KeyValuePair";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3.HeaderToMetadata.KeyValuePair"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3.HeaderToMetadata.KeyValuePair"
+                .into()
+        }
+    }
     /// A Rule defines what metadata to apply when a header is present or missing.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Rule {
@@ -73,6 +85,18 @@ pub mod header_to_metadata {
         /// This prevents headers from leaking.
         #[prost(bool, tag = "4")]
         pub remove: bool,
+    }
+    impl ::prost::Name for Rule {
+        const NAME: &'static str = "Rule";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3.HeaderToMetadata.Rule"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3.HeaderToMetadata.Rule"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -154,5 +178,17 @@ pub mod header_to_metadata {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for HeaderToMetadata {
+    const NAME: &'static str = "HeaderToMetadata";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3.HeaderToMetadata"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.header_to_metadata.v3.HeaderToMetadata"
+            .into()
     }
 }

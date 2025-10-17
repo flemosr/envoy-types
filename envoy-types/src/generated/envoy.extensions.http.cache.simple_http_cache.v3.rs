@@ -2,3 +2,14 @@
 /// \[\#extension: envoy.extensions.http.cache.simple\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SimpleHttpCacheConfig {}
+impl ::prost::Name for SimpleHttpCacheConfig {
+    const NAME: &'static str = "SimpleHttpCacheConfig";
+    const PACKAGE: &'static str = "envoy.extensions.http.cache.simple_http_cache.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.cache.simple_http_cache.v3.SimpleHttpCacheConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.cache.simple_http_cache.v3.SimpleHttpCacheConfig"
+            .into()
+    }
+}

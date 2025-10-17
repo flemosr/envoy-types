@@ -92,3 +92,14 @@ pub struct CustomResponse {
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
 }
+impl ::prost::Name for CustomResponse {
+    const NAME: &'static str = "CustomResponse";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.custom_response.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.custom_response.v3.CustomResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.custom_response.v3.CustomResponse"
+            .into()
+    }
+}

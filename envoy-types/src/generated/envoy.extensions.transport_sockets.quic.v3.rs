@@ -13,6 +13,17 @@ pub struct QuicDownstreamTransport {
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for QuicDownstreamTransport {
+    const NAME: &'static str = "QuicDownstreamTransport";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.quic.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.quic.v3.QuicDownstreamTransport".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.quic.v3.QuicDownstreamTransport"
+            .into()
+    }
+}
 /// Configuration for Upstream QUIC transport socket. This provides Google's implementation of Google QUIC and IETF QUIC to Envoy.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuicUpstreamTransport {
@@ -20,4 +31,15 @@ pub struct QuicUpstreamTransport {
     pub upstream_tls_context: ::core::option::Option<
         super::super::tls::v3::UpstreamTlsContext,
     >,
+}
+impl ::prost::Name for QuicUpstreamTransport {
+    const NAME: &'static str = "QuicUpstreamTransport";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.quic.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.quic.v3.QuicUpstreamTransport".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.quic.v3.QuicUpstreamTransport"
+            .into()
+    }
 }

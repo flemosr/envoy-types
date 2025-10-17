@@ -316,6 +316,17 @@ pub mod bootstrap {
             super::super::super::super::extensions::transport_sockets::tls::v3::Secret,
         >,
     }
+    impl ::prost::Name for StaticResources {
+        const NAME: &'static str = "StaticResources";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.Bootstrap.StaticResources".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.Bootstrap.StaticResources"
+                .into()
+        }
+    }
     /// \[\#next-free-field: 7\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicResources {
@@ -352,6 +363,17 @@ pub mod bootstrap {
             super::super::super::core::v3::ApiConfigSource,
         >,
     }
+    impl ::prost::Name for DynamicResources {
+        const NAME: &'static str = "DynamicResources";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.Bootstrap.DynamicResources".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.Bootstrap.DynamicResources"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ApplicationLogConfig {
         /// Optional field to set the application logs format. If this field is set, it will override
@@ -385,6 +407,29 @@ pub mod bootstrap {
                 TextFormat(::prost::alloc::string::String),
             }
         }
+        impl ::prost::Name for LogFormat {
+            const NAME: &'static str = "LogFormat";
+            const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.bootstrap.v3.Bootstrap.ApplicationLogConfig.LogFormat"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.bootstrap.v3.Bootstrap.ApplicationLogConfig.LogFormat"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for ApplicationLogConfig {
+        const NAME: &'static str = "ApplicationLogConfig";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.Bootstrap.ApplicationLogConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.Bootstrap.ApplicationLogConfig"
+                .into()
+        }
     }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DeferredStatOptions {
@@ -400,6 +445,17 @@ pub mod bootstrap {
         #[prost(bool, tag = "1")]
         pub enable_deferred_creation_stats: bool,
     }
+    impl ::prost::Name for DeferredStatOptions {
+        const NAME: &'static str = "DeferredStatOptions";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.Bootstrap.DeferredStatOptions".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.Bootstrap.DeferredStatOptions"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GrpcAsyncClientManagerConfig {
         /// Optional field to set the expiration time for the cached gRPC client object.
@@ -409,6 +465,17 @@ pub mod bootstrap {
             super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for GrpcAsyncClientManagerConfig {
+        const NAME: &'static str = "GrpcAsyncClientManagerConfig";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.Bootstrap.GrpcAsyncClientManagerConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.Bootstrap.GrpcAsyncClientManagerConfig"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum StatsFlush {
         /// Flush stats to sinks only when queried for on the admin interface. If set,
@@ -416,6 +483,16 @@ pub mod bootstrap {
         /// `stats_flush_interval` can be set.
         #[prost(bool, tag = "29")]
         StatsFlushOnAdmin(bool),
+    }
+}
+impl ::prost::Name for Bootstrap {
+    const NAME: &'static str = "Bootstrap";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.Bootstrap".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.Bootstrap".into()
     }
 }
 /// Administration interface :ref:`operations documentation  <operations_admin_interface>`.
@@ -450,6 +527,16 @@ pub struct Admin {
     /// should apply to the admin interface or not.
     #[prost(bool, tag = "6")]
     pub ignore_global_conn_limit: bool,
+}
+impl ::prost::Name for Admin {
+    const NAME: &'static str = "Admin";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.Admin".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.Admin".into()
+    }
 }
 /// Cluster manager :ref:`architecture overview <arch_overview_cluster_manager>`.
 /// \[\#next-free-field: 6\]
@@ -495,6 +582,27 @@ pub mod cluster_manager {
             super::super::super::core::v3::EventServiceConfig,
         >,
     }
+    impl ::prost::Name for OutlierDetection {
+        const NAME: &'static str = "OutlierDetection";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.ClusterManager.OutlierDetection".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.ClusterManager.OutlierDetection"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ClusterManager {
+    const NAME: &'static str = "ClusterManager";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.ClusterManager".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.ClusterManager".into()
+    }
 }
 /// Allows you to specify different watchdog configs for different subsystems.
 /// This allows finer tuned policies for the watchdog. If a subsystem is omitted
@@ -507,6 +615,16 @@ pub struct Watchdogs {
     /// Watchdog for the worker threads.
     #[prost(message, optional, tag = "2")]
     pub worker_watchdog: ::core::option::Option<Watchdog>,
+}
+impl ::prost::Name for Watchdogs {
+    const NAME: &'static str = "Watchdogs";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.Watchdogs".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.Watchdogs".into()
+    }
 }
 /// Envoy process watchdog configuration. When configured, this monitors for
 /// nonresponsive threads and kills the process after the configured thresholds.
@@ -628,6 +746,27 @@ pub mod watchdog {
             }
         }
     }
+    impl ::prost::Name for WatchdogAction {
+        const NAME: &'static str = "WatchdogAction";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.Watchdog.WatchdogAction".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.Watchdog.WatchdogAction"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Watchdog {
+    const NAME: &'static str = "Watchdog";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.Watchdog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.Watchdog".into()
+    }
 }
 /// Fatal actions to run while crashing. Actions can be safe (meaning they are
 /// async-signal safe) or unsafe. We run all safe actions before we run unsafe actions.
@@ -643,6 +782,16 @@ pub struct FatalAction {
     /// to the `Envoy::Server::Configuration::FatalAction` interface.
     #[prost(message, optional, tag = "1")]
     pub config: ::core::option::Option<super::super::core::v3::TypedExtensionConfig>,
+}
+impl ::prost::Name for FatalAction {
+    const NAME: &'static str = "FatalAction";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.FatalAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.FatalAction".into()
+    }
 }
 /// Runtime :ref:`configuration overview <config_runtime>` (deprecated).
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -674,6 +823,16 @@ pub struct Runtime {
     pub base: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
     >,
+}
+impl ::prost::Name for Runtime {
+    const NAME: &'static str = "Runtime";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.Runtime".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.Runtime".into()
+    }
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -709,9 +868,30 @@ pub mod runtime_layer {
         #[prost(bool, tag = "2")]
         pub append_service_cluster: bool,
     }
+    impl ::prost::Name for DiskLayer {
+        const NAME: &'static str = "DiskLayer";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.RuntimeLayer.DiskLayer".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.RuntimeLayer.DiskLayer".into()
+        }
+    }
     /// :ref:`Admin console runtime <config_runtime_admin>` layer.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct AdminLayer {}
+    impl ::prost::Name for AdminLayer {
+        const NAME: &'static str = "AdminLayer";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.RuntimeLayer.AdminLayer".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.RuntimeLayer.AdminLayer"
+                .into()
+        }
+    }
     /// :ref:`Runtime Discovery Service (RTDS) <config_runtime_rtds>` layer.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RtdsLayer {
@@ -723,6 +903,16 @@ pub mod runtime_layer {
         pub rtds_config: ::core::option::Option<
             super::super::super::core::v3::ConfigSource,
         >,
+    }
+    impl ::prost::Name for RtdsLayer {
+        const NAME: &'static str = "RtdsLayer";
+        const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.bootstrap.v3.RuntimeLayer.RtdsLayer".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.bootstrap.v3.RuntimeLayer.RtdsLayer".into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum LayerSpecifier {
@@ -739,6 +929,16 @@ pub mod runtime_layer {
         RtdsLayer(RtdsLayer),
     }
 }
+impl ::prost::Name for RuntimeLayer {
+    const NAME: &'static str = "RuntimeLayer";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.RuntimeLayer".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.RuntimeLayer".into()
+    }
+}
 /// Runtime :ref:`configuration overview <config_runtime>`.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LayeredRuntime {
@@ -746,6 +946,16 @@ pub struct LayeredRuntime {
     /// such that later layers in the list overlay earlier entries.
     #[prost(message, repeated, tag = "1")]
     pub layers: ::prost::alloc::vec::Vec<RuntimeLayer>,
+}
+impl ::prost::Name for LayeredRuntime {
+    const NAME: &'static str = "LayeredRuntime";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.LayeredRuntime".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.LayeredRuntime".into()
+    }
 }
 /// Used to specify the header that needs to be registered as an inline header.
 ///
@@ -825,6 +1035,16 @@ pub mod custom_inline_header {
         }
     }
 }
+impl ::prost::Name for CustomInlineHeader {
+    const NAME: &'static str = "CustomInlineHeader";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.CustomInlineHeader".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.CustomInlineHeader".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MemoryAllocatorManager {
     /// Configures tcmalloc to perform background release of free memory in amount of bytes per `memory_release_interval` interval.
@@ -838,4 +1058,14 @@ pub struct MemoryAllocatorManager {
     pub memory_release_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+}
+impl ::prost::Name for MemoryAllocatorManager {
+    const NAME: &'static str = "MemoryAllocatorManager";
+    const PACKAGE: &'static str = "envoy.config.bootstrap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.bootstrap.v3.MemoryAllocatorManager".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.bootstrap.v3.MemoryAllocatorManager".into()
+    }
 }

@@ -124,4 +124,28 @@ pub mod grpc_json_reverse_transcoder {
         #[prost(bool, tag = "3")]
         pub use_canonical_field_names: bool,
     }
+    impl ::prost::Name for PrintOptions {
+        const NAME: &'static str = "PrintOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_json_reverse_transcoder.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.grpc_json_reverse_transcoder.v3.GrpcJsonReverseTranscoder.PrintOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.grpc_json_reverse_transcoder.v3.GrpcJsonReverseTranscoder.PrintOptions"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for GrpcJsonReverseTranscoder {
+    const NAME: &'static str = "GrpcJsonReverseTranscoder";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_json_reverse_transcoder.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_json_reverse_transcoder.v3.GrpcJsonReverseTranscoder"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_json_reverse_transcoder.v3.GrpcJsonReverseTranscoder"
+            .into()
+    }
 }

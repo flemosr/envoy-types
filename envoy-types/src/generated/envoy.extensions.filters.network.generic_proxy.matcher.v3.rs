@@ -4,19 +4,65 @@
 /// This is deprecated and should be replaced by HostMatchInput. This is kept for backward compatibility.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ServiceMatchInput {}
+impl ::prost::Name for ServiceMatchInput {
+    const NAME: &'static str = "ServiceMatchInput";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.ServiceMatchInput"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.ServiceMatchInput"
+            .into()
+    }
+}
 /// Used to match request host of the generic downstream request. Only applicable if a host provided
 /// by the application protocol.
 /// This is same with the ServiceMatchInput and this should be preferred over ServiceMatchInput.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HostMatchInput {}
+impl ::prost::Name for HostMatchInput {
+    const NAME: &'static str = "HostMatchInput";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.HostMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.HostMatchInput"
+            .into()
+    }
+}
 /// Used to match request path of the generic downstream request. Only applicable if a path provided
 /// by the application protocol.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PathMatchInput {}
+impl ::prost::Name for PathMatchInput {
+    const NAME: &'static str = "PathMatchInput";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.PathMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.PathMatchInput"
+            .into()
+    }
+}
 /// Used to match request method of the generic downstream request. Only applicable if a method provided
 /// by the application protocol.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MethodMatchInput {}
+impl ::prost::Name for MethodMatchInput {
+    const NAME: &'static str = "MethodMatchInput";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.MethodMatchInput"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.MethodMatchInput"
+            .into()
+    }
+}
 /// Used to match an arbitrary property of the generic downstream request.
 /// These properties are populated by the codecs of application protocols.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -25,9 +71,33 @@ pub struct PropertyMatchInput {
     #[prost(string, tag = "1")]
     pub property_name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for PropertyMatchInput {
+    const NAME: &'static str = "PropertyMatchInput";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.PropertyMatchInput"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.PropertyMatchInput"
+            .into()
+    }
+}
 /// Used to match an whole generic downstream request.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RequestMatchInput {}
+impl ::prost::Name for RequestMatchInput {
+    const NAME: &'static str = "RequestMatchInput";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.RequestMatchInput"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.RequestMatchInput"
+            .into()
+    }
+}
 /// Used to match an arbitrary key-value pair for headers, trailers or properties.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct KeyValueMatchEntry {
@@ -39,6 +109,18 @@ pub struct KeyValueMatchEntry {
     pub string_match: ::core::option::Option<
         super::super::super::super::super::super::r#type::matcher::v3::StringMatcher,
     >,
+}
+impl ::prost::Name for KeyValueMatchEntry {
+    const NAME: &'static str = "KeyValueMatchEntry";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.KeyValueMatchEntry"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.KeyValueMatchEntry"
+            .into()
+    }
 }
 /// Custom matcher to match on the generic downstream request. This is used to match
 /// multiple fields of the downstream request and avoid complex combinations of
@@ -65,4 +147,15 @@ pub struct RequestMatcher {
     /// to match on.
     #[prost(message, repeated, tag = "4")]
     pub properties: ::prost::alloc::vec::Vec<KeyValueMatchEntry>,
+}
+impl ::prost::Name for RequestMatcher {
+    const NAME: &'static str = "RequestMatcher";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.matcher.v3.RequestMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.matcher.v3.RequestMatcher"
+            .into()
+    }
 }

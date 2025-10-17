@@ -51,6 +51,18 @@ pub mod config {
         #[prost(enumeration = "ValueEncode", tag = "5")]
         pub encode: i32,
     }
+    impl ::prost::Name for KeyValuePair {
+        const NAME: &'static str = "KeyValuePair";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.header_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.header_to_metadata.v3.Config.KeyValuePair"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.header_to_metadata.v3.Config.KeyValuePair"
+                .into()
+        }
+    }
     /// A Rule defines what metadata to apply when a header is present or missing.
     /// \[\#next-free-field: 6\]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -81,6 +93,17 @@ pub mod config {
         /// This field is not supported in case of a cookie.
         #[prost(bool, tag = "4")]
         pub remove: bool,
+    }
+    impl ::prost::Name for Rule {
+        const NAME: &'static str = "Rule";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.header_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.header_to_metadata.v3.Config.Rule".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.header_to_metadata.v3.Config.Rule"
+                .into()
+        }
     }
     /// Specifies the value type to use in metadata.
     #[derive(
@@ -166,5 +189,16 @@ pub mod config {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.header_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.header_to_metadata.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.header_to_metadata.v3.Config"
+            .into()
     }
 }

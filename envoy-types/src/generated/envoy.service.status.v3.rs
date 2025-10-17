@@ -17,6 +17,16 @@ pub struct ClientStatusRequest {
     #[prost(bool, tag = "3")]
     pub exclude_resource_contents: bool,
 }
+impl ::prost::Name for ClientStatusRequest {
+    const NAME: &'static str = "ClientStatusRequest";
+    const PACKAGE: &'static str = "envoy.service.status.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.status.v3.ClientStatusRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.status.v3.ClientStatusRequest".into()
+    }
+}
 /// Detailed config (per xDS) with status.
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -52,6 +62,16 @@ pub mod per_xds_config {
         ScopedRouteConfig(super::super::super::super::admin::v3::ScopedRoutesConfigDump),
         #[prost(message, tag = "6")]
         EndpointConfig(super::super::super::super::admin::v3::EndpointsConfigDump),
+    }
+}
+impl ::prost::Name for PerXdsConfig {
+    const NAME: &'static str = "PerXdsConfig";
+    const PACKAGE: &'static str = "envoy.service.status.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.status.v3.PerXdsConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.status.v3.PerXdsConfig".into()
     }
 }
 /// All xds configs for a particular client.
@@ -130,12 +150,43 @@ pub mod client_config {
         #[prost(bool, tag = "9")]
         pub is_static_resource: bool,
     }
+    impl ::prost::Name for GenericXdsConfig {
+        const NAME: &'static str = "GenericXdsConfig";
+        const PACKAGE: &'static str = "envoy.service.status.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.status.v3.ClientConfig.GenericXdsConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.status.v3.ClientConfig.GenericXdsConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ClientConfig {
+    const NAME: &'static str = "ClientConfig";
+    const PACKAGE: &'static str = "envoy.service.status.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.status.v3.ClientConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.status.v3.ClientConfig".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientStatusResponse {
     /// Client configs for the clients specified in the ClientStatusRequest.
     #[prost(message, repeated, tag = "1")]
     pub config: ::prost::alloc::vec::Vec<ClientConfig>,
+}
+impl ::prost::Name for ClientStatusResponse {
+    const NAME: &'static str = "ClientStatusResponse";
+    const PACKAGE: &'static str = "envoy.service.status.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.status.v3.ClientStatusResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.status.v3.ClientStatusResponse".into()
+    }
 }
 /// Status of a config from a management server view.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

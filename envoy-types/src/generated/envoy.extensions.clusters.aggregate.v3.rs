@@ -8,6 +8,16 @@ pub struct ClusterConfig {
     #[prost(string, repeated, tag = "1")]
     pub clusters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for ClusterConfig {
+    const NAME: &'static str = "ClusterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.clusters.aggregate.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.clusters.aggregate.v3.ClusterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.clusters.aggregate.v3.ClusterConfig".into()
+    }
+}
 ///
 /// Configures an aggregate cluster whose
 /// : ref:`ClusterConfig <envoy_v3_api_msg_extensions.clusters.aggregate.v3.ClusterConfig>`
@@ -26,4 +36,15 @@ pub struct AggregateClusterResource {
     /// The name of the ClusterConfig resource to subscribe to.
     #[prost(string, tag = "2")]
     pub resource_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for AggregateClusterResource {
+    const NAME: &'static str = "AggregateClusterResource";
+    const PACKAGE: &'static str = "envoy.extensions.clusters.aggregate.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.clusters.aggregate.v3.AggregateClusterResource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.clusters.aggregate.v3.AggregateClusterResource"
+            .into()
+    }
 }

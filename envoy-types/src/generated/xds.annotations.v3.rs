@@ -5,17 +5,47 @@ pub struct FileStatusAnnotation {
     #[prost(bool, tag = "1")]
     pub work_in_progress: bool,
 }
+impl ::prost::Name for FileStatusAnnotation {
+    const NAME: &'static str = "FileStatusAnnotation";
+    const PACKAGE: &'static str = "xds.annotations.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.annotations.v3.FileStatusAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.annotations.v3.FileStatusAnnotation".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MessageStatusAnnotation {
     /// The entity is work-in-progress and subject to breaking changes.
     #[prost(bool, tag = "1")]
     pub work_in_progress: bool,
 }
+impl ::prost::Name for MessageStatusAnnotation {
+    const NAME: &'static str = "MessageStatusAnnotation";
+    const PACKAGE: &'static str = "xds.annotations.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.annotations.v3.MessageStatusAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.annotations.v3.MessageStatusAnnotation".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FieldStatusAnnotation {
     /// The entity is work-in-progress and subject to breaking changes.
     #[prost(bool, tag = "1")]
     pub work_in_progress: bool,
+}
+impl ::prost::Name for FieldStatusAnnotation {
+    const NAME: &'static str = "FieldStatusAnnotation";
+    const PACKAGE: &'static str = "xds.annotations.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.annotations.v3.FieldStatusAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.annotations.v3.FieldStatusAnnotation".into()
+    }
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StatusAnnotation {
@@ -25,6 +55,16 @@ pub struct StatusAnnotation {
     /// The entity belongs to a package with the given version status.
     #[prost(enumeration = "PackageVersionStatus", tag = "2")]
     pub package_version_status: i32,
+}
+impl ::prost::Name for StatusAnnotation {
+    const NAME: &'static str = "StatusAnnotation";
+    const PACKAGE: &'static str = "xds.annotations.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.annotations.v3.StatusAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.annotations.v3.StatusAnnotation".into()
+    }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

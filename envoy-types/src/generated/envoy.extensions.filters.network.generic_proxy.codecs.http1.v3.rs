@@ -34,3 +34,15 @@ pub struct Http1CodecConfig {
         super::super::super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for Http1CodecConfig {
+    const NAME: &'static str = "Http1CodecConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.codecs.http1.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.codecs.http1.v3.Http1CodecConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.codecs.http1.v3.Http1CodecConfig"
+            .into()
+    }
+}

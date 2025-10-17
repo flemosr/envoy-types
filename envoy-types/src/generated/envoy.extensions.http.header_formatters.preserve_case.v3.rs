@@ -59,3 +59,15 @@ pub mod preserve_case_formatter_config {
         }
     }
 }
+impl ::prost::Name for PreserveCaseFormatterConfig {
+    const NAME: &'static str = "PreserveCaseFormatterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.http.header_formatters.preserve_case.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.header_formatters.preserve_case.v3.PreserveCaseFormatterConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.header_formatters.preserve_case.v3.PreserveCaseFormatterConfig"
+            .into()
+    }
+}

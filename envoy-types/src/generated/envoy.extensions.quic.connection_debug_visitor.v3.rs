@@ -2,3 +2,14 @@
 /// Configuration for a basic QUIC connection debug visitor.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BasicConfig {}
+impl ::prost::Name for BasicConfig {
+    const NAME: &'static str = "BasicConfig";
+    const PACKAGE: &'static str = "envoy.extensions.quic.connection_debug_visitor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.connection_debug_visitor.v3.BasicConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.connection_debug_visitor.v3.BasicConfig"
+            .into()
+    }
+}

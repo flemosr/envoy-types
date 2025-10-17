@@ -19,6 +19,17 @@ pub mod stdout_access_log {
         ),
     }
 }
+impl ::prost::Name for StdoutAccessLog {
+    const NAME: &'static str = "StdoutAccessLog";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.stream.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.stream.v3.StdoutAccessLog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog"
+            .into()
+    }
+}
 /// Custom configuration for an :ref:`AccessLog <envoy_v3_api_msg_config.accesslog.v3.AccessLog>`
 /// that writes log entries directly to the operating system's standard error.
 /// \[\#extension: envoy.access_loggers.stderr\]
@@ -37,5 +48,16 @@ pub mod stderr_access_log {
         LogFormat(
             super::super::super::super::super::config::core::v3::SubstitutionFormatString,
         ),
+    }
+}
+impl ::prost::Name for StderrAccessLog {
+    const NAME: &'static str = "StderrAccessLog";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.stream.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.stream.v3.StderrAccessLog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StderrAccessLog"
+            .into()
     }
 }

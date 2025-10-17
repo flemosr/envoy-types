@@ -274,6 +274,18 @@ pub mod redis_proxy {
             }
         }
     }
+    impl ::prost::Name for ConnPoolSettings {
+        const NAME: &'static str = "ConnPoolSettings";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.ConnPoolSettings"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.ConnPoolSettings"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct PrefixRoutes {
         /// List of prefix routes.
@@ -341,12 +353,60 @@ pub mod redis_proxy {
                 #[prost(bool, tag = "3")]
                 pub exclude_read_commands: bool,
             }
+            impl ::prost::Name for RequestMirrorPolicy {
+                const NAME: &'static str = "RequestMirrorPolicy";
+                const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.Route.RequestMirrorPolicy"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.Route.RequestMirrorPolicy"
+                        .into()
+                }
+            }
             /// ReadCommandPolicy specifies that Envoy should route read commands to another cluster.
             #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
             pub struct ReadCommandPolicy {
                 #[prost(string, tag = "1")]
                 pub cluster: ::prost::alloc::string::String,
             }
+            impl ::prost::Name for ReadCommandPolicy {
+                const NAME: &'static str = "ReadCommandPolicy";
+                const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.Route.ReadCommandPolicy"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.Route.ReadCommandPolicy"
+                        .into()
+                }
+            }
+        }
+        impl ::prost::Name for Route {
+            const NAME: &'static str = "Route";
+            const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.Route"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes.Route"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for PrefixRoutes {
+        const NAME: &'static str = "PrefixRoutes";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.PrefixRoutes"
+                .into()
         }
     }
     /// RedisFault defines faults used for fault injection.
@@ -411,6 +471,18 @@ pub mod redis_proxy {
             }
         }
     }
+    impl ::prost::Name for RedisFault {
+        const NAME: &'static str = "RedisFault";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.RedisFault"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.RedisFault"
+                .into()
+        }
+    }
     /// Configuration to limit reconnection rate to redis server to protect redis server
     /// from client reconnection storm.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -418,6 +490,29 @@ pub mod redis_proxy {
         /// Reconnection rate per sec. Rate limiting is implemented with TokenBucket.
         #[prost(uint32, tag = "1")]
         pub connection_rate_limit_per_sec: u32,
+    }
+    impl ::prost::Name for ConnectionRateLimit {
+        const NAME: &'static str = "ConnectionRateLimit";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.ConnectionRateLimit"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy.ConnectionRateLimit"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for RedisProxy {
+    const NAME: &'static str = "RedisProxy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.redis_proxy.v3.RedisProxy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy"
+            .into()
     }
 }
 ///
@@ -443,6 +538,17 @@ pub struct RedisProtocolOptions {
     /// The cluster level configuration for AWS IAM authentication
     #[prost(message, optional, tag = "3")]
     pub aws_iam: ::core::option::Option<AwsIam>,
+}
+impl ::prost::Name for RedisProtocolOptions {
+    const NAME: &'static str = "RedisProtocolOptions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.redis_proxy.v3.RedisProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProtocolOptions"
+            .into()
+    }
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -471,6 +577,17 @@ pub struct AwsIam {
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for AwsIam {
+    const NAME: &'static str = "AwsIam";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.redis_proxy.v3.AwsIam".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.AwsIam"
+            .into()
+    }
+}
 /// RedisExternalAuthProvider specifies a gRPC service that can be used to authenticate Redis clients.
 /// This service will be called every time an AUTH command is received from a client.
 /// If the service returns an error, authentication is considered failed.
@@ -492,4 +609,16 @@ pub struct RedisExternalAuthProvider {
     /// a new expiration timestamp.
     #[prost(bool, tag = "2")]
     pub enable_auth_expiration: bool,
+}
+impl ::prost::Name for RedisExternalAuthProvider {
+    const NAME: &'static str = "RedisExternalAuthProvider";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.redis_proxy.v3.RedisExternalAuthProvider"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisExternalAuthProvider"
+            .into()
+    }
 }

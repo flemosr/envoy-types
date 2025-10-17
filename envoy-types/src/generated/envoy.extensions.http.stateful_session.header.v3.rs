@@ -28,3 +28,14 @@ pub struct HeaderBasedSessionState {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for HeaderBasedSessionState {
+    const NAME: &'static str = "HeaderBasedSessionState";
+    const PACKAGE: &'static str = "envoy.extensions.http.stateful_session.header.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.stateful_session.header.v3.HeaderBasedSessionState".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.stateful_session.header.v3.HeaderBasedSessionState"
+            .into()
+    }
+}

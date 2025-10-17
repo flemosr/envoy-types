@@ -8,3 +8,15 @@
 /// load balancing policies, such as subset load balancing policy.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ClusterProvided {}
+impl ::prost::Name for ClusterProvided {
+    const NAME: &'static str = "ClusterProvided";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.cluster_provided.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.cluster_provided.v3.ClusterProvided"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.cluster_provided.v3.ClusterProvided"
+            .into()
+    }
+}
