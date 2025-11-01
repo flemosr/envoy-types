@@ -185,7 +185,7 @@ impl ::prost::Name for OAuth2Credentials {
 }
 /// OAuth config
 ///
-/// \[\#next-free-field: 26\]
+/// \[\#next-free-field: 27\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
     /// Endpoint on the authorization server to retrieve the access token from.
@@ -327,6 +327,11 @@ pub struct OAuth2Config {
     pub code_verifier_token_expires_in: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
+    /// Disable token encryption. When set to true, both the access token and the ID token will be stored in plain text.
+    /// This option should only be used in secure environments where token encryption is not required.
+    /// Default is false (tokens are encrypted).
+    #[prost(bool, tag = "26")]
+    pub disable_token_encryption: bool,
 }
 /// Nested message and enum types in `OAuth2Config`.
 pub mod o_auth2_config {

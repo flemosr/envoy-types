@@ -15,13 +15,24 @@ pub struct TlsInspector {
     >,
     /// The size in bytes of the initial buffer requested by the tls_inspector.
     /// If the filter needs to read additional bytes from the socket, the
-    /// filter will double the buffer up to it's default maximum of 64KiB.
-    /// If this size is not defined, defaults to maximum 64KiB that the
+    /// filter will double the buffer up to it's default maximum of 16KiB.
+    /// If this size is not defined, defaults to maximum 16KiB that the
     /// tls inspector will consume.
     #[prost(message, optional, tag = "2")]
     pub initial_read_buffer_size: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
+    /// Close connection when TLS ClientHello message could not be parsed.
+    /// This flag should be enabled only if it is known that incoming connections are expected to use
+    /// TLS protocol, as Envoy does not distinguish between a plain text message or a malformed TLS
+    /// ClientHello message.
+    /// By default this flag is false and TLS ClientHello parsing errors are interpreted as a
+    /// plain text connection.
+    /// Setting this to true will cause connections to be terminated and the `client_hello_too_large`
+    /// counter to be incremented if the ClientHello message is over implementation defined limit
+    /// (currently 16Kb).
+    #[prost(bool, tag = "4")]
+    pub close_connection_on_client_hello_parsing_errors: bool,
 }
 impl ::prost::Name for TlsInspector {
     const NAME: &'static str = "TlsInspector";

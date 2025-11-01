@@ -11,9 +11,29 @@ pub struct DnsFilterConfig {
     pub server_config: ::core::option::Option<dns_filter_config::ServerContextConfig>,
     /// Client context configuration controls Envoy's behavior when it must use external
     /// resolvers to answer a query. This object is optional and if omitted instructs
-    /// the filter to resolve queries from the data in the server_config
+    /// the filter to resolve queries from the data in the server_config.
+    /// Also, if `client_config` is omitted, here is the Envoy's behavior to create DNS resolver:
+    ///
+    /// 1. If :ref:`typed_dns_resolver_config <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.typed_dns_resolver_config>`
+    ///    is not empty, uses it.
+    ///
+    /// 1. Otherwise, uses the default c-ares DNS resolver.
     #[prost(message, optional, tag = "3")]
     pub client_config: ::core::option::Option<dns_filter_config::ClientContextConfig>,
+    /// Configuration for :ref:`access logs <arch_overview_access_logs>`
+    /// emitted by the DNS filter for each DNS query received.
+    /// Supports custom format commands for DNS-specific attributes:
+    ///
+    /// * `QUERY_NAME`: The DNS query name being resolved
+    /// * `QUERY_TYPE`: The DNS query type (A, AAAA, SRV, etc.)
+    /// * `QUERY_CLASS`: The DNS query class
+    /// * `ANSWER_COUNT`: Number of answers in the response
+    /// * `RESPONSE_CODE`: DNS response code
+    /// * `PARSE_STATUS`: Whether the query was successfully parsed
+    #[prost(message, repeated, tag = "4")]
+    pub access_log: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::accesslog::v3::AccessLog,
+    >,
 }
 /// Nested message and enum types in `DnsFilterConfig`.
 pub mod dns_filter_config {

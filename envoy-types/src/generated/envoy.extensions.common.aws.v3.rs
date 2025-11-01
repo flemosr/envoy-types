@@ -265,7 +265,8 @@ pub struct AssumeRoleCredentialProvider {
     /// The ARN of the role to assume.
     #[prost(string, tag = "1")]
     pub role_arn: ::prost::alloc::string::String,
-    /// Optional string value to use as the role session name
+    /// An optional role session name, used when identifying the role in subsequent AWS API calls. If not provided, the role session name will default
+    /// to the current timestamp.
     #[prost(string, tag = "2")]
     pub role_session_name: ::prost::alloc::string::String,
     /// Optional string value to use as the externalId

@@ -15,6 +15,15 @@ pub struct StatefulSession {
     /// found, the request will be routed according to the load balancing algorithm.
     #[prost(bool, tag = "2")]
     pub strict: bool,
+    /// Optional stat prefix. If specified, the filter will emit statistics in the
+    /// `http.<stat_prefix>.stateful_session.<stat_prefix>.` namespace. If not specified, no statistics will be emitted.
+    ///
+    /// .. note::
+    ///
+    /// Per-route configuration overrides do not support statistics and will not emit stats even if this field is set
+    /// in the per-route config.
+    #[prost(string, tag = "3")]
+    pub stat_prefix: ::prost::alloc::string::String,
 }
 impl ::prost::Name for StatefulSession {
     const NAME: &'static str = "StatefulSession";

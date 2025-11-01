@@ -25,11 +25,9 @@ pub struct NetworkExternalProcessor {
     /// prematurely with an error, the filter will fail, leading to the close of connection.
     /// With this parameter set to true, however, then if the gRPC stream is prematurely closed
     /// or could not be opened, processing continues without error.
-    /// \[\#not-implemented-hide:\]
     #[prost(bool, tag = "2")]
     pub failure_mode_allow: bool,
     /// Options for controlling processing behavior.
-    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "3")]
     pub processing_mode: ::core::option::Option<ProcessingMode>,
     /// Specifies the timeout for each individual message sent on the stream and
@@ -37,7 +35,6 @@ pub struct NetworkExternalProcessor {
     /// the proxy sends a message on the stream that requires a response, it will
     /// reset this timer, and will stop processing and return an error (subject
     /// to the processing mode) if the timer expires. Default is 200 ms.
-    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "4")]
     pub message_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,

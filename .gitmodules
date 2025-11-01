@@ -10,9 +10,6 @@
 [submodule "submodules/googleapis"]
 	path = envoy-proto-collect/submodules/googleapis
 	url = https://github.com/googleapis/googleapis
-[submodule "submodules/opencensus-proto"]
-	path = envoy-proto-collect/submodules/opencensus-proto
-	url = https://github.com/census-instrumentation/opencensus-proto
 [submodule "submodules/opentelemetry-proto"]
 	path = envoy-proto-collect/submodules/opentelemetry-proto
 	url = https://github.com/open-telemetry/opentelemetry-proto

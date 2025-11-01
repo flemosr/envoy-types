@@ -42,7 +42,7 @@
 /// http2_protocol_options:
 /// max_concurrent_streams: 100
 /// .... \[further cluster config\]
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpProtocolOptions {
     /// This contains options common across HTTP/1 and HTTP/2
@@ -82,6 +82,11 @@ pub struct HttpProtocolOptions {
     #[prost(message, optional, tag = "7")]
     pub header_validation_config: ::core::option::Option<
         super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
+    /// Defines http specific outlier detection parameters.
+    #[prost(message, optional, tag = "8")]
+    pub outlier_detection: ::core::option::Option<
+        http_protocol_options::OutlierDetection,
     >,
     /// This controls the actual protocol to be used upstream.
     #[prost(oneof = "http_protocol_options::UpstreamProtocolOptions", tags = "3, 4, 5")]
@@ -221,6 +226,27 @@ pub mod http_protocol_options {
         }
         fn type_url() -> ::prost::alloc::string::String {
             "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions.AutoHttpConfig"
+                .into()
+        }
+    }
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct OutlierDetection {
+        /// If specified, only responses matching the matcher will be treated by outlier detection as errors.
+        /// If not specified, only 5xx codes are treated by outlier detection as errors.
+        #[prost(message, optional, tag = "1")]
+        pub error_matcher: ::core::option::Option<
+            super::super::super::super::super::config::common::matcher::v3::MatchPredicate,
+        >,
+    }
+    impl ::prost::Name for OutlierDetection {
+        const NAME: &'static str = "OutlierDetection";
+        const PACKAGE: &'static str = "envoy.extensions.upstreams.http.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.upstreams.http.v3.HttpProtocolOptions.OutlierDetection"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions.OutlierDetection"
                 .into()
         }
     }

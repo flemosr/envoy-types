@@ -13,6 +13,14 @@ pub struct ExpressionFilter {
     /// * `(connection.mtls && request.headers\['x-log-mtls'\] == 'true') || request.url_path.contains('v1beta3')`
     #[prost(string, tag = "1")]
     pub expression: ::prost::alloc::string::String,
+    /// CEL expression configuration that modifies the evaluation behavior of the `expression` field.
+    /// If specified, string conversion, concatenation, and manipulation functions may be enabled
+    /// for the filter expression. See :ref:`CelExpressionConfig <envoy_v3_api_msg_config.core.v3.CelExpressionConfig>`
+    /// for more details.
+    #[prost(message, optional, tag = "2")]
+    pub cel_config: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::CelExpressionConfig,
+    >,
 }
 impl ::prost::Name for ExpressionFilter {
     const NAME: &'static str = "ExpressionFilter";

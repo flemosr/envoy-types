@@ -4,7 +4,7 @@
 /// gRPC Authorization API defined by
 /// : ref:`CheckRequest <envoy_v3_api_msg_service.auth.v3.CheckRequest>`.
 ///   A failed check will cause this filter to close the TCP connection.
-///   \[\#next-free-field: 9\]
+///   \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {
     /// The prefix to use when emitting statistics.
@@ -55,6 +55,14 @@ pub struct ExtAuthz {
     /// : ref:`tls_session<envoy_v3_api_field_service.auth.v3.AttributeContext.tls_session>`.
     #[prost(bool, tag = "8")]
     pub include_tls_session: bool,
+    /// When set to `true`, the filter will send a TLS `access_denied(49)` alert before closing
+    /// the connection when authorization is denied. This provides better visibility to TLS clients
+    /// about the reason for connection closure. This alert is only sent for TLS connections. The
+    /// non-TLS connections will be closed without sending an alert.
+    ///
+    /// Defaults to `false`.
+    #[prost(bool, tag = "9")]
+    pub send_tls_alert_on_denial: bool,
 }
 impl ::prost::Name for ExtAuthz {
     const NAME: &'static str = "ExtAuthz";

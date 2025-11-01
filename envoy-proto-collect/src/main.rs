@@ -172,17 +172,6 @@ fn main() {
         None,
     );
 
-    // Files from `opencensus-proto` already have an Apache-2.0 declaration
-    collect_protos(
-        &out_dir,
-        "opencensus-proto",
-        vec![
-            "**/opencensus/proto/resource/v1/resource.proto",
-            "**/opencensus/proto/trace/v1/*.proto",
-        ],
-        None,
-    );
-
     // Files from `opentelemetry-proto` already have an Apache-2.0 declaration
     collect_protos(
         &out_dir,

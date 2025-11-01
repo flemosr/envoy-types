@@ -279,7 +279,7 @@ impl ::prost::Name for DoubleMatcher {
         "type.googleapis.com/envoy.type.matcher.v3.DoubleMatcher".into()
     }
 }
-/// Specifies the way to match a ProtobufWkt::Value. Primitive values and ListValue are supported.
+/// Specifies the way to match a Protobuf::Value. Primitive values and ListValue are supported.
 /// StructValue is not supported and is always not matched.
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]

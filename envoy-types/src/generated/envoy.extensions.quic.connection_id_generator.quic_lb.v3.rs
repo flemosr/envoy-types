@@ -10,18 +10,12 @@
 /// .. warning::
 ///
 /// ```text
-/// This is still a work in progress. Performance is expected to be poor. Interoperability testing
-/// has not yet been performed.
+/// This is still a work in progress. Interoperability testing has not yet been performed.
 /// ```
 ///
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {
-    /// Use the unencrypted mode. This is useful for testing, but allows for linking different CIDs
-    /// for the same connection, and leaks information about the valid server IDs in use. This should
-    /// only be used for testing.
-    #[prost(bool, tag = "1")]
-    pub unsafe_unencrypted_testing_mode: bool,
     /// Must be at least 1 octet.
     /// The length of server_id and nonce_length_bytes must be 18 or less.
     /// See <https://datatracker.ietf.org/doc/html/draft-ietf-quic-load-balancers#name-server-id-allocation.>
@@ -29,6 +23,12 @@ pub struct Config {
     pub server_id: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
+    /// If true, indicates that the :ref:`server_id  <envoy_v3_api_field_extensions.quic.connection_id_generator.quic_lb.v3.Config.server_id>` is base64 encoded.
+    ///
+    /// This can be useful if the ID may contain binary data and must be transmitted as a string, for example in
+    /// an environment variable.
+    #[prost(bool, tag = "6")]
+    pub server_id_base64_encoded: bool,
     /// Optional validation of the expected server ID length. If this is non-zero and the value in `server_id`
     /// does not have a matching length, a configuration error is generated. This can be useful for validating
     /// that the server ID is valid.
@@ -51,6 +51,15 @@ pub struct Config {
     pub encryption_parameters: ::core::option::Option<
         super::super::super::super::transport_sockets::tls::v3::SdsSecretConfig,
     >,
+    /// Use the unencrypted mode. This is useful for testing or a simplified implementation of the
+    /// downstream load balancer, but allows for linking different CIDs for the same connection, and
+    /// leaks information about the valid server IDs in use. This mode does not comply with the RFC.
+    ///
+    /// Note that in this mode, :ref:`encryption_parameters  <envoy_v3_api_field_extensions.quic.connection_id_generator.quic_lb.v3.Config.encryption_parameters>`
+    /// is still required because it contains `configuration_version`, which is still
+    /// needed. `encryption_key` can be set to `inline_string: '0000000000000000'`.
+    #[prost(bool, tag = "1")]
+    pub unencrypted_mode: bool,
 }
 impl ::prost::Name for Config {
     const NAME: &'static str = "Config";

@@ -40,17 +40,22 @@ pub struct JwtProvider {
     /// It is optional. If specified, it has to match the `iss` field in JWT,
     /// otherwise the JWT `iss` field is not checked.
     ///
-    /// Note: `JwtRequirement` :ref:`allow_missing <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtRequirement.allow_missing>`
+    /// .. note::
+    /// `JwtRequirement` :ref:`allow_missing <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtRequirement.allow_missing>`
     /// and :ref:`allow_missing_or_failed <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtRequirement.allow_missing_or_failed>`
     /// are implemented differently than other `JwtRequirements`. Hence the usage of this field
     /// is different as follows if `allow_missing` or `allow_missing_or_failed` is used:
     ///
-    /// * If a JWT has `iss` field, it needs to be specified by this field in one of `JwtProviders`.
-    /// * If a JWT doesn't have `iss` field, one of `JwtProviders` should fill this field empty.
-    /// * Multiple `JwtProviders` should not have same value in this field.
+    /// ```text
+    /// * If a JWT has ``iss`` field, it needs to be specified by this field in one of ``JwtProviders``.
+    /// * If a JWT doesn't have ``iss`` field, one of ``JwtProviders`` should fill this field empty.
+    /// * Multiple ``JwtProviders`` should not have same value in this field.
+    /// ```
     ///
-    /// Example: <https://securetoken.google.com>
-    /// Example: 1234567-compute@developer.gserviceaccount.com
+    /// Examples:
+    ///
+    /// * <https://securetoken.google.com>
+    /// * Example: 1234567-compute@developer.gserviceaccount.com
     #[prost(string, tag = "1")]
     pub issuer: ::prost::alloc::string::String,
     /// The list of JWT `audiences <<https://tools.ietf.org/html/rfc7519#section-4.1.3>`\_> are

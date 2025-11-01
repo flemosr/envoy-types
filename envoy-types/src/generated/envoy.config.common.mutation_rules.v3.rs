@@ -99,11 +99,31 @@ impl ::prost::Name for HeaderMutationRules {
 /// headers.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HeaderMutation {
-    #[prost(oneof = "header_mutation::Action", tags = "1, 2")]
+    #[prost(oneof = "header_mutation::Action", tags = "1, 2, 3")]
     pub action: ::core::option::Option<header_mutation::Action>,
 }
 /// Nested message and enum types in `HeaderMutation`.
 pub mod header_mutation {
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct RemoveOnMatch {
+        /// A string matcher that will be applied to the header key. If the header key
+        /// matches, the header will be removed.
+        #[prost(message, optional, tag = "1")]
+        pub key_matcher: ::core::option::Option<
+            super::super::super::super::super::r#type::matcher::v3::StringMatcher,
+        >,
+    }
+    impl ::prost::Name for RemoveOnMatch {
+        const NAME: &'static str = "RemoveOnMatch";
+        const PACKAGE: &'static str = "envoy.config.common.mutation_rules.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.common.mutation_rules.v3.HeaderMutation.RemoveOnMatch".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.common.mutation_rules.v3.HeaderMutation.RemoveOnMatch"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Action {
         /// Remove the specified header if it exists.
@@ -112,6 +132,9 @@ pub mod header_mutation {
         /// Append new header by the specified HeaderValueOption.
         #[prost(message, tag = "2")]
         Append(super::super::super::super::core::v3::HeaderValueOption),
+        /// Remove the header if the key matches the specified string matcher.
+        #[prost(message, tag = "3")]
+        RemoveOnMatch(RemoveOnMatch),
     }
 }
 impl ::prost::Name for HeaderMutation {

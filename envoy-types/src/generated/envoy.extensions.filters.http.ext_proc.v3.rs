@@ -110,8 +110,7 @@ pub mod processing_mode {
     pub enum BodySendMode {
         /// Do not send the body at all. This is the default.
         None = 0,
-        /// Stream the body to the server in pieces as they arrive at the
-        /// proxy.
+        /// Stream the body to the server in pieces as they are seen.
         Streamed = 1,
         /// Buffer the message body in memory and send the entire body at once.
         /// If the body exceeds the configured buffer limit, then the
@@ -177,8 +176,6 @@ impl ::prost::Name for ProcessingMode {
 ///
 /// * Whether it receives the response message at all.
 /// * Whether it receives the message body at all, in separate chunks, or as a single buffer.
-/// * Whether subsequent HTTP requests are transmitted synchronously or whether they are
-///   sent asynchronously.
 /// * To modify request or response trailers if they already exist.
 ///
 /// The filter supports up to six different processing steps. Each is represented by
@@ -186,9 +183,11 @@ impl ::prost::Name for ProcessingMode {
 /// processor must send a matching response.
 ///
 /// * Request headers: Contains the headers from the original HTTP request.
-/// * Request body: Delivered if they are present and sent in a single message if
-///   the `BUFFERED` or `BUFFERED_PARTIAL` mode is chosen, in multiple messages if the
-///   `STREAMED` mode is chosen, and not at all otherwise.
+/// * Request body: If the body is present, the behavior depends on the
+///   body send mode. In `BUFFERED` or `BUFFERED_PARTIAL` mode, the body is sent to the external
+///   processor in a single message. In `STREAMED` or `FULL_DUPLEX_STREAMED` mode, the body will
+///   be split across multiple messages sent to the external processor. In `NONE` mode, the body
+///   will not be sent to the external processor.
 /// * Request trailers: Delivered if they are present and if the trailer mode is set
 ///   to `SEND`.
 /// * Response headers: Contains the headers from the HTTP response. Keep in mind
@@ -204,7 +203,7 @@ impl ::prost::Name for ProcessingMode {
 /// from the external processor. The latter is only enabled if `allow_mode_override` is
 /// set to true. This way, a processor may, for example, use information
 /// in the request header to determine whether the message body must be examined, or whether
-/// the proxy should simply stream it straight through.
+/// the data plane should simply stream it straight through.
 ///
 /// All of this together allows a server to process the filter traffic in fairly
 /// sophisticated ways. For example:
@@ -213,13 +212,9 @@ impl ::prost::Name for ProcessingMode {
 ///   on the content of the headers.
 /// * A server may choose to immediately reject some messages based on their HTTP
 ///   headers (or other dynamic metadata) and more carefully examine others.
-/// * A server may asynchronously monitor traffic coming through the filter by inspecting
-///   headers, bodies, or both, and then decide to switch to a synchronous processing
-///   mode, either permanently or temporarily.
 ///
 ///
-/// The protocol itself is based on a bidirectional gRPC stream. Envoy will send the
-/// server
+/// The protocol itself is based on a bidirectional gRPC stream. The data plane will send the server
 /// : ref:`ProcessingRequest <envoy_v3_api_msg_service.ext_proc.v3.ProcessingRequest>`
 ///   messages, and the server must reply with
 /// : ref:`ProcessingResponse <envoy_v3_api_msg_service.ext_proc.v3.ProcessingResponse>`.
@@ -228,11 +223,10 @@ impl ::prost::Name for ProcessingMode {
 /// Stats about each gRPC call are recorded in a :ref:`dynamic filter state  <arch_overview_advanced_filter_state_sharing>` object in a namespace matching the filter
 /// name.
 ///
-/// \[\#next-free-field: 24\]
+/// \[\#next-free-field: 26\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExternalProcessor {
     /// Configuration for the gRPC service that the filter will communicate with.
-    /// The filter supports both the "Envoy" and "Google" gRPC clients.
     /// Only one of `grpc_service` or `http_service` can be set.
     /// It is required that one of them must be set.
     #[prost(message, optional, tag = "1")]
@@ -251,14 +245,14 @@ pub struct ExternalProcessor {
     ///   sending request or response headers to the side stream server.
     ///
     ///
-    /// With this configuration, Envoy behavior:
+    /// With this configuration, the data plane behavior is:
     ///
     /// 1. The headers are first put in a proto message
     ///    :ref:`ProcessingRequest <envoy_v3_api_msg_service.ext_proc.v3.ProcessingRequest>`.
     ///
     /// 1. This proto message is then transcoded into a JSON text.
     ///
-    /// 1. Envoy then sends an HTTP POST message with content-type as "application/json",
+    /// 1. The data plane then sends an HTTP POST message with content-type as "application/json",
     ///    and this JSON text as body to the side stream server.
     ///
     /// After the side-stream receives this HTTP request message, it is expected to do as follows:
@@ -271,17 +265,11 @@ pub struct ExternalProcessor {
     ///
     /// 1. It converts the `ProcessingResponse` proto message into a JSON text.
     ///
-    /// 1. It then sends an HTTP response back to Envoy with status code as `"200"`,
+    /// 1. It then sends an HTTP response back to the data plane with status code as `"200"`,
     ///    `content-type` as `"application/json"` and sets the JSON text as the body.
     #[prost(message, optional, tag = "20")]
     pub http_service: ::core::option::Option<ExtProcHttpService>,
-    ///
-    /// If the `BodySendMode` in the
-    /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
-    ///   is set to `FULL_DUPLEX_STREAMED`, `failure_mode_allow` can not be set to true.
-    ///
-    ///
-    /// Otherwise, by default, if in the following cases:
+    /// By default, if in the following cases:
     ///
     /// 1. The gRPC stream cannot be established.
     ///
@@ -302,28 +290,33 @@ pub struct ExternalProcessor {
     /// sent. See `ProcessingMode` for details.
     #[prost(message, optional, tag = "3")]
     pub processing_mode: ::core::option::Option<ProcessingMode>,
-    /// Envoy provides a number of :ref:`attributes <arch_overview_attributes>`
+    ///
+    /// The data plane provides a number of :ref:`attributes <arch_overview_attributes>`
     /// for expressive policies. Each attribute name provided in this field will be
-    /// matched against that list and populated in the `request_headers` message.
-    /// See the :ref:`attribute documentation <arch_overview_request_attributes>`
-    /// for the list of supported attributes and their types.
+    /// matched against that list and populated in the
+    /// : ref:`ProcessingRequest.attributes <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.attributes>` field.
+    ///   See the :ref:`attribute documentation <arch_overview_request_attributes>`
+    ///   for the list of supported attributes and their types.
     #[prost(string, repeated, tag = "5")]
     pub request_attributes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// Envoy provides a number of :ref:`attributes <arch_overview_attributes>`
+    ///
+    /// The data plane provides a number of :ref:`attributes <arch_overview_attributes>`
     /// for expressive policies. Each attribute name provided in this field will be
-    /// matched against that list and populated in the `response_headers` message.
-    /// See the :ref:`attribute documentation <arch_overview_attributes>`
-    /// for the list of supported attributes and their types.
+    /// matched against that list and populated in the
+    /// : ref:`ProcessingRequest.attributes <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.attributes>` field.
+    ///   See the :ref:`attribute documentation <arch_overview_attributes>`
+    ///   for the list of supported attributes and their types.
     #[prost(string, repeated, tag = "6")]
     pub response_attributes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// Specifies the timeout for each individual message sent on the stream and
-    /// when the filter is running in synchronous mode. Whenever the proxy sends
-    /// a message on the stream that requires a response, it will reset this timer,
-    /// and will stop processing and return an error (subject to the processing mode)
-    /// if the timer expires before a matching response is received. There is no
-    /// timeout when the filter is running in asynchronous mode. Zero is a valid
-    /// config which means the timer will be triggered immediately. If not
-    /// configured, default is 200 milliseconds.
+    /// Specifies the timeout for each individual message sent on the stream.
+    /// Whenever the data plane sends a message on the stream that requires a
+    /// response, it will reset this timer, and will stop processing and return
+    /// an error (subject to the processing mode) if the timer expires before a
+    /// matching response is received. There is no timeout when the filter is
+    /// running in observability mode or when the body send mode is
+    /// `FULL_DUPLEX_STREAMED`. Zero is a valid config which means the timer
+    /// will be triggered immediately. If not configured, default is 200
+    /// milliseconds.
     #[prost(message, optional, tag = "7")]
     pub message_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -340,7 +333,7 @@ pub struct ExternalProcessor {
     /// : ref:`header_prefix <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.header_prefix>`
     ///   (which is usually "x-envoy").
     ///   Note that changing headers such as "host" or ":authority" may not in itself
-    ///   change Envoy's routing decision, as routes can be cached. To also force the
+    ///   change the data plane's routing decision, as routes can be cached. To also force the
     ///   route to be recomputed, set the
     /// : ref:`clear_route_cache <envoy_v3_api_field_service.ext_proc.v3.CommonResponse.clear_route_cache>`
     ///   field to true in the same response.
@@ -372,6 +365,7 @@ pub struct ExternalProcessor {
     /// can be overridden by the response message from the external processing server
     /// : ref:`mode_override <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`.
     ///   If not set, `mode_override` API in the response message will be ignored.
+    ///   Mode override is not supported if the body send mode is `FULL_DUPLEX_STREAMED`.
     #[prost(bool, tag = "14")]
     pub allow_mode_override: bool,
     ///
@@ -387,10 +381,10 @@ pub struct ExternalProcessor {
     pub metadata_options: ::core::option::Option<MetadataOptions>,
     /// If true, send each part of the HTTP request or response specified by `ProcessingMode`
     /// without pausing on filter chain iteration. It is "Send and Go" mode that can be used
-    /// by external processor to observe Envoy data and status. In this mode:
+    /// by external processor to observe the request's data and status. In this mode:
     ///
-    /// 1. Only `STREAMED` body processing mode is supported and any other body processing modes will be
-    ///    ignored. `NONE` mode (i.e., skip body processing) will still work as expected.
+    /// 1. Only `STREAMED` and `NONE` body processing modes are supported; for any other body
+    ///    processing mode, the body will not be sent.
     ///
     /// 1. External processor should not send back processing response, as any responses will be ignored.
     ///    This also means that
@@ -428,14 +422,15 @@ pub struct ExternalProcessor {
     /// Specifies the deferred closure timeout for gRPC stream that connects to external processor. Currently, the deferred stream closure
     /// is only used in :ref:`observability_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.observability_mode>`.
     /// In observability mode, gRPC streams may be held open to the external processor longer than the lifetime of the regular client to
-    /// backend stream lifetime. In this case, Envoy will eventually timeout the external processor stream according to this time limit.
+    /// backend stream lifetime. In this case, the data plane will eventually timeout the external processor stream according to this time limit.
     /// The default value is 5000 milliseconds (5 seconds) if not specified.
     #[prost(message, optional, tag = "19")]
     pub deferred_close_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
     /// Send body to the side stream server once it arrives without waiting for the header response from that server.
-    /// It only works for `STREAMED` body processing mode. For any other body processing modes, it is ignored.
+    /// It only works for `STREAMED` body processing mode. For any other body
+    /// processing modes, it is ignored.
     /// The server has two options upon receiving a header request:
     ///
     /// 1. Instant Response: send the header response as soon as the header request is received.
@@ -445,9 +440,9 @@ pub struct ExternalProcessor {
     /// In all scenarios, the header-body ordering must always be maintained.
     ///
     ///
-    /// If enabled Envoy will ignore the
+    /// If enabled the data plane will ignore the
     /// : ref:`mode_override <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`
-    ///   value that the server sends in the header response. This is because Envoy may have already
+    ///   value that the server sends in the header response. This is because the data plane may have already
     ///   sent the body to the server, prior to processing the header response.
     #[prost(bool, tag = "21")]
     pub send_body_without_waiting_for_header_response: bool,
@@ -460,6 +455,17 @@ pub struct ExternalProcessor {
     ///   Since `request_header_mode` is not applicable in any way, it's ignored in comparison.
     #[prost(message, repeated, tag = "22")]
     pub allowed_override_modes: ::prost::alloc::vec::Vec<ProcessingMode>,
+    /// Decorator to introduce custom logic that runs after the `ProcessingRequest` is constructed, but
+    /// before it is sent to the External Processor. The `ProcessingRequest` may be modified.
+    ///
+    /// .. note::
+    /// Processing request modifiers are currently in alpha.
+    ///
+    /// \[\#extension-category: envoy.http.ext_proc.processing_request_modifiers\]
+    #[prost(message, optional, tag = "25")]
+    pub processing_request_modifier: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
     /// Decorator to introduce custom logic that runs after a message received from
     /// the External Processor is processed, but before continuing filter chain iteration.
     ///
@@ -470,6 +476,14 @@ pub struct ExternalProcessor {
     #[prost(message, optional, tag = "23")]
     pub on_processing_response: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
+    /// Sets the HTTP status code that is returned to the client when the external processing server returns
+    /// an error, fails to respond, or cannot be reached.
+    ///
+    /// The default status is `HTTP 500 Internal Server Error`.
+    #[prost(message, optional, tag = "24")]
+    pub status_on_error: ::core::option::Option<
+        super::super::super::super::super::r#type::v3::HttpStatus,
     >,
 }
 /// Nested message and enum types in `ExternalProcessor`.
@@ -688,7 +702,7 @@ impl ::prost::Name for ExtProcPerRoute {
     }
 }
 /// Overrides that may be set on a per-route basis
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtProcOverrides {
     /// Set a different processing mode for this route than the default.
@@ -696,6 +710,8 @@ pub struct ExtProcOverrides {
     pub processing_mode: ::core::option::Option<ProcessingMode>,
     /// \[\#not-implemented-hide:\]
     /// Set a different asynchronous processing option than the default.
+    /// Deprecated and not implemented.
+    #[deprecated]
     #[prost(bool, tag = "2")]
     pub async_mode: bool,
     /// \[\#not-implemented-hide:\]
@@ -735,6 +751,15 @@ pub struct ExtProcOverrides {
     #[prost(message, optional, tag = "8")]
     pub failure_mode_allow: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
+    >,
+    ///
+    /// Decorator to introduce custom logic that runs after the `ProcessingRequest` is constructed, but
+    /// before it is sent to the External Processor. The `ProcessingRequest` may be modified.
+    /// This is a per-route override of
+    /// : ref:`processing_request_modifier <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_request_modifier>`.
+    #[prost(message, optional, tag = "9")]
+    pub processing_request_modifier: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
 }
 impl ::prost::Name for ExtProcOverrides {

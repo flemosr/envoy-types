@@ -53,7 +53,10 @@ impl ::prost::Name for FieldSelector {
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Rule {
-    /// The field to match on. If set, takes precedence over field_selector.
+    ///
+    /// The field to match on.
+    /// : ref:`field_selector<envoy_v3_api_field_extensions.filters.http.thrift_to_metadata.v3.Rule.field_selector>`
+    ///   takes precedence if both are set.
     #[prost(enumeration = "Field", tag = "1")]
     pub field: i32,
     /// Specifies that a match will be performed on the value of a field in the thrift body.

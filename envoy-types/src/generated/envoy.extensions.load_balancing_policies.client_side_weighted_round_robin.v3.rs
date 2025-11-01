@@ -23,7 +23,7 @@
 ///
 /// See the :ref:`load balancing architecture  overview<arch_overview_load_balancing_types>` for more information.
 ///
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientSideWeightedRoundRobin {
     /// Whether to enable out-of-band utilization reporting collection from
@@ -78,6 +78,13 @@ pub struct ClientSideWeightedRoundRobin {
     #[prost(string, repeated, tag = "7")]
     pub metric_names_for_computing_utilization: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
+    >,
+    /// Configuration for slow start mode.
+    /// If this configuration is not set, slow start will not be not enabled.
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "8")]
+    pub slow_start_config: ::core::option::Option<
+        super::super::common::v3::SlowStartConfig,
     >,
 }
 impl ::prost::Name for ClientSideWeightedRoundRobin {

@@ -476,7 +476,8 @@ pub struct UpstreamLocalityStats {
     /// locality.
     #[prost(uint64, tag = "2")]
     pub total_successful_requests: u64,
-    /// The total number of unfinished requests
+    /// The total number of unfinished requests. A request can be an HTTP request
+    /// or a TCP connection for a TCP connection pool.
     #[prost(uint64, tag = "3")]
     pub total_requests_in_progress: u64,
     /// The total number of requests that failed due to errors at the endpoint,
@@ -485,7 +486,8 @@ pub struct UpstreamLocalityStats {
     pub total_error_requests: u64,
     /// The total number of requests that were issued by this Envoy since
     /// the last report. This information is aggregated over all the
-    /// upstream endpoints in the locality.
+    /// upstream endpoints in the locality. A request can be an HTTP request
+    /// or a TCP connection for a TCP connection pool.
     #[prost(uint64, tag = "8")]
     pub total_issued_requests: u64,
     /// The total number of connections in an established state at the time of the
