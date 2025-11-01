@@ -392,14 +392,30 @@ impl ::prost::Name for ClientConfig {
 }
 /// Configuration for the Zipkin tracer.
 /// \[\#extension: envoy.tracers.zipkin\]
-/// \[\#next-free-field: 8\]
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+/// \[\#next-free-field: 10\]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ZipkinConfig {
     /// The cluster manager cluster that hosts the Zipkin collectors.
+    ///
+    /// .. note::
+    /// This field will be deprecated in future releases in favor of
+    /// :ref:`collector_service <envoy_v3_api_field_config.trace.v3.ZipkinConfig.collector_service>`.
+    ///
+    /// ```text
+    /// Either this field or ``collector_service`` must be specified.
+    /// ```
     #[prost(string, tag = "1")]
     pub collector_cluster: ::prost::alloc::string::String,
     /// The API endpoint of the Zipkin service where the spans will be sent. When
     /// using a standard Zipkin installation.
+    ///
+    /// .. note::
+    /// This field will be deprecated in future releases in favor of
+    /// :ref:`collector_service <envoy_v3_api_field_config.trace.v3.ZipkinConfig.collector_service>`.
+    ///
+    /// ```text
+    /// Required when using ``collector_cluster``.
+    /// ```
     #[prost(string, tag = "2")]
     pub collector_endpoint: ::prost::alloc::string::String,
     /// Determines whether a 128bit trace id will be used when creating a new
@@ -417,6 +433,10 @@ pub struct ZipkinConfig {
     pub collector_endpoint_version: i32,
     /// Optional hostname to use when sending spans to the collector_cluster. Useful for collectors
     /// that require a specific hostname. Defaults to :ref:`collector_cluster <envoy_v3_api_field_config.trace.v3.ZipkinConfig.collector_cluster>` above.
+    ///
+    /// .. note::
+    /// This field will be deprecated in future releases in favor of
+    /// :ref:`collector_service <envoy_v3_api_field_config.trace.v3.ZipkinConfig.collector_service>`.
     #[prost(string, tag = "6")]
     pub collector_hostname: ::prost::alloc::string::String,
     /// If this is set to true, then Envoy will be treated as an independent hop in trace chain. A complete span pair will be created for a single
@@ -440,9 +460,107 @@ pub struct ZipkinConfig {
     #[deprecated]
     #[prost(bool, tag = "7")]
     pub split_spans_for_request: bool,
+    /// Determines which trace context format to use for trace header extraction and propagation.
+    /// This controls both downstream request header extraction and upstream request header injection.
+    /// Here is the spec for W3C trace headers: <https://www.w3.org/TR/trace-context/>
+    /// The default value is USE_B3 to maintain backward compatibility.
+    #[prost(enumeration = "zipkin_config::TraceContextOption", tag = "8")]
+    pub trace_context_option: i32,
+    /// HTTP service configuration for the Zipkin collector.
+    /// When specified, this configuration takes precedence over the legacy fields:
+    /// collector_cluster, collector_endpoint, and collector_hostname.
+    /// This provides a complete HTTP service configuration including cluster, URI, timeout, and headers.
+    /// If not specified, the legacy fields above will be used for backward compatibility.
+    ///
+    /// Required fields when using collector_service:
+    ///
+    /// * `http_uri.cluster` - Must be specified and non-empty
+    /// * `http_uri.uri` - Must be specified and non-empty
+    /// * `http_uri.timeout` - Optional
+    ///
+    /// Full URI Support with Automatic Parsing:
+    ///
+    /// The `uri` field supports both path-only and full URI formats:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// tracing:
+    /// provider:
+    /// name: envoy.tracers.zipkin
+    /// typed_config:
+    /// "@type": type.googleapis.com/envoy.config.trace.v3.ZipkinConfig
+    /// collector_service:
+    /// http_uri:
+    /// \# Full URI format - hostname and path are extracted automatically
+    /// uri: "<https://zipkin-collector.example.com/api/v2/spans">
+    /// cluster: zipkin
+    /// timeout: 5s
+    /// request_headers_to_add:
+    /// - header:
+    /// key: "X-Custom-Token"
+    /// value: "your-custom-token"
+    /// - header:
+    /// key: "X-Service-ID"
+    /// value: "your-service-id"
+    ///
+    /// URI Parsing Behavior:
+    ///
+    /// * Full URI: `"<https://zipkin-collector.example.com/api/v2/spans"`>
+    ///
+    ///   * Hostname: `zipkin-collector.example.com` (sets HTTP `Host` header)
+    ///   * Path: `/api/v2/spans` (sets HTTP request path)
+    /// * Path only: `"/api/v2/spans"`
+    ///
+    ///   * Hostname: Uses cluster name as fallback
+    ///   * Path: `/api/v2/spans`
+    #[prost(message, optional, tag = "9")]
+    pub collector_service: ::core::option::Option<super::super::core::v3::HttpService>,
 }
 /// Nested message and enum types in `ZipkinConfig`.
 pub mod zipkin_config {
+    /// Available trace context options for handling different trace header formats.
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum TraceContextOption {
+        /// Use B3 headers only (default behavior).
+        UseB3 = 0,
+        /// Enable B3 and W3C dual header support:
+        ///
+        /// * For downstream: Extract from B3 headers first, fallback to W3C traceparent if B3 is unavailable.
+        /// * For upstream: Inject both B3 and W3C traceparent headers.
+        ///   When this option is NOT set, only B3 headers are used for both extraction and injection.
+        UseB3WithW3cPropagation = 1,
+    }
+    impl TraceContextOption {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Self::UseB3 => "USE_B3",
+                Self::UseB3WithW3cPropagation => "USE_B3_WITH_W3C_PROPAGATION",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "USE_B3" => Some(Self::UseB3),
+                "USE_B3_WITH_W3C_PROPAGATION" => Some(Self::UseB3WithW3cPropagation),
+                _ => None,
+            }
+        }
+    }
     /// Available Zipkin collector endpoint versions.
     #[derive(
         Clone,

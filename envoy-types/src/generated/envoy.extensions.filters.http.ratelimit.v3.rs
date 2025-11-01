@@ -166,8 +166,6 @@ pub struct RateLimit {
     /// 1. :ref:`dynamic metadata <envoy_v3_api_field_config.route.v3.RateLimit.Action.dynamic_metadata>`.
     /// 1. :ref:`disable_key <envoy_v3_api_field_config.route.v3.RateLimit.disable_key>`.
     /// 1. :ref:`override limit <envoy_v3_api_field_config.route.v3.RateLimit.limit>`.
-    /// 1. :ref:`hits_addend <envoy_v3_api_field_config.route.v3.RateLimit.hits_addend>`.
-    /// 1. :ref:`apply_on_stream_done <envoy_v3_api_field_config.route.v3.RateLimit.apply_on_stream_done>`.
     #[prost(message, repeated, tag = "17")]
     pub rate_limits: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::route::v3::RateLimit,

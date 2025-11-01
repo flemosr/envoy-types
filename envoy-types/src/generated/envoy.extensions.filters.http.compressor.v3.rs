@@ -9,62 +9,69 @@ pub struct Compressor {
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Set of strings that allows specifying which mime-types yield compression; e.g.,
-    /// application/json, text/html, etc. When this field is not defined, compression will be applied
-    /// to the following mime-types: "application/javascript", "application/json",
-    /// "application/xhtml+xml", "image/svg+xml", "text/css", "text/html", "text/plain", "text/xml"
-    /// and their synonyms.
+    /// `application/json`, `text/html`, etc.
+    ///
+    /// When this field is not specified, compression will be applied to these following mime-types
+    /// and their synonyms:
+    ///
+    /// * `application/javascript`
+    /// * `application/json`
+    /// * `application/xhtml+xml`
+    /// * `image/svg+xml`
+    /// * `text/css`
+    /// * `text/html`
+    /// * `text/plain`
+    /// * `text/xml`
     #[deprecated]
     #[prost(string, repeated, tag = "2")]
     pub content_type: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// If true, disables compression when the response contains an etag header. When it is false, the
-    /// filter will preserve weak etags and remove the ones that require strong validation.
+    /// When this field is `true`, disables compression when the response contains an `ETag` header.
+    /// When this field is `false`, the filter will preserve weak `ETag` values and remove those that
+    /// require strong validation.
     #[deprecated]
     #[prost(bool, tag = "3")]
     pub disable_on_etag_header: bool,
-    /// If true, removes accept-encoding from the request headers before dispatching it to the upstream
-    /// so that responses do not get compressed before reaching the filter.
+    /// When this field is `true`, removes `Accept-Encoding` from the request headers before dispatching
+    /// the request to the upstream so that responses do not get compressed before reaching the filter.
     ///
     /// .. attention::
     ///
     /// ```text
-    /// To avoid interfering with other compression filters in the same chain use this option in
+    /// To avoid interfering with other compression filters in the same chain, use this option in
     /// the filter closest to the upstream.
     /// ```
     #[deprecated]
     #[prost(bool, tag = "4")]
     pub remove_accept_encoding_header: bool,
-    /// Runtime flag that controls whether the filter is enabled or not. If set to false, the
-    /// filter will operate as a pass-through filter, unless overridden by
-    /// CompressorPerRoute. If not specified, defaults to enabled.
+    /// Runtime flag that controls whether the filter is enabled. When this field is `false`, the
+    /// filter will operate as a pass-through filter, unless overridden by `CompressorPerRoute`.
+    /// If this field is not specified, the filter is enabled by default.
     #[deprecated]
     #[prost(message, optional, tag = "5")]
     pub runtime_enabled: ::core::option::Option<
         super::super::super::super::super::config::core::v3::RuntimeFeatureFlag,
     >,
-    ///
-    /// A compressor library to use for compression. Currently only
-    /// : ref:`envoy.compression.gzip.compressor<envoy_v3_api_msg_extensions.compression.gzip.compressor.v3.Gzip>`
-    ///   is included in Envoy.
-    ///   \[\#extension-category: envoy.compression.compressor\]
+    /// A compressor library to use for compression.
+    /// \[\#extension-category: envoy.compression.compressor\]
     #[prost(message, optional, tag = "6")]
     pub compressor_library: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
-    /// Configuration for request compression. Compression is disabled by default if left empty.
+    /// Configuration for request compression. If this field is not specified, request compression is disabled.
     #[prost(message, optional, tag = "7")]
     pub request_direction_config: ::core::option::Option<
         compressor::RequestDirectionConfig,
     >,
-    /// Configuration for response compression. Compression is enabled by default if left empty.
+    /// Configuration for response compression. If this field is not specified, response compression is enabled.
     ///
     /// .. attention::
     ///
     /// ```text
-    /// If the field is not empty then the duplicate deprecated fields of the ``Compressor`` message,
+    /// When this field is set, duplicate deprecated fields of the ``Compressor`` message,
     /// such as ``content_length``, ``content_type``, ``disable_on_etag_header``,
-    /// ``remove_accept_encoding_header`` and ``runtime_enabled``, are ignored.
+    /// ``remove_accept_encoding_header``, and ``runtime_enabled``, are ignored.
     ///
-    /// Also all the statistics related to response compression will be rooted in
+    /// Additionally, all statistics related to response compression will be rooted in
     /// ``<stat_prefix>.compressor.<compressor_library.name>.<compressor_library_stat_prefix>.response.*``
     /// instead of
     /// ``<stat_prefix>.compressor.<compressor_library.name>.<compressor_library_stat_prefix>.*``.
@@ -73,8 +80,8 @@ pub struct Compressor {
     pub response_direction_config: ::core::option::Option<
         compressor::ResponseDirectionConfig,
     >,
-    /// If true, chooses this compressor first to do compression when the q-values in `Accept-Encoding` are same.
-    /// The last compressor which enables choose_first will be chosen if multiple compressor filters in the chain have choose_first as true.
+    /// When this field is `true`, this compressor is preferred when q-values in `Accept-Encoding` are equal.
+    /// If multiple compressor filters set `choose_first` to `true`, the last one in the filter chain is chosen.
     #[prost(bool, tag = "9")]
     pub choose_first: bool,
 }
@@ -82,25 +89,34 @@ pub struct Compressor {
 pub mod compressor {
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct CommonDirectionConfig {
-        /// Runtime flag that controls whether compression is enabled or not for the direction this
-        /// common config is put in. If set to false, the filter will operate as a pass-through filter
-        /// in the chosen direction, unless overridden by CompressorPerRoute.
-        /// If the field is omitted, the filter will be enabled.
+        /// Runtime flag that controls whether compression is enabled for the direction this
+        /// common config is applied to. When this field is `false`, the filter will operate as a
+        /// pass-through filter in the chosen direction, unless overridden by `CompressorPerRoute`.
+        /// If this field is not specified, the filter will be enabled.
         #[prost(message, optional, tag = "1")]
         pub enabled: ::core::option::Option<
             super::super::super::super::super::super::config::core::v3::RuntimeFeatureFlag,
         >,
-        /// Minimum value of Content-Length header of request or response messages (depending on the direction
-        /// this common config is put in), in bytes, which will trigger compression. The default value is 30.
+        /// Minimum value of the `Content-Length` header in request or response messages (depending on the
+        /// direction this common config is applied to), in bytes, that will trigger compression. Defaults to 30.
         #[prost(message, optional, tag = "2")]
         pub min_content_length: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::UInt32Value,
         >,
         /// Set of strings that allows specifying which mime-types yield compression; e.g.,
-        /// application/json, text/html, etc. When this field is not defined, compression will be applied
-        /// to the following mime-types: "application/javascript", "application/json",
-        /// "application/xhtml+xml", "image/svg+xml", "text/css", "text/html", "text/plain", "text/xml"
-        /// and their synonyms.
+        /// `application/json`, `text/html`, etc.
+        ///
+        /// When this field is not specified, compression will be applied to these following mime-types
+        /// and their synonyms:
+        ///
+        /// * `application/javascript`
+        /// * `application/json`
+        /// * `application/xhtml+xml`
+        /// * `image/svg+xml`
+        /// * `text/css`
+        /// * `text/html`
+        /// * `text/plain`
+        /// * `text/xml`
         #[prost(string, repeated, tag = "3")]
         pub content_type: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
@@ -135,29 +151,41 @@ pub mod compressor {
         }
     }
     /// Configuration for filter behavior on the response direction.
+    /// \[\#next-free-field: 6\]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ResponseDirectionConfig {
         #[prost(message, optional, tag = "1")]
         pub common_config: ::core::option::Option<CommonDirectionConfig>,
-        /// If true, disables compression when the response contains an etag header. When it is false, the
-        /// filter will preserve weak etags and remove the ones that require strong validation.
+        /// When this field is `true`, disables compression when the response contains an `ETag` header.
+        /// When this field is `false`, the filter will preserve weak `ETag` values and remove those that
+        /// require strong validation.
         #[prost(bool, tag = "2")]
         pub disable_on_etag_header: bool,
-        /// If true, removes accept-encoding from the request headers before dispatching it to the upstream
-        /// so that responses do not get compressed before reaching the filter.
+        /// When this field is `true`, removes `Accept-Encoding` from the request headers before dispatching
+        /// the request to the upstream so that responses do not get compressed before reaching the filter.
         ///
         /// .. attention::
         ///
         /// ```text
-        /// To avoid interfering with other compression filters in the same chain use this option in
+        /// To avoid interfering with other compression filters in the same chain, use this option in
         /// the filter closest to the upstream.
         /// ```
         #[prost(bool, tag = "3")]
         pub remove_accept_encoding_header: bool,
-        /// Set of response codes for which compression is disabled, e.g. 206 Partial Content should not
+        /// Set of response codes for which compression is disabled; e.g., 206 Partial Content should not
         /// be compressed.
         #[prost(uint32, repeated, packed = "false", tag = "4")]
         pub uncompressible_response_codes: ::prost::alloc::vec::Vec<u32>,
+        /// If true, the filter adds the `x-envoy-compression-status` response
+        /// header to indicate whether the compression occurred and, if not, provide
+        /// the reason why. The header's value format is
+        /// `<encoder-type>;<status>\[;<additional-params>\]`, where `<status>` is
+        /// `Compressed` or the reason compression was skipped (e.g.,
+        /// `ContentLengthTooSmall`). When this field is enabled, the compressor
+        /// filter alters the order of the compression eligibility checks to report
+        /// the most valid reason for skipping the compression.
+        #[prost(bool, tag = "5")]
+        pub status_header_enabled: bool,
     }
     impl ::prost::Name for ResponseDirectionConfig {
         const NAME: &'static str = "ResponseDirectionConfig";
@@ -209,11 +237,17 @@ impl ::prost::Name for ResponseDirectionOverrides {
 /// Per-route overrides. As per-route overrides are needed, they should be
 /// added here, mirroring the structure of `Compressor`. All fields should be
 /// optional, to allow overriding arbitrary subsets of configuration.
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CompressorOverrides {
     /// If present, response compression is enabled.
     #[prost(message, optional, tag = "1")]
     pub response_direction_config: ::core::option::Option<ResponseDirectionOverrides>,
+    /// A compressor library to use for compression. If specified, this overrides
+    /// the filter-level `compressor_library` configuration for this route.
+    #[prost(message, optional, tag = "2")]
+    pub compressor_library: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
 }
 impl ::prost::Name for CompressorOverrides {
     const NAME: &'static str = "CompressorOverrides";
@@ -226,17 +260,17 @@ impl ::prost::Name for CompressorOverrides {
             .into()
     }
 }
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CompressorPerRoute {
     #[prost(oneof = "compressor_per_route::Override", tags = "1, 2")]
     pub r#override: ::core::option::Option<compressor_per_route::Override>,
 }
 /// Nested message and enum types in `CompressorPerRoute`.
 pub mod compressor_per_route {
-    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Override {
         /// If set, the filter will operate as a pass-through filter.
-        /// Overrides Compressor.runtime_enabled and CommonDirectionConfig.enabled.
+        /// Overrides `Compressor.runtime_enabled` and `CommonDirectionConfig.enabled`.
         #[prost(bool, tag = "1")]
         Disabled(bool),
         /// Per-route overrides. Fields set here will override corresponding fields in `Compressor`.

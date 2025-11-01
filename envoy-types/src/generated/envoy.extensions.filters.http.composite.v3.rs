@@ -22,10 +22,33 @@ impl ::prost::Name for Composite {
         "type.googleapis.com/envoy.extensions.filters.http.composite.v3.Composite".into()
     }
 }
+/// A list of filter configurations to be called in order. Note that this can be used as the type
+/// inside of an ECDS :ref:`TypedExtensionConfig  <envoy_v3_api_msg_config.core.v3.TypedExtensionConfig>` extension, which allows a chain of
+/// filters to be configured dynamically. In that case, the types of all filters in the chain must
+/// be present in the :ref:`ExtensionConfigSource.type_urls  <envoy_v3_api_field_config.core.v3.ExtensionConfigSource.type_urls>` field.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FilterChainConfiguration {
+    #[prost(message, repeated, tag = "1")]
+    pub typed_config: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
+}
+impl ::prost::Name for FilterChainConfiguration {
+    const NAME: &'static str = "FilterChainConfiguration";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.composite.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.composite.v3.FilterChainConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.composite.v3.FilterChainConfiguration"
+            .into()
+    }
+}
 /// Configuration for an extension configuration discovery service with name.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicConfig {
     /// The name of the extension configuration. It also serves as a resource name in ExtensionConfigDS.
+    /// The resource type in the `DiscoveryRequest` will be :ref:`TypedExtensionConfig  <envoy_v3_api_msg_config.core.v3.TypedExtensionConfig>`.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// Configuration source specifier for an extension configuration discovery
@@ -54,6 +77,7 @@ pub struct ExecuteFilterAction {
     /// Filter specific configuration which depends on the filter being
     /// instantiated. See the supported filters for further documentation.
     /// Only one of `typed_config` or `dynamic_config` can be set.
+    /// Ignored if `filter_chain` is set.
     /// \[\#extension-category: envoy.filters.http\]
     #[prost(message, optional, tag = "1")]
     pub typed_config: ::core::option::Option<
@@ -61,8 +85,13 @@ pub struct ExecuteFilterAction {
     >,
     /// Dynamic configuration of filter obtained via extension configuration discovery service.
     /// Only one of `typed_config` or `dynamic_config` can be set.
+    /// Ignored if `filter_chain` is set.
     #[prost(message, optional, tag = "2")]
     pub dynamic_config: ::core::option::Option<DynamicConfig>,
+    /// An inlined list of filter configurations. The specified filters will be executed in order.
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "4")]
+    pub filter_chain: ::core::option::Option<FilterChainConfiguration>,
     ///
     /// Probability of the action execution. If not specified, this is 100%.
     /// This allows sampling behavior for the configured actions.

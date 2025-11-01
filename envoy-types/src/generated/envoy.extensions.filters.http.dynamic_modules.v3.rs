@@ -4,6 +4,10 @@
 ///
 /// A module can be loaded by multiple HTTP filters, hence the program can be structured in a way that
 /// the module is loaded only once and shared across multiple filters providing multiple functionalities.
+///
+/// A dynamic module HTTP filter can opt into being a terminal filter with no upstream by setting `terminal_filter` to
+/// true in the configuration. A terminal dynamic module can use `send_` ABI methods to send response headers,
+/// body and trailers to the downstream.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DynamicModuleFilter {
     /// Specifies the shared-object level configuration.
@@ -47,6 +51,10 @@ pub struct DynamicModuleFilter {
     pub filter_config: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Any,
     >,
+    /// Set true if the dynamic module is a terminal filter to use without an upstream.
+    /// The dynamic module is responsible for creating and sending the response to downstream.
+    #[prost(bool, tag = "4")]
+    pub terminal_filter: bool,
 }
 impl ::prost::Name for DynamicModuleFilter {
     const NAME: &'static str = "DynamicModuleFilter";

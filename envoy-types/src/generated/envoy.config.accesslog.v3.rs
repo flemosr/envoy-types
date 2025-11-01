@@ -130,6 +130,8 @@ pub mod comparison_filter {
         Ge = 1,
         /// \<=
         Le = 2,
+        /// !=
+        Ne = 3,
     }
     impl Op {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -141,6 +143,7 @@ pub mod comparison_filter {
                 Self::Eq => "EQ",
                 Self::Ge => "GE",
                 Self::Le => "LE",
+                Self::Ne => "NE",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -149,6 +152,7 @@ pub mod comparison_filter {
                 "EQ" => Some(Self::Eq),
                 "GE" => Some(Self::Ge),
                 "LE" => Some(Self::Le),
+                "NE" => Some(Self::Ne),
                 _ => None,
             }
         }

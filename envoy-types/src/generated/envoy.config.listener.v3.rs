@@ -289,7 +289,7 @@ pub struct FilterChain {
     pub use_proxy_proto: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// \[\#not-implemented-hide:\] filter chain metadata.
+    /// Filter chain metadata.
     #[prost(message, optional, tag = "5")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
     ///
@@ -311,7 +311,9 @@ pub struct FilterChain {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// The unique name (or empty) by which this filter chain is known.
-    /// Note: :ref:`filter_chain_matcher  <envoy_v3_api_field_config.listener.v3.Listener.filter_chain_matcher>`
+    ///
+    /// .. note::
+    /// :ref:`filter_chain_matcher      <envoy_v3_api_field_config.listener.v3.Listener.filter_chain_matcher>`
     /// requires that filter chains are uniquely named within a listener.
     #[prost(string, tag = "7")]
     pub name: ::prost::alloc::string::String,
@@ -455,7 +457,7 @@ impl ::prost::Name for ListenerFilter {
     }
 }
 /// Configuration specific to the UDP QUIC listener.
-/// \[\#next-free-field: 14\]
+/// \[\#next-free-field: 15\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuicProtocolOptions {
     #[prost(message, optional, tag = "1")]
@@ -547,6 +549,14 @@ pub struct QuicProtocolOptions {
     /// client.
     #[prost(bool, tag = "13")]
     pub reject_new_connections: bool,
+    /// Maximum number of QUIC sessions to create per event loop.
+    /// If not specified, the default value is 16.
+    /// This is an equivalent of the TCP listener option
+    /// max_connections_to_accept_per_socket_event.
+    #[prost(message, optional, tag = "14")]
+    pub max_sessions_per_event_loop: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt32Value,
+    >,
 }
 impl ::prost::Name for QuicProtocolOptions {
     const NAME: &'static str = "QuicProtocolOptions";

@@ -9,7 +9,7 @@ pub struct LocalityLbConfig {
 /// Nested message and enum types in `LocalityLbConfig`.
 pub mod locality_lb_config {
     /// Configuration for :ref:`zone aware routing  <arch_overview_load_balancing_zone_aware_routing>`.
-    /// \[\#next-free-field: 6\]
+    /// \[\#next-free-field: 7\]
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct ZoneAwareLbConfig {
         /// Configures percentage of requests that will be considered for zone aware routing
@@ -44,6 +44,13 @@ pub mod locality_lb_config {
         pub force_local_zone: ::core::option::Option<
             zone_aware_lb_config::ForceLocalZone,
         >,
+        /// Determines how locality percentages are computed:
+        ///
+        /// * HEALTHY_HOSTS_NUM: proportional to the count of healthy hosts.
+        /// * HEALTHY_HOSTS_WEIGHT: proportional to the weights of healthy hosts.
+        ///   Default value is HEALTHY_HOSTS_NUM if unset.
+        #[prost(enumeration = "zone_aware_lb_config::LocalityBasis", tag = "6")]
+        pub locality_basis: i32,
     }
     /// Nested message and enum types in `ZoneAwareLbConfig`.
     pub mod zone_aware_lb_config {
@@ -79,6 +86,45 @@ pub mod locality_lb_config {
             fn type_url() -> ::prost::alloc::string::String {
                 "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig.ZoneAwareLbConfig.ForceLocalZone"
                     .into()
+            }
+        }
+        /// Basis for computing per-locality percentages in zone-aware routing.
+        #[derive(
+            Clone,
+            Copy,
+            Debug,
+            PartialEq,
+            Eq,
+            Hash,
+            PartialOrd,
+            Ord,
+            ::prost::Enumeration
+        )]
+        #[repr(i32)]
+        pub enum LocalityBasis {
+            /// Use the number of healthy hosts in each locality.
+            HealthyHostsNum = 0,
+            /// Use the weights of healthy hosts in each locality.
+            HealthyHostsWeight = 1,
+        }
+        impl LocalityBasis {
+            /// String value of the enum field names used in the ProtoBuf definition.
+            ///
+            /// The values are not transformed in any way and thus are considered stable
+            /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+            pub fn as_str_name(&self) -> &'static str {
+                match self {
+                    Self::HealthyHostsNum => "HEALTHY_HOSTS_NUM",
+                    Self::HealthyHostsWeight => "HEALTHY_HOSTS_WEIGHT",
+                }
+            }
+            /// Creates an enum from field names used in the ProtoBuf definition.
+            pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+                match value {
+                    "HEALTHY_HOSTS_NUM" => Some(Self::HealthyHostsNum),
+                    "HEALTHY_HOSTS_WEIGHT" => Some(Self::HealthyHostsWeight),
+                    _ => None,
+                }
             }
         }
     }

@@ -274,3 +274,29 @@ impl ::prost::Name for DynamicMetadataInput {
             .into()
     }
 }
+///
+/// Input that matches by the network namespace of the listener address.
+/// This input returns the network namespace filepath that was used to create the listening socket.
+/// On Linux systems, this corresponds to the `network_namespace_filepath` field in the
+/// : ref:`SocketAddress <envoy_v3_api_msg_config.core.v3.SocketAddress>` configuration.
+///
+///
+/// .. note::
+///
+/// This input is only meaningful on Linux systems where network namespaces are supported.
+/// On other platforms, this input will always return an empty value.
+///
+/// \[\#extension: envoy.matching.inputs.network_namespace\]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct NetworkNamespaceInput {}
+impl ::prost::Name for NetworkNamespaceInput {
+    const NAME: &'static str = "NetworkNamespaceInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.NetworkNamespaceInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.NetworkNamespaceInput"
+            .into()
+    }
+}

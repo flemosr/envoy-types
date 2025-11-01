@@ -4,7 +4,7 @@
 /// host header. This allows a single listener to service multiple top level domain path trees. Once
 /// a virtual host is selected based on the domain, the routes are processed in order to see which
 /// upstream cluster to route to or whether to perform a redirect.
-/// \[\#next-free-field: 25\]
+/// \[\#next-free-field: 26\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VirtualHost {
     /// The logical name of the virtual host. This is used when emitting certain
@@ -24,7 +24,7 @@ pub struct VirtualHost {
     /// .. note::
     ///
     /// The wildcard will not match the empty string.
-    /// e.g. `*-bar.foo.com` will match `baz-bar.foo.com` but not `-bar.foo.com`.
+    /// For example, `*-bar.foo.com` will match `baz-bar.foo.com` but not `-bar.foo.com`.
     /// The longest wildcards match first.
     /// Only a single virtual host in the entire route configuration can match on `*`. A domain
     /// must be unique across all virtual hosts or the config will fail to load.
@@ -103,7 +103,7 @@ pub struct VirtualHost {
     ///
     /// This field can be used to provide virtual host level per filter config. The key should match the
     /// : ref:`filter config name  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
-    ///   See :ref:`Http filter route specific config <arch_overview_http_filters_per_filter_config>`
+    ///   See :ref:`HTTP filter route-specific config <arch_overview_http_filters_per_filter_config>`
     ///   for details.
     ///   \[\#comment: An entry's value may be wrapped in a
     /// : ref:`FilterConfig<envoy_v3_api_msg_config.route.v3.FilterConfig>`
@@ -113,11 +113,14 @@ pub struct VirtualHost {
         ::prost::alloc::string::String,
         super::super::super::super::google::protobuf::Any,
     >,
-    ///
     /// Decides whether the :ref:`x-envoy-attempt-count  <config_http_filters_router_x-envoy-attempt-count>` header should be included
     /// in the upstream request. Setting this option will cause it to override any existing header
     /// value, so in the case of two Envoys on the request path with this option enabled, the upstream
-    /// will see the attempt count as perceived by the second Envoy. Defaults to false.
+    /// will see the attempt count as perceived by the second Envoy.
+    ///
+    /// Defaults to `false`.
+    ///
+    ///
     /// This header is unaffected by the
     /// : ref:`suppress_envoy_headers  <envoy_v3_api_field_extensions.filters.http.router.v3.Router.suppress_envoy_headers>` flag.
     ///
@@ -125,23 +128,26 @@ pub struct VirtualHost {
     /// \[\#next-major-version: rename to include_attempt_count_in_request.\]
     #[prost(bool, tag = "14")]
     pub include_request_attempt_count: bool,
-    ///
     /// Decides whether the :ref:`x-envoy-attempt-count  <config_http_filters_router_x-envoy-attempt-count>` header should be included
     /// in the downstream response. Setting this option will cause the router to override any existing header
     /// value, so in the case of two Envoys on the request path with this option enabled, the downstream
-    /// will see the attempt count as perceived by the Envoy closest upstream from itself. Defaults to false.
+    /// will see the attempt count as perceived by the Envoy closest upstream from itself.
+    ///
+    /// Defaults to `false`.
+    ///
+    ///
     /// This header is unaffected by the
     /// : ref:`suppress_envoy_headers  <envoy_v3_api_field_extensions.filters.http.router.v3.Router.suppress_envoy_headers>` flag.
     #[prost(bool, tag = "19")]
     pub include_attempt_count_in_response: bool,
     /// Indicates the retry policy for all routes in this virtual host. Note that setting a
     /// route level entry will take precedence over this config and it'll be treated
-    /// independently (e.g.: values are not inherited).
+    /// independently (e.g., values are not inherited).
     #[prost(message, optional, tag = "16")]
     pub retry_policy: ::core::option::Option<RetryPolicy>,
     /// \[\#not-implemented-hide:\]
     /// Specifies the configuration for retry policy extension. Note that setting a route level entry
-    /// will take precedence over this config and it'll be treated independently (e.g.: values are not
+    /// will take precedence over this config and it'll be treated independently (e.g., values are not
     /// inherited). :ref:`Retry policy <envoy_v3_api_field_config.route.v3.VirtualHost.retry_policy>` should not be
     /// set if this field is used.
     #[prost(message, optional, tag = "20")]
@@ -150,19 +156,46 @@ pub struct VirtualHost {
     >,
     /// Indicates the hedge policy for all routes in this virtual host. Note that setting a
     /// route level entry will take precedence over this config and it'll be treated
-    /// independently (e.g.: values are not inherited).
+    /// independently (e.g., values are not inherited).
     #[prost(message, optional, tag = "17")]
     pub hedge_policy: ::core::option::Option<HedgePolicy>,
     /// Decides whether to include the :ref:`x-envoy-is-timeout-retry <config_http_filters_router_x-envoy-is-timeout-retry>`
-    /// request header in retries initiated by per try timeouts.
+    /// request header in retries initiated by per-try timeouts.
     #[prost(bool, tag = "23")]
     pub include_is_timeout_retry_header: bool,
-    /// The maximum bytes which will be buffered for retries and shadowing.
-    /// If set and a route-specific limit is not set, the bytes actually buffered will be the minimum
-    /// value of this and the listener per_connection_buffer_limit_bytes.
+    /// The maximum bytes which will be buffered for retries and shadowing. If set, the bytes actually buffered will be
+    /// the minimum value of this and the listener `per_connection_buffer_limit_bytes`.
+    ///
+    /// .. attention::
+    ///
+    /// This field has been deprecated. Please use :ref:`request_body_buffer_limit    <envoy_v3_api_field_config.route.v3.VirtualHost.request_body_buffer_limit>` instead.
+    /// Only one of `per_request_buffer_limit_bytes` and `request_body_buffer_limit` could be set.
+    #[deprecated]
     #[prost(message, optional, tag = "18")]
     pub per_request_buffer_limit_bytes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// The maximum bytes which will be buffered for request bodies to support large request body
+    /// buffering beyond the `per_connection_buffer_limit_bytes`.
+    ///
+    /// This limit is specifically for the request body buffering and allows buffering larger payloads while maintaining
+    /// flow control.
+    ///
+    /// Buffer limit precedence (from highest to lowest priority):
+    ///
+    /// 1. If `request_body_buffer_limit` is set, then `request_body_buffer_limit` will be used.
+    /// 1. If :ref:`per_request_buffer_limit_bytes <envoy_v3_api_field_config.route.v3.VirtualHost.per_request_buffer_limit_bytes>`
+    ///    is set but `request_body_buffer_limit` is not, then `min(per_request_buffer_limit_bytes, per_connection_buffer_limit_bytes)`
+    ///    will be used.
+    /// 1. If neither is set, then `per_connection_buffer_limit_bytes` will be used.
+    ///
+    /// For flow control chunk sizes, `min(per_connection_buffer_limit_bytes, 16KB)` will be used.
+    ///
+    /// Only one of :ref:`per_request_buffer_limit_bytes <envoy_v3_api_field_config.route.v3.VirtualHost.per_request_buffer_limit_bytes>`
+    /// and `request_body_buffer_limit` could be set.
+    #[prost(message, optional, tag = "25")]
+    pub request_body_buffer_limit: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt64Value,
     >,
     /// Specify a set of default request mirroring policies for every route under this virtual host.
     /// It takes precedence over the route config mirror policy entirely.
@@ -278,7 +311,7 @@ impl ::prost::Name for RouteList {
 /// .. attention::
 ///
 /// Envoy supports routing on HTTP method via :ref:`header matching    <envoy_v3_api_msg_config.route.v3.HeaderMatcher>`.
-/// \[\#next-free-field: 20\]
+/// \[\#next-free-field: 21\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Route {
     /// Name for the route.
@@ -300,7 +333,7 @@ pub struct Route {
     ///
     /// This field can be used to provide route specific per filter config. The key should match the
     /// : ref:`filter config name  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
-    ///   See :ref:`Http filter route specific config <arch_overview_http_filters_per_filter_config>`
+    ///   See :ref:`HTTP filter route-specific config <arch_overview_http_filters_per_filter_config>`
     ///   for details.
     ///   \[\#comment: An entry's value may be wrapped in a
     /// : ref:`FilterConfig<envoy_v3_api_msg_config.route.v3.FilterConfig>`
@@ -350,6 +383,12 @@ pub struct Route {
     /// The maximum bytes which will be buffered for retries and shadowing.
     /// If set, the bytes actually buffered will be the minimum value of this and the
     /// listener per_connection_buffer_limit_bytes.
+    ///
+    /// .. attention::
+    ///
+    /// This field has been deprecated. Please use :ref:`request_body_buffer_limit    <envoy_v3_api_field_config.route.v3.Route.request_body_buffer_limit>` instead.
+    /// Only one of `per_request_buffer_limit_bytes` and `request_body_buffer_limit` may be set.
+    #[deprecated]
     #[prost(message, optional, tag = "16")]
     pub per_request_buffer_limit_bytes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -367,10 +406,31 @@ pub struct Route {
     /// ```text
     /// We do not recommend setting up a stat prefix for
     /// every application endpoint. This is both not easily maintainable and
-    /// statistics use a non-trivial amount of memory(approximately 1KiB per route).
+    /// statistics use a non-trivial amount of memory (approximately 1KiB per route).
     /// ```
     #[prost(string, tag = "19")]
     pub stat_prefix: ::prost::alloc::string::String,
+    /// The maximum bytes which will be buffered for request bodies to support large request body
+    /// buffering beyond the `per_connection_buffer_limit_bytes`.
+    ///
+    /// This limit is specifically for the request body buffering and allows buffering larger payloads while maintaining
+    /// flow control.
+    ///
+    /// Buffer limit precedence (from highest to lowest priority):
+    ///
+    /// 1. If `request_body_buffer_limit` is set: use `request_body_buffer_limit`
+    /// 1. If :ref:`per_request_buffer_limit_bytes <envoy_v3_api_field_config.route.v3.Route.per_request_buffer_limit_bytes>`
+    ///    is set but `request_body_buffer_limit` is not: use `min(per_request_buffer_limit_bytes, per_connection_buffer_limit_bytes)`
+    /// 1. If neither is set: use `per_connection_buffer_limit_bytes`
+    ///
+    /// For flow control chunk sizes, use `min(per_connection_buffer_limit_bytes, 16KB)`.
+    ///
+    /// Only one of :ref:`per_request_buffer_limit_bytes <envoy_v3_api_field_config.route.v3.Route.per_request_buffer_limit_bytes>`
+    /// and `request_body_buffer_limit` may be set.
+    #[prost(message, optional, tag = "20")]
+    pub request_body_buffer_limit: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt64Value,
+    >,
     #[prost(oneof = "route::Action", tags = "2, 3, 7, 17, 18")]
     pub action: ::core::option::Option<route::Action>,
 }
@@ -417,6 +477,7 @@ impl ::prost::Name for Route {
 /// multiple upstream clusters along with weights that indicate the percentage of
 /// traffic to be forwarded to each cluster. The router selects an upstream cluster based on the
 /// weights.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WeightedCluster {
     /// Specifies one or more upstream clusters associated with the route.
@@ -440,7 +501,7 @@ pub struct WeightedCluster {
     /// configuration file will be used as the default weight. See the :ref:`runtime documentation  <operations_runtime>` for how key names map to the underlying implementation.
     #[prost(string, tag = "2")]
     pub runtime_key_prefix: ::prost::alloc::string::String,
-    #[prost(oneof = "weighted_cluster::RandomValueSpecifier", tags = "4")]
+    #[prost(oneof = "weighted_cluster::RandomValueSpecifier", tags = "4, 5")]
     pub random_value_specifier: ::core::option::Option<
         weighted_cluster::RandomValueSpecifier,
     >,
@@ -530,7 +591,7 @@ pub mod weighted_cluster {
         ///
         /// This field can be used to provide weighted cluster specific per filter config. The key should match the
         /// : ref:`filter config name  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpFilter.name>`.
-        ///   See :ref:`Http filter route specific config <arch_overview_http_filters_per_filter_config>`
+        ///   See :ref:`HTTP filter route-specific config <arch_overview_http_filters_per_filter_config>`
         ///   for details.
         ///   \[\#comment: An entry's value may be wrapped in a
         /// : ref:`FilterConfig<envoy_v3_api_msg_config.route.v3.FilterConfig>`
@@ -575,6 +636,10 @@ pub mod weighted_cluster {
         /// the process for the consistency. And the value is a unsigned number between 0 and UINT64_MAX.
         #[prost(string, tag = "4")]
         HeaderName(::prost::alloc::string::String),
+        /// When set to true, the hash policies will be used to generate the random value for weighted cluster selection.
+        /// This could ensure consistent cluster picking across multiple proxy levels for weighted traffic.
+        #[prost(message, tag = "5")]
+        UseHashPolicy(super::super::super::super::super::google::protobuf::BoolValue),
     }
 }
 impl ::prost::Name for WeightedCluster {
@@ -616,7 +681,7 @@ impl ::prost::Name for ClusterSpecifierPlugin {
 /// \[\#next-free-field: 17\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteMatch {
-    /// Indicates that prefix/path matching should be case sensitive. The default
+    /// Indicates that prefix/path matching should be case-sensitive. The default
     /// is true. Ignored for safe_regex matching.
     #[prost(message, optional, tag = "4")]
     pub case_sensitive: ::core::option::Option<
@@ -662,15 +727,15 @@ pub struct RouteMatch {
     /// ```text
     /// If query parameters are used to pass request message fields when
     /// `grpc_json_transcoder <<https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/grpc_json_transcoder_filter>`_>
-    /// is used, the transcoded message fields maybe different. The query parameters are
-    /// url encoded, but the message fields are not. For example, if a query
+    /// is used, the transcoded message fields may be different. The query parameters are
+    /// URL-encoded, but the message fields are not. For example, if a query
     /// parameter is "foo%20bar", the message field will be "foo bar".
     /// ```
     #[prost(message, repeated, tag = "7")]
     pub query_parameters: ::prost::alloc::vec::Vec<QueryParameterMatcher>,
     /// If specified, only gRPC requests will be matched. The router will check
-    /// that the content-type header has a application/grpc or one of the various
-    /// application/grpc+ values.
+    /// that the `Content-Type` header has `application/grpc` or one of the various
+    /// `application/grpc+` values.
     #[prost(message, optional, tag = "8")]
     pub grpc: ::core::option::Option<route_match::GrpcRouteMatchOptions>,
     /// If specified, the client tls context will be matched against the defined
@@ -781,7 +846,7 @@ pub mod route_match {
         ///
         /// \[\#next-major-version: In the v3 API we should redo how path specification works such
         /// that we utilize StringMatcher, and additionally have consistent options around whether we
-        /// strip query strings, do a case sensitive match, etc. In the interim it will be too disruptive
+        /// strip query strings, do a case-sensitive match, etc. In the interim it will be too disruptive
         /// to deprecate the existing options. We should even consider whether we want to do away with
         /// path_specifier entirely and just rely on a set of header matchers which can already match
         /// on :path, etc. The issue with that is it is unclear how to generically deal with query string
@@ -882,7 +947,7 @@ pub struct CorsPolicy {
         super::super::super::super::google::protobuf::BoolValue,
     >,
     /// Specifies if preflight requests not matching the configured allowed origin should be forwarded
-    /// to the upstream. Default is true.
+    /// to the upstream. Default is `true`.
     #[prost(message, optional, tag = "13")]
     pub forward_not_matching_preflights: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
@@ -915,7 +980,7 @@ impl ::prost::Name for CorsPolicy {
         "type.googleapis.com/envoy.config.route.v3.CorsPolicy".into()
     }
 }
-/// \[\#next-free-field: 42\]
+/// \[\#next-free-field: 46\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteAction {
     /// The HTTP status code to use when configured cluster is not found.
@@ -934,9 +999,11 @@ pub struct RouteAction {
     /// place the original path before rewrite into the :ref:`x-envoy-original-path  <config_http_filters_router_x-envoy-original-path>` header.
     ///
     ///
-    /// Only one of :ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>`
+    /// Only one of :ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>`,
     /// : ref:`path_rewrite_policy <envoy_v3_api_field_config.route.v3.RouteAction.path_rewrite_policy>`,
-    ///   or :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>` may be specified.
+    /// : ref:`path_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.path_rewrite>`,
+    ///   or :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`
+    ///   may be specified.
     ///
     ///
     /// .. attention::
@@ -976,8 +1043,9 @@ pub struct RouteAction {
     ///
     ///
     /// Only one of :ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>`,
-    /// : ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`, or
-    /// : ref:`path_rewrite_policy <envoy_v3_api_field_config.route.v3.RouteAction.path_rewrite_policy>`\]
+    /// : ref:`path_rewrite_policy <envoy_v3_api_field_config.route.v3.RouteAction.path_rewrite_policy>`,
+    /// : ref:`path_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.path_rewrite>`,
+    ///   or :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`
     ///   may be specified.
     ///
     ///
@@ -1006,6 +1074,35 @@ pub struct RouteAction {
     pub path_rewrite_policy: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
     >,
+    /// Rewrites the whole path (without query parameters) with the given path value.
+    /// The router filter will
+    /// place the original path before rewrite into the :ref:`x-envoy-original-path  <config_http_filters_router_x-envoy-original-path>` header.
+    ///
+    ///
+    /// Only one of :ref:`regex_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.regex_rewrite>`,
+    /// : ref:`path_rewrite_policy <envoy_v3_api_field_config.route.v3.RouteAction.path_rewrite_policy>`,
+    /// : ref:`path_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.path_rewrite>`,
+    ///   or :ref:`prefix_rewrite <envoy_v3_api_field_config.route.v3.RouteAction.prefix_rewrite>`
+    ///   may be specified.
+    ///
+    ///
+    /// The :ref:`substitution format specifier <config_access_log_format>` could be applied here.
+    /// For example, with the following config:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// ```text
+    /// path_rewrite: "/new_path_prefix%REQ(custom-path-header-name)%"
+    /// ```
+    ///
+    /// Would rewrite the path to `/new_path_prefix/some_value` given the header
+    /// `custom-path-header-name: some_value`. If the header is not present, the path will be
+    /// rewritten to `/new_path_prefix`.
+    ///
+    /// If the final output of the path rewrite is empty, then the update will be ignored and the
+    /// original path will be preserved.
+    #[prost(string, tag = "45")]
+    pub path_rewrite: ::prost::alloc::string::String,
     ///
     /// If set, then a host rewrite action (one of
     /// : ref:`host_rewrite_literal <envoy_v3_api_field_config.route.v3.RouteAction.host_rewrite_literal>`,
@@ -1052,8 +1149,29 @@ pub struct RouteAction {
     /// If the :ref:`overload action <config_overload_manager_overload_actions>` "envoy.overload_actions.reduce_timeouts"
     /// is configured, this timeout is scaled according to the value for
     /// : ref:`HTTP_DOWNSTREAM_STREAM_IDLE <envoy_v3_api_enum_value_config.overload.v3.ScaleTimersOverloadActionConfig.TimerType.HTTP_DOWNSTREAM_STREAM_IDLE>`.
+    ///
+    ///
+    /// This timeout may also be used in place of `flush_timeout` in very specific cases. See the
+    /// documentation for `flush_timeout` for more details.
     #[prost(message, optional, tag = "24")]
     pub idle_timeout: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
+    /// Specifies the codec stream flush timeout for the route.
+    ///
+    /// If not specified, the first preference is the global :ref:`stream_flush_timeout  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_flush_timeout>`,
+    /// but only if explicitly configured.
+    ///
+    /// If neither the explicit HCM-wide flush timeout nor this route-specific flush timeout is configured,
+    /// the route's stream idle timeout is reused for this timeout. This is for
+    /// backwards compatibility since both behaviors were historically controlled by the one timeout.
+    ///
+    /// If the route also does not have an idle timeout configured, the global :ref:`stream_idle_timeout  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_idle_timeout>`. used, again
+    /// for backwards compatibility. That timeout defaults to 5 minutes.
+    ///
+    /// A value of 0 via any of the above paths will completely disable the timeout for a given route.
+    #[prost(message, optional, tag = "42")]
+    pub flush_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Specifies how to send request over TLS early data.
@@ -1065,13 +1183,13 @@ pub struct RouteAction {
     >,
     /// Indicates that the route has a retry policy. Note that if this is set,
     /// it'll take precedence over the virtual host level retry policy entirely
-    /// (e.g.: policies are not merged, most internal one becomes the enforced policy).
+    /// (e.g., policies are not merged, the most internal one becomes the enforced policy).
     #[prost(message, optional, tag = "9")]
     pub retry_policy: ::core::option::Option<RetryPolicy>,
     /// \[\#not-implemented-hide:\]
     /// Specifies the configuration for retry policy extension. Note that if this is set, it'll take
-    /// precedence over the virtual host level retry policy entirely (e.g.: policies are not merged,
-    /// most internal one becomes the enforced policy). :ref:`Retry policy <envoy_v3_api_field_config.route.v3.VirtualHost.retry_policy>`
+    /// precedence over the virtual host level retry policy entirely (e.g., policies are not merged,
+    /// the most internal one becomes the enforced policy). :ref:`Retry policy <envoy_v3_api_field_config.route.v3.VirtualHost.retry_policy>`
     /// should not be set if this field is used.
     #[prost(message, optional, tag = "33")]
     pub retry_policy_typed_config: ::core::option::Option<
@@ -1097,6 +1215,8 @@ pub struct RouteAction {
     /// : ref:`rate_limits <envoy_v3_api_field_config.route.v3.VirtualHost.rate_limits>` are not applied to the
     ///   request.
     ///
+    ///
+    /// .. attention::
     ///
     /// This field is deprecated. Please use :ref:`vh_rate_limits <envoy_v3_api_field_extensions.filters.http.ratelimit.v3.RateLimitPerRoute.vh_rate_limits>`
     #[deprecated]
@@ -1207,7 +1327,7 @@ pub struct RouteAction {
     >,
     /// Indicates that the route has a hedge policy. Note that if this is set,
     /// it'll take precedence over the virtual host level hedge policy entirely
-    /// (e.g.: policies are not merged, most internal one becomes the enforced policy).
+    /// (e.g., policies are not merged, the most internal one becomes the enforced policy).
     #[prost(message, optional, tag = "27")]
     pub hedge_policy: ::core::option::Option<HedgePolicy>,
     /// Specifies the maximum stream duration for this route.
@@ -1225,7 +1345,7 @@ pub struct RouteAction {
     /// : ref:`append_x_forwarded_host <envoy_v3_api_field_config.route.v3.RouteAction.append_x_forwarded_host>`
     ///   is set to true, the original host value will also be appended to the
     /// : ref:`config_http_conn_man_headers_x-forwarded-host` header.
-    #[prost(oneof = "route_action::HostRewriteSpecifier", tags = "6, 7, 29, 35")]
+    #[prost(oneof = "route_action::HostRewriteSpecifier", tags = "6, 7, 29, 35, 44")]
     pub host_rewrite_specifier: ::core::option::Option<
         route_action::HostRewriteSpecifier,
     >,
@@ -1247,9 +1367,9 @@ pub mod route_action {
     ///
     /// .. note::
     ///
-    /// Shadowing doesn't support Http CONNECT and upgrades.
-    /// \[\#next-free-field: 7\]
-    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    /// Shadowing doesn't support HTTP CONNECT and upgrades.
+    /// \[\#next-free-field: 9\]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RequestMirrorPolicy {
         /// Only one of `cluster` and `cluster_header` can be specified.
         /// \[\#next-major-version: Need to add back the validation rule: (validate.rules).string = {min_len: 1}\]
@@ -1293,9 +1413,24 @@ pub mod route_action {
         pub trace_sampled: ::core::option::Option<
             super::super::super::super::super::google::protobuf::BoolValue,
         >,
-        /// Disables appending the `-shadow` suffix to the shadowed `Host` header. Defaults to `false`.
+        /// Disables appending the `-shadow` suffix to the shadowed `Host` header.
+        ///
+        /// Defaults to `false`.
         #[prost(bool, tag = "6")]
         pub disable_shadow_host_suffix_append: bool,
+        /// Specifies a list of header mutations that should be applied to each mirrored request.
+        /// Header mutations are applied in the order they are specified. For more information, including
+        /// details on header value syntax, see the documentation on :ref:`custom request headers  <config_http_conn_man_headers_custom_request_headers>`.
+        #[prost(message, repeated, tag = "7")]
+        pub request_headers_mutations: ::prost::alloc::vec::Vec<
+            super::super::super::common::mutation_rules::v3::HeaderMutation,
+        >,
+        ///
+        /// Indicates that during mirroring, the host header will be swapped with this value.
+        /// : ref:`disable_shadow_host_suffix_append  <envoy_v3_api_field_config.route.v3.RouteAction.RequestMirrorPolicy.disable_shadow_host_suffix_append>`
+        ///   is implicitly enabled if this field is set.
+        #[prost(string, tag = "8")]
+        pub host_rewrite_literal: ::prost::alloc::string::String,
     }
     impl ::prost::Name for RequestMirrorPolicy {
         const NAME: &'static str = "RequestMirrorPolicy";
@@ -1524,12 +1659,14 @@ pub mod route_action {
     ///   but does not affect any custom filter chain specified there.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct UpgradeConfig {
-        /// The case-insensitive name of this upgrade, e.g. "websocket".
+        /// The case-insensitive name of this upgrade, for example, "websocket".
         /// For each upgrade type present in upgrade_configs, requests with
         /// Upgrade: \[upgrade_type\] will be proxied upstream.
         #[prost(string, tag = "1")]
         pub upgrade_type: ::prost::alloc::string::String,
-        /// Determines if upgrades are available on this route. Defaults to true.
+        /// Determines if upgrades are available on this route.
+        ///
+        /// Defaults to `true`.
         #[prost(message, optional, tag = "2")]
         pub enabled: ::core::option::Option<
             super::super::super::super::super::google::protobuf::BoolValue,
@@ -1803,6 +1940,26 @@ pub mod route_action {
         HostRewritePathRegex(
             super::super::super::super::r#type::matcher::v3::RegexMatchAndSubstitute,
         ),
+        /// Rewrites the host header with the value of this field. The router filter will
+        /// place the original host header value before rewriting into the :ref:`x-envoy-original-host  <config_http_filters_router_x-envoy-original-host>` header.
+        ///
+        /// The :ref:`substitution format specifier <config_access_log_format>` could be applied here.
+        /// For example, with the following config:
+        ///
+        /// .. code-block:: yaml
+        ///
+        /// ```text
+        /// host_rewrite: "prefix-%REQ(custom-host-header-name)%"
+        /// ```
+        ///
+        /// Would rewrite the host header to `prefix-some_value` given the header
+        /// `custom-host-header-name: some_value`. If the header is not present, the host header will
+        /// be rewritten to an value of `prefix-`.
+        ///
+        /// If the final output of the host rewrite is empty, then the update will be ignored and the
+        /// original host header will be preserved.
+        #[prost(string, tag = "44")]
+        HostRewrite(::prost::alloc::string::String),
     }
 }
 impl ::prost::Name for RouteAction {
@@ -1853,7 +2010,7 @@ pub struct RetryPolicy {
     >,
     ///
     /// Specifies an upstream idle timeout per retry attempt (including the initial attempt). This
-    /// parameter is optional and if absent there is no per try idle timeout. The semantics of the per
+    /// parameter is optional and if absent there is no per-try idle timeout. The semantics of the per-
     /// try idle timeout are similar to the
     /// : ref:`route idle timeout <envoy_v3_api_field_config.route.v3.RouteAction.timeout>` and
     /// : ref:`stream idle timeout  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_idle_timeout>`
@@ -2092,7 +2249,9 @@ pub mod retry_policy {
         pub reset_headers: ::prost::alloc::vec::Vec<ResetHeader>,
         /// Specifies the maximum back off interval that Envoy will allow. If a reset
         /// header contains an interval longer than this then it will be discarded and
-        /// the next header will be tried. Defaults to 300 seconds.
+        /// the next header will be tried.
+        ///
+        /// Defaults to 300 seconds.
         #[prost(message, optional, tag = "2")]
         pub max_interval: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Duration,
@@ -2161,6 +2320,7 @@ impl ::prost::Name for RetryPolicy {
 pub struct HedgePolicy {
     /// Specifies the number of initial requests that should be sent upstream.
     /// Must be at least 1.
+    ///
     /// Defaults to 1.
     /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "1")]
@@ -2169,6 +2329,7 @@ pub struct HedgePolicy {
     >,
     /// Specifies a probability that an additional upstream request should be sent
     /// on top of what is specified by initial_requests.
+    ///
     /// Defaults to 0.
     /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "2")]
@@ -2180,14 +2341,16 @@ pub struct HedgePolicy {
     /// The first request to complete successfully will be the one returned to the caller.
     ///
     /// * At any time, a successful response (i.e. not triggering any of the retry-on conditions) would be returned to the client.
-    /// * Before per-try timeout, an error response (per retry-on conditions) would be retried immediately or returned ot the client
+    /// * Before per-try timeout, an error response (per retry-on conditions) would be retried immediately or returned to the client
     ///   if there are no more retries left.
     /// * After per-try timeout, an error response would be discarded, as a retry in the form of a hedged request is already in progress.
     ///
-    /// Note: For this to have effect, you must have a :ref:`RetryPolicy <envoy_v3_api_msg_config.route.v3.RetryPolicy>` that retries at least
+    /// .. note::
+    ///
+    /// For this to have effect, you must have a :ref:`RetryPolicy <envoy_v3_api_msg_config.route.v3.RetryPolicy>` that retries at least
     /// one error code and specifies a maximum number of retries.
     ///
-    /// Defaults to false.
+    /// Defaults to `false`.
     #[prost(bool, tag = "3")]
     pub hedge_on_per_try_timeout: bool,
 }
@@ -2421,7 +2584,7 @@ pub struct Decorator {
     /// by the :ref:`x-envoy-decorator-operation    <config_http_filters_router_x-envoy-decorator-operation>` header.
     #[prost(string, tag = "1")]
     pub operation: ::prost::alloc::string::String,
-    /// Whether the decorated details should be propagated to the other party. The default is true.
+    /// Whether the decorated details should be propagated to the other party. The default is `true`.
     #[prost(message, optional, tag = "2")]
     pub propagate: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
@@ -2725,7 +2888,7 @@ pub mod rate_limit {
             /// the value of the descriptor entry for the descriptor_key.
             #[prost(string, tag = "1")]
             pub query_parameter_name: ::prost::alloc::string::String,
-            /// The key to use when creating the rate limit descriptor entry. his descriptor key will be used to identify the
+            /// The key to use when creating the rate limit descriptor entry. This descriptor key will be used to identify the
             /// rate limit rule in the rate limiting service.
             #[prost(string, tag = "2")]
             pub descriptor_key: ::prost::alloc::string::String,
@@ -2782,7 +2945,9 @@ pub mod rate_limit {
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct MaskedRemoteAddress {
             /// Length of prefix mask len for IPv4 (e.g. 0, 32).
+            ///
             /// Defaults to 32 when unset.
+            ///
             /// For example, trusted address from x-forwarded-for is `192.168.1.1`,
             /// the descriptor entry is ("masked_remote_address", "192.168.1.1/32");
             /// if mask len is 24, the descriptor entry is ("masked_remote_address", "192.168.1.0/24").
@@ -2791,7 +2956,9 @@ pub mod rate_limit {
                 super::super::super::super::super::super::google::protobuf::UInt32Value,
             >,
             /// Length of prefix mask len for IPv6 (e.g. 0, 128).
+            ///
             /// Defaults to 128 when unset.
+            ///
             /// For example, trusted address from x-forwarded-for is `2001:abcd:ef01:2345:6789:abcd:ef01:234`,
             /// the descriptor entry is ("masked_remote_address", "2001:abcd:ef01:2345:6789:abcd:ef01:234/128");
             /// if mask len is 64, the descriptor entry is ("masked_remote_address", "2001:abcd:ef01:2345::/64").
@@ -2844,7 +3011,9 @@ pub mod rate_limit {
         /// ("header_match", "\<descriptor_value>")
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct HeaderValueMatch {
-            /// The key to use in the descriptor entry. Defaults to `header_match`.
+            /// The key to use in the descriptor entry.
+            ///
+            /// Defaults to `header_match`.
             #[prost(string, tag = "4")]
             pub descriptor_key: ::prost::alloc::string::String,
             /// The value to use in the descriptor entry.
@@ -3014,7 +3183,9 @@ pub mod rate_limit {
         /// ("query_match", "\<descriptor_value>")
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct QueryParameterValueMatch {
-            /// The key to use in the descriptor entry. Defaults to `query_match`.
+            /// The key to use in the descriptor entry.
+            ///
+            /// Defaults to `query_match`.
             #[prost(string, tag = "4")]
             pub descriptor_key: ::prost::alloc::string::String,
             /// The value to use in the descriptor entry.
@@ -3241,7 +3412,9 @@ pub struct HeaderMatcher {
     /// Specifies the name of the header in the request.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
-    /// If specified, the match result will be inverted before checking. Defaults to false.
+    /// If specified, the match result will be inverted before checking.
+    ///
+    /// Defaults to `false`.
     ///
     /// Examples:
     ///
@@ -3250,7 +3423,9 @@ pub struct HeaderMatcher {
     #[prost(bool, tag = "8")]
     pub invert_match: bool,
     /// If specified, for any header match rule, if the header match rule specified header
-    /// does not exist, this header value will be treated as empty. Defaults to false.
+    /// does not exist, this header value will be treated as empty.
+    ///
+    /// Defaults to `false`.
     ///
     /// Examples:
     ///
@@ -3303,12 +3478,18 @@ pub mod header_matcher {
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum HeaderMatchSpecifier {
         /// If specified, header match will be performed based on the value of the header.
+        ///
+        /// .. attention::
+        ///
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
         #[prost(string, tag = "4")]
         ExactMatch(::prost::alloc::string::String),
         /// If specified, this regex string is a regular expression rule which implies the entire request
         /// header value must match the regex. The rule will not match if only a subsequence of the
         /// request header value matches the regex.
+        ///
+        /// .. attention::
+        ///
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
         #[prost(message, tag = "11")]
         SafeRegexMatch(super::super::super::super::r#type::matcher::v3::RegexMatcher),
@@ -3330,7 +3511,13 @@ pub mod header_matcher {
         #[prost(bool, tag = "7")]
         PresentMatch(bool),
         /// If specified, header match will be performed based on the prefix of the header value.
-        /// Note: empty prefix is not allowed, please use present_match instead.
+        ///
+        /// .. note::
+        ///
+        /// Empty prefix is not allowed. Please use `present_match` instead.
+        ///
+        /// .. attention::
+        ///
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
         ///
         /// Examples:
@@ -3339,7 +3526,13 @@ pub mod header_matcher {
         #[prost(string, tag = "9")]
         PrefixMatch(::prost::alloc::string::String),
         /// If specified, header match will be performed based on the suffix of the header value.
-        /// Note: empty suffix is not allowed, please use present_match instead.
+        ///
+        /// .. note::
+        ///
+        /// Empty suffix is not allowed. Please use `present_match` instead.
+        ///
+        /// .. attention::
+        ///
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
         ///
         /// Examples:
@@ -3349,7 +3542,13 @@ pub mod header_matcher {
         SuffixMatch(::prost::alloc::string::String),
         /// If specified, header match will be performed based on whether the header value contains
         /// the given value or not.
-        /// Note: empty contains match is not allowed, please use present_match instead.
+        ///
+        /// .. note::
+        ///
+        /// Empty contains match is not allowed. Please use `present_match` instead.
+        ///
+        /// .. attention::
+        ///
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
         ///
         /// Examples:
@@ -3440,7 +3639,7 @@ pub struct InternalRedirectPolicy {
         super::super::core::v3::TypedExtensionConfig,
     >,
     /// Allow internal redirect to follow a target URI with a different scheme than the value of
-    /// x-forwarded-proto. The default is false.
+    /// x-forwarded-proto. The default is `false`.
     #[prost(bool, tag = "4")]
     pub allow_cross_scheme_redirect: bool,
     /// Specifies a list of headers, by name, to copy from the internal redirect into the subsequent
@@ -3507,7 +3706,7 @@ impl ::prost::Name for FilterConfig {
         "type.googleapis.com/envoy.config.route.v3.FilterConfig".into()
     }
 }
-/// \[\#next-free-field: 18\]
+/// \[\#next-free-field: 19\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteConfiguration {
     ///
@@ -3612,13 +3811,19 @@ pub struct RouteConfiguration {
     pub request_mirror_policies: ::prost::alloc::vec::Vec<
         route_action::RequestMirrorPolicy,
     >,
-    ///
     /// By default, port in :authority header (if any) is used in host matching.
     /// With this option enabled, Envoy will ignore the port number in the :authority header (if any) when picking VirtualHost.
-    /// NOTE: this option will not strip the port number (if any) contained in route config
-    /// : ref:`envoy_v3_api_msg_config.route.v3.VirtualHost`.domains field.
+    ///
+    /// .. note::
+    /// This option will not strip the port number (if any) contained in route config
+    /// :ref:`envoy_v3_api_msg_config.route.v3.VirtualHost`.domains field.
     #[prost(bool, tag = "14")]
     pub ignore_port_in_host_matching: bool,
+    /// Normally, virtual host matching is done using the :authority (or
+    /// Host: in HTTP \< 2) HTTP header. Setting this will instead, use a
+    /// different HTTP header for this purpose.
+    #[prost(string, tag = "18")]
+    pub vhost_header: ::prost::alloc::string::String,
     /// Ignore path-parameters in path-matching.
     /// Before RFC3986, URI were like(RFC1808): <scheme>://\<net_loc>/<path>;<params>?<query>\#<fragment>
     /// Envoy by default takes ":path" as "<path>;<params>".

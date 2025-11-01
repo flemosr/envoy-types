@@ -1755,19 +1755,36 @@ pub mod grpc_service {
             "type.googleapis.com/envoy.config.core.v3.GrpcService.EnvoyGrpc".into()
         }
     }
-    /// \[\#next-free-field: 9\]
+    /// \[\#next-free-field: 11\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GoogleGrpc {
-        ///
-        /// The target URI when using the `Google C++ gRPC client  <<https://github.com/grpc/grpc>`\_.> SSL credentials will be supplied in
-        /// : ref:`channel_credentials <envoy_v3_api_field_config.core.v3.GrpcService.GoogleGrpc.channel_credentials>`.
+        /// The target URI when using the `Google C++ gRPC client  <<https://github.com/grpc/grpc>`\_.>
         #[prost(string, tag = "1")]
         pub target_uri: ::prost::alloc::string::String,
+        /// The channel credentials to use. See `channel credentials  <<https://grpc.io/docs/guides/auth.html#credential-types>`\_.>
+        /// Ignored if `channel_credentials_plugin` is set.
         #[prost(message, optional, tag = "2")]
         pub channel_credentials: ::core::option::Option<google_grpc::ChannelCredentials>,
-        /// A set of call credentials that can be composed with `channel credentials  <<https://grpc.io/docs/guides/auth.html#credential-types>`\_.>
+        /// A list of channel credentials plugins.
+        /// The data plane will iterate over the list in order and stop at the first credential type
+        /// that it supports. This provides a mechanism for starting to use new credential types that
+        /// are not yet supported by all data planes.
+        /// \[\#not-implemented-hide:\]
+        #[prost(message, repeated, tag = "9")]
+        pub channel_credentials_plugin: ::prost::alloc::vec::Vec<
+            super::super::super::super::super::google::protobuf::Any,
+        >,
+        /// The call credentials to use. See `channel credentials  <<https://grpc.io/docs/guides/auth.html#credential-types>`\_.>
+        /// Ignored if `call_credentials_plugin` is set.
         #[prost(message, repeated, tag = "3")]
         pub call_credentials: ::prost::alloc::vec::Vec<google_grpc::CallCredentials>,
+        /// A list of call credentials plugins. All supported plugins will be used.
+        /// Unsupported plugin types will be ignored.
+        /// \[\#not-implemented-hide:\]
+        #[prost(message, repeated, tag = "10")]
+        pub call_credentials_plugin: ::prost::alloc::vec::Vec<
+            super::super::super::super::super::google::protobuf::Any,
+        >,
         /// The human readable prefix to use when emitting statistics for the gRPC
         /// service.
         ///
@@ -2189,6 +2206,149 @@ impl ::prost::Name for EventServiceConfig {
         "type.googleapis.com/envoy.config.core.v3.EventServiceConfig".into()
     }
 }
+/// Optional configuration options to be used with json_format.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct JsonFormatOptions {
+    /// The output JSON string properties will be sorted.
+    ///
+    /// .. note::
+    /// As the properties are always sorted, this option has no effect and is deprecated.
+    #[deprecated]
+    #[prost(bool, tag = "1")]
+    pub sort_properties: bool,
+}
+impl ::prost::Name for JsonFormatOptions {
+    const NAME: &'static str = "JsonFormatOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.JsonFormatOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.JsonFormatOptions".into()
+    }
+}
+/// Configuration to use multiple :ref:`command operators <config_access_log_command_operators>`
+/// to generate a new string in either plain text or JSON format.
+/// \[\#next-free-field: 8\]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SubstitutionFormatString {
+    /// If set to true, when command operators are evaluated to null,
+    ///
+    /// * for `text_format`, the output of the empty operator is changed from `-` to an
+    ///   empty string, so that empty values are omitted entirely.
+    /// * for `json_format` the keys with null values are omitted in the output structure.
+    ///
+    /// .. note::
+    /// This option does not work perfectly with `json_format` as keys with `null` values
+    /// will still be included in the output. See <https://github.com/envoyproxy/envoy/issues/37941>
+    /// for more details.
+    #[prost(bool, tag = "3")]
+    pub omit_empty_values: bool,
+    /// Specify a `content_type` field.
+    /// If this field is not set then `text/plain` is used for `text_format` and
+    /// `application/json` is used for `json_format`.
+    ///
+    ///
+    /// .. validated-code-block:: yaml
+    /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+    ///
+    ///
+    /// content_type: "text/html; charset=UTF-8"
+    #[prost(string, tag = "4")]
+    pub content_type: ::prost::alloc::string::String,
+    /// Specifies a collection of Formatter plugins that can be called from the access log configuration.
+    /// See the formatters extensions documentation for details.
+    /// \[\#extension-category: envoy.formatter\]
+    #[prost(message, repeated, tag = "6")]
+    pub formatters: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
+    /// If json_format is used, the options will be applied to the output JSON string.
+    #[prost(message, optional, tag = "7")]
+    pub json_format_options: ::core::option::Option<JsonFormatOptions>,
+    #[prost(oneof = "substitution_format_string::Format", tags = "1, 2, 5")]
+    pub format: ::core::option::Option<substitution_format_string::Format>,
+}
+/// Nested message and enum types in `SubstitutionFormatString`.
+pub mod substitution_format_string {
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Format {
+        /// Specify a format with command operators to form a text string.
+        /// Its details is described in :ref:`format string<config_access_log_format_strings>`.
+        ///
+        /// For example, setting `text_format` like below,
+        ///
+        ///
+        /// .. validated-code-block:: yaml
+        /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+        ///
+        ///
+        /// text_format: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
+        ///
+        /// generates plain text similar to:
+        ///
+        /// .. code-block:: text
+        ///
+        /// upstream connect error:503:path=/foo
+        ///
+        /// Deprecated in favor of :ref:`text_format_source <envoy_v3_api_field_config.core.v3.SubstitutionFormatString.text_format_source>`. To migrate text format strings, use the :ref:`inline_string <envoy_v3_api_field_config.core.v3.DataSource.inline_string>` field.
+        #[prost(string, tag = "1")]
+        TextFormat(::prost::alloc::string::String),
+        /// Specify a format with command operators to form a JSON string.
+        /// Its details is described in :ref:`format dictionary<config_access_log_format_dictionaries>`.
+        /// Values are rendered as strings, numbers, or boolean values as appropriate.
+        /// Nested JSON objects may be produced by some command operators (e.g. FILTER_STATE or DYNAMIC_METADATA).
+        /// See the documentation for a specific command operator for details.
+        ///
+        ///
+        /// .. validated-code-block:: yaml
+        /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+        ///
+        ///
+        /// json_format:
+        /// status: "%RESPONSE_CODE%"
+        /// message: "%LOCAL_REPLY_BODY%"
+        ///
+        /// The following JSON object would be created:
+        ///
+        /// .. code-block:: json
+        ///
+        /// {
+        /// "status": 500,
+        /// "message": "My error message"
+        /// }
+        #[prost(message, tag = "2")]
+        JsonFormat(super::super::super::super::super::google::protobuf::Struct),
+        /// Specify a format with command operators to form a text string.
+        /// Its details is described in :ref:`format string<config_access_log_format_strings>`.
+        ///
+        /// For example, setting `text_format` like below,
+        ///
+        ///
+        /// .. validated-code-block:: yaml
+        /// : type-name: envoy.config.core.v3.SubstitutionFormatString
+        ///
+        ///
+        /// text_format_source:
+        /// inline_string: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
+        ///
+        /// generates plain text similar to:
+        ///
+        /// .. code-block:: text
+        ///
+        /// upstream connect error:503:path=/foo
+        #[prost(message, tag = "5")]
+        TextFormatSource(super::DataSource),
+    }
+}
+impl ::prost::Name for SubstitutionFormatString {
+    const NAME: &'static str = "SubstitutionFormatString";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SubstitutionFormatString".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SubstitutionFormatString".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ProxyProtocolPassThroughTlVs {
     /// The strategy to pass through TLVs. Default is INCLUDE_ALL.
@@ -2255,14 +2415,33 @@ impl ::prost::Name for ProxyProtocolPassThroughTlVs {
     }
 }
 /// Represents a single Type-Length-Value (TLV) entry.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TlvEntry {
     /// The type of the TLV. Must be a uint8 (0-255) as per the Proxy Protocol v2 specification.
     #[prost(uint32, tag = "1")]
     pub r#type: u32,
-    /// The value of the TLV. Must be at least one byte long.
+    /// The static value of the TLV.
+    /// Only one of `value` or `format_string` may be set.
     #[prost(bytes = "vec", tag = "2")]
     pub value: ::prost::alloc::vec::Vec<u8>,
+    /// Uses the :ref:`format string <config_access_log_format_strings>` to dynamically
+    /// populate the TLV value from stream information. This allows dynamic values
+    /// such as metadata, filter state, or other stream properties to be included in
+    /// the TLV.
+    ///
+    /// For example:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// type: 0xF0
+    /// format_string:
+    /// text_format_source:
+    /// inline_string: "%DYNAMIC_METADATA(envoy.filters.network:key)%"
+    ///
+    /// The formatted string will be used directly as the TLV value.
+    /// Only one of `value` or `format_string` may be set.
+    #[prost(message, optional, tag = "3")]
+    pub format_string: ::core::option::Option<SubstitutionFormatString>,
 }
 impl ::prost::Name for TlvEntry {
     const NAME: &'static str = "TlvEntry";
@@ -3276,8 +3455,10 @@ pub struct ExtensionConfigSource {
     /// to be supplied.
     #[prost(bool, tag = "3")]
     pub apply_default_config_without_warming: bool,
-    /// A set of permitted extension type URLs. Extension configuration updates are rejected
-    /// if they do not match any type URL in the set.
+    ///
+    /// A set of permitted extension type URLs for the type encoded inside of the
+    /// : ref:`TypedExtensionConfig <envoy_v3_api_msg_config.core.v3.TypedExtensionConfig>`. Extension
+    ///   configuration updates are rejected if they do not match any type URL in the set.
     #[prost(string, repeated, tag = "4")]
     pub type_urls: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
@@ -3435,6 +3616,7 @@ pub struct QuicProtocolOptions {
     /// default 600s will be applied.
     /// For internal corporate network, a long timeout is often fine.
     /// But for client facing network, 30s is usually a good choice.
+    /// Do not add an upper bound here. A long idle timeout is useful for maintaining warm connections at non-front-line proxy for low QPS services."
     #[prost(message, optional, tag = "8")]
     pub idle_network_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
@@ -3976,7 +4158,7 @@ pub struct Http2ProtocolOptions {
     >,
     /// `Maximum concurrent streams <<https://httpwg.org/specs/rfc7540.html#rfc.section.5.1.2>`\_>
     /// allowed for peer on one HTTP/2 connection. Valid values range from 1 to 2147483647 (2^31 - 1)
-    /// and defaults to 2147483647.
+    /// and defaults to 1024 for safety and should be sufficient for most use cases.
     ///
     /// For upstream connections, this also limits how many streams Envoy will initiate concurrently
     /// on a single connection. If the limit is reached, Envoy may queue requests or establish
@@ -3990,8 +4172,8 @@ pub struct Http2ProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// `Initial stream-level flow-control window  <<https://httpwg.org/specs/rfc7540.html#rfc.section.6.9.2>`\_> size. Valid values range from 65535
-    /// (2^16 - 1, HTTP/2 default) to 2147483647 (2^31 - 1, HTTP/2 maximum) and defaults to 268435456
-    /// (256 * 1024 * 1024).
+    /// (2^16 - 1, HTTP/2 default) to 2147483647 (2^31 - 1, HTTP/2 maximum) and defaults to
+    /// 16MiB (16 * 1024 * 1024).
     ///
     /// .. note::
     ///
@@ -4006,7 +4188,7 @@ pub struct Http2ProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Similar to `initial_stream_window_size`, but for connection-level flow-control
-    /// window. Currently, this has the same minimum/maximum/default as `initial_stream_window_size`.
+    /// window. The default is 24MiB (24 * 1024 * 1024).
     #[prost(message, optional, tag = "4")]
     pub initial_connection_window_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -4393,6 +4575,67 @@ impl ::prost::Name for SocketCmsgHeaders {
         "type.googleapis.com/envoy.config.core.v3.SocketCmsgHeaders".into()
     }
 }
+/// CEL expression evaluation configuration.
+/// These options control the behavior of the Common Expression Language runtime for
+/// individual CEL expressions.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct CelExpressionConfig {
+    /// Enable string conversion functions for CEL expressions. When enabled, CEL expressions
+    /// can convert values to strings using the `string()` function.
+    ///
+    /// .. attention::
+    ///
+    /// This option is disabled by default to avoid unbounded memory allocation.
+    /// CEL evaluation cost is typically bounded by the expression size, but converting
+    /// arbitrary values (e.g., large messages, lists, or maps) to strings may allocate
+    /// memory proportional to input data size, which can be unbounded and lead to
+    /// memory exhaustion.
+    #[prost(bool, tag = "1")]
+    pub enable_string_conversion: bool,
+    /// Enable string concatenation for CEL expressions. When enabled, CEL expressions
+    /// can concatenate strings using the `+` operator.
+    ///
+    /// .. attention::
+    ///
+    /// This option is disabled by default to avoid unbounded memory allocation.
+    /// While CEL normally bounds evaluation by expression size, enabling string
+    /// concatenation allows building outputs whose size depends on input data,
+    /// potentially causing large intermediate allocations and memory exhaustion.
+    #[prost(bool, tag = "2")]
+    pub enable_string_concat: bool,
+    /// Enable string manipulation functions for CEL expressions. When enabled, CEL
+    /// expressions can use additional string functions:
+    ///
+    /// * `replace(old, new)` - Replaces all occurrences of `old` with `new`.
+    /// * `split(separator)` - Splits a string into a list of substrings.
+    /// * `lowerAscii()` - Converts ASCII characters to lowercase.
+    /// * `upperAscii()` - Converts ASCII characters to uppercase.
+    ///
+    /// .. note::
+    ///
+    /// Standard CEL string functions like `contains()`, `startsWith()`, and
+    /// `endsWith()` are always available regardless of this setting.
+    ///
+    /// .. attention::
+    ///
+    /// This option is disabled by default to avoid unbounded memory allocation.
+    /// Although CEL generally bounds evaluation by expression size, functions such as
+    /// `replace`, `split`, `lowerAscii()`, and `upperAscii()` can allocate memory
+    /// proportional to input data size. Under adversarial inputs this can lead to
+    /// unbounded allocations and memory exhaustion.
+    #[prost(bool, tag = "3")]
+    pub enable_string_functions: bool,
+}
+impl ::prost::Name for CelExpressionConfig {
+    const NAME: &'static str = "CelExpressionConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.CelExpressionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.CelExpressionConfig".into()
+    }
+}
 /// A list of gRPC methods which can be used as an allowlist, for example.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcMethodList {
@@ -4458,148 +4701,5 @@ impl ::prost::Name for HttpService {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "type.googleapis.com/envoy.config.core.v3.HttpService".into()
-    }
-}
-/// Optional configuration options to be used with json_format.
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct JsonFormatOptions {
-    /// The output JSON string properties will be sorted.
-    ///
-    /// .. note::
-    /// As the properties are always sorted, this option has no effect and is deprecated.
-    #[deprecated]
-    #[prost(bool, tag = "1")]
-    pub sort_properties: bool,
-}
-impl ::prost::Name for JsonFormatOptions {
-    const NAME: &'static str = "JsonFormatOptions";
-    const PACKAGE: &'static str = "envoy.config.core.v3";
-    fn full_name() -> ::prost::alloc::string::String {
-        "envoy.config.core.v3.JsonFormatOptions".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "type.googleapis.com/envoy.config.core.v3.JsonFormatOptions".into()
-    }
-}
-/// Configuration to use multiple :ref:`command operators <config_access_log_command_operators>`
-/// to generate a new string in either plain text or JSON format.
-/// \[\#next-free-field: 8\]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SubstitutionFormatString {
-    /// If set to true, when command operators are evaluated to null,
-    ///
-    /// * for `text_format`, the output of the empty operator is changed from `-` to an
-    ///   empty string, so that empty values are omitted entirely.
-    /// * for `json_format` the keys with null values are omitted in the output structure.
-    ///
-    /// .. note::
-    /// This option does not work perfectly with `json_format` as keys with `null` values
-    /// will still be included in the output. See <https://github.com/envoyproxy/envoy/issues/37941>
-    /// for more details.
-    #[prost(bool, tag = "3")]
-    pub omit_empty_values: bool,
-    /// Specify a `content_type` field.
-    /// If this field is not set then `text/plain` is used for `text_format` and
-    /// `application/json` is used for `json_format`.
-    ///
-    ///
-    /// .. validated-code-block:: yaml
-    /// : type-name: envoy.config.core.v3.SubstitutionFormatString
-    ///
-    ///
-    /// content_type: "text/html; charset=UTF-8"
-    #[prost(string, tag = "4")]
-    pub content_type: ::prost::alloc::string::String,
-    /// Specifies a collection of Formatter plugins that can be called from the access log configuration.
-    /// See the formatters extensions documentation for details.
-    /// \[\#extension-category: envoy.formatter\]
-    #[prost(message, repeated, tag = "6")]
-    pub formatters: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
-    /// If json_format is used, the options will be applied to the output JSON string.
-    #[prost(message, optional, tag = "7")]
-    pub json_format_options: ::core::option::Option<JsonFormatOptions>,
-    #[prost(oneof = "substitution_format_string::Format", tags = "1, 2, 5")]
-    pub format: ::core::option::Option<substitution_format_string::Format>,
-}
-/// Nested message and enum types in `SubstitutionFormatString`.
-pub mod substitution_format_string {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Format {
-        /// Specify a format with command operators to form a text string.
-        /// Its details is described in :ref:`format string<config_access_log_format_strings>`.
-        ///
-        /// For example, setting `text_format` like below,
-        ///
-        ///
-        /// .. validated-code-block:: yaml
-        /// : type-name: envoy.config.core.v3.SubstitutionFormatString
-        ///
-        ///
-        /// text_format: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
-        ///
-        /// generates plain text similar to:
-        ///
-        /// .. code-block:: text
-        ///
-        /// upstream connect error:503:path=/foo
-        ///
-        /// Deprecated in favor of :ref:`text_format_source <envoy_v3_api_field_config.core.v3.SubstitutionFormatString.text_format_source>`. To migrate text format strings, use the :ref:`inline_string <envoy_v3_api_field_config.core.v3.DataSource.inline_string>` field.
-        #[prost(string, tag = "1")]
-        TextFormat(::prost::alloc::string::String),
-        /// Specify a format with command operators to form a JSON string.
-        /// Its details is described in :ref:`format dictionary<config_access_log_format_dictionaries>`.
-        /// Values are rendered as strings, numbers, or boolean values as appropriate.
-        /// Nested JSON objects may be produced by some command operators (e.g. FILTER_STATE or DYNAMIC_METADATA).
-        /// See the documentation for a specific command operator for details.
-        ///
-        ///
-        /// .. validated-code-block:: yaml
-        /// : type-name: envoy.config.core.v3.SubstitutionFormatString
-        ///
-        ///
-        /// json_format:
-        /// status: "%RESPONSE_CODE%"
-        /// message: "%LOCAL_REPLY_BODY%"
-        ///
-        /// The following JSON object would be created:
-        ///
-        /// .. code-block:: json
-        ///
-        /// {
-        /// "status": 500,
-        /// "message": "My error message"
-        /// }
-        #[prost(message, tag = "2")]
-        JsonFormat(super::super::super::super::super::google::protobuf::Struct),
-        /// Specify a format with command operators to form a text string.
-        /// Its details is described in :ref:`format string<config_access_log_format_strings>`.
-        ///
-        /// For example, setting `text_format` like below,
-        ///
-        ///
-        /// .. validated-code-block:: yaml
-        /// : type-name: envoy.config.core.v3.SubstitutionFormatString
-        ///
-        ///
-        /// text_format_source:
-        /// inline_string: "%LOCAL_REPLY_BODY%:%RESPONSE_CODE%:path=%REQ(:path)%\n"
-        ///
-        /// generates plain text similar to:
-        ///
-        /// .. code-block:: text
-        ///
-        /// upstream connect error:503:path=/foo
-        #[prost(message, tag = "5")]
-        TextFormatSource(super::DataSource),
-    }
-}
-impl ::prost::Name for SubstitutionFormatString {
-    const NAME: &'static str = "SubstitutionFormatString";
-    const PACKAGE: &'static str = "envoy.config.core.v3";
-    fn full_name() -> ::prost::alloc::string::String {
-        "envoy.config.core.v3.SubstitutionFormatString".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "type.googleapis.com/envoy.config.core.v3.SubstitutionFormatString".into()
     }
 }

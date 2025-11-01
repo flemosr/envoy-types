@@ -179,6 +179,11 @@ pub mod scale_timers_overload_action_config {
         /// This affects the value of
         /// : ref:`HttpConnectionManager.common_http_protocol_options.max_connection_duration  <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_connection_duration>`.
         HttpDownstreamConnectionMax = 4,
+        ///
+        /// Adjusts the timeout for the downstream codec to flush an ended stream.
+        /// This affects the value of :ref:`RouteAction.flush_timeout  <envoy_v3_api_field_config.route.v3.RouteAction.flush_timeout>` and
+        /// : ref:`HttpConnectionManager.stream_flush_timeout  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.stream_flush_timeout>`
+        HttpDownstreamStreamFlush = 5,
     }
     impl TimerType {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -192,6 +197,7 @@ pub mod scale_timers_overload_action_config {
                 Self::HttpDownstreamStreamIdle => "HTTP_DOWNSTREAM_STREAM_IDLE",
                 Self::TransportSocketConnect => "TRANSPORT_SOCKET_CONNECT",
                 Self::HttpDownstreamConnectionMax => "HTTP_DOWNSTREAM_CONNECTION_MAX",
+                Self::HttpDownstreamStreamFlush => "HTTP_DOWNSTREAM_STREAM_FLUSH",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -206,6 +212,7 @@ pub mod scale_timers_overload_action_config {
                 "HTTP_DOWNSTREAM_CONNECTION_MAX" => {
                     Some(Self::HttpDownstreamConnectionMax)
                 }
+                "HTTP_DOWNSTREAM_STREAM_FLUSH" => Some(Self::HttpDownstreamStreamFlush),
                 _ => None,
             }
         }
@@ -224,9 +231,17 @@ impl ::prost::Name for ScaleTimersOverloadActionConfig {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OverloadAction {
-    /// The name of the overload action. This is just a well-known string that listeners can
-    /// use for registering callbacks. Custom overload actions should be named using reverse
-    /// DNS to ensure uniqueness.
+    /// The name of the overload action. This is just a well-known string that
+    /// listeners can use for registering callbacks.
+    /// Valid known overload actions include:
+    ///
+    /// * envoy.overload_actions.stop_accepting_requests
+    /// * envoy.overload_actions.disable_http_keepalive
+    /// * envoy.overload_actions.stop_accepting_connections
+    /// * envoy.overload_actions.reject_incoming_connections
+    /// * envoy.overload_actions.shrink_heap
+    /// * envoy.overload_actions.reduce_timeouts
+    /// * envoy.overload_actions.reset_high_memory_stream
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
     /// A set of triggers for this action. The state of the action is the maximum
@@ -237,7 +252,7 @@ pub struct OverloadAction {
     /// in this list.
     #[prost(message, repeated, tag = "2")]
     pub triggers: ::prost::alloc::vec::Vec<Trigger>,
-    /// Configuration for the action being instantiated.
+    /// Configuration for the action being instantiated if applicable.
     #[prost(message, optional, tag = "3")]
     pub typed_config: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,

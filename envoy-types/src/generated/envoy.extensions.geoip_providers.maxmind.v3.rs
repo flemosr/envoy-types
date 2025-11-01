@@ -2,21 +2,21 @@
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MaxMindConfig {
-    /// Full file path to the Maxmind city database, e.g. /etc/GeoLite2-City.mmdb.
-    /// Database file is expected to have .mmdb extension.
+    /// Full file path to the MaxMind city database, e.g., `/etc/GeoLite2-City.mmdb`.
+    /// Database file is expected to have `.mmdb` extension.
     #[prost(string, tag = "1")]
     pub city_db_path: ::prost::alloc::string::String,
-    /// Full file path to the Maxmind ASN database, e.g. /etc/GeoLite2-ASN.mmdb.
-    /// Database file is expected to have .mmdb extension.
-    /// When is defined the ASN information will always be fetched from the `asn_db`.
+    /// Full file path to the MaxMind ASN database, e.g., `/etc/GeoLite2-ASN.mmdb`.
+    /// Database file is expected to have `.mmdb` extension.
+    /// When this is defined, the ASN information will always be fetched from the `asn_db`.
     #[prost(string, tag = "2")]
     pub asn_db_path: ::prost::alloc::string::String,
-    /// Full file path to the Maxmind anonymous IP database, e.g. /etc/GeoIP2-Anonymous-IP.mmdb.
-    /// Database file is expected to have .mmdb extension.
+    /// Full file path to the MaxMind Anonymous IP database, e.g., `/etc/GeoIP2-Anonymous-IP.mmdb`.
+    /// Database file is expected to have `.mmdb` extension.
     #[prost(string, tag = "3")]
     pub anon_db_path: ::prost::alloc::string::String,
-    /// Full file path to the Maxmind ISP database, e.g. /etc/GeoLite2-ISP.mmdb.
-    /// Database file is expected to have .mmdb extension.
+    /// Full file path to the MaxMind ISP database, e.g., `/etc/GeoLite2-ISP.mmdb`.
+    /// Database file is expected to have `.mmdb` extension.
     /// If `asn_db_path` is not defined, ASN information will be fetched from
     /// `isp_db` instead.
     #[prost(string, tag = "5")]

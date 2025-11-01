@@ -72,6 +72,9 @@ pub struct HttpBufferedTrace {
     /// downstream connection
     #[prost(message, optional, tag = "3")]
     pub downstream_connection: ::core::option::Option<Connection>,
+    /// upstream connection
+    #[prost(message, optional, tag = "4")]
+    pub upstream_connection: ::core::option::Option<Connection>,
 }
 /// Nested message and enum types in `HttpBufferedTrace`.
 pub mod http_buffered_trace {

@@ -129,6 +129,10 @@ pub mod method_extraction {
         /// It should be only annotated on Message type fields so if the field isn't
         /// empty, an empty Struct will be extracted.
         ExtractRedact = 2,
+        /// Extract a repeated top-level field and record its number of entries in
+        /// the extraction result. Can be applied to at most one field in the
+        /// response, and cannot be applied to any fields in the request.
+        ExtractRepeatedCardinality = 3,
     }
     impl ExtractDirective {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -140,6 +144,7 @@ pub mod method_extraction {
                 Self::Unspecified => "ExtractDirective_UNSPECIFIED",
                 Self::Extract => "EXTRACT",
                 Self::ExtractRedact => "EXTRACT_REDACT",
+                Self::ExtractRepeatedCardinality => "EXTRACT_REPEATED_CARDINALITY",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -148,6 +153,7 @@ pub mod method_extraction {
                 "ExtractDirective_UNSPECIFIED" => Some(Self::Unspecified),
                 "EXTRACT" => Some(Self::Extract),
                 "EXTRACT_REDACT" => Some(Self::ExtractRedact),
+                "EXTRACT_REPEATED_CARDINALITY" => Some(Self::ExtractRepeatedCardinality),
                 _ => None,
             }
         }

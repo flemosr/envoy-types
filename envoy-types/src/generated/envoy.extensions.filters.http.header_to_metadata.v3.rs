@@ -7,6 +7,17 @@ pub struct Config {
     /// The list of rules to apply to responses.
     #[prost(message, repeated, tag = "2")]
     pub response_rules: ::prost::alloc::vec::Vec<config::Rule>,
+    /// Optional prefix to use when emitting filter statistics. When configured,
+    /// statistics are emitted with the prefix `http_filter_name.<stat_prefix>`.
+    ///
+    /// This emits statistics such as:
+    ///
+    /// * `http_filter_name.my_header_converter.rules_processed`
+    /// * `http_filter_name.my_header_converter.metadata_added`
+    ///
+    /// If not configured, no statistics are emitted.
+    #[prost(string, tag = "3")]
+    pub stat_prefix: ::prost::alloc::string::String,
 }
 /// Nested message and enum types in `Config`.
 pub mod config {

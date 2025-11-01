@@ -335,6 +335,11 @@ pub struct HistogramBucketSettings {
     /// The order of the buckets does not matter.
     #[prost(double, repeated, packed = "false", tag = "2")]
     pub buckets: ::prost::alloc::vec::Vec<f64>,
+    /// Initial number of bins for the `circllhist` thread local histogram per time series. Default value is 100.
+    #[prost(message, optional, tag = "3")]
+    pub bins: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt32Value,
+    >,
 }
 impl ::prost::Name for HistogramBucketSettings {
     const NAME: &'static str = "HistogramBucketSettings";

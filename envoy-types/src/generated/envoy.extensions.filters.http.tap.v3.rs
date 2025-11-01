@@ -15,6 +15,9 @@ pub struct Tap {
     /// Indicates whether report downstream connection info
     #[prost(bool, tag = "3")]
     pub record_downstream_connection: bool,
+    /// If enabled, upstream connection information will be reported.
+    #[prost(bool, tag = "4")]
+    pub record_upstream_connection: bool,
 }
 impl ::prost::Name for Tap {
     const NAME: &'static str = "Tap";

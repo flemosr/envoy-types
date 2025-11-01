@@ -239,6 +239,7 @@ impl ::prost::Name for Rbac {
 /// A policy matches if and only if at least one of its permissions match the
 /// action taking place AND at least one of its principals match the downstream
 /// AND the condition is true if specified.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Policy {
     /// Required. The set of permissions that define a role. Each permission is
@@ -268,6 +269,12 @@ pub struct Policy {
     pub checked_condition: ::core::option::Option<
         super::super::super::super::google::api::expr::v1alpha1::CheckedExpr,
     >,
+    /// CEL expression configuration that modifies the evaluation behavior of the `condition` field.
+    /// If specified, string conversion, concatenation, and manipulation functions may be enabled
+    /// for the CEL expression. See :ref:`CelExpressionConfig <envoy_v3_api_msg_config.core.v3.CelExpressionConfig>`
+    /// for more details.
+    #[prost(message, optional, tag = "5")]
+    pub cel_config: ::core::option::Option<super::super::core::v3::CelExpressionConfig>,
 }
 impl ::prost::Name for Policy {
     const NAME: &'static str = "Policy";
