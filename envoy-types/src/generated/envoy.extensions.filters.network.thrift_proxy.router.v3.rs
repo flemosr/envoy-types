@@ -7,3 +7,14 @@ pub struct Router {
         super::super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for Router {
+    const NAME: &'static str = "Router";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.router.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.router.v3.Router".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.router.v3.Router"
+            .into()
+    }
+}

@@ -3,3 +3,14 @@
 /// The default rule to allow/disallow a request to be sent as early data. It's an empty config now. Configuring it will disallow any request to be sent over early data.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DefaultEarlyDataPolicy {}
+impl ::prost::Name for DefaultEarlyDataPolicy {
+    const NAME: &'static str = "DefaultEarlyDataPolicy";
+    const PACKAGE: &'static str = "envoy.extensions.early_data.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.early_data.v3.DefaultEarlyDataPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.early_data.v3.DefaultEarlyDataPolicy"
+            .into()
+    }
+}

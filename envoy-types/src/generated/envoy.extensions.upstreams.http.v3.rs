@@ -121,6 +121,18 @@ pub mod http_protocol_options {
             ),
         }
     }
+    impl ::prost::Name for ExplicitHttpConfig {
+        const NAME: &'static str = "ExplicitHttpConfig";
+        const PACKAGE: &'static str = "envoy.extensions.upstreams.http.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.upstreams.http.v3.HttpProtocolOptions.ExplicitHttpConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions.ExplicitHttpConfig"
+                .into()
+        }
+    }
     /// If this is used, the cluster can use either of the configured protocols, and
     /// will use whichever protocol was used by the downstream connection.
     ///
@@ -143,6 +155,18 @@ pub mod http_protocol_options {
         pub http3_protocol_options: ::core::option::Option<
             super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
         >,
+    }
+    impl ::prost::Name for UseDownstreamHttpConfig {
+        const NAME: &'static str = "UseDownstreamHttpConfig";
+        const PACKAGE: &'static str = "envoy.extensions.upstreams.http.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.upstreams.http.v3.HttpProtocolOptions.UseDownstreamHttpConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions.UseDownstreamHttpConfig"
+                .into()
+        }
     }
     /// If this is used, the cluster can use either HTTP/1 or HTTP/2, and will use whichever
     /// protocol is negotiated by ALPN with the upstream.
@@ -188,6 +212,18 @@ pub mod http_protocol_options {
             super::super::super::super::super::config::core::v3::AlternateProtocolsCacheOptions,
         >,
     }
+    impl ::prost::Name for AutoHttpConfig {
+        const NAME: &'static str = "AutoHttpConfig";
+        const PACKAGE: &'static str = "envoy.extensions.upstreams.http.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.upstreams.http.v3.HttpProtocolOptions.AutoHttpConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions.AutoHttpConfig"
+                .into()
+        }
+    }
     /// This controls the actual protocol to be used upstream.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum UpstreamProtocolOptions {
@@ -201,5 +237,16 @@ pub mod http_protocol_options {
         /// This allows switching on protocol based on ALPN
         #[prost(message, tag = "5")]
         AutoConfig(AutoHttpConfig),
+    }
+}
+impl ::prost::Name for HttpProtocolOptions {
+    const NAME: &'static str = "HttpProtocolOptions";
+    const PACKAGE: &'static str = "envoy.extensions.upstreams.http.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.upstreams.http.v3.HttpProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions"
+            .into()
     }
 }

@@ -44,6 +44,30 @@ pub mod data_source_server_preferred_address_config {
             super::super::super::super::super::config::core::v3::DataSource,
         >,
     }
+    impl ::prost::Name for AddressFamilyConfig {
+        const NAME: &'static str = "AddressFamilyConfig";
+        const PACKAGE: &'static str = "envoy.extensions.quic.server_preferred_address.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.quic.server_preferred_address.v3.DataSourceServerPreferredAddressConfig.AddressFamilyConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.quic.server_preferred_address.v3.DataSourceServerPreferredAddressConfig.AddressFamilyConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for DataSourceServerPreferredAddressConfig {
+    const NAME: &'static str = "DataSourceServerPreferredAddressConfig";
+    const PACKAGE: &'static str = "envoy.extensions.quic.server_preferred_address.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.server_preferred_address.v3.DataSourceServerPreferredAddressConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.server_preferred_address.v3.DataSourceServerPreferredAddressConfig"
+            .into()
+    }
 }
 /// Configuration for FixedServerPreferredAddressConfig.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -103,5 +127,29 @@ pub mod fixed_server_preferred_address_config {
         pub dnat_address: ::core::option::Option<
             super::super::super::super::super::config::core::v3::SocketAddress,
         >,
+    }
+    impl ::prost::Name for AddressFamilyConfig {
+        const NAME: &'static str = "AddressFamilyConfig";
+        const PACKAGE: &'static str = "envoy.extensions.quic.server_preferred_address.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.quic.server_preferred_address.v3.FixedServerPreferredAddressConfig.AddressFamilyConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.quic.server_preferred_address.v3.FixedServerPreferredAddressConfig.AddressFamilyConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for FixedServerPreferredAddressConfig {
+    const NAME: &'static str = "FixedServerPreferredAddressConfig";
+    const PACKAGE: &'static str = "envoy.extensions.quic.server_preferred_address.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.server_preferred_address.v3.FixedServerPreferredAddressConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.server_preferred_address.v3.FixedServerPreferredAddressConfig"
+            .into()
     }
 }

@@ -57,6 +57,17 @@ pub mod filter_config {
         ),
     }
 }
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_stats.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_stats.v3.FilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_stats.v3.FilterConfig"
+            .into()
+    }
+}
 /// gRPC statistics filter state object in protobuf form.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterObject {
@@ -66,4 +77,15 @@ pub struct FilterObject {
     /// Count of response messages in the response stream.
     #[prost(uint64, tag = "2")]
     pub response_message_count: u64,
+}
+impl ::prost::Name for FilterObject {
+    const NAME: &'static str = "FilterObject";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_stats.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_stats.v3.FilterObject".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_stats.v3.FilterObject"
+            .into()
+    }
 }

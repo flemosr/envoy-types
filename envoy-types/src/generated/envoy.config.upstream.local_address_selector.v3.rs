@@ -14,3 +14,15 @@
 ///   be returned.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DefaultLocalAddressSelector {}
+impl ::prost::Name for DefaultLocalAddressSelector {
+    const NAME: &'static str = "DefaultLocalAddressSelector";
+    const PACKAGE: &'static str = "envoy.config.upstream.local_address_selector.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.upstream.local_address_selector.v3.DefaultLocalAddressSelector"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.upstream.local_address_selector.v3.DefaultLocalAddressSelector"
+            .into()
+    }
+}

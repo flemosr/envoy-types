@@ -8,3 +8,13 @@ pub struct KeyValueStoreConfig {
         super::super::super::core::v3::TypedExtensionConfig,
     >,
 }
+impl ::prost::Name for KeyValueStoreConfig {
+    const NAME: &'static str = "KeyValueStoreConfig";
+    const PACKAGE: &'static str = "envoy.config.common.key_value.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.common.key_value.v3.KeyValueStoreConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.common.key_value.v3.KeyValueStoreConfig".into()
+    }
+}

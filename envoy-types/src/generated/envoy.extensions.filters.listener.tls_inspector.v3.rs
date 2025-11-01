@@ -23,3 +23,14 @@ pub struct TlsInspector {
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for TlsInspector {
+    const NAME: &'static str = "TlsInspector";
+    const PACKAGE: &'static str = "envoy.extensions.filters.listener.tls_inspector.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.listener.tls_inspector.v3.TlsInspector".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.listener.tls_inspector.v3.TlsInspector"
+            .into()
+    }
+}

@@ -2,6 +2,16 @@
 /// Empty response for the StreamAccessLogs API. Will never be sent. See below.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamAccessLogsResponse {}
+impl ::prost::Name for StreamAccessLogsResponse {
+    const NAME: &'static str = "StreamAccessLogsResponse";
+    const PACKAGE: &'static str = "envoy.service.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.accesslog.v3.StreamAccessLogsResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.accesslog.v3.StreamAccessLogsResponse".into()
+    }
+}
 /// Stream message for the StreamAccessLogs API. Envoy will open a stream to the server and stream
 /// access logs without ever expecting a response.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -28,6 +38,17 @@ pub mod stream_access_logs_message {
         #[prost(string, tag = "2")]
         pub log_name: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Identifier {
+        const NAME: &'static str = "Identifier";
+        const PACKAGE: &'static str = "envoy.service.accesslog.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.accesslog.v3.StreamAccessLogsMessage.Identifier".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.accesslog.v3.StreamAccessLogsMessage.Identifier"
+                .into()
+        }
+    }
     /// Wrapper for batches of HTTP access log entries.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct HttpAccessLogEntries {
@@ -35,6 +56,18 @@ pub mod stream_access_logs_message {
         pub log_entry: ::prost::alloc::vec::Vec<
             super::super::super::super::data::accesslog::v3::HttpAccessLogEntry,
         >,
+    }
+    impl ::prost::Name for HttpAccessLogEntries {
+        const NAME: &'static str = "HTTPAccessLogEntries";
+        const PACKAGE: &'static str = "envoy.service.accesslog.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.accesslog.v3.StreamAccessLogsMessage.HTTPAccessLogEntries"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.accesslog.v3.StreamAccessLogsMessage.HTTPAccessLogEntries"
+                .into()
+        }
     }
     /// Wrapper for batches of TCP access log entries.
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -44,6 +77,18 @@ pub mod stream_access_logs_message {
             super::super::super::super::data::accesslog::v3::TcpAccessLogEntry,
         >,
     }
+    impl ::prost::Name for TcpAccessLogEntries {
+        const NAME: &'static str = "TCPAccessLogEntries";
+        const PACKAGE: &'static str = "envoy.service.accesslog.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.accesslog.v3.StreamAccessLogsMessage.TCPAccessLogEntries"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.accesslog.v3.StreamAccessLogsMessage.TCPAccessLogEntries"
+                .into()
+        }
+    }
     /// Batches of log entries of a single type. Generally speaking, a given stream should only
     /// ever include one type of log entry.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
@@ -52,6 +97,16 @@ pub mod stream_access_logs_message {
         HttpLogs(HttpAccessLogEntries),
         #[prost(message, tag = "3")]
         TcpLogs(TcpAccessLogEntries),
+    }
+}
+impl ::prost::Name for StreamAccessLogsMessage {
+    const NAME: &'static str = "StreamAccessLogsMessage";
+    const PACKAGE: &'static str = "envoy.service.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.accesslog.v3.StreamAccessLogsMessage".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.accesslog.v3.StreamAccessLogsMessage".into()
     }
 }
 /// Generated client implementations.

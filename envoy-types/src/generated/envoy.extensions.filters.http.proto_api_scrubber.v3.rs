@@ -50,6 +50,18 @@ pub mod proto_api_scrubber_config {
         }
     }
 }
+impl ::prost::Name for ProtoApiScrubberConfig {
+    const NAME: &'static str = "ProtoApiScrubberConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_api_scrubber.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_api_scrubber.v3.ProtoApiScrubberConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_api_scrubber.v3.ProtoApiScrubberConfig"
+            .into()
+    }
+}
 /// Specifies the descriptor set for proto services.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DescriptorSet {
@@ -59,6 +71,17 @@ pub struct DescriptorSet {
     pub data_source: ::core::option::Option<
         super::super::super::super::super::config::core::v3::DataSource,
     >,
+}
+impl ::prost::Name for DescriptorSet {
+    const NAME: &'static str = "DescriptorSet";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_api_scrubber.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_api_scrubber.v3.DescriptorSet".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_api_scrubber.v3.DescriptorSet"
+            .into()
+    }
 }
 /// Contains the restrictions for the methods.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -71,6 +94,17 @@ pub struct Restrictions {
         ::prost::alloc::string::String,
         MethodRestrictions,
     >,
+}
+impl ::prost::Name for Restrictions {
+    const NAME: &'static str = "Restrictions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_api_scrubber.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_api_scrubber.v3.Restrictions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_api_scrubber.v3.Restrictions"
+            .into()
+    }
 }
 /// Contains the method restrictions which include the field level restrictions
 /// for the request and response fields.
@@ -95,6 +129,17 @@ pub struct MethodRestrictions {
         RestrictionConfig,
     >,
 }
+impl ::prost::Name for MethodRestrictions {
+    const NAME: &'static str = "MethodRestrictions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_api_scrubber.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_api_scrubber.v3.MethodRestrictions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_api_scrubber.v3.MethodRestrictions"
+            .into()
+    }
+}
 /// The restriction configuration.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RestrictionConfig {
@@ -106,7 +151,29 @@ pub struct RestrictionConfig {
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
 }
+impl ::prost::Name for RestrictionConfig {
+    const NAME: &'static str = "RestrictionConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_api_scrubber.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_api_scrubber.v3.RestrictionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_api_scrubber.v3.RestrictionConfig"
+            .into()
+    }
+}
 /// Specifies an :ref:`Unified Matcher API <envoy_v3_api_msg_.xds.type.matcher.v3.Matcher>` action to remove a field.
 /// This actual action needs to be implemented by the filter using it.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RemoveFieldAction {}
+impl ::prost::Name for RemoveFieldAction {
+    const NAME: &'static str = "RemoveFieldAction";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_api_scrubber.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_api_scrubber.v3.RemoveFieldAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_api_scrubber.v3.RemoveFieldAction"
+            .into()
+    }
+}

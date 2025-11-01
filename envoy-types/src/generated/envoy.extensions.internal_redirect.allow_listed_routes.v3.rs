@@ -9,3 +9,15 @@ pub struct AllowListedRoutesConfig {
     #[prost(string, repeated, tag = "1")]
     pub allowed_route_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for AllowListedRoutesConfig {
+    const NAME: &'static str = "AllowListedRoutesConfig";
+    const PACKAGE: &'static str = "envoy.extensions.internal_redirect.allow_listed_routes.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.internal_redirect.allow_listed_routes.v3.AllowListedRoutesConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.internal_redirect.allow_listed_routes.v3.AllowListedRoutesConfig"
+            .into()
+    }
+}

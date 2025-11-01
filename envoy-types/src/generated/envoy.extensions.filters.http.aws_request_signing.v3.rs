@@ -87,6 +87,18 @@ pub mod aws_request_signing {
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for QueryString {
+        const NAME: &'static str = "QueryString";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.aws_request_signing.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.aws_request_signing.v3.AwsRequestSigning.QueryString"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.aws_request_signing.v3.AwsRequestSigning.QueryString"
+                .into()
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -126,6 +138,17 @@ pub mod aws_request_signing {
         }
     }
 }
+impl ::prost::Name for AwsRequestSigning {
+    const NAME: &'static str = "AwsRequestSigning";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.aws_request_signing.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.aws_request_signing.v3.AwsRequestSigning".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.aws_request_signing.v3.AwsRequestSigning"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AwsRequestSigningPerRoute {
     /// Override the global configuration of the filter with this new config.
@@ -135,4 +158,16 @@ pub struct AwsRequestSigningPerRoute {
     /// The human readable prefix to use when emitting stats.
     #[prost(string, tag = "2")]
     pub stat_prefix: ::prost::alloc::string::String,
+}
+impl ::prost::Name for AwsRequestSigningPerRoute {
+    const NAME: &'static str = "AwsRequestSigningPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.aws_request_signing.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.aws_request_signing.v3.AwsRequestSigningPerRoute"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.aws_request_signing.v3.AwsRequestSigningPerRoute"
+            .into()
+    }
 }

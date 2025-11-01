@@ -9,6 +9,17 @@ pub struct DefaultSocketInterface {
     #[prost(message, optional, tag = "1")]
     pub io_uring_options: ::core::option::Option<IoUringOptions>,
 }
+impl ::prost::Name for DefaultSocketInterface {
+    const NAME: &'static str = "DefaultSocketInterface";
+    const PACKAGE: &'static str = "envoy.extensions.network.socket_interface.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.network.socket_interface.v3.DefaultSocketInterface".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.network.socket_interface.v3.DefaultSocketInterface"
+            .into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct IoUringOptions {
     /// The size for io_uring submission queues (SQ). io_uring is built with a fixed size in each
@@ -37,4 +48,15 @@ pub struct IoUringOptions {
     pub write_timeout_ms: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
+}
+impl ::prost::Name for IoUringOptions {
+    const NAME: &'static str = "IoUringOptions";
+    const PACKAGE: &'static str = "envoy.extensions.network.socket_interface.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.network.socket_interface.v3.IoUringOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.network.socket_interface.v3.IoUringOptions"
+            .into()
+    }
 }

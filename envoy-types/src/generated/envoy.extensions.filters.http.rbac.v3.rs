@@ -52,10 +52,30 @@ pub struct Rbac {
     #[prost(bool, tag = "7")]
     pub track_per_rule_stats: bool,
 }
+impl ::prost::Name for Rbac {
+    const NAME: &'static str = "RBAC";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.rbac.v3.RBAC".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.rbac.v3.RBAC".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RbacPerRoute {
     /// Per-route specific RBAC configuration that overrides the global RBAC configuration.
     /// If absent, RBAC policy will be disabled for this route.
     #[prost(message, optional, tag = "2")]
     pub rbac: ::core::option::Option<Rbac>,
+}
+impl ::prost::Name for RbacPerRoute {
+    const NAME: &'static str = "RBACPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.rbac.v3.RBACPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.rbac.v3.RBACPerRoute".into()
+    }
 }

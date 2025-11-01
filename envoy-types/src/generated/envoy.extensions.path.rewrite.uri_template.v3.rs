@@ -44,3 +44,14 @@ pub struct UriTemplateRewriteConfig {
     #[prost(string, tag = "1")]
     pub path_template_rewrite: ::prost::alloc::string::String,
 }
+impl ::prost::Name for UriTemplateRewriteConfig {
+    const NAME: &'static str = "UriTemplateRewriteConfig";
+    const PACKAGE: &'static str = "envoy.extensions.path.rewrite.uri_template.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.path.rewrite.uri_template.v3.UriTemplateRewriteConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.path.rewrite.uri_template.v3.UriTemplateRewriteConfig"
+            .into()
+    }
+}

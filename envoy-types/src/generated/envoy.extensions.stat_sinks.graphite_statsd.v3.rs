@@ -27,3 +27,14 @@ pub mod graphite_statsd_sink {
         Address(super::super::super::super::super::config::core::v3::Address),
     }
 }
+impl ::prost::Name for GraphiteStatsdSink {
+    const NAME: &'static str = "GraphiteStatsdSink";
+    const PACKAGE: &'static str = "envoy.extensions.stat_sinks.graphite_statsd.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.stat_sinks.graphite_statsd.v3.GraphiteStatsdSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.stat_sinks.graphite_statsd.v3.GraphiteStatsdSink"
+            .into()
+    }
+}

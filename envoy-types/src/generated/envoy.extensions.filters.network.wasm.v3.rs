@@ -7,3 +7,13 @@ pub struct Wasm {
         super::super::super::super::wasm::v3::PluginConfig,
     >,
 }
+impl ::prost::Name for Wasm {
+    const NAME: &'static str = "Wasm";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.wasm.v3.Wasm".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.wasm.v3.Wasm".into()
+    }
+}

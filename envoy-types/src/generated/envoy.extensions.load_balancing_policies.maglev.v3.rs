@@ -22,3 +22,14 @@ pub struct Maglev {
         super::super::common::v3::locality_lb_config::LocalityWeightedLbConfig,
     >,
 }
+impl ::prost::Name for Maglev {
+    const NAME: &'static str = "Maglev";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.maglev.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.maglev.v3.Maglev".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.maglev.v3.Maglev"
+            .into()
+    }
+}

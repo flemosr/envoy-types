@@ -89,4 +89,27 @@ pub mod fluentd_access_log_config {
             super::super::super::super::super::config::core::v3::BackoffStrategy,
         >,
     }
+    impl ::prost::Name for RetryOptions {
+        const NAME: &'static str = "RetryOptions";
+        const PACKAGE: &'static str = "envoy.extensions.access_loggers.fluentd.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.access_loggers.fluentd.v3.FluentdAccessLogConfig.RetryOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.access_loggers.fluentd.v3.FluentdAccessLogConfig.RetryOptions"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for FluentdAccessLogConfig {
+    const NAME: &'static str = "FluentdAccessLogConfig";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.fluentd.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.fluentd.v3.FluentdAccessLogConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.fluentd.v3.FluentdAccessLogConfig"
+            .into()
+    }
 }

@@ -9,3 +9,14 @@ pub struct Random {
         super::super::common::v3::LocalityLbConfig,
     >,
 }
+impl ::prost::Name for Random {
+    const NAME: &'static str = "Random";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.random.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.random.v3.Random".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.random.v3.Random"
+            .into()
+    }
+}

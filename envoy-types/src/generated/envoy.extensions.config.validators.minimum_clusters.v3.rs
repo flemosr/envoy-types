@@ -9,3 +9,15 @@ pub struct MinimumClustersValidator {
     #[prost(uint32, tag = "1")]
     pub min_clusters_num: u32,
 }
+impl ::prost::Name for MinimumClustersValidator {
+    const NAME: &'static str = "MinimumClustersValidator";
+    const PACKAGE: &'static str = "envoy.extensions.config.validators.minimum_clusters.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.config.validators.minimum_clusters.v3.MinimumClustersValidator"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.config.validators.minimum_clusters.v3.MinimumClustersValidator"
+            .into()
+    }
+}

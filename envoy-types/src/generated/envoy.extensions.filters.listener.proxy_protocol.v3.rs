@@ -72,6 +72,18 @@ pub mod proxy_protocol {
         #[prost(string, tag = "2")]
         pub key: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for KeyValuePair {
+        const NAME: &'static str = "KeyValuePair";
+        const PACKAGE: &'static str = "envoy.extensions.filters.listener.proxy_protocol.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol.KeyValuePair"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol.KeyValuePair"
+                .into()
+        }
+    }
     /// A Rule defines what metadata to apply when a header is present or missing.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Rule {
@@ -82,5 +94,28 @@ pub mod proxy_protocol {
         /// If the TLV type is present, apply this metadata KeyValuePair.
         #[prost(message, optional, tag = "2")]
         pub on_tlv_present: ::core::option::Option<KeyValuePair>,
+    }
+    impl ::prost::Name for Rule {
+        const NAME: &'static str = "Rule";
+        const PACKAGE: &'static str = "envoy.extensions.filters.listener.proxy_protocol.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol.Rule"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol.Rule"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ProxyProtocol {
+    const NAME: &'static str = "ProxyProtocol";
+    const PACKAGE: &'static str = "envoy.extensions.filters.listener.proxy_protocol.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol"
+            .into()
     }
 }

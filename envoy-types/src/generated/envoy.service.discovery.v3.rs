@@ -14,6 +14,16 @@ pub struct ResourceLocator {
         ::prost::alloc::string::String,
     >,
 }
+impl ::prost::Name for ResourceLocator {
+    const NAME: &'static str = "ResourceLocator";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.ResourceLocator".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.ResourceLocator".into()
+    }
+}
 /// Specifies a concrete resource name.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResourceName {
@@ -26,6 +36,16 @@ pub struct ResourceName {
     pub dynamic_parameter_constraints: ::core::option::Option<
         DynamicParameterConstraints,
     >,
+}
+impl ::prost::Name for ResourceName {
+    const NAME: &'static str = "ResourceName";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.ResourceName".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.ResourceName".into()
+    }
 }
 /// \[\#not-implemented-hide:\]
 /// An error associated with a specific resource name, returned to the
@@ -40,6 +60,16 @@ pub struct ResourceError {
     pub error_detail: ::core::option::Option<
         super::super::super::super::google::rpc::Status,
     >,
+}
+impl ::prost::Name for ResourceError {
+    const NAME: &'static str = "ResourceError";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.ResourceError".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.ResourceError".into()
+    }
 }
 /// A DiscoveryRequest requests a set of versioned resources of the same type for
 /// a given Envoy node on some API.
@@ -101,6 +131,16 @@ pub struct DiscoveryRequest {
         super::super::super::super::google::rpc::Status,
     >,
 }
+impl ::prost::Name for DiscoveryRequest {
+    const NAME: &'static str = "DiscoveryRequest";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.DiscoveryRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.DiscoveryRequest".into()
+    }
+}
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DiscoveryResponse {
@@ -156,6 +196,16 @@ pub struct DiscoveryResponse {
     /// received that contains the resource in the 'resources' field.
     #[prost(message, repeated, tag = "7")]
     pub resource_errors: ::prost::alloc::vec::Vec<ResourceError>,
+}
+impl ::prost::Name for DiscoveryResponse {
+    const NAME: &'static str = "DiscoveryResponse";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.DiscoveryResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.DiscoveryResponse".into()
+    }
 }
 /// DeltaDiscoveryRequest and DeltaDiscoveryResponse are used in a new gRPC
 /// endpoint for Delta xDS.
@@ -283,6 +333,16 @@ pub struct DeltaDiscoveryRequest {
         super::super::super::super::google::rpc::Status,
     >,
 }
+impl ::prost::Name for DeltaDiscoveryRequest {
+    const NAME: &'static str = "DeltaDiscoveryRequest";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.DeltaDiscoveryRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.DeltaDiscoveryRequest".into()
+    }
+}
 /// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeltaDiscoveryResponse {
@@ -325,6 +385,16 @@ pub struct DeltaDiscoveryResponse {
     #[prost(message, repeated, tag = "9")]
     pub resource_errors: ::prost::alloc::vec::Vec<ResourceError>,
 }
+impl ::prost::Name for DeltaDiscoveryResponse {
+    const NAME: &'static str = "DeltaDiscoveryResponse";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.DeltaDiscoveryResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.DeltaDiscoveryResponse".into()
+    }
+}
 ///
 /// A set of dynamic parameter constraints associated with a variant of an individual xDS resource.
 /// These constraints determine whether the resource matches a subscription based on the set of
@@ -352,6 +422,18 @@ pub mod dynamic_parameter_constraints {
     pub mod single_constraint {
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct Exists {}
+        impl ::prost::Name for Exists {
+            const NAME: &'static str = "Exists";
+            const PACKAGE: &'static str = "envoy.service.discovery.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.service.discovery.v3.DynamicParameterConstraints.SingleConstraint.Exists"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.service.discovery.v3.DynamicParameterConstraints.SingleConstraint.Exists"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ConstraintType {
             /// Matches this exact value.
@@ -365,10 +447,34 @@ pub mod dynamic_parameter_constraints {
             Exists(Exists),
         }
     }
+    impl ::prost::Name for SingleConstraint {
+        const NAME: &'static str = "SingleConstraint";
+        const PACKAGE: &'static str = "envoy.service.discovery.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.discovery.v3.DynamicParameterConstraints.SingleConstraint"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.discovery.v3.DynamicParameterConstraints.SingleConstraint"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ConstraintList {
         #[prost(message, repeated, tag = "1")]
         pub constraints: ::prost::alloc::vec::Vec<super::DynamicParameterConstraints>,
+    }
+    impl ::prost::Name for ConstraintList {
+        const NAME: &'static str = "ConstraintList";
+        const PACKAGE: &'static str = "envoy.service.discovery.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.discovery.v3.DynamicParameterConstraints.ConstraintList"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.discovery.v3.DynamicParameterConstraints.ConstraintList"
+                .into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Type {
@@ -385,6 +491,17 @@ pub mod dynamic_parameter_constraints {
         /// The inverse (NOT) of a set of constraints.
         #[prost(message, tag = "4")]
         NotConstraints(::prost::alloc::boxed::Box<super::DynamicParameterConstraints>),
+    }
+}
+impl ::prost::Name for DynamicParameterConstraints {
+    const NAME: &'static str = "DynamicParameterConstraints";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.DynamicParameterConstraints".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.DynamicParameterConstraints"
+            .into()
     }
 }
 /// \[\#next-free-field: 10\]
@@ -454,11 +571,41 @@ pub mod resource {
         #[prost(bool, tag = "1")]
         pub do_not_cache: bool,
     }
+    impl ::prost::Name for CacheControl {
+        const NAME: &'static str = "CacheControl";
+        const PACKAGE: &'static str = "envoy.service.discovery.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.discovery.v3.Resource.CacheControl".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.discovery.v3.Resource.CacheControl".into()
+        }
+    }
+}
+impl ::prost::Name for Resource {
+    const NAME: &'static str = "Resource";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.Resource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.Resource".into()
+    }
 }
 /// \[\#not-implemented-hide:\] Not configuration. Workaround c++ protobuf issue with importing
 /// services: <https://github.com/google/protobuf/issues/4221>
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AdsDummy {}
+impl ::prost::Name for AdsDummy {
+    const NAME: &'static str = "AdsDummy";
+    const PACKAGE: &'static str = "envoy.service.discovery.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.discovery.v3.AdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.discovery.v3.AdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod aggregated_discovery_service_client {
     #![allow(

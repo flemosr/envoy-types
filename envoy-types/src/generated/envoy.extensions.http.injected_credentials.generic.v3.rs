@@ -16,3 +16,14 @@ pub struct Generic {
     #[prost(string, tag = "2")]
     pub header: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Generic {
+    const NAME: &'static str = "Generic";
+    const PACKAGE: &'static str = "envoy.extensions.http.injected_credentials.generic.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.injected_credentials.generic.v3.Generic".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.injected_credentials.generic.v3.Generic"
+            .into()
+    }
+}

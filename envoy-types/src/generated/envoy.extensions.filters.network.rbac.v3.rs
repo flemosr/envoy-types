@@ -105,3 +105,13 @@ pub mod rbac {
         }
     }
 }
+impl ::prost::Name for Rbac {
+    const NAME: &'static str = "RBAC";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.rbac.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.rbac.v3.RBAC".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.rbac.v3.RBAC".into()
+    }
+}

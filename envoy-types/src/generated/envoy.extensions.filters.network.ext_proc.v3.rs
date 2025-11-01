@@ -48,6 +48,17 @@ pub struct NetworkExternalProcessor {
     #[prost(message, optional, tag = "6")]
     pub metadata_options: ::core::option::Option<MetadataOptions>,
 }
+impl ::prost::Name for NetworkExternalProcessor {
+    const NAME: &'static str = "NetworkExternalProcessor";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.ext_proc.v3.NetworkExternalProcessor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.ext_proc.v3.NetworkExternalProcessor"
+            .into()
+    }
+}
 /// Options for controlling processing behavior.
 /// Filter will reject the config if both read and write are SKIP mode.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -103,6 +114,17 @@ pub mod processing_mode {
         }
     }
 }
+impl ::prost::Name for ProcessingMode {
+    const NAME: &'static str = "ProcessingMode";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.ext_proc.v3.ProcessingMode".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.ext_proc.v3.ProcessingMode"
+            .into()
+    }
+}
 /// The MetadataOptions structure defines options for sending dynamic metadata. Specifically,
 /// which namespaces to send to the server.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -128,5 +150,28 @@ pub mod metadata_options {
         /// definition for safe parsing.
         #[prost(string, repeated, tag = "2")]
         pub typed: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    impl ::prost::Name for MetadataNamespaces {
+        const NAME: &'static str = "MetadataNamespaces";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.ext_proc.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.ext_proc.v3.MetadataOptions.MetadataNamespaces"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.ext_proc.v3.MetadataOptions.MetadataNamespaces"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for MetadataOptions {
+    const NAME: &'static str = "MetadataOptions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.ext_proc.v3.MetadataOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.ext_proc.v3.MetadataOptions"
+            .into()
     }
 }

@@ -36,6 +36,18 @@ pub mod decompressor {
         #[prost(bool, tag = "2")]
         pub ignore_no_transform_header: bool,
     }
+    impl ::prost::Name for CommonDirectionConfig {
+        const NAME: &'static str = "CommonDirectionConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.decompressor.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.decompressor.v3.Decompressor.CommonDirectionConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.decompressor.v3.Decompressor.CommonDirectionConfig"
+                .into()
+        }
+    }
     /// Configuration for filter behavior on the request direction.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RequestDirectionConfig {
@@ -48,10 +60,45 @@ pub mod decompressor {
             super::super::super::super::super::super::super::google::protobuf::BoolValue,
         >,
     }
+    impl ::prost::Name for RequestDirectionConfig {
+        const NAME: &'static str = "RequestDirectionConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.decompressor.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.decompressor.v3.Decompressor.RequestDirectionConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.decompressor.v3.Decompressor.RequestDirectionConfig"
+                .into()
+        }
+    }
     /// Configuration for filter behavior on the response direction.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ResponseDirectionConfig {
         #[prost(message, optional, tag = "1")]
         pub common_config: ::core::option::Option<CommonDirectionConfig>,
+    }
+    impl ::prost::Name for ResponseDirectionConfig {
+        const NAME: &'static str = "ResponseDirectionConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.decompressor.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.decompressor.v3.Decompressor.ResponseDirectionConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.decompressor.v3.Decompressor.ResponseDirectionConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Decompressor {
+    const NAME: &'static str = "Decompressor";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.decompressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.decompressor.v3.Decompressor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.decompressor.v3.Decompressor"
+            .into()
     }
 }

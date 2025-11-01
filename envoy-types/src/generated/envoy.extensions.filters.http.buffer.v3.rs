@@ -8,6 +8,16 @@ pub struct Buffer {
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for Buffer {
+    const NAME: &'static str = "Buffer";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.buffer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.buffer.v3.Buffer".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.buffer.v3.Buffer".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BufferPerRoute {
     #[prost(oneof = "buffer_per_route::Override", tags = "1, 2")]
@@ -23,5 +33,16 @@ pub mod buffer_per_route {
         /// Override the global configuration of the filter with this new config.
         #[prost(message, tag = "2")]
         Buffer(super::Buffer),
+    }
+}
+impl ::prost::Name for BufferPerRoute {
+    const NAME: &'static str = "BufferPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.buffer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.buffer.v3.BufferPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.buffer.v3.BufferPerRoute"
+            .into()
     }
 }

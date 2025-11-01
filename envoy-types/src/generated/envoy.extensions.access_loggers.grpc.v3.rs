@@ -24,6 +24,17 @@ pub struct HttpGrpcAccessLogConfig {
         ::prost::alloc::string::String,
     >,
 }
+impl ::prost::Name for HttpGrpcAccessLogConfig {
+    const NAME: &'static str = "HttpGrpcAccessLogConfig";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.grpc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.grpc.v3.HttpGrpcAccessLogConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.grpc.v3.HttpGrpcAccessLogConfig"
+            .into()
+    }
+}
 /// Configuration for the built-in `envoy.access_loggers.tcp_grpc` type. This configuration will
 /// populate `StreamAccessLogsMessage.tcp_logs`.
 /// \[\#extension: envoy.access_loggers.tcp_grpc\]
@@ -31,6 +42,17 @@ pub struct HttpGrpcAccessLogConfig {
 pub struct TcpGrpcAccessLogConfig {
     #[prost(message, optional, tag = "1")]
     pub common_config: ::core::option::Option<CommonGrpcAccessLogConfig>,
+}
+impl ::prost::Name for TcpGrpcAccessLogConfig {
+    const NAME: &'static str = "TcpGrpcAccessLogConfig";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.grpc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.grpc.v3.TcpGrpcAccessLogConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.grpc.v3.TcpGrpcAccessLogConfig"
+            .into()
+    }
 }
 /// Common configuration for gRPC access logs.
 /// \[\#next-free-field: 9\]
@@ -88,4 +110,15 @@ pub struct CommonGrpcAccessLogConfig {
     pub custom_tags: ::prost::alloc::vec::Vec<
         super::super::super::super::r#type::tracing::v3::CustomTag,
     >,
+}
+impl ::prost::Name for CommonGrpcAccessLogConfig {
+    const NAME: &'static str = "CommonGrpcAccessLogConfig";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.grpc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.grpc.v3.CommonGrpcAccessLogConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.grpc.v3.CommonGrpcAccessLogConfig"
+            .into()
+    }
 }

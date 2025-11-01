@@ -51,6 +51,17 @@ pub mod dependency {
         }
     }
 }
+impl ::prost::Name for Dependency {
+    const NAME: &'static str = "Dependency";
+    const PACKAGE: &'static str = "envoy.extensions.filters.common.dependency.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.common.dependency.v3.Dependency".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.common.dependency.v3.Dependency"
+            .into()
+    }
+}
 /// Dependency specification for a filter. For a filter chain to be valid, any
 /// dependency that is required must be provided by an earlier filter.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -67,6 +78,17 @@ pub struct FilterDependencies {
     /// A list of dependencies provided on the encode path.
     #[prost(message, repeated, tag = "4")]
     pub encode_provided: ::prost::alloc::vec::Vec<Dependency>,
+}
+impl ::prost::Name for FilterDependencies {
+    const NAME: &'static str = "FilterDependencies";
+    const PACKAGE: &'static str = "envoy.extensions.filters.common.dependency.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.common.dependency.v3.FilterDependencies".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.common.dependency.v3.FilterDependencies"
+            .into()
+    }
 }
 /// Matching requirements for a filter. For a match tree to be used with a filter, the match
 /// requirements must be satisfied.
@@ -88,5 +110,28 @@ pub mod matching_requirements {
         /// An explicit list of data inputs that are allowed to be used with this filter.
         #[prost(string, repeated, tag = "1")]
         pub type_url: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    impl ::prost::Name for DataInputAllowList {
+        const NAME: &'static str = "DataInputAllowList";
+        const PACKAGE: &'static str = "envoy.extensions.filters.common.dependency.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.common.dependency.v3.MatchingRequirements.DataInputAllowList"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.common.dependency.v3.MatchingRequirements.DataInputAllowList"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for MatchingRequirements {
+    const NAME: &'static str = "MatchingRequirements";
+    const PACKAGE: &'static str = "envoy.extensions.filters.common.dependency.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.common.dependency.v3.MatchingRequirements".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.common.dependency.v3.MatchingRequirements"
+            .into()
     }
 }

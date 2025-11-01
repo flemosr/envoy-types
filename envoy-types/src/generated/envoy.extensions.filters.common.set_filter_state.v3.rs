@@ -86,3 +86,14 @@ pub mod filter_state_value {
         ),
     }
 }
+impl ::prost::Name for FilterStateValue {
+    const NAME: &'static str = "FilterStateValue";
+    const PACKAGE: &'static str = "envoy.extensions.filters.common.set_filter_state.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.common.set_filter_state.v3.FilterStateValue".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.common.set_filter_state.v3.FilterStateValue"
+            .into()
+    }
+}

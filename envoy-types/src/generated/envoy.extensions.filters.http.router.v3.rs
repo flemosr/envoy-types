@@ -112,4 +112,26 @@ pub mod router {
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for UpstreamAccessLogOptions {
+        const NAME: &'static str = "UpstreamAccessLogOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.router.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.router.v3.Router.UpstreamAccessLogOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.router.v3.Router.UpstreamAccessLogOptions"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Router {
+    const NAME: &'static str = "Router";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.router.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.router.v3.Router".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.router.v3.Router".into()
+    }
 }

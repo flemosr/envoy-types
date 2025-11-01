@@ -29,6 +29,17 @@ pub struct VirtualHost {
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
 }
+impl ::prost::Name for VirtualHost {
+    const NAME: &'static str = "VirtualHost";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.v3.VirtualHost".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.v3.VirtualHost"
+            .into()
+    }
+}
 /// The generic proxy makes use of the xDS matching API for routing configurations.
 ///
 /// In the below example, we combine a top level tree matcher with a linear matcher to match
@@ -93,6 +104,17 @@ pub struct RouteConfiguration {
     #[prost(message, repeated, tag = "3")]
     pub virtual_hosts: ::prost::alloc::vec::Vec<VirtualHost>,
 }
+impl ::prost::Name for RouteConfiguration {
+    const NAME: &'static str = "RouteConfiguration";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.v3.RouteConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.v3.RouteConfiguration"
+            .into()
+    }
+}
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenericProxy {
@@ -138,6 +160,17 @@ pub mod generic_proxy {
         RouteConfig(super::RouteConfiguration),
     }
 }
+impl ::prost::Name for GenericProxy {
+    const NAME: &'static str = "GenericProxy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.v3.GenericProxy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.v3.GenericProxy"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenericRds {
     /// Configuration source specifier for RDS.
@@ -149,4 +182,15 @@ pub struct GenericRds {
     /// Envoy configuration with multiple generic proxies to use different route configurations.
     #[prost(string, tag = "2")]
     pub route_config_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for GenericRds {
+    const NAME: &'static str = "GenericRds";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.generic_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.generic_proxy.v3.GenericRds".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.generic_proxy.v3.GenericRds"
+            .into()
+    }
 }

@@ -16,6 +16,17 @@ pub struct KeyValuePair {
         super::super::super::super::super::super::google::protobuf::Value,
     >,
 }
+impl ::prost::Name for KeyValuePair {
+    const NAME: &'static str = "KeyValuePair";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.thrift_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.thrift_to_metadata.v3.KeyValuePair".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.thrift_to_metadata.v3.KeyValuePair"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FieldSelector {
     /// field name to log
@@ -27,6 +38,17 @@ pub struct FieldSelector {
     /// next node of the field selector
     #[prost(message, optional, boxed, tag = "3")]
     pub child: ::core::option::Option<::prost::alloc::boxed::Box<FieldSelector>>,
+}
+impl ::prost::Name for FieldSelector {
+    const NAME: &'static str = "FieldSelector";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.thrift_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.thrift_to_metadata.v3.FieldSelector".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.thrift_to_metadata.v3.FieldSelector"
+            .into()
+    }
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -99,6 +121,17 @@ pub struct Rule {
     #[prost(message, optional, tag = "5")]
     pub on_missing: ::core::option::Option<KeyValuePair>,
 }
+impl ::prost::Name for Rule {
+    const NAME: &'static str = "Rule";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.thrift_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.thrift_to_metadata.v3.Rule".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.thrift_to_metadata.v3.Rule"
+            .into()
+    }
+}
 /// The configuration for transforming thrift metadata into filter metadata.
 ///
 /// \[\#next-free-field: 7\]
@@ -143,6 +176,17 @@ pub struct ThriftToMetadata {
     #[prost(bool, tag = "6")]
     pub allow_empty_content_type: bool,
 }
+impl ::prost::Name for ThriftToMetadata {
+    const NAME: &'static str = "ThriftToMetadata";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.thrift_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.thrift_to_metadata.v3.ThriftToMetadata".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.thrift_to_metadata.v3.ThriftToMetadata"
+            .into()
+    }
+}
 /// Thrift to metadata configuration on a per-route basis, which overrides the global configuration for
 /// request rules and responses rules.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -153,6 +197,18 @@ pub struct ThriftToMetadataPerRoute {
     /// The list of rules to apply to http response body to extract thrift metadata.
     #[prost(message, repeated, tag = "2")]
     pub response_rules: ::prost::alloc::vec::Vec<Rule>,
+}
+impl ::prost::Name for ThriftToMetadataPerRoute {
+    const NAME: &'static str = "ThriftToMetadataPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.thrift_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.thrift_to_metadata.v3.ThriftToMetadataPerRoute"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.thrift_to_metadata.v3.ThriftToMetadataPerRoute"
+            .into()
+    }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

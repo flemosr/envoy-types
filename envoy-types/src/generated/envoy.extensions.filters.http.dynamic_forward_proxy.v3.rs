@@ -44,6 +44,17 @@ pub mod filter_config {
         SubClusterConfig(super::SubClusterConfig),
     }
 }
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.dynamic_forward_proxy.v3.FilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.dynamic_forward_proxy.v3.FilterConfig"
+            .into()
+    }
+}
 /// Per route Configuration for the dynamic forward proxy HTTP filter.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PerRouteConfig {
@@ -89,6 +100,17 @@ pub mod per_route_config {
         HostRewriteHeader(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for PerRouteConfig {
+    const NAME: &'static str = "PerRouteConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.dynamic_forward_proxy.v3.PerRouteConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.dynamic_forward_proxy.v3.PerRouteConfig"
+            .into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SubClusterConfig {
     /// The timeout used for sub cluster initialization. Defaults to **5s** if not set.
@@ -96,4 +118,15 @@ pub struct SubClusterConfig {
     pub cluster_init_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
+}
+impl ::prost::Name for SubClusterConfig {
+    const NAME: &'static str = "SubClusterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.dynamic_forward_proxy.v3.SubClusterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.dynamic_forward_proxy.v3.SubClusterConfig"
+            .into()
+    }
 }

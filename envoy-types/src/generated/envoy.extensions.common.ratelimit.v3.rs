@@ -72,6 +72,17 @@ pub mod rate_limit_descriptor {
         #[prost(string, tag = "2")]
         pub value: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Entry {
+        const NAME: &'static str = "Entry";
+        const PACKAGE: &'static str = "envoy.extensions.common.ratelimit.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.common.ratelimit.v3.RateLimitDescriptor.Entry".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.common.ratelimit.v3.RateLimitDescriptor.Entry"
+                .into()
+        }
+    }
     /// Override rate limit to apply to this descriptor instead of the limit
     /// configured in the rate limit service. See :ref:`rate limit override  <config_http_filters_rate_limit_rate_limit_override>` for more information.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -85,6 +96,29 @@ pub mod rate_limit_descriptor {
             tag = "2"
         )]
         pub unit: i32,
+    }
+    impl ::prost::Name for RateLimitOverride {
+        const NAME: &'static str = "RateLimitOverride";
+        const PACKAGE: &'static str = "envoy.extensions.common.ratelimit.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.common.ratelimit.v3.RateLimitDescriptor.RateLimitOverride"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.common.ratelimit.v3.RateLimitDescriptor.RateLimitOverride"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for RateLimitDescriptor {
+    const NAME: &'static str = "RateLimitDescriptor";
+    const PACKAGE: &'static str = "envoy.extensions.common.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.ratelimit.v3.RateLimitDescriptor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.ratelimit.v3.RateLimitDescriptor"
+            .into()
     }
 }
 /// Configuration used to enable local rate limiting.
@@ -104,6 +138,17 @@ pub struct LocalRateLimitDescriptor {
         super::super::super::super::r#type::v3::TokenBucket,
     >,
 }
+impl ::prost::Name for LocalRateLimitDescriptor {
+    const NAME: &'static str = "LocalRateLimitDescriptor";
+    const PACKAGE: &'static str = "envoy.extensions.common.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.ratelimit.v3.LocalRateLimitDescriptor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.ratelimit.v3.LocalRateLimitDescriptor"
+            .into()
+    }
+}
 /// Configuration used to enable local cluster level rate limiting where the token buckets
 /// will be shared across all the Envoy instances in the local cluster.
 /// A share will be calculated based on the membership of the local cluster dynamically
@@ -114,6 +159,17 @@ pub struct LocalRateLimitDescriptor {
 /// about local cluster.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LocalClusterRateLimit {}
+impl ::prost::Name for LocalClusterRateLimit {
+    const NAME: &'static str = "LocalClusterRateLimit";
+    const PACKAGE: &'static str = "envoy.extensions.common.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.ratelimit.v3.LocalClusterRateLimit".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.ratelimit.v3.LocalClusterRateLimit"
+            .into()
+    }
+}
 /// Defines the version of the standard to use for X-RateLimit headers.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

@@ -2,3 +2,13 @@
 /// gRPC Web filter config.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GrpcWeb {}
+impl ::prost::Name for GrpcWeb {
+    const NAME: &'static str = "GrpcWeb";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_web.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_web.v3.GrpcWeb".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_web.v3.GrpcWeb".into()
+    }
+}

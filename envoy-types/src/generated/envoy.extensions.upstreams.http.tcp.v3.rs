@@ -3,3 +3,14 @@
 /// \[\#extension: envoy.upstreams.http.tcp\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TcpConnectionPoolProto {}
+impl ::prost::Name for TcpConnectionPoolProto {
+    const NAME: &'static str = "TcpConnectionPoolProto";
+    const PACKAGE: &'static str = "envoy.extensions.upstreams.http.tcp.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.upstreams.http.tcp.v3.TcpConnectionPoolProto".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.upstreams.http.tcp.v3.TcpConnectionPoolProto"
+            .into()
+    }
+}

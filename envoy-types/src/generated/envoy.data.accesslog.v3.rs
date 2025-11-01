@@ -8,6 +8,16 @@ pub struct TcpAccessLogEntry {
     #[prost(message, optional, tag = "2")]
     pub connection_properties: ::core::option::Option<ConnectionProperties>,
 }
+impl ::prost::Name for TcpAccessLogEntry {
+    const NAME: &'static str = "TCPAccessLogEntry";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.TCPAccessLogEntry".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.TCPAccessLogEntry".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpAccessLogEntry {
     /// Common properties shared by all Envoy access logs.
@@ -71,6 +81,16 @@ pub mod http_access_log_entry {
         }
     }
 }
+impl ::prost::Name for HttpAccessLogEntry {
+    const NAME: &'static str = "HTTPAccessLogEntry";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.HTTPAccessLogEntry".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.HTTPAccessLogEntry".into()
+    }
+}
 /// Defines fields for a connection
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ConnectionProperties {
@@ -80,6 +100,16 @@ pub struct ConnectionProperties {
     /// Number of bytes sent to downstream.
     #[prost(uint64, tag = "2")]
     pub sent_bytes: u64,
+}
+impl ::prost::Name for ConnectionProperties {
+    const NAME: &'static str = "ConnectionProperties";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.ConnectionProperties".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.ConnectionProperties".into()
+    }
 }
 /// Defines fields that are shared by all Envoy access logs.
 /// \[\#next-free-field: 34\]
@@ -293,6 +323,16 @@ pub struct AccessLogCommon {
     #[prost(enumeration = "AccessLogType", tag = "33")]
     pub access_log_type: i32,
 }
+impl ::prost::Name for AccessLogCommon {
+    const NAME: &'static str = "AccessLogCommon";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.AccessLogCommon".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.AccessLogCommon".into()
+    }
+}
 /// Flags indicating occurrences during request/response processing.
 /// \[\#next-free-field: 29\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -431,6 +471,27 @@ pub mod response_flags {
             }
         }
     }
+    impl ::prost::Name for Unauthorized {
+        const NAME: &'static str = "Unauthorized";
+        const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.accesslog.v3.ResponseFlags.Unauthorized".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.accesslog.v3.ResponseFlags.Unauthorized"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ResponseFlags {
+    const NAME: &'static str = "ResponseFlags";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.ResponseFlags".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.ResponseFlags".into()
+    }
 }
 /// Properties of a negotiated TLS connection.
 /// \[\#next-free-field: 8\]
@@ -502,6 +563,29 @@ pub mod tls_properties {
                 Dns(::prost::alloc::string::String),
             }
         }
+        impl ::prost::Name for SubjectAltName {
+            const NAME: &'static str = "SubjectAltName";
+            const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.data.accesslog.v3.TLSProperties.CertificateProperties.SubjectAltName"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.data.accesslog.v3.TLSProperties.CertificateProperties.SubjectAltName"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for CertificateProperties {
+        const NAME: &'static str = "CertificateProperties";
+        const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.accesslog.v3.TLSProperties.CertificateProperties".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.accesslog.v3.TLSProperties.CertificateProperties"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -547,6 +631,16 @@ pub mod tls_properties {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for TlsProperties {
+    const NAME: &'static str = "TLSProperties";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.TLSProperties".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.TLSProperties".into()
     }
 }
 /// \[\#next-free-field: 16\]
@@ -619,6 +713,16 @@ pub struct HttpRequestProperties {
     #[prost(uint64, tag = "15")]
     pub downstream_header_bytes_received: u64,
 }
+impl ::prost::Name for HttpRequestProperties {
+    const NAME: &'static str = "HTTPRequestProperties";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.HTTPRequestProperties".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.HTTPRequestProperties".into()
+    }
+}
 /// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpResponseProperties {
@@ -660,6 +764,16 @@ pub struct HttpResponseProperties {
     /// Number of header bytes sent to the downstream by the http stream, including protocol overhead.
     #[prost(uint64, tag = "8")]
     pub downstream_header_bytes_sent: u64,
+}
+impl ::prost::Name for HttpResponseProperties {
+    const NAME: &'static str = "HTTPResponseProperties";
+    const PACKAGE: &'static str = "envoy.data.accesslog.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.accesslog.v3.HTTPResponseProperties".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.accesslog.v3.HTTPResponseProperties".into()
+    }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

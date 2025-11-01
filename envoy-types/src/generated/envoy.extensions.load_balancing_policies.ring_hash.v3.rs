@@ -117,3 +117,14 @@ pub mod ring_hash {
         }
     }
 }
+impl ::prost::Name for RingHash {
+    const NAME: &'static str = "RingHash";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.ring_hash.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.ring_hash.v3.RingHash".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.ring_hash.v3.RingHash"
+            .into()
+    }
+}

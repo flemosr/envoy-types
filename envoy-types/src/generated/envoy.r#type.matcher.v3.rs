@@ -44,11 +44,31 @@ pub mod regex_matcher {
             super::super::super::super::super::google::protobuf::UInt32Value,
         >,
     }
+    impl ::prost::Name for GoogleRe2 {
+        const NAME: &'static str = "GoogleRE2";
+        const PACKAGE: &'static str = "envoy.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.matcher.v3.RegexMatcher.GoogleRE2".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.matcher.v3.RegexMatcher.GoogleRE2".into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum EngineType {
         /// Google's RE2 regex engine.
         #[prost(message, tag = "1")]
         GoogleRe2(GoogleRe2),
+    }
+}
+impl ::prost::Name for RegexMatcher {
+    const NAME: &'static str = "RegexMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.RegexMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.RegexMatcher".into()
     }
 }
 /// Describes how to match a string and then produce a new string using a regular
@@ -76,6 +96,16 @@ pub struct RegexMatchAndSubstitute {
     /// to capture group 2.
     #[prost(string, tag = "2")]
     pub substitution: ::prost::alloc::string::String,
+}
+impl ::prost::Name for RegexMatchAndSubstitute {
+    const NAME: &'static str = "RegexMatchAndSubstitute";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.RegexMatchAndSubstitute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.RegexMatchAndSubstitute".into()
+    }
 }
 /// Specifies the way to match a string.
 /// \[\#next-free-field: 9\]
@@ -143,11 +173,31 @@ pub mod string_matcher {
         Custom(super::super::super::super::super::xds::core::v3::TypedExtensionConfig),
     }
 }
+impl ::prost::Name for StringMatcher {
+    const NAME: &'static str = "StringMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.StringMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.StringMatcher".into()
+    }
+}
 /// Specifies a list of ways to match a string.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListStringMatcher {
     #[prost(message, repeated, tag = "1")]
     pub patterns: ::prost::alloc::vec::Vec<StringMatcher>,
+}
+impl ::prost::Name for ListStringMatcher {
+    const NAME: &'static str = "ListStringMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.ListStringMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.ListStringMatcher".into()
+    }
 }
 /// Match an IP against a repeated CIDR range. This matcher is intended to be
 /// used in other matchers, for example in the filter state matcher to match a
@@ -158,6 +208,16 @@ pub struct AddressMatcher {
     pub ranges: ::prost::alloc::vec::Vec<
         super::super::super::super::xds::core::v3::CidrRange,
     >,
+}
+impl ::prost::Name for AddressMatcher {
+    const NAME: &'static str = "AddressMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.AddressMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.AddressMatcher".into()
+    }
 }
 /// FilterStateMatcher provides a general interface for matching the filter state objects.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -180,6 +240,16 @@ pub mod filter_state_matcher {
         AddressMatch(super::AddressMatcher),
     }
 }
+impl ::prost::Name for FilterStateMatcher {
+    const NAME: &'static str = "FilterStateMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.FilterStateMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.FilterStateMatcher".into()
+    }
+}
 /// Specifies the way to match a double value.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct DoubleMatcher {
@@ -199,6 +269,16 @@ pub mod double_matcher {
         Exact(f64),
     }
 }
+impl ::prost::Name for DoubleMatcher {
+    const NAME: &'static str = "DoubleMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.DoubleMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.DoubleMatcher".into()
+    }
+}
 /// Specifies the way to match a ProtobufWkt::Value. Primitive values and ListValue are supported.
 /// StructValue is not supported and is always not matched.
 /// \[\#next-free-field: 8\]
@@ -213,6 +293,16 @@ pub mod value_matcher {
     /// NullMatch is an empty message to specify a null value.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct NullMatch {}
+    impl ::prost::Name for NullMatch {
+        const NAME: &'static str = "NullMatch";
+        const PACKAGE: &'static str = "envoy.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.matcher.v3.ValueMatcher.NullMatch".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.matcher.v3.ValueMatcher.NullMatch".into()
+        }
+    }
     /// Specifies how to match a value.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum MatchPattern {
@@ -245,6 +335,16 @@ pub mod value_matcher {
         OrMatch(super::OrMatcher),
     }
 }
+impl ::prost::Name for ValueMatcher {
+    const NAME: &'static str = "ValueMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.ValueMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.ValueMatcher".into()
+    }
+}
 /// Specifies the way to match a list value.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListMatcher {
@@ -260,11 +360,31 @@ pub mod list_matcher {
         OneOf(::prost::alloc::boxed::Box<super::ValueMatcher>),
     }
 }
+impl ::prost::Name for ListMatcher {
+    const NAME: &'static str = "ListMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.ListMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.ListMatcher".into()
+    }
+}
 /// Specifies a list of alternatives for the match.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OrMatcher {
     #[prost(message, repeated, tag = "1")]
     pub value_matchers: ::prost::alloc::vec::Vec<ValueMatcher>,
+}
+impl ::prost::Name for OrMatcher {
+    const NAME: &'static str = "OrMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.OrMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.OrMatcher".into()
+    }
 }
 /// \[\#next-major-version: MetadataMatcher should use StructMatcher\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -303,6 +423,27 @@ pub mod metadata_matcher {
             Key(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for PathSegment {
+        const NAME: &'static str = "PathSegment";
+        const PACKAGE: &'static str = "envoy.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.matcher.v3.MetadataMatcher.PathSegment".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.matcher.v3.MetadataMatcher.PathSegment"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for MetadataMatcher {
+    const NAME: &'static str = "MetadataMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.MetadataMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.MetadataMatcher".into()
+    }
 }
 /// Specifies the way to match a path on HTTP request.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -319,6 +460,16 @@ pub mod path_matcher {
         /// For example, the path `/data` will match the `:path` header `/data#fragment?param=value`.
         #[prost(message, tag = "1")]
         Path(super::StringMatcher),
+    }
+}
+impl ::prost::Name for PathMatcher {
+    const NAME: &'static str = "PathMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.PathMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.PathMatcher".into()
     }
 }
 /// StructMatcher provides a general interface to check if a given value is matched in
@@ -404,6 +555,26 @@ pub mod struct_matcher {
             Key(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for PathSegment {
+        const NAME: &'static str = "PathSegment";
+        const PACKAGE: &'static str = "envoy.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.matcher.v3.StructMatcher.PathSegment".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.matcher.v3.StructMatcher.PathSegment".into()
+        }
+    }
+}
+impl ::prost::Name for StructMatcher {
+    const NAME: &'static str = "StructMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.StructMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.StructMatcher".into()
+    }
 }
 /// Specifies the way to match a Node.
 /// The match follows AND semantics.
@@ -415,6 +586,16 @@ pub struct NodeMatcher {
     /// Specifies match criteria on the node metadata.
     #[prost(message, repeated, tag = "2")]
     pub node_metadatas: ::prost::alloc::vec::Vec<StructMatcher>,
+}
+impl ::prost::Name for NodeMatcher {
+    const NAME: &'static str = "NodeMatcher";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.NodeMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.NodeMatcher".into()
+    }
 }
 /// Match input indicates that matching should be done on a specific request header.
 /// The resulting input string will be all headers for the given key joined by a comma,
@@ -428,6 +609,16 @@ pub struct HttpRequestHeaderMatchInput {
     #[prost(string, tag = "1")]
     pub header_name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for HttpRequestHeaderMatchInput {
+    const NAME: &'static str = "HttpRequestHeaderMatchInput";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.HttpRequestHeaderMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.HttpRequestHeaderMatchInput".into()
+    }
+}
 /// Match input indicates that matching should be done on a specific request trailer.
 /// The resulting input string will be all headers for the given key joined by a comma,
 /// e.g. if the request contains two 'foo' headers with value 'bar' and 'baz', the input
@@ -439,6 +630,16 @@ pub struct HttpRequestTrailerMatchInput {
     /// The request trailer to match on.
     #[prost(string, tag = "1")]
     pub header_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for HttpRequestTrailerMatchInput {
+    const NAME: &'static str = "HttpRequestTrailerMatchInput";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.HttpRequestTrailerMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.HttpRequestTrailerMatchInput".into()
+    }
 }
 /// Match input indicating that matching should be done on a specific response header.
 /// The resulting input string will be all headers for the given key joined by a comma,
@@ -452,6 +653,16 @@ pub struct HttpResponseHeaderMatchInput {
     #[prost(string, tag = "1")]
     pub header_name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for HttpResponseHeaderMatchInput {
+    const NAME: &'static str = "HttpResponseHeaderMatchInput";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.HttpResponseHeaderMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.HttpResponseHeaderMatchInput".into()
+    }
+}
 /// Match input indicates that matching should be done on a specific response trailer.
 /// The resulting input string will be all headers for the given key joined by a comma,
 /// e.g. if the request contains two 'foo' headers with value 'bar' and 'baz', the input
@@ -464,6 +675,16 @@ pub struct HttpResponseTrailerMatchInput {
     #[prost(string, tag = "1")]
     pub header_name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for HttpResponseTrailerMatchInput {
+    const NAME: &'static str = "HttpResponseTrailerMatchInput";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.HttpResponseTrailerMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.HttpResponseTrailerMatchInput".into()
+    }
+}
 /// Match input indicates that matching should be done on a specific query parameter.
 /// The resulting input string will be the first query parameter for the value
 /// 'query_param'.
@@ -474,11 +695,44 @@ pub struct HttpRequestQueryParamMatchInput {
     #[prost(string, tag = "1")]
     pub query_param: ::prost::alloc::string::String,
 }
+impl ::prost::Name for HttpRequestQueryParamMatchInput {
+    const NAME: &'static str = "HttpRequestQueryParamMatchInput";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.HttpRequestQueryParamMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.HttpRequestQueryParamMatchInput"
+            .into()
+    }
+}
 /// Match input indicates that matching should be done on the response status
 /// code.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HttpResponseStatusCodeMatchInput {}
+impl ::prost::Name for HttpResponseStatusCodeMatchInput {
+    const NAME: &'static str = "HttpResponseStatusCodeMatchInput";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.HttpResponseStatusCodeMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.HttpResponseStatusCodeMatchInput"
+            .into()
+    }
+}
 /// Match input indicates that the matching should be done on the class of the
 /// response status code. For eg: 1xx, 2xx, 3xx, 4xx or 5xx.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HttpResponseStatusCodeClassMatchInput {}
+impl ::prost::Name for HttpResponseStatusCodeClassMatchInput {
+    const NAME: &'static str = "HttpResponseStatusCodeClassMatchInput";
+    const PACKAGE: &'static str = "envoy.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.matcher.v3.HttpResponseStatusCodeClassMatchInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.matcher.v3.HttpResponseStatusCodeClassMatchInput"
+            .into()
+    }
+}

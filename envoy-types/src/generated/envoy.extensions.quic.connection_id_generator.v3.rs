@@ -2,3 +2,15 @@
 /// Configuration for a connection ID generator implementation which issues predictable CIDs with stable first 4 bytes.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DeterministicConnectionIdGeneratorConfig {}
+impl ::prost::Name for DeterministicConnectionIdGeneratorConfig {
+    const NAME: &'static str = "DeterministicConnectionIdGeneratorConfig";
+    const PACKAGE: &'static str = "envoy.extensions.quic.connection_id_generator.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.connection_id_generator.v3.DeterministicConnectionIdGeneratorConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.connection_id_generator.v3.DeterministicConnectionIdGeneratorConfig"
+            .into()
+    }
+}

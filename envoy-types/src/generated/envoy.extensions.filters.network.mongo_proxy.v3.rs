@@ -27,3 +27,14 @@ pub struct MongoProxy {
     #[prost(string, repeated, tag = "5")]
     pub commands: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for MongoProxy {
+    const NAME: &'static str = "MongoProxy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.mongo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.mongo_proxy.v3.MongoProxy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.mongo_proxy.v3.MongoProxy"
+            .into()
+    }
+}

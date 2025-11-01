@@ -8,6 +8,16 @@ pub struct Certificates {
     #[prost(message, repeated, tag = "1")]
     pub certificates: ::prost::alloc::vec::Vec<Certificate>,
 }
+impl ::prost::Name for Certificates {
+    const NAME: &'static str = "Certificates";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.Certificates".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.Certificates".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Certificate {
     /// Details of CA certificate.
@@ -16,6 +26,16 @@ pub struct Certificate {
     /// Details of Certificate Chain
     #[prost(message, repeated, tag = "2")]
     pub cert_chain: ::prost::alloc::vec::Vec<CertificateDetails>,
+}
+impl ::prost::Name for Certificate {
+    const NAME: &'static str = "Certificate";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.Certificate".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.Certificate".into()
+    }
 }
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -61,6 +81,26 @@ pub mod certificate_details {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
+    impl ::prost::Name for OcspDetails {
+        const NAME: &'static str = "OcspDetails";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.CertificateDetails.OcspDetails".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.CertificateDetails.OcspDetails".into()
+        }
+    }
+}
+impl ::prost::Name for CertificateDetails {
+    const NAME: &'static str = "CertificateDetails";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.CertificateDetails".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.CertificateDetails".into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SubjectAlternateName {
@@ -79,6 +119,16 @@ pub mod subject_alternate_name {
         Uri(::prost::alloc::string::String),
         #[prost(string, tag = "3")]
         IpAddress(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for SubjectAlternateName {
+    const NAME: &'static str = "SubjectAlternateName";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.SubjectAlternateName".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.SubjectAlternateName".into()
     }
 }
 /// Proto representation of an Envoy Counter or Gauge value.
@@ -133,6 +183,16 @@ pub mod simple_metric {
         }
     }
 }
+impl ::prost::Name for SimpleMetric {
+    const NAME: &'static str = "SimpleMetric";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.SimpleMetric".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.SimpleMetric".into()
+    }
+}
 /// Admin endpoint uses this wrapper for `/clusters` to display cluster status information.
 /// See :ref:`/clusters <operations_admin_interface_clusters>` for more information.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -140,6 +200,16 @@ pub struct Clusters {
     /// Mapping from cluster name to each cluster's status.
     #[prost(message, repeated, tag = "1")]
     pub cluster_statuses: ::prost::alloc::vec::Vec<ClusterStatus>,
+}
+impl ::prost::Name for Clusters {
+    const NAME: &'static str = "Clusters";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.Clusters".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.Clusters".into()
+    }
 }
 /// Details an individual cluster's current status.
 /// \[\#next-free-field: 9\]
@@ -212,6 +282,16 @@ pub struct ClusterStatus {
     #[prost(string, tag = "8")]
     pub eds_service_name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for ClusterStatus {
+    const NAME: &'static str = "ClusterStatus";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.ClusterStatus".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.ClusterStatus".into()
+    }
+}
 /// Current state of a particular host.
 /// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -272,6 +352,16 @@ pub struct HostStatus {
     #[prost(message, optional, tag = "9")]
     pub locality: ::core::option::Option<super::super::config::core::v3::Locality>,
 }
+impl ::prost::Name for HostStatus {
+    const NAME: &'static str = "HostStatus";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.HostStatus".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.HostStatus".into()
+    }
+}
 /// Health status for a host.
 /// \[\#next-free-field: 9\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -309,6 +399,16 @@ pub struct HostHealthStatus {
     #[prost(enumeration = "super::super::config::core::v3::HealthStatus", tag = "3")]
     pub eds_health_status: i32,
 }
+impl ::prost::Name for HostHealthStatus {
+    const NAME: &'static str = "HostHealthStatus";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.HostHealthStatus".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.HostHealthStatus".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UpdateFailureState {
     /// What the component configuration would have been if the update had succeeded.
@@ -329,6 +429,16 @@ pub struct UpdateFailureState {
     /// \[\#not-implemented-hide:\]
     #[prost(string, tag = "4")]
     pub version_info: ::prost::alloc::string::String,
+}
+impl ::prost::Name for UpdateFailureState {
+    const NAME: &'static str = "UpdateFailureState";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.UpdateFailureState".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.UpdateFailureState".into()
+    }
 }
 /// Envoy's listener manager fills this message with all currently known listeners. Listener
 /// configuration information can be used to recreate an Envoy configuration by populating all
@@ -367,6 +477,17 @@ pub mod listeners_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
+    impl ::prost::Name for StaticListener {
+        const NAME: &'static str = "StaticListener";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.ListenersConfigDump.StaticListener".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.ListenersConfigDump.StaticListener"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicListenerState {
         ///
@@ -386,6 +507,17 @@ pub mod listeners_config_dump {
         pub last_updated: ::core::option::Option<
             super::super::super::super::google::protobuf::Timestamp,
         >,
+    }
+    impl ::prost::Name for DynamicListenerState {
+        const NAME: &'static str = "DynamicListenerState";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.ListenersConfigDump.DynamicListenerState".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.ListenersConfigDump.DynamicListenerState"
+                .into()
+        }
     }
     /// Describes a dynamically loaded listener via the LDS API.
     /// \[\#next-free-field: 7\]
@@ -420,6 +552,27 @@ pub mod listeners_config_dump {
         /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
+    }
+    impl ::prost::Name for DynamicListener {
+        const NAME: &'static str = "DynamicListener";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.ListenersConfigDump.DynamicListener".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.ListenersConfigDump.DynamicListener"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ListenersConfigDump {
+    const NAME: &'static str = "ListenersConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.ListenersConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.ListenersConfigDump".into()
     }
 }
 /// Envoy's cluster manager fills this message with all currently known clusters. Cluster
@@ -466,6 +619,16 @@ pub mod clusters_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
+    impl ::prost::Name for StaticCluster {
+        const NAME: &'static str = "StaticCluster";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.ClustersConfigDump.StaticCluster".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.ClustersConfigDump.StaticCluster".into()
+        }
+    }
     /// Describes a dynamically loaded cluster via the CDS API.
     /// \[\#next-free-field: 6\]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -498,6 +661,26 @@ pub mod clusters_config_dump {
         /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
+    }
+    impl ::prost::Name for DynamicCluster {
+        const NAME: &'static str = "DynamicCluster";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.ClustersConfigDump.DynamicCluster".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.ClustersConfigDump.DynamicCluster".into()
+        }
+    }
+}
+impl ::prost::Name for ClustersConfigDump {
+    const NAME: &'static str = "ClustersConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.ClustersConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.ClustersConfigDump".into()
     }
 }
 /// Envoy's RDS implementation fills this message with all currently loaded routes, as described by
@@ -533,6 +716,17 @@ pub mod routes_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
+    impl ::prost::Name for StaticRouteConfig {
+        const NAME: &'static str = "StaticRouteConfig";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.RoutesConfigDump.StaticRouteConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.RoutesConfigDump.StaticRouteConfig"
+                .into()
+        }
+    }
     /// \[\#next-free-field: 6\]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicRouteConfig {
@@ -563,6 +757,27 @@ pub mod routes_config_dump {
         /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
+    }
+    impl ::prost::Name for DynamicRouteConfig {
+        const NAME: &'static str = "DynamicRouteConfig";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.RoutesConfigDump.DynamicRouteConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.RoutesConfigDump.DynamicRouteConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for RoutesConfigDump {
+    const NAME: &'static str = "RoutesConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.RoutesConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.RoutesConfigDump".into()
     }
 }
 /// Envoy's scoped RDS implementation fills this message with all currently loaded route
@@ -600,6 +815,17 @@ pub mod scoped_routes_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
+    impl ::prost::Name for InlineScopedRouteConfigs {
+        const NAME: &'static str = "InlineScopedRouteConfigs";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.ScopedRoutesConfigDump.InlineScopedRouteConfigs".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.ScopedRoutesConfigDump.InlineScopedRouteConfigs"
+                .into()
+        }
+    }
     /// \[\#next-free-field: 7\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DynamicScopedRouteConfigs {
@@ -634,6 +860,27 @@ pub mod scoped_routes_config_dump {
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
+    impl ::prost::Name for DynamicScopedRouteConfigs {
+        const NAME: &'static str = "DynamicScopedRouteConfigs";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.ScopedRoutesConfigDump.DynamicScopedRouteConfigs".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.ScopedRoutesConfigDump.DynamicScopedRouteConfigs"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ScopedRoutesConfigDump {
+    const NAME: &'static str = "ScopedRoutesConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.ScopedRoutesConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.ScopedRoutesConfigDump".into()
+    }
 }
 /// Envoy's admin fill this message with all currently known endpoints. Endpoint
 /// configuration information can be used to recreate an Envoy configuration by populating all
@@ -666,6 +913,17 @@ pub mod endpoints_config_dump {
             super::super::super::super::google::protobuf::Timestamp,
         >,
     }
+    impl ::prost::Name for StaticEndpointConfig {
+        const NAME: &'static str = "StaticEndpointConfig";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.EndpointsConfigDump.StaticEndpointConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.EndpointsConfigDump.StaticEndpointConfig"
+                .into()
+        }
+    }
     /// \[\#next-free-field: 6\]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DynamicEndpointConfig {
@@ -696,6 +954,27 @@ pub mod endpoints_config_dump {
         /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
+    }
+    impl ::prost::Name for DynamicEndpointConfig {
+        const NAME: &'static str = "DynamicEndpointConfig";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.EndpointsConfigDump.DynamicEndpointConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.EndpointsConfigDump.DynamicEndpointConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for EndpointsConfigDump {
+    const NAME: &'static str = "EndpointsConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.EndpointsConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.EndpointsConfigDump".into()
     }
 }
 /// Envoy's ECDS service fills this message with all currently extension
@@ -739,6 +1018,26 @@ pub mod ecds_config_dump {
         /// \[\#not-implemented-hide:\]
         #[prost(enumeration = "super::ClientResourceStatus", tag = "5")]
         pub client_status: i32,
+    }
+    impl ::prost::Name for EcdsFilterConfig {
+        const NAME: &'static str = "EcdsFilterConfig";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.EcdsConfigDump.EcdsFilterConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.EcdsConfigDump.EcdsFilterConfig".into()
+        }
+    }
+}
+impl ::prost::Name for EcdsConfigDump {
+    const NAME: &'static str = "EcdsConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.EcdsConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.EcdsConfigDump".into()
     }
 }
 /// Resource status from the view of a xDS client, which tells the synchronization
@@ -834,6 +1133,16 @@ pub struct ConfigDump {
     #[prost(message, repeated, tag = "1")]
     pub configs: ::prost::alloc::vec::Vec<super::super::super::google::protobuf::Any>,
 }
+impl ::prost::Name for ConfigDump {
+    const NAME: &'static str = "ConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.ConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.ConfigDump".into()
+    }
+}
 /// This message describes the bootstrap configuration that Envoy was started with. This includes
 /// any CLI overrides that were merged. Bootstrap configuration information can be used to recreate
 /// the static portions of an Envoy configuration by reusing the output as the bootstrap
@@ -849,6 +1158,16 @@ pub struct BootstrapConfigDump {
     pub last_updated: ::core::option::Option<
         super::super::super::google::protobuf::Timestamp,
     >,
+}
+impl ::prost::Name for BootstrapConfigDump {
+    const NAME: &'static str = "BootstrapConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.BootstrapConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.BootstrapConfigDump".into()
+    }
 }
 /// Envoys SDS implementation fills this message with all secrets fetched dynamically via SDS.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -905,6 +1224,16 @@ pub mod secrets_config_dump {
         #[prost(enumeration = "super::ClientResourceStatus", tag = "6")]
         pub client_status: i32,
     }
+    impl ::prost::Name for DynamicSecret {
+        const NAME: &'static str = "DynamicSecret";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.SecretsConfigDump.DynamicSecret".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.SecretsConfigDump.DynamicSecret".into()
+        }
+    }
     /// StaticSecret specifies statically loaded secret in bootstrap.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct StaticSecret {
@@ -923,6 +1252,26 @@ pub mod secrets_config_dump {
         pub secret: ::core::option::Option<
             super::super::super::super::google::protobuf::Any,
         >,
+    }
+    impl ::prost::Name for StaticSecret {
+        const NAME: &'static str = "StaticSecret";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.SecretsConfigDump.StaticSecret".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.SecretsConfigDump.StaticSecret".into()
+        }
+    }
+}
+impl ::prost::Name for SecretsConfigDump {
+    const NAME: &'static str = "SecretsConfigDump";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.SecretsConfigDump".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.SecretsConfigDump".into()
     }
 }
 /// Dumps of unready targets of envoy init managers. Envoy's admin fills this message with init managers,
@@ -950,6 +1299,27 @@ pub mod unready_targets_dumps {
         #[prost(string, repeated, tag = "2")]
         pub target_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
+    impl ::prost::Name for UnreadyTargetsDump {
+        const NAME: &'static str = "UnreadyTargetsDump";
+        const PACKAGE: &'static str = "envoy.admin.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.admin.v3.UnreadyTargetsDumps.UnreadyTargetsDump".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.admin.v3.UnreadyTargetsDumps.UnreadyTargetsDump"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for UnreadyTargetsDumps {
+    const NAME: &'static str = "UnreadyTargetsDumps";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.UnreadyTargetsDumps".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.UnreadyTargetsDumps".into()
+    }
 }
 /// Admin endpoint uses this wrapper for `/listeners` to display listener status information.
 /// See :ref:`/listeners <operations_admin_interface_listeners>` for more information.
@@ -958,6 +1328,16 @@ pub struct Listeners {
     /// List of listener statuses.
     #[prost(message, repeated, tag = "1")]
     pub listener_statuses: ::prost::alloc::vec::Vec<ListenerStatus>,
+}
+impl ::prost::Name for Listeners {
+    const NAME: &'static str = "Listeners";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.Listeners".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.Listeners".into()
+    }
 }
 /// Details an individual listener's current status.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -975,6 +1355,16 @@ pub struct ListenerStatus {
     pub additional_local_addresses: ::prost::alloc::vec::Vec<
         super::super::config::core::v3::Address,
     >,
+}
+impl ::prost::Name for ListenerStatus {
+    const NAME: &'static str = "ListenerStatus";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.ListenerStatus".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.ListenerStatus".into()
+    }
 }
 /// Proto representation of the internal memory consumption of an Envoy instance. These represent
 /// values extracted from an internal TCMalloc instance. For more information, see the section of the
@@ -1009,6 +1399,16 @@ pub struct Memory {
     #[prost(uint64, tag = "6")]
     pub total_physical_bytes: u64,
 }
+impl ::prost::Name for Memory {
+    const NAME: &'static str = "Memory";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.Memory".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.Memory".into()
+    }
+}
 /// Proto representation of the statistics collected upon absl::Mutex contention, if Envoy is run
 /// under :option:`--enable-mutex-tracing`. For more information, see the `absl::Mutex`
 /// [docs](<https://abseil.io/about/design/mutex#extra-features>).
@@ -1027,6 +1427,16 @@ pub struct MutexStats {
     /// The lifetime total of all contention wait cycles.
     #[prost(uint64, tag = "3")]
     pub lifetime_wait_cycles: u64,
+}
+impl ::prost::Name for MutexStats {
+    const NAME: &'static str = "MutexStats";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.MutexStats".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.MutexStats".into()
+    }
 }
 /// Proto representation of the value returned by /server_info, containing
 /// server version/server status information.
@@ -1106,6 +1516,16 @@ pub mod server_info {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for ServerInfo {
+    const NAME: &'static str = "ServerInfo";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.ServerInfo".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.ServerInfo".into()
     }
 }
 /// \[\#next-free-field: 42\]
@@ -1348,6 +1768,16 @@ pub mod command_line_options {
         }
     }
 }
+impl ::prost::Name for CommandLineOptions {
+    const NAME: &'static str = "CommandLineOptions";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.CommandLineOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.CommandLineOptions".into()
+    }
+}
 /// The /tap admin request body that is used to configure an active tap session.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TapRequest {
@@ -1358,4 +1788,14 @@ pub struct TapRequest {
     /// The tap configuration to load.
     #[prost(message, optional, tag = "2")]
     pub tap_config: ::core::option::Option<super::super::config::tap::v3::TapConfig>,
+}
+impl ::prost::Name for TapRequest {
+    const NAME: &'static str = "TapRequest";
+    const PACKAGE: &'static str = "envoy.admin.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.admin.v3.TapRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.admin.v3.TapRequest".into()
+    }
 }

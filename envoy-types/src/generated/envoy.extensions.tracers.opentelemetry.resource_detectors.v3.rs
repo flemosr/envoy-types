@@ -10,6 +10,18 @@
 /// \[\#extension: envoy.tracers.opentelemetry.resource_detectors.dynatrace\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DynatraceResourceDetectorConfig {}
+impl ::prost::Name for DynatraceResourceDetectorConfig {
+    const NAME: &'static str = "DynatraceResourceDetectorConfig";
+    const PACKAGE: &'static str = "envoy.extensions.tracers.opentelemetry.resource_detectors.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.tracers.opentelemetry.resource_detectors.v3.DynatraceResourceDetectorConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.tracers.opentelemetry.resource_detectors.v3.DynatraceResourceDetectorConfig"
+            .into()
+    }
+}
 /// Configuration for the Environment Resource detector extension.
 /// The resource detector reads from the `OTEL_RESOURCE_ATTRIBUTES`
 /// environment variable, as per the OpenTelemetry specification.
@@ -21,6 +33,18 @@ pub struct DynatraceResourceDetectorConfig {}
 /// \[\#extension: envoy.tracers.opentelemetry.resource_detectors.environment\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EnvironmentResourceDetectorConfig {}
+impl ::prost::Name for EnvironmentResourceDetectorConfig {
+    const NAME: &'static str = "EnvironmentResourceDetectorConfig";
+    const PACKAGE: &'static str = "envoy.extensions.tracers.opentelemetry.resource_detectors.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.tracers.opentelemetry.resource_detectors.v3.EnvironmentResourceDetectorConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.tracers.opentelemetry.resource_detectors.v3.EnvironmentResourceDetectorConfig"
+            .into()
+    }
+}
 /// Configuration for the Static Resource detector extension.
 /// The resource detector uses static config for resource attribute,
 /// as per the OpenTelemetry specification.
@@ -34,4 +58,16 @@ pub struct StaticConfigResourceDetectorConfig {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
+}
+impl ::prost::Name for StaticConfigResourceDetectorConfig {
+    const NAME: &'static str = "StaticConfigResourceDetectorConfig";
+    const PACKAGE: &'static str = "envoy.extensions.tracers.opentelemetry.resource_detectors.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.tracers.opentelemetry.resource_detectors.v3.StaticConfigResourceDetectorConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.tracers.opentelemetry.resource_detectors.v3.StaticConfigResourceDetectorConfig"
+            .into()
+    }
 }

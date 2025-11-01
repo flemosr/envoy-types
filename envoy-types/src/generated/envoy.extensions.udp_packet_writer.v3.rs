@@ -3,6 +3,28 @@
 /// uses the kernel's sendmsg() to send UDP packets.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UdpDefaultWriterFactory {}
+impl ::prost::Name for UdpDefaultWriterFactory {
+    const NAME: &'static str = "UdpDefaultWriterFactory";
+    const PACKAGE: &'static str = "envoy.extensions.udp_packet_writer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.udp_packet_writer.v3.UdpDefaultWriterFactory".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.udp_packet_writer.v3.UdpDefaultWriterFactory"
+            .into()
+    }
+}
 /// Configuration for the UDP GSO batch packet writer factory.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UdpGsoBatchWriterFactory {}
+impl ::prost::Name for UdpGsoBatchWriterFactory {
+    const NAME: &'static str = "UdpGsoBatchWriterFactory";
+    const PACKAGE: &'static str = "envoy.extensions.udp_packet_writer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.udp_packet_writer.v3.UdpGsoBatchWriterFactory".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.udp_packet_writer.v3.UdpGsoBatchWriterFactory"
+            .into()
+    }
+}

@@ -9,3 +9,14 @@ pub struct Config {
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.quic.connection_debug_visitor.quic_stats.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.connection_debug_visitor.quic_stats.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.connection_debug_visitor.quic_stats.v3.Config"
+            .into()
+    }
+}

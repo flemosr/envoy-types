@@ -49,3 +49,15 @@ pub mod cpu_utilization_config {
         }
     }
 }
+impl ::prost::Name for CpuUtilizationConfig {
+    const NAME: &'static str = "CpuUtilizationConfig";
+    const PACKAGE: &'static str = "envoy.extensions.resource_monitors.cpu_utilization.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.resource_monitors.cpu_utilization.v3.CpuUtilizationConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.resource_monitors.cpu_utilization.v3.CpuUtilizationConfig"
+            .into()
+    }
+}

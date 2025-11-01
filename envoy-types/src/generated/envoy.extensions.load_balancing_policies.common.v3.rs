@@ -69,10 +69,46 @@ pub mod locality_lb_config {
                 super::super::super::super::super::super::super::google::protobuf::UInt32Value,
             >,
         }
+        impl ::prost::Name for ForceLocalZone {
+            const NAME: &'static str = "ForceLocalZone";
+            const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.common.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig.ZoneAwareLbConfig.ForceLocalZone"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig.ZoneAwareLbConfig.ForceLocalZone"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for ZoneAwareLbConfig {
+        const NAME: &'static str = "ZoneAwareLbConfig";
+        const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.common.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig.ZoneAwareLbConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig.ZoneAwareLbConfig"
+                .into()
+        }
     }
     /// Configuration for :ref:`locality weighted load balancing  <arch_overview_load_balancing_locality_weighted_lb>`
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct LocalityWeightedLbConfig {}
+    impl ::prost::Name for LocalityWeightedLbConfig {
+        const NAME: &'static str = "LocalityWeightedLbConfig";
+        const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.common.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig.LocalityWeightedLbConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig.LocalityWeightedLbConfig"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
     pub enum LocalityConfigSpecifier {
         /// Configuration for local zone aware load balancing.
@@ -81,6 +117,17 @@ pub mod locality_lb_config {
         /// Enable locality weighted load balancing.
         #[prost(message, tag = "2")]
         LocalityWeightedLbConfig(LocalityWeightedLbConfig),
+    }
+}
+impl ::prost::Name for LocalityLbConfig {
+    const NAME: &'static str = "LocalityLbConfig";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.LocalityLbConfig"
+            .into()
     }
 }
 /// Configuration for :ref:`slow start mode <arch_overview_load_balancing_slow_start>`.
@@ -116,6 +163,17 @@ pub struct SlowStartConfig {
     pub min_weight_percent: ::core::option::Option<
         super::super::super::super::r#type::v3::Percent,
     >,
+}
+impl ::prost::Name for SlowStartConfig {
+    const NAME: &'static str = "SlowStartConfig";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.common.v3.SlowStartConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.SlowStartConfig"
+            .into()
+    }
 }
 /// Common Configuration for all consistent hashing load balancers (MaglevLb, RingHashLb, etc.)
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -155,4 +213,16 @@ pub struct ConsistentHashingLbConfig {
     pub hash_policy: ::prost::alloc::vec::Vec<
         super::super::super::super::config::route::v3::route_action::HashPolicy,
     >,
+}
+impl ::prost::Name for ConsistentHashingLbConfig {
+    const NAME: &'static str = "ConsistentHashingLbConfig";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.common.v3.ConsistentHashingLbConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.ConsistentHashingLbConfig"
+            .into()
+    }
 }

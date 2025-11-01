@@ -20,3 +20,15 @@ pub struct GetAddrInfoDnsResolverConfig {
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for GetAddrInfoDnsResolverConfig {
+    const NAME: &'static str = "GetAddrInfoDnsResolverConfig";
+    const PACKAGE: &'static str = "envoy.extensions.network.dns_resolver.getaddrinfo.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.network.dns_resolver.getaddrinfo.v3.GetAddrInfoDnsResolverConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.network.dns_resolver.getaddrinfo.v3.GetAddrInfoDnsResolverConfig"
+            .into()
+    }
+}

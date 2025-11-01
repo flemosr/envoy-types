@@ -42,6 +42,18 @@ pub mod filter_config {
             super::super::super::super::super::super::super::super::super::google::protobuf::UInt64Value,
         >,
     }
+    impl ::prost::Name for BufferOptions {
+        const NAME: &'static str = "BufferOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.session.dynamic_forward_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.udp.udp_proxy.session.dynamic_forward_proxy.v3.FilterConfig.BufferOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.session.dynamic_forward_proxy.v3.FilterConfig.BufferOptions"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ImplementationSpecifier {
         /// The DNS cache configuration that the filter will attach to. Note this
@@ -50,5 +62,17 @@ pub mod filter_config {
         DnsCacheConfig(
             super::super::super::super::super::super::super::common::dynamic_forward_proxy::v3::DnsCacheConfig,
         ),
+    }
+}
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.udp.udp_proxy.session.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.udp.udp_proxy.session.dynamic_forward_proxy.v3.FilterConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.udp.udp_proxy.session.dynamic_forward_proxy.v3.FilterConfig"
+            .into()
     }
 }

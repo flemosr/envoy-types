@@ -12,3 +12,14 @@ pub struct AppleDnsResolverConfig {
     #[prost(bool, tag = "1")]
     pub include_unroutable_families: bool,
 }
+impl ::prost::Name for AppleDnsResolverConfig {
+    const NAME: &'static str = "AppleDnsResolverConfig";
+    const PACKAGE: &'static str = "envoy.extensions.network.dns_resolver.apple.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.network.dns_resolver.apple.v3.AppleDnsResolverConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.network.dns_resolver.apple.v3.AppleDnsResolverConfig"
+            .into()
+    }
+}

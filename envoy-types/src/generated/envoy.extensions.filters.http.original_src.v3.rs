@@ -11,3 +11,14 @@ pub struct OriginalSrc {
     #[prost(uint32, tag = "1")]
     pub mark: u32,
 }
+impl ::prost::Name for OriginalSrc {
+    const NAME: &'static str = "OriginalSrc";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.original_src.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.original_src.v3.OriginalSrc".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.original_src.v3.OriginalSrc"
+            .into()
+    }
+}

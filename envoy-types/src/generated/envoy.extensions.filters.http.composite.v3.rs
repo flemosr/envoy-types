@@ -12,6 +12,16 @@
 ///   which filter configuration to create and delegate to.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Composite {}
+impl ::prost::Name for Composite {
+    const NAME: &'static str = "Composite";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.composite.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.composite.v3.Composite".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.composite.v3.Composite".into()
+    }
+}
 /// Configuration for an extension configuration discovery service with name.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicConfig {
@@ -25,6 +35,17 @@ pub struct DynamicConfig {
     pub config_discovery: ::core::option::Option<
         super::super::super::super::super::config::core::v3::ExtensionConfigSource,
     >,
+}
+impl ::prost::Name for DynamicConfig {
+    const NAME: &'static str = "DynamicConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.composite.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.composite.v3.DynamicConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.composite.v3.DynamicConfig"
+            .into()
+    }
 }
 /// Composite match action (see :ref:`matching docs <arch_overview_matching_api>` for more info on match actions).
 /// This specifies the filter configuration of the filter that the composite filter should delegate filter interactions to.
@@ -54,4 +75,15 @@ pub struct ExecuteFilterAction {
     pub sample_percent: ::core::option::Option<
         super::super::super::super::super::config::core::v3::RuntimeFractionalPercent,
     >,
+}
+impl ::prost::Name for ExecuteFilterAction {
+    const NAME: &'static str = "ExecuteFilterAction";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.composite.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.composite.v3.ExecuteFilterAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.composite.v3.ExecuteFilterAction"
+            .into()
+    }
 }

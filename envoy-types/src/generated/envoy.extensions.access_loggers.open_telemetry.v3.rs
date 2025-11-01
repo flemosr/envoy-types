@@ -52,3 +52,15 @@ pub struct OpenTelemetryAccessLogConfig {
         super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
 }
+impl ::prost::Name for OpenTelemetryAccessLogConfig {
+    const NAME: &'static str = "OpenTelemetryAccessLogConfig";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.open_telemetry.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.open_telemetry.v3.OpenTelemetryAccessLogConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.open_telemetry.v3.OpenTelemetryAccessLogConfig"
+            .into()
+    }
+}

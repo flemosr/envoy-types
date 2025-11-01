@@ -30,4 +30,25 @@ pub mod geoip {
         #[prost(uint32, tag = "1")]
         pub xff_num_trusted_hops: u32,
     }
+    impl ::prost::Name for XffConfig {
+        const NAME: &'static str = "XffConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.geoip.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.geoip.v3.Geoip.XffConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.geoip.v3.Geoip.XffConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Geoip {
+    const NAME: &'static str = "Geoip";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.geoip.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.geoip.v3.Geoip".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.geoip.v3.Geoip".into()
+    }
 }

@@ -5,3 +5,13 @@ pub struct Wasm {
     #[prost(message, optional, tag = "1")]
     pub config: ::core::option::Option<super::super::super::wasm::v3::PluginConfig>,
 }
+impl ::prost::Name for Wasm {
+    const NAME: &'static str = "Wasm";
+    const PACKAGE: &'static str = "envoy.extensions.stat_sinks.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.stat_sinks.wasm.v3.Wasm".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.stat_sinks.wasm.v3.Wasm".into()
+    }
+}

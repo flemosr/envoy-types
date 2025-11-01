@@ -232,6 +232,18 @@ pub mod grpc_json_transcoder {
         #[prost(bool, tag = "6")]
         pub stream_sse_style_delimited: bool,
     }
+    impl ::prost::Name for PrintOptions {
+        const NAME: &'static str = "PrintOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_json_transcoder.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.PrintOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.PrintOptions"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RequestValidationOptions {
         ///
@@ -260,6 +272,18 @@ pub mod grpc_json_transcoder {
         /// value is different from the body value.
         #[prost(bool, tag = "3")]
         pub reject_binding_body_field_collisions: bool,
+    }
+    impl ::prost::Name for RequestValidationOptions {
+        const NAME: &'static str = "RequestValidationOptions";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_json_transcoder.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.RequestValidationOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder.RequestValidationOptions"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -326,6 +350,17 @@ pub mod grpc_json_transcoder {
         ProtoDescriptorBin(::prost::alloc::vec::Vec<u8>),
     }
 }
+impl ::prost::Name for GrpcJsonTranscoder {
+    const NAME: &'static str = "GrpcJsonTranscoder";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_json_transcoder.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder"
+            .into()
+    }
+}
 /// `UnknownQueryParams` is added as an extension field in `HttpBody` if
 /// `GrpcJsonTranscoder::capture_unknown_query_parameters` is true and unknown query
 /// parameters were present in the request.
@@ -344,5 +379,28 @@ pub mod unknown_query_params {
     pub struct Values {
         #[prost(string, repeated, tag = "1")]
         pub values: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    impl ::prost::Name for Values {
+        const NAME: &'static str = "Values";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_json_transcoder.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.grpc_json_transcoder.v3.UnknownQueryParams.Values"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.UnknownQueryParams.Values"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for UnknownQueryParams {
+    const NAME: &'static str = "UnknownQueryParams";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_json_transcoder.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_json_transcoder.v3.UnknownQueryParams".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.UnknownQueryParams"
+            .into()
     }
 }

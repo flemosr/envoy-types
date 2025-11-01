@@ -4,6 +4,16 @@
 /// protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EcdsDummy {}
+impl ::prost::Name for EcdsDummy {
+    const NAME: &'static str = "EcdsDummy";
+    const PACKAGE: &'static str = "envoy.service.extension.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.extension.v3.EcdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.extension.v3.EcdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod extension_config_discovery_service_client {
     #![allow(

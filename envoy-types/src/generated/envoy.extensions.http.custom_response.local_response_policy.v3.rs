@@ -30,3 +30,15 @@ pub struct LocalResponsePolicy {
         super::super::super::super::super::config::core::v3::HeaderValueOption,
     >,
 }
+impl ::prost::Name for LocalResponsePolicy {
+    const NAME: &'static str = "LocalResponsePolicy";
+    const PACKAGE: &'static str = "envoy.extensions.http.custom_response.local_response_policy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.custom_response.local_response_policy.v3.LocalResponsePolicy"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.custom_response.local_response_policy.v3.LocalResponsePolicy"
+            .into()
+    }
+}

@@ -108,6 +108,16 @@ pub mod attribute_context {
         #[prost(string, tag = "5")]
         pub certificate: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Peer {
+        const NAME: &'static str = "Peer";
+        const PACKAGE: &'static str = "envoy.service.auth.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.auth.v3.AttributeContext.Peer".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.auth.v3.AttributeContext.Peer".into()
+        }
+    }
     /// Represents a network request, such as an HTTP request.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Request {
@@ -119,6 +129,16 @@ pub mod attribute_context {
         /// Represents an HTTP request or an HTTP-like request.
         #[prost(message, optional, tag = "2")]
         pub http: ::core::option::Option<HttpRequest>,
+    }
+    impl ::prost::Name for Request {
+        const NAME: &'static str = "Request";
+        const PACKAGE: &'static str = "envoy.service.auth.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.auth.v3.AttributeContext.Request".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.auth.v3.AttributeContext.Request".into()
+        }
     }
     /// This message defines attributes for an HTTP request.
     /// HTTP/1.x, HTTP/2, gRPC are all considered as HTTP requests.
@@ -208,6 +228,17 @@ pub mod attribute_context {
         #[prost(bytes = "vec", tag = "12")]
         pub raw_body: ::prost::alloc::vec::Vec<u8>,
     }
+    impl ::prost::Name for HttpRequest {
+        const NAME: &'static str = "HttpRequest";
+        const PACKAGE: &'static str = "envoy.service.auth.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.auth.v3.AttributeContext.HttpRequest".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.auth.v3.AttributeContext.HttpRequest"
+                .into()
+        }
+    }
     /// This message defines attributes for the underlying TLS session.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct TlsSession {
@@ -215,12 +246,43 @@ pub mod attribute_context {
         #[prost(string, tag = "1")]
         pub sni: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for TlsSession {
+        const NAME: &'static str = "TLSSession";
+        const PACKAGE: &'static str = "envoy.service.auth.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.auth.v3.AttributeContext.TLSSession".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.auth.v3.AttributeContext.TLSSession"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for AttributeContext {
+    const NAME: &'static str = "AttributeContext";
+    const PACKAGE: &'static str = "envoy.service.auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.auth.v3.AttributeContext".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.auth.v3.AttributeContext".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CheckRequest {
     /// The request attributes.
     #[prost(message, optional, tag = "1")]
     pub attributes: ::core::option::Option<AttributeContext>,
+}
+impl ::prost::Name for CheckRequest {
+    const NAME: &'static str = "CheckRequest";
+    const PACKAGE: &'static str = "envoy.service.auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.auth.v3.CheckRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.auth.v3.CheckRequest".into()
+    }
 }
 /// HTTP attributes for a denied response.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -240,6 +302,16 @@ pub struct DeniedHttpResponse {
     /// to the downstream client.
     #[prost(string, tag = "3")]
     pub body: ::prost::alloc::string::String,
+}
+impl ::prost::Name for DeniedHttpResponse {
+    const NAME: &'static str = "DeniedHttpResponse";
+    const PACKAGE: &'static str = "envoy.service.auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.auth.v3.DeniedHttpResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.auth.v3.DeniedHttpResponse".into()
+    }
 }
 /// HTTP attributes for an OK response.
 /// \[\#next-free-field: 9\]
@@ -301,6 +373,16 @@ pub struct OkHttpResponse {
         ::prost::alloc::string::String,
     >,
 }
+impl ::prost::Name for OkHttpResponse {
+    const NAME: &'static str = "OkHttpResponse";
+    const PACKAGE: &'static str = "envoy.service.auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.auth.v3.OkHttpResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.auth.v3.OkHttpResponse".into()
+    }
+}
 /// Intended for gRPC and Network Authorization servers `only`.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CheckResponse {
@@ -338,6 +420,16 @@ pub mod check_response {
         /// Supplies http attributes for an ok response.
         #[prost(message, tag = "3")]
         OkResponse(super::OkHttpResponse),
+    }
+}
+impl ::prost::Name for CheckResponse {
+    const NAME: &'static str = "CheckResponse";
+    const PACKAGE: &'static str = "envoy.service.auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.auth.v3.CheckResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.auth.v3.CheckResponse".into()
     }
 }
 /// Generated client implementations.

@@ -118,3 +118,14 @@ pub mod least_request {
         }
     }
 }
+impl ::prost::Name for LeastRequest {
+    const NAME: &'static str = "LeastRequest";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.least_request.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.least_request.v3.LeastRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.least_request.v3.LeastRequest"
+            .into()
+    }
+}

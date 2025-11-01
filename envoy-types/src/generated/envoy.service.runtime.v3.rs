@@ -3,6 +3,16 @@
 /// services: <https://github.com/google/protobuf/issues/4221>
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RtdsDummy {}
+impl ::prost::Name for RtdsDummy {
+    const NAME: &'static str = "RtdsDummy";
+    const PACKAGE: &'static str = "envoy.service.runtime.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.runtime.v3.RtdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.runtime.v3.RtdsDummy".into()
+    }
+}
 /// RTDS resource type. This describes a layer in the runtime virtual filesystem.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Runtime {
@@ -14,6 +24,16 @@ pub struct Runtime {
     pub layer: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
     >,
+}
+impl ::prost::Name for Runtime {
+    const NAME: &'static str = "Runtime";
+    const PACKAGE: &'static str = "envoy.service.runtime.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.runtime.v3.Runtime".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.runtime.v3.Runtime".into()
+    }
 }
 /// Generated client implementations.
 pub mod runtime_discovery_service_client {

@@ -11,3 +11,14 @@ pub struct FilterConfig {
         super::super::super::super::super::config::core::v3::AlternateProtocolsCacheOptions,
     >,
 }
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.alternate_protocols_cache.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.alternate_protocols_cache.v3.FilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.alternate_protocols_cache.v3.FilterConfig"
+            .into()
+    }
+}

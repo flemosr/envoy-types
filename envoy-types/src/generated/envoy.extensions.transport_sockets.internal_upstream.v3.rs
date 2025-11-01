@@ -40,4 +40,28 @@ pub mod internal_upstream_transport {
         #[prost(string, tag = "2")]
         pub name: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for MetadataValueSource {
+        const NAME: &'static str = "MetadataValueSource";
+        const PACKAGE: &'static str = "envoy.extensions.transport_sockets.internal_upstream.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.transport_sockets.internal_upstream.v3.InternalUpstreamTransport.MetadataValueSource"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.transport_sockets.internal_upstream.v3.InternalUpstreamTransport.MetadataValueSource"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for InternalUpstreamTransport {
+    const NAME: &'static str = "InternalUpstreamTransport";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.internal_upstream.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.internal_upstream.v3.InternalUpstreamTransport"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.internal_upstream.v3.InternalUpstreamTransport"
+            .into()
+    }
 }

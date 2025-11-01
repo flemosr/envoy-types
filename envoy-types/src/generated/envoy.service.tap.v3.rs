@@ -28,10 +28,41 @@ pub mod stream_taps_request {
         #[prost(string, tag = "2")]
         pub tap_id: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Identifier {
+        const NAME: &'static str = "Identifier";
+        const PACKAGE: &'static str = "envoy.service.tap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.tap.v3.StreamTapsRequest.Identifier".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.tap.v3.StreamTapsRequest.Identifier"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for StreamTapsRequest {
+    const NAME: &'static str = "StreamTapsRequest";
+    const PACKAGE: &'static str = "envoy.service.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.tap.v3.StreamTapsRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.tap.v3.StreamTapsRequest".into()
+    }
 }
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamTapsResponse {}
+impl ::prost::Name for StreamTapsResponse {
+    const NAME: &'static str = "StreamTapsResponse";
+    const PACKAGE: &'static str = "envoy.service.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.tap.v3.StreamTapsResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.tap.v3.StreamTapsResponse".into()
+    }
+}
 /// Generated client implementations.
 pub mod tap_sink_service_client {
     #![allow(

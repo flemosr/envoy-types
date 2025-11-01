@@ -79,6 +79,18 @@ pub mod proto_message_extraction_config {
         ProtoDescriptorTypedMetadata(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for ProtoMessageExtractionConfig {
+    const NAME: &'static str = "ProtoMessageExtractionConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_message_extraction.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_message_extraction.v3.ProtoMessageExtractionConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_message_extraction.v3.ProtoMessageExtractionConfig"
+            .into()
+    }
+}
 /// This message can be used to support per route config approach later even
 /// though the Istio doesn't support that so far.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -139,5 +151,17 @@ pub mod method_extraction {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for MethodExtraction {
+    const NAME: &'static str = "MethodExtraction";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_message_extraction.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_message_extraction.v3.MethodExtraction"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_message_extraction.v3.MethodExtraction"
+            .into()
     }
 }

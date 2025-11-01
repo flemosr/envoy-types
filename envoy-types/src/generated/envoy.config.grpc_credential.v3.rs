@@ -14,3 +14,14 @@ pub struct FileBasedMetadataConfig {
     #[prost(string, tag = "3")]
     pub header_prefix: ::prost::alloc::string::String,
 }
+impl ::prost::Name for FileBasedMetadataConfig {
+    const NAME: &'static str = "FileBasedMetadataConfig";
+    const PACKAGE: &'static str = "envoy.config.grpc_credential.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.grpc_credential.v3.FileBasedMetadataConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.grpc_credential.v3.FileBasedMetadataConfig"
+            .into()
+    }
+}

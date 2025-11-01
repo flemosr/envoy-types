@@ -19,6 +19,17 @@ pub mod fault_abort {
     ///   more information.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct HeaderAbort {}
+    impl ::prost::Name for HeaderAbort {
+        const NAME: &'static str = "HeaderAbort";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.fault.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.fault.v3.FaultAbort.HeaderAbort".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.fault.v3.FaultAbort.HeaderAbort"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum ErrorType {
         /// HTTP status code to use to abort the HTTP request.
@@ -30,6 +41,16 @@ pub mod fault_abort {
         /// Fault aborts are controlled via an HTTP header (if applicable).
         #[prost(message, tag = "4")]
         HeaderAbort(HeaderAbort),
+    }
+}
+impl ::prost::Name for FaultAbort {
+    const NAME: &'static str = "FaultAbort";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.fault.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.fault.v3.FaultAbort".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.fault.v3.FaultAbort".into()
     }
 }
 /// \[\#next-free-field: 17\]
@@ -135,4 +156,14 @@ pub struct HttpFault {
     pub filter_metadata: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Struct,
     >,
+}
+impl ::prost::Name for HttpFault {
+    const NAME: &'static str = "HTTPFault";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.fault.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.fault.v3.HTTPFault".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.fault.v3.HTTPFault".into()
+    }
 }

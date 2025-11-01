@@ -27,3 +27,14 @@ pub struct MaxMindConfig {
         super::super::common::v3::CommonGeoipProviderConfig,
     >,
 }
+impl ::prost::Name for MaxMindConfig {
+    const NAME: &'static str = "MaxMindConfig";
+    const PACKAGE: &'static str = "envoy.extensions.geoip_providers.maxmind.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.geoip_providers.maxmind.v3.MaxMindConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.geoip_providers.maxmind.v3.MaxMindConfig"
+            .into()
+    }
+}

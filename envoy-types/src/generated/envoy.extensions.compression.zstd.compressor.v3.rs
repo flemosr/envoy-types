@@ -101,3 +101,13 @@ pub mod zstd {
         }
     }
 }
+impl ::prost::Name for Zstd {
+    const NAME: &'static str = "Zstd";
+    const PACKAGE: &'static str = "envoy.extensions.compression.zstd.compressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.compression.zstd.compressor.v3.Zstd".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.compression.zstd.compressor.v3.Zstd".into()
+    }
+}

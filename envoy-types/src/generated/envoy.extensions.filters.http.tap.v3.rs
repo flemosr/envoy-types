@@ -16,3 +16,13 @@ pub struct Tap {
     #[prost(bool, tag = "3")]
     pub record_downstream_connection: bool,
 }
+impl ::prost::Name for Tap {
+    const NAME: &'static str = "Tap";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.tap.v3.Tap".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.tap.v3.Tap".into()
+    }
+}

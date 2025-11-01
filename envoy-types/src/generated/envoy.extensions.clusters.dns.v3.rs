@@ -85,4 +85,25 @@ pub mod dns_cluster {
             super::super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for RefreshRate {
+        const NAME: &'static str = "RefreshRate";
+        const PACKAGE: &'static str = "envoy.extensions.clusters.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.clusters.dns.v3.DnsCluster.RefreshRate".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.clusters.dns.v3.DnsCluster.RefreshRate"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for DnsCluster {
+    const NAME: &'static str = "DnsCluster";
+    const PACKAGE: &'static str = "envoy.extensions.clusters.dns.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.clusters.dns.v3.DnsCluster".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.clusters.dns.v3.DnsCluster".into()
+    }
 }

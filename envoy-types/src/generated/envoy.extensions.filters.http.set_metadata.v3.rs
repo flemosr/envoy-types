@@ -26,6 +26,17 @@ pub struct Metadata {
         super::super::super::super::super::super::google::protobuf::Any,
     >,
 }
+impl ::prost::Name for Metadata {
+    const NAME: &'static str = "Metadata";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.set_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.set_metadata.v3.Metadata".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.set_metadata.v3.Metadata"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {
     /// The metadata namespace.
@@ -47,4 +58,14 @@ pub struct Config {
     /// Defines changes to be made to dynamic metadata.
     #[prost(message, repeated, tag = "3")]
     pub metadata: ::prost::alloc::vec::Vec<Metadata>,
+}
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.set_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.set_metadata.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.set_metadata.v3.Config".into()
+    }
 }

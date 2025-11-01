@@ -226,6 +226,16 @@ pub mod virtual_host {
         }
     }
 }
+impl ::prost::Name for VirtualHost {
+    const NAME: &'static str = "VirtualHost";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.VirtualHost".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.VirtualHost".into()
+    }
+}
 /// A filter-defined action type.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterAction {
@@ -234,6 +244,16 @@ pub struct FilterAction {
         super::super::super::super::google::protobuf::Any,
     >,
 }
+impl ::prost::Name for FilterAction {
+    const NAME: &'static str = "FilterAction";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.FilterAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.FilterAction".into()
+    }
+}
 /// This can be used in route matcher :ref:`VirtualHost.matcher <envoy_v3_api_field_config.route.v3.VirtualHost.matcher>`.
 /// When the matcher matches, routes will be matched and run.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -241,6 +261,16 @@ pub struct RouteList {
     /// The list of routes that will be matched and run, in order. The first route that matches will be used.
     #[prost(message, repeated, tag = "1")]
     pub routes: ::prost::alloc::vec::Vec<Route>,
+}
+impl ::prost::Name for RouteList {
+    const NAME: &'static str = "RouteList";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.RouteList".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.RouteList".into()
+    }
 }
 /// A route is both a specification of how to match a request as well as an indication of what to do
 /// next (e.g., redirect, forward, rewrite, etc.).
@@ -370,6 +400,16 @@ pub mod route {
         /// in Envoy for a filter that directly generates responses for requests.
         #[prost(message, tag = "18")]
         NonForwardingAction(super::NonForwardingAction),
+    }
+}
+impl ::prost::Name for Route {
+    const NAME: &'static str = "Route";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.Route".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.Route".into()
     }
 }
 /// Compared to the :ref:`cluster <envoy_v3_api_field_config.route.v3.RouteAction.cluster>` field that specifies a
@@ -515,6 +555,17 @@ pub mod weighted_cluster {
             HostRewriteLiteral(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for ClusterWeight {
+        const NAME: &'static str = "ClusterWeight";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.WeightedCluster.ClusterWeight".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.WeightedCluster.ClusterWeight"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum RandomValueSpecifier {
         /// Specifies the header name that is used to look up the random value passed in the request header.
@@ -524,6 +575,16 @@ pub mod weighted_cluster {
         /// the process for the consistency. And the value is a unsigned number between 0 and UINT64_MAX.
         #[prost(string, tag = "4")]
         HeaderName(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for WeightedCluster {
+    const NAME: &'static str = "WeightedCluster";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.WeightedCluster".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.WeightedCluster".into()
     }
 }
 /// Configuration for a cluster specifier plugin.
@@ -541,6 +602,16 @@ pub struct ClusterSpecifierPlugin {
     /// selected.
     #[prost(bool, tag = "2")]
     pub is_optional: bool,
+}
+impl ::prost::Name for ClusterSpecifierPlugin {
+    const NAME: &'static str = "ClusterSpecifierPlugin";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.ClusterSpecifierPlugin".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.ClusterSpecifierPlugin".into()
+    }
 }
 /// \[\#next-free-field: 17\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -631,6 +702,17 @@ pub struct RouteMatch {
 pub mod route_match {
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GrpcRouteMatchOptions {}
+    impl ::prost::Name for GrpcRouteMatchOptions {
+        const NAME: &'static str = "GrpcRouteMatchOptions";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RouteMatch.GrpcRouteMatchOptions".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RouteMatch.GrpcRouteMatchOptions"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct TlsContextMatchOptions {
         /// If specified, the route will match against whether or not a certificate is presented.
@@ -658,9 +740,30 @@ pub mod route_match {
             super::super::super::super::super::google::protobuf::BoolValue,
         >,
     }
+    impl ::prost::Name for TlsContextMatchOptions {
+        const NAME: &'static str = "TlsContextMatchOptions";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RouteMatch.TlsContextMatchOptions".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RouteMatch.TlsContextMatchOptions"
+                .into()
+        }
+    }
     /// An extensible message for matching CONNECT or CONNECT-UDP requests.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ConnectMatcher {}
+    impl ::prost::Name for ConnectMatcher {
+        const NAME: &'static str = "ConnectMatcher";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RouteMatch.ConnectMatcher".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RouteMatch.ConnectMatcher".into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum PathSpecifier {
         /// If specified, the route is a prefix rule meaning that the prefix must
@@ -709,6 +812,16 @@ pub mod route_match {
         /// \[\#extension-category: envoy.path.match\]
         #[prost(message, tag = "15")]
         PathMatchPolicy(super::super::super::core::v3::TypedExtensionConfig),
+    }
+}
+impl ::prost::Name for RouteMatch {
+    const NAME: &'static str = "RouteMatch";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.RouteMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.RouteMatch".into()
     }
 }
 /// Cors policy configuration.
@@ -790,6 +903,16 @@ pub mod cors_policy {
         /// specified, Envoy will lookup the runtime key to get the percentage of requests to filter.
         #[prost(message, tag = "9")]
         FilterEnabled(super::super::super::core::v3::RuntimeFractionalPercent),
+    }
+}
+impl ::prost::Name for CorsPolicy {
+    const NAME: &'static str = "CorsPolicy";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.CorsPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.CorsPolicy".into()
     }
 }
 /// \[\#next-free-field: 42\]
@@ -1174,6 +1297,17 @@ pub mod route_action {
         #[prost(bool, tag = "6")]
         pub disable_shadow_host_suffix_append: bool,
     }
+    impl ::prost::Name for RequestMirrorPolicy {
+        const NAME: &'static str = "RequestMirrorPolicy";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RouteAction.RequestMirrorPolicy".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RouteAction.RequestMirrorPolicy"
+                .into()
+        }
+    }
     /// Specifies the route's hashing policy if the upstream cluster uses a hashing :ref:`load balancer  <arch_overview_load_balancing_types>`.
     /// \[\#next-free-field: 7\]
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1217,6 +1351,17 @@ pub mod route_action {
                 super::super::super::super::super::r#type::matcher::v3::RegexMatchAndSubstitute,
             >,
         }
+        impl ::prost::Name for Header {
+            const NAME: &'static str = "Header";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RouteAction.HashPolicy.Header".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RouteAction.HashPolicy.Header"
+                    .into()
+            }
+        }
         /// CookieAttribute defines an API for adding additional attributes for a HTTP cookie.
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct CookieAttribute {
@@ -1226,6 +1371,17 @@ pub mod route_action {
             /// The optional value of the cookie attribute.
             #[prost(string, tag = "2")]
             pub value: ::prost::alloc::string::String,
+        }
+        impl ::prost::Name for CookieAttribute {
+            const NAME: &'static str = "CookieAttribute";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RouteAction.HashPolicy.CookieAttribute".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RouteAction.HashPolicy.CookieAttribute"
+                    .into()
+            }
         }
         /// Envoy supports two types of cookie affinity:
         ///
@@ -1263,11 +1419,34 @@ pub mod route_action {
             #[prost(message, repeated, tag = "4")]
             pub attributes: ::prost::alloc::vec::Vec<CookieAttribute>,
         }
+        impl ::prost::Name for Cookie {
+            const NAME: &'static str = "Cookie";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RouteAction.HashPolicy.Cookie".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RouteAction.HashPolicy.Cookie"
+                    .into()
+            }
+        }
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ConnectionProperties {
             /// Hash on source IP address.
             #[prost(bool, tag = "1")]
             pub source_ip: bool,
+        }
+        impl ::prost::Name for ConnectionProperties {
+            const NAME: &'static str = "ConnectionProperties";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RouteAction.HashPolicy.ConnectionProperties"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RouteAction.HashPolicy.ConnectionProperties"
+                    .into()
+            }
         }
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct QueryParameter {
@@ -1278,6 +1457,17 @@ pub mod route_action {
             #[prost(string, tag = "1")]
             pub name: ::prost::alloc::string::String,
         }
+        impl ::prost::Name for QueryParameter {
+            const NAME: &'static str = "QueryParameter";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RouteAction.HashPolicy.QueryParameter".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RouteAction.HashPolicy.QueryParameter"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct FilterState {
             /// The name of the Object in the per-request filterState, which is an
@@ -1285,6 +1475,17 @@ pub mod route_action {
             /// or the stored object is not Envoy::Hashable, no hash will be produced.
             #[prost(string, tag = "1")]
             pub key: ::prost::alloc::string::String,
+        }
+        impl ::prost::Name for FilterState {
+            const NAME: &'static str = "FilterState";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RouteAction.HashPolicy.FilterState".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RouteAction.HashPolicy.FilterState"
+                    .into()
+            }
         }
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum PolicySpecifier {
@@ -1303,6 +1504,16 @@ pub mod route_action {
             /// Filter state hash policy.
             #[prost(message, tag = "6")]
             FilterState(FilterState),
+        }
+    }
+    impl ::prost::Name for HashPolicy {
+        const NAME: &'static str = "HashPolicy";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RouteAction.HashPolicy".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RouteAction.HashPolicy".into()
         }
     }
     ///
@@ -1345,6 +1556,27 @@ pub mod route_action {
             #[prost(bool, tag = "2")]
             pub allow_post: bool,
         }
+        impl ::prost::Name for ConnectConfig {
+            const NAME: &'static str = "ConnectConfig";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RouteAction.UpgradeConfig.ConnectConfig".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RouteAction.UpgradeConfig.ConnectConfig"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for UpgradeConfig {
+        const NAME: &'static str = "UpgradeConfig";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RouteAction.UpgradeConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RouteAction.UpgradeConfig".into()
+        }
     }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct MaxStreamDuration {
@@ -1376,6 +1608,17 @@ pub mod route_action {
         pub grpc_timeout_header_offset: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Duration,
         >,
+    }
+    impl ::prost::Name for MaxStreamDuration {
+        const NAME: &'static str = "MaxStreamDuration";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RouteAction.MaxStreamDuration".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RouteAction.MaxStreamDuration"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -1562,6 +1805,16 @@ pub mod route_action {
         ),
     }
 }
+impl ::prost::Name for RouteAction {
+    const NAME: &'static str = "RouteAction";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.RouteAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.RouteAction".into()
+    }
+}
 /// HTTP retry :ref:`architecture overview <arch_overview_http_routing_retry>`.
 /// \[\#next-free-field: 14\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1694,6 +1947,16 @@ pub mod retry_policy {
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
         }
     }
+    impl ::prost::Name for RetryPriority {
+        const NAME: &'static str = "RetryPriority";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RetryPolicy.RetryPriority".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RetryPolicy.RetryPriority".into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RetryHostPredicate {
         #[prost(string, tag = "1")]
@@ -1709,6 +1972,17 @@ pub mod retry_policy {
         pub enum ConfigType {
             #[prost(message, tag = "3")]
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
+        }
+    }
+    impl ::prost::Name for RetryHostPredicate {
+        const NAME: &'static str = "RetryHostPredicate";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RetryPolicy.RetryHostPredicate".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RetryPolicy.RetryHostPredicate"
+                .into()
         }
     }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -1730,6 +2004,16 @@ pub mod retry_policy {
             super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for RetryBackOff {
+        const NAME: &'static str = "RetryBackOff";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RetryPolicy.RetryBackOff".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RetryPolicy.RetryBackOff".into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ResetHeader {
         /// The name of the reset header.
@@ -1742,6 +2026,16 @@ pub mod retry_policy {
         /// The format of the reset header.
         #[prost(enumeration = "ResetHeaderFormat", tag = "2")]
         pub format: i32,
+    }
+    impl ::prost::Name for ResetHeader {
+        const NAME: &'static str = "ResetHeader";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RetryPolicy.ResetHeader".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RetryPolicy.ResetHeader".into()
+        }
     }
     /// A retry back-off strategy that applies when the upstream server rate limits
     /// the request.
@@ -1804,6 +2098,17 @@ pub mod retry_policy {
             super::super::super::super::super::google::protobuf::Duration,
         >,
     }
+    impl ::prost::Name for RateLimitedRetryBackOff {
+        const NAME: &'static str = "RateLimitedRetryBackOff";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RetryPolicy.RateLimitedRetryBackOff".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RetryPolicy.RateLimitedRetryBackOff"
+                .into()
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -1841,6 +2146,16 @@ pub mod retry_policy {
         }
     }
 }
+impl ::prost::Name for RetryPolicy {
+    const NAME: &'static str = "RetryPolicy";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.RetryPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.RetryPolicy".into()
+    }
+}
 /// HTTP request hedging :ref:`architecture overview <arch_overview_http_routing_hedging>`.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HedgePolicy {
@@ -1875,6 +2190,16 @@ pub struct HedgePolicy {
     /// Defaults to false.
     #[prost(bool, tag = "3")]
     pub hedge_on_per_try_timeout: bool,
+}
+impl ::prost::Name for HedgePolicy {
+    const NAME: &'static str = "HedgePolicy";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.HedgePolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.HedgePolicy".into()
+    }
 }
 /// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -2035,6 +2360,16 @@ pub mod redirect_action {
         ),
     }
 }
+impl ::prost::Name for RedirectAction {
+    const NAME: &'static str = "RedirectAction";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.RedirectAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.RedirectAction".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DirectResponseAction {
     /// Specifies the HTTP response status to be returned.
@@ -2052,9 +2387,29 @@ pub struct DirectResponseAction {
     #[prost(message, optional, tag = "2")]
     pub body: ::core::option::Option<super::super::core::v3::DataSource>,
 }
+impl ::prost::Name for DirectResponseAction {
+    const NAME: &'static str = "DirectResponseAction";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.DirectResponseAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.DirectResponseAction".into()
+    }
+}
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct NonForwardingAction {}
+impl ::prost::Name for NonForwardingAction {
+    const NAME: &'static str = "NonForwardingAction";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.NonForwardingAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.NonForwardingAction".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Decorator {
     /// The operation name associated with the request matched to this route. If tracing is
@@ -2071,6 +2426,16 @@ pub struct Decorator {
     pub propagate: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
+}
+impl ::prost::Name for Decorator {
+    const NAME: &'static str = "Decorator";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.Decorator".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.Decorator".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Tracing {
@@ -2116,6 +2481,16 @@ pub struct Tracing {
         super::super::super::r#type::tracing::v3::CustomTag,
     >,
 }
+impl ::prost::Name for Tracing {
+    const NAME: &'static str = "Tracing";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.Tracing".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.Tracing".into()
+    }
+}
 /// A virtual cluster is a way of specifying a regex matching rule against
 /// certain important endpoints such that statistics are generated explicitly for
 /// the matched requests. The reason this is useful is that when doing
@@ -2147,6 +2522,16 @@ pub struct VirtualCluster {
     /// router filter and are documented :ref:`here <config_http_filters_router_stats>`.
     #[prost(string, tag = "2")]
     pub name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for VirtualCluster {
+    const NAME: &'static str = "VirtualCluster";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.VirtualCluster".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.VirtualCluster".into()
+    }
 }
 /// Global rate limiting :ref:`architecture overview <arch_overview_global_rate_limit>`.
 /// Also applies to Local rate limiting :ref:`using descriptors <config_http_filters_local_rate_limit_descriptors>`.
@@ -2247,6 +2632,17 @@ pub mod rate_limit {
         /// <local service cluster> is derived from the :option:`--service-cluster` option.
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct SourceCluster {}
+        impl ::prost::Name for SourceCluster {
+            const NAME: &'static str = "SourceCluster";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.SourceCluster".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.SourceCluster"
+                    .into()
+            }
+        }
         /// The following descriptor entry is appended to the descriptor:
         ///
         /// .. code-block:: cpp
@@ -2265,6 +2661,17 @@ pub mod rate_limit {
         ///   header in the request contains the target cluster.
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct DestinationCluster {}
+        impl ::prost::Name for DestinationCluster {
+            const NAME: &'static str = "DestinationCluster";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.DestinationCluster".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.DestinationCluster"
+                    .into()
+            }
+        }
         /// The following descriptor entry is appended when a header contains a key that matches the
         /// `header_name`:
         ///
@@ -2294,6 +2701,17 @@ pub mod rate_limit {
             /// * Useful if you want Envoy to enforce rate limiting even when the header is not present.
             #[prost(bool, tag = "3")]
             pub skip_if_absent: bool,
+        }
+        impl ::prost::Name for RequestHeaders {
+            const NAME: &'static str = "RequestHeaders";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.RequestHeaders".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.RequestHeaders"
+                    .into()
+            }
         }
         /// The following descriptor entry is appended when a query parameter contains a key that matches the
         /// `query_parameter_name`:
@@ -2325,6 +2743,17 @@ pub mod rate_limit {
             #[prost(bool, tag = "3")]
             pub skip_if_absent: bool,
         }
+        impl ::prost::Name for QueryParameters {
+            const NAME: &'static str = "QueryParameters";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.QueryParameters".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.QueryParameters"
+                    .into()
+            }
+        }
         /// The following descriptor entry is appended to the descriptor and is populated using the
         /// trusted address from :ref:`x-forwarded-for <config_http_conn_man_headers_x-forwarded-for>`:
         ///
@@ -2333,6 +2762,17 @@ pub mod rate_limit {
         /// ("remote_address", "<trusted address from x-forwarded-for>")
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct RemoteAddress {}
+        impl ::prost::Name for RemoteAddress {
+            const NAME: &'static str = "RemoteAddress";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.RemoteAddress".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.RemoteAddress"
+                    .into()
+            }
+        }
         /// The following descriptor entry is appended to the descriptor and is populated using the
         /// masked address from :ref:`x-forwarded-for <config_http_conn_man_headers_x-forwarded-for>`:
         ///
@@ -2360,6 +2800,17 @@ pub mod rate_limit {
                 super::super::super::super::super::super::google::protobuf::UInt32Value,
             >,
         }
+        impl ::prost::Name for MaskedRemoteAddress {
+            const NAME: &'static str = "MaskedRemoteAddress";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.MaskedRemoteAddress".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.MaskedRemoteAddress"
+                    .into()
+            }
+        }
         /// The following descriptor entry is appended to the descriptor:
         ///
         /// .. code-block:: cpp
@@ -2374,6 +2825,17 @@ pub mod rate_limit {
             /// to 'generic_key' as the descriptor key.
             #[prost(string, tag = "2")]
             pub descriptor_key: ::prost::alloc::string::String,
+        }
+        impl ::prost::Name for GenericKey {
+            const NAME: &'static str = "GenericKey";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.GenericKey".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.GenericKey"
+                    .into()
+            }
         }
         /// The following descriptor entry is appended to the descriptor:
         ///
@@ -2404,6 +2866,17 @@ pub mod rate_limit {
             #[prost(message, repeated, tag = "3")]
             pub headers: ::prost::alloc::vec::Vec<super::super::HeaderMatcher>,
         }
+        impl ::prost::Name for HeaderValueMatch {
+            const NAME: &'static str = "HeaderValueMatch";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.HeaderValueMatch".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.HeaderValueMatch"
+                    .into()
+            }
+        }
         ///
         /// The following descriptor entry is appended when the
         /// : ref:`dynamic metadata <well_known_dynamic_metadata>` contains a key value:
@@ -2430,6 +2903,17 @@ pub mod rate_limit {
             /// no value is present under the metadata_key then no descriptor is generated.
             #[prost(string, tag = "3")]
             pub default_value: ::prost::alloc::string::String,
+        }
+        impl ::prost::Name for DynamicMetaData {
+            const NAME: &'static str = "DynamicMetaData";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.DynamicMetaData".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.DynamicMetaData"
+                    .into()
+            }
         }
         /// The following descriptor entry is appended when the metadata contains a key value:
         ///
@@ -2512,6 +2996,17 @@ pub mod rate_limit {
                 }
             }
         }
+        impl ::prost::Name for MetaData {
+            const NAME: &'static str = "MetaData";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.MetaData".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.MetaData"
+                    .into()
+            }
+        }
         /// The following descriptor entry is appended to the descriptor:
         ///
         /// .. code-block:: cpp
@@ -2542,6 +3037,17 @@ pub mod rate_limit {
             pub query_parameters: ::prost::alloc::vec::Vec<
                 super::super::QueryParameterMatcher,
             >,
+        }
+        impl ::prost::Name for QueryParameterValueMatch {
+            const NAME: &'static str = "QueryParameterValueMatch";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.QueryParameterValueMatch".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.QueryParameterValueMatch"
+                    .into()
+            }
         }
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum ActionSpecifier {
@@ -2594,6 +3100,16 @@ pub mod rate_limit {
             QueryParameterValueMatch(QueryParameterValueMatch),
         }
     }
+    impl ::prost::Name for Action {
+        const NAME: &'static str = "Action";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RateLimit.Action".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RateLimit.Action".into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Override {
         #[prost(oneof = "r#override::OverrideSpecifier", tags = "1")]
@@ -2612,11 +3128,32 @@ pub mod rate_limit {
                 super::super::super::super::super::r#type::metadata::v3::MetadataKey,
             >,
         }
+        impl ::prost::Name for DynamicMetadata {
+            const NAME: &'static str = "DynamicMetadata";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Override.DynamicMetadata".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Override.DynamicMetadata"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum OverrideSpecifier {
             /// Limit override from dynamic metadata.
             #[prost(message, tag = "1")]
             DynamicMetadata(DynamicMetadata),
+        }
+    }
+    impl ::prost::Name for Override {
+        const NAME: &'static str = "Override";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RateLimit.Override".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RateLimit.Override".into()
         }
     }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -2650,6 +3187,26 @@ pub mod rate_limit {
         /// One of the `number` or `format` fields should be set but not both.
         #[prost(string, tag = "2")]
         pub format: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for HitsAddend {
+        const NAME: &'static str = "HitsAddend";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.RateLimit.HitsAddend".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.RateLimit.HitsAddend".into()
+        }
+    }
+}
+impl ::prost::Name for RateLimit {
+    const NAME: &'static str = "RateLimit";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.RateLimit".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.RateLimit".into()
     }
 }
 /// .. attention::
@@ -2805,6 +3362,16 @@ pub mod header_matcher {
         StringMatch(super::super::super::super::r#type::matcher::v3::StringMatcher),
     }
 }
+impl ::prost::Name for HeaderMatcher {
+    const NAME: &'static str = "HeaderMatcher";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.HeaderMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.HeaderMatcher".into()
+    }
+}
 /// Query parameter matching treats the query string of a request's :path header
 /// as an ampersand-separated list of keys and/or key=value elements.
 /// \[\#next-free-field: 7\]
@@ -2832,6 +3399,16 @@ pub mod query_parameter_matcher {
         /// Specifies whether a query parameter should be present.
         #[prost(bool, tag = "6")]
         PresentMatch(bool),
+    }
+}
+impl ::prost::Name for QueryParameterMatcher {
+    const NAME: &'static str = "QueryParameterMatcher";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.QueryParameterMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.QueryParameterMatcher".into()
     }
 }
 /// HTTP Internal Redirect :ref:`architecture overview <arch_overview_internal_redirects>`.
@@ -2874,6 +3451,16 @@ pub struct InternalRedirectPolicy {
         ::prost::alloc::string::String,
     >,
 }
+impl ::prost::Name for InternalRedirectPolicy {
+    const NAME: &'static str = "InternalRedirectPolicy";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.InternalRedirectPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.InternalRedirectPolicy".into()
+    }
+}
 ///
 /// A simple wrapper for an HTTP filter config. This is intended to be used as a wrapper for the
 /// map value in
@@ -2909,6 +3496,16 @@ pub struct FilterConfig {
     /// This field only make sense for the downstream HTTP filters for now.
     #[prost(bool, tag = "3")]
     pub disabled: bool,
+}
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.FilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.FilterConfig".into()
+    }
 }
 /// \[\#next-free-field: 18\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -3049,11 +3646,31 @@ pub struct RouteConfiguration {
     #[prost(message, optional, tag = "17")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
 }
+impl ::prost::Name for RouteConfiguration {
+    const NAME: &'static str = "RouteConfiguration";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.RouteConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.RouteConfiguration".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Vhds {
     /// Configuration source specifier for VHDS.
     #[prost(message, optional, tag = "1")]
     pub config_source: ::core::option::Option<super::super::core::v3::ConfigSource>,
+}
+impl ::prost::Name for Vhds {
+    const NAME: &'static str = "Vhds";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.Vhds".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.Vhds".into()
+    }
 }
 ///
 /// Specifies a routing scope, which associates a
@@ -3177,5 +3794,37 @@ pub mod scoped_route_configuration {
                 StringKey(::prost::alloc::string::String),
             }
         }
+        impl ::prost::Name for Fragment {
+            const NAME: &'static str = "Fragment";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.ScopedRouteConfiguration.Key.Fragment".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.ScopedRouteConfiguration.Key.Fragment"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for Key {
+        const NAME: &'static str = "Key";
+        const PACKAGE: &'static str = "envoy.config.route.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.route.v3.ScopedRouteConfiguration.Key".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.route.v3.ScopedRouteConfiguration.Key"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ScopedRouteConfiguration {
+    const NAME: &'static str = "ScopedRouteConfiguration";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.ScopedRouteConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.ScopedRouteConfiguration".into()
     }
 }

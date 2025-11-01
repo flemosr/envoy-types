@@ -227,6 +227,18 @@ pub mod subset {
             }
         }
     }
+    impl ::prost::Name for LbSubsetSelector {
+        const NAME: &'static str = "LbSubsetSelector";
+        const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.subset.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.load_balancing_policies.subset.v3.Subset.LbSubsetSelector"
+                .into()
+        }
+    }
     /// If NO_FALLBACK is selected, a result
     /// equivalent to no healthy hosts is reported. If ANY_ENDPOINT is selected,
     /// any cluster endpoint may be returned (subject to policy, health checks,
@@ -346,5 +358,16 @@ pub mod subset {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for Subset {
+    const NAME: &'static str = "Subset";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.subset.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.subset.v3.Subset".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.subset.v3.Subset"
+            .into()
     }
 }

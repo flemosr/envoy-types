@@ -36,6 +36,16 @@ pub mod dns_table {
         #[prost(string, repeated, tag = "1")]
         pub address: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
+    impl ::prost::Name for AddressList {
+        const NAME: &'static str = "AddressList";
+        const PACKAGE: &'static str = "envoy.data.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.dns.v3.DnsTable.AddressList".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.dns.v3.DnsTable.AddressList".into()
+        }
+    }
     /// Specify the service protocol using a numeric or string value
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct DnsServiceProtocol {
@@ -57,6 +67,16 @@ pub mod dns_table {
             /// Specify the protocol name for the service.
             #[prost(string, tag = "2")]
             Name(::prost::alloc::string::String),
+        }
+    }
+    impl ::prost::Name for DnsServiceProtocol {
+        const NAME: &'static str = "DnsServiceProtocol";
+        const PACKAGE: &'static str = "envoy.data.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.dns.v3.DnsTable.DnsServiceProtocol".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.dns.v3.DnsTable.DnsServiceProtocol".into()
         }
     }
     /// Specify the target for a given DNS service
@@ -91,6 +111,16 @@ pub mod dns_table {
             ClusterName(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for DnsServiceTarget {
+        const NAME: &'static str = "DnsServiceTarget";
+        const PACKAGE: &'static str = "envoy.data.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.dns.v3.DnsTable.DnsServiceTarget".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.dns.v3.DnsTable.DnsServiceTarget".into()
+        }
+    }
     /// This message defines a service selection record returned for a service query in a domain
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DnsService {
@@ -109,11 +139,31 @@ pub mod dns_table {
         #[prost(message, repeated, tag = "4")]
         pub targets: ::prost::alloc::vec::Vec<DnsServiceTarget>,
     }
+    impl ::prost::Name for DnsService {
+        const NAME: &'static str = "DnsService";
+        const PACKAGE: &'static str = "envoy.data.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.dns.v3.DnsTable.DnsService".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.dns.v3.DnsTable.DnsService".into()
+        }
+    }
     /// Define a list of service records for a given service
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DnsServiceList {
         #[prost(message, repeated, tag = "1")]
         pub services: ::prost::alloc::vec::Vec<DnsService>,
+    }
+    impl ::prost::Name for DnsServiceList {
+        const NAME: &'static str = "DnsServiceList";
+        const PACKAGE: &'static str = "envoy.data.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.dns.v3.DnsTable.DnsServiceList".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.dns.v3.DnsTable.DnsServiceList".into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DnsEndpoint {
@@ -133,6 +183,16 @@ pub mod dns_table {
             /// Define a DNS Service List for the specified endpoint
             #[prost(message, tag = "3")]
             ServiceList(super::DnsServiceList),
+        }
+    }
+    impl ::prost::Name for DnsEndpoint {
+        const NAME: &'static str = "DnsEndpoint";
+        const PACKAGE: &'static str = "envoy.data.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.dns.v3.DnsTable.DnsEndpoint".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.dns.v3.DnsTable.DnsEndpoint".into()
         }
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -156,5 +216,25 @@ pub mod dns_table {
         pub answer_ttl: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Duration,
         >,
+    }
+    impl ::prost::Name for DnsVirtualDomain {
+        const NAME: &'static str = "DnsVirtualDomain";
+        const PACKAGE: &'static str = "envoy.data.dns.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.dns.v3.DnsTable.DnsVirtualDomain".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.dns.v3.DnsTable.DnsVirtualDomain".into()
+        }
+    }
+}
+impl ::prost::Name for DnsTable {
+    const NAME: &'static str = "DnsTable";
+    const PACKAGE: &'static str = "envoy.data.dns.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.dns.v3.DnsTable".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.dns.v3.DnsTable".into()
     }
 }

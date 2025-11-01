@@ -37,3 +37,13 @@ pub struct FluentdConfig {
         super::super::super::super::config::core::v3::RetryPolicy,
     >,
 }
+impl ::prost::Name for FluentdConfig {
+    const NAME: &'static str = "FluentdConfig";
+    const PACKAGE: &'static str = "envoy.extensions.tracers.fluentd.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.tracers.fluentd.v3.FluentdConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.tracers.fluentd.v3.FluentdConfig".into()
+    }
+}

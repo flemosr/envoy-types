@@ -224,6 +224,17 @@ pub mod tls_parameters {
         }
     }
 }
+impl ::prost::Name for TlsParameters {
+    const NAME: &'static str = "TlsParameters";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.TlsParameters".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.TlsParameters"
+            .into()
+    }
+}
 /// BoringSSL private key method configuration. The private key methods are used for external
 /// (potentially asynchronous) signing and decryption operations. Some use cases for private key
 /// methods would be TPM support and TLS acceleration.
@@ -249,6 +260,17 @@ pub mod private_key_provider {
     pub enum ConfigType {
         #[prost(message, tag = "3")]
         TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
+    }
+}
+impl ::prost::Name for PrivateKeyProvider {
+    const NAME: &'static str = "PrivateKeyProvider";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.PrivateKeyProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.PrivateKeyProvider"
+            .into()
     }
 }
 /// \[\#next-free-field: 9\]
@@ -331,6 +353,17 @@ pub struct TlsCertificate {
         super::super::super::super::config::core::v3::DataSource,
     >,
 }
+impl ::prost::Name for TlsCertificate {
+    const NAME: &'static str = "TlsCertificate";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.TlsCertificate".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.TlsCertificate"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TlsSessionTicketKeys {
     /// Keys for encrypting and decrypting TLS session tickets. The
@@ -361,6 +394,17 @@ pub struct TlsSessionTicketKeys {
         super::super::super::super::config::core::v3::DataSource,
     >,
 }
+impl ::prost::Name for TlsSessionTicketKeys {
+    const NAME: &'static str = "TlsSessionTicketKeys";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.TlsSessionTicketKeys".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.TlsSessionTicketKeys"
+            .into()
+    }
+}
 /// Indicates a certificate to be obtained from a named CertificateProvider plugin instance.
 /// The plugin instances are defined in the client's bootstrap file.
 /// The plugin allows certificates to be fetched/refreshed over the network asynchronously with
@@ -381,6 +425,18 @@ pub struct CertificateProviderPluginInstance {
     /// defaults to the empty string.
     #[prost(string, tag = "2")]
     pub certificate_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for CertificateProviderPluginInstance {
+    const NAME: &'static str = "CertificateProviderPluginInstance";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.CertificateProviderPluginInstance"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.CertificateProviderPluginInstance"
+            .into()
+    }
 }
 /// Matcher for subject alternative names, to match both type and value of the SAN.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -469,6 +525,17 @@ pub mod subject_alt_name_matcher {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for SubjectAltNameMatcher {
+    const NAME: &'static str = "SubjectAltNameMatcher";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.SubjectAltNameMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.SubjectAltNameMatcher"
+            .into()
     }
 }
 /// \[\#next-free-field: 18\]
@@ -698,6 +765,18 @@ pub struct CertificateValidationContext {
 pub mod certificate_validation_context {
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct SystemRootCerts {}
+    impl ::prost::Name for SystemRootCerts {
+        const NAME: &'static str = "SystemRootCerts";
+        const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.transport_sockets.tls.v3.CertificateValidationContext.SystemRootCerts"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.CertificateValidationContext.SystemRootCerts"
+                .into()
+        }
+    }
     /// Peer certificate verification mode.
     #[derive(
         Clone,
@@ -740,6 +819,17 @@ pub mod certificate_validation_context {
         }
     }
 }
+impl ::prost::Name for CertificateValidationContext {
+    const NAME: &'static str = "CertificateValidationContext";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.CertificateValidationContext".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.CertificateValidationContext"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenericSecret {
     /// Secret of generic type and is available to filters. It is expected
@@ -756,6 +846,17 @@ pub struct GenericSecret {
         super::super::super::super::config::core::v3::DataSource,
     >,
 }
+impl ::prost::Name for GenericSecret {
+    const NAME: &'static str = "GenericSecret";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.GenericSecret".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.GenericSecret"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SdsSecretConfig {
     /// Name by which the secret can be uniquely referred to. When both name and config are specified,
@@ -767,6 +868,17 @@ pub struct SdsSecretConfig {
     pub sds_config: ::core::option::Option<
         super::super::super::super::config::core::v3::ConfigSource,
     >,
+}
+impl ::prost::Name for SdsSecretConfig {
+    const NAME: &'static str = "SdsSecretConfig";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.SdsSecretConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.SdsSecretConfig"
+            .into()
+    }
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -789,6 +901,16 @@ pub mod secret {
         ValidationContext(super::CertificateValidationContext),
         #[prost(message, tag = "5")]
         GenericSecret(super::GenericSecret),
+    }
+}
+impl ::prost::Name for Secret {
+    const NAME: &'static str = "Secret";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.Secret".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret".into()
     }
 }
 /// \[\#next-free-field: 8\]
@@ -854,6 +976,17 @@ pub struct UpstreamTlsContext {
     pub enforce_rsa_key_usage: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
+}
+impl ::prost::Name for UpstreamTlsContext {
+    const NAME: &'static str = "UpstreamTlsContext";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext"
+            .into()
+    }
 }
 /// \[\#next-free-field: 12\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -981,6 +1114,17 @@ pub mod downstream_tls_context {
         DisableStatelessSessionResumption(bool),
     }
 }
+impl ::prost::Name for DownstreamTlsContext {
+    const NAME: &'static str = "DownstreamTlsContext";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext"
+            .into()
+    }
+}
 /// TLS key log configuration.
 /// The key log file format is "format used by NSS for its SSLKEYLOGFILE debugging output" (text taken from openssl man page)
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -998,6 +1142,16 @@ pub struct TlsKeyLog {
     pub remote_address_range: ::prost::alloc::vec::Vec<
         super::super::super::super::config::core::v3::CidrRange,
     >,
+}
+impl ::prost::Name for TlsKeyLog {
+    const NAME: &'static str = "TlsKeyLog";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.TlsKeyLog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.TlsKeyLog".into()
+    }
 }
 /// TLS context shared by both client and server TLS contexts.
 /// \[\#next-free-field: 17\]
@@ -1129,6 +1283,18 @@ pub mod common_tls_context {
             ),
         }
     }
+    impl ::prost::Name for CertificateProvider {
+        const NAME: &'static str = "CertificateProvider";
+        const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProvider"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProvider"
+                .into()
+        }
+    }
     /// Similar to CertificateProvider above, but allows the provider instances to be configured on
     /// the client side instead of being sent from the control plane.
     ///
@@ -1154,6 +1320,18 @@ pub mod common_tls_context {
         /// defaults to the empty string.
         #[prost(string, tag = "2")]
         pub certificate_name: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for CertificateProviderInstance {
+        const NAME: &'static str = "CertificateProviderInstance";
+        const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProviderInstance"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.CommonTlsContext.CertificateProviderInstance"
+                .into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CombinedCertificateValidationContext {
@@ -1185,6 +1363,18 @@ pub mod common_tls_context {
             CertificateProviderInstance,
         >,
     }
+    impl ::prost::Name for CombinedCertificateValidationContext {
+        const NAME: &'static str = "CombinedCertificateValidationContext";
+        const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.transport_sockets.tls.v3.CommonTlsContext.CombinedCertificateValidationContext"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.CommonTlsContext.CombinedCertificateValidationContext"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ValidationContextType {
         /// How to validate peer certificates.
@@ -1215,6 +1405,17 @@ pub mod common_tls_context {
         /// \[\#not-implemented-hide:\]
         #[prost(message, tag = "12")]
         ValidationContextCertificateProviderInstance(CertificateProviderInstance),
+    }
+}
+impl ::prost::Name for CommonTlsContext {
+    const NAME: &'static str = "CommonTlsContext";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.CommonTlsContext".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.CommonTlsContext"
+            .into()
     }
 }
 /// Configuration specific to the `SPIFFE <<https://github.com/spiffe/spiffe>`\_> certificate validator.
@@ -1277,5 +1478,28 @@ pub mod spiffe_cert_validator_config {
         pub trust_bundle: ::core::option::Option<
             super::super::super::super::super::config::core::v3::DataSource,
         >,
+    }
+    impl ::prost::Name for TrustDomain {
+        const NAME: &'static str = "TrustDomain";
+        const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.transport_sockets.tls.v3.SPIFFECertValidatorConfig.TrustDomain"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.SPIFFECertValidatorConfig.TrustDomain"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for SpiffeCertValidatorConfig {
+    const NAME: &'static str = "SPIFFECertValidatorConfig";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tls.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tls.v3.SPIFFECertValidatorConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.SPIFFECertValidatorConfig"
+            .into()
     }
 }

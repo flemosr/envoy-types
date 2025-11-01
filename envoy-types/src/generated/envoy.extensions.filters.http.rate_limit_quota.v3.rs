@@ -124,6 +124,18 @@ pub struct RateLimitQuotaFilterConfig {
         super::super::super::super::super::config::core::v3::HeaderValueOption,
     >,
 }
+impl ::prost::Name for RateLimitQuotaFilterConfig {
+    const NAME: &'static str = "RateLimitQuotaFilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaFilterConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaFilterConfig"
+            .into()
+    }
+}
 /// Per-route and per-host configuration overrides. The more specific definition completely
 /// overrides the less specific definition.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -145,6 +157,17 @@ pub struct RateLimitQuotaOverride {
     pub bucket_matchers: ::core::option::Option<
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
+}
+impl ::prost::Name for RateLimitQuotaOverride {
+    const NAME: &'static str = "RateLimitQuotaOverride";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaOverride".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaOverride"
+            .into()
+    }
 }
 /// Rate Limit Quota Bucket Settings to apply on the successful `bucket_matchers` match.
 ///
@@ -322,6 +345,18 @@ pub mod rate_limit_quota_bucket_settings {
             ),
         }
     }
+    impl ::prost::Name for NoAssignmentBehavior {
+        const NAME: &'static str = "NoAssignmentBehavior";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.NoAssignmentBehavior"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.NoAssignmentBehavior"
+                .into()
+        }
+    }
     /// Specifies the behavior when the bucket's assignment has expired, and cannot be refreshed for
     /// any reason.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -361,6 +396,18 @@ pub mod rate_limit_quota_bucket_settings {
         /// field.
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ReuseLastAssignment {}
+        impl ::prost::Name for ReuseLastAssignment {
+            const NAME: &'static str = "ReuseLastAssignment";
+            const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.ReuseLastAssignment"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior.ReuseLastAssignment"
+                    .into()
+            }
+        }
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum ExpiredAssignmentBehavior {
             /// Apply the rate limiting strategy to all requests matched into the bucket until the RLQS
@@ -376,6 +423,18 @@ pub mod rate_limit_quota_bucket_settings {
             ///   runs out.
             #[prost(message, tag = "3")]
             ReuseLastAssignment(ReuseLastAssignment),
+        }
+    }
+    impl ::prost::Name for ExpiredAssignmentBehavior {
+        const NAME: &'static str = "ExpiredAssignmentBehavior";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.ExpiredAssignmentBehavior"
+                .into()
         }
     }
     /// Customize the deny response to the requests over the rate limit.
@@ -414,6 +473,18 @@ pub mod rate_limit_quota_bucket_settings {
         pub response_headers_to_add: ::prost::alloc::vec::Vec<
             super::super::super::super::super::super::config::core::v3::HeaderValueOption,
         >,
+    }
+    impl ::prost::Name for DenyResponseSettings {
+        const NAME: &'static str = "DenyResponseSettings";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.DenyResponseSettings"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.DenyResponseSettings"
+                .into()
+        }
     }
     /// `BucketIdBuilder` makes it possible to build :ref:`BucketId  <envoy_v3_api_msg_service.rate_limit_quota.v3.BucketId>` with values substituted
     /// from the dynamic properties associated with each individual request. See usage examples in
@@ -463,5 +534,41 @@ pub mod rate_limit_quota_bucket_settings {
                 ),
             }
         }
+        impl ::prost::Name for ValueBuilder {
+            const NAME: &'static str = "ValueBuilder";
+            const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.BucketIdBuilder.ValueBuilder"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.BucketIdBuilder.ValueBuilder"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for BucketIdBuilder {
+        const NAME: &'static str = "BucketIdBuilder";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.BucketIdBuilder"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings.BucketIdBuilder"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for RateLimitQuotaBucketSettings {
+    const NAME: &'static str = "RateLimitQuotaBucketSettings";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.rate_limit_quota.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.rate_limit_quota.v3.RateLimitQuotaBucketSettings"
+            .into()
     }
 }

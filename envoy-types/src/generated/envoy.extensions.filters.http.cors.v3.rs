@@ -9,6 +9,16 @@
 /// must be configured in the `RouteConfiguration` as `typed_per_filter_config` at some level to make the filter work.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Cors {}
+impl ::prost::Name for Cors {
+    const NAME: &'static str = "Cors";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.cors.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.cors.v3.Cors".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.cors.v3.Cors".into()
+    }
+}
 /// Per route configuration for the CORS filter. This configuration should be configured in the `RouteConfiguration` as `typed_per_filter_config` at some level to
 /// make the filter work.
 /// \[\#next-free-field: 11\]
@@ -75,4 +85,14 @@ pub struct CorsPolicy {
     pub forward_not_matching_preflights: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
+}
+impl ::prost::Name for CorsPolicy {
+    const NAME: &'static str = "CorsPolicy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.cors.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.cors.v3.CorsPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.cors.v3.CorsPolicy".into()
+    }
 }

@@ -120,6 +120,7 @@ pub mod pb {
 
 /// Convenience mod for `ext_authz` server implementation
 pub mod ext_authz;
+pub mod util;
 
 mod sealed {
     pub trait Sealed {}

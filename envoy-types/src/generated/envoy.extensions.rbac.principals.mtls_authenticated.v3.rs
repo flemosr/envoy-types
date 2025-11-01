@@ -20,3 +20,14 @@ pub struct Config {
     #[prost(bool, tag = "2")]
     pub any_validated_client_certificate: bool,
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.rbac.principals.mtls_authenticated.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.rbac.principals.mtls_authenticated.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.rbac.principals.mtls_authenticated.v3.Config"
+            .into()
+    }
+}

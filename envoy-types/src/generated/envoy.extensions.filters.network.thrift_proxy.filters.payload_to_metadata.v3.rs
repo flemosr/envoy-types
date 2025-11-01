@@ -44,6 +44,18 @@ pub mod payload_to_metadata {
             ),
         }
     }
+    impl ::prost::Name for KeyValuePair {
+        const NAME: &'static str = "KeyValuePair";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata.KeyValuePair"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata.KeyValuePair"
+                .into()
+        }
+    }
     /// A Rule defines what metadata to apply when a field is present or missing.
     /// \[\#next-free-field: 6\]
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -78,6 +90,18 @@ pub mod payload_to_metadata {
             ServiceName(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for Rule {
+        const NAME: &'static str = "Rule";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata.Rule"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata.Rule"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct FieldSelector {
         /// field name to log
@@ -89,6 +113,18 @@ pub mod payload_to_metadata {
         /// next node of the field selector
         #[prost(message, optional, boxed, tag = "3")]
         pub child: ::core::option::Option<::prost::alloc::boxed::Box<FieldSelector>>,
+    }
+    impl ::prost::Name for FieldSelector {
+        const NAME: &'static str = "FieldSelector";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata.FieldSelector"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata.FieldSelector"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -125,5 +161,17 @@ pub mod payload_to_metadata {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for PayloadToMetadata {
+    const NAME: &'static str = "PayloadToMetadata";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.filters.payload_to_metadata.v3.PayloadToMetadata"
+            .into()
     }
 }

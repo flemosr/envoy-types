@@ -2,3 +2,14 @@
 /// Configuration for the default QUIC server crypto stream provided by QUICHE.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CryptoServerStreamConfig {}
+impl ::prost::Name for CryptoServerStreamConfig {
+    const NAME: &'static str = "CryptoServerStreamConfig";
+    const PACKAGE: &'static str = "envoy.extensions.quic.crypto_stream.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.crypto_stream.v3.CryptoServerStreamConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.crypto_stream.v3.CryptoServerStreamConfig"
+            .into()
+    }
+}

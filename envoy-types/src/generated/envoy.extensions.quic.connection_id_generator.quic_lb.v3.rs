@@ -52,3 +52,14 @@ pub struct Config {
         super::super::super::super::transport_sockets::tls::v3::SdsSecretConfig,
     >,
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.quic.connection_id_generator.quic_lb.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.quic.connection_id_generator.quic_lb.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.quic.connection_id_generator.quic_lb.v3.Config"
+            .into()
+    }
+}

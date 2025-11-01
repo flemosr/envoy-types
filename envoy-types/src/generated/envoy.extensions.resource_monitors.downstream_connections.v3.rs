@@ -7,3 +7,15 @@ pub struct DownstreamConnectionsConfig {
     #[prost(int64, tag = "1")]
     pub max_active_downstream_connections: i64,
 }
+impl ::prost::Name for DownstreamConnectionsConfig {
+    const NAME: &'static str = "DownstreamConnectionsConfig";
+    const PACKAGE: &'static str = "envoy.extensions.resource_monitors.downstream_connections.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.resource_monitors.downstream_connections.v3.DownstreamConnectionsConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.resource_monitors.downstream_connections.v3.DownstreamConnectionsConfig"
+            .into()
+    }
+}

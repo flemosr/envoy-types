@@ -53,6 +53,17 @@ pub struct XffConfig {
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for XffConfig {
+    const NAME: &'static str = "XffConfig";
+    const PACKAGE: &'static str = "envoy.extensions.http.original_ip_detection.xff.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.original_ip_detection.xff.v3.XffConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.original_ip_detection.xff.v3.XffConfig"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct XffTrustedCidrs {
     /// The list of `CIDRs <<https://tools.ietf.org/html/rfc4632>`\_> from which remote
@@ -61,4 +72,15 @@ pub struct XffTrustedCidrs {
     pub cidrs: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::core::v3::CidrRange,
     >,
+}
+impl ::prost::Name for XffTrustedCidrs {
+    const NAME: &'static str = "XffTrustedCidrs";
+    const PACKAGE: &'static str = "envoy.extensions.http.original_ip_detection.xff.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.original_ip_detection.xff.v3.XffTrustedCidrs".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.original_ip_detection.xff.v3.XffTrustedCidrs"
+            .into()
+    }
 }

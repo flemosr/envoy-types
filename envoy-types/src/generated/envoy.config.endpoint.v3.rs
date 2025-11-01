@@ -71,11 +71,43 @@ pub mod endpoint {
         #[prost(bool, tag = "4")]
         pub disable_active_health_check: bool,
     }
+    impl ::prost::Name for HealthCheckConfig {
+        const NAME: &'static str = "HealthCheckConfig";
+        const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.endpoint.v3.Endpoint.HealthCheckConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.endpoint.v3.Endpoint.HealthCheckConfig"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct AdditionalAddress {
         /// Additional address that is associated with the endpoint.
         #[prost(message, optional, tag = "1")]
         pub address: ::core::option::Option<super::super::super::core::v3::Address>,
+    }
+    impl ::prost::Name for AdditionalAddress {
+        const NAME: &'static str = "AdditionalAddress";
+        const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.endpoint.v3.Endpoint.AdditionalAddress".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.endpoint.v3.Endpoint.AdditionalAddress"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Endpoint {
+    const NAME: &'static str = "Endpoint";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.Endpoint".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.Endpoint".into()
     }
 }
 /// An Endpoint that Envoy can route traffic to.
@@ -124,6 +156,16 @@ pub mod lb_endpoint {
         EndpointName(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for LbEndpoint {
+    const NAME: &'static str = "LbEndpoint";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.LbEndpoint".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.LbEndpoint".into()
+    }
+}
 /// LbEndpoint list collection. Entries are `LbEndpoint` resources or references.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -132,6 +174,16 @@ pub struct LbEndpointCollection {
     pub entries: ::core::option::Option<
         super::super::super::super::xds::core::v3::CollectionEntry,
     >,
+}
+impl ::prost::Name for LbEndpointCollection {
+    const NAME: &'static str = "LbEndpointCollection";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.LbEndpointCollection".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.LbEndpointCollection".into()
+    }
 }
 /// A configuration for an LEDS collection.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -148,6 +200,16 @@ pub struct LedsClusterLocalityConfig {
     /// Envoy currently supports only glob collections.
     #[prost(string, tag = "2")]
     pub leds_collection_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for LedsClusterLocalityConfig {
+    const NAME: &'static str = "LedsClusterLocalityConfig";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.LedsClusterLocalityConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.LedsClusterLocalityConfig".into()
+    }
 }
 /// A group of endpoints belonging to a Locality.
 /// One can have multiple LocalityLbEndpoints for a locality, but only if
@@ -212,6 +274,17 @@ pub mod locality_lb_endpoints {
         #[prost(message, repeated, tag = "1")]
         pub lb_endpoints: ::prost::alloc::vec::Vec<super::LbEndpoint>,
     }
+    impl ::prost::Name for LbEndpointList {
+        const NAME: &'static str = "LbEndpointList";
+        const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.endpoint.v3.LocalityLbEndpoints.LbEndpointList".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.endpoint.v3.LocalityLbEndpoints.LbEndpointList"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum LbConfig {
         /// \[\#not-implemented-hide:\]
@@ -223,6 +296,16 @@ pub mod locality_lb_endpoints {
         /// field is ignored.
         #[prost(message, tag = "8")]
         LedsClusterLocalityConfig(super::LedsClusterLocalityConfig),
+    }
+}
+impl ::prost::Name for LocalityLbEndpoints {
+    const NAME: &'static str = "LocalityLbEndpoints";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.LocalityLbEndpoints".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.LocalityLbEndpoints".into()
     }
 }
 /// Each route from RDS will map to a single cluster or traffic split across
@@ -343,6 +426,39 @@ pub mod cluster_load_assignment {
                 super::super::super::super::super::r#type::v3::FractionalPercent,
             >,
         }
+        impl ::prost::Name for DropOverload {
+            const NAME: &'static str = "DropOverload";
+            const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.endpoint.v3.ClusterLoadAssignment.Policy.DropOverload"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.endpoint.v3.ClusterLoadAssignment.Policy.DropOverload"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for Policy {
+        const NAME: &'static str = "Policy";
+        const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.endpoint.v3.ClusterLoadAssignment.Policy".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.endpoint.v3.ClusterLoadAssignment.Policy"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ClusterLoadAssignment {
+    const NAME: &'static str = "ClusterLoadAssignment";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.ClusterLoadAssignment".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.ClusterLoadAssignment".into()
     }
 }
 ///
@@ -424,6 +540,16 @@ pub struct UpstreamLocalityStats {
     #[prost(uint32, tag = "6")]
     pub priority: u32,
 }
+impl ::prost::Name for UpstreamLocalityStats {
+    const NAME: &'static str = "UpstreamLocalityStats";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.UpstreamLocalityStats".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.UpstreamLocalityStats".into()
+    }
+}
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpstreamEndpointStats {
@@ -466,6 +592,16 @@ pub struct UpstreamEndpointStats {
     #[prost(message, repeated, tag = "5")]
     pub load_metric_stats: ::prost::alloc::vec::Vec<EndpointLoadMetricStats>,
 }
+impl ::prost::Name for UpstreamEndpointStats {
+    const NAME: &'static str = "UpstreamEndpointStats";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.UpstreamEndpointStats".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.UpstreamEndpointStats".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EndpointLoadMetricStats {
     /// Name of the metric; may be empty.
@@ -479,6 +615,16 @@ pub struct EndpointLoadMetricStats {
     #[prost(double, tag = "3")]
     pub total_metric_value: f64,
 }
+impl ::prost::Name for EndpointLoadMetricStats {
+    const NAME: &'static str = "EndpointLoadMetricStats";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.EndpointLoadMetricStats".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.EndpointLoadMetricStats".into()
+    }
+}
 /// Same as EndpointLoadMetricStats, except without the metric_name field.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct UnnamedEndpointLoadMetricStats {
@@ -489,6 +635,17 @@ pub struct UnnamedEndpointLoadMetricStats {
     /// load_reporting_interval.
     #[prost(double, tag = "2")]
     pub total_metric_value: f64,
+}
+impl ::prost::Name for UnnamedEndpointLoadMetricStats {
+    const NAME: &'static str = "UnnamedEndpointLoadMetricStats";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.UnnamedEndpointLoadMetricStats".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.UnnamedEndpointLoadMetricStats"
+            .into()
+    }
 }
 ///
 /// Per cluster load stats. Envoy reports these stats a management server in a
@@ -539,5 +696,26 @@ pub mod cluster_stats {
         /// Total number of deliberately dropped requests for the category.
         #[prost(uint64, tag = "2")]
         pub dropped_count: u64,
+    }
+    impl ::prost::Name for DroppedRequests {
+        const NAME: &'static str = "DroppedRequests";
+        const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.endpoint.v3.ClusterStats.DroppedRequests".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.endpoint.v3.ClusterStats.DroppedRequests"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for ClusterStats {
+    const NAME: &'static str = "ClusterStats";
+    const PACKAGE: &'static str = "envoy.config.endpoint.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.endpoint.v3.ClusterStats".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.endpoint.v3.ClusterStats".into()
     }
 }

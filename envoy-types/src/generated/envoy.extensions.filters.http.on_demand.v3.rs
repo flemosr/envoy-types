@@ -17,6 +17,17 @@ pub struct OnDemandCds {
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for OnDemandCds {
+    const NAME: &'static str = "OnDemandCds";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.on_demand.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.on_demand.v3.OnDemandCds".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.on_demand.v3.OnDemandCds"
+            .into()
+    }
+}
 /// On Demand Discovery filter config.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OnDemand {
@@ -29,6 +40,16 @@ pub struct OnDemand {
     #[prost(message, optional, tag = "1")]
     pub odcds: ::core::option::Option<OnDemandCds>,
 }
+impl ::prost::Name for OnDemand {
+    const NAME: &'static str = "OnDemand";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.on_demand.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.on_demand.v3.OnDemand".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.on_demand.v3.OnDemand".into()
+    }
+}
 /// Per-route configuration for On Demand Discovery.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PerRouteConfig {
@@ -40,4 +61,15 @@ pub struct PerRouteConfig {
     /// request will be resumed for further processing.
     #[prost(message, optional, tag = "1")]
     pub odcds: ::core::option::Option<OnDemandCds>,
+}
+impl ::prost::Name for PerRouteConfig {
+    const NAME: &'static str = "PerRouteConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.on_demand.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.on_demand.v3.PerRouteConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.on_demand.v3.PerRouteConfig"
+            .into()
+    }
 }

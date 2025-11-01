@@ -41,6 +41,29 @@ pub mod rate_limit_quota_usage_reports {
         #[prost(uint64, tag = "4")]
         pub num_requests_denied: u64,
     }
+    impl ::prost::Name for BucketQuotaUsage {
+        const NAME: &'static str = "BucketQuotaUsage";
+        const PACKAGE: &'static str = "envoy.service.rate_limit_quota.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.rate_limit_quota.v3.RateLimitQuotaUsageReports.BucketQuotaUsage"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.rate_limit_quota.v3.RateLimitQuotaUsageReports.BucketQuotaUsage"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for RateLimitQuotaUsageReports {
+    const NAME: &'static str = "RateLimitQuotaUsageReports";
+    const PACKAGE: &'static str = "envoy.service.rate_limit_quota.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.rate_limit_quota.v3.RateLimitQuotaUsageReports".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.rate_limit_quota.v3.RateLimitQuotaUsageReports"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimitQuotaResponse {
@@ -126,6 +149,18 @@ pub mod rate_limit_quota_response {
                 super::super::super::super::super::r#type::v3::RateLimitStrategy,
             >,
         }
+        impl ::prost::Name for QuotaAssignmentAction {
+            const NAME: &'static str = "QuotaAssignmentAction";
+            const PACKAGE: &'static str = "envoy.service.rate_limit_quota.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction"
+                    .into()
+            }
+        }
         /// Abandon action for the bucket. Indicates that the RLQS server will no longer be
         /// sending updates for the given :ref:`bucket_id  <envoy_v3_api_field_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.bucket_id>`.
         ///
@@ -154,6 +189,18 @@ pub mod rate_limit_quota_response {
         ///    "Applying the first assignment to the bucket" section of the :ref:`QuotaAssignmentAction <envoy_v3_api_msg_service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.QuotaAssignmentAction>`.
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct AbandonAction {}
+        impl ::prost::Name for AbandonAction {
+            const NAME: &'static str = "AbandonAction";
+            const PACKAGE: &'static str = "envoy.service.rate_limit_quota.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction.AbandonAction"
+                    .into()
+            }
+        }
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum BucketAction {
             /// Apply the quota assignment to the bucket.
@@ -173,6 +220,29 @@ pub mod rate_limit_quota_response {
             #[prost(message, tag = "3")]
             AbandonAction(AbandonAction),
         }
+    }
+    impl ::prost::Name for BucketAction {
+        const NAME: &'static str = "BucketAction";
+        const PACKAGE: &'static str = "envoy.service.rate_limit_quota.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse.BucketAction"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for RateLimitQuotaResponse {
+    const NAME: &'static str = "RateLimitQuotaResponse";
+    const PACKAGE: &'static str = "envoy.service.rate_limit_quota.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.rate_limit_quota.v3.RateLimitQuotaResponse"
+            .into()
     }
 }
 /// The identifier for the bucket. Used to match the bucket between the control plane (RLQS server),
@@ -204,6 +274,16 @@ pub struct BucketId {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
+}
+impl ::prost::Name for BucketId {
+    const NAME: &'static str = "BucketId";
+    const PACKAGE: &'static str = "envoy.service.rate_limit_quota.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.rate_limit_quota.v3.BucketId".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.rate_limit_quota.v3.BucketId".into()
+    }
 }
 /// Generated client implementations.
 pub mod rate_limit_quota_service_client {

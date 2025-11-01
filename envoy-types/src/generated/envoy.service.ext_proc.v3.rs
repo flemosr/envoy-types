@@ -23,6 +23,16 @@ pub struct ProtocolConfiguration {
     #[prost(bool, tag = "3")]
     pub send_body_without_waiting_for_header_response: bool,
 }
+impl ::prost::Name for ProtocolConfiguration {
+    const NAME: &'static str = "ProtocolConfiguration";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.ProtocolConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.ProtocolConfiguration".into()
+    }
+}
 /// This represents the different types of messages that Envoy can send
 /// to an external processing server.
 /// \[\#next-free-field: 12\]
@@ -103,6 +113,16 @@ pub mod processing_request {
         /// the original upstream response has trailers.
         #[prost(message, tag = "7")]
         ResponseTrailers(super::HttpTrailers),
+    }
+}
+impl ::prost::Name for ProcessingRequest {
+    const NAME: &'static str = "ProcessingRequest";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.ProcessingRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.ProcessingRequest".into()
     }
 }
 /// This represents the different types of messages the server may send back to Envoy
@@ -204,6 +224,16 @@ pub mod processing_response {
         ImmediateResponse(super::ImmediateResponse),
     }
 }
+impl ::prost::Name for ProcessingResponse {
+    const NAME: &'static str = "ProcessingResponse";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.ProcessingResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.ProcessingResponse".into()
+    }
+}
 /// This message is sent to the external server when the HTTP request and responses
 /// are first received.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -231,6 +261,16 @@ pub struct HttpHeaders {
     #[prost(bool, tag = "3")]
     pub end_of_stream: bool,
 }
+impl ::prost::Name for HttpHeaders {
+    const NAME: &'static str = "HttpHeaders";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.HttpHeaders".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.HttpHeaders".into()
+    }
+}
 /// This message is sent to the external server when the HTTP request and
 /// response bodies are received.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -244,6 +284,16 @@ pub struct HttpBody {
     #[prost(bool, tag = "2")]
     pub end_of_stream: bool,
 }
+impl ::prost::Name for HttpBody {
+    const NAME: &'static str = "HttpBody";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.HttpBody".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.HttpBody".into()
+    }
+}
 /// This message is sent to the external server when the HTTP request and
 /// response trailers are received.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -256,6 +306,16 @@ pub struct HttpTrailers {
         super::super::super::config::core::v3::HeaderMap,
     >,
 }
+impl ::prost::Name for HttpTrailers {
+    const NAME: &'static str = "HttpTrailers";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.HttpTrailers".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.HttpTrailers".into()
+    }
+}
 /// This message is sent by the external server to Envoy after `HttpHeaders` was
 /// sent to it.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -264,6 +324,16 @@ pub struct HeadersResponse {
     /// request/response.
     #[prost(message, optional, tag = "1")]
     pub response: ::core::option::Option<CommonResponse>,
+}
+impl ::prost::Name for HeadersResponse {
+    const NAME: &'static str = "HeadersResponse";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.HeadersResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.HeadersResponse".into()
+    }
 }
 /// This message is sent by the external server to Envoy after `HttpBody` was
 /// sent to it.
@@ -274,6 +344,16 @@ pub struct BodyResponse {
     #[prost(message, optional, tag = "1")]
     pub response: ::core::option::Option<CommonResponse>,
 }
+impl ::prost::Name for BodyResponse {
+    const NAME: &'static str = "BodyResponse";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.BodyResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.BodyResponse".into()
+    }
+}
 /// This message is sent by the external server to Envoy after `HttpTrailers` was
 /// sent to it.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -282,6 +362,16 @@ pub struct TrailersResponse {
     /// request/response trailers.
     #[prost(message, optional, tag = "1")]
     pub header_mutation: ::core::option::Option<HeaderMutation>,
+}
+impl ::prost::Name for TrailersResponse {
+    const NAME: &'static str = "TrailersResponse";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.TrailersResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.TrailersResponse".into()
+    }
 }
 /// This message contains common fields between header and body responses.
 /// \[\#next-free-field: 6\]
@@ -379,6 +469,16 @@ pub mod common_response {
         }
     }
 }
+impl ::prost::Name for CommonResponse {
+    const NAME: &'static str = "CommonResponse";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.CommonResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.CommonResponse".into()
+    }
+}
 /// This message causes the filter to attempt to create a locally
 /// generated response, send it  downstream, stop processing
 /// additional filters, and ignore any additional messages received
@@ -407,12 +507,32 @@ pub struct ImmediateResponse {
     #[prost(string, tag = "5")]
     pub details: ::prost::alloc::string::String,
 }
+impl ::prost::Name for ImmediateResponse {
+    const NAME: &'static str = "ImmediateResponse";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.ImmediateResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.ImmediateResponse".into()
+    }
+}
 /// This message specifies a gRPC status for an ImmediateResponse message.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GrpcStatus {
     /// The actual gRPC status.
     #[prost(uint32, tag = "1")]
     pub status: u32,
+}
+impl ::prost::Name for GrpcStatus {
+    const NAME: &'static str = "GrpcStatus";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.GrpcStatus".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.GrpcStatus".into()
+    }
 }
 /// Change HTTP headers or trailers by appending, replacing, or removing
 /// headers.
@@ -433,6 +553,16 @@ pub struct HeaderMutation {
     #[prost(string, repeated, tag = "2")]
     pub remove_headers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for HeaderMutation {
+    const NAME: &'static str = "HeaderMutation";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.HeaderMutation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.HeaderMutation".into()
+    }
+}
 /// The body response message corresponding to FULL_DUPLEX_STREAMED body mode.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamedBodyResponse {
@@ -445,6 +575,16 @@ pub struct StreamedBodyResponse {
     ///   and this is the last chunk of body responses.
     #[prost(bool, tag = "2")]
     pub end_of_stream: bool,
+}
+impl ::prost::Name for StreamedBodyResponse {
+    const NAME: &'static str = "StreamedBodyResponse";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.StreamedBodyResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.StreamedBodyResponse".into()
+    }
 }
 /// This message specifies the body mutation the server sends to Envoy.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -479,6 +619,16 @@ pub mod body_mutation {
         ///   is set to `FULL_DUPLEX_STREAMED`.
         #[prost(message, tag = "3")]
         StreamedResponse(super::StreamedBodyResponse),
+    }
+}
+impl ::prost::Name for BodyMutation {
+    const NAME: &'static str = "BodyMutation";
+    const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ext_proc.v3.BodyMutation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ext_proc.v3.BodyMutation".into()
     }
 }
 /// Generated client implementations.

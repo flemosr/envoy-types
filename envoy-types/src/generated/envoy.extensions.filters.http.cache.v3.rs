@@ -84,4 +84,25 @@ pub mod cache_config {
             super::super::super::super::super::super::config::route::v3::QueryParameterMatcher,
         >,
     }
+    impl ::prost::Name for KeyCreatorParams {
+        const NAME: &'static str = "KeyCreatorParams";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.cache.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.cache.v3.CacheConfig.KeyCreatorParams".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.cache.v3.CacheConfig.KeyCreatorParams"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for CacheConfig {
+    const NAME: &'static str = "CacheConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.cache.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.cache.v3.CacheConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.cache.v3.CacheConfig".into()
+    }
 }

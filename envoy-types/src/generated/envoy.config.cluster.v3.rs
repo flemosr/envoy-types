@@ -122,6 +122,38 @@ pub mod circuit_breakers {
                 super::super::super::super::super::super::google::protobuf::UInt32Value,
             >,
         }
+        impl ::prost::Name for RetryBudget {
+            const NAME: &'static str = "RetryBudget";
+            const PACKAGE: &'static str = "envoy.config.cluster.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.cluster.v3.CircuitBreakers.Thresholds.RetryBudget".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.cluster.v3.CircuitBreakers.Thresholds.RetryBudget"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for Thresholds {
+        const NAME: &'static str = "Thresholds";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.CircuitBreakers.Thresholds".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.CircuitBreakers.Thresholds"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for CircuitBreakers {
+    const NAME: &'static str = "CircuitBreakers";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.CircuitBreakers".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.CircuitBreakers".into()
     }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -145,6 +177,16 @@ pub struct Filter {
     pub config_discovery: ::core::option::Option<
         super::super::core::v3::ExtensionConfigSource,
     >,
+}
+impl ::prost::Name for Filter {
+    const NAME: &'static str = "Filter";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.Filter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.Filter".into()
+    }
 }
 /// See the :ref:`architecture overview <arch_overview_outlier_detection>` for
 /// more information on outlier detection.
@@ -349,6 +391,16 @@ pub struct OutlierDetection {
         super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for OutlierDetection {
+    const NAME: &'static str = "OutlierDetection";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.OutlierDetection".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.OutlierDetection".into()
+    }
+}
 /// Cluster list collections. Entries are `Cluster` resources or references.
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -357,6 +409,16 @@ pub struct ClusterCollection {
     pub entries: ::core::option::Option<
         super::super::super::super::xds::core::v3::CollectionEntry,
     >,
+}
+impl ::prost::Name for ClusterCollection {
+    const NAME: &'static str = "ClusterCollection";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.ClusterCollection".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.ClusterCollection".into()
+    }
 }
 /// Configuration for a single upstream cluster.
 /// \[\#next-free-field: 59\]
@@ -920,6 +982,17 @@ pub mod cluster {
             super::super::super::core::v3::TransportSocket,
         >,
     }
+    impl ::prost::Name for TransportSocketMatch {
+        const NAME: &'static str = "TransportSocketMatch";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.TransportSocketMatch".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.TransportSocketMatch"
+                .into()
+        }
+    }
     /// Extended cluster type.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct CustomClusterType {
@@ -934,6 +1007,17 @@ pub mod cluster {
             super::super::super::super::super::google::protobuf::Any,
         >,
     }
+    impl ::prost::Name for CustomClusterType {
+        const NAME: &'static str = "CustomClusterType";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.CustomClusterType".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.CustomClusterType"
+                .into()
+        }
+    }
     /// Only valid when discovery type is EDS.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct EdsClusterConfig {
@@ -947,6 +1031,16 @@ pub mod cluster {
         /// length. This may be a xdstp:// URL.
         #[prost(string, tag = "2")]
         pub service_name: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for EdsClusterConfig {
+        const NAME: &'static str = "EdsClusterConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.EdsClusterConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.EdsClusterConfig".into()
+        }
     }
     /// Optionally divide the endpoints in this cluster into subsets defined by
     /// endpoint metadata and selected by route and weighted cluster metadata.
@@ -1138,6 +1232,17 @@ pub mod cluster {
                 }
             }
         }
+        impl ::prost::Name for LbSubsetSelector {
+            const NAME: &'static str = "LbSubsetSelector";
+            const PACKAGE: &'static str = "envoy.config.cluster.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.cluster.v3.Cluster.LbSubsetConfig.LbSubsetSelector"
+                    .into()
+            }
+        }
         /// If NO_FALLBACK is selected, a result
         /// equivalent to no healthy hosts is reported. If ANY_ENDPOINT is selected,
         /// any cluster endpoint may be returned (subject to policy, health checks,
@@ -1259,6 +1364,16 @@ pub mod cluster {
             }
         }
     }
+    impl ::prost::Name for LbSubsetConfig {
+        const NAME: &'static str = "LbSubsetConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.LbSubsetConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.LbSubsetConfig".into()
+        }
+    }
     /// Configuration for :ref:`slow start mode <arch_overview_load_balancing_slow_start>`.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SlowStartConfig {
@@ -1293,6 +1408,16 @@ pub mod cluster {
             super::super::super::super::r#type::v3::Percent,
         >,
     }
+    impl ::prost::Name for SlowStartConfig {
+        const NAME: &'static str = "SlowStartConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.SlowStartConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.SlowStartConfig".into()
+        }
+    }
     /// Specific configuration for the RoundRobin load balancing policy.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RoundRobinLbConfig {
@@ -1300,6 +1425,17 @@ pub mod cluster {
         /// If this configuration is not set, slow start will not be not enabled.
         #[prost(message, optional, tag = "1")]
         pub slow_start_config: ::core::option::Option<SlowStartConfig>,
+    }
+    impl ::prost::Name for RoundRobinLbConfig {
+        const NAME: &'static str = "RoundRobinLbConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.RoundRobinLbConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.RoundRobinLbConfig"
+                .into()
+        }
     }
     /// Specific configuration for the LeastRequest load balancing policy.
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1341,6 +1477,17 @@ pub mod cluster {
         /// If this configuration is not set, slow start will not be not enabled.
         #[prost(message, optional, tag = "3")]
         pub slow_start_config: ::core::option::Option<SlowStartConfig>,
+    }
+    impl ::prost::Name for LeastRequestLbConfig {
+        const NAME: &'static str = "LeastRequestLbConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.LeastRequestLbConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.LeastRequestLbConfig"
+                .into()
+        }
     }
     /// Specific configuration for the :ref:`RingHash<arch_overview_load_balancing_types_ring_hash>`
     /// load balancing policy.
@@ -1413,6 +1560,16 @@ pub mod cluster {
             }
         }
     }
+    impl ::prost::Name for RingHashLbConfig {
+        const NAME: &'static str = "RingHashLbConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.RingHashLbConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.RingHashLbConfig".into()
+        }
+    }
     /// Specific configuration for the :ref:`Maglev<arch_overview_load_balancing_types_maglev>`
     /// load balancing policy.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -1425,6 +1582,16 @@ pub mod cluster {
         pub table_size: ::core::option::Option<
             super::super::super::super::super::google::protobuf::UInt64Value,
         >,
+    }
+    impl ::prost::Name for MaglevLbConfig {
+        const NAME: &'static str = "MaglevLbConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.MaglevLbConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.MaglevLbConfig".into()
+        }
     }
     ///
     /// Specific configuration for the
@@ -1465,6 +1632,17 @@ pub mod cluster {
         pub metadata_key: ::core::option::Option<
             super::super::super::super::r#type::metadata::v3::MetadataKey,
         >,
+    }
+    impl ::prost::Name for OriginalDstLbConfig {
+        const NAME: &'static str = "OriginalDstLbConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.OriginalDstLbConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.OriginalDstLbConfig"
+                .into()
+        }
     }
     /// Common configuration for all load balancer implementations.
     /// \[\#next-free-field: 9\]
@@ -1560,9 +1738,32 @@ pub mod cluster {
             #[prost(bool, tag = "3")]
             pub fail_traffic_on_panic: bool,
         }
+        impl ::prost::Name for ZoneAwareLbConfig {
+            const NAME: &'static str = "ZoneAwareLbConfig";
+            const PACKAGE: &'static str = "envoy.config.cluster.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.cluster.v3.Cluster.CommonLbConfig.ZoneAwareLbConfig".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.cluster.v3.Cluster.CommonLbConfig.ZoneAwareLbConfig"
+                    .into()
+            }
+        }
         /// Configuration for :ref:`locality weighted load balancing  <arch_overview_load_balancing_locality_weighted_lb>`
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct LocalityWeightedLbConfig {}
+        impl ::prost::Name for LocalityWeightedLbConfig {
+            const NAME: &'static str = "LocalityWeightedLbConfig";
+            const PACKAGE: &'static str = "envoy.config.cluster.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.cluster.v3.Cluster.CommonLbConfig.LocalityWeightedLbConfig"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.cluster.v3.Cluster.CommonLbConfig.LocalityWeightedLbConfig"
+                    .into()
+            }
+        }
         /// Common Configuration for all consistent hashing load balancers (MaglevLb, RingHashLb, etc.)
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ConsistentHashingLbConfig {
@@ -1593,12 +1794,34 @@ pub mod cluster {
                 super::super::super::super::super::super::google::protobuf::UInt32Value,
             >,
         }
+        impl ::prost::Name for ConsistentHashingLbConfig {
+            const NAME: &'static str = "ConsistentHashingLbConfig";
+            const PACKAGE: &'static str = "envoy.config.cluster.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.cluster.v3.Cluster.CommonLbConfig.ConsistentHashingLbConfig"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.cluster.v3.Cluster.CommonLbConfig.ConsistentHashingLbConfig"
+                    .into()
+            }
+        }
         #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
         pub enum LocalityConfigSpecifier {
             #[prost(message, tag = "2")]
             ZoneAwareLbConfig(ZoneAwareLbConfig),
             #[prost(message, tag = "3")]
             LocalityWeightedLbConfig(LocalityWeightedLbConfig),
+        }
+    }
+    impl ::prost::Name for CommonLbConfig {
+        const NAME: &'static str = "CommonLbConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.CommonLbConfig".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.CommonLbConfig".into()
         }
     }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -1620,6 +1843,16 @@ pub mod cluster {
         pub max_interval: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Duration,
         >,
+    }
+    impl ::prost::Name for RefreshRate {
+        const NAME: &'static str = "RefreshRate";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.RefreshRate".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.RefreshRate".into()
+        }
     }
     #[derive(Clone, Copy, PartialEq, ::prost::Message)]
     pub struct PreconnectPolicy {
@@ -1677,6 +1910,16 @@ pub mod cluster {
         pub predictive_preconnect_ratio: ::core::option::Option<
             super::super::super::super::super::google::protobuf::DoubleValue,
         >,
+    }
+    impl ::prost::Name for PreconnectPolicy {
+        const NAME: &'static str = "PreconnectPolicy";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.PreconnectPolicy".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.PreconnectPolicy".into()
+        }
     }
     /// Refer to :ref:`service discovery type <arch_overview_service_discovery_types>`
     /// for an explanation on each type.
@@ -1949,6 +2192,16 @@ pub mod cluster {
         RoundRobinLbConfig(RoundRobinLbConfig),
     }
 }
+impl ::prost::Name for Cluster {
+    const NAME: &'static str = "Cluster";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.Cluster".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.Cluster".into()
+    }
+}
 /// Extensible load balancing policy configuration.
 ///
 /// Every LB policy defined via this mechanism will be identified via a unique name using reverse
@@ -1986,6 +2239,27 @@ pub mod load_balancing_policy {
             super::super::super::core::v3::TypedExtensionConfig,
         >,
     }
+    impl ::prost::Name for Policy {
+        const NAME: &'static str = "Policy";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.LoadBalancingPolicy.Policy".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.LoadBalancingPolicy.Policy"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for LoadBalancingPolicy {
+    const NAME: &'static str = "LoadBalancingPolicy";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.LoadBalancingPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.LoadBalancingPolicy".into()
+    }
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UpstreamConnectionOptions {
@@ -2019,6 +2293,18 @@ pub mod upstream_connection_options {
         pub first_address_family_count: ::core::option::Option<
             super::super::super::super::super::google::protobuf::UInt32Value,
         >,
+    }
+    impl ::prost::Name for HappyEyeballsConfig {
+        const NAME: &'static str = "HappyEyeballsConfig";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.UpstreamConnectionOptions.HappyEyeballsConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.UpstreamConnectionOptions.HappyEyeballsConfig"
+                .into()
+        }
     }
     #[derive(
         Clone,
@@ -2062,6 +2348,16 @@ pub mod upstream_connection_options {
         }
     }
 }
+impl ::prost::Name for UpstreamConnectionOptions {
+    const NAME: &'static str = "UpstreamConnectionOptions";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.UpstreamConnectionOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.UpstreamConnectionOptions".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TrackClusterStats {
     /// If timeout_budgets is true, the :ref:`timeout budget histograms  <config_cluster_manager_cluster_stats_timeout_budgets>` will be published for each
@@ -2089,4 +2385,14 @@ pub struct TrackClusterStats {
     /// : ref:`load_stats_config <envoy_v3_api_field_config.bootstrap.v3.ClusterManager.load_stats_config>`.
     #[prost(bool, tag = "3")]
     pub per_endpoint_stats: bool,
+}
+impl ::prost::Name for TrackClusterStats {
+    const NAME: &'static str = "TrackClusterStats";
+    const PACKAGE: &'static str = "envoy.config.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.cluster.v3.TrackClusterStats".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.cluster.v3.TrackClusterStats".into()
+    }
 }

@@ -47,3 +47,14 @@ pub mod file_access_log {
         ),
     }
 }
+impl ::prost::Name for FileAccessLog {
+    const NAME: &'static str = "FileAccessLog";
+    const PACKAGE: &'static str = "envoy.extensions.access_loggers.file.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.access_loggers.file.v3.FileAccessLog".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog"
+            .into()
+    }
+}

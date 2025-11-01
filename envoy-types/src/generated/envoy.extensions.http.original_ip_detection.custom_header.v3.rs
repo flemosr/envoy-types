@@ -28,3 +28,15 @@ pub struct CustomHeaderConfig {
         super::super::super::super::super::r#type::v3::HttpStatus,
     >,
 }
+impl ::prost::Name for CustomHeaderConfig {
+    const NAME: &'static str = "CustomHeaderConfig";
+    const PACKAGE: &'static str = "envoy.extensions.http.original_ip_detection.custom_header.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.original_ip_detection.custom_header.v3.CustomHeaderConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.original_ip_detection.custom_header.v3.CustomHeaderConfig"
+            .into()
+    }
+}

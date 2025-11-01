@@ -29,6 +29,17 @@ pub struct RouteConfiguration {
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for RouteConfiguration {
+    const NAME: &'static str = "RouteConfiguration";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.RouteConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.RouteConfiguration"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Route {
     /// Route matching parameters.
@@ -37,6 +48,17 @@ pub struct Route {
     /// Route request to some upstream cluster.
     #[prost(message, optional, tag = "2")]
     pub route: ::core::option::Option<RouteAction>,
+}
+impl ::prost::Name for Route {
+    const NAME: &'static str = "Route";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.Route".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.Route"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteMatch {
@@ -77,6 +99,17 @@ pub mod route_match {
         /// multiplexing.
         #[prost(string, tag = "2")]
         ServiceName(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for RouteMatch {
+    const NAME: &'static str = "RouteMatch";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.RouteMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.RouteMatch"
+            .into()
     }
 }
 /// \[\#next-free-field: 8\]
@@ -137,6 +170,18 @@ pub mod route_action {
             super::super::super::super::super::super::config::core::v3::RuntimeFractionalPercent,
         >,
     }
+    impl ::prost::Name for RequestMirrorPolicy {
+        const NAME: &'static str = "RequestMirrorPolicy";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.thrift_proxy.v3.RouteAction.RequestMirrorPolicy"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.RouteAction.RequestMirrorPolicy"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ClusterSpecifier {
         /// Indicates a single upstream cluster to which the request should be routed
@@ -155,6 +200,17 @@ pub mod route_action {
         /// respectively.
         #[prost(string, tag = "6")]
         ClusterHeader(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for RouteAction {
+    const NAME: &'static str = "RouteAction";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.RouteAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.RouteAction"
+            .into()
     }
 }
 /// Allows for specification of multiple upstream clusters along with weights that indicate the
@@ -190,6 +246,29 @@ pub mod weighted_cluster {
             super::super::super::super::super::super::config::core::v3::Metadata,
         >,
     }
+    impl ::prost::Name for ClusterWeight {
+        const NAME: &'static str = "ClusterWeight";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.thrift_proxy.v3.WeightedCluster.ClusterWeight"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.WeightedCluster.ClusterWeight"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for WeightedCluster {
+    const NAME: &'static str = "WeightedCluster";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.WeightedCluster".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.WeightedCluster"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Trds {
@@ -204,6 +283,17 @@ pub struct Trds {
     /// Leave unspecified is also valid and means the unnamed route configuration.
     #[prost(string, tag = "2")]
     pub route_config_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for Trds {
+    const NAME: &'static str = "Trds";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.Trds".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.Trds"
+            .into()
+    }
 }
 /// \[\#next-free-field: 11\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -260,6 +350,17 @@ pub struct ThriftProxy {
     #[prost(bool, tag = "10")]
     pub header_keys_preserve_case: bool,
 }
+impl ::prost::Name for ThriftProxy {
+    const NAME: &'static str = "ThriftProxy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.ThriftProxy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.ThriftProxy"
+            .into()
+    }
+}
 /// ThriftFilter configures a Thrift filter.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ThriftFilter {
@@ -289,6 +390,17 @@ pub mod thrift_filter {
         ),
     }
 }
+impl ::prost::Name for ThriftFilter {
+    const NAME: &'static str = "ThriftFilter";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.ThriftFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.ThriftFilter"
+            .into()
+    }
+}
 ///
 /// ThriftProtocolOptions specifies Thrift upstream protocol options. This object is used in
 /// in
@@ -310,6 +422,17 @@ pub struct ThriftProtocolOptions {
     ///   which is the default, causes the proxy to use the same protocol as the downstream connection.
     #[prost(enumeration = "ProtocolType", tag = "2")]
     pub protocol: i32,
+}
+impl ::prost::Name for ThriftProtocolOptions {
+    const NAME: &'static str = "ThriftProtocolOptions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.thrift_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.thrift_proxy.v3.ThriftProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.thrift_proxy.v3.ThriftProtocolOptions"
+            .into()
+    }
 }
 /// Thrift transport types supported by Envoy.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

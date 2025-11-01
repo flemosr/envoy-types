@@ -84,6 +84,17 @@ pub struct HeaderMutationRules {
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for HeaderMutationRules {
+    const NAME: &'static str = "HeaderMutationRules";
+    const PACKAGE: &'static str = "envoy.config.common.mutation_rules.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.common.mutation_rules.v3.HeaderMutationRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.common.mutation_rules.v3.HeaderMutationRules"
+            .into()
+    }
+}
 /// The HeaderMutation structure specifies an action that may be taken on HTTP
 /// headers.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -101,5 +112,15 @@ pub mod header_mutation {
         /// Append new header by the specified HeaderValueOption.
         #[prost(message, tag = "2")]
         Append(super::super::super::super::core::v3::HeaderValueOption),
+    }
+}
+impl ::prost::Name for HeaderMutation {
+    const NAME: &'static str = "HeaderMutation";
+    const PACKAGE: &'static str = "envoy.config.common.mutation_rules.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.common.mutation_rules.v3.HeaderMutation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.common.mutation_rules.v3.HeaderMutation".into()
     }
 }

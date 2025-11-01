@@ -11,6 +11,16 @@ pub struct Data {
     #[prost(bool, tag = "2")]
     pub end_of_stream: bool,
 }
+impl ::prost::Name for Data {
+    const NAME: &'static str = "Data";
+    const PACKAGE: &'static str = "envoy.service.network_ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.network_ext_proc.v3.Data".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.network_ext_proc.v3.Data".into()
+    }
+}
 /// ProcessingRequest contains data sent from Envoy to the external processing server.
 /// Each request contains either read data (from client) or write data (to client)
 /// along with optional metadata.
@@ -36,6 +46,16 @@ pub struct ProcessingRequest {
     pub metadata: ::core::option::Option<
         super::super::super::config::core::v3::Metadata,
     >,
+}
+impl ::prost::Name for ProcessingRequest {
+    const NAME: &'static str = "ProcessingRequest";
+    const PACKAGE: &'static str = "envoy.service.network_ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.network_ext_proc.v3.ProcessingRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.network_ext_proc.v3.ProcessingRequest".into()
+    }
 }
 /// ProcessingResponse contains the response from the external processing server to Envoy.
 /// Each response corresponds to a ProcessingRequest and indicates how the network
@@ -170,6 +190,16 @@ pub mod processing_response {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for ProcessingResponse {
+    const NAME: &'static str = "ProcessingResponse";
+    const PACKAGE: &'static str = "envoy.service.network_ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.network_ext_proc.v3.ProcessingResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.network_ext_proc.v3.ProcessingResponse".into()
     }
 }
 /// Generated client implementations.

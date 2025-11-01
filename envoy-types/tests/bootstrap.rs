@@ -33,14 +33,19 @@ fn bootstrap() {
 
     let include_paths: Vec<PathBuf> = INCLUDE_PATHS.iter().map(PathBuf::from).collect();
 
+    let mut config = prost_build::Config::new();
+    config
+        .enable_type_names()
+        .type_name_domain(["."], "type.googleapis.com")
+        .compile_well_known_types()
+        .file_descriptor_set_path(out_dir.join("types.bin"))
+        .include_file("mod.rs");
+
     tonic_prost_build::configure()
         .build_server(true)
         .build_client(true)
-        .compile_well_known_types(true)
         .out_dir(&out_dir)
-        .file_descriptor_set_path(out_dir.join("types.bin"))
-        .include_file("mod.rs")
-        .compile_protos(&protos, &include_paths)
+        .compile_with_config(config, &protos, &include_paths)
         .unwrap();
 
     let status = Command::new("git")

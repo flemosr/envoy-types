@@ -68,3 +68,14 @@ pub struct CaresDnsResolverConfig {
     #[prost(bool, tag = "8")]
     pub rotate_nameservers: bool,
 }
+impl ::prost::Name for CaresDnsResolverConfig {
+    const NAME: &'static str = "CaresDnsResolverConfig";
+    const PACKAGE: &'static str = "envoy.extensions.network.dns_resolver.cares.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig"
+            .into()
+    }
+}

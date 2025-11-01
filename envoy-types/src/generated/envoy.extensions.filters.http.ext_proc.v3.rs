@@ -150,6 +150,17 @@ pub mod processing_mode {
         }
     }
 }
+impl ::prost::Name for ProcessingMode {
+    const NAME: &'static str = "ProcessingMode";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_proc.v3.ProcessingMode".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.ProcessingMode"
+            .into()
+    }
+}
 /// The filter communicates with an external gRPC service called an "external processor"
 /// that can do a variety of things with the request and response:
 ///
@@ -516,6 +527,17 @@ pub mod external_processor {
         }
     }
 }
+impl ::prost::Name for ExternalProcessor {
+    const NAME: &'static str = "ExternalProcessor";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_proc.v3.ExternalProcessor".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.ExternalProcessor"
+            .into()
+    }
+}
 /// ExtProcHttpService is used for HTTP communication between the filter and the external processing service.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtProcHttpService {
@@ -524,6 +546,17 @@ pub struct ExtProcHttpService {
     pub http_service: ::core::option::Option<
         super::super::super::super::super::config::core::v3::HttpService,
     >,
+}
+impl ::prost::Name for ExtProcHttpService {
+    const NAME: &'static str = "ExtProcHttpService";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_proc.v3.ExtProcHttpService".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.ExtProcHttpService"
+            .into()
+    }
 }
 /// The MetadataOptions structure defines options for the sending and receiving of
 /// dynamic metadata. Specifically, which namespaces to send to the server, whether
@@ -559,6 +592,29 @@ pub mod metadata_options {
         #[prost(string, repeated, tag = "2")]
         pub typed: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
+    impl ::prost::Name for MetadataNamespaces {
+        const NAME: &'static str = "MetadataNamespaces";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.ext_proc.v3.MetadataOptions.MetadataNamespaces"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.MetadataOptions.MetadataNamespaces"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for MetadataOptions {
+    const NAME: &'static str = "MetadataOptions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_proc.v3.MetadataOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.MetadataOptions"
+            .into()
+    }
 }
 /// The HeaderForwardingRules structure specifies what headers are
 /// allowed to be forwarded to the external processing server.
@@ -587,6 +643,17 @@ pub struct HeaderForwardingRules {
         super::super::super::super::super::r#type::matcher::v3::ListStringMatcher,
     >,
 }
+impl ::prost::Name for HeaderForwardingRules {
+    const NAME: &'static str = "HeaderForwardingRules";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_proc.v3.HeaderForwardingRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.HeaderForwardingRules"
+            .into()
+    }
+}
 /// Extra settings that may be added to per-route configuration for a
 /// virtual host or cluster.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -607,6 +674,17 @@ pub mod ext_proc_per_route {
         /// flag set in a less-specific one.
         #[prost(message, tag = "2")]
         Overrides(super::ExtProcOverrides),
+    }
+}
+impl ::prost::Name for ExtProcPerRoute {
+    const NAME: &'static str = "ExtProcPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_proc.v3.ExtProcPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.ExtProcPerRoute"
+            .into()
     }
 }
 /// Overrides that may be set on a per-route basis
@@ -658,4 +736,15 @@ pub struct ExtProcOverrides {
     pub failure_mode_allow: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
+}
+impl ::prost::Name for ExtProcOverrides {
+    const NAME: &'static str = "ExtProcOverrides";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ext_proc.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ext_proc.v3.ExtProcOverrides".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ext_proc.v3.ExtProcOverrides"
+            .into()
+    }
 }

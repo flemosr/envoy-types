@@ -8,3 +8,14 @@ pub struct CgroupMemoryConfig {
     #[prost(uint64, tag = "1")]
     pub max_memory_bytes: u64,
 }
+impl ::prost::Name for CgroupMemoryConfig {
+    const NAME: &'static str = "CgroupMemoryConfig";
+    const PACKAGE: &'static str = "envoy.extensions.resource_monitors.cgroup_memory.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.resource_monitors.cgroup_memory.v3.CgroupMemoryConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.resource_monitors.cgroup_memory.v3.CgroupMemoryConfig"
+            .into()
+    }
+}

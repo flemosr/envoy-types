@@ -3,6 +3,16 @@
 /// services: <https://github.com/google/protobuf/issues/4221> and protoxform to upgrade the file.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LdsDummy {}
+impl ::prost::Name for LdsDummy {
+    const NAME: &'static str = "LdsDummy";
+    const PACKAGE: &'static str = "envoy.service.listener.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.listener.v3.LdsDummy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.listener.v3.LdsDummy".into()
+    }
+}
 /// Generated client implementations.
 pub mod listener_discovery_service_client {
     #![allow(

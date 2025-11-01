@@ -26,6 +26,16 @@ pub mod body {
         AsString(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for Body {
+    const NAME: &'static str = "Body";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.Body".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.Body".into()
+    }
+}
 /// Connection properties.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Connection {
@@ -39,6 +49,16 @@ pub struct Connection {
     pub remote_address: ::core::option::Option<
         super::super::super::config::core::v3::Address,
     >,
+}
+impl ::prost::Name for Connection {
+    const NAME: &'static str = "Connection";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.Connection".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.Connection".into()
+    }
 }
 /// A fully buffered HTTP trace message.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -76,6 +96,26 @@ pub mod http_buffered_trace {
         pub headers_received_time: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Timestamp,
         >,
+    }
+    impl ::prost::Name for Message {
+        const NAME: &'static str = "Message";
+        const PACKAGE: &'static str = "envoy.data.tap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.tap.v3.HttpBufferedTrace.Message".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.tap.v3.HttpBufferedTrace.Message".into()
+        }
+    }
+}
+impl ::prost::Name for HttpBufferedTrace {
+    const NAME: &'static str = "HttpBufferedTrace";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.HttpBufferedTrace".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.HttpBufferedTrace".into()
     }
 }
 /// A streamed HTTP trace segment. Multiple segments make up a full trace.
@@ -116,6 +156,16 @@ pub mod http_streamed_trace_segment {
         ResponseTrailers(super::super::super::super::config::core::v3::HeaderMap),
     }
 }
+impl ::prost::Name for HttpStreamedTraceSegment {
+    const NAME: &'static str = "HttpStreamedTraceSegment";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.HttpStreamedTraceSegment".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.HttpStreamedTraceSegment".into()
+    }
+}
 /// Event in a socket trace.
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -143,6 +193,16 @@ pub mod socket_event {
         #[prost(message, optional, tag = "1")]
         pub data: ::core::option::Option<super::Body>,
     }
+    impl ::prost::Name for Read {
+        const NAME: &'static str = "Read";
+        const PACKAGE: &'static str = "envoy.data.tap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.tap.v3.SocketEvent.Read".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.tap.v3.SocketEvent.Read".into()
+        }
+    }
     /// Data written by Envoy to the transport socket.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Write {
@@ -153,11 +213,31 @@ pub mod socket_event {
         #[prost(bool, tag = "2")]
         pub end_stream: bool,
     }
+    impl ::prost::Name for Write {
+        const NAME: &'static str = "Write";
+        const PACKAGE: &'static str = "envoy.data.tap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.tap.v3.SocketEvent.Write".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.tap.v3.SocketEvent.Write".into()
+        }
+    }
     /// The connection was closed.
     ///
     /// TODO(mattklein123): Close event type.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Closed {}
+    impl ::prost::Name for Closed {
+        const NAME: &'static str = "Closed";
+        const PACKAGE: &'static str = "envoy.data.tap.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.data.tap.v3.SocketEvent.Closed".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.data.tap.v3.SocketEvent.Closed".into()
+        }
+    }
     /// Read or write with content as bytes string.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum EventSelector {
@@ -167,6 +247,16 @@ pub mod socket_event {
         Write(Write),
         #[prost(message, tag = "4")]
         Closed(Closed),
+    }
+}
+impl ::prost::Name for SocketEvent {
+    const NAME: &'static str = "SocketEvent";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.SocketEvent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.SocketEvent".into()
     }
 }
 /// Sequence of read/write events that constitute a buffered trace on a socket.
@@ -190,11 +280,31 @@ pub struct SocketBufferedTrace {
     #[prost(bool, tag = "5")]
     pub write_truncated: bool,
 }
+impl ::prost::Name for SocketBufferedTrace {
+    const NAME: &'static str = "SocketBufferedTrace";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.SocketBufferedTrace".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.SocketBufferedTrace".into()
+    }
+}
 /// A message for the sequence of observed events
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketEvents {
     #[prost(message, repeated, tag = "1")]
     pub events: ::prost::alloc::vec::Vec<SocketEvent>,
+}
+impl ::prost::Name for SocketEvents {
+    const NAME: &'static str = "SocketEvents";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.SocketEvents".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.SocketEvents".into()
+    }
 }
 /// A streamed socket trace segment. Multiple segments make up a full trace.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -223,6 +333,16 @@ pub mod socket_streamed_trace_segment {
         Events(super::SocketEvents),
     }
 }
+impl ::prost::Name for SocketStreamedTraceSegment {
+    const NAME: &'static str = "SocketStreamedTraceSegment";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.SocketStreamedTraceSegment".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.SocketStreamedTraceSegment".into()
+    }
+}
 /// Wrapper for all fully buffered and streamed tap traces that Envoy emits. This is required for
 /// sending traces over gRPC APIs or more easily persisting binary messages to files.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -246,5 +366,15 @@ pub mod trace_wrapper {
         /// A socket streamed tap trace segment.
         #[prost(message, tag = "4")]
         SocketStreamedTraceSegment(super::SocketStreamedTraceSegment),
+    }
+}
+impl ::prost::Name for TraceWrapper {
+    const NAME: &'static str = "TraceWrapper";
+    const PACKAGE: &'static str = "envoy.data.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.tap.v3.TraceWrapper".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.tap.v3.TraceWrapper".into()
     }
 }

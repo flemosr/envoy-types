@@ -55,6 +55,16 @@ pub struct AwsCredentialProvider {
         ::prost::alloc::boxed::Box<AssumeRoleCredentialProvider>,
     >,
 }
+impl ::prost::Name for AwsCredentialProvider {
+    const NAME: &'static str = "AwsCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.AwsCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.AwsCredentialProvider".into()
+    }
+}
 /// Configuration to use an inline AWS credential. This is an equivalent to setting the well-known
 /// environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and the optional `AWS_SESSION_TOKEN`.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -68,6 +78,17 @@ pub struct InlineCredentialProvider {
     /// The AWS session token. This is optional.
     #[prost(string, tag = "3")]
     pub session_token: ::prost::alloc::string::String,
+}
+impl ::prost::Name for InlineCredentialProvider {
+    const NAME: &'static str = "InlineCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.InlineCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.InlineCredentialProvider"
+            .into()
+    }
 }
 /// Configuration to use `AssumeRoleWithWebIdentity <<https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html>`\_>
 /// to retrieve AWS credentials.
@@ -87,6 +108,18 @@ pub struct AssumeRoleWithWebIdentityCredentialProvider {
     #[prost(string, tag = "3")]
     pub role_session_name: ::prost::alloc::string::String,
 }
+impl ::prost::Name for AssumeRoleWithWebIdentityCredentialProvider {
+    const NAME: &'static str = "AssumeRoleWithWebIdentityCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.AssumeRoleWithWebIdentityCredentialProvider"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.AssumeRoleWithWebIdentityCredentialProvider"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CredentialsFileCredentialProvider {
     /// Data source from which to retrieve AWS credentials
@@ -99,6 +132,17 @@ pub struct CredentialsFileCredentialProvider {
     /// The profile within the credentials_file data source. If not provided, the default profile will be used.
     #[prost(string, tag = "2")]
     pub profile: ::prost::alloc::string::String,
+}
+impl ::prost::Name for CredentialsFileCredentialProvider {
+    const NAME: &'static str = "CredentialsFileCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.CredentialsFileCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.CredentialsFileCredentialProvider"
+            .into()
+    }
 }
 /// Configuration to use `IAM Roles Anywhere <<https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html>`\_>
 /// to retrieve AWS credentials.
@@ -143,22 +187,77 @@ pub struct IamRolesAnywhereCredentialProvider {
         super::super::super::super::super::google::protobuf::Duration,
     >,
 }
+impl ::prost::Name for IamRolesAnywhereCredentialProvider {
+    const NAME: &'static str = "IAMRolesAnywhereCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.IAMRolesAnywhereCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.IAMRolesAnywhereCredentialProvider"
+            .into()
+    }
+}
 /// The Config Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ConfigCredentialProvider {}
+impl ::prost::Name for ConfigCredentialProvider {
+    const NAME: &'static str = "ConfigCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.ConfigCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.ConfigCredentialProvider"
+            .into()
+    }
+}
 /// The Container Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ContainerCredentialProvider {}
+impl ::prost::Name for ContainerCredentialProvider {
+    const NAME: &'static str = "ContainerCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.ContainerCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.ContainerCredentialProvider"
+            .into()
+    }
+}
 /// The Environment Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EnvironmentCredentialProvider {}
+impl ::prost::Name for EnvironmentCredentialProvider {
+    const NAME: &'static str = "EnvironmentCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.EnvironmentCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.EnvironmentCredentialProvider"
+            .into()
+    }
+}
 /// The Instance Profile Credential Provider has no configurable parameters, but listing it in a custom credential provider chain will enable this
 /// credential provider.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct InstanceProfileCredentialProvider {}
+impl ::prost::Name for InstanceProfileCredentialProvider {
+    const NAME: &'static str = "InstanceProfileCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.InstanceProfileCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.InstanceProfileCredentialProvider"
+            .into()
+    }
+}
 /// Configuration to use `AssumeRole <<https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html>`\_> for retrieving new credentials, via role chaining.
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -186,4 +285,15 @@ pub struct AssumeRoleCredentialProvider {
     pub credential_provider: ::core::option::Option<
         ::prost::alloc::boxed::Box<AwsCredentialProvider>,
     >,
+}
+impl ::prost::Name for AssumeRoleCredentialProvider {
+    const NAME: &'static str = "AssumeRoleCredentialProvider";
+    const PACKAGE: &'static str = "envoy.extensions.common.aws.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.aws.v3.AssumeRoleCredentialProvider".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.aws.v3.AssumeRoleCredentialProvider"
+            .into()
+    }
 }

@@ -30,11 +30,31 @@ pub mod regex_matcher {
     /// program size exceeds the warn level threshold.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GoogleRe2 {}
+    impl ::prost::Name for GoogleRe2 {
+        const NAME: &'static str = "GoogleRE2";
+        const PACKAGE: &'static str = "xds.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "xds.type.matcher.v3.RegexMatcher.GoogleRE2".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/xds.type.matcher.v3.RegexMatcher.GoogleRE2".into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum EngineType {
         /// Google's RE2 regex engine.
         #[prost(message, tag = "1")]
         GoogleRe2(GoogleRe2),
+    }
+}
+impl ::prost::Name for RegexMatcher {
+    const NAME: &'static str = "RegexMatcher";
+    const PACKAGE: &'static str = "xds.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.type.matcher.v3.RegexMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.type.matcher.v3.RegexMatcher".into()
     }
 }
 /// Specifies the way to match a string.
@@ -93,11 +113,31 @@ pub mod string_matcher {
         Custom(super::super::super::super::core::v3::TypedExtensionConfig),
     }
 }
+impl ::prost::Name for StringMatcher {
+    const NAME: &'static str = "StringMatcher";
+    const PACKAGE: &'static str = "xds.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.type.matcher.v3.StringMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.type.matcher.v3.StringMatcher".into()
+    }
+}
 /// Specifies a list of ways to match a string.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListStringMatcher {
     #[prost(message, repeated, tag = "1")]
     pub patterns: ::prost::alloc::vec::Vec<StringMatcher>,
+}
+impl ::prost::Name for ListStringMatcher {
+    const NAME: &'static str = "ListStringMatcher";
+    const PACKAGE: &'static str = "xds.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.type.matcher.v3.ListStringMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.type.matcher.v3.ListStringMatcher".into()
+    }
 }
 /// A matcher, which may traverse a matching tree in order to result in a match action.
 /// During matching, the tree will be traversed until a match is found, or if no match
@@ -148,6 +188,16 @@ pub mod matcher {
             Action(super::super::super::super::super::core::v3::TypedExtensionConfig),
         }
     }
+    impl ::prost::Name for OnMatch {
+        const NAME: &'static str = "OnMatch";
+        const PACKAGE: &'static str = "xds.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "xds.type.matcher.v3.Matcher.OnMatch".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/xds.type.matcher.v3.Matcher.OnMatch".into()
+        }
+    }
     /// A linear list of field matchers.
     /// The field matchers are evaluated in order, and the first match
     /// wins.
@@ -194,11 +244,35 @@ pub mod matcher {
                     ),
                 }
             }
+            impl ::prost::Name for SinglePredicate {
+                const NAME: &'static str = "SinglePredicate";
+                const PACKAGE: &'static str = "xds.type.matcher.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "xds.type.matcher.v3.Matcher.MatcherList.Predicate.SinglePredicate"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/xds.type.matcher.v3.Matcher.MatcherList.Predicate.SinglePredicate"
+                        .into()
+                }
+            }
             /// A list of two or more matchers. Used to allow using a list within a oneof.
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct PredicateList {
                 #[prost(message, repeated, tag = "1")]
                 pub predicate: ::prost::alloc::vec::Vec<super::Predicate>,
+            }
+            impl ::prost::Name for PredicateList {
+                const NAME: &'static str = "PredicateList";
+                const PACKAGE: &'static str = "xds.type.matcher.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "xds.type.matcher.v3.Matcher.MatcherList.Predicate.PredicateList"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/xds.type.matcher.v3.Matcher.MatcherList.Predicate.PredicateList"
+                        .into()
+                }
             }
             #[derive(Clone, PartialEq, ::prost::Oneof)]
             pub enum MatchType {
@@ -216,6 +290,17 @@ pub mod matcher {
                 NotMatcher(::prost::alloc::boxed::Box<super::Predicate>),
             }
         }
+        impl ::prost::Name for Predicate {
+            const NAME: &'static str = "Predicate";
+            const PACKAGE: &'static str = "xds.type.matcher.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "xds.type.matcher.v3.Matcher.MatcherList.Predicate".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/xds.type.matcher.v3.Matcher.MatcherList.Predicate"
+                    .into()
+            }
+        }
         /// An individual matcher.
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct FieldMatcher {
@@ -225,6 +310,27 @@ pub mod matcher {
             /// What to do if the match succeeds.
             #[prost(message, optional, tag = "2")]
             pub on_match: ::core::option::Option<super::OnMatch>,
+        }
+        impl ::prost::Name for FieldMatcher {
+            const NAME: &'static str = "FieldMatcher";
+            const PACKAGE: &'static str = "xds.type.matcher.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "xds.type.matcher.v3.Matcher.MatcherList.FieldMatcher".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/xds.type.matcher.v3.Matcher.MatcherList.FieldMatcher"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for MatcherList {
+        const NAME: &'static str = "MatcherList";
+        const PACKAGE: &'static str = "xds.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "xds.type.matcher.v3.Matcher.MatcherList".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/xds.type.matcher.v3.Matcher.MatcherList".into()
         }
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -251,6 +357,17 @@ pub mod matcher {
                 super::OnMatch,
             >,
         }
+        impl ::prost::Name for MatchMap {
+            const NAME: &'static str = "MatchMap";
+            const PACKAGE: &'static str = "xds.type.matcher.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "xds.type.matcher.v3.Matcher.MatcherTree.MatchMap".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/xds.type.matcher.v3.Matcher.MatcherTree.MatchMap"
+                    .into()
+            }
+        }
         /// Exact or prefix match maps in which to look up the input value.
         /// If the lookup succeeds, the match is considered successful, and
         /// the corresponding OnMatch is used.
@@ -268,6 +385,16 @@ pub mod matcher {
             ),
         }
     }
+    impl ::prost::Name for MatcherTree {
+        const NAME: &'static str = "MatcherTree";
+        const PACKAGE: &'static str = "xds.type.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "xds.type.matcher.v3.Matcher.MatcherTree".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/xds.type.matcher.v3.Matcher.MatcherTree".into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum MatcherType {
         /// A linear list of matchers to evaluate.
@@ -276,5 +403,15 @@ pub mod matcher {
         /// A match tree to evaluate.
         #[prost(message, tag = "2")]
         MatcherTree(MatcherTree),
+    }
+}
+impl ::prost::Name for Matcher {
+    const NAME: &'static str = "Matcher";
+    const PACKAGE: &'static str = "xds.type.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "xds.type.matcher.v3.Matcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/xds.type.matcher.v3.Matcher".into()
     }
 }

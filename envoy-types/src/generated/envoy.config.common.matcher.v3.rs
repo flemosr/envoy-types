@@ -55,6 +55,16 @@ pub mod matcher {
             Action(super::super::super::super::super::core::v3::TypedExtensionConfig),
         }
     }
+    impl ::prost::Name for OnMatch {
+        const NAME: &'static str = "OnMatch";
+        const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.common.matcher.v3.Matcher.OnMatch".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.OnMatch".into()
+        }
+    }
     /// A linear list of field matchers.
     /// The field matchers are evaluated in order, and the first match
     /// wins.
@@ -103,11 +113,35 @@ pub mod matcher {
                     ),
                 }
             }
+            impl ::prost::Name for SinglePredicate {
+                const NAME: &'static str = "SinglePredicate";
+                const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.config.common.matcher.v3.Matcher.MatcherList.Predicate.SinglePredicate"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.MatcherList.Predicate.SinglePredicate"
+                        .into()
+                }
+            }
             /// A list of two or more matchers. Used to allow using a list within a oneof.
             #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct PredicateList {
                 #[prost(message, repeated, tag = "1")]
                 pub predicate: ::prost::alloc::vec::Vec<super::Predicate>,
+            }
+            impl ::prost::Name for PredicateList {
+                const NAME: &'static str = "PredicateList";
+                const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.config.common.matcher.v3.Matcher.MatcherList.Predicate.PredicateList"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.MatcherList.Predicate.PredicateList"
+                        .into()
+                }
             }
             #[derive(Clone, PartialEq, ::prost::Oneof)]
             pub enum MatchType {
@@ -125,6 +159,17 @@ pub mod matcher {
                 NotMatcher(::prost::alloc::boxed::Box<super::Predicate>),
             }
         }
+        impl ::prost::Name for Predicate {
+            const NAME: &'static str = "Predicate";
+            const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.common.matcher.v3.Matcher.MatcherList.Predicate".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.MatcherList.Predicate"
+                    .into()
+            }
+        }
         /// An individual matcher.
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct FieldMatcher {
@@ -134,6 +179,28 @@ pub mod matcher {
             /// What to do if the match succeeds.
             #[prost(message, optional, tag = "2")]
             pub on_match: ::core::option::Option<super::OnMatch>,
+        }
+        impl ::prost::Name for FieldMatcher {
+            const NAME: &'static str = "FieldMatcher";
+            const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.common.matcher.v3.Matcher.MatcherList.FieldMatcher".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.MatcherList.FieldMatcher"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for MatcherList {
+        const NAME: &'static str = "MatcherList";
+        const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.common.matcher.v3.Matcher.MatcherList".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.MatcherList"
+                .into()
         }
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -160,6 +227,17 @@ pub mod matcher {
                 super::OnMatch,
             >,
         }
+        impl ::prost::Name for MatchMap {
+            const NAME: &'static str = "MatchMap";
+            const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.common.matcher.v3.Matcher.MatcherTree.MatchMap".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.MatcherTree.MatchMap"
+                    .into()
+            }
+        }
         /// Exact or prefix match maps in which to look up the input value.
         /// If the lookup succeeds, the match is considered successful, and
         /// the corresponding OnMatch is used.
@@ -177,6 +255,17 @@ pub mod matcher {
             ),
         }
     }
+    impl ::prost::Name for MatcherTree {
+        const NAME: &'static str = "MatcherTree";
+        const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.common.matcher.v3.Matcher.MatcherTree".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.common.matcher.v3.Matcher.MatcherTree"
+                .into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum MatcherType {
         /// A linear list of matchers to evaluate.
@@ -185,6 +274,16 @@ pub mod matcher {
         /// A match tree to evaluate.
         #[prost(message, tag = "2")]
         MatcherTree(MatcherTree),
+    }
+}
+impl ::prost::Name for Matcher {
+    const NAME: &'static str = "Matcher";
+    const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.common.matcher.v3.Matcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.common.matcher.v3.Matcher".into()
     }
 }
 /// Match configuration. This is a recursive structure which allows complex nested match
@@ -203,6 +302,17 @@ pub mod match_predicate {
         /// The list of rules that make up the set.
         #[prost(message, repeated, tag = "1")]
         pub rules: ::prost::alloc::vec::Vec<super::MatchPredicate>,
+    }
+    impl ::prost::Name for MatchSet {
+        const NAME: &'static str = "MatchSet";
+        const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.common.matcher.v3.MatchPredicate.MatchSet".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.common.matcher.v3.MatchPredicate.MatchSet"
+                .into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Rule {
@@ -240,12 +350,32 @@ pub mod match_predicate {
         HttpResponseGenericBodyMatch(super::HttpGenericBodyMatch),
     }
 }
+impl ::prost::Name for MatchPredicate {
+    const NAME: &'static str = "MatchPredicate";
+    const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.common.matcher.v3.MatchPredicate".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.common.matcher.v3.MatchPredicate".into()
+    }
+}
 /// HTTP headers match configuration.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpHeadersMatch {
     /// HTTP headers to match.
     #[prost(message, repeated, tag = "1")]
     pub headers: ::prost::alloc::vec::Vec<super::super::super::route::v3::HeaderMatcher>,
+}
+impl ::prost::Name for HttpHeadersMatch {
+    const NAME: &'static str = "HttpHeadersMatch";
+    const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.common.matcher.v3.HttpHeadersMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.common.matcher.v3.HttpHeadersMatch".into()
+    }
 }
 /// HTTP generic body match configuration.
 /// List of text strings and hex strings to be located in HTTP body.
@@ -284,5 +414,26 @@ pub mod http_generic_body_match {
             #[prost(bytes, tag = "2")]
             BinaryMatch(::prost::alloc::vec::Vec<u8>),
         }
+    }
+    impl ::prost::Name for GenericTextMatch {
+        const NAME: &'static str = "GenericTextMatch";
+        const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.common.matcher.v3.HttpGenericBodyMatch.GenericTextMatch".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.common.matcher.v3.HttpGenericBodyMatch.GenericTextMatch"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for HttpGenericBodyMatch {
+    const NAME: &'static str = "HttpGenericBodyMatch";
+    const PACKAGE: &'static str = "envoy.config.common.matcher.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.common.matcher.v3.HttpGenericBodyMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.common.matcher.v3.HttpGenericBodyMatch".into()
     }
 }

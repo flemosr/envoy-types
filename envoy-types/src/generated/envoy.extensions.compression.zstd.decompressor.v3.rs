@@ -18,3 +18,14 @@ pub struct Zstd {
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for Zstd {
+    const NAME: &'static str = "Zstd";
+    const PACKAGE: &'static str = "envoy.extensions.compression.zstd.decompressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.compression.zstd.decompressor.v3.Zstd".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.compression.zstd.decompressor.v3.Zstd"
+            .into()
+    }
+}

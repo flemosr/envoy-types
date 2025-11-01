@@ -3,24 +3,79 @@
 /// \[\#extension: envoy.matching.inputs.destination_ip\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DestinationIpInput {}
+impl ::prost::Name for DestinationIpInput {
+    const NAME: &'static str = "DestinationIPInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.DestinationIPInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.DestinationIPInput"
+            .into()
+    }
+}
 /// Specifies that matching should be performed by the destination port.
 /// \[\#extension: envoy.matching.inputs.destination_port\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DestinationPortInput {}
+impl ::prost::Name for DestinationPortInput {
+    const NAME: &'static str = "DestinationPortInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.DestinationPortInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.DestinationPortInput"
+            .into()
+    }
+}
 /// Specifies that matching should be performed by the source IP address.
 /// \[\#extension: envoy.matching.inputs.source_ip\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SourceIpInput {}
+impl ::prost::Name for SourceIpInput {
+    const NAME: &'static str = "SourceIPInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.SourceIPInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.SourceIPInput"
+            .into()
+    }
+}
 /// Specifies that matching should be performed by the source port.
 /// \[\#extension: envoy.matching.inputs.source_port\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SourcePortInput {}
+impl ::prost::Name for SourcePortInput {
+    const NAME: &'static str = "SourcePortInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.SourcePortInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.SourcePortInput"
+            .into()
+    }
+}
 /// Input that matches by the directly connected source IP address (this
 /// will only be different from the source IP address when using a listener
 /// filter that overrides the source address, such as the :ref:`Proxy Protocol  listener filter <config_listener_filters_proxy_protocol>`).
 /// \[\#extension: envoy.matching.inputs.direct_source_ip\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DirectSourceIpInput {}
+impl ::prost::Name for DirectSourceIpInput {
+    const NAME: &'static str = "DirectSourceIPInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.DirectSourceIPInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.DirectSourceIPInput"
+            .into()
+    }
+}
 /// Input that matches by the source IP type.
 /// Specifies the source IP match type. The values include:
 ///
@@ -28,6 +83,17 @@ pub struct DirectSourceIpInput {}
 ///   \[\#extension: envoy.matching.inputs.source_type\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SourceTypeInput {}
+impl ::prost::Name for SourceTypeInput {
+    const NAME: &'static str = "SourceTypeInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.SourceTypeInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.SourceTypeInput"
+            .into()
+    }
+}
 ///
 /// Input that matches by the requested server name (e.g. SNI in TLS).
 /// : ref:`TLS Inspector <config_listener_filters_tls_inspector>` provides the requested server name based on SNI,
@@ -35,6 +101,17 @@ pub struct SourceTypeInput {}
 ///   \[\#extension: envoy.matching.inputs.server_name\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ServerNameInput {}
+impl ::prost::Name for ServerNameInput {
+    const NAME: &'static str = "ServerNameInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.ServerNameInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.ServerNameInput"
+            .into()
+    }
+}
 /// Input that matches by the transport protocol.
 ///
 /// Suggested values include:
@@ -45,6 +122,18 @@ pub struct ServerNameInput {}
 ///   \[\#extension: envoy.matching.inputs.transport_protocol\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TransportProtocolInput {}
+impl ::prost::Name for TransportProtocolInput {
+    const NAME: &'static str = "TransportProtocolInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.TransportProtocolInput"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.TransportProtocolInput"
+            .into()
+    }
+}
 /// List of quoted and comma-separated requested application protocols. The list consists of a
 /// single negotiated application protocol once the network stream is established.
 ///
@@ -71,6 +160,18 @@ pub struct TransportProtocolInput {}
 /// \[\#extension: envoy.matching.inputs.application_protocol\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ApplicationProtocolInput {}
+impl ::prost::Name for ApplicationProtocolInput {
+    const NAME: &'static str = "ApplicationProtocolInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.ApplicationProtocolInput"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.ApplicationProtocolInput"
+            .into()
+    }
+}
 /// Input that matches by a specific filter state key.
 /// The value of the provided filter state key will be the raw string representation of the filter state object
 /// \[\#extension: envoy.matching.inputs.filter_state\]
@@ -78,6 +179,17 @@ pub struct ApplicationProtocolInput {}
 pub struct FilterStateInput {
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
+}
+impl ::prost::Name for FilterStateInput {
+    const NAME: &'static str = "FilterStateInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.FilterStateInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.FilterStateInput"
+            .into()
+    }
 }
 ///
 /// Input that matches dynamic metadata by key.
@@ -137,5 +249,28 @@ pub mod dynamic_metadata_input {
             #[prost(string, tag = "1")]
             Key(::prost::alloc::string::String),
         }
+    }
+    impl ::prost::Name for PathSegment {
+        const NAME: &'static str = "PathSegment";
+        const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.matching.common_inputs.network.v3.DynamicMetadataInput.PathSegment"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.DynamicMetadataInput.PathSegment"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for DynamicMetadataInput {
+    const NAME: &'static str = "DynamicMetadataInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.network.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.network.v3.DynamicMetadataInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.DynamicMetadataInput"
+            .into()
     }
 }

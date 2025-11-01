@@ -7,3 +7,14 @@ pub struct Config {
         super::super::super::super::super::config::core::v3::DataSource,
     >,
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.direct_response.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.direct_response.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.direct_response.v3.Config"
+            .into()
+    }
+}

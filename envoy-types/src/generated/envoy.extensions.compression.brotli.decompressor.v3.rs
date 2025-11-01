@@ -11,3 +11,14 @@ pub struct Brotli {
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for Brotli {
+    const NAME: &'static str = "Brotli";
+    const PACKAGE: &'static str = "envoy.extensions.compression.brotli.decompressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.compression.brotli.decompressor.v3.Brotli".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.compression.brotli.decompressor.v3.Brotli"
+            .into()
+    }
+}

@@ -2,3 +2,14 @@
 /// Configuration for the request without query formatter.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ReqWithoutQuery {}
+impl ::prost::Name for ReqWithoutQuery {
+    const NAME: &'static str = "ReqWithoutQuery";
+    const PACKAGE: &'static str = "envoy.extensions.formatter.req_without_query.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.formatter.req_without_query.v3.ReqWithoutQuery".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.formatter.req_without_query.v3.ReqWithoutQuery"
+            .into()
+    }
+}

@@ -13,3 +13,13 @@ pub struct Redis {
         super::super::super::filters::network::redis_proxy::v3::AwsIam,
     >,
 }
+impl ::prost::Name for Redis {
+    const NAME: &'static str = "Redis";
+    const PACKAGE: &'static str = "envoy.extensions.health_checkers.redis.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.health_checkers.redis.v3.Redis".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.health_checkers.redis.v3.Redis".into()
+    }
+}

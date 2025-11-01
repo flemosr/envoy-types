@@ -10,3 +10,14 @@ pub struct S2aConfiguration {
     #[prost(string, tag = "1")]
     pub s2a_address: ::prost::alloc::string::String,
 }
+impl ::prost::Name for S2aConfiguration {
+    const NAME: &'static str = "S2AConfiguration";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.s2a.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.s2a.v3.S2AConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.s2a.v3.S2AConfiguration"
+            .into()
+    }
+}

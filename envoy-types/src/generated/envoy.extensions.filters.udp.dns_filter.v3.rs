@@ -43,6 +43,18 @@ pub mod dns_filter_config {
             ),
         }
     }
+    impl ::prost::Name for ServerContextConfig {
+        const NAME: &'static str = "ServerContextConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.udp.dns_filter.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.udp.dns_filter.v3.DnsFilterConfig.ServerContextConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.udp.dns_filter.v3.DnsFilterConfig.ServerContextConfig"
+                .into()
+        }
+    }
     /// This message contains the configuration for the DNS Filter operating
     /// in a client context. This message will contain the timeouts, retry,
     /// and forwarding configuration for Envoy to make DNS requests to other
@@ -103,5 +115,28 @@ pub mod dns_filter_config {
         /// resolution times out or is otherwise unsuccessful
         #[prost(uint64, tag = "3")]
         pub max_pending_lookups: u64,
+    }
+    impl ::prost::Name for ClientContextConfig {
+        const NAME: &'static str = "ClientContextConfig";
+        const PACKAGE: &'static str = "envoy.extensions.filters.udp.dns_filter.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.udp.dns_filter.v3.DnsFilterConfig.ClientContextConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.udp.dns_filter.v3.DnsFilterConfig.ClientContextConfig"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for DnsFilterConfig {
+    const NAME: &'static str = "DnsFilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.udp.dns_filter.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.udp.dns_filter.v3.DnsFilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.udp.dns_filter.v3.DnsFilterConfig"
+            .into()
     }
 }

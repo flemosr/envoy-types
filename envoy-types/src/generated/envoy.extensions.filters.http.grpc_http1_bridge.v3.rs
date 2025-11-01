@@ -13,3 +13,14 @@ pub struct Config {
     #[prost(bool, tag = "2")]
     pub ignore_query_parameters: bool,
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_http1_bridge.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_http1_bridge.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_http1_bridge.v3.Config"
+            .into()
+    }
+}

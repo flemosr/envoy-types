@@ -31,6 +31,17 @@ pub mod ip_tagging {
             super::super::super::super::super::super::config::core::v3::CidrRange,
         >,
     }
+    impl ::prost::Name for IpTag {
+        const NAME: &'static str = "IPTag";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.ip_tagging.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.ip_tagging.v3.IPTagging.IPTag".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.ip_tagging.v3.IPTagging.IPTag"
+                .into()
+        }
+    }
     /// Specify to which header the tags will be written.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct IpTagHeader {
@@ -99,6 +110,17 @@ pub mod ip_tagging {
             }
         }
     }
+    impl ::prost::Name for IpTagHeader {
+        const NAME: &'static str = "IpTagHeader";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.ip_tagging.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.ip_tagging.v3.IPTagging.IpTagHeader".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.ip_tagging.v3.IPTagging.IpTagHeader"
+                .into()
+        }
+    }
     ///
     /// The type of requests the filter should apply to. The supported types
     /// are internal, external or both. The
@@ -147,5 +169,16 @@ pub mod ip_tagging {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for IpTagging {
+    const NAME: &'static str = "IPTagging";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.ip_tagging.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.ip_tagging.v3.IPTagging".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.ip_tagging.v3.IPTagging"
+            .into()
     }
 }

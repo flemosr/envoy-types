@@ -18,6 +18,16 @@ pub struct TypedExtensionConfig {
         super::super::super::super::google::protobuf::Any,
     >,
 }
+impl ::prost::Name for TypedExtensionConfig {
+    const NAME: &'static str = "TypedExtensionConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.TypedExtensionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.TypedExtensionConfig".into()
+    }
+}
 /// Generic socket option message. This would be used to set socket options that
 /// might not exist in upstream kernels or precompiled Envoy binaries.
 ///
@@ -89,9 +99,41 @@ pub mod socket_option {
         /// The stream socket type.
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct Stream {}
+        impl ::prost::Name for Stream {
+            const NAME: &'static str = "Stream";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.SocketOption.SocketType.Stream".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.SocketOption.SocketType.Stream"
+                    .into()
+            }
+        }
         /// The datagram socket type.
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct Datagram {}
+        impl ::prost::Name for Datagram {
+            const NAME: &'static str = "Datagram";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.SocketOption.SocketType.Datagram".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.SocketOption.SocketType.Datagram"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for SocketType {
+        const NAME: &'static str = "SocketType";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.SocketOption.SocketType".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.SocketOption.SocketType".into()
+        }
     }
     #[derive(
         Clone,
@@ -145,10 +187,30 @@ pub mod socket_option {
         BufValue(::prost::alloc::vec::Vec<u8>),
     }
 }
+impl ::prost::Name for SocketOption {
+    const NAME: &'static str = "SocketOption";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SocketOption".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SocketOption".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SocketOptionsOverride {
     #[prost(message, repeated, tag = "1")]
     pub socket_options: ::prost::alloc::vec::Vec<SocketOption>,
+}
+impl ::prost::Name for SocketOptionsOverride {
+    const NAME: &'static str = "SocketOptionsOverride";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SocketOptionsOverride".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SocketOptionsOverride".into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Pipe {
@@ -161,6 +223,16 @@ pub struct Pipe {
     /// The mode for the Pipe. Not applicable for abstract sockets.
     #[prost(uint32, tag = "2")]
     pub mode: u32,
+}
+impl ::prost::Name for Pipe {
+    const NAME: &'static str = "Pipe";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Pipe".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Pipe".into()
+    }
 }
 /// The address represents an envoy internal listener.
 /// \[\#comment: TODO(asraa): When address available, remove workaround from test/server/server_fuzz_test.cc:30.\]
@@ -184,6 +256,16 @@ pub mod envoy_internal_address {
         /// internal listener.
         #[prost(string, tag = "1")]
         ServerListenerName(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for EnvoyInternalAddress {
+    const NAME: &'static str = "EnvoyInternalAddress";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.EnvoyInternalAddress".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.EnvoyInternalAddress".into()
     }
 }
 /// \[\#next-free-field: 8\]
@@ -276,6 +358,16 @@ pub mod socket_address {
         NamedPort(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for SocketAddress {
+    const NAME: &'static str = "SocketAddress";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SocketAddress".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SocketAddress".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TcpKeepalive {
     /// Maximum number of keepalive probes to send without response before deciding
@@ -299,6 +391,16 @@ pub struct TcpKeepalive {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for TcpKeepalive {
+    const NAME: &'static str = "TcpKeepalive";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.TcpKeepalive".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.TcpKeepalive".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtraSourceAddress {
     /// The additional address to bind.
@@ -314,6 +416,16 @@ pub struct ExtraSourceAddress {
     ///   it means no socket option will apply.
     #[prost(message, optional, tag = "2")]
     pub socket_options: ::core::option::Option<SocketOptionsOverride>,
+}
+impl ::prost::Name for ExtraSourceAddress {
+    const NAME: &'static str = "ExtraSourceAddress";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.ExtraSourceAddress".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.ExtraSourceAddress".into()
+    }
 }
 /// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -353,6 +465,16 @@ pub struct BindConfig {
     #[prost(message, optional, tag = "6")]
     pub local_address_selector: ::core::option::Option<TypedExtensionConfig>,
 }
+impl ::prost::Name for BindConfig {
+    const NAME: &'static str = "BindConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.BindConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.BindConfig".into()
+    }
+}
 /// Addresses specify either a logical or physical address and port, which are
 /// used to tell Envoy where to bind/listen, connect to upstream and find
 /// management servers.
@@ -374,6 +496,16 @@ pub mod address {
         EnvoyInternalAddress(super::EnvoyInternalAddress),
     }
 }
+impl ::prost::Name for Address {
+    const NAME: &'static str = "Address";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Address".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Address".into()
+    }
+}
 /// CidrRange specifies an IP Address and a prefix length to construct
 /// the subnet mask for a `CIDR <<https://tools.ietf.org/html/rfc4632>`\_> range.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -386,6 +518,16 @@ pub struct CidrRange {
     pub prefix_len: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
+}
+impl ::prost::Name for CidrRange {
+    const NAME: &'static str = "CidrRange";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.CidrRange".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.CidrRange".into()
+    }
 }
 /// Configuration defining a jittered exponential back off strategy.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -403,6 +545,16 @@ pub struct BackoffStrategy {
     pub max_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+}
+impl ::prost::Name for BackoffStrategy {
+    const NAME: &'static str = "BackoffStrategy";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.BackoffStrategy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.BackoffStrategy".into()
+    }
 }
 /// Envoy external URI descriptor
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -450,6 +602,16 @@ pub mod http_uri {
         Cluster(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for HttpUri {
+    const NAME: &'static str = "HttpUri";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HttpUri".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HttpUri".into()
+    }
+}
 /// Identifies location of where either Envoy runs or where upstream hosts run.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Locality {
@@ -471,6 +633,16 @@ pub struct Locality {
     #[prost(string, tag = "3")]
     pub sub_zone: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Locality {
+    const NAME: &'static str = "Locality";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Locality".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Locality".into()
+    }
+}
 /// BuildVersion combines SemVer version of extension with free-form build information
 /// (i.e. 'alpha', 'private-build') as a set of strings.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -486,6 +658,16 @@ pub struct BuildVersion {
     pub metadata: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
     >,
+}
+impl ::prost::Name for BuildVersion {
+    const NAME: &'static str = "BuildVersion";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.BuildVersion".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.BuildVersion".into()
+    }
 }
 /// Version and identification for an Envoy extension.
 /// \[\#next-free-field: 7\]
@@ -519,6 +701,16 @@ pub struct Extension {
     /// Type URLs of extension configuration protos.
     #[prost(string, repeated, tag = "6")]
     pub type_urls: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for Extension {
+    const NAME: &'static str = "Extension";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Extension".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Extension".into()
+    }
 }
 /// Identifies a specific Envoy instance. The node identifier is presented to the
 /// management server, which may use this identifier to distinguish per Envoy
@@ -600,6 +792,16 @@ pub mod node {
         UserAgentBuildVersion(super::BuildVersion),
     }
 }
+impl ::prost::Name for Node {
+    const NAME: &'static str = "Node";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Node".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Node".into()
+    }
+}
 /// Metadata provides additional inputs to filters based on matched listeners,
 /// filter chains, routes and endpoints. It is structured as a map, usually from
 /// filter name (in reverse DNS format) to metadata specific to the filter. Metadata
@@ -648,6 +850,16 @@ pub struct Metadata {
         super::super::super::super::google::protobuf::Any,
     >,
 }
+impl ::prost::Name for Metadata {
+    const NAME: &'static str = "Metadata";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Metadata".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Metadata".into()
+    }
+}
 /// Runtime derived uint32 with a default when not specified.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RuntimeUInt32 {
@@ -657,6 +869,16 @@ pub struct RuntimeUInt32 {
     /// Runtime key to get value for comparison. This value is used if defined.
     #[prost(string, tag = "3")]
     pub runtime_key: ::prost::alloc::string::String,
+}
+impl ::prost::Name for RuntimeUInt32 {
+    const NAME: &'static str = "RuntimeUInt32";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RuntimeUInt32".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RuntimeUInt32".into()
+    }
 }
 /// Runtime derived percentage with a default when not specified.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -668,6 +890,16 @@ pub struct RuntimePercent {
     #[prost(string, tag = "2")]
     pub runtime_key: ::prost::alloc::string::String,
 }
+impl ::prost::Name for RuntimePercent {
+    const NAME: &'static str = "RuntimePercent";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RuntimePercent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RuntimePercent".into()
+    }
+}
 /// Runtime derived double with a default when not specified.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RuntimeDouble {
@@ -677,6 +909,16 @@ pub struct RuntimeDouble {
     /// Runtime key to get value for comparison. This value is used if defined.
     #[prost(string, tag = "2")]
     pub runtime_key: ::prost::alloc::string::String,
+}
+impl ::prost::Name for RuntimeDouble {
+    const NAME: &'static str = "RuntimeDouble";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RuntimeDouble".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RuntimeDouble".into()
+    }
 }
 /// Runtime derived bool with a default when not specified.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -691,6 +933,16 @@ pub struct RuntimeFeatureFlag {
     /// `canonical JSON encoding <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_.>
     #[prost(string, tag = "2")]
     pub runtime_key: ::prost::alloc::string::String,
+}
+impl ::prost::Name for RuntimeFeatureFlag {
+    const NAME: &'static str = "RuntimeFeatureFlag";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RuntimeFeatureFlag".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RuntimeFeatureFlag".into()
+    }
 }
 /// Please use :ref:`KeyValuePair <envoy_api_msg_config.core.v3.KeyValuePair>` instead.
 /// \[\#not-implemented-hide:\]
@@ -709,6 +961,16 @@ pub struct KeyValue {
     #[prost(bytes = "vec", tag = "2")]
     pub value: ::prost::alloc::vec::Vec<u8>,
 }
+impl ::prost::Name for KeyValue {
+    const NAME: &'static str = "KeyValue";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.KeyValue".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.KeyValue".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct KeyValuePair {
     /// The key of the key/value pair.
@@ -719,6 +981,16 @@ pub struct KeyValuePair {
     pub value: ::core::option::Option<
         super::super::super::super::google::protobuf::Value,
     >,
+}
+impl ::prost::Name for KeyValuePair {
+    const NAME: &'static str = "KeyValuePair";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.KeyValuePair".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.KeyValuePair".into()
+    }
 }
 /// Key/value pair plus option to control append behavior. This is used to specify
 /// key/value pairs that should be appended to a set of existing key/value pairs.
@@ -799,6 +1071,16 @@ pub mod key_value_append {
         }
     }
 }
+impl ::prost::Name for KeyValueAppend {
+    const NAME: &'static str = "KeyValueAppend";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.KeyValueAppend".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.KeyValueAppend".into()
+    }
+}
 /// Key/value pair to append or remove.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct KeyValueMutation {
@@ -811,6 +1093,16 @@ pub struct KeyValueMutation {
     #[prost(string, tag = "2")]
     pub remove: ::prost::alloc::string::String,
 }
+impl ::prost::Name for KeyValueMutation {
+    const NAME: &'static str = "KeyValueMutation";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.KeyValueMutation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.KeyValueMutation".into()
+    }
+}
 /// Query parameter name/value pair.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct QueryParameter {
@@ -820,6 +1112,16 @@ pub struct QueryParameter {
     /// The value of the query parameter.
     #[prost(string, tag = "2")]
     pub value: ::prost::alloc::string::String,
+}
+impl ::prost::Name for QueryParameter {
+    const NAME: &'static str = "QueryParameter";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.QueryParameter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.QueryParameter".into()
+    }
 }
 /// Header name/value pair.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -841,6 +1143,16 @@ pub struct HeaderValue {
     /// Only one of `value` or `raw_value` can be set.
     #[prost(bytes = "vec", tag = "3")]
     pub raw_value: ::prost::alloc::vec::Vec<u8>,
+}
+impl ::prost::Name for HeaderValue {
+    const NAME: &'static str = "HeaderValue";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HeaderValue".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HeaderValue".into()
+    }
 }
 /// Header name/value pair plus option to control append behavior.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -932,12 +1244,32 @@ pub mod header_value_option {
         }
     }
 }
+impl ::prost::Name for HeaderValueOption {
+    const NAME: &'static str = "HeaderValueOption";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HeaderValueOption".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HeaderValueOption".into()
+    }
+}
 /// Wrapper for a set of headers.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderMap {
     /// A list of header names and their values.
     #[prost(message, repeated, tag = "1")]
     pub headers: ::prost::alloc::vec::Vec<HeaderValue>,
+}
+impl ::prost::Name for HeaderMap {
+    const NAME: &'static str = "HeaderMap";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HeaderMap".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HeaderMap".into()
+    }
 }
 /// A directory that is watched for changes, e.g. by inotify on Linux. Move/rename
 /// events inside this directory trigger the watch.
@@ -946,6 +1278,16 @@ pub struct WatchedDirectory {
     /// Directory path to watch.
     #[prost(string, tag = "1")]
     pub path: ::prost::alloc::string::String,
+}
+impl ::prost::Name for WatchedDirectory {
+    const NAME: &'static str = "WatchedDirectory";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.WatchedDirectory".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.WatchedDirectory".into()
+    }
 }
 /// Data source consisting of a file, an inline value, or an environment variable.
 /// \[\#next-free-field: 6\]
@@ -986,6 +1328,16 @@ pub mod data_source {
         /// Environment variable data source.
         #[prost(string, tag = "4")]
         EnvironmentVariable(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for DataSource {
+    const NAME: &'static str = "DataSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.DataSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.DataSource".into()
     }
 }
 /// The message specifies the retry policy of remote data source when fetching fails.
@@ -1034,6 +1386,16 @@ pub mod retry_policy {
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
         }
     }
+    impl ::prost::Name for RetryPriority {
+        const NAME: &'static str = "RetryPriority";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.RetryPolicy.RetryPriority".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.RetryPolicy.RetryPriority".into()
+        }
+    }
     /// See :ref:`RetryHostPredicate <envoy_v3_api_field_config.route.v3.RetryPolicy.retry_host_predicate>`.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RetryHostPredicate {
@@ -1050,6 +1412,27 @@ pub mod retry_policy {
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
         }
     }
+    impl ::prost::Name for RetryHostPredicate {
+        const NAME: &'static str = "RetryHostPredicate";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.RetryPolicy.RetryHostPredicate".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.RetryPolicy.RetryHostPredicate"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for RetryPolicy {
+    const NAME: &'static str = "RetryPolicy";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RetryPolicy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RetryPolicy".into()
+    }
 }
 /// The message specifies how to fetch data from remote and how to verify it.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1063,6 +1446,16 @@ pub struct RemoteDataSource {
     /// Retry policy for fetching remote data.
     #[prost(message, optional, tag = "3")]
     pub retry_policy: ::core::option::Option<RetryPolicy>,
+}
+impl ::prost::Name for RemoteDataSource {
+    const NAME: &'static str = "RemoteDataSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RemoteDataSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RemoteDataSource".into()
+    }
 }
 /// Async data source which support async data fetch.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1080,6 +1473,16 @@ pub mod async_data_source {
         /// Remote async data source.
         #[prost(message, tag = "2")]
         Remote(super::RemoteDataSource),
+    }
+}
+impl ::prost::Name for AsyncDataSource {
+    const NAME: &'static str = "AsyncDataSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.AsyncDataSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.AsyncDataSource".into()
     }
 }
 ///
@@ -1108,6 +1511,16 @@ pub mod transport_socket {
         TypedConfig(super::super::super::super::super::google::protobuf::Any),
     }
 }
+impl ::prost::Name for TransportSocket {
+    const NAME: &'static str = "TransportSocket";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.TransportSocket".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.TransportSocket".into()
+    }
+}
 /// Runtime derived FractionalPercent with defaults for when the numerator or denominator is not
 /// specified via a runtime key.
 ///
@@ -1130,6 +1543,16 @@ pub struct RuntimeFractionalPercent {
     #[prost(string, tag = "2")]
     pub runtime_key: ::prost::alloc::string::String,
 }
+impl ::prost::Name for RuntimeFractionalPercent {
+    const NAME: &'static str = "RuntimeFractionalPercent";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RuntimeFractionalPercent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RuntimeFractionalPercent".into()
+    }
+}
 /// Identifies a specific ControlPlane instance that Envoy is connected to.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ControlPlane {
@@ -1138,6 +1561,16 @@ pub struct ControlPlane {
     /// the Envoy is connected to.
     #[prost(string, tag = "1")]
     pub identifier: ::prost::alloc::string::String,
+}
+impl ::prost::Name for ControlPlane {
+    const NAME: &'static str = "ControlPlane";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.ControlPlane".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.ControlPlane".into()
+    }
 }
 /// Envoy supports :ref:`upstream priority routing  <arch_overview_http_routing_priority>` both at the route and the virtual
 /// cluster level. The current priority implementation uses different connection
@@ -1312,6 +1745,16 @@ pub mod grpc_service {
         #[prost(bool, tag = "5")]
         pub skip_envoy_headers: bool,
     }
+    impl ::prost::Name for EnvoyGrpc {
+        const NAME: &'static str = "EnvoyGrpc";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.GrpcService.EnvoyGrpc".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.GrpcService.EnvoyGrpc".into()
+        }
+    }
     /// \[\#next-free-field: 9\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GoogleGrpc {
@@ -1374,10 +1817,33 @@ pub mod grpc_service {
             #[prost(message, optional, tag = "3")]
             pub cert_chain: ::core::option::Option<super::super::DataSource>,
         }
+        impl ::prost::Name for SslCredentials {
+            const NAME: &'static str = "SslCredentials";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.GrpcService.GoogleGrpc.SslCredentials".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.SslCredentials"
+                    .into()
+            }
+        }
         /// Local channel credentials. Only UDS is supported for now.
         /// See <https://github.com/grpc/grpc/pull/15909.>
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct GoogleLocalCredentials {}
+        impl ::prost::Name for GoogleLocalCredentials {
+            const NAME: &'static str = "GoogleLocalCredentials";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.GrpcService.GoogleGrpc.GoogleLocalCredentials"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.GoogleLocalCredentials"
+                    .into()
+            }
+        }
         /// See <https://grpc.io/docs/guides/auth.html#credential-types> to understand Channel and Call
         /// credential types.
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -1405,6 +1871,17 @@ pub mod grpc_service {
                 LocalCredentials(super::GoogleLocalCredentials),
             }
         }
+        impl ::prost::Name for ChannelCredentials {
+            const NAME: &'static str = "ChannelCredentials";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelCredentials".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelCredentials"
+                    .into()
+            }
+        }
         /// \[\#next-free-field: 8\]
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct CallCredentials {
@@ -1425,12 +1902,36 @@ pub mod grpc_service {
                 #[prost(uint64, tag = "2")]
                 pub token_lifetime_seconds: u64,
             }
+            impl ::prost::Name for ServiceAccountJwtAccessCredentials {
+                const NAME: &'static str = "ServiceAccountJWTAccessCredentials";
+                const PACKAGE: &'static str = "envoy.config.core.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.ServiceAccountJWTAccessCredentials"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.ServiceAccountJWTAccessCredentials"
+                        .into()
+                }
+            }
             #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
             pub struct GoogleIamCredentials {
                 #[prost(string, tag = "1")]
                 pub authorization_token: ::prost::alloc::string::String,
                 #[prost(string, tag = "2")]
                 pub authority_selector: ::prost::alloc::string::String,
+            }
+            impl ::prost::Name for GoogleIamCredentials {
+                const NAME: &'static str = "GoogleIAMCredentials";
+                const PACKAGE: &'static str = "envoy.config.core.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.GoogleIAMCredentials"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.GoogleIAMCredentials"
+                        .into()
+                }
             }
             #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
             pub struct MetadataCredentialsFromPlugin {
@@ -1454,6 +1955,18 @@ pub mod grpc_service {
                     TypedConfig(
                         super::super::super::super::super::super::super::super::google::protobuf::Any,
                     ),
+                }
+            }
+            impl ::prost::Name for MetadataCredentialsFromPlugin {
+                const NAME: &'static str = "MetadataCredentialsFromPlugin";
+                const PACKAGE: &'static str = "envoy.config.core.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.MetadataCredentialsFromPlugin"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.MetadataCredentialsFromPlugin"
+                        .into()
                 }
             }
             /// Security token service configuration that allows Google gRPC to
@@ -1499,6 +2012,18 @@ pub mod grpc_service {
                 #[prost(string, tag = "9")]
                 pub actor_token_type: ::prost::alloc::string::String,
             }
+            impl ::prost::Name for StsService {
+                const NAME: &'static str = "StsService";
+                const PACKAGE: &'static str = "envoy.config.core.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.StsService"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials.StsService"
+                        .into()
+                }
+            }
             #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
             pub enum CredentialSpecifier {
                 /// Access token credentials.
@@ -1535,6 +2060,17 @@ pub mod grpc_service {
                 StsService(StsService),
             }
         }
+        impl ::prost::Name for CallCredentials {
+            const NAME: &'static str = "CallCredentials";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.CallCredentials"
+                    .into()
+            }
+        }
         /// Channel arguments.
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct ChannelArgs {
@@ -1566,6 +2102,39 @@ pub mod grpc_service {
                     IntValue(i64),
                 }
             }
+            impl ::prost::Name for Value {
+                const NAME: &'static str = "Value";
+                const PACKAGE: &'static str = "envoy.config.core.v3";
+                fn full_name() -> ::prost::alloc::string::String {
+                    "envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelArgs.Value"
+                        .into()
+                }
+                fn type_url() -> ::prost::alloc::string::String {
+                    "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelArgs.Value"
+                        .into()
+                }
+            }
+        }
+        impl ::prost::Name for ChannelArgs {
+            const NAME: &'static str = "ChannelArgs";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelArgs".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc.ChannelArgs"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for GoogleGrpc {
+        const NAME: &'static str = "GoogleGrpc";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.GrpcService.GoogleGrpc".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.GrpcService.GoogleGrpc".into()
         }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
@@ -1580,6 +2149,16 @@ pub mod grpc_service {
         /// documentation for discussion on gRPC client selection.
         #[prost(message, tag = "2")]
         GoogleGrpc(GoogleGrpc),
+    }
+}
+impl ::prost::Name for GrpcService {
+    const NAME: &'static str = "GrpcService";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.GrpcService".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.GrpcService".into()
     }
 }
 /// \[\#not-implemented-hide:\]
@@ -1598,6 +2177,16 @@ pub mod event_service_config {
         /// Specifies the gRPC service that hosts the event reporting service.
         #[prost(message, tag = "1")]
         GrpcService(super::GrpcService),
+    }
+}
+impl ::prost::Name for EventServiceConfig {
+    const NAME: &'static str = "EventServiceConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.EventServiceConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.EventServiceConfig".into()
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -1655,6 +2244,16 @@ pub mod proxy_protocol_pass_through_tl_vs {
         }
     }
 }
+impl ::prost::Name for ProxyProtocolPassThroughTlVs {
+    const NAME: &'static str = "ProxyProtocolPassThroughTLVs";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.ProxyProtocolPassThroughTLVs".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.ProxyProtocolPassThroughTLVs".into()
+    }
+}
 /// Represents a single Type-Length-Value (TLV) entry.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TlvEntry {
@@ -1664,6 +2263,16 @@ pub struct TlvEntry {
     /// The value of the TLV. Must be at least one byte long.
     #[prost(bytes = "vec", tag = "2")]
     pub value: ::prost::alloc::vec::Vec<u8>,
+}
+impl ::prost::Name for TlvEntry {
+    const NAME: &'static str = "TlvEntry";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.TlvEntry".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.TlvEntry".into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProxyProtocolConfig {
@@ -1742,17 +2351,47 @@ pub mod proxy_protocol_config {
         }
     }
 }
+impl ::prost::Name for ProxyProtocolConfig {
+    const NAME: &'static str = "ProxyProtocolConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.ProxyProtocolConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.ProxyProtocolConfig".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PerHostConfig {
     /// Enables per-host configuration for Proxy Protocol.
     #[prost(message, repeated, tag = "1")]
     pub added_tlvs: ::prost::alloc::vec::Vec<TlvEntry>,
 }
+impl ::prost::Name for PerHostConfig {
+    const NAME: &'static str = "PerHostConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.PerHostConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.PerHostConfig".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthStatusSet {
     /// An order-independent set of health status.
     #[prost(enumeration = "HealthStatus", repeated, packed = "false", tag = "1")]
     pub statuses: ::prost::alloc::vec::Vec<i32>,
+}
+impl ::prost::Name for HealthStatusSet {
+    const NAME: &'static str = "HealthStatusSet";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HealthStatusSet".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HealthStatusSet".into()
+    }
 }
 /// \[\#next-free-field: 27\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1967,6 +2606,16 @@ pub mod health_check {
             Binary(::prost::alloc::vec::Vec<u8>),
         }
     }
+    impl ::prost::Name for Payload {
+        const NAME: &'static str = "Payload";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.HealthCheck.Payload".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.HealthCheck.Payload".into()
+        }
+    }
     /// \[\#next-free-field: 15\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct HttpHealthCheck {
@@ -2056,6 +2705,16 @@ pub mod health_check {
         #[prost(enumeration = "super::RequestMethod", tag = "13")]
         pub method: i32,
     }
+    impl ::prost::Name for HttpHealthCheck {
+        const NAME: &'static str = "HttpHealthCheck";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.HealthCheck.HttpHealthCheck".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.HealthCheck.HttpHealthCheck".into()
+        }
+    }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct TcpHealthCheck {
         /// Empty payloads imply a connect-only health check.
@@ -2074,6 +2733,16 @@ pub mod health_check {
         #[prost(message, optional, tag = "3")]
         pub proxy_protocol_config: ::core::option::Option<super::ProxyProtocolConfig>,
     }
+    impl ::prost::Name for TcpHealthCheck {
+        const NAME: &'static str = "TcpHealthCheck";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.HealthCheck.TcpHealthCheck".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.HealthCheck.TcpHealthCheck".into()
+        }
+    }
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct RedisHealthCheck {
         /// If set, optionally perform `EXISTS <key>` instead of `PING`. A return value
@@ -2082,6 +2751,17 @@ pub mod health_check {
         /// by setting the specified key to any value and waiting for traffic to drain.
         #[prost(string, tag = "1")]
         pub key: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for RedisHealthCheck {
+        const NAME: &'static str = "RedisHealthCheck";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.HealthCheck.RedisHealthCheck".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.HealthCheck.RedisHealthCheck"
+                .into()
+        }
     }
     /// `grpc.health.v1.Health  <<https://github.com/grpc/grpc/blob/master/src/proto/grpc/health/v1/health.proto>`*-based>
     /// healthcheck. See `gRPC doc <<https://github.com/grpc/grpc/blob/master/doc/health-checking.md>`*>
@@ -2104,6 +2784,16 @@ pub mod health_check {
         /// see the documentation on :ref:`custom request headers  <config_http_conn_man_headers_custom_request_headers>`.
         #[prost(message, repeated, tag = "3")]
         pub initial_metadata: ::prost::alloc::vec::Vec<super::HeaderValueOption>,
+    }
+    impl ::prost::Name for GrpcHealthCheck {
+        const NAME: &'static str = "GrpcHealthCheck";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.HealthCheck.GrpcHealthCheck".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.HealthCheck.GrpcHealthCheck".into()
+        }
     }
     /// Custom health check.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -2128,6 +2818,17 @@ pub mod health_check {
             TypedConfig(super::super::super::super::super::super::google::protobuf::Any),
         }
     }
+    impl ::prost::Name for CustomHealthCheck {
+        const NAME: &'static str = "CustomHealthCheck";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.HealthCheck.CustomHealthCheck".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.HealthCheck.CustomHealthCheck"
+                .into()
+        }
+    }
     /// Health checks occur over the transport socket specified for the cluster. This implies that if a
     /// cluster is using a TLS-enabled transport socket, the health check will also occur over TLS.
     ///
@@ -2139,6 +2840,16 @@ pub mod health_check {
         /// versus data connections. If empty, no ALPN protocols will be set on health check connections.
         #[prost(string, repeated, tag = "1")]
         pub alpn_protocols: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    impl ::prost::Name for TlsOptions {
+        const NAME: &'static str = "TlsOptions";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.HealthCheck.TlsOptions".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.HealthCheck.TlsOptions".into()
+        }
     }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum HealthChecker {
@@ -2154,6 +2865,16 @@ pub mod health_check {
         /// Custom health check.
         #[prost(message, tag = "13")]
         CustomHealthCheck(CustomHealthCheck),
+    }
+}
+impl ::prost::Name for HealthCheck {
+    const NAME: &'static str = "HealthCheck";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HealthCheck".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HealthCheck".into()
     }
 }
 /// Endpoint health status.
@@ -2330,11 +3051,31 @@ pub mod api_config_source {
         }
     }
 }
+impl ::prost::Name for ApiConfigSource {
+    const NAME: &'static str = "ApiConfigSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.ApiConfigSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.ApiConfigSource".into()
+    }
+}
 /// Aggregated Discovery Service (ADS) options. This is currently empty, but when
 /// set in :ref:`ConfigSource <envoy_v3_api_msg_config.core.v3.ConfigSource>` can be used to
 /// specify that ADS is to be used.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AggregatedConfigSource {}
+impl ::prost::Name for AggregatedConfigSource {
+    const NAME: &'static str = "AggregatedConfigSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.AggregatedConfigSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.AggregatedConfigSource".into()
+    }
+}
 /// \[\#not-implemented-hide:\]
 /// Self-referencing config source options. This is currently empty, but when
 /// set in :ref:`ConfigSource <envoy_v3_api_msg_config.core.v3.ConfigSource>` can be used to
@@ -2345,6 +3086,16 @@ pub struct SelfConfigSource {
     /// endpoint and version of \[Delta\]DiscoveryRequest/Response used on the wire.
     #[prost(enumeration = "ApiVersion", tag = "1")]
     pub transport_api_version: i32,
+}
+impl ::prost::Name for SelfConfigSource {
+    const NAME: &'static str = "SelfConfigSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SelfConfigSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SelfConfigSource".into()
+    }
 }
 /// Rate Limit settings to be applied for discovery requests made by Envoy.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -2362,6 +3113,16 @@ pub struct RateLimitSettings {
     pub fill_rate: ::core::option::Option<
         super::super::super::super::google::protobuf::DoubleValue,
     >,
+}
+impl ::prost::Name for RateLimitSettings {
+    const NAME: &'static str = "RateLimitSettings";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RateLimitSettings".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RateLimitSettings".into()
+    }
 }
 /// Local filesystem path configuration source.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -2400,6 +3161,16 @@ pub struct PathConfigSource {
     /// required due to how Kubernetes manages ConfigMap symbolic links during atomic updates.
     #[prost(message, optional, tag = "2")]
     pub watched_directory: ::core::option::Option<WatchedDirectory>,
+}
+impl ::prost::Name for PathConfigSource {
+    const NAME: &'static str = "PathConfigSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.PathConfigSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.PathConfigSource".into()
+    }
 }
 /// Configuration for :ref:`listeners <config_listeners>`, :ref:`clusters  <config_cluster_manager>`, :ref:`routes  <envoy_v3_api_msg_config.route.v3.RouteConfiguration>`, :ref:`endpoints  <arch_overview_service_discovery>` etc. may either be sourced from the
 /// filesystem or from an xDS API source. Filesystem configs are watched with
@@ -2468,6 +3239,16 @@ pub mod config_source {
         Self_(super::SelfConfigSource),
     }
 }
+impl ::prost::Name for ConfigSource {
+    const NAME: &'static str = "ConfigSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.ConfigSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.ConfigSource".into()
+    }
+}
 /// Configuration source specifier for a late-bound extension configuration. The
 /// parent resource is warmed until all the initial extension configurations are
 /// received, unless the flag to apply the default configuration is set.
@@ -2499,6 +3280,16 @@ pub struct ExtensionConfigSource {
     /// if they do not match any type URL in the set.
     #[prost(string, repeated, tag = "4")]
     pub type_urls: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for ExtensionConfigSource {
+    const NAME: &'static str = "ExtensionConfigSource";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.ExtensionConfigSource".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.ExtensionConfigSource".into()
+    }
 }
 /// xDS API and non-xDS services version. This is used to describe both resource and transport
 /// protocol versions (in distinct configuration fields).
@@ -2537,6 +3328,16 @@ impl ApiVersion {
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TcpProtocolOptions {}
+impl ::prost::Name for TcpProtocolOptions {
+    const NAME: &'static str = "TcpProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.TcpProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.TcpProtocolOptions".into()
+    }
+}
 /// Config for keepalive probes in a QUIC connection.
 /// Note that QUIC keep-alive probing packets work differently from HTTP/2 keep-alive PINGs in a sense that the probing packet
 /// itself doesn't timeout waiting for a probing response. Quic has a shorter idle timeout than TCP, so it doesn't rely on such probing to discover dead connections. If the peer fails to respond, the connection will idle timeout eventually. Thus, they are configured differently from :ref:`connection_keepalive <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.connection_keepalive>`.
@@ -2561,6 +3362,16 @@ pub struct QuicKeepAliveSettings {
     pub initial_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+}
+impl ::prost::Name for QuicKeepAliveSettings {
+    const NAME: &'static str = "QuicKeepAliveSettings";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.QuicKeepAliveSettings".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.QuicKeepAliveSettings".into()
+    }
 }
 /// QUIC protocol options which apply to both downstream and upstream connections.
 /// \[\#next-free-field: 10\]
@@ -2635,6 +3446,16 @@ pub struct QuicProtocolOptions {
         super::super::super::super::google::protobuf::UInt64Value,
     >,
 }
+impl ::prost::Name for QuicProtocolOptions {
+    const NAME: &'static str = "QuicProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.QuicProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.QuicProtocolOptions".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UpstreamHttpProtocolOptions {
     /// Set transport socket `SNI <<https://en.wikipedia.org/wiki/Server_Name_Indication>`\_> for new
@@ -2668,6 +3489,16 @@ pub struct UpstreamHttpProtocolOptions {
     ///   Does nothing if a filter before the http router filter sets the corresponding metadata.
     #[prost(string, tag = "3")]
     pub override_auto_sni_header: ::prost::alloc::string::String,
+}
+impl ::prost::Name for UpstreamHttpProtocolOptions {
+    const NAME: &'static str = "UpstreamHttpProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.UpstreamHttpProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.UpstreamHttpProtocolOptions".into()
+    }
 }
 /// Configures the alternate protocols cache which tracks alternate protocols that can be used to
 /// make an HTTP connection to an origin server. See <https://tools.ietf.org/html/rfc7838> for
@@ -2738,6 +3569,28 @@ pub mod alternate_protocols_cache_options {
         /// The port for the alternate protocol entry.
         #[prost(uint32, tag = "2")]
         pub port: u32,
+    }
+    impl ::prost::Name for AlternateProtocolsCacheEntry {
+        const NAME: &'static str = "AlternateProtocolsCacheEntry";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.AlternateProtocolsCacheOptions.AlternateProtocolsCacheEntry"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.AlternateProtocolsCacheOptions.AlternateProtocolsCacheEntry"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for AlternateProtocolsCacheOptions {
+    const NAME: &'static str = "AlternateProtocolsCacheOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.AlternateProtocolsCacheOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.AlternateProtocolsCacheOptions".into()
     }
 }
 /// \[\#next-free-field: 8\]
@@ -2890,6 +3743,16 @@ pub mod http_protocol_options {
         }
     }
 }
+impl ::prost::Name for HttpProtocolOptions {
+    const NAME: &'static str = "HttpProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HttpProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HttpProtocolOptions".into()
+    }
+}
 /// \[\#next-free-field: 12\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http1ProtocolOptions {
@@ -3005,6 +3868,18 @@ pub mod http1_protocol_options {
     pub mod header_key_format {
         #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct ProperCaseWords {}
+        impl ::prost::Name for ProperCaseWords {
+            const NAME: &'static str = "ProperCaseWords";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.Http1ProtocolOptions.HeaderKeyFormat.ProperCaseWords"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.Http1ProtocolOptions.HeaderKeyFormat.ProperCaseWords"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum HeaderFormat {
             /// Formats the header by proper casing words: the first character and any character following
@@ -3020,6 +3895,27 @@ pub mod http1_protocol_options {
             #[prost(message, tag = "8")]
             StatefulFormatter(super::super::TypedExtensionConfig),
         }
+    }
+    impl ::prost::Name for HeaderKeyFormat {
+        const NAME: &'static str = "HeaderKeyFormat";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.Http1ProtocolOptions.HeaderKeyFormat".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.Http1ProtocolOptions.HeaderKeyFormat"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Http1ProtocolOptions {
+    const NAME: &'static str = "Http1ProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Http1ProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Http1ProtocolOptions".into()
     }
 }
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -3056,6 +3952,16 @@ pub struct KeepaliveSettings {
     pub connection_idle_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+}
+impl ::prost::Name for KeepaliveSettings {
+    const NAME: &'static str = "KeepaliveSettings";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.KeepaliveSettings".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.KeepaliveSettings".into()
+    }
 }
 /// \[\#next-free-field: 18\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -3263,12 +4169,43 @@ pub mod http2_protocol_options {
             super::super::super::super::super::google::protobuf::UInt32Value,
         >,
     }
+    impl ::prost::Name for SettingsParameter {
+        const NAME: &'static str = "SettingsParameter";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.Http2ProtocolOptions.SettingsParameter".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.Http2ProtocolOptions.SettingsParameter"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for Http2ProtocolOptions {
+    const NAME: &'static str = "Http2ProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Http2ProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Http2ProtocolOptions".into()
+    }
 }
 /// \[\#not-implemented-hide:\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcProtocolOptions {
     #[prost(message, optional, tag = "1")]
     pub http2_protocol_options: ::core::option::Option<Http2ProtocolOptions>,
+}
+impl ::prost::Name for GrpcProtocolOptions {
+    const NAME: &'static str = "GrpcProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.GrpcProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.GrpcProtocolOptions".into()
+    }
 }
 /// A message which allows using HTTP/3.
 /// \[\#next-free-field: 9\]
@@ -3312,6 +4249,16 @@ pub struct Http3ProtocolOptions {
     #[prost(bool, tag = "8")]
     pub disable_connection_flow_control_for_streams: bool,
 }
+impl ::prost::Name for Http3ProtocolOptions {
+    const NAME: &'static str = "Http3ProtocolOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.Http3ProtocolOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.Http3ProtocolOptions".into()
+    }
+}
 /// A message to control transformations to the :scheme header
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SchemeHeaderTransformation {
@@ -3336,6 +4283,16 @@ pub mod scheme_header_transformation {
         SchemeToOverwrite(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for SchemeHeaderTransformation {
+    const NAME: &'static str = "SchemeHeaderTransformation";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SchemeHeaderTransformation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SchemeHeaderTransformation".into()
+    }
+}
 /// Configuration of DNS resolver option flags which control the behavior of the DNS resolver.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DnsResolverOptions {
@@ -3345,6 +4302,16 @@ pub struct DnsResolverOptions {
     /// Do not use the default search domains; only query hostnames as-is or as aliases.
     #[prost(bool, tag = "2")]
     pub no_default_search_domain: bool,
+}
+impl ::prost::Name for DnsResolverOptions {
+    const NAME: &'static str = "DnsResolverOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.DnsResolverOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.DnsResolverOptions".into()
+    }
 }
 /// DNS resolution configuration which includes the underlying dns resolver addresses and options.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -3357,6 +4324,16 @@ pub struct DnsResolutionConfig {
     /// Configuration of DNS resolver option flags which control the behavior of the DNS resolver.
     #[prost(message, optional, tag = "2")]
     pub dns_resolver_options: ::core::option::Option<DnsResolverOptions>,
+}
+impl ::prost::Name for DnsResolutionConfig {
+    const NAME: &'static str = "DnsResolutionConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.DnsResolutionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.DnsResolutionConfig".into()
+    }
 }
 /// Generic UDP socket configuration.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -3378,6 +4355,16 @@ pub struct UdpSocketConfig {
         super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for UdpSocketConfig {
+    const NAME: &'static str = "UdpSocketConfig";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.UdpSocketConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.UdpSocketConfig".into()
+    }
+}
 /// Configuration for socket cmsg headers.
 /// See `:ref:CMSG <<https://man7.org/linux/man-pages/man3/cmsg.3.html>`\_> for further information.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -3396,6 +4383,16 @@ pub struct SocketCmsgHeaders {
     #[prost(uint32, tag = "3")]
     pub expected_size: u32,
 }
+impl ::prost::Name for SocketCmsgHeaders {
+    const NAME: &'static str = "SocketCmsgHeaders";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SocketCmsgHeaders".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SocketCmsgHeaders".into()
+    }
+}
 /// A list of gRPC methods which can be used as an allowlist, for example.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrpcMethodList {
@@ -3412,6 +4409,26 @@ pub mod grpc_method_list {
         /// The names of the gRPC methods in this service.
         #[prost(string, repeated, tag = "2")]
         pub method_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    impl ::prost::Name for Service {
+        const NAME: &'static str = "Service";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.GrpcMethodList.Service".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.GrpcMethodList.Service".into()
+        }
+    }
+}
+impl ::prost::Name for GrpcMethodList {
+    const NAME: &'static str = "GrpcMethodList";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.GrpcMethodList".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.GrpcMethodList".into()
     }
 }
 /// HTTP service configuration.
@@ -3433,6 +4450,16 @@ pub struct HttpService {
     #[prost(message, repeated, tag = "2")]
     pub request_headers_to_add: ::prost::alloc::vec::Vec<HeaderValueOption>,
 }
+impl ::prost::Name for HttpService {
+    const NAME: &'static str = "HttpService";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.HttpService".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.HttpService".into()
+    }
+}
 /// Optional configuration options to be used with json_format.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JsonFormatOptions {
@@ -3443,6 +4470,16 @@ pub struct JsonFormatOptions {
     #[deprecated]
     #[prost(bool, tag = "1")]
     pub sort_properties: bool,
+}
+impl ::prost::Name for JsonFormatOptions {
+    const NAME: &'static str = "JsonFormatOptions";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.JsonFormatOptions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.JsonFormatOptions".into()
+    }
 }
 /// Configuration to use multiple :ref:`command operators <config_access_log_command_operators>`
 /// to generate a new string in either plain text or JSON format.
@@ -3554,5 +4591,15 @@ pub mod substitution_format_string {
         /// upstream connect error:503:path=/foo
         #[prost(message, tag = "5")]
         TextFormatSource(super::DataSource),
+    }
+}
+impl ::prost::Name for SubstitutionFormatString {
+    const NAME: &'static str = "SubstitutionFormatString";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.SubstitutionFormatString".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.SubstitutionFormatString".into()
     }
 }

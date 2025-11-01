@@ -53,11 +53,31 @@ pub mod health_check_event {
         NoLongerDegradedHost(super::NoLongerDegradedHost),
     }
 }
+impl ::prost::Name for HealthCheckEvent {
+    const NAME: &'static str = "HealthCheckEvent";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.HealthCheckEvent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.HealthCheckEvent".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckEjectUnhealthy {
     /// The type of failure that caused this ejection.
     #[prost(enumeration = "HealthCheckFailureType", tag = "1")]
     pub failure_type: i32,
+}
+impl ::prost::Name for HealthCheckEjectUnhealthy {
+    const NAME: &'static str = "HealthCheckEjectUnhealthy";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.HealthCheckEjectUnhealthy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.HealthCheckEjectUnhealthy".into()
+    }
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckAddHealthy {
@@ -67,8 +87,28 @@ pub struct HealthCheckAddHealthy {
     #[prost(bool, tag = "1")]
     pub first_check: bool,
 }
+impl ::prost::Name for HealthCheckAddHealthy {
+    const NAME: &'static str = "HealthCheckAddHealthy";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.HealthCheckAddHealthy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.HealthCheckAddHealthy".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckSuccessful {}
+impl ::prost::Name for HealthCheckSuccessful {
+    const NAME: &'static str = "HealthCheckSuccessful";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.HealthCheckSuccessful".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.HealthCheckSuccessful".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HealthCheckFailure {
     /// The type of failure that caused this event.
@@ -78,10 +118,40 @@ pub struct HealthCheckFailure {
     #[prost(bool, tag = "2")]
     pub first_check: bool,
 }
+impl ::prost::Name for HealthCheckFailure {
+    const NAME: &'static str = "HealthCheckFailure";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.HealthCheckFailure".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.HealthCheckFailure".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DegradedHealthyHost {}
+impl ::prost::Name for DegradedHealthyHost {
+    const NAME: &'static str = "DegradedHealthyHost";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.DegradedHealthyHost".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.DegradedHealthyHost".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct NoLongerDegradedHost {}
+impl ::prost::Name for NoLongerDegradedHost {
+    const NAME: &'static str = "NoLongerDegradedHost";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.NoLongerDegradedHost".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.NoLongerDegradedHost".into()
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum HealthCheckFailureType {
@@ -163,4 +233,14 @@ pub struct TlvsMetadata {
         ::prost::alloc::string::String,
         ::prost::alloc::vec::Vec<u8>,
     >,
+}
+impl ::prost::Name for TlvsMetadata {
+    const NAME: &'static str = "TlvsMetadata";
+    const PACKAGE: &'static str = "envoy.data.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.core.v3.TlvsMetadata".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.core.v3.TlvsMetadata".into()
+    }
 }

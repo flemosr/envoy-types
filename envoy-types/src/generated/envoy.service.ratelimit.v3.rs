@@ -26,6 +26,16 @@ pub struct RateLimitRequest {
     #[prost(uint32, tag = "3")]
     pub hits_addend: u32,
 }
+impl ::prost::Name for RateLimitRequest {
+    const NAME: &'static str = "RateLimitRequest";
+    const PACKAGE: &'static str = "envoy.service.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ratelimit.v3.RateLimitRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ratelimit.v3.RateLimitRequest".into()
+    }
+}
 /// A response from a ShouldRateLimit call.
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -161,6 +171,17 @@ pub mod rate_limit_response {
             }
         }
     }
+    impl ::prost::Name for RateLimit {
+        const NAME: &'static str = "RateLimit";
+        const PACKAGE: &'static str = "envoy.service.ratelimit.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.ratelimit.v3.RateLimitResponse.RateLimit".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.ratelimit.v3.RateLimitResponse.RateLimit"
+                .into()
+        }
+    }
     /// Cacheable quota for responses.
     /// Quota can be granted at different levels: either for each individual descriptor or for the whole descriptor set.
     /// This is a certain number of requests over a period of time.
@@ -197,6 +218,17 @@ pub mod rate_limit_response {
             ValidUntil(
                 super::super::super::super::super::super::google::protobuf::Timestamp,
             ),
+        }
+    }
+    impl ::prost::Name for Quota {
+        const NAME: &'static str = "Quota";
+        const PACKAGE: &'static str = "envoy.service.ratelimit.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.ratelimit.v3.RateLimitResponse.Quota".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.ratelimit.v3.RateLimitResponse.Quota"
+                .into()
         }
     }
     /// \[\#next-free-field: 6\]
@@ -249,6 +281,17 @@ pub mod rate_limit_response {
         #[prost(message, optional, tag = "5")]
         pub quota: ::core::option::Option<Quota>,
     }
+    impl ::prost::Name for DescriptorStatus {
+        const NAME: &'static str = "DescriptorStatus";
+        const PACKAGE: &'static str = "envoy.service.ratelimit.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.ratelimit.v3.RateLimitResponse.DescriptorStatus".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.ratelimit.v3.RateLimitResponse.DescriptorStatus"
+                .into()
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -290,6 +333,16 @@ pub mod rate_limit_response {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for RateLimitResponse {
+    const NAME: &'static str = "RateLimitResponse";
+    const PACKAGE: &'static str = "envoy.service.ratelimit.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.ratelimit.v3.RateLimitResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.ratelimit.v3.RateLimitResponse".into()
     }
 }
 /// Generated client implementations.

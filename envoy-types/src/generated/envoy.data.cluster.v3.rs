@@ -48,6 +48,16 @@ pub mod outlier_detection_event {
         EjectFailurePercentageEvent(super::OutlierEjectFailurePercentage),
     }
 }
+impl ::prost::Name for OutlierDetectionEvent {
+    const NAME: &'static str = "OutlierDetectionEvent";
+    const PACKAGE: &'static str = "envoy.data.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.cluster.v3.OutlierDetectionEvent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.cluster.v3.OutlierDetectionEvent".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct OutlierEjectSuccessRate {
     /// Host’s success rate at the time of the ejection event on a 0-100 range.
@@ -61,13 +71,43 @@ pub struct OutlierEjectSuccessRate {
     #[prost(uint32, tag = "3")]
     pub cluster_success_rate_ejection_threshold: u32,
 }
+impl ::prost::Name for OutlierEjectSuccessRate {
+    const NAME: &'static str = "OutlierEjectSuccessRate";
+    const PACKAGE: &'static str = "envoy.data.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.cluster.v3.OutlierEjectSuccessRate".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.cluster.v3.OutlierEjectSuccessRate".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct OutlierEjectConsecutive {}
+impl ::prost::Name for OutlierEjectConsecutive {
+    const NAME: &'static str = "OutlierEjectConsecutive";
+    const PACKAGE: &'static str = "envoy.data.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.cluster.v3.OutlierEjectConsecutive".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.cluster.v3.OutlierEjectConsecutive".into()
+    }
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct OutlierEjectFailurePercentage {
     /// Host's success rate at the time of the ejection event on a 0-100 range.
     #[prost(uint32, tag = "1")]
     pub host_success_rate: u32,
+}
+impl ::prost::Name for OutlierEjectFailurePercentage {
+    const NAME: &'static str = "OutlierEjectFailurePercentage";
+    const PACKAGE: &'static str = "envoy.data.cluster.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.data.cluster.v3.OutlierEjectFailurePercentage".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.data.cluster.v3.OutlierEjectFailurePercentage".into()
+    }
 }
 /// Type of ejection that took place
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

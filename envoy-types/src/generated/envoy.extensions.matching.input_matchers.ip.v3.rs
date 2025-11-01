@@ -25,3 +25,13 @@ pub struct Ip {
     #[prost(string, tag = "2")]
     pub stat_prefix: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Ip {
+    const NAME: &'static str = "Ip";
+    const PACKAGE: &'static str = "envoy.extensions.matching.input_matchers.ip.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.input_matchers.ip.v3.Ip".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.input_matchers.ip.v3.Ip".into()
+    }
+}

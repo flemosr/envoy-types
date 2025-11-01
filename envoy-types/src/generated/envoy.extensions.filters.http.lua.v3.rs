@@ -70,6 +70,16 @@ pub struct Lua {
         super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
+impl ::prost::Name for Lua {
+    const NAME: &'static str = "Lua";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.lua.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.lua.v3.Lua".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LuaPerRoute {
     /// Optional filter context for Lua script. This could be used to pass configuration
@@ -108,5 +118,15 @@ pub mod lua_per_route {
         SourceCode(
             super::super::super::super::super::super::config::core::v3::DataSource,
         ),
+    }
+}
+impl ::prost::Name for LuaPerRoute {
+    const NAME: &'static str = "LuaPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.lua.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.lua.v3.LuaPerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.lua.v3.LuaPerRoute".into()
     }
 }

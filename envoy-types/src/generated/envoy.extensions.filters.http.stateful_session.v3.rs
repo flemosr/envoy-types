@@ -16,6 +16,17 @@ pub struct StatefulSession {
     #[prost(bool, tag = "2")]
     pub strict: bool,
 }
+impl ::prost::Name for StatefulSession {
+    const NAME: &'static str = "StatefulSession";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.stateful_session.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.stateful_session.v3.StatefulSession".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.stateful_session.v3.StatefulSession"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StatefulSessionPerRoute {
     #[prost(oneof = "stateful_session_per_route::Override", tags = "1, 2")]
@@ -32,5 +43,17 @@ pub mod stateful_session_per_route {
         /// Per-route stateful session configuration that can be served by RDS or static route table.
         #[prost(message, tag = "2")]
         StatefulSession(super::StatefulSession),
+    }
+}
+impl ::prost::Name for StatefulSessionPerRoute {
+    const NAME: &'static str = "StatefulSessionPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.stateful_session.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.stateful_session.v3.StatefulSessionPerRoute"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.stateful_session.v3.StatefulSessionPerRoute"
+            .into()
     }
 }

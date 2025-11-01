@@ -2,3 +2,14 @@
 /// Connect RPC to gRPC bridge filter configuration
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterConfig {}
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.connect_grpc_bridge.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.connect_grpc_bridge.v3.FilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.connect_grpc_bridge.v3.FilterConfig"
+            .into()
+    }
+}

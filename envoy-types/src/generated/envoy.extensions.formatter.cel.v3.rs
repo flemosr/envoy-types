@@ -6,3 +6,13 @@
 /// It is unnecessary to configure this extension.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Cel {}
+impl ::prost::Name for Cel {
+    const NAME: &'static str = "Cel";
+    const PACKAGE: &'static str = "envoy.extensions.formatter.cel.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.formatter.cel.v3.Cel".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.formatter.cel.v3.Cel".into()
+    }
+}

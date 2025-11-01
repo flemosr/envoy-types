@@ -45,6 +45,18 @@ pub mod o_auth2 {
         #[prost(enumeration = "AuthType", tag = "3")]
         pub auth_type: i32,
     }
+    impl ::prost::Name for ClientCredentials {
+        const NAME: &'static str = "ClientCredentials";
+        const PACKAGE: &'static str = "envoy.extensions.http.injected_credentials.oauth2.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.http.injected_credentials.oauth2.v3.OAuth2.ClientCredentials"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.http.injected_credentials.oauth2.v3.OAuth2.ClientCredentials"
+                .into()
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -90,5 +102,16 @@ pub mod o_auth2 {
         /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-4.4>) for details.
         #[prost(message, tag = "3")]
         ClientCredentials(ClientCredentials),
+    }
+}
+impl ::prost::Name for OAuth2 {
+    const NAME: &'static str = "OAuth2";
+    const PACKAGE: &'static str = "envoy.extensions.http.injected_credentials.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.injected_credentials.oauth2.v3.OAuth2".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.injected_credentials.oauth2.v3.OAuth2"
+            .into()
     }
 }

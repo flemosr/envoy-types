@@ -40,3 +40,15 @@ pub struct PreviousPrioritiesConfig {
     #[prost(int32, tag = "1")]
     pub update_frequency: i32,
 }
+impl ::prost::Name for PreviousPrioritiesConfig {
+    const NAME: &'static str = "PreviousPrioritiesConfig";
+    const PACKAGE: &'static str = "envoy.extensions.retry.priority.previous_priorities.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.retry.priority.previous_priorities.v3.PreviousPrioritiesConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.retry.priority.previous_priorities.v3.PreviousPrioritiesConfig"
+            .into()
+    }
+}

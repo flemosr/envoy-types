@@ -151,3 +151,13 @@ pub mod gzip {
         }
     }
 }
+impl ::prost::Name for Gzip {
+    const NAME: &'static str = "Gzip";
+    const PACKAGE: &'static str = "envoy.extensions.compression.gzip.compressor.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.compression.gzip.compressor.v3.Gzip".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.compression.gzip.compressor.v3.Gzip".into()
+    }
+}

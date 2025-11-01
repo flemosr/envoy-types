@@ -11,3 +11,14 @@ pub struct Metadata {
     #[prost(bool, tag = "4")]
     pub invert: bool,
 }
+impl ::prost::Name for Metadata {
+    const NAME: &'static str = "Metadata";
+    const PACKAGE: &'static str = "envoy.extensions.matching.input_matchers.metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.input_matchers.metadata.v3.Metadata".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.input_matchers.metadata.v3.Metadata"
+            .into()
+    }
+}

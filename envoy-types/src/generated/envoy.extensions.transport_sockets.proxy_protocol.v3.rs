@@ -22,3 +22,15 @@ pub struct ProxyProtocolUpstreamTransport {
     #[prost(bool, tag = "4")]
     pub tlv_as_pool_key: bool,
 }
+impl ::prost::Name for ProxyProtocolUpstreamTransport {
+    const NAME: &'static str = "ProxyProtocolUpstreamTransport";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.proxy_protocol.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.proxy_protocol.v3.ProxyProtocolUpstreamTransport"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.proxy_protocol.v3.ProxyProtocolUpstreamTransport"
+            .into()
+    }
+}

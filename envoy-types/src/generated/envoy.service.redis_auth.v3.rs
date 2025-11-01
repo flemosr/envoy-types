@@ -8,6 +8,17 @@ pub struct RedisProxyExternalAuthRequest {
     #[prost(string, tag = "2")]
     pub password: ::prost::alloc::string::String,
 }
+impl ::prost::Name for RedisProxyExternalAuthRequest {
+    const NAME: &'static str = "RedisProxyExternalAuthRequest";
+    const PACKAGE: &'static str = "envoy.service.redis_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.redis_auth.v3.RedisProxyExternalAuthRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.redis_auth.v3.RedisProxyExternalAuthRequest"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RedisProxyExternalAuthResponse {
     /// Status of the authentication check.
@@ -23,6 +34,17 @@ pub struct RedisProxyExternalAuthResponse {
     /// Optional message to be sent back to the client.
     #[prost(string, tag = "3")]
     pub message: ::prost::alloc::string::String,
+}
+impl ::prost::Name for RedisProxyExternalAuthResponse {
+    const NAME: &'static str = "RedisProxyExternalAuthResponse";
+    const PACKAGE: &'static str = "envoy.service.redis_auth.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.service.redis_auth.v3.RedisProxyExternalAuthResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.service.redis_auth.v3.RedisProxyExternalAuthResponse"
+            .into()
+    }
 }
 /// Generated client implementations.
 pub mod redis_proxy_external_auth_client {

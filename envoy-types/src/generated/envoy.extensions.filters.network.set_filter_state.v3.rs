@@ -8,3 +8,14 @@ pub struct Config {
         super::super::super::common::set_filter_state::v3::FilterStateValue,
     >,
 }
+impl ::prost::Name for Config {
+    const NAME: &'static str = "Config";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.set_filter_state.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.set_filter_state.v3.Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.set_filter_state.v3.Config"
+            .into()
+    }
+}

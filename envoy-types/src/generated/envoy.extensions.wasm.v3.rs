@@ -8,6 +8,16 @@ pub struct ReloadConfig {
         super::super::super::config::core::v3::BackoffStrategy,
     >,
 }
+impl ::prost::Name for ReloadConfig {
+    const NAME: &'static str = "ReloadConfig";
+    const PACKAGE: &'static str = "envoy.extensions.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.wasm.v3.ReloadConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.wasm.v3.ReloadConfig".into()
+    }
+}
 /// Configuration for restricting Proxy-Wasm capabilities available to modules.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CapabilityRestrictionConfig {
@@ -28,12 +38,32 @@ pub struct CapabilityRestrictionConfig {
         SanitizationConfig,
     >,
 }
+impl ::prost::Name for CapabilityRestrictionConfig {
+    const NAME: &'static str = "CapabilityRestrictionConfig";
+    const PACKAGE: &'static str = "envoy.extensions.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.wasm.v3.CapabilityRestrictionConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.wasm.v3.CapabilityRestrictionConfig".into()
+    }
+}
 /// Configuration for sanitization of inputs to an allowed capability.
 ///
 /// .. note::
 /// This is currently unimplemented.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SanitizationConfig {}
+impl ::prost::Name for SanitizationConfig {
+    const NAME: &'static str = "SanitizationConfig";
+    const PACKAGE: &'static str = "envoy.extensions.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.wasm.v3.SanitizationConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.wasm.v3.SanitizationConfig".into()
+    }
+}
 /// Configuration for a Wasm VM.
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -108,6 +138,16 @@ pub struct VmConfig {
     #[prost(message, optional, tag = "7")]
     pub environment_variables: ::core::option::Option<EnvironmentVariables>,
 }
+impl ::prost::Name for VmConfig {
+    const NAME: &'static str = "VmConfig";
+    const PACKAGE: &'static str = "envoy.extensions.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.wasm.v3.VmConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.wasm.v3.VmConfig".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EnvironmentVariables {
     /// The keys of *Envoy's* environment variables exposed to this VM. In other words, if a key exists in Envoy's environment
@@ -120,6 +160,16 @@ pub struct EnvironmentVariables {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
+}
+impl ::prost::Name for EnvironmentVariables {
+    const NAME: &'static str = "EnvironmentVariables";
+    const PACKAGE: &'static str = "envoy.extensions.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.wasm.v3.EnvironmentVariables".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.wasm.v3.EnvironmentVariables".into()
+    }
 }
 /// Base Configuration for Wasm Plugins e.g. filters and services.
 /// \[\#next-free-field: 10\]
@@ -187,6 +237,16 @@ pub mod plugin_config {
         VmConfig(super::VmConfig),
     }
 }
+impl ::prost::Name for PluginConfig {
+    const NAME: &'static str = "PluginConfig";
+    const PACKAGE: &'static str = "envoy.extensions.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.wasm.v3.PluginConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.wasm.v3.PluginConfig".into()
+    }
+}
 /// WasmService is configured as a built-in `envoy.wasm_service` :ref:`WasmService  <config_wasm_service>` This opaque configuration will be used to create a Wasm Service.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WasmService {
@@ -197,6 +257,16 @@ pub struct WasmService {
     /// not be used with filters.
     #[prost(bool, tag = "2")]
     pub singleton: bool,
+}
+impl ::prost::Name for WasmService {
+    const NAME: &'static str = "WasmService";
+    const PACKAGE: &'static str = "envoy.extensions.wasm.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.wasm.v3.WasmService".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.wasm.v3.WasmService".into()
+    }
 }
 /// If there is a fatal error on the VM (e.g. exception, `abort()`), then the policy will be applied.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

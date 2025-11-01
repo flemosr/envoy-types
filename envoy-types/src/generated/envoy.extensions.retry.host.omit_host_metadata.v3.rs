@@ -13,3 +13,14 @@ pub struct OmitHostMetadataConfig {
         super::super::super::super::super::config::core::v3::Metadata,
     >,
 }
+impl ::prost::Name for OmitHostMetadataConfig {
+    const NAME: &'static str = "OmitHostMetadataConfig";
+    const PACKAGE: &'static str = "envoy.extensions.retry.host.omit_host_metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.retry.host.omit_host_metadata.v3.OmitHostMetadataConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.retry.host.omit_host_metadata.v3.OmitHostMetadataConfig"
+            .into()
+    }
+}

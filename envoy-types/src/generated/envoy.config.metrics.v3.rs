@@ -27,6 +27,16 @@ pub mod stats_sink {
         TypedConfig(super::super::super::super::super::google::protobuf::Any),
     }
 }
+impl ::prost::Name for StatsSink {
+    const NAME: &'static str = "StatsSink";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.StatsSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.StatsSink".into()
+    }
+}
 /// Statistics configuration such as tagging.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatsConfig {
@@ -96,6 +106,16 @@ pub struct StatsConfig {
     /// ```
     #[prost(message, repeated, tag = "4")]
     pub histogram_bucket_settings: ::prost::alloc::vec::Vec<HistogramBucketSettings>,
+}
+impl ::prost::Name for StatsConfig {
+    const NAME: &'static str = "StatsConfig";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.StatsConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.StatsConfig".into()
+    }
 }
 /// Configuration for disabling stat instantiation.
 ///
@@ -190,6 +210,16 @@ pub mod stats_matcher {
         ),
     }
 }
+impl ::prost::Name for StatsMatcher {
+    const NAME: &'static str = "StatsMatcher";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.StatsMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.StatsMatcher".into()
+    }
+}
 /// Designates a tag name and value pair. The value may be either a fixed value
 /// or a regex providing the value via capture groups. The specified tag will be
 /// unconditionally set if a fixed value, otherwise it will only be set if one
@@ -282,6 +312,16 @@ pub mod tag_specifier {
         FixedValue(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for TagSpecifier {
+    const NAME: &'static str = "TagSpecifier";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.TagSpecifier".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.TagSpecifier".into()
+    }
+}
 /// Specifies a matcher for stats and the buckets that matching stats should use.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HistogramBucketSettings {
@@ -295,6 +335,16 @@ pub struct HistogramBucketSettings {
     /// The order of the buckets does not matter.
     #[prost(double, repeated, packed = "false", tag = "2")]
     pub buckets: ::prost::alloc::vec::Vec<f64>,
+}
+impl ::prost::Name for HistogramBucketSettings {
+    const NAME: &'static str = "HistogramBucketSettings";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.HistogramBucketSettings".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.HistogramBucketSettings".into()
+    }
 }
 /// Stats configuration proto schema for built-in `envoy.stat_sinks.statsd` sink. This sink does not support
 /// tagged metrics.
@@ -347,6 +397,16 @@ pub mod statsd_sink {
         TcpClusterName(::prost::alloc::string::String),
     }
 }
+impl ::prost::Name for StatsdSink {
+    const NAME: &'static str = "StatsdSink";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.StatsdSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.StatsdSink".into()
+    }
+}
 /// Stats configuration proto schema for built-in `envoy.stat_sinks.dog_statsd` sink.
 /// The sink emits stats with `DogStatsD <<https://docs.datadoghq.com/guides/dogstatsd/>`\_>
 /// compatible tags. Tags are configurable via :ref:`StatsConfig  <envoy_v3_api_msg_config.metrics.v3.StatsConfig>`.
@@ -381,6 +441,16 @@ pub mod dog_statsd_sink {
         Address(super::super::super::core::v3::Address),
     }
 }
+impl ::prost::Name for DogStatsdSink {
+    const NAME: &'static str = "DogStatsdSink";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.DogStatsdSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.DogStatsdSink".into()
+    }
+}
 /// Stats configuration proto schema for built-in `envoy.stat_sinks.hystrix` sink.
 /// The sink emits stats in `text/event-stream  <<https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events>`\_>
 /// formatted stream for use by `Hystrix dashboard  <<https://github.com/Netflix-Skunkworks/hystrix-dashboard/wiki>`\_.>
@@ -403,6 +473,16 @@ pub struct HystrixSink {
     /// More detailed explanation can be found in `Hystrix wiki  <<https://github.com/Netflix/Hystrix/wiki/Metrics-and-Monitoring#hystrixrollingnumber>`\_.>
     #[prost(int64, tag = "1")]
     pub num_buckets: i64,
+}
+impl ::prost::Name for HystrixSink {
+    const NAME: &'static str = "HystrixSink";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.HystrixSink".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.HystrixSink".into()
+    }
 }
 /// Metrics Service is configured as a built-in `envoy.stat_sinks.metrics_service` :ref:`StatsSink  <envoy_v3_api_msg_config.metrics.v3.StatsSink>`. This opaque configuration will be used to create
 /// Metrics Service.
@@ -445,6 +525,16 @@ pub struct MetricsServiceConfig {
     /// Specify which metrics types to emit for histograms. Defaults to SUMMARY_AND_HISTOGRAM.
     #[prost(enumeration = "HistogramEmitMode", tag = "5")]
     pub histogram_emit_mode: i32,
+}
+impl ::prost::Name for MetricsServiceConfig {
+    const NAME: &'static str = "MetricsServiceConfig";
+    const PACKAGE: &'static str = "envoy.config.metrics.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.metrics.v3.MetricsServiceConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.metrics.v3.MetricsServiceConfig".into()
+    }
 }
 /// HistogramEmitMode is used to configure which metric types should be emitted for histograms.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

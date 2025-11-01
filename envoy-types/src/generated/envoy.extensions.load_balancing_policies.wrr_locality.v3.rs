@@ -8,3 +8,14 @@ pub struct WrrLocality {
         super::super::super::super::config::cluster::v3::LoadBalancingPolicy,
     >,
 }
+impl ::prost::Name for WrrLocality {
+    const NAME: &'static str = "WrrLocality";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.wrr_locality.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.wrr_locality.v3.WrrLocality".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.wrr_locality.v3.WrrLocality"
+            .into()
+    }
+}

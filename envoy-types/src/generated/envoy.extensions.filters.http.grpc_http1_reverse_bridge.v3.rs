@@ -28,6 +28,17 @@ pub struct FilterConfig {
     #[prost(string, tag = "3")]
     pub response_size_header: ::prost::alloc::string::String,
 }
+impl ::prost::Name for FilterConfig {
+    const NAME: &'static str = "FilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_http1_reverse_bridge.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_http1_reverse_bridge.v3.FilterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_http1_reverse_bridge.v3.FilterConfig"
+            .into()
+    }
+}
 /// gRPC reverse bridge filter configuration per virtualhost/route/weighted-cluster level.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterConfigPerRoute {
@@ -35,4 +46,16 @@ pub struct FilterConfigPerRoute {
     /// If disabled is specified in multiple per-filter-configs, the most specific one will be used.
     #[prost(bool, tag = "1")]
     pub disabled: bool,
+}
+impl ::prost::Name for FilterConfigPerRoute {
+    const NAME: &'static str = "FilterConfigPerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.grpc_http1_reverse_bridge.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.grpc_http1_reverse_bridge.v3.FilterConfigPerRoute"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.grpc_http1_reverse_bridge.v3.FilterConfigPerRoute"
+            .into()
+    }
 }

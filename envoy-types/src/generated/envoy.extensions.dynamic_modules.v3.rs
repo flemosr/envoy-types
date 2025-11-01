@@ -30,3 +30,14 @@ pub struct DynamicModuleConfig {
     #[prost(bool, tag = "3")]
     pub do_not_close: bool,
 }
+impl ::prost::Name for DynamicModuleConfig {
+    const NAME: &'static str = "DynamicModuleConfig";
+    const PACKAGE: &'static str = "envoy.extensions.dynamic_modules.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.dynamic_modules.v3.DynamicModuleConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.dynamic_modules.v3.DynamicModuleConfig"
+            .into()
+    }
+}

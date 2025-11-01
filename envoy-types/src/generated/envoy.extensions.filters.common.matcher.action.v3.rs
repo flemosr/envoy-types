@@ -10,3 +10,14 @@
 /// headers), the filter will be completely skipped.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SkipFilter {}
+impl ::prost::Name for SkipFilter {
+    const NAME: &'static str = "SkipFilter";
+    const PACKAGE: &'static str = "envoy.extensions.filters.common.matcher.action.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.common.matcher.action.v3.SkipFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.common.matcher.action.v3.SkipFilter"
+            .into()
+    }
+}

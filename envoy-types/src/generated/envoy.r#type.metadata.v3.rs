@@ -62,6 +62,26 @@ pub mod metadata_key {
             Key(::prost::alloc::string::String),
         }
     }
+    impl ::prost::Name for PathSegment {
+        const NAME: &'static str = "PathSegment";
+        const PACKAGE: &'static str = "envoy.type.metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.metadata.v3.MetadataKey.PathSegment".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.metadata.v3.MetadataKey.PathSegment".into()
+        }
+    }
+}
+impl ::prost::Name for MetadataKey {
+    const NAME: &'static str = "MetadataKey";
+    const PACKAGE: &'static str = "envoy.type.metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.metadata.v3.MetadataKey".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.metadata.v3.MetadataKey".into()
+    }
 }
 /// Describes different types of metadata sources.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -74,15 +94,55 @@ pub mod metadata_kind {
     /// Represents dynamic metadata associated with the request.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Request {}
+    impl ::prost::Name for Request {
+        const NAME: &'static str = "Request";
+        const PACKAGE: &'static str = "envoy.type.metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.metadata.v3.MetadataKind.Request".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.metadata.v3.MetadataKind.Request".into()
+        }
+    }
     /// Represents metadata from :ref:`the route<envoy_v3_api_field_config.route.v3.Route.metadata>`.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Route {}
+    impl ::prost::Name for Route {
+        const NAME: &'static str = "Route";
+        const PACKAGE: &'static str = "envoy.type.metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.metadata.v3.MetadataKind.Route".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.metadata.v3.MetadataKind.Route".into()
+        }
+    }
     /// Represents metadata from :ref:`the upstream cluster<envoy_v3_api_field_config.cluster.v3.Cluster.metadata>`.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Cluster {}
+    impl ::prost::Name for Cluster {
+        const NAME: &'static str = "Cluster";
+        const PACKAGE: &'static str = "envoy.type.metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.metadata.v3.MetadataKind.Cluster".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.metadata.v3.MetadataKind.Cluster".into()
+        }
+    }
     /// Represents metadata from :ref:`the upstream  host<envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Host {}
+    impl ::prost::Name for Host {
+        const NAME: &'static str = "Host";
+        const PACKAGE: &'static str = "envoy.type.metadata.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.type.metadata.v3.MetadataKind.Host".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.type.metadata.v3.MetadataKind.Host".into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Kind {
         /// Request kind of metadata.
@@ -97,5 +157,15 @@ pub mod metadata_kind {
         /// Host kind of metadata.
         #[prost(message, tag = "4")]
         Host(Host),
+    }
+}
+impl ::prost::Name for MetadataKind {
+    const NAME: &'static str = "MetadataKind";
+    const PACKAGE: &'static str = "envoy.type.metadata.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.metadata.v3.MetadataKind".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.metadata.v3.MetadataKind".into()
     }
 }

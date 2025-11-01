@@ -9,6 +9,16 @@ pub struct ParsedExpr {
     #[prost(message, optional, tag = "3")]
     pub source_info: ::core::option::Option<SourceInfo>,
 }
+impl ::prost::Name for ParsedExpr {
+    const NAME: &'static str = "ParsedExpr";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.ParsedExpr".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.ParsedExpr".into()
+    }
+}
 /// An abstract representation of a common expression.
 ///
 /// Expressions are abstractly represented as a collection of identifiers,
@@ -50,6 +60,16 @@ pub mod expr {
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for Ident {
+        const NAME: &'static str = "Ident";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Expr.Ident".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Expr.Ident".into()
+        }
+    }
     /// A field selection expression. e.g. `request.auth`.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Select {
@@ -71,6 +91,16 @@ pub mod expr {
         #[prost(bool, tag = "3")]
         pub test_only: bool,
     }
+    impl ::prost::Name for Select {
+        const NAME: &'static str = "Select";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Expr.Select".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Expr.Select".into()
+        }
+    }
     /// A call expression, including calls to predefined functions and operators.
     ///
     /// For example, `value == 10`, `size(map_value)`.
@@ -86,6 +116,16 @@ pub mod expr {
         /// The arguments.
         #[prost(message, repeated, tag = "3")]
         pub args: ::prost::alloc::vec::Vec<super::Expr>,
+    }
+    impl ::prost::Name for Call {
+        const NAME: &'static str = "Call";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Expr.Call".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Expr.Call".into()
+        }
     }
     /// A list creation expression.
     ///
@@ -104,6 +144,16 @@ pub mod expr {
         /// element is omitted from the CreateList result.
         #[prost(int32, repeated, tag = "2")]
         pub optional_indices: ::prost::alloc::vec::Vec<i32>,
+    }
+    impl ::prost::Name for CreateList {
+        const NAME: &'static str = "CreateList";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Expr.CreateList".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Expr.CreateList".into()
+        }
     }
     /// A map or message creation expression.
     ///
@@ -156,6 +206,26 @@ pub mod expr {
                 #[prost(message, tag = "3")]
                 MapKey(super::super::super::Expr),
             }
+        }
+        impl ::prost::Name for Entry {
+            const NAME: &'static str = "Entry";
+            const PACKAGE: &'static str = "cel.expr";
+            fn full_name() -> ::prost::alloc::string::String {
+                "cel.expr.Expr.CreateStruct.Entry".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/cel.expr.Expr.CreateStruct.Entry".into()
+            }
+        }
+    }
+    impl ::prost::Name for CreateStruct {
+        const NAME: &'static str = "CreateStruct";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Expr.CreateStruct".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Expr.CreateStruct".into()
         }
     }
     /// A comprehension expression applied to a list or map.
@@ -252,6 +322,16 @@ pub mod expr {
         #[prost(message, optional, boxed, tag = "7")]
         pub result: ::core::option::Option<::prost::alloc::boxed::Box<super::Expr>>,
     }
+    impl ::prost::Name for Comprehension {
+        const NAME: &'static str = "Comprehension";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Expr.Comprehension".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Expr.Comprehension".into()
+        }
+    }
     /// Required. Variants of expressions.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ExprKind {
@@ -276,6 +356,16 @@ pub mod expr {
         /// A comprehension expression.
         #[prost(message, tag = "9")]
         ComprehensionExpr(::prost::alloc::boxed::Box<Comprehension>),
+    }
+}
+impl ::prost::Name for Expr {
+    const NAME: &'static str = "Expr";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.Expr".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.Expr".into()
     }
 }
 /// Represents a primitive literal.
@@ -337,6 +427,16 @@ pub mod constant {
         /// Deprecated: timestamp is no longer considered a builtin cel type.
         #[prost(message, tag = "9")]
         TimestampValue(super::super::super::google::protobuf::Timestamp),
+    }
+}
+impl ::prost::Name for Constant {
+    const NAME: &'static str = "Constant";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.Constant".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.Constant".into()
     }
 }
 /// Source information collected at parse time.
@@ -417,6 +517,16 @@ pub mod source_info {
             #[prost(int64, tag = "2")]
             pub minor: i64,
         }
+        impl ::prost::Name for Version {
+            const NAME: &'static str = "Version";
+            const PACKAGE: &'static str = "cel.expr";
+            fn full_name() -> ::prost::alloc::string::String {
+                "cel.expr.SourceInfo.Extension.Version".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/cel.expr.SourceInfo.Extension.Version".into()
+            }
+        }
         /// CEL component specifier.
         #[derive(
             Clone,
@@ -467,6 +577,26 @@ pub mod source_info {
             }
         }
     }
+    impl ::prost::Name for Extension {
+        const NAME: &'static str = "Extension";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.SourceInfo.Extension".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.SourceInfo.Extension".into()
+        }
+    }
+}
+impl ::prost::Name for SourceInfo {
+    const NAME: &'static str = "SourceInfo";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.SourceInfo".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.SourceInfo".into()
+    }
 }
 /// A CEL expression which has been successfully type checked.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -513,6 +643,16 @@ pub struct CheckedExpr {
     #[prost(message, optional, tag = "4")]
     pub expr: ::core::option::Option<Expr>,
 }
+impl ::prost::Name for CheckedExpr {
+    const NAME: &'static str = "CheckedExpr";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.CheckedExpr".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.CheckedExpr".into()
+    }
+}
 /// Represents a CEL type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Type {
@@ -532,6 +672,16 @@ pub mod r#type {
         #[prost(message, optional, boxed, tag = "1")]
         pub elem_type: ::core::option::Option<::prost::alloc::boxed::Box<super::Type>>,
     }
+    impl ::prost::Name for ListType {
+        const NAME: &'static str = "ListType";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Type.ListType".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Type.ListType".into()
+        }
+    }
     /// Map type with parameterized key and value types, e.g. `map<string, int>`.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MapType {
@@ -541,6 +691,16 @@ pub mod r#type {
         /// The type of the value.
         #[prost(message, optional, boxed, tag = "2")]
         pub value_type: ::core::option::Option<::prost::alloc::boxed::Box<super::Type>>,
+    }
+    impl ::prost::Name for MapType {
+        const NAME: &'static str = "MapType";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Type.MapType".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Type.MapType".into()
+        }
     }
     /// Function type with result and arg types.
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -552,6 +712,16 @@ pub mod r#type {
         #[prost(message, repeated, tag = "2")]
         pub arg_types: ::prost::alloc::vec::Vec<super::Type>,
     }
+    impl ::prost::Name for FunctionType {
+        const NAME: &'static str = "FunctionType";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Type.FunctionType".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Type.FunctionType".into()
+        }
+    }
     /// Application defined abstract type.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct AbstractType {
@@ -561,6 +731,16 @@ pub mod r#type {
         /// Parameter types for this abstract type.
         #[prost(message, repeated, tag = "2")]
         pub parameter_types: ::prost::alloc::vec::Vec<super::Type>,
+    }
+    impl ::prost::Name for AbstractType {
+        const NAME: &'static str = "AbstractType";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Type.AbstractType".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Type.AbstractType".into()
+        }
     }
     /// CEL primitive types.
     #[derive(
@@ -742,6 +922,16 @@ pub mod r#type {
         AbstractType(AbstractType),
     }
 }
+impl ::prost::Name for Type {
+    const NAME: &'static str = "Type";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.Type".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.Type".into()
+    }
+}
 /// Represents a declaration of a named value or function.
 ///
 /// A declaration is part of the contract between the expression, the agent
@@ -800,6 +990,16 @@ pub mod decl {
         /// ```
         #[prost(string, tag = "3")]
         pub doc: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for IdentDecl {
+        const NAME: &'static str = "IdentDecl";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Decl.IdentDecl".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Decl.IdentDecl".into()
+        }
     }
     /// Function declaration specifies one or more overloads which indicate the
     /// function's parameter types and return type.
@@ -904,6 +1104,26 @@ pub mod decl {
             #[prost(string, tag = "6")]
             pub doc: ::prost::alloc::string::String,
         }
+        impl ::prost::Name for Overload {
+            const NAME: &'static str = "Overload";
+            const PACKAGE: &'static str = "cel.expr";
+            fn full_name() -> ::prost::alloc::string::String {
+                "cel.expr.Decl.FunctionDecl.Overload".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/cel.expr.Decl.FunctionDecl.Overload".into()
+            }
+        }
+    }
+    impl ::prost::Name for FunctionDecl {
+        const NAME: &'static str = "FunctionDecl";
+        const PACKAGE: &'static str = "cel.expr";
+        fn full_name() -> ::prost::alloc::string::String {
+            "cel.expr.Decl.FunctionDecl".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/cel.expr.Decl.FunctionDecl".into()
+        }
     }
     /// Required. The declaration kind.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
@@ -914,6 +1134,16 @@ pub mod decl {
         /// Function declaration.
         #[prost(message, tag = "3")]
         Function(FunctionDecl),
+    }
+}
+impl ::prost::Name for Decl {
+    const NAME: &'static str = "Decl";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.Decl".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.Decl".into()
     }
 }
 /// Describes a resolved reference to a declaration.
@@ -937,4 +1167,14 @@ pub struct Reference {
     /// constant if known at compile time.
     #[prost(message, optional, tag = "4")]
     pub value: ::core::option::Option<Constant>,
+}
+impl ::prost::Name for Reference {
+    const NAME: &'static str = "Reference";
+    const PACKAGE: &'static str = "cel.expr";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cel.expr.Reference".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/cel.expr.Reference".into()
+    }
 }

@@ -36,3 +36,14 @@ pub struct RedisClusterConfig {
     #[prost(uint32, tag = "6")]
     pub host_degraded_refresh_threshold: u32,
 }
+impl ::prost::Name for RedisClusterConfig {
+    const NAME: &'static str = "RedisClusterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.clusters.redis.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.clusters.redis.v3.RedisClusterConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.clusters.redis.v3.RedisClusterConfig"
+            .into()
+    }
+}

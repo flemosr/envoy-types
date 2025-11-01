@@ -9,6 +9,17 @@ pub struct DnsCacheCircuitBreakers {
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for DnsCacheCircuitBreakers {
+    const NAME: &'static str = "DnsCacheCircuitBreakers";
+    const PACKAGE: &'static str = "envoy.extensions.common.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.dynamic_forward_proxy.v3.DnsCacheCircuitBreakers".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.dynamic_forward_proxy.v3.DnsCacheCircuitBreakers"
+            .into()
+    }
+}
 /// Configuration for the dynamic forward proxy DNS cache. See the :ref:`architecture overview  <arch_overview_http_dynamic_forward_proxy>` for more information.
 /// \[\#next-free-field: 16\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -147,4 +158,15 @@ pub struct DnsCacheConfig {
     pub key_value_config: ::core::option::Option<
         super::super::super::super::config::common::key_value::v3::KeyValueStoreConfig,
     >,
+}
+impl ::prost::Name for DnsCacheConfig {
+    const NAME: &'static str = "DnsCacheConfig";
+    const PACKAGE: &'static str = "envoy.extensions.common.dynamic_forward_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.common.dynamic_forward_proxy.v3.DnsCacheConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.common.dynamic_forward_proxy.v3.DnsCacheConfig"
+            .into()
+    }
 }

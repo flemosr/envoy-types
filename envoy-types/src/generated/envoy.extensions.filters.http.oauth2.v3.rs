@@ -51,6 +51,16 @@ pub mod cookie_config {
         }
     }
 }
+impl ::prost::Name for CookieConfig {
+    const NAME: &'static str = "CookieConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.CookieConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.CookieConfig".into()
+    }
+}
 /// \[\#next-free-field: 8\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CookieConfigs {
@@ -75,6 +85,17 @@ pub struct CookieConfigs {
     /// Configuration for the code verifier cookie.
     #[prost(message, optional, tag = "7")]
     pub code_verifier_cookie_config: ::core::option::Option<CookieConfig>,
+}
+impl ::prost::Name for CookieConfigs {
+    const NAME: &'static str = "CookieConfigs";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.CookieConfigs".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.CookieConfigs"
+            .into()
+    }
 }
 /// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -129,6 +150,18 @@ pub mod o_auth2_credentials {
         #[prost(string, tag = "7")]
         pub code_verifier: ::prost::alloc::string::String,
     }
+    impl ::prost::Name for CookieNames {
+        const NAME: &'static str = "CookieNames";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.oauth2.v3.OAuth2Credentials.CookieNames"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.OAuth2Credentials.CookieNames"
+                .into()
+        }
+    }
     /// Configures how the secret token should be created.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum TokenFormation {
@@ -137,6 +170,17 @@ pub mod o_auth2_credentials {
         HmacSecret(
             super::super::super::super::super::transport_sockets::tls::v3::SdsSecretConfig,
         ),
+    }
+}
+impl ::prost::Name for OAuth2Credentials {
+    const NAME: &'static str = "OAuth2Credentials";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.OAuth2Credentials".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.OAuth2Credentials"
+            .into()
     }
 }
 /// OAuth config
@@ -326,10 +370,30 @@ pub mod o_auth2_config {
         }
     }
 }
+impl ::prost::Name for OAuth2Config {
+    const NAME: &'static str = "OAuth2Config";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.OAuth2Config".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.OAuth2Config".into()
+    }
+}
 /// Filter config.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2 {
     /// Leave this empty to disable OAuth2 for a specific route, using per filter config.
     #[prost(message, optional, tag = "1")]
     pub config: ::core::option::Option<OAuth2Config>,
+}
+impl ::prost::Name for OAuth2 {
+    const NAME: &'static str = "OAuth2";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.OAuth2".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.OAuth2".into()
+    }
 }

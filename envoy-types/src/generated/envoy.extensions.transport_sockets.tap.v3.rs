@@ -17,6 +17,16 @@ pub struct Tap {
     #[prost(message, optional, tag = "3")]
     pub socket_tap_config: ::core::option::Option<SocketTapConfig>,
 }
+impl ::prost::Name for Tap {
+    const NAME: &'static str = "Tap";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tap.v3.Tap".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tap.v3.Tap".into()
+    }
+}
 /// Additional configurations for the transport socket tap
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SocketTapConfig {
@@ -27,4 +37,15 @@ pub struct SocketTapConfig {
     /// The contents of the transport tap's statistics prefix.
     #[prost(string, tag = "2")]
     pub stats_prefix: ::prost::alloc::string::String,
+}
+impl ::prost::Name for SocketTapConfig {
+    const NAME: &'static str = "SocketTapConfig";
+    const PACKAGE: &'static str = "envoy.extensions.transport_sockets.tap.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.transport_sockets.tap.v3.SocketTapConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.transport_sockets.tap.v3.SocketTapConfig"
+            .into()
+    }
 }

@@ -19,3 +19,14 @@ pub struct FileBasedKeyValueStoreConfig {
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
 }
+impl ::prost::Name for FileBasedKeyValueStoreConfig {
+    const NAME: &'static str = "FileBasedKeyValueStoreConfig";
+    const PACKAGE: &'static str = "envoy.extensions.key_value.file_based.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.key_value.file_based.v3.FileBasedKeyValueStoreConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.key_value.file_based.v3.FileBasedKeyValueStoreConfig"
+            .into()
+    }
+}

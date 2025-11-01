@@ -8,6 +8,16 @@ pub struct StatusAnnotation {
     #[prost(enumeration = "PackageVersionStatus", tag = "2")]
     pub package_version_status: i32,
 }
+impl ::prost::Name for StatusAnnotation {
+    const NAME: &'static str = "StatusAnnotation";
+    const PACKAGE: &'static str = "udpa.annotations";
+    fn full_name() -> ::prost::alloc::string::String {
+        "udpa.annotations.StatusAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/udpa.annotations.StatusAnnotation".into()
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum PackageVersionStatus {
@@ -53,11 +63,31 @@ pub struct VersioningAnnotation {
     #[prost(string, tag = "1")]
     pub previous_message_type: ::prost::alloc::string::String,
 }
+impl ::prost::Name for VersioningAnnotation {
+    const NAME: &'static str = "VersioningAnnotation";
+    const PACKAGE: &'static str = "udpa.annotations";
+    fn full_name() -> ::prost::alloc::string::String {
+        "udpa.annotations.VersioningAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/udpa.annotations.VersioningAnnotation".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MigrateAnnotation {
     /// Rename the message/enum/enum value in next version.
     #[prost(string, tag = "1")]
     pub rename: ::prost::alloc::string::String,
+}
+impl ::prost::Name for MigrateAnnotation {
+    const NAME: &'static str = "MigrateAnnotation";
+    const PACKAGE: &'static str = "udpa.annotations";
+    fn full_name() -> ::prost::alloc::string::String {
+        "udpa.annotations.MigrateAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/udpa.annotations.MigrateAnnotation".into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FieldMigrateAnnotation {
@@ -70,12 +100,32 @@ pub struct FieldMigrateAnnotation {
     #[prost(string, tag = "2")]
     pub oneof_promotion: ::prost::alloc::string::String,
 }
+impl ::prost::Name for FieldMigrateAnnotation {
+    const NAME: &'static str = "FieldMigrateAnnotation";
+    const PACKAGE: &'static str = "udpa.annotations";
+    fn full_name() -> ::prost::alloc::string::String {
+        "udpa.annotations.FieldMigrateAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/udpa.annotations.FieldMigrateAnnotation".into()
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FileMigrateAnnotation {
     /// Move all types in the file to another package, this implies changing proto
     /// file path.
     #[prost(string, tag = "2")]
     pub move_to_package: ::prost::alloc::string::String,
+}
+impl ::prost::Name for FileMigrateAnnotation {
+    const NAME: &'static str = "FileMigrateAnnotation";
+    const PACKAGE: &'static str = "udpa.annotations";
+    fn full_name() -> ::prost::alloc::string::String {
+        "udpa.annotations.FileMigrateAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/udpa.annotations.FileMigrateAnnotation".into()
+    }
 }
 /// These annotations indicate metadata for the purpose of understanding the
 /// security significance of fields.
@@ -87,4 +137,14 @@ pub struct FieldSecurityAnnotation {
     /// Field should be set in the presence of untrusted upstreams.
     #[prost(bool, tag = "2")]
     pub configure_for_untrusted_upstream: bool,
+}
+impl ::prost::Name for FieldSecurityAnnotation {
+    const NAME: &'static str = "FieldSecurityAnnotation";
+    const PACKAGE: &'static str = "udpa.annotations";
+    fn full_name() -> ::prost::alloc::string::String {
+        "udpa.annotations.FieldSecurityAnnotation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/udpa.annotations.FieldSecurityAnnotation".into()
+    }
 }

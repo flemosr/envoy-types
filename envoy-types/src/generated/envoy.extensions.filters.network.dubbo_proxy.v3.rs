@@ -27,6 +27,17 @@ pub struct RouteConfiguration {
     #[prost(message, repeated, tag = "5")]
     pub routes: ::prost::alloc::vec::Vec<Route>,
 }
+impl ::prost::Name for RouteConfiguration {
+    const NAME: &'static str = "RouteConfiguration";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.RouteConfiguration".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.RouteConfiguration"
+            .into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Route {
     /// Route matching parameters.
@@ -35,6 +46,17 @@ pub struct Route {
     /// Route request to some upstream cluster.
     #[prost(message, optional, tag = "2")]
     pub route: ::core::option::Option<RouteAction>,
+}
+impl ::prost::Name for Route {
+    const NAME: &'static str = "Route";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.Route".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.Route"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteMatch {
@@ -49,6 +71,17 @@ pub struct RouteMatch {
     pub headers: ::prost::alloc::vec::Vec<
         super::super::super::super::super::config::route::v3::HeaderMatcher,
     >,
+}
+impl ::prost::Name for RouteMatch {
+    const NAME: &'static str = "RouteMatch";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.RouteMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.RouteMatch"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteAction {
@@ -77,6 +110,17 @@ pub mod route_action {
         WeightedClusters(
             super::super::super::super::super::super::config::route::v3::WeightedCluster,
         ),
+    }
+}
+impl ::prost::Name for RouteAction {
+    const NAME: &'static str = "RouteAction";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.RouteAction".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.RouteAction"
+            .into()
     }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -132,6 +176,29 @@ pub mod method_match {
             ),
         }
     }
+    impl ::prost::Name for ParameterMatchSpecifier {
+        const NAME: &'static str = "ParameterMatchSpecifier";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.dubbo_proxy.v3.MethodMatch.ParameterMatchSpecifier"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.MethodMatch.ParameterMatchSpecifier"
+                .into()
+        }
+    }
+}
+impl ::prost::Name for MethodMatch {
+    const NAME: &'static str = "MethodMatch";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.MethodMatch".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.MethodMatch"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MultipleRouteConfiguration {
@@ -141,6 +208,18 @@ pub struct MultipleRouteConfiguration {
     /// The route table of the dubbo connection manager.
     #[prost(message, repeated, tag = "4")]
     pub route_config: ::prost::alloc::vec::Vec<RouteConfiguration>,
+}
+impl ::prost::Name for MultipleRouteConfiguration {
+    const NAME: &'static str = "MultipleRouteConfiguration";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.MultipleRouteConfiguration"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.MultipleRouteConfiguration"
+            .into()
+    }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Drds {
@@ -155,6 +234,16 @@ pub struct Drds {
     /// source. Leave unspecified is also valid and means the unnamed multiple route configuration.
     #[prost(string, tag = "2")]
     pub route_config_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for Drds {
+    const NAME: &'static str = "Drds";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.Drds".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.Drds".into()
+    }
 }
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -196,6 +285,17 @@ pub mod dubbo_proxy {
         MultipleRouteConfig(super::MultipleRouteConfiguration),
     }
 }
+impl ::prost::Name for DubboProxy {
+    const NAME: &'static str = "DubboProxy";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.DubboProxy".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.DubboProxy"
+            .into()
+    }
+}
 /// DubboFilter configures a Dubbo filter.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DubboFilter {
@@ -209,6 +309,17 @@ pub struct DubboFilter {
     pub config: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Any,
     >,
+}
+impl ::prost::Name for DubboFilter {
+    const NAME: &'static str = "DubboFilter";
+    const PACKAGE: &'static str = "envoy.extensions.filters.network.dubbo_proxy.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.network.dubbo_proxy.v3.DubboFilter".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.network.dubbo_proxy.v3.DubboFilter"
+            .into()
+    }
 }
 /// Dubbo Protocol types supported by Envoy.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

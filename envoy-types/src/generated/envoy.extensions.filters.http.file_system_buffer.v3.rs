@@ -10,14 +10,74 @@ pub struct BufferBehavior {
 pub mod buffer_behavior {
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct StreamWhenPossible {}
+    impl ::prost::Name for StreamWhenPossible {
+        const NAME: &'static str = "StreamWhenPossible";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.StreamWhenPossible"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.StreamWhenPossible"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct Bypass {}
+    impl ::prost::Name for Bypass {
+        const NAME: &'static str = "Bypass";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.Bypass"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.Bypass"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct InjectContentLengthIfNecessary {}
+    impl ::prost::Name for InjectContentLengthIfNecessary {
+        const NAME: &'static str = "InjectContentLengthIfNecessary";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.InjectContentLengthIfNecessary"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.InjectContentLengthIfNecessary"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct FullyBufferAndAlwaysInjectContentLength {}
+    impl ::prost::Name for FullyBufferAndAlwaysInjectContentLength {
+        const NAME: &'static str = "FullyBufferAndAlwaysInjectContentLength";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.FullyBufferAndAlwaysInjectContentLength"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.FullyBufferAndAlwaysInjectContentLength"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct FullyBuffer {}
+    impl ::prost::Name for FullyBuffer {
+        const NAME: &'static str = "FullyBuffer";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.FullyBuffer"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior.FullyBuffer"
+                .into()
+        }
+    }
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Behavior {
         /// Don't inject `content-length` header.
@@ -39,6 +99,17 @@ pub mod buffer_behavior {
         /// Always buffer the entire input, do not modify `content-length`.
         #[prost(message, tag = "5")]
         FullyBuffer(FullyBuffer),
+    }
+}
+impl ::prost::Name for BufferBehavior {
+    const NAME: &'static str = "BufferBehavior";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.BufferBehavior"
+            .into()
     }
 }
 /// The configuration for one direction of the filter behavior.
@@ -87,6 +158,17 @@ pub struct StreamConfig {
         super::super::super::super::super::super::google::protobuf::UInt64Value,
     >,
 }
+impl ::prost::Name for StreamConfig {
+    const NAME: &'static str = "StreamConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.file_system_buffer.v3.StreamConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.StreamConfig"
+            .into()
+    }
+}
 /// A :ref:`file system buffer <config_http_filters_file_system_buffer>` filter configuration.
 ///
 /// Route-specific configs override only the fields they explicitly include; unset
@@ -121,4 +203,16 @@ pub struct FileSystemBufferFilterConfig {
     /// (with behavior `stream_when_possible`)
     #[prost(message, optional, tag = "4")]
     pub response: ::core::option::Option<StreamConfig>,
+}
+impl ::prost::Name for FileSystemBufferFilterConfig {
+    const NAME: &'static str = "FileSystemBufferFilterConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.file_system_buffer.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.file_system_buffer.v3.FileSystemBufferFilterConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.file_system_buffer.v3.FileSystemBufferFilterConfig"
+            .into()
+    }
 }

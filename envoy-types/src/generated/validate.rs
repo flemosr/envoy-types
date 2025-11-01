@@ -62,6 +62,16 @@ pub mod field_rules {
         Timestamp(super::TimestampRules),
     }
 }
+impl ::prost::Name for FieldRules {
+    const NAME: &'static str = "FieldRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.FieldRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.FieldRules".into()
+    }
+}
 /// FloatRules describes the constraints applied to `float` values
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FloatRules {
@@ -98,6 +108,16 @@ pub struct FloatRules {
     /// evaluated only if the field is not empty
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
+}
+impl ::prost::Name for FloatRules {
+    const NAME: &'static str = "FloatRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.FloatRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.FloatRules".into()
+    }
 }
 /// DoubleRules describes the constraints applied to `double` values
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -136,6 +156,16 @@ pub struct DoubleRules {
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
 }
+impl ::prost::Name for DoubleRules {
+    const NAME: &'static str = "DoubleRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.DoubleRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.DoubleRules".into()
+    }
+}
 /// Int32Rules describes the constraints applied to `int32` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int32Rules {
@@ -172,6 +202,16 @@ pub struct Int32Rules {
     /// evaluated only if the field is not empty
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
+}
+impl ::prost::Name for Int32Rules {
+    const NAME: &'static str = "Int32Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.Int32Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.Int32Rules".into()
+    }
 }
 /// Int64Rules describes the constraints applied to `int64` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -210,6 +250,16 @@ pub struct Int64Rules {
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
 }
+impl ::prost::Name for Int64Rules {
+    const NAME: &'static str = "Int64Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.Int64Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.Int64Rules".into()
+    }
+}
 /// UInt32Rules describes the constraints applied to `uint32` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UInt32Rules {
@@ -246,6 +296,16 @@ pub struct UInt32Rules {
     /// evaluated only if the field is not empty
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
+}
+impl ::prost::Name for UInt32Rules {
+    const NAME: &'static str = "UInt32Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.UInt32Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.UInt32Rules".into()
+    }
 }
 /// UInt64Rules describes the constraints applied to `uint64` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -284,6 +344,16 @@ pub struct UInt64Rules {
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
 }
+impl ::prost::Name for UInt64Rules {
+    const NAME: &'static str = "UInt64Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.UInt64Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.UInt64Rules".into()
+    }
+}
 /// SInt32Rules describes the constraints applied to `sint32` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SInt32Rules {
@@ -320,6 +390,16 @@ pub struct SInt32Rules {
     /// evaluated only if the field is not empty
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
+}
+impl ::prost::Name for SInt32Rules {
+    const NAME: &'static str = "SInt32Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.SInt32Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.SInt32Rules".into()
+    }
 }
 /// SInt64Rules describes the constraints applied to `sint64` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -358,6 +438,16 @@ pub struct SInt64Rules {
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
 }
+impl ::prost::Name for SInt64Rules {
+    const NAME: &'static str = "SInt64Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.SInt64Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.SInt64Rules".into()
+    }
+}
 /// Fixed32Rules describes the constraints applied to `fixed32` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Fixed32Rules {
@@ -394,6 +484,16 @@ pub struct Fixed32Rules {
     /// evaluated only if the field is not empty
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
+}
+impl ::prost::Name for Fixed32Rules {
+    const NAME: &'static str = "Fixed32Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.Fixed32Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.Fixed32Rules".into()
+    }
 }
 /// Fixed64Rules describes the constraints applied to `fixed64` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -432,6 +532,16 @@ pub struct Fixed64Rules {
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
 }
+impl ::prost::Name for Fixed64Rules {
+    const NAME: &'static str = "Fixed64Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.Fixed64Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.Fixed64Rules".into()
+    }
+}
 /// SFixed32Rules describes the constraints applied to `sfixed32` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SFixed32Rules {
@@ -468,6 +578,16 @@ pub struct SFixed32Rules {
     /// evaluated only if the field is not empty
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
+}
+impl ::prost::Name for SFixed32Rules {
+    const NAME: &'static str = "SFixed32Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.SFixed32Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.SFixed32Rules".into()
+    }
 }
 /// SFixed64Rules describes the constraints applied to `sfixed64` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -506,12 +626,32 @@ pub struct SFixed64Rules {
     #[prost(bool, optional, tag = "8")]
     pub ignore_empty: ::core::option::Option<bool>,
 }
+impl ::prost::Name for SFixed64Rules {
+    const NAME: &'static str = "SFixed64Rules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.SFixed64Rules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.SFixed64Rules".into()
+    }
+}
 /// BoolRules describes the constraints applied to `bool` values
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BoolRules {
     /// Const specifies that this field must be exactly the specified value
     #[prost(bool, optional, tag = "1")]
     pub r#const: ::core::option::Option<bool>,
+}
+impl ::prost::Name for BoolRules {
+    const NAME: &'static str = "BoolRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.BoolRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.BoolRules".into()
+    }
 }
 /// StringRules describe the constraints applied to `string` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -641,6 +781,16 @@ pub mod string_rules {
         WellKnownRegex(i32),
     }
 }
+impl ::prost::Name for StringRules {
+    const NAME: &'static str = "StringRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.StringRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.StringRules".into()
+    }
+}
 /// BytesRules describe the constraints applied to `bytes` values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BytesRules {
@@ -712,6 +862,16 @@ pub mod bytes_rules {
         Ipv6(bool),
     }
 }
+impl ::prost::Name for BytesRules {
+    const NAME: &'static str = "BytesRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.BytesRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.BytesRules".into()
+    }
+}
 /// EnumRules describe the constraints applied to enum values
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EnumRules {
@@ -731,6 +891,16 @@ pub struct EnumRules {
     #[prost(int32, repeated, packed = "false", tag = "4")]
     pub not_in: ::prost::alloc::vec::Vec<i32>,
 }
+impl ::prost::Name for EnumRules {
+    const NAME: &'static str = "EnumRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.EnumRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.EnumRules".into()
+    }
+}
 /// MessageRules describe the constraints applied to embedded message values.
 /// For message-type fields, validation is performed recursively.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
@@ -742,6 +912,16 @@ pub struct MessageRules {
     /// Required specifies that this field must be set
     #[prost(bool, optional, tag = "2")]
     pub required: ::core::option::Option<bool>,
+}
+impl ::prost::Name for MessageRules {
+    const NAME: &'static str = "MessageRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.MessageRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.MessageRules".into()
+    }
 }
 /// RepeatedRules describe the constraints applied to `repeated` values
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -768,6 +948,16 @@ pub struct RepeatedRules {
     /// evaluated only if the field is not empty
     #[prost(bool, optional, tag = "5")]
     pub ignore_empty: ::core::option::Option<bool>,
+}
+impl ::prost::Name for RepeatedRules {
+    const NAME: &'static str = "RepeatedRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.RepeatedRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.RepeatedRules".into()
+    }
 }
 /// MapRules describe the constraints applied to `map` values
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -797,6 +987,16 @@ pub struct MapRules {
     #[prost(bool, optional, tag = "6")]
     pub ignore_empty: ::core::option::Option<bool>,
 }
+impl ::prost::Name for MapRules {
+    const NAME: &'static str = "MapRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.MapRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.MapRules".into()
+    }
+}
 /// AnyRules describe constraints applied exclusively to the
 /// `google.protobuf.Any` well-known type
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -812,6 +1012,16 @@ pub struct AnyRules {
     /// the specified values.
     #[prost(string, repeated, tag = "3")]
     pub not_in: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for AnyRules {
+    const NAME: &'static str = "AnyRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.AnyRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.AnyRules".into()
+    }
 }
 /// DurationRules describe the constraints applied exclusively to the
 /// `google.protobuf.Duration` well-known type
@@ -847,6 +1057,16 @@ pub struct DurationRules {
     /// values
     #[prost(message, repeated, tag = "8")]
     pub not_in: ::prost::alloc::vec::Vec<super::google::protobuf::Duration>,
+}
+impl ::prost::Name for DurationRules {
+    const NAME: &'static str = "DurationRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.DurationRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.DurationRules".into()
+    }
 }
 /// TimestampRules describe the constraints applied exclusively to the
 /// `google.protobuf.Timestamp` well-known type
@@ -887,6 +1107,16 @@ pub struct TimestampRules {
     /// GtNow rules.
     #[prost(message, optional, tag = "9")]
     pub within: ::core::option::Option<super::google::protobuf::Duration>,
+}
+impl ::prost::Name for TimestampRules {
+    const NAME: &'static str = "TimestampRules";
+    const PACKAGE: &'static str = "validate";
+    fn full_name() -> ::prost::alloc::string::String {
+        "validate.TimestampRules".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/validate.TimestampRules".into()
+    }
 }
 /// WellKnownRegex contain some well-known patterns.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]

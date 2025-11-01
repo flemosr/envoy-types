@@ -218,6 +218,18 @@ pub mod header_validator_config {
             }
         }
     }
+    impl ::prost::Name for UriPathNormalizationOptions {
+        const NAME: &'static str = "UriPathNormalizationOptions";
+        const PACKAGE: &'static str = "envoy.extensions.http.header_validators.envoy_default.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.UriPathNormalizationOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.UriPathNormalizationOptions"
+                .into()
+        }
+    }
     /// HTTP/1 protocol specific options for header validation.
     ///
     /// These options control how Envoy handles HTTP/1 specific behaviors and edge cases
@@ -236,6 +248,18 @@ pub mod header_validator_config {
         /// is proxied via multiple layers of proxies.
         #[prost(bool, tag = "1")]
         pub allow_chunked_length: bool,
+    }
+    impl ::prost::Name for Http1ProtocolOptions {
+        const NAME: &'static str = "Http1ProtocolOptions";
+        const PACKAGE: &'static str = "envoy.extensions.http.header_validators.envoy_default.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.Http1ProtocolOptions"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig.Http1ProtocolOptions"
+                .into()
+        }
     }
     /// Action to take when Envoy receives client request with header names containing underscore
     /// characters.
@@ -294,5 +318,17 @@ pub mod header_validator_config {
                 _ => None,
             }
         }
+    }
+}
+impl ::prost::Name for HeaderValidatorConfig {
+    const NAME: &'static str = "HeaderValidatorConfig";
+    const PACKAGE: &'static str = "envoy.extensions.http.header_validators.envoy_default.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.http.header_validators.envoy_default.v3.HeaderValidatorConfig"
+            .into()
     }
 }
