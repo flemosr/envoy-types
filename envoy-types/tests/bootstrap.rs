@@ -36,7 +36,7 @@ fn bootstrap() {
     let mut config = prost_build::Config::new();
     config
         .enable_type_names()
-        .type_name_domain(&["."], "type.googleapis.com")
+        .type_name_domain(["."], "type.googleapis.com")
         .compile_well_known_types()
         .file_descriptor_set_path(out_dir.join("types.bin"))
         .include_file("mod.rs");

@@ -100,14 +100,15 @@
 /// the Joda Time's [`ISODateTimeFormat.dateTime()`](<http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime(>)) to obtain a formatter capable of generating timestamps in this format.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Timestamp {
-    /// Represents seconds of UTC time since Unix epoch
-    /// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
-    /// 9999-12-31T23:59:59Z inclusive.
+    /// Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must
+    /// be between -315576000000 and 315576000000 inclusive (which corresponds to
+    /// 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z).
     #[prost(int64, tag = "1")]
     pub seconds: i64,
-    /// Non-negative fractions of a second at nanosecond resolution. Negative
-    /// second values with fractions must still have non-negative nanos values
-    /// that count forward in time. Must be from 0 to 999,999,999
+    /// Non-negative fractions of a second at nanosecond resolution. This field is
+    /// the nanosecond portion of the duration, not an alternative to seconds.
+    /// Negative second values with fractions must still have non-negative nanos
+    /// values that count forward in time. Must be between 0 and 999,999,999
     /// inclusive.
     #[prost(int32, tag = "2")]
     pub nanos: i32,
@@ -158,6 +159,10 @@ pub struct FileDescriptorProto {
     /// For Google-internal migration only. Do not use.
     #[prost(int32, repeated, packed = "false", tag = "11")]
     pub weak_dependency: ::prost::alloc::vec::Vec<i32>,
+    /// Names of files imported by this file purely for the purpose of providing
+    /// option extensions. These are excluded from the dependency list above.
+    #[prost(string, repeated, tag = "15")]
+    pub option_dependency: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// All top-level definitions in this file.
     #[prost(message, repeated, tag = "4")]
     pub message_type: ::prost::alloc::vec::Vec<DescriptorProto>,
@@ -179,9 +184,15 @@ pub struct FileDescriptorProto {
     /// The supported values are "proto2", "proto3", and "editions".
     ///
     /// If `edition` is present, this value must be "editions".
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(string, optional, tag = "12")]
     pub syntax: ::core::option::Option<::prost::alloc::string::String>,
     /// The edition of the proto file.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(enumeration = "Edition", optional, tag = "14")]
     pub edition: ::core::option::Option<i32>,
 }
@@ -220,6 +231,9 @@ pub struct DescriptorProto {
     /// A given name may only be reserved once.
     #[prost(string, repeated, tag = "10")]
     pub reserved_name: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Support for `export` and `local` keywords on enums.
+    #[prost(enumeration = "SymbolVisibility", optional, tag = "11")]
+    pub visibility: ::core::option::Option<i32>,
 }
 /// Nested message and enum types in `DescriptorProto`.
 pub mod descriptor_proto {
@@ -646,6 +660,9 @@ pub struct EnumDescriptorProto {
     /// be reserved once.
     #[prost(string, repeated, tag = "5")]
     pub reserved_name: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Support for `export` and `local` keywords on enums.
+    #[prost(enumeration = "SymbolVisibility", optional, tag = "6")]
+    pub visibility: ::core::option::Option<i32>,
 }
 /// Nested message and enum types in `EnumDescriptorProto`.
 pub mod enum_descriptor_proto {
@@ -869,6 +886,9 @@ pub struct FileOptions {
     #[prost(string, optional, tag = "45")]
     pub ruby_package: ::core::option::Option<::prost::alloc::string::String>,
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "50")]
     pub features: ::core::option::Option<FeatureSet>,
     /// The parser stores options it doesn't recognize here.
@@ -1004,6 +1024,9 @@ pub struct MessageOptions {
     #[prost(bool, optional, tag = "11")]
     pub deprecated_legacy_json_field_conflicts: ::core::option::Option<bool>,
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "12")]
     pub features: ::core::option::Option<FeatureSet>,
     /// The parser stores options it doesn't recognize here. See above.
@@ -1098,7 +1121,9 @@ pub struct FieldOptions {
     /// is a formalization for deprecating fields.
     #[prost(bool, optional, tag = "3", default = "false")]
     pub deprecated: ::core::option::Option<bool>,
+    /// DEPRECATED. DO NOT USE!
     /// For Google-internal migration only. Do not use.
+    #[deprecated]
     #[prost(bool, optional, tag = "10", default = "false")]
     pub weak: ::core::option::Option<bool>,
     /// Indicate that the field value should not be printed out when using debug
@@ -1117,6 +1142,9 @@ pub struct FieldOptions {
     #[prost(message, repeated, tag = "20")]
     pub edition_defaults: ::prost::alloc::vec::Vec<field_options::EditionDefault>,
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "21")]
     pub features: ::core::option::Option<FeatureSet>,
     #[prost(message, optional, tag = "22")]
@@ -1382,6 +1410,9 @@ impl ::prost::Name for FieldOptions {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OneofOptions {
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "1")]
     pub features: ::core::option::Option<FeatureSet>,
     /// The parser stores options it doesn't recognize here. See above.
@@ -1420,6 +1451,9 @@ pub struct EnumOptions {
     #[prost(bool, optional, tag = "6")]
     pub deprecated_legacy_json_field_conflicts: ::core::option::Option<bool>,
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "7")]
     pub features: ::core::option::Option<FeatureSet>,
     /// The parser stores options it doesn't recognize here. See above.
@@ -1445,6 +1479,9 @@ pub struct EnumValueOptions {
     #[prost(bool, optional, tag = "1", default = "false")]
     pub deprecated: ::core::option::Option<bool>,
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "2")]
     pub features: ::core::option::Option<FeatureSet>,
     /// Indicate that fields annotated with this enum value should not be printed
@@ -1472,6 +1509,9 @@ impl ::prost::Name for EnumValueOptions {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ServiceOptions {
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "34")]
     pub features: ::core::option::Option<FeatureSet>,
     /// Is this service deprecated?
@@ -1510,6 +1550,9 @@ pub struct MethodOptions {
     )]
     pub idempotency_level: ::core::option::Option<i32>,
     /// Any features defined in the specific edition.
+    /// WARNING: This field should only be used by protobuf plugins or special
+    /// cases like the proto compiler. Other uses are discouraged and
+    /// developers should rely on the protoreflect APIs for their client language.
     #[prost(message, optional, tag = "35")]
     pub features: ::core::option::Option<FeatureSet>,
     /// The parser stores options it doesn't recognize here. See above.
@@ -1653,9 +1696,83 @@ pub struct FeatureSet {
     pub message_encoding: ::core::option::Option<i32>,
     #[prost(enumeration = "feature_set::JsonFormat", optional, tag = "6")]
     pub json_format: ::core::option::Option<i32>,
+    #[prost(enumeration = "feature_set::EnforceNamingStyle", optional, tag = "7")]
+    pub enforce_naming_style: ::core::option::Option<i32>,
+    #[prost(
+        enumeration = "feature_set::visibility_feature::DefaultSymbolVisibility",
+        optional,
+        tag = "8"
+    )]
+    pub default_symbol_visibility: ::core::option::Option<i32>,
 }
 /// Nested message and enum types in `FeatureSet`.
 pub mod feature_set {
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct VisibilityFeature {}
+    /// Nested message and enum types in `VisibilityFeature`.
+    pub mod visibility_feature {
+        #[derive(
+            Clone,
+            Copy,
+            Debug,
+            PartialEq,
+            Eq,
+            Hash,
+            PartialOrd,
+            Ord,
+            ::prost::Enumeration
+        )]
+        #[repr(i32)]
+        pub enum DefaultSymbolVisibility {
+            Unknown = 0,
+            /// Default pre-EDITION_2024, all UNSET visibility are export.
+            ExportAll = 1,
+            /// All top-level symbols default to export, nested default to local.
+            ExportTopLevel = 2,
+            /// All symbols default to local.
+            LocalAll = 3,
+            /// All symbols local by default. Nested types cannot be exported.
+            /// With special case caveat for message { enum {} reserved 1 to max; }
+            /// This is the recommended setting for new protos.
+            Strict = 4,
+        }
+        impl DefaultSymbolVisibility {
+            /// String value of the enum field names used in the ProtoBuf definition.
+            ///
+            /// The values are not transformed in any way and thus are considered stable
+            /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+            pub fn as_str_name(&self) -> &'static str {
+                match self {
+                    Self::Unknown => "DEFAULT_SYMBOL_VISIBILITY_UNKNOWN",
+                    Self::ExportAll => "EXPORT_ALL",
+                    Self::ExportTopLevel => "EXPORT_TOP_LEVEL",
+                    Self::LocalAll => "LOCAL_ALL",
+                    Self::Strict => "STRICT",
+                }
+            }
+            /// Creates an enum from field names used in the ProtoBuf definition.
+            pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+                match value {
+                    "DEFAULT_SYMBOL_VISIBILITY_UNKNOWN" => Some(Self::Unknown),
+                    "EXPORT_ALL" => Some(Self::ExportAll),
+                    "EXPORT_TOP_LEVEL" => Some(Self::ExportTopLevel),
+                    "LOCAL_ALL" => Some(Self::LocalAll),
+                    "STRICT" => Some(Self::Strict),
+                    _ => None,
+                }
+            }
+        }
+    }
+    impl ::prost::Name for VisibilityFeature {
+        const NAME: &'static str = "VisibilityFeature";
+        const PACKAGE: &'static str = "google.protobuf";
+        fn full_name() -> ::prost::alloc::string::String {
+            "google.protobuf.FeatureSet.VisibilityFeature".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/google.protobuf.FeatureSet.VisibilityFeature".into()
+        }
+    }
     #[derive(
         Clone,
         Copy,
@@ -1889,6 +2006,45 @@ pub mod feature_set {
                 "JSON_FORMAT_UNKNOWN" => Some(Self::Unknown),
                 "ALLOW" => Some(Self::Allow),
                 "LEGACY_BEST_EFFORT" => Some(Self::LegacyBestEffort),
+                _ => None,
+            }
+        }
+    }
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum EnforceNamingStyle {
+        Unknown = 0,
+        Style2024 = 1,
+        StyleLegacy = 2,
+    }
+    impl EnforceNamingStyle {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Self::Unknown => "ENFORCE_NAMING_STYLE_UNKNOWN",
+                Self::Style2024 => "STYLE2024",
+                Self::StyleLegacy => "STYLE_LEGACY",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "ENFORCE_NAMING_STYLE_UNKNOWN" => Some(Self::Unknown),
+                "STYLE2024" => Some(Self::Style2024),
+                "STYLE_LEGACY" => Some(Self::StyleLegacy),
                 _ => None,
             }
         }
@@ -2299,6 +2455,40 @@ impl Edition {
         }
     }
 }
+/// Describes the 'visibility' of a symbol with respect to the proto import
+/// system. Symbols can only be imported when the visibility rules do not prevent
+/// it (ex: local symbols cannot be imported).  Visibility modifiers can only set
+/// on `message` and `enum` as they are the only types available to be referenced
+/// from other files.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum SymbolVisibility {
+    VisibilityUnset = 0,
+    VisibilityLocal = 1,
+    VisibilityExport = 2,
+}
+impl SymbolVisibility {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::VisibilityUnset => "VISIBILITY_UNSET",
+            Self::VisibilityLocal => "VISIBILITY_LOCAL",
+            Self::VisibilityExport => "VISIBILITY_EXPORT",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "VISIBILITY_UNSET" => Some(Self::VisibilityUnset),
+            "VISIBILITY_LOCAL" => Some(Self::VisibilityLocal),
+            "VISIBILITY_EXPORT" => Some(Self::VisibilityExport),
+            _ => None,
+        }
+    }
+}
 /// `Any` contains an arbitrary serialized protocol buffer message along with a
 /// URL that describes the type of the serialized message.
 ///
@@ -2535,6 +2725,9 @@ impl ::prost::Name for Duration {
 /// Wrapper message for `double`.
 ///
 /// The JSON representation for `DoubleValue` is JSON number.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct DoubleValue {
     /// The double value.
@@ -2554,6 +2747,9 @@ impl ::prost::Name for DoubleValue {
 /// Wrapper message for `float`.
 ///
 /// The JSON representation for `FloatValue` is JSON number.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct FloatValue {
     /// The float value.
@@ -2573,6 +2769,9 @@ impl ::prost::Name for FloatValue {
 /// Wrapper message for `int64`.
 ///
 /// The JSON representation for `Int64Value` is JSON string.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int64Value {
     /// The int64 value.
@@ -2592,6 +2791,9 @@ impl ::prost::Name for Int64Value {
 /// Wrapper message for `uint64`.
 ///
 /// The JSON representation for `UInt64Value` is JSON string.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UInt64Value {
     /// The uint64 value.
@@ -2611,6 +2813,9 @@ impl ::prost::Name for UInt64Value {
 /// Wrapper message for `int32`.
 ///
 /// The JSON representation for `Int32Value` is JSON number.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Int32Value {
     /// The int32 value.
@@ -2630,6 +2835,9 @@ impl ::prost::Name for Int32Value {
 /// Wrapper message for `uint32`.
 ///
 /// The JSON representation for `UInt32Value` is JSON number.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct UInt32Value {
     /// The uint32 value.
@@ -2649,6 +2857,9 @@ impl ::prost::Name for UInt32Value {
 /// Wrapper message for `bool`.
 ///
 /// The JSON representation for `BoolValue` is JSON `true` and `false`.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BoolValue {
     /// The bool value.
@@ -2668,6 +2879,9 @@ impl ::prost::Name for BoolValue {
 /// Wrapper message for `string`.
 ///
 /// The JSON representation for `StringValue` is JSON string.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StringValue {
     /// The string value.
@@ -2687,6 +2901,9 @@ impl ::prost::Name for StringValue {
 /// Wrapper message for `bytes`.
 ///
 /// The JSON representation for `BytesValue` is JSON string.
+///
+/// Not recommended for use in new APIs, but still useful for legacy APIs and
+/// has no plan to be removed.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BytesValue {
     /// The bytes value.
