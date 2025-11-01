@@ -13,7 +13,6 @@ const INCLUDE_PATHS: &[&str] = &[
     "proto/client_model",
     "proto/data-plane-api",
     "proto/googleapis",
-    "proto/opencensus-proto/src",
     "proto/opentelemetry-proto",
     "proto/opentelemetry-proto",
     "proto/protoc-gen-validate",
