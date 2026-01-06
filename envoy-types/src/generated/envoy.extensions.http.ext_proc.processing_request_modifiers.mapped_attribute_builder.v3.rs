@@ -57,6 +57,18 @@ pub struct MappedAttributeBuilder {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
+    /// Similar to `mapped_request_attributes`, but for response attributes. The
+    /// response nomenclature here just indicates that the attributes, whatever they may be, are sent
+    /// with a response headers, body, or trailers ext_proc call.
+    /// If a value contains a request key, e.g., `request.host`, then the attribute would
+    /// just be sent along in the response. This is useful if a given ext_proc extension is only
+    /// enabled for response handling, e.g., `RESPONSE_HEADERS` but the backend wants to access request
+    /// metadata.
+    #[prost(map = "string, string", tag = "2")]
+    pub mapped_response_attributes: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
 }
 impl ::prost::Name for MappedAttributeBuilder {
     const NAME: &'static str = "MappedAttributeBuilder";

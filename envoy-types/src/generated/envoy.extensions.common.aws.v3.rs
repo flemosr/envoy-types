@@ -95,8 +95,10 @@ impl ::prost::Name for InlineCredentialProvider {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AssumeRoleWithWebIdentityCredentialProvider {
     /// Data source for a web identity token that is provided by the identity provider to assume the role.
-    /// When using this data source, even if a `watched_directory` is provided, the token file will only be re-read when the credentials
-    /// returned from AssumeRoleWithWebIdentity expire.
+    /// If a `watched_directory` is not provided, one will be automatically inferred from the directory of the token file. This is to ensure
+    /// that if the token file is rotated, the new token will be picked up. This behaviour differs from the standard envoy data source behavior, which does not
+    /// automatically watch the directory of a file data source.
+    /// Even when file rotation occurs, current credentials will continue to be used until they expire, at which point new credentials will be retrieved using the new token.
     #[prost(message, optional, tag = "1")]
     pub web_identity_token_data_source: ::core::option::Option<
         super::super::super::super::config::core::v3::DataSource,

@@ -2533,7 +2533,7 @@ impl ::prost::Name for RedirectAction {
         "type.googleapis.com/envoy.config.route.v3.RedirectAction".into()
     }
 }
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DirectResponseAction {
     /// Specifies the HTTP response status to be returned.
     #[prost(uint32, tag = "1")]
@@ -2549,6 +2549,14 @@ pub struct DirectResponseAction {
     /// : ref:`envoy_v3_api_msg_config.route.v3.VirtualHost`.
     #[prost(message, optional, tag = "2")]
     pub body: ::core::option::Option<super::super::core::v3::DataSource>,
+    /// Specifies a format string for the response body. If present, the contents of
+    /// `body_format` will be formatted and used as the response body, where the
+    /// contents of `body` (may be empty) will be passed as the variable `%LOCAL_REPLY_BODY%`.
+    /// If neither are provided, no body is included in the generated response.
+    #[prost(message, optional, tag = "3")]
+    pub body_format: ::core::option::Option<
+        super::super::core::v3::SubstitutionFormatString,
+    >,
 }
 impl ::prost::Name for DirectResponseAction {
     const NAME: &'static str = "DirectResponseAction";
@@ -2600,6 +2608,7 @@ impl ::prost::Name for Decorator {
         "type.googleapis.com/envoy.config.route.v3.Decorator".into()
     }
 }
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Tracing {
     /// Target percentage of requests managed by this HTTP connection manager that will be force
@@ -2643,6 +2652,36 @@ pub struct Tracing {
     pub custom_tags: ::prost::alloc::vec::Vec<
         super::super::super::r#type::tracing::v3::CustomTag,
     >,
+    /// The operation name of the span which will be used for tracing.
+    ///
+    ///
+    /// The same :ref:`format specifier <config_access_log_format>` as used for
+    /// : ref:`HTTP access logging <config_access_log>` applies here, however
+    ///   unknown specifier values are replaced with the empty string instead of `-`.
+    ///
+    ///
+    /// This field will take precedence over and make following settings ineffective:
+    ///
+    /// * :ref:`route decorator <envoy_v3_api_field_config.route.v3.Route.decorator>`.
+    /// * :ref:`x-envoy-decorator-operation <config_http_filters_router_x-envoy-decorator-operation>`.
+    /// * :ref:`HCM tracing operation <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.operation>`.
+    #[prost(string, tag = "5")]
+    pub operation: ::prost::alloc::string::String,
+    /// The operation name of the upstream span which will be used for tracing.
+    /// This only takes effect when `spawn_upstream_span` is set to true and the upstream
+    /// span is created.
+    ///
+    ///
+    /// The same :ref:`format specifier <config_access_log_format>` as used for
+    /// : ref:`HTTP access logging <config_access_log>` applies here, however
+    ///   unknown specifier values are replaced with the empty string instead of `-`.
+    ///
+    ///
+    /// This field will take precedence over and make following settings ineffective:
+    ///
+    /// * :ref:`HCM tracing upstream operation <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.Tracing.upstream_operation>`
+    #[prost(string, tag = "6")]
+    pub upstream_operation: ::prost::alloc::string::String,
 }
 impl ::prost::Name for Tracing {
     const NAME: &'static str = "Tracing";
@@ -2985,9 +3024,41 @@ pub mod rate_limit {
         /// ("generic_key", "\<descriptor_value>")
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
         pub struct GenericKey {
-            /// The value to use in the descriptor entry.
+            /// Descriptor value of entry.
+            ///
+            ///
+            /// The same :ref:`format specifier <config_access_log_format>` as used for
+            /// : ref:`HTTP access logging <config_access_log>` applies here, however
+            ///   unknown specifier values are replaced with the empty string instead of `-`.
+            ///
+            ///
+            /// .. note::
+            ///
+            /// Formatter parsing is controlled by the runtime feature flag
+            /// `envoy.reloadable_features.enable_formatter_for_ratelimit_action_descriptor_value`
+            /// (disabled by default).
+            ///
+            /// When enabled: The format string can contain multiple valid substitution
+            /// fields. If multiple substitution fields are present, their results will be concatenated
+            /// to form the final descriptor value. If it contains no substitution fields, the value
+            /// will be used as is. If the final concatenated result is empty and `default_value` is set,
+            /// the `default_value` will be used. If `default_value` is not set and the result is
+            /// empty, this descriptor will be skipped and not included in the rate limit call.
+            ///
+            /// When disabled (default): The descriptor_value is used as a literal string without any formatter
+            /// parsing or substitution.
+            ///
+            /// For example, `static_value` will be used as is since there are no substitution fields.
+            /// `%REQ(:method)%` will be replaced with the HTTP method, and
+            /// `%REQ(:method)%%REQ(:path)%` will be replaced with the concatenation of the HTTP method and path.
+            /// `%CEL(request.headers\['user-id'\])%` will use CEL to extract the user ID from request headers.
             #[prost(string, tag = "1")]
             pub descriptor_value: ::prost::alloc::string::String,
+            /// An optional value to use if the final concatenated `descriptor_value` result is empty.
+            /// Only applicable when formatter parsing is enabled by the runtime feature flag
+            /// `envoy.reloadable_features.enable_formatter_for_ratelimit_action_descriptor_value` (disabled by default).
+            #[prost(string, tag = "3")]
+            pub default_value: ::prost::alloc::string::String,
             /// An optional key to use in the descriptor entry. If not set it defaults
             /// to 'generic_key' as the descriptor key.
             #[prost(string, tag = "2")]
@@ -3009,16 +3080,50 @@ pub mod rate_limit {
         /// .. code-block:: cpp
         ///
         /// ("header_match", "\<descriptor_value>")
+        /// \[\#next-free-field: 6\]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct HeaderValueMatch {
+            /// Descriptor value of entry.
+            ///
+            ///
+            /// The same :ref:`format specifier <config_access_log_format>` as used for
+            /// : ref:`HTTP access logging <config_access_log>` applies here, however
+            ///   unknown specifier values are replaced with the empty string instead of `-`.
+            ///
+            ///
+            /// .. note::
+            ///
+            /// Formatter parsing is controlled by the runtime feature flag
+            /// `envoy.reloadable_features.enable_formatter_for_ratelimit_action_descriptor_value`
+            /// (disabled by default).
+            ///
+            /// When enabled: The format string can contain multiple valid substitution
+            /// fields. If multiple substitution fields are present, their results will be concatenated
+            /// to form the final descriptor value. If it contains no substitution fields, the value
+            /// will be used as is. All substitution fields will be evaluated and their results
+            /// concatenated. If the final concatenated result is empty and `default_value` is set,
+            /// the `default_value` will be used. If `default_value` is not set and the result is
+            /// empty, this descriptor will be skipped and not included in the rate limit call.
+            ///
+            /// When disabled (default): The descriptor_value is used as a literal string without any formatter
+            /// parsing or substitution.
+            ///
+            /// For example, `static_value` will be used as is since there are no substitution fields.
+            /// `%REQ(:method)%` will be replaced with the HTTP method, and
+            /// `%REQ(:method)%%REQ(:path)%` will be replaced with the concatenation of the HTTP method and path.
+            /// `%CEL(request.headers\['user-id'\])%` will use CEL to extract the user ID from request headers.
+            #[prost(string, tag = "1")]
+            pub descriptor_value: ::prost::alloc::string::String,
+            /// An optional value to use if the final concatenated `descriptor_value` result is empty.
+            /// Only applicable when formatter parsing is enabled by the runtime feature flag
+            /// `envoy.reloadable_features.enable_formatter_for_ratelimit_action_descriptor_value` (disabled by default).
+            #[prost(string, tag = "5")]
+            pub default_value: ::prost::alloc::string::String,
             /// The key to use in the descriptor entry.
             ///
             /// Defaults to `header_match`.
             #[prost(string, tag = "4")]
             pub descriptor_key: ::prost::alloc::string::String,
-            /// The value to use in the descriptor entry.
-            #[prost(string, tag = "1")]
-            pub descriptor_value: ::prost::alloc::string::String,
             /// If set to true, the action will append a descriptor entry when the
             /// request matches the headers. If set to false, the action will append a
             /// descriptor entry when the request does not match the headers. The
@@ -3028,7 +3133,7 @@ pub mod rate_limit {
                 super::super::super::super::super::super::google::protobuf::BoolValue,
             >,
             /// Specifies a set of headers that the rate limit action should match
-            /// on. The action will check the request’s headers against all the
+            /// on. The action will check the request's headers against all the
             /// specified headers in the config. A match will happen if all the
             /// headers in the config are present in the request with the same values
             /// (or based on presence if the value field is not in the config).
@@ -3181,16 +3286,50 @@ pub mod rate_limit {
         /// .. code-block:: cpp
         ///
         /// ("query_match", "\<descriptor_value>")
+        /// \[\#next-free-field: 6\]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct QueryParameterValueMatch {
+            /// Descriptor value of entry.
+            ///
+            ///
+            /// The same :ref:`format specifier <config_access_log_format>` as used for
+            /// : ref:`HTTP access logging <config_access_log>` applies here, however
+            ///   unknown specifier values are replaced with the empty string instead of `-`.
+            ///
+            ///
+            /// .. note::
+            ///
+            /// Formatter parsing is controlled by the runtime feature flag
+            /// `envoy.reloadable_features.enable_formatter_for_ratelimit_action_descriptor_value`
+            /// (disabled by default).
+            ///
+            /// When enabled: The format string can contain multiple valid substitution
+            /// fields. If multiple substitution fields are present, their results will be concatenated
+            /// to form the final descriptor value. If it contains no substitution fields, the value
+            /// will be used as is. All substitution fields will be evaluated and their results
+            /// concatenated. If the final concatenated result is empty and `default_value` is set,
+            /// the `default_value` will be used. If `default_value` is not set and the result is
+            /// empty, this descriptor will be skipped and not included in the rate limit call.
+            ///
+            /// When disabled (default): The descriptor_value is used as a literal string without any formatter
+            /// parsing or substitution.
+            ///
+            /// For example, `static_value` will be used as is since there are no substitution fields.
+            /// `%REQ(:method)%` will be replaced with the HTTP method, and
+            /// `%REQ(:method)%%REQ(:path)%` will be replaced with the concatenation of the HTTP method and path.
+            /// `%CEL(request.headers\['user-id'\])%` will use CEL to extract the user ID from request headers.
+            #[prost(string, tag = "1")]
+            pub descriptor_value: ::prost::alloc::string::String,
+            /// An optional value to use if the final concatenated `descriptor_value` result is empty.
+            /// Only applicable when formatter parsing is enabled by the runtime feature flag
+            /// `envoy.reloadable_features.enable_formatter_for_ratelimit_action_descriptor_value` (disabled by default).
+            #[prost(string, tag = "5")]
+            pub default_value: ::prost::alloc::string::String,
             /// The key to use in the descriptor entry.
             ///
             /// Defaults to `query_match`.
             #[prost(string, tag = "4")]
             pub descriptor_key: ::prost::alloc::string::String,
-            /// The value to use in the descriptor entry.
-            #[prost(string, tag = "1")]
-            pub descriptor_value: ::prost::alloc::string::String,
             /// If set to true, the action will append a descriptor entry when the
             /// request matches the headers. If set to false, the action will append a
             /// descriptor entry when the request does not match the headers. The
@@ -3200,7 +3339,7 @@ pub mod rate_limit {
                 super::super::super::super::super::super::google::protobuf::BoolValue,
             >,
             /// Specifies a set of query parameters that the rate limit action should match
-            /// on. The action will check the request’s query parameters against all the
+            /// on. The action will check the request's query parameters against all the
             /// specified query parameters in the config. A match will happen if all the
             /// query parameters in the config are present in the request with the same values
             /// (or based on presence if the value field is not in the config).
@@ -3691,8 +3830,6 @@ pub struct FilterConfig {
     /// And if the request is mutated later and re-match to another route, the disabled filter by the
     /// initial route will not be added back to the filter chain because the filter chain is already
     /// created and it is too late to change the chain.
-    ///
-    /// This field only make sense for the downstream HTTP filters for now.
     #[prost(bool, tag = "3")]
     pub disabled: bool,
 }

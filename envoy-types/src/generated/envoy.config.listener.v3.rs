@@ -634,6 +634,15 @@ pub struct AdditionalAddress {
     pub socket_options: ::core::option::Option<
         super::super::core::v3::SocketOptionsOverride,
     >,
+    ///
+    /// Configures TCP keepalive settings for the additional address.
+    /// If not set, the listener :ref:`tcp_keepalive <envoy_v3_api_field_config.listener.v3.Listener.tcp_keepalive>`
+    /// configuration is inherited. You can explicitly disable TCP keepalive for the additional address by setting any keepalive field
+    /// (:ref:`keepalive_probes <envoy_v3_api_field_config.core.v3.TcpKeepalive.keepalive_probes>`,
+    /// : ref:`keepalive_time <envoy_v3_api_field_config.core.v3.TcpKeepalive.keepalive_time>`, or
+    /// : ref:`keepalive_interval <envoy_v3_api_field_config.core.v3.TcpKeepalive.keepalive_interval>`) to `0`.
+    #[prost(message, optional, tag = "3")]
+    pub tcp_keepalive: ::core::option::Option<super::super::core::v3::TcpKeepalive>,
 }
 impl ::prost::Name for AdditionalAddress {
     const NAME: &'static str = "AdditionalAddress";
@@ -664,7 +673,7 @@ impl ::prost::Name for ListenerCollection {
         "type.googleapis.com/envoy.config.listener.v3.ListenerCollection".into()
     }
 }
-/// \[\#next-free-field: 37\]
+/// \[\#next-free-field: 38\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Listener {
     /// The unique name by which this listener is known. If no name is provided,
@@ -676,6 +685,13 @@ pub struct Listener {
     /// that is governed by the bind rules of the OS. E.g., multiple listeners can listen on port 0 on
     /// Linux as the actual port will be allocated by the OS.
     /// Required unless `api_listener` or `listener_specifier` is populated.
+    ///
+    ///
+    /// When the address contains a network namespace filepath (via
+    /// : ref:`network_namespace_filepath <envoy_v3_api_field_config.core.v3.SocketAddress.network_namespace_filepath>`),
+    ///   Envoy automatically populates the filter state with key `envoy.network.network_namespace`
+    ///   when a connection is accepted. This provides read-only access to the network namespace for
+    ///   filters, access logs, and other components.
     #[prost(message, optional, tag = "2")]
     pub address: ::core::option::Option<super::super::core::v3::Address>,
     /// The additional addresses the listener should listen on. The addresses must be unique across all
@@ -955,6 +971,12 @@ pub struct Listener {
     /// Whether the listener bypasses configured overload manager actions.
     #[prost(bool, tag = "35")]
     pub bypass_overload_manager: bool,
+    /// If set, TCP keepalive settings are configured for the listener address and inherited by
+    /// additional addresses. If not set, TCP keepalive settings are not configured for the
+    /// listener address and additional addresses by default. See :ref:`tcp_keepalive <envoy_v3_api_field_config.listener.v3.AdditionalAddress.tcp_keepalive>`
+    /// to explicitly configure TCP keepalive settings for individual additional addresses.
+    #[prost(message, optional, tag = "37")]
+    pub tcp_keepalive: ::core::option::Option<super::super::core::v3::TcpKeepalive>,
     /// The exclusive listener type and the corresponding config.
     #[prost(oneof = "listener::ListenerSpecifier", tags = "27")]
     pub listener_specifier: ::core::option::Option<listener::ListenerSpecifier>,

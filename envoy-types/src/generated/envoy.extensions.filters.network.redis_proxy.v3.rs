@@ -538,6 +538,48 @@ pub struct RedisProtocolOptions {
     /// The cluster level configuration for AWS IAM authentication
     #[prost(message, optional, tag = "3")]
     pub aws_iam: ::core::option::Option<AwsIam>,
+    /// If specified, these credentials are used when connecting to upstream endpoints. Which
+    /// credential is used is determined by matching the resolved `address` field here with each
+    /// endpoint's resolved `address` field. The first entry for a given `address` here takes precedence.
+    /// If no entry in `credentials` matches, then the `auth_password` and `auth_username` fields
+    /// are used as defaults.
+    #[prost(message, repeated, tag = "4")]
+    pub credentials: ::prost::alloc::vec::Vec<redis_protocol_options::Credential>,
+}
+/// Nested message and enum types in `RedisProtocolOptions`.
+pub mod redis_protocol_options {
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct Credential {
+        /// The address to which this username and password applies.
+        #[prost(message, optional, tag = "1")]
+        pub address: ::core::option::Option<
+            super::super::super::super::super::super::config::core::v3::Address,
+        >,
+        /// Upstream server password as defined by the `requirepass` directive
+        /// `<<https://redis.io/topics/config>`\_> in the server's configuration file.
+        #[prost(message, optional, tag = "2")]
+        pub auth_password: ::core::option::Option<
+            super::super::super::super::super::super::config::core::v3::DataSource,
+        >,
+        /// Upstream server username as defined by the `user` directive
+        /// `<<https://redis.io/topics/acl>`\_> in the server's configuration file.
+        #[prost(message, optional, tag = "3")]
+        pub auth_username: ::core::option::Option<
+            super::super::super::super::super::super::config::core::v3::DataSource,
+        >,
+    }
+    impl ::prost::Name for Credential {
+        const NAME: &'static str = "Credential";
+        const PACKAGE: &'static str = "envoy.extensions.filters.network.redis_proxy.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.network.redis_proxy.v3.RedisProtocolOptions.Credential"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProtocolOptions.Credential"
+                .into()
+        }
+    }
 }
 impl ::prost::Name for RedisProtocolOptions {
     const NAME: &'static str = "RedisProtocolOptions";

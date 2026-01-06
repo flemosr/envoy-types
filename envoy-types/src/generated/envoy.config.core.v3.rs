@@ -372,20 +372,22 @@ impl ::prost::Name for SocketAddress {
 pub struct TcpKeepalive {
     /// Maximum number of keepalive probes to send without response before deciding
     /// the connection is dead. Default is to use the OS level configuration (unless
-    /// overridden, Linux defaults to 9.)
+    /// overridden, Linux defaults to 9.) Setting this to `0` disables TCP keepalive.
     #[prost(message, optional, tag = "1")]
     pub keepalive_probes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// The number of seconds a connection needs to be idle before keep-alive probes
     /// start being sent. Default is to use the OS level configuration (unless
-    /// overridden, Linux defaults to 7200s (i.e., 2 hours.)
+    /// overridden, Linux defaults to 7200s (i.e., 2 hours.) Setting this to `0` disables
+    /// TCP keepalive.
     #[prost(message, optional, tag = "2")]
     pub keepalive_time: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// The number of seconds between keep-alive probes. Default is to use the OS
-    /// level configuration (unless overridden, Linux defaults to 75s.)
+    /// level configuration (unless overridden, Linux defaults to 75s.) Setting this to
+    /// `0` disables TCP keepalive.
     #[prost(message, optional, tag = "3")]
     pub keepalive_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -1704,8 +1706,18 @@ pub struct GrpcService {
     /// documentation on :ref:`custom request headers  <config_http_conn_man_headers_custom_request_headers>`.
     #[prost(message, repeated, tag = "5")]
     pub initial_metadata: ::prost::alloc::vec::Vec<HeaderValue>,
-    /// Optional default retry policy for streams toward the service.
-    /// If an async stream doesn't have retry policy configured in its stream options, this retry policy is used.
+    /// Optional default retry policy for RPCs or streams initiated toward this gRPC service.
+    ///
+    /// If an async stream does not have a retry policy configured in its per‑stream options, this
+    /// policy is used as the default.
+    ///
+    /// .. note::
+    ///
+    /// This field is only applied by Envoy gRPC (`envoy_grpc`) clients. Google gRPC
+    /// (`google_grpc`) clients currently ignore this field.
+    ///
+    /// If not specified, no default retry policy is applied at the client level and retries only occur
+    /// when explicitly configured in per‑stream options.
     #[prost(message, optional, tag = "6")]
     pub retry_policy: ::core::option::Option<RetryPolicy>,
     #[prost(oneof = "grpc_service::TargetSpecifier", tags = "1, 2")]
@@ -1724,10 +1736,21 @@ pub mod grpc_service {
         /// Note that this authority does not override the SNI. The SNI is provided by the transport socket of the cluster.
         #[prost(string, tag = "2")]
         pub authority: ::prost::alloc::string::String,
-        /// Indicates the retry policy for re-establishing the gRPC stream
-        /// This field is optional. If max interval is not provided, it will be set to ten times the provided base interval.
-        /// Currently only supported for xDS gRPC streams.
-        /// If not set, xDS gRPC streams default base interval:500ms, maximum interval:30s will be applied.
+        /// Specifies the retry backoff policy for re-establishing long‑lived xDS gRPC streams.
+        ///
+        /// This field is optional. If `retry_back_off.max_interval` is not provided, it will be set to
+        /// ten times the configured `retry_back_off.base_interval`.
+        ///
+        /// .. note::
+        ///
+        ///
+        /// This field is only honored for management‑plane xDS gRPC streams created from
+        /// : ref:`ApiConfigSource <envoy_v3_api_msg_config.core.v3.ApiConfigSource>` that use
+        ///   `envoy_grpc`. Data‑plane gRPC clients (for example external authorization or external
+        ///   processing filters) must use :ref:`GrpcService.retry_policy    <envoy_v3_api_field_config.core.v3.GrpcService.retry_policy>` instead.
+        ///
+        ///
+        /// If not set, xDS gRPC streams default to a base interval of 500ms and a maximum interval of 30s.
         #[prost(message, optional, tag = "3")]
         pub retry_policy: ::core::option::Option<super::RetryPolicy>,
         /// Maximum gRPC message size that is allowed to be received.
@@ -3520,11 +3543,14 @@ impl ::prost::Name for TcpProtocolOptions {
     }
 }
 /// Config for keepalive probes in a QUIC connection.
-/// Note that QUIC keep-alive probing packets work differently from HTTP/2 keep-alive PINGs in a sense that the probing packet
-/// itself doesn't timeout waiting for a probing response. Quic has a shorter idle timeout than TCP, so it doesn't rely on such probing to discover dead connections. If the peer fails to respond, the connection will idle timeout eventually. Thus, they are configured differently from :ref:`connection_keepalive <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.connection_keepalive>`.
+///
+/// .. note::
+///
+/// QUIC keep-alive probing packets work differently from HTTP/2 keep-alive PINGs in a sense that the probing packet
+/// itself doesn't timeout waiting for a probing response. QUIC has a shorter idle timeout than TCP, so it doesn't rely on such probing to discover dead connections. If the peer fails to respond, the connection will idle timeout eventually. Thus, they are configured differently from :ref:`connection_keepalive <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.connection_keepalive>`.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct QuicKeepAliveSettings {
-    /// The max interval for a connection to send keep-alive probing packets (with PING or PATH_RESPONSE). The value should be smaller than :ref:`connection idle_timeout <envoy_v3_api_field_config.listener.v3.QuicProtocolOptions.idle_timeout>` to prevent idle timeout while not less than 1s to avoid throttling the connection or flooding the peer with probes.
+    /// The max interval for a connection to send keep-alive probing packets (with `PING` or `PATH_RESPONSE`). The value should be smaller than :ref:`connection idle_timeout <envoy_v3_api_field_config.listener.v3.QuicProtocolOptions.idle_timeout>` to prevent idle timeout while not less than `1s` to avoid throttling the connection or flooding the peer with probes.
     ///
     /// If :ref:`initial_interval <envoy_v3_api_field_config.core.v3.QuicKeepAliveSettings.initial_interval>` is absent or zero, a client connection will use this value to start probing.
     ///
@@ -3558,19 +3584,19 @@ impl ::prost::Name for QuicKeepAliveSettings {
 /// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct QuicProtocolOptions {
-    /// Maximum number of streams that the client can negotiate per connection. 100
+    /// Maximum number of streams that the client can negotiate per connection. `100`
     /// if not specified.
     #[prost(message, optional, tag = "1")]
     pub max_concurrent_streams: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// `Initial stream-level flow-control receive window  <<https://tools.ietf.org/html/draft-ietf-quic-transport-34#section-4.1>`\_> size. Valid values range from
-    /// 1 to 16777216 (2^24, maximum supported by QUICHE) and defaults to 16777216 (16 * 1024 * 1024).
+    /// `1` to `16777216` (`2^24`, maximum supported by QUICHE) and defaults to `16777216` (`16 * 1024 * 1024`).
     ///
     /// .. note::
     ///
-    /// 16384 (2^14) is the minimum window size supported in Google QUIC. If configured smaller than it, we will use
-    /// 16384 instead. QUICHE IETF Quic implementation supports 1 bytes window. We only support increasing the default
+    /// `16384` (`2^14`) is the minimum window size supported in Google QUIC. If configured smaller than it, we will use
+    /// `16384` instead. QUICHE IETF QUIC implementation supports `1` byte window. We only support increasing the default
     /// window size now, so it's also the minimum.
     ///
     /// This field also acts as a soft limit on the number of bytes Envoy will buffer per-stream in the
@@ -3581,27 +3607,27 @@ pub struct QuicProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Similar to `initial_stream_window_size`, but for connection-level
-    /// flow-control. Valid values range from 1 to 25165824 (24MB, maximum supported by QUICHE) and defaults
-    /// to 25165824 (24 * 1024 * 1024).
+    /// flow-control. Valid values range from `1` to `25165824` (`24MB`, maximum supported by QUICHE) and defaults
+    /// to `25165824` (`24 * 1024 * 1024`).
     ///
     /// .. note::
     ///
-    /// 16384 (2^14) is the minimum window size supported in Google QUIC. We only support increasing the default
+    /// `16384` (`2^14`) is the minimum window size supported in Google QUIC. We only support increasing the default
     /// window size now, so it's also the minimum.
     #[prost(message, optional, tag = "3")]
     pub initial_connection_window_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// The number of timeouts that can occur before port migration is triggered for QUIC clients.
-    /// This defaults to 4. If set to 0, port migration will not occur on path degrading.
-    /// Timeout here refers to QUIC internal path degrading timeout mechanism, such as PTO.
+    /// This defaults to `4`. If set to `0`, port migration will not occur on path degrading.
+    /// Timeout here refers to QUIC internal path degrading timeout mechanism, such as `PTO`.
     /// This has no effect on server sessions.
     #[prost(message, optional, tag = "4")]
     pub num_timeouts_to_trigger_port_migration: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Probes the peer at the configured interval to solicit traffic, i.e. ACK or PATH_RESPONSE, from the peer to push back connection idle timeout.
-    /// If absent, use the default keepalive behavior of which a client connection sends PINGs every 15s, and a server connection doesn't do anything.
+    /// Probes the peer at the configured interval to solicit traffic, i.e. `ACK` or `PATH_RESPONSE`, from the peer to push back connection idle timeout.
+    /// If absent, use the default keepalive behavior of which a client connection sends `PING`s every `15s`, and a server connection doesn't do anything.
     #[prost(message, optional, tag = "5")]
     pub connection_keepalive: ::core::option::Option<QuicKeepAliveSettings>,
     /// A comma-separated list of strings representing QUIC connection options defined in
@@ -3613,10 +3639,10 @@ pub struct QuicProtocolOptions {
     #[prost(string, tag = "7")]
     pub client_connection_options: ::prost::alloc::string::String,
     /// The duration that a QUIC connection stays idle before it closes itself. If this field is not present, QUICHE
-    /// default 600s will be applied.
+    /// default `600s` will be applied.
     /// For internal corporate network, a long timeout is often fine.
-    /// But for client facing network, 30s is usually a good choice.
-    /// Do not add an upper bound here. A long idle timeout is useful for maintaining warm connections at non-front-line proxy for low QPS services."
+    /// But for client facing network, `30s` is usually a good choice.
+    /// Do not add an upper bound here. A long idle timeout is useful for maintaining warm connections at non-front-line proxy for low QPS services.
     #[prost(message, optional, tag = "8")]
     pub idle_network_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
@@ -3696,9 +3722,9 @@ pub struct AlternateProtocolsCacheOptions {
     /// not the case.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
-    /// The maximum number of entries that the cache will hold. If not specified defaults to 1024.
+    /// The maximum number of entries that the cache will hold. If not specified defaults to `1024`.
     ///
-    /// .. note:
+    /// .. note::
     ///
     /// The implementation is approximate and enforced independently on each worker thread, thus
     /// it is possible for the maximum entries in the cache to go slightly above the configured
@@ -3784,9 +3810,13 @@ pub struct HttpProtocolOptions {
     /// idle timeout is reached the connection will be closed. If the connection is an HTTP/2
     /// downstream connection a drain sequence will occur prior to closing the connection, see
     /// : ref:`drain_timeout  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.drain_timeout>`.
-    ///   Note that request based timeouts mean that HTTP/2 PINGs will not keep the connection alive.
-    ///   If not specified, this defaults to 1 hour. To disable idle timeouts explicitly set this to 0.
     ///
+    ///
+    /// .. note::
+    ///
+    /// Request based timeouts mean that HTTP/2 PINGs will not keep the connection alive.
+    ///
+    /// If not specified, this defaults to `1 hour`. To disable idle timeouts explicitly set this to `0`.
     ///
     /// .. warning::
     /// Disabling this timeout has a highly likelihood of yielding connection leaks due to lost TCP
@@ -3810,22 +3840,22 @@ pub struct HttpProtocolOptions {
     >,
     /// The maximum number of headers (request headers if configured on HttpConnectionManager,
     /// response headers when configured on a cluster).
-    /// If unconfigured, the default maximum number of headers allowed is 100.
+    /// If unconfigured, the default maximum number of headers allowed is `100`.
     /// The default value for requests can be overridden by setting runtime key `envoy.reloadable_features.max_request_headers_count`.
     /// The default value for responses can be overridden by setting runtime key `envoy.reloadable_features.max_response_headers_count`.
-    /// Downstream requests that exceed this limit will receive a 431 response for HTTP/1.x and cause a stream
+    /// Downstream requests that exceed this limit will receive a `HTTP 431` response for HTTP/1.x and cause a stream
     /// reset for HTTP/2.
-    /// Upstream responses that exceed this limit will result in a 502 response.
+    /// Upstream responses that exceed this limit will result in a `HTTP 502` response.
     #[prost(message, optional, tag = "2")]
     pub max_headers_count: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     ///
     /// The maximum size of response headers.
-    /// If unconfigured, the default is 60 KiB, except for HTTP/1 response headers which have a default
-    /// of 80KiB.
+    /// If unconfigured, the default is `60 KiB`, except for HTTP/1 response headers which have a default
+    /// of `80 KiB`.
     /// The default value can be overridden by setting runtime key `envoy.reloadable_features.max_response_headers_size_kb`.
-    /// Responses that exceed this limit will result in a 503 response.
+    /// Responses that exceed this limit will result in a `HTTP 503` response.
     /// In Envoy, this setting is only valid when configured on an upstream cluster, not on the
     /// : ref:`HTTP Connection Manager  <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.common_http_protocol_options>`.
     ///
@@ -3834,8 +3864,8 @@ pub struct HttpProtocolOptions {
     ///
     /// Currently some protocol codecs impose limits on the maximum size of a single header.
     ///
-    /// * HTTP/2 (when using nghttp2) limits a single header to around 100kb.
-    /// * HTTP/3 limits a single header to around 1024kb.
+    /// * HTTP/2 (when using `nghttp2`) limits a single header to around `100kb`.
+    /// * HTTP/3 limits a single header to around `1024kb`.
     #[prost(message, optional, tag = "7")]
     pub max_response_headers_kb: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -3847,7 +3877,7 @@ pub struct HttpProtocolOptions {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Action to take when a client request with a header name containing underscore characters is received.
-    /// If this setting is not specified, the value defaults to ALLOW.
+    /// If this setting is not specified, the value defaults to `ALLOW`.
     ///
     /// .. note::
     ///
@@ -3864,7 +3894,7 @@ pub struct HttpProtocolOptions {
     pub headers_with_underscores_action: i32,
     /// Optional maximum requests for both upstream and downstream connections.
     /// If not specified, there is no limit.
-    /// Setting this parameter to 1 will effectively disable keep alive.
+    /// Setting this parameter to `1` will effectively disable keep alive.
     /// For HTTP/2 and HTTP/3, due to concurrent stream processing, the limit is approximate.
     #[prost(message, optional, tag = "6")]
     pub max_requests_per_connection: ::core::option::Option<
@@ -3893,13 +3923,13 @@ pub mod http_protocol_options {
     pub enum HeadersWithUnderscoresAction {
         /// Allow headers with underscores. This is the default behavior.
         Allow = 0,
-        /// Reject client request. HTTP/1 requests are rejected with the 400 status. HTTP/2 requests
-        /// end with the stream reset. The "httpN.requests_rejected_with_underscores_in_headers" counter
+        /// Reject client request. HTTP/1 requests are rejected with `HTTP 400` status. HTTP/2 requests
+        /// end with the stream reset. The `httpN.requests_rejected_with_underscores_in_headers` counter
         /// is incremented for each rejected request.
         RejectRequest = 1,
         /// Drop the client header with name containing underscores. The header is dropped before the filter chain is
         /// invoked and as such filters will not see dropped headers. The
-        /// "httpN.dropped_headers_with_underscores" is incremented for each dropped header.
+        /// `httpN.dropped_headers_with_underscores` is incremented for each dropped header.
         DropHeader = 2,
     }
     impl HeadersWithUnderscoresAction {
@@ -3946,7 +3976,7 @@ pub struct Http1ProtocolOptions {
     pub allow_absolute_url: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// Handle incoming HTTP/1.0 and HTTP 0.9 requests.
+    /// Handle incoming HTTP/1.0 and HTTP/0.9 requests.
     /// This is off by default, and not fully standards compliant. There is support for pre-HTTP/1.1
     /// style connect logic, dechunking, and handling lack of client host iff
     /// `default_host_for_http_10` is configured.
@@ -3967,21 +3997,22 @@ pub struct Http1ProtocolOptions {
     ///
     /// .. attention::
     ///
-    /// Note that this only happens when Envoy is chunk encoding which occurs when:
+    /// This only happens when Envoy is chunk encoding which occurs when:
     ///
     /// * The request is HTTP/1.1.
-    /// * Is neither a HEAD only request nor a HTTP Upgrade.
-    /// * Not a response to a HEAD request.
-    /// * The content length header is not present.
+    /// * Is neither a `HEAD` only request nor a HTTP Upgrade.
+    /// * Not a response to a `HEAD` request.
+    /// * The `Content-Length` header is not present.
     #[prost(bool, tag = "5")]
     pub enable_trailers: bool,
     /// Allows Envoy to process requests/responses with both `Content-Length` and `Transfer-Encoding`
     /// headers set. By default such messages are rejected, but if option is enabled - Envoy will
-    /// remove Content-Length header and process message.
+    /// remove `Content-Length` header and process message.
     /// See `RFC7230, sec. 3.3.3 <<https://tools.ietf.org/html/rfc7230#section-3.3.3>`\_> for details.
     ///
-    ///
     /// .. attention::
+    ///
+    ///
     /// Enabling this option might lead to request smuggling vulnerability, especially if traffic
     /// is proxied via multiple layers of proxies.
     /// \[\#comment:TODO: This field is ignored when the
@@ -4066,9 +4097,12 @@ pub mod http1_protocol_options {
         pub enum HeaderFormat {
             /// Formats the header by proper casing words: the first character and any character following
             /// a special character will be capitalized if it's an alpha character. For example,
-            /// "content-type" becomes "Content-Type", and "foo$b#$are" becomes "Foo$B#$Are".
-            /// Note that while this results in most headers following conventional casing, certain headers
-            /// are not covered. For example, the "TE" header will be formatted as "Te".
+            /// `"content-type"` becomes `"Content-Type"`, and `"foo$b#$are"` becomes `"Foo$B#$Are"`.
+            ///
+            /// .. note::
+            ///
+            /// While this results in most headers following conventional casing, certain headers
+            /// are not covered. For example, the `"TE"` header will be formatted as `"Te"`.
             #[prost(message, tag = "1")]
             ProperCaseWords(ProperCaseWords),
             /// Configuration for stateful formatter extensions that allow using received headers to
@@ -4109,8 +4143,11 @@ pub struct KeepaliveSettings {
         super::super::super::super::google::protobuf::Duration,
     >,
     /// How long to wait for a response to a keepalive PING. If a response is not received within this
-    /// time period, the connection will be aborted. Note that in order to prevent the influence of
-    /// Head-of-line (HOL) blocking the timeout period is extended when *any* frame is received on
+    /// time period, the connection will be aborted.
+    ///
+    /// .. note::
+    ///
+    /// In order to prevent the influence of Head-of-line (HOL) blocking the timeout period is extended when *any* frame is received on
     /// the connection, under the assumption that if a frame is received the connection is healthy.
     #[prost(message, optional, tag = "2")]
     pub timeout: ::core::option::Option<
@@ -4118,7 +4155,7 @@ pub struct KeepaliveSettings {
     >,
     /// A random jitter amount as a percentage of interval that will be added to each interval.
     /// A value of zero means there will be no jitter.
-    /// The default value is 15%.
+    /// The default value is `15%`.
     #[prost(message, optional, tag = "3")]
     pub interval_jitter: ::core::option::Option<
         super::super::super::r#type::v3::Percent,
@@ -4145,20 +4182,20 @@ impl ::prost::Name for KeepaliveSettings {
         "type.googleapis.com/envoy.config.core.v3.KeepaliveSettings".into()
     }
 }
-/// \[\#next-free-field: 18\]
+/// \[\#next-free-field: 19\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http2ProtocolOptions {
     /// `Maximum table size <<https://httpwg.org/specs/rfc7541.html#rfc.section.4.2>`\_>
     /// (in octets) that the encoder is permitted to use for the dynamic HPACK table. Valid values
-    /// range from 0 to 4294967295 (2^32 - 1) and defaults to 4096. 0 effectively disables header
+    /// range from `0` to `4294967295` (`2^32 - 1`) and defaults to `4096`. `0` effectively disables header
     /// compression.
     #[prost(message, optional, tag = "1")]
     pub hpack_table_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// `Maximum concurrent streams <<https://httpwg.org/specs/rfc7540.html#rfc.section.5.1.2>`\_>
-    /// allowed for peer on one HTTP/2 connection. Valid values range from 1 to 2147483647 (2^31 - 1)
-    /// and defaults to 1024 for safety and should be sufficient for most use cases.
+    /// allowed for peer on one HTTP/2 connection. Valid values range from `1` to `2147483647` (`2^31 - 1`)
+    /// and defaults to `1024` for safety and should be sufficient for most use cases.
     ///
     /// For upstream connections, this also limits how many streams Envoy will initiate concurrently
     /// on a single connection. If the limit is reached, Envoy may queue requests or establish
@@ -4171,13 +4208,13 @@ pub struct Http2ProtocolOptions {
     pub max_concurrent_streams: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// `Initial stream-level flow-control window  <<https://httpwg.org/specs/rfc7540.html#rfc.section.6.9.2>`\_> size. Valid values range from 65535
-    /// (2^16 - 1, HTTP/2 default) to 2147483647 (2^31 - 1, HTTP/2 maximum) and defaults to
-    /// 16MiB (16 * 1024 * 1024).
+    /// `Initial stream-level flow-control window  <<https://httpwg.org/specs/rfc7540.html#rfc.section.6.9.2>`\_> size. Valid values range from `65535`
+    /// (`2^16 - 1`, HTTP/2 default) to `2147483647` (`2^31 - 1`, HTTP/2 maximum) and defaults to
+    /// `16MiB` (`16 * 1024 * 1024`).
     ///
     /// .. note::
     ///
-    /// 65535 is the initial window size from HTTP/2 spec. We only support increasing the default window size now,
+    /// `65535` is the initial window size from HTTP/2 spec. We only support increasing the default window size now,
     /// so it's also the minimum.
     ///
     /// This field also acts as a soft limit on the number of bytes Envoy will buffer per-stream in the
@@ -4188,7 +4225,7 @@ pub struct Http2ProtocolOptions {
         super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// Similar to `initial_stream_window_size`, but for connection-level flow-control
-    /// window. The default is 24MiB (24 * 1024 * 1024).
+    /// window. The default is `24MiB` (`24 * 1024 * 1024`).
     #[prost(message, optional, tag = "4")]
     pub initial_connection_window_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -4207,59 +4244,58 @@ pub struct Http2ProtocolOptions {
     /// Limit the number of pending outbound downstream frames of all types (frames that are waiting to
     /// be written into the socket). Exceeding this limit triggers flood mitigation and connection is
     /// terminated. The `http2.outbound_flood` stat tracks the number of terminated connections due
-    /// to flood mitigation. The default limit is 10000.
+    /// to flood mitigation. The default limit is `10000`.
     #[prost(message, optional, tag = "7")]
     pub max_outbound_frames: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Limit the number of pending outbound downstream frames of types PING, SETTINGS and RST_STREAM,
+    /// Limit the number of pending outbound downstream frames of types `PING`, `SETTINGS` and `RST_STREAM`,
     /// preventing high memory utilization when receiving continuous stream of these frames. Exceeding
     /// this limit triggers flood mitigation and connection is terminated. The
     /// `http2.outbound_control_flood` stat tracks the number of terminated connections due to flood
-    /// mitigation. The default limit is 1000.
+    /// mitigation. The default limit is `1000`.
     #[prost(message, optional, tag = "8")]
     pub max_outbound_control_frames: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Limit the number of consecutive inbound frames of types HEADERS, CONTINUATION and DATA with an
+    /// Limit the number of consecutive inbound frames of types `HEADERS`, `CONTINUATION` and `DATA` with an
     /// empty payload and no end stream flag. Those frames have no legitimate use and are abusive, but
-    /// might be a result of a broken HTTP/2 implementation. The \`http2.inbound_empty_frames_flood\``
+    /// might be a result of a broken HTTP/2 implementation. The `http2.inbound_empty_frames_flood`
     /// stat tracks the number of connections terminated due to flood mitigation.
-    /// Setting this to 0 will terminate connection upon receiving first frame with an empty payload
-    /// and no end stream flag. The default limit is 1.
+    /// Setting this to `0` will terminate connection upon receiving first frame with an empty payload
+    /// and no end stream flag. The default limit is `1`.
     #[prost(message, optional, tag = "9")]
     pub max_consecutive_inbound_frames_with_empty_payload: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Limit the number of inbound PRIORITY frames allowed per each opened stream. If the number
-    /// of PRIORITY frames received over the lifetime of connection exceeds the value calculated
+    /// Limit the number of inbound `PRIORITY` frames allowed per each opened stream. If the number
+    /// of `PRIORITY` frames received over the lifetime of connection exceeds the value calculated
     /// using this formula::
     ///
     /// `max_inbound_priority_frames_per_stream` * (1 + `opened_streams`)
     ///
     /// the connection is terminated. For downstream connections the `opened_streams` is incremented when
     /// Envoy receives complete response headers from the upstream server. For upstream connection the
-    /// `opened_streams` is incremented when Envoy send the HEADERS frame for a new stream. The
+    /// `opened_streams` is incremented when Envoy sends the `HEADERS` frame for a new stream. The
     /// `http2.inbound_priority_frames_flood` stat tracks
-    /// the number of connections terminated due to flood mitigation. The default limit is 100.
+    /// the number of connections terminated due to flood mitigation. The default limit is `100`.
     #[prost(message, optional, tag = "10")]
     pub max_inbound_priority_frames_per_stream: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Limit the number of inbound WINDOW_UPDATE frames allowed per DATA frame sent. If the number
-    /// of WINDOW_UPDATE frames received over the lifetime of connection exceeds the value calculated
+    /// Limit the number of inbound `WINDOW_UPDATE` frames allowed per `DATA` frame sent. If the number
+    /// of `WINDOW_UPDATE` frames received over the lifetime of connection exceeds the value calculated
     /// using this formula::
     ///
-    /// 5 + 2 * (`opened_streams` +
-    /// `max_inbound_window_update_frames_per_data_frame_sent` * `outbound_data_frames`)
+    /// `5 + 2 * (opened_streams +             max_inbound_window_update_frames_per_data_frame_sent * outbound_data_frames)`
     ///
     /// the connection is terminated. For downstream connections the `opened_streams` is incremented when
     /// Envoy receives complete response headers from the upstream server. For upstream connections the
-    /// `opened_streams` is incremented when Envoy sends the HEADERS frame for a new stream. The
+    /// `opened_streams` is incremented when Envoy sends the `HEADERS` frame for a new stream. The
     /// `http2.inbound_priority_frames_flood` stat tracks the number of connections terminated due to
-    /// flood mitigation. The default max_inbound_window_update_frames_per_data_frame_sent value is 10.
-    /// Setting this to 1 should be enough to support HTTP/2 implementations with basic flow control,
-    /// but more complex implementations that try to estimate available bandwidth require at least 2.
+    /// flood mitigation. The default `max_inbound_window_update_frames_per_data_frame_sent` value is `10`.
+    /// Setting this to `1` should be enough to support HTTP/2 implementations with basic flow control,
+    /// but more complex implementations that try to estimate available bandwidth require at least `2`.
     #[prost(message, optional, tag = "11")]
     pub max_inbound_window_update_frames_per_data_frame_sent: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -4297,7 +4333,9 @@ pub struct Http2ProtocolOptions {
     /// 1. SETTINGS_ENABLE_CONNECT_PROTOCOL (0x8) is only configurable through the named field
     ///    'allow_connect'.
     ///
-    /// Note that custom parameters specified through this field can not also be set in the
+    /// .. note::
+    ///
+    /// Custom parameters specified through this field can not also be set in the
     /// corresponding named parameters:
     ///
     /// .. code-block:: text
@@ -4328,10 +4366,18 @@ pub struct Http2ProtocolOptions {
     pub use_oghttp2_codec: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
-    /// Configure the maximum amount of metadata than can be handled per stream. Defaults to 1 MB.
+    /// Configure the maximum amount of metadata than can be handled per stream. Defaults to `1 MB`.
     #[prost(message, optional, tag = "17")]
     pub max_metadata_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt64Value,
+    >,
+    /// Controls whether to encode headers using huffman encoding.
+    /// This can be useful in cases where the cpu spent encoding the headers isn't
+    /// worth the network bandwidth saved e.g. for localhost.
+    /// If unset, uses the data plane's default value.
+    #[prost(message, optional, tag = "18")]
+    pub enable_huffman_encoding: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
     >,
 }
 /// Nested message and enum types in `Http2ProtocolOptions`.
@@ -4407,7 +4453,10 @@ pub struct Http3ProtocolOptions {
     /// Allows proxying Websocket and other upgrades over HTTP/3 CONNECT using
     /// the header mechanisms from the `HTTP/2 extended connect RFC  <<https://datatracker.ietf.org/doc/html/rfc8441>`\_>
     /// and settings `proposed for HTTP/3  <<https://datatracker.ietf.org/doc/draft-ietf-httpbis-h3-websockets/>`\_>
-    /// Note that HTTP/3 CONNECT is not yet an RFC.
+    ///
+    /// .. note::
+    ///
+    /// HTTP/3 CONNECT is not yet an RFC.
     #[prost(bool, tag = "5")]
     pub allow_extended_connect: bool,
     /// \[\#not-implemented-hide:\] Hiding until Envoy has full metadata support.
@@ -4422,7 +4471,7 @@ pub struct Http3ProtocolOptions {
     /// Still under implementation. DO NOT USE.
     ///
     /// Disables QPACK compression related features for HTTP/3 including:
-    /// No huffman encoding, zero dynamic table capacity and no cookie crumbing.
+    /// No huffman encoding, zero dynamic table capacity and no cookie crumbling.
     /// This can be useful for trading off CPU vs bandwidth when an upstream HTTP/3 connection multiplexes multiple downstream connections.
     #[prost(bool, tag = "7")]
     pub disable_qpack: bool,
@@ -4445,9 +4494,9 @@ impl ::prost::Name for Http3ProtocolOptions {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SchemeHeaderTransformation {
     /// Set the Scheme header to match the upstream transport protocol. For example, should a
-    /// request be sent to the upstream over TLS, the scheme header will be set to "https". Should the
-    /// request be sent over plaintext, the scheme header will be set to "http".
-    /// If scheme_to_overwrite is set, this field is not used.
+    /// request be sent to the upstream over TLS, the scheme header will be set to `"https"`. Should the
+    /// request be sent over plaintext, the scheme header will be set to `"http"`.
+    /// If `scheme_to_overwrite` is set, this field is not used.
     #[prost(bool, tag = "2")]
     pub match_upstream: bool,
     #[prost(oneof = "scheme_header_transformation::Transformation", tags = "1")]
@@ -4460,7 +4509,7 @@ pub mod scheme_header_transformation {
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Transformation {
         /// Overwrite any Scheme header with the contents of this string.
-        /// If set, takes precedence over match_upstream.
+        /// If set, takes precedence over `match_upstream`.
         #[prost(string, tag = "1")]
         SchemeToOverwrite(::prost::alloc::string::String),
     }

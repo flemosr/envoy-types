@@ -10,8 +10,20 @@
 ///   where a match tree is specified that indicates (via
 /// : ref:`ExecuteFilterAction <envoy_v3_api_msg_extensions.filters.http.composite.v3.ExecuteFilterAction>`)
 ///   which filter configuration to create and delegate to.
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct Composite {}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Composite {
+    ///
+    /// Named filter chain definitions that can be referenced from
+    /// : ref:`ExecuteFilterAction.filter_chain_name  <envoy_v3_api_field_extensions.filters.http.composite.v3.ExecuteFilterAction.filter_chain_name>`.
+    ///   The filter chains are compiled at configuration time and can be referenced by name.
+    ///   This is useful when the same filter chain needs to be applied across many routes,
+    ///   as it avoids duplicating the filter chain configuration.
+    #[prost(map = "string, message", tag = "1")]
+    pub named_filter_chains: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        FilterChainConfiguration,
+    >,
+}
 impl ::prost::Name for Composite {
     const NAME: &'static str = "Composite";
     const PACKAGE: &'static str = "envoy.extensions.filters.http.composite.v3";
@@ -72,26 +84,37 @@ impl ::prost::Name for DynamicConfig {
 }
 /// Composite match action (see :ref:`matching docs <arch_overview_matching_api>` for more info on match actions).
 /// This specifies the filter configuration of the filter that the composite filter should delegate filter interactions to.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExecuteFilterAction {
     /// Filter specific configuration which depends on the filter being
     /// instantiated. See the supported filters for further documentation.
-    /// Only one of `typed_config` or `dynamic_config` can be set.
-    /// Ignored if `filter_chain` is set.
+    /// Only one of `typed_config`, `dynamic_config`, `filter_chain`, or `filter_chain_name`
+    /// can be set.
     /// \[\#extension-category: envoy.filters.http\]
     #[prost(message, optional, tag = "1")]
     pub typed_config: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
     /// Dynamic configuration of filter obtained via extension configuration discovery service.
-    /// Only one of `typed_config` or `dynamic_config` can be set.
-    /// Ignored if `filter_chain` is set.
+    /// Only one of `typed_config`, `dynamic_config`, `filter_chain`, or `filter_chain_name`
+    /// can be set.
     #[prost(message, optional, tag = "2")]
     pub dynamic_config: ::core::option::Option<DynamicConfig>,
     /// An inlined list of filter configurations. The specified filters will be executed in order.
-    /// \[\#not-implemented-hide:\]
+    /// Only one of `typed_config`, `dynamic_config`, `filter_chain`, or `filter_chain_name`
+    /// can be set.
     #[prost(message, optional, tag = "4")]
     pub filter_chain: ::core::option::Option<FilterChainConfiguration>,
+    ///
+    /// The name of a filter chain defined in
+    /// : ref:`Composite.named_filter_chains  <envoy_v3_api_field_extensions.filters.http.composite.v3.Composite.named_filter_chains>`.
+    ///   At runtime, if the named filter chain is not found in the Composite filter's configuration,
+    ///   no filter will be applied for this match (the action is silently skipped).
+    ///   Only one of `typed_config`, `dynamic_config`, `filter_chain`, or `filter_chain_name`
+    ///   can be set.
+    #[prost(string, tag = "5")]
+    pub filter_chain_name: ::prost::alloc::string::String,
     ///
     /// Probability of the action execution. If not specified, this is 100%.
     /// This allows sampling behavior for the configured actions.

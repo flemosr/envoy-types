@@ -137,7 +137,7 @@ impl ::prost::Name for ProcessingRequest {
 ///
 /// * If it is set to `FULL_DUPLEX_STREAMED`, the server must follow the API defined
 ///   for this mode to send the ProcessingResponse messages.
-///   \[\#next-free-field: 11\]
+///   \[\#next-free-field: 12\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingResponse {
     /// Optional metadata that will be emitted as dynamic metadata to be consumed by
@@ -163,6 +163,19 @@ pub struct ProcessingResponse {
     pub mode_override: ::core::option::Option<
         super::super::super::extensions::filters::http::ext_proc::v3::ProcessingMode,
     >,
+    /// \[\#not-implemented-hide:\]
+    /// Used only in `FULL_DUPLEX_STREAMED` and `GRPC` body send modes.
+    /// Instructs the data plane to stop sending body data and to send a
+    /// half-close on the ext_proc stream. The ext_proc server should then echo
+    /// back all subsequent body contents as-is until it sees the client's
+    /// half-close, at which point the ext_proc server can terminate the stream
+    /// with an OK status. This provides a safe way for the ext_proc server
+    /// to indicate that it does not need to see the rest of the stream;
+    /// without this, the ext_proc server could not terminate the stream
+    /// early, because it would wind up dropping any body contents that the
+    /// client had already sent before it saw the ext_proc stream termination.
+    #[prost(bool, tag = "11")]
+    pub request_drain: bool,
     ///
     /// When ext_proc server receives a request message, in case it needs more
     /// time to process the message, it sends back a ProcessingResponse message
@@ -277,12 +290,28 @@ impl ::prost::Name for HttpHeaders {
 pub struct HttpBody {
     /// The contents of the body in the HTTP request/response. Note that in
     /// streaming mode multiple `HttpBody` messages may be sent.
+    ///
+    /// In `GRPC` body send mode, a separate `HttpBody` message will be
+    /// sent for each message in the gRPC stream.
     #[prost(bytes = "vec", tag = "1")]
     pub body: ::prost::alloc::vec::Vec<u8>,
     /// If `true`, this will be the last `HttpBody` message that will be sent and no
     /// trailers will be sent for the current request/response.
     #[prost(bool, tag = "2")]
     pub end_of_stream: bool,
+    /// This field is used in `GRPC` body send mode when `end_of_stream` is
+    /// true and `body` is empty. Those values would normally indicate an
+    /// empty message on the stream with the end-of-stream bit set.
+    /// However, if the half-close happens after the last message on the
+    /// stream was already sent, then this field will be true to indicate an
+    /// end-of-stream with *no* message (as opposed to an empty message).
+    #[prost(bool, tag = "3")]
+    pub end_of_stream_without_message: bool,
+    /// This field is used in `GRPC` body send mode to indicate whether
+    /// the message is compressed. This will never be set to true by gRPC
+    /// but may be set to true by a proxy like Envoy.
+    #[prost(bool, tag = "4")]
+    pub grpc_message_compressed: bool,
 }
 impl ::prost::Name for HttpBody {
     const NAME: &'static str = "HttpBody";
@@ -446,6 +475,8 @@ pub mod common_response {
         ///
         /// In other words, this response makes it possible to turn an HTTP GET
         /// into a POST, PUT, or PATCH.
+        ///
+        /// Not supported if the body send mode is `GRPC`.
         ContinueAndReplace = 1,
     }
     impl ResponseStatus {
@@ -563,18 +594,37 @@ impl ::prost::Name for HeaderMutation {
         "type.googleapis.com/envoy.service.ext_proc.v3.HeaderMutation".into()
     }
 }
-/// The body response message corresponding to FULL_DUPLEX_STREAMED body mode.
+/// The body response message corresponding to `FULL_DUPLEX_STREAMED` or `GRPC` body modes.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamedBodyResponse {
-    /// The body response chunk that will be passed to the upstream/downstream by the data plane.
+    /// In `FULL_DUPLEX_STREAMED` body send mode, contains the body response chunk that will be
+    /// passed to the upstream/downstream by the data plane. In `GRPC` body send mode, contains
+    /// a serialized gRPC message to be passed to the upstream/downstream by the data plane.
     #[prost(bytes = "vec", tag = "1")]
     pub body: ::prost::alloc::vec::Vec<u8>,
     ///
     /// The server sets this flag to true if it has received a body request with
     /// : ref:`end_of_stream <envoy_v3_api_field_service.ext_proc.v3.HttpBody.end_of_stream>` set to true,
     ///   and this is the last chunk of body responses.
+    ///   Note that in `GRPC` body send mode, this allows the ext_proc
+    ///   server to tell the data plane to send a half close after a client
+    ///   message, which will result in discarding any other messages sent by
+    ///   the client application.
     #[prost(bool, tag = "2")]
     pub end_of_stream: bool,
+    /// This field is used in `GRPC` body send mode when `end_of_stream` is
+    /// true and `body` is empty. Those values would normally indicate an
+    /// empty message on the stream with the end-of-stream bit set.
+    /// However, if the half-close happens after the last message on the
+    /// stream was already sent, then this field will be true to indicate an
+    /// end-of-stream with *no* message (as opposed to an empty message).
+    #[prost(bool, tag = "3")]
+    pub end_of_stream_without_message: bool,
+    /// This field is used in `GRPC` body send mode to indicate whether
+    /// the message is compressed. This will never be set to true by gRPC
+    /// but may be set to true by a proxy like Envoy.
+    #[prost(bool, tag = "4")]
+    pub grpc_message_compressed: bool,
 }
 impl ::prost::Name for StreamedBodyResponse {
     const NAME: &'static str = "StreamedBodyResponse";
@@ -602,21 +652,21 @@ pub mod body_mutation {
         /// The entire body to replace.
         /// Should only be used when the corresponding `BodySendMode` in the
         /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
-        ///   is not set to `FULL_DUPLEX_STREAMED`.
+        ///   is not set to `FULL_DUPLEX_STREAMED` or `GRPC`.
         #[prost(bytes, tag = "1")]
         Body(::prost::alloc::vec::Vec<u8>),
         ///
         /// Clear the corresponding body chunk.
         /// Should only be used when the corresponding `BodySendMode` in the
         /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
-        ///   is not set to `FULL_DUPLEX_STREAMED`.
+        ///   is not set to `FULL_DUPLEX_STREAMED` or `GRPC`.
         ///   Clear the corresponding body chunk.
         #[prost(bool, tag = "2")]
         ClearBody(bool),
         ///
         /// Must be used when the corresponding `BodySendMode` in the
         /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`
-        ///   is set to `FULL_DUPLEX_STREAMED`.
+        ///   is set to `FULL_DUPLEX_STREAMED` or `GRPC`.
         #[prost(message, tag = "3")]
         StreamedResponse(super::StreamedBodyResponse),
     }

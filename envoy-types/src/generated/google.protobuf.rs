@@ -2403,6 +2403,8 @@ pub enum Edition {
     /// comparison.
     Edition2023 = 1000,
     Edition2024 = 1001,
+    /// A placeholder edition for developing and testing unscheduled features.
+    Unstable = 9999,
     /// Placeholder editions for testing feature resolution.  These should not be
     /// used or relied on outside of tests.
     Edition1TestOnly = 1,
@@ -2428,6 +2430,7 @@ impl Edition {
             Self::Proto3 => "EDITION_PROTO3",
             Self::Edition2023 => "EDITION_2023",
             Self::Edition2024 => "EDITION_2024",
+            Self::Unstable => "EDITION_UNSTABLE",
             Self::Edition1TestOnly => "EDITION_1_TEST_ONLY",
             Self::Edition2TestOnly => "EDITION_2_TEST_ONLY",
             Self::Edition99997TestOnly => "EDITION_99997_TEST_ONLY",
@@ -2445,6 +2448,7 @@ impl Edition {
             "EDITION_PROTO3" => Some(Self::Proto3),
             "EDITION_2023" => Some(Self::Edition2023),
             "EDITION_2024" => Some(Self::Edition2024),
+            "EDITION_UNSTABLE" => Some(Self::Unstable),
             "EDITION_1_TEST_ONLY" => Some(Self::Edition1TestOnly),
             "EDITION_2_TEST_ONLY" => Some(Self::Edition2TestOnly),
             "EDITION_99997_TEST_ONLY" => Some(Self::Edition99997TestOnly),

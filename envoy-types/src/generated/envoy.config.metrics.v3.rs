@@ -52,11 +52,6 @@ pub struct StatsConfig {
     /// custom tags specified in :ref:`stats_tags  <envoy_v3_api_field_config.metrics.v3.StatsConfig.stats_tags>`. They will be processed before
     /// the custom tags.
     ///
-    /// .. note::
-    ///
-    /// If any default tags are specified twice, the config will be considered
-    /// invalid.
-    ///
     /// See :repo:`well_known_names.h <source/common/config/well_known_names.h>` for a list of the
     /// default tags in Envoy.
     ///
@@ -504,7 +499,7 @@ impl ::prost::Name for HystrixSink {
 /// ```
 ///
 /// \[\#extension: envoy.stat_sinks.metrics_service\]
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MetricsServiceConfig {
     /// The upstream gRPC cluster that hosts the metrics service.
@@ -530,6 +525,13 @@ pub struct MetricsServiceConfig {
     /// Specify which metrics types to emit for histograms. Defaults to SUMMARY_AND_HISTOGRAM.
     #[prost(enumeration = "HistogramEmitMode", tag = "5")]
     pub histogram_emit_mode: i32,
+    /// The maximum number of metrics to send in a single gRPC message. If not set or set to 0,
+    /// all metrics will be sent in a single message (current behavior). When set to a positive value,
+    /// metrics will be batched into multiple messages, with each message containing at most batch_size
+    /// metric families. This helps avoid hitting gRPC message size limits (typically 4MB) when sending
+    /// large numbers of metrics.
+    #[prost(uint32, tag = "6")]
+    pub batch_size: u32,
 }
 impl ::prost::Name for MetricsServiceConfig {
     const NAME: &'static str = "MetricsServiceConfig";
