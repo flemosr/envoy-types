@@ -16,6 +16,13 @@ pub struct UpstreamReverseConnectionSocketInterface {
     /// Defaults to false.
     #[prost(bool, tag = "3")]
     pub enable_detailed_stats: bool,
+    /// Optional configuration for a tunnel reporting extension. When provided,
+    /// the socket interface instantiates a reporter via the configured factory.
+    /// If unset, no reporting is done.
+    #[prost(message, optional, tag = "4")]
+    pub reporter_config: ::core::option::Option<
+        super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
 }
 impl ::prost::Name for UpstreamReverseConnectionSocketInterface {
     const NAME: &'static str = "UpstreamReverseConnectionSocketInterface";

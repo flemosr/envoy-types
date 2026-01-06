@@ -121,6 +121,23 @@ pub mod processing_mode {
         /// up to the buffer limit will be sent.
         BufferedPartial = 3,
         FullDuplexStreamed = 4,
+        ///
+        /// \[\#not-implemented-hide:\]
+        /// A mode for gRPC traffic. This is similar to `FULL_DUPLEX_STREAMED`,
+        /// except that instead of sending raw chunks of the HTTP/2 DATA frames,
+        /// the ext_proc client will de-frame the individual gRPC messages inside
+        /// the HTTP/2 DATA frames, and as each message is de-framed, it will be
+        /// sent to the ext_proc server as a :ref:`request_body  <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.request_body>`
+        /// or :ref:`response_body  <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.response_body>`.
+        /// The ext_proc server will stream back individual gRPC messages in the
+        /// : ref:`StreamedBodyResponse <envoy_v3_api_msg_service.ext_proc.v3.StreamedBodyResponse>`
+        ///   field, but the number of messages sent by the ext_proc server
+        ///   does not need to equal the number of messages sent by the data
+        ///   plane. This allows the ext_proc server to change the number of
+        ///   messages sent on the stream.
+        ///   In this mode, the client will send body and trailers to the server as
+        ///   they arrive.
+        Grpc = 5,
     }
     impl BodySendMode {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -134,6 +151,7 @@ pub mod processing_mode {
                 Self::Buffered => "BUFFERED",
                 Self::BufferedPartial => "BUFFERED_PARTIAL",
                 Self::FullDuplexStreamed => "FULL_DUPLEX_STREAMED",
+                Self::Grpc => "GRPC",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -144,6 +162,7 @@ pub mod processing_mode {
                 "BUFFERED" => Some(Self::Buffered),
                 "BUFFERED_PARTIAL" => Some(Self::BufferedPartial),
                 "FULL_DUPLEX_STREAMED" => Some(Self::FullDuplexStreamed),
+                "GRPC" => Some(Self::Grpc),
                 _ => None,
             }
         }
@@ -186,8 +205,10 @@ impl ::prost::Name for ProcessingMode {
 /// * Request body: If the body is present, the behavior depends on the
 ///   body send mode. In `BUFFERED` or `BUFFERED_PARTIAL` mode, the body is sent to the external
 ///   processor in a single message. In `STREAMED` or `FULL_DUPLEX_STREAMED` mode, the body will
-///   be split across multiple messages sent to the external processor. In `NONE` mode, the body
-///   will not be sent to the external processor.
+///   be split across multiple messages sent to the external processor. In `GRPC` mode, as each
+///   gRPC message arrives, it will be sent to the external processor (there will be exactly one
+///   gRPC message in each message sent to the external processor). In `NONE` mode, the body will
+///   not be sent to the external processor.
 /// * Request trailers: Delivered if they are present and if the trailer mode is set
 ///   to `SEND`.
 /// * Response headers: Contains the headers from the HTTP response. Keep in mind
@@ -314,9 +335,9 @@ pub struct ExternalProcessor {
     /// an error (subject to the processing mode) if the timer expires before a
     /// matching response is received. There is no timeout when the filter is
     /// running in observability mode or when the body send mode is
-    /// `FULL_DUPLEX_STREAMED`. Zero is a valid config which means the timer
-    /// will be triggered immediately. If not configured, default is 200
-    /// milliseconds.
+    /// `FULL_DUPLEX_STREAMED` or `GRPC`. Zero is a valid config which means
+    /// the timer will be triggered immediately. If not configured, default is
+    /// 200 milliseconds.
     #[prost(message, optional, tag = "7")]
     pub message_timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
@@ -383,8 +404,8 @@ pub struct ExternalProcessor {
     /// without pausing on filter chain iteration. It is "Send and Go" mode that can be used
     /// by external processor to observe the request's data and status. In this mode:
     ///
-    /// 1. Only `STREAMED` and `NONE` body processing modes are supported; for any other body
-    ///    processing mode, the body will not be sent.
+    /// 1. Only `STREAMED`, `GRPC`, and `NONE` body processing modes are supported; for any
+    ///    other body processing mode, the body will not be sent.
     ///
     /// 1. External processor should not send back processing response, as any responses will be ignored.
     ///    This also means that
@@ -577,17 +598,26 @@ impl ::prost::Name for ExtProcHttpService {
 /// metadata returned by the server may be written, and how that metadata may be written.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MetadataOptions {
-    /// Describes which typed or untyped dynamic metadata namespaces to forward to
+    /// Describes which typed or untyped filter dynamic metadata namespaces to forward to
     /// the external processing server.
     #[prost(message, optional, tag = "1")]
     pub forwarding_namespaces: ::core::option::Option<
         metadata_options::MetadataNamespaces,
     >,
-    /// Describes which typed or untyped dynamic metadata namespaces to accept from
+    /// Describes which typed or untyped filter dynamic metadata namespaces to accept from
     /// the external processing server. Set to empty or leave unset to disallow writing
     /// any received dynamic metadata. Receiving of typed metadata is not supported.
     #[prost(message, optional, tag = "2")]
     pub receiving_namespaces: ::core::option::Option<
+        metadata_options::MetadataNamespaces,
+    >,
+    /// Describes which cluster metadata namespaces to forward to
+    /// the external processing server.
+    /// .. note::
+    /// This is the least specific metadata. Should there be any namespace collision,
+    /// cluster level metadata can be overridden by filter metadata.
+    #[prost(message, optional, tag = "3")]
+    pub cluster_metadata_forwarding_namespaces: ::core::option::Option<
         metadata_options::MetadataNamespaces,
     >,
 }

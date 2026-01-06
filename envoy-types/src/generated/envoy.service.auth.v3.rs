@@ -384,6 +384,7 @@ impl ::prost::Name for OkHttpResponse {
     }
 }
 /// Intended for gRPC and Network Authorization servers `only`.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CheckResponse {
     /// Status `OK` allows the request. Any other status indicates the request should be denied, and
@@ -404,7 +405,7 @@ pub struct CheckResponse {
     /// An message that contains HTTP response attributes. This message is
     /// used when the authorization service needs to send custom responses to the
     /// downstream client or, to modify/add request headers being dispatched to the upstream.
-    #[prost(oneof = "check_response::HttpResponse", tags = "2, 3")]
+    #[prost(oneof = "check_response::HttpResponse", tags = "2, 3, 5")]
     pub http_response: ::core::option::Option<check_response::HttpResponse>,
 }
 /// Nested message and enum types in `CheckResponse`.
@@ -420,6 +421,18 @@ pub mod check_response {
         /// Supplies http attributes for an ok response.
         #[prost(message, tag = "3")]
         OkResponse(super::OkHttpResponse),
+        ///
+        /// Supplies http attributes for an error response. This is used when the authorization
+        /// service encounters an internal error and wants to return custom headers and body to the
+        /// downstream client. When `error_response` is set, the ext_authz filter increments the
+        /// `ext_authz_error` stat and respects the :ref:`failure_mode_allow  <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.failure_mode_allow>`
+        /// configuration. The HTTP status code, headers, and body are taken from the
+        /// : ref:`DeniedHttpResponse <envoy_v3_api_msg_service.auth.v3.DeniedHttpResponse>` message.
+        ///   If the status field is not set, Envoy sends the status code configured via
+        /// : ref:`status_on_error <envoy_v3_api_field_extensions.filters.http.ext_authz.v3.ExtAuthz.status_on_error>`,
+        ///   which defaults to `403 Forbidden`.
+        #[prost(message, tag = "5")]
+        ErrorResponse(super::DeniedHttpResponse),
     }
 }
 impl ::prost::Name for CheckResponse {

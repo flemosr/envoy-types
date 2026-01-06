@@ -7,6 +7,15 @@ pub struct Config {
     pub on_new_connection: ::prost::alloc::vec::Vec<
         super::super::super::common::set_filter_state::v3::FilterStateValue,
     >,
+    /// A sequence of the filter state values to apply in the specified order
+    /// when the downstream TLS handshake is complete.
+    ///
+    /// For non-TLS downstream connections (where there is no TLS handshake), this
+    /// list is applied when a new connection is received.
+    #[prost(message, repeated, tag = "2")]
+    pub on_downstream_tls_handshake: ::prost::alloc::vec::Vec<
+        super::super::super::common::set_filter_state::v3::FilterStateValue,
+    >,
 }
 impl ::prost::Name for Config {
     const NAME: &'static str = "Config";

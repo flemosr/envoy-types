@@ -9,26 +9,26 @@ pub struct Bootstrap {
     pub node: ::core::option::Option<super::super::core::v3::Node>,
     /// A list of :ref:`Node <envoy_v3_api_msg_config.core.v3.Node>` field names
     /// that will be included in the context parameters of the effective
-    /// xdstp:// URL that is sent in a discovery request when resource
+    /// `xdstp://` URL that is sent in a discovery request when resource
     /// locators are used for LDS/CDS. Any non-string field will have its JSON
     /// encoding set as the context parameter value, with the exception of
     /// metadata, which will be flattened (see example below). The supported field
     /// names are:
     ///
-    /// * "cluster"
-    /// * "id"
-    /// * "locality.region"
-    /// * "locality.sub_zone"
-    /// * "locality.zone"
-    /// * "metadata"
-    /// * "user_agent_build_version.metadata"
-    /// * "user_agent_build_version.version"
-    /// * "user_agent_name"
-    /// * "user_agent_version"
+    /// * `cluster`
+    /// * `id`
+    /// * `locality.region`
+    /// * `locality.sub_zone`
+    /// * `locality.zone`
+    /// * `metadata`
+    /// * `user_agent_build_version.metadata`
+    /// * `user_agent_build_version.version`
+    /// * `user_agent_name`
+    /// * `user_agent_version`
     ///
     /// The node context parameters act as a base layer dictionary for the context
     /// parameters (i.e. more specific resource specific context parameters will
-    /// override). Field names will be prefixed with “udpa.node.” when included in
+    /// override). Field names will be prefixed with `"udpa.node."` when included in
     /// context parameters.
     ///
     /// For example, if node_context_params is `\["user_agent_name", "metadata"\]`,
@@ -70,10 +70,10 @@ pub struct Bootstrap {
     pub stats_config: ::core::option::Option<super::super::metrics::v3::StatsConfig>,
     /// Optional duration between flushes to configured stats sinks. For
     /// performance reasons Envoy latches counters and only flushes counters and
-    /// gauges at a periodic interval. If not specified the default is 5000ms (5
-    /// seconds). Only one of `stats_flush_interval` or `stats_flush_on_admin`
+    /// gauges at a periodic interval. If not specified the default is `5000ms` (`5` seconds).
+    /// Only one of `stats_flush_interval` or `stats_flush_on_admin`
     /// can be set.
-    /// Duration must be at least 1ms and at most 5 min.
+    /// Duration must be at least `1ms` and at most `5 min`.
     #[prost(message, optional, tag = "7")]
     pub stats_flush_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
@@ -109,21 +109,26 @@ pub struct Bootstrap {
     pub overload_manager: ::core::option::Option<
         super::super::overload::v3::OverloadManager,
     >,
+    /// Enable :ref:`stats for event dispatcher <operations_performance>`. Defaults to `false`.
     ///
-    /// Enable :ref:`stats for event dispatcher <operations_performance>`, defaults to false.
-    /// Note that this records a value for each iteration of the event loop on every thread. This
+    /// .. note::
+    ///
+    ///
+    /// This records a value for each iteration of the event loop on every thread. This
     /// should normally be minimal overhead, but when using
     /// : ref:`statsd <envoy_v3_api_msg_config.metrics.v3.StatsdSink>`, it will send each observed value
     ///   over the wire individually because the statsd protocol doesn't have any way to represent a
     ///   histogram summary. Be aware that this can be a very large volume of data.
     #[prost(bool, tag = "16")]
     pub enable_dispatcher_stats: bool,
-    /// Optional string which will be used in lieu of x-envoy in prefixing headers.
+    /// Optional string which will be used in lieu of `x-envoy` in prefixing headers.
     ///
-    /// For example, if this string is present and set to X-Foo, then x-envoy-retry-on will be
-    /// transformed into x-foo-retry-on etc.
+    /// For example, if this string is present and set to `X-Foo`, then `x-envoy-retry-on` will be
+    /// transformed into `x-foo-retry-on` etc.
     ///
-    /// Note this applies to the headers Envoy will generate, the headers Envoy will sanitize, and the
+    /// .. note::
+    ///
+    /// This applies to the headers Envoy will generate, the headers Envoy will sanitize, and the
     /// headers Envoy will trust for core code and core extensions only. Be VERY careful making
     /// changes to this string, especially in multi-layer Envoy deployments or deployments using
     /// extensions which are not upstream.
@@ -137,8 +142,8 @@ pub struct Bootstrap {
         super::super::super::super::google::protobuf::UInt64Value,
     >,
     ///
-    /// Always use TCP queries instead of UDP queries for DNS lookups.
-    /// This may be overridden on a per-cluster basis in cds_config,
+    /// Always use `TCP` queries instead of `UDP` queries for DNS lookups.
+    /// This may be overridden on a per-cluster basis in `cds_config`,
     /// when :ref:`dns_resolvers <envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolvers>` and
     /// : ref:`use_tcp_for_dns_lookups <envoy_v3_api_field_config.cluster.v3.Cluster.use_tcp_for_dns_lookups>` are
     ///   specified.
@@ -148,8 +153,8 @@ pub struct Bootstrap {
     #[prost(bool, tag = "20")]
     pub use_tcp_for_dns_lookups: bool,
     ///
-    /// DNS resolution configuration which includes the underlying dns resolver addresses and options.
-    /// This may be overridden on a per-cluster basis in cds_config, when
+    /// DNS resolution configuration which includes the underlying DNS resolver addresses and options.
+    /// This may be overridden on a per-cluster basis in `cds_config`, when
     /// : ref:`dns_resolution_config <envoy_v3_api_field_config.cluster.v3.Cluster.dns_resolution_config>`
     ///   is specified.
     ///   This field is deprecated in favor of
@@ -160,17 +165,19 @@ pub struct Bootstrap {
         super::super::core::v3::DnsResolutionConfig,
     >,
     ///
-    /// DNS resolver type configuration extension. This extension can be used to configure c-ares, apple,
+    /// DNS resolver type configuration extension. This extension can be used to configure `c-ares`, `apple`,
     /// or any other DNS resolver types and the related parameters.
     /// For example, an object of
     /// : ref:`CaresDnsResolverConfig <envoy_v3_api_msg_extensions.network.dns_resolver.cares.v3.CaresDnsResolverConfig>`
     ///   can be packed into this `typed_dns_resolver_config`. This configuration replaces the
     /// : ref:`dns_resolution_config <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.dns_resolution_config>`
     ///   configuration.
-    ///   During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exists,
-    ///   when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
-    ///   When `typed_dns_resolver_config` is missing, the default behavior is in place.
-    ///   \[\#extension-category: envoy.network.dns_resolver\]
+    ///
+    ///
+    /// During the transition period when both `dns_resolution_config` and `typed_dns_resolver_config` exist,
+    /// when `typed_dns_resolver_config` is in place, Envoy will use it and ignore `dns_resolution_config`.
+    /// When `typed_dns_resolver_config` is missing, the default behavior is in place.
+    /// \[\#extension-category: envoy.network.dns_resolver\]
     #[prost(message, optional, tag = "31")]
     pub typed_dns_resolver_config: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -187,10 +194,10 @@ pub struct Bootstrap {
     #[prost(message, repeated, tag = "28")]
     pub fatal_actions: ::prost::alloc::vec::Vec<FatalAction>,
     /// Configuration sources that will participate in
-    /// xdstp:// URL authority resolution. The algorithm is as
+    /// `xdstp://` URL authority resolution. The algorithm is as
     /// follows:
     ///
-    /// 1. The authority field is taken from the xdstp:// URL, call
+    /// 1. The authority field is taken from the `xdstp://` URL, call
     ///    this `resource_authority`.
     /// 1. `resource_authority` is compared against the authorities in any peer
     ///    `ConfigSource`. The peer `ConfigSource` is the configuration source
@@ -206,7 +213,7 @@ pub struct Bootstrap {
     ///    \[\#not-implemented-hide:\]
     #[prost(message, repeated, tag = "22")]
     pub config_sources: ::prost::alloc::vec::Vec<super::super::core::v3::ConfigSource>,
-    /// Default configuration source for xdstp:// URLs if all
+    /// Default configuration source for `xdstp://` URLs if all
     /// other resolution fails.
     /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "23")]
@@ -231,15 +238,17 @@ pub struct Bootstrap {
     /// allows users to customize the inline headers on-demand at Envoy startup without modifying
     /// Envoy's source code.
     ///
-    /// Note that the 'set-cookie' header cannot be registered as inline header.
+    /// .. note::
+    ///
+    /// The `set-cookie` header cannot be registered as inline header.
     #[prost(message, repeated, tag = "32")]
     pub inline_headers: ::prost::alloc::vec::Vec<CustomInlineHeader>,
-    /// Optional path to a file with performance tracing data created by "Perfetto" SDK in binary
-    /// ProtoBuf format. The default value is "envoy.pftrace".
+    /// Optional path to a file with performance tracing data created by `Perfetto` SDK in binary
+    /// ProtoBuf format. The default value is `envoy.pftrace`.
     #[prost(string, tag = "33")]
     pub perf_tracing_file_path: ::prost::alloc::string::String,
     /// Optional overriding of default regex engine.
-    /// If the value is not specified, Google RE2 will be used by default.
+    /// If the value is not specified, `Google RE2` will be used by default.
     /// \[\#extension-category: envoy.regex_engines\]
     #[prost(message, optional, tag = "34")]
     pub default_regex_engine: ::core::option::Option<
@@ -247,7 +256,7 @@ pub struct Bootstrap {
     >,
     /// Optional XdsResourcesDelegate configuration, which allows plugging custom logic into both
     /// fetch and load events during xDS processing.
-    /// If a value is not specified, no XdsResourcesDelegate will be used.
+    /// If a value is not specified, no `XdsResourcesDelegate` will be used.
     /// TODO(abeyad): Add public-facing documentation.
     /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "35")]
@@ -256,7 +265,7 @@ pub struct Bootstrap {
     >,
     /// Optional XdsConfigTracker configuration, which allows tracking xDS responses in external components,
     /// e.g., external tracer or monitor. It provides the process point when receive, ingest, or fail to
-    /// process xDS resources and messages. If a value is not specified, no XdsConfigTracker will be used.
+    /// process xDS resources and messages. If a value is not specified, no `XdsConfigTracker` will be used.
     ///
     /// .. note::
     ///
@@ -272,8 +281,8 @@ pub struct Bootstrap {
     >,
     /// \[\#not-implemented-hide:\]
     /// This controls the type of listener manager configured for Envoy. Currently
-    /// Envoy only supports ListenerManager for this field and Envoy Mobile
-    /// supports ApiListenerManager.
+    /// Envoy only supports `ListenerManager` for this field and Envoy Mobile
+    /// supports `ApiListenerManager`.
     #[prost(message, optional, tag = "37")]
     pub listener_manager: ::core::option::Option<
         super::super::core::v3::TypedExtensionConfig,
@@ -281,7 +290,7 @@ pub struct Bootstrap {
     /// Optional application log configuration.
     #[prost(message, optional, tag = "38")]
     pub application_log_config: ::core::option::Option<bootstrap::ApplicationLogConfig>,
-    /// Optional gRPC async manager config.
+    /// Optional gRPC async client manager config.
     #[prost(message, optional, tag = "40")]
     pub grpc_async_client_manager_config: ::core::option::Option<
         bootstrap::GrpcAsyncClientManagerConfig,
@@ -339,7 +348,7 @@ pub mod bootstrap {
         pub lds_config: ::core::option::Option<
             super::super::super::core::v3::ConfigSource,
         >,
-        /// xdstp:// resource locator for listener collection.
+        /// `xdstp://` resource locator for listener collection.
         /// \[\#not-implemented-hide:\]
         #[prost(string, tag = "5")]
         pub lds_resources_locator: ::prost::alloc::string::String,
@@ -350,7 +359,7 @@ pub mod bootstrap {
         pub cds_config: ::core::option::Option<
             super::super::super::core::v3::ConfigSource,
         >,
-        /// xdstp:// resource locator for cluster collection.
+        /// `xdstp://` resource locator for cluster collection.
         /// \[\#not-implemented-hide:\]
         #[prost(string, tag = "6")]
         pub cds_resources_locator: ::prost::alloc::string::String,
@@ -438,8 +447,9 @@ pub mod bootstrap {
         /// When the flag is enabled, Envoy will lazily initialize a subset of the stats (see below).
         /// This will save memory and CPU cycles when creating the objects that own these stats, if those
         /// stats are never referenced throughout the lifetime of the process. However, it will incur additional
-        /// memory overhead for these objects, and a small increase of CPU usage when a at least one of the stats
+        /// memory overhead for these objects, and a small increase of CPU usage when at least one of the stats
         /// is updated for the first time.
+        ///
         /// Groups of stats that will be lazily initialized:
         ///
         /// * Cluster traffic stats: a subgroup of the :ref:`cluster statistics <config_cluster_manager_cluster_stats>`
@@ -461,7 +471,7 @@ pub mod bootstrap {
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GrpcAsyncClientManagerConfig {
         /// Optional field to set the expiration time for the cached gRPC client object.
-        /// The minimal value is 5s and the default is 50s.
+        /// The minimal value is `5s` and the default is `50s`.
         #[prost(message, optional, tag = "1")]
         pub max_cached_entry_idle_duration: ::core::option::Option<
             super::super::super::super::super::google::protobuf::Duration,
@@ -508,7 +518,7 @@ impl ::prost::Name for Bootstrap {
     }
 }
 /// Administration interface :ref:`operations documentation  <operations_admin_interface>`.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Admin {
     /// Configuration for :ref:`access logs <arch_overview_access_logs>`
@@ -517,14 +527,14 @@ pub struct Admin {
     pub access_log: ::prost::alloc::vec::Vec<super::super::accesslog::v3::AccessLog>,
     ///
     /// The path to write the access log for the administration server. If no
-    /// access log is desired specify ‘/dev/null’. This is only required if
+    /// access log is desired specify `/dev/null`. This is only required if
     /// : ref:`address <envoy_v3_api_field_config.bootstrap.v3.Admin.address>` is set.
     ///   Deprecated in favor of `access_log` which offers more options.
     #[deprecated]
     #[prost(string, tag = "1")]
     pub access_log_path: ::prost::alloc::string::String,
-    /// The cpu profiler output path for the administration server. If no profile
-    /// path is specified, the default is ‘/var/log/envoy/envoy.prof’.
+    /// The CPU profiler output path for the administration server. If no profile
+    /// path is specified, the default is `/var/log/envoy/envoy.prof`.
     #[prost(string, tag = "2")]
     pub profile_path: ::prost::alloc::string::String,
     /// The TCP address that the administration server will listen on.
@@ -539,6 +549,23 @@ pub struct Admin {
     /// should apply to the admin interface or not.
     #[prost(bool, tag = "6")]
     pub ignore_global_conn_limit: bool,
+    /// List of admin paths that are accessible. If not specified, all admin endpoints are accessible.
+    ///
+    /// When specified, only paths in this list will be accessible, all others will return `HTTP 403 Forbidden`.
+    ///
+    /// Example:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// allow_paths:
+    ///
+    /// * exact: /stats
+    /// * exact: /ready
+    /// * prefix: /healthcheck
+    #[prost(message, repeated, tag = "7")]
+    pub allow_paths: ::prost::alloc::vec::Vec<
+        super::super::super::r#type::matcher::v3::StringMatcher,
+    >,
 }
 impl ::prost::Name for Admin {
     const NAME: &'static str = "Admin";
@@ -564,7 +591,7 @@ pub struct ClusterManager {
     #[prost(message, optional, tag = "2")]
     pub outlier_detection: ::core::option::Option<cluster_manager::OutlierDetection>,
     /// Optional configuration used to bind newly established upstream connections.
-    /// This may be overridden on a per-cluster basis by upstream_bind_config in the cds_config.
+    /// This may be overridden on a per-cluster basis by `upstream_bind_config` in the `cds_config`.
     #[prost(message, optional, tag = "3")]
     pub upstream_bind_config: ::core::option::Option<super::super::core::v3::BindConfig>,
     /// A management server endpoint to stream load stats to via
@@ -575,7 +602,7 @@ pub struct ClusterManager {
     >,
     /// Whether the ClusterManager will create clusters on the worker threads
     /// inline during requests. This will save memory and CPU cycles in cases where
-    /// there are lots of inactive clusters and > 1 worker thread.
+    /// there are lots of inactive clusters and `> 1` worker thread.
     #[prost(bool, tag = "5")]
     pub enable_deferred_cluster_creation: bool,
 }
@@ -644,49 +671,48 @@ impl ::prost::Name for Watchdogs {
 /// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Watchdog {
-    /// Register actions that will fire on given WatchDog events.
-    /// See `WatchDogAction` for priority of events.
+    /// Register actions that will fire on given Watchdog events.
+    /// See `WatchdogAction` for priority of events.
     #[prost(message, repeated, tag = "7")]
     pub actions: ::prost::alloc::vec::Vec<watchdog::WatchdogAction>,
     /// The duration after which Envoy counts a nonresponsive thread in the
-    /// `watchdog_miss` statistic. If not specified the default is 200ms.
+    /// `watchdog_miss` statistic. If not specified the default is `200ms`.
     #[prost(message, optional, tag = "1")]
     pub miss_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// The duration after which Envoy counts a nonresponsive thread in the
-    /// `watchdog_mega_miss` statistic. If not specified the default is
-    /// 1000ms.
+    /// `watchdog_mega_miss` statistic. If not specified the default is `1000ms`.
     #[prost(message, optional, tag = "2")]
     pub megamiss_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// If a watched thread has been nonresponsive for this duration, assume a
-    /// programming error and kill the entire Envoy process. Set to 0 to disable
-    /// kill behavior. If not specified the default is 0 (disabled).
+    /// programming error and kill the entire Envoy process. Set to `0` to disable
+    /// kill behavior. If not specified the default is `0` (disabled).
     #[prost(message, optional, tag = "3")]
     pub kill_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Defines the maximum jitter used to adjust the `kill_timeout` if `kill_timeout` is
     /// enabled. Enabling this feature would help to reduce risk of synchronized
-    /// watchdog kill events across proxies due to external triggers. Set to 0 to
-    /// disable. If not specified the default is 0 (disabled).
+    /// watchdog kill events across proxies due to external triggers. Set to `0` to
+    /// disable. If not specified the default is `0` (disabled).
     #[prost(message, optional, tag = "6")]
     pub max_kill_timeout_jitter: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
-    /// If `max(2, ceil(registered_threads * Fraction(*multikill_threshold*)))`
+    /// If `max(2, ceil(registered_threads * Fraction(multikill_threshold)))`
     /// threads have been nonresponsive for at least this duration kill the entire
-    /// Envoy process. Set to 0 to disable this behavior. If not specified the
-    /// default is 0 (disabled).
+    /// Envoy process. Set to `0` to disable this behavior. If not specified the
+    /// default is `0` (disabled).
     #[prost(message, optional, tag = "4")]
     pub multikill_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
     /// Sets the threshold for `multikill_timeout` in terms of the percentage of
     /// nonresponsive threads required for the `multikill_timeout`.
-    /// If not specified the default is 0.
+    /// If not specified the default is `0`.
     #[prost(message, optional, tag = "5")]
     pub multikill_threshold: ::core::option::Option<
         super::super::super::r#type::v3::Percent,
@@ -706,12 +732,12 @@ pub mod watchdog {
     }
     /// Nested message and enum types in `WatchdogAction`.
     pub mod watchdog_action {
-        /// The events are fired in this order: KILL, MULTIKILL, MEGAMISS, MISS.
+        /// The events are fired in this order: `KILL`, `MULTIKILL`, `MEGAMISS`, `MISS`.
         /// Within an event type, actions execute in the order they are configured.
-        /// For KILL/MULTIKILL there is a default PANIC that will run after the
+        /// For `KILL`/`MULTIKILL` there is a default `PANIC` that will run after the
         /// registered actions and kills the process if it wasn't already killed.
         /// It might be useful to specify several debug actions, and possibly an
-        /// alternate FATAL action.
+        /// alternate `FATAL` action.
         #[derive(
             Clone,
             Copy,
@@ -782,7 +808,10 @@ impl ::prost::Name for Watchdog {
 }
 /// Fatal actions to run while crashing. Actions can be safe (meaning they are
 /// async-signal safe) or unsafe. We run all safe actions before we run unsafe actions.
-/// If using an unsafe action that could get stuck or deadlock, it important to
+///
+/// .. note::
+///
+/// If using an unsafe action that could get stuck or deadlock, it is important to
 /// have an out of band system to terminate the process.
 ///
 /// The interface for the extension is `Envoy::Server::Configuration::FatalAction`.
@@ -907,7 +936,7 @@ pub mod runtime_layer {
     /// :ref:`Runtime Discovery Service (RTDS) <config_runtime_rtds>` layer.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct RtdsLayer {
-        /// Resource to subscribe to at `rtds_config` for the RTDS layer.
+        /// Resource to subscribe to at the `rtds_config` for the RTDS layer.
         #[prost(string, tag = "1")]
         pub name: ::prost::alloc::string::String,
         /// RTDS configuration source.
@@ -972,11 +1001,11 @@ impl ::prost::Name for LayeredRuntime {
 /// Used to specify the header that needs to be registered as an inline header.
 ///
 /// If request or response contain multiple headers with the same name and the header
-/// name is registered as an inline header. Then multiple headers will be folded
+/// name is registered as an inline header, then multiple headers will be folded
 /// into one, and multiple header values will be concatenated by a suitable delimiter.
 /// The delimiter is generally a comma.
 ///
-/// For example, if 'foo' is registered as an inline header, and the headers contains
+/// For example, if `foo` is registered as an inline header, and the headers contain
 /// the following two headers:
 ///
 /// .. code-block:: text
@@ -1065,7 +1094,7 @@ pub struct MemoryAllocatorManager {
     pub bytes_to_release: u64,
     /// Interval in milliseconds for memory releasing. If specified, during every
     /// interval Envoy will try to release `bytes_to_release` of free memory back to operating system for reuse.
-    /// Defaults to 1000 milliseconds.
+    /// Defaults to `1000` milliseconds.
     #[prost(message, optional, tag = "2")]
     pub memory_release_interval: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,

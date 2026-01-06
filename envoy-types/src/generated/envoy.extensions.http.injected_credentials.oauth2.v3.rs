@@ -3,6 +3,7 @@
 /// proxied requests.
 /// Currently, only the Client Credentials Grant flow is supported.
 /// The access token will be injected into the request headers using the `Authorization` header as a bearer token.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2 {
     /// Endpoint on the authorization server to retrieve the access token from.
@@ -21,6 +22,10 @@ pub struct OAuth2 {
     pub token_fetch_retry_interval: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,
     >,
+    /// Optional list of additional parameters to send to the token endpoint.
+    /// These parameters will be URL-encoded and included in the token request body.
+    #[prost(message, repeated, tag = "5")]
+    pub endpoint_params: ::prost::alloc::vec::Vec<o_auth2::EndpointParameter>,
     #[prost(oneof = "o_auth2::FlowType", tags = "3")]
     pub flow_type: ::core::option::Option<o_auth2::FlowType>,
 }
@@ -54,6 +59,30 @@ pub mod o_auth2 {
         }
         fn type_url() -> ::prost::alloc::string::String {
             "type.googleapis.com/envoy.extensions.http.injected_credentials.oauth2.v3.OAuth2.ClientCredentials"
+                .into()
+        }
+    }
+    /// Optional additional parameters to include in the token endpoint request body.
+    /// These parameters will be URL-encoded and added to the request body along with the standard OAuth2 parameters.
+    /// Refer to your authorization server's documentation for supported parameters.
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct EndpointParameter {
+        /// Parameter name.
+        #[prost(string, tag = "1")]
+        pub name: ::prost::alloc::string::String,
+        /// Parameter value.
+        #[prost(string, tag = "2")]
+        pub value: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for EndpointParameter {
+        const NAME: &'static str = "EndpointParameter";
+        const PACKAGE: &'static str = "envoy.extensions.http.injected_credentials.oauth2.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.http.injected_credentials.oauth2.v3.OAuth2.EndpointParameter"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.http.injected_credentials.oauth2.v3.OAuth2.EndpointParameter"
                 .into()
         }
     }

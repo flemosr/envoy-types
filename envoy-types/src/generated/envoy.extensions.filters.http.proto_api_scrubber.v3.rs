@@ -94,6 +94,14 @@ pub struct Restrictions {
         ::prost::alloc::string::String,
         MethodRestrictions,
     >,
+    /// Specifies the message restrictions.
+    /// Key - Fully qualified message name e.g., `endpoints.examples.bookstore.Book`.
+    /// Value - Message restrictions.
+    #[prost(map = "string, message", tag = "2")]
+    pub message_restrictions: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        MessageRestrictions,
+    >,
 }
 impl ::prost::Name for Restrictions {
     const NAME: &'static str = "Restrictions";
@@ -111,7 +119,7 @@ impl ::prost::Name for Restrictions {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MethodRestrictions {
     /// Restrictions that apply to request fields of the method.
-    /// Key - field mask like path of the field eg, foo.bar.baz
+    /// Key - field mask like path of the field e.g., foo.bar.baz
     /// Value - Restrictions map containing the mapping from restriction name to
     /// the restriction values.
     #[prost(map = "string, message", tag = "1")]
@@ -120,7 +128,7 @@ pub struct MethodRestrictions {
         RestrictionConfig,
     >,
     /// Restrictions that apply to response fields of the method.
-    /// Key - field mask like path of the field eg, foo.bar.baz
+    /// Key - field mask like path of the field e.g., foo.bar.baz
     /// Value - Restrictions map containing the mapping from restriction name to
     /// the restriction values.
     #[prost(map = "string, message", tag = "2")]
@@ -128,6 +136,16 @@ pub struct MethodRestrictions {
         ::prost::alloc::string::String,
         RestrictionConfig,
     >,
+    /// Optional restriction that applies to the entire method. If present, this
+    /// rule takes precedence for the method itself over field-level or
+    /// message-level rules. The 'matcher' within RestrictionConfig will determine
+    /// if the method is denied/scrubbed. If the matcher evaluates to true:
+    ///
+    /// * The request is **denied**, and further processing is stopped.
+    /// * The implementation should generate an immediate error response
+    ///   (e.g., an HTTP 403 Forbidden status) and send it to the client.
+    #[prost(message, optional, tag = "3")]
+    pub method_restriction: ::core::option::Option<RestrictionConfig>,
 }
 impl ::prost::Name for MethodRestrictions {
     const NAME: &'static str = "MethodRestrictions";
@@ -140,12 +158,38 @@ impl ::prost::Name for MethodRestrictions {
             .into()
     }
 }
+/// Contains message-level restrictions.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MessageRestrictions {
+    /// The core restriction to apply to this message type.
+    /// The 'matcher' within RestrictionConfig will determine if the message is
+    /// scrubbed/denied/allowed.
+    #[prost(message, optional, tag = "1")]
+    pub config: ::core::option::Option<RestrictionConfig>,
+    /// Restrictions that apply to specific fields within this message type.
+    /// Key - field mask (e.g. "social_security_number").
+    /// Value - The restriction configuration for that field.
+    #[prost(map = "string, message", tag = "2")]
+    pub field_restrictions: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        RestrictionConfig,
+    >,
+}
+impl ::prost::Name for MessageRestrictions {
+    const NAME: &'static str = "MessageRestrictions";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.proto_api_scrubber.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.proto_api_scrubber.v3.MessageRestrictions".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.proto_api_scrubber.v3.MessageRestrictions"
+            .into()
+    }
+}
 /// The restriction configuration.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RestrictionConfig {
     /// Matcher tree for matching requests and responses with the configured restrictions.
-    /// NOTE: Currently, only CEL expressions are supported for matching. Support for more
-    /// matchers will be added incrementally overtime.
     #[prost(message, optional, tag = "1")]
     pub matcher: ::core::option::Option<
         super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,

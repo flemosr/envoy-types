@@ -1528,7 +1528,7 @@ impl ::prost::Name for ServerInfo {
         "type.googleapis.com/envoy.admin.v3.ServerInfo".into()
     }
 }
-/// \[\#next-free-field: 42\]
+/// \[\#next-free-field: 43\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CommandLineOptions {
     /// See :option:`--base-id` for details.
@@ -1602,6 +1602,9 @@ pub struct CommandLineOptions {
     pub file_flush_interval: ::core::option::Option<
         super::super::super::google::protobuf::Duration,
     >,
+    /// See :option:`--file-flush-min-size-kb` for details.
+    #[prost(uint32, tag = "42")]
+    pub file_flush_min_size: u32,
     /// See :option:`--drain-time-s` for details.
     #[prost(message, optional, tag = "17")]
     pub drain_time: ::core::option::Option<

@@ -421,7 +421,7 @@ impl ::prost::Name for ClusterCollection {
     }
 }
 /// Configuration for a single upstream cluster.
-/// \[\#next-free-field: 59\]
+/// \[\#next-free-field: 60\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Cluster {
     ///
@@ -481,6 +481,47 @@ pub struct Cluster {
     #[prost(message, repeated, tag = "43")]
     pub transport_socket_matches: ::prost::alloc::vec::Vec<
         cluster::TransportSocketMatch,
+    >,
+    ///
+    /// Optional matcher that selects a transport socket from
+    /// : ref:`transport_socket_matches <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket_matches>`.
+    ///
+    ///
+    /// This matcher uses the generic xDS matcher framework to select a named transport socket
+    /// based on various inputs available at transport socket selection time.
+    ///
+    /// Supported matching inputs:
+    ///
+    /// * `endpoint_metadata`: Extract values from the selected endpoint's metadata.
+    ///
+    /// * `locality_metadata`: Extract values from the endpoint's locality metadata.
+    ///
+    /// * `transport_socket_filter_state`: Extract values from filter state that was explicitly shared from
+    ///   downstream to upstream via `TransportSocketOptions`. This enables flexible
+    ///   downstream-connection-based matching, such as:
+    ///
+    ///   * Network namespace matching.
+    ///   * Custom connection attributes.
+    ///   * Any data explicitly passed via filter state.
+    ///
+    /// .. note::
+    /// Filter state sharing follows the same pattern as tunneling in Envoy. Filters must explicitly
+    /// share data by setting filter state with the appropriate sharing mode. The filter state is
+    /// then accessible via the `transport_socket_filter_state` input during transport socket selection.
+    ///
+    /// If this field is set, it takes precedence over legacy metadata-based selection
+    /// performed by :ref:`transport_socket_matches  <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket_matches>` alone.
+    /// If the matcher does not yield a match, Envoy uses the default transport socket
+    /// configured for the cluster.
+    ///
+    ///
+    /// When using this field, each entry in
+    /// : ref:`transport_socket_matches <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket_matches>`
+    ///   must have a unique `name`. The matcher outcome is expected to reference one of
+    ///   these names.
+    #[prost(message, optional, tag = "59")]
+    pub transport_socket_matcher: ::core::option::Option<
+        super::super::super::super::xds::r#type::matcher::v3::Matcher,
     >,
     ///
     /// Supplies the name of the cluster which must be unique across all clusters.
@@ -1906,6 +1947,9 @@ pub mod cluster {
         /// If both this and preconnect_ratio are set, Envoy will make sure both predicted needs are met,
         /// basically preconnecting max(predictive-preconnect, per-upstream-preconnect), for each
         /// upstream.
+        ///
+        /// This is limited somewhat arbitrarily to 3 because preconnecting too aggressively can
+        /// harm latency more than the preconnecting helps.
         #[prost(message, optional, tag = "2")]
         pub predictive_preconnect_ratio: ::core::option::Option<
             super::super::super::super::super::google::protobuf::DoubleValue,

@@ -81,7 +81,6 @@ pub struct ClientSideWeightedRoundRobin {
     >,
     /// Configuration for slow start mode.
     /// If this configuration is not set, slow start will not be not enabled.
-    /// \[\#not-implemented-hide:\]
     #[prost(message, optional, tag = "8")]
     pub slow_start_config: ::core::option::Option<
         super::super::common::v3::SlowStartConfig,

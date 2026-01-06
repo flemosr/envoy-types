@@ -9,9 +9,38 @@ pub struct DownstreamReverseConnectionSocketInterface {
     pub stat_prefix: ::prost::alloc::string::String,
     /// Enable detailed per-host and per-cluster statistics.
     /// When enabled, emits hidden statistics for individual hosts and clusters.
-    /// Defaults to false.
+    /// Defaults to `false`.
     #[prost(bool, tag = "2")]
     pub enable_detailed_stats: bool,
+    /// Optional HTTP handshake configuration. When unset, the initiator envoy uses the defaults
+    /// provided by `HttpHandshakeConfig`.
+    #[prost(message, optional, tag = "3")]
+    pub http_handshake: ::core::option::Option<
+        downstream_reverse_connection_socket_interface::HttpHandshakeConfig,
+    >,
+}
+/// Nested message and enum types in `DownstreamReverseConnectionSocketInterface`.
+pub mod downstream_reverse_connection_socket_interface {
+    /// HTTP handshake settings for initiator envoy initiated reverse tunnels.
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct HttpHandshakeConfig {
+        /// Request path used when issuing the HTTP reverse-connection handshake. Defaults to
+        /// "/reverse_connections/request".
+        #[prost(string, tag = "1")]
+        pub request_path: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for HttpHandshakeConfig {
+        const NAME: &'static str = "HttpHandshakeConfig";
+        const PACKAGE: &'static str = "envoy.extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface.HttpHandshakeConfig"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.bootstrap.reverse_tunnel.downstream_socket_interface.v3.DownstreamReverseConnectionSocketInterface.HttpHandshakeConfig"
+                .into()
+        }
+    }
 }
 impl ::prost::Name for DownstreamReverseConnectionSocketInterface {
     const NAME: &'static str = "DownstreamReverseConnectionSocketInterface";

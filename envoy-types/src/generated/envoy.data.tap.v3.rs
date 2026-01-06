@@ -170,7 +170,7 @@ impl ::prost::Name for HttpStreamedTraceSegment {
     }
 }
 /// Event in a socket trace.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SocketEvent {
     /// Timestamp for event.
@@ -181,6 +181,9 @@ pub struct SocketEvent {
     /// Connection information per event
     #[prost(message, optional, tag = "5")]
     pub connection: ::core::option::Option<Connection>,
+    /// Data sequence number
+    #[prost(uint64, tag = "6")]
+    pub seq_num: u64,
     /// Read or write with content as bytes string.
     #[prost(oneof = "socket_event::EventSelector", tags = "2, 3, 4")]
     pub event_selector: ::core::option::Option<socket_event::EventSelector>,
