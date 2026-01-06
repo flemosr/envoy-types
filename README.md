@@ -1,17 +1,20 @@
-# Envoy Types
+# envoy-types
 
-Collection of protobuf types and other assets to work with the [Envoy Proxy]
-through Rust gRPC services.
+Collection of protobuf types and other assets to work with the
+[Envoy Proxy](https://www.envoyproxy.io) through Rust gRPC services.
 
 Among other use cases, this crate can be used to implement an
-[Envoy External Authorization] (ExtAuthz) gRPC Server written in Rust.
+[Envoy External Authorization](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter)
+(ExtAuthz) gRPC Server written in Rust.
 
 [![Crates.io Badge](https://img.shields.io/crates/v/envoy-types)](https://crates.io/crates/envoy-types)
 [![Documentation Badge](https://docs.rs/envoy-types/badge.svg)](https://docs.rs/envoy-types)
-[![License Badge](https://img.shields.io/crates/l/envoy-types)](LICENSE)
+[![License Badge](https://img.shields.io/crates/l/envoy-types)](https://github.com/flemosr/envoy-types/blob/main/LICENSE)
 ![CI Badge](https://github.com/flemosr/envoy-types/actions/workflows/ci.yml/badge.svg)
 
-[Examples] | [Docs]
+[Repository](https://github.com/flemosr/envoy-types) |
+[Examples](https://github.com/flemosr/envoy-types/tree/main/examples) |
+[Documentation](https://docs.rs/envoy-types/latest/envoy_types)
 
 ## Getting Started
 
@@ -26,20 +29,19 @@ This project's MSRV is `1.75`.
 envoy-types = "<envoy-types-version>"
 ```
 
-The protobuf types made available are already pre-compiled, so you only need the
-latest stable Protocol Buffer Compiler (`protoc`) to run the crate's tests.
-Generated code may vary across `protoc` versions, and the use of the latest
-stable version is enforced by CI.
-Installation instructions can be found [here][protoc-install].
+The protobuf types made available are already pre-compiled, so the latest stable Protocol Buffer
+Compiler (`protoc`) is only needed to run the crate's tests. Generated code may vary across `protoc`
+versions, and the use of the latest stable version is enforced by CI. Installation instructions can
+be found [here](https://grpc.io/docs/protoc-installation/).
 
 ## Examples
 
 The example bellow covers a bare-bones implementation of an Envoy ExtAuthz gRPC
-`AuthorizationServer`, with [`tonic`]. A more complete implementation,
-including query parameters and header manipulation, can be found at the
-[examples] directory.
+`AuthorizationServer`, with [`tonic`](https://github.com/hyperium/tonic). A more complete
+implementation, including query parameters and header manipulation, can be found at the
+[examples](https://github.com/flemosr/envoy-types/tree/main/examples) directory.
 
-```rust
+```rust,ignore
 use std::env;
 use tonic::{transport::Server, Request, Response, Status};
 
@@ -94,8 +96,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ## Compatibility
 
-The table bellow outlines the correspondence between the versions of [`tonic`]
-and the compatible versions of [`envoy-types`].
+The table bellow outlines the correspondence between the versions of
+[`tonic`](https://github.com/hyperium/tonic) and the compatible versions of
+[`envoy-types`](https://crates.io/crates/envoy-types).
 
 `tonic` | `envoy-types`
 :-      | :-
@@ -108,18 +111,10 @@ v0.9    | [v0.2](https://crates.io/crates/envoy-types/0.2.0)
 
 ## License
 
-This project is licensed under the [Apache License (Version 2.0)](LICENSE).
+This project is licensed under the
+[Apache License (Version 2.0)](https://github.com/flemosr/envoy-types/blob/main/LICENSE).
 
 ## Contribution
 
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion by you, shall be licensed as Apache-2.0, without any additional
-terms or conditions.
-
-[Envoy Proxy]: https://www.envoyproxy.io
-[Envoy External Authorization]: https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter
-[examples]: https://github.com/flemosr/envoy-types/tree/main/examples
-[`envoy-types`]: https://crates.io/crates/envoy-types
-[Docs]: https://docs.rs/envoy-types/latest/envoy_types
-[protoc-install]: https://grpc.io/docs/protoc-installation/
-[`tonic`]: https://github.com/hyperium/tonic
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion by
+you, shall be licensed as Apache-2.0, without any additional terms or conditions.
