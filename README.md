@@ -102,7 +102,7 @@ The table bellow outlines the correspondence between the versions of
 
 `tonic` | `envoy-types`
 :-      | :-
-v0.14   | [v0.7](https://crates.io/crates/envoy-types/0.7.1)
+v0.14   | [v0.7](https://crates.io/crates/envoy-types/0.7.2)
 v0.13   | [v0.6](https://crates.io/crates/envoy-types/0.6.1)
 v0.12   | [v0.5](https://crates.io/crates/envoy-types/0.5.6)
 v0.11   | [v0.4](https://crates.io/crates/envoy-types/0.4.0)
