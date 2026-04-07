@@ -15,6 +15,19 @@ pub struct CookieConfig {
     /// If not specified, defaults to `/`.
     #[prost(string, tag = "2")]
     pub path: ::prost::alloc::string::String,
+    /// If true, the `Partitioned` attribute will be set on the cookie.
+    ///
+    /// Modern browsers (Firefox, Chrome with third-party cookie deprecation) warn or block
+    /// "foreign" cookies unless they carry the `Partitioned` attribute alongside `SameSite=None; Secure`.
+    /// When Envoy is used in a gateway/IdP flow that sets OAuth/OIDC cookies for a parent domain
+    /// (e.g., `Domain=.example.com`) while running on a different host, those cookies are
+    /// considered third-party and will be rejected without `Partitioned`.
+    ///
+    /// See `CHIPS <<https://developers.google.com/privacy-sandbox/3pcd/chips>`\_> for more information.
+    ///
+    /// Default is false.
+    #[prost(bool, tag = "3")]
+    pub partitioned: bool,
 }
 /// Nested message and enum types in `CookieConfig`.
 pub mod cookie_config {

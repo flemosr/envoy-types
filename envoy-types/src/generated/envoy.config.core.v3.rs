@@ -52,7 +52,7 @@ impl ::prost::Name for TypedExtensionConfig {
 ///
 ///
 /// It should be noted that the name or level may have different values on different platforms.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SocketOption {
     /// An optional name to give this socket option for debugging, etc.
@@ -73,6 +73,10 @@ pub struct SocketOption {
     /// If not specified, the socket option will be applied to all socket types.
     #[prost(message, optional, tag = "7")]
     pub r#type: ::core::option::Option<socket_option::SocketType>,
+    /// Apply the socket option to the specified `socket Ip version  <<https://linux.die.net/man/2/socket>`\_.> If not specified, the socket option
+    /// will be applied to all socket ip versions.
+    #[prost(enumeration = "socket_option::SocketIpVersion", tag = "8")]
+    pub ip_version: i32,
     #[prost(oneof = "socket_option::Value", tags = "4, 5")]
     pub value: ::core::option::Option<socket_option::Value>,
 }
@@ -173,6 +177,50 @@ pub mod socket_option {
                 "STATE_PREBIND" => Some(Self::StatePrebind),
                 "STATE_BOUND" => Some(Self::StateBound),
                 "STATE_LISTENING" => Some(Self::StateListening),
+                _ => None,
+            }
+        }
+    }
+    /// The `socket IP version <<https://linux.die.net/man/2/socket>`\_> to apply the
+    /// socket option to.
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum SocketIpVersion {
+        /// Apply the socket option to all socket IP versions.
+        Unspecified = 0,
+        /// Apply the socket option to the IPv4 socket type.
+        Ipv4 = 1,
+        /// Apply the socket option to the IPv6 socket type.
+        Ipv6 = 2,
+    }
+    impl SocketIpVersion {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Self::Unspecified => "SOCKET_IP_VERSION_UNSPECIFIED",
+                Self::Ipv4 => "SOCKET_IP_VERSION_IPV4",
+                Self::Ipv6 => "SOCKET_IP_VERSION_IPV6",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "SOCKET_IP_VERSION_UNSPECIFIED" => Some(Self::Unspecified),
+                "SOCKET_IP_VERSION_IPV4" => Some(Self::Ipv4),
+                "SOCKET_IP_VERSION_IPV6" => Some(Self::Ipv6),
                 _ => None,
             }
         }
@@ -2313,6 +2361,7 @@ pub mod substitution_format_string {
         /// upstream connect error:503:path=/foo
         ///
         /// Deprecated in favor of :ref:`text_format_source <envoy_v3_api_field_config.core.v3.SubstitutionFormatString.text_format_source>`. To migrate text format strings, use the :ref:`inline_string <envoy_v3_api_field_config.core.v3.DataSource.inline_string>` field.
+        #[deprecated]
         #[prost(string, tag = "1")]
         TextFormat(::prost::alloc::string::String),
         /// Specify a format with command operators to form a JSON string.
@@ -2509,6 +2558,9 @@ pub struct ProxyProtocolConfig {
     ///   at the transport socket level and override them at the host level.
     /// * Any TLV defined in the `pass_through_tlvs` field will be overridden by either the host-level
     ///   or transport socket-level TLV.
+    ///
+    /// If there are multiple TLVs with the same type, only the TLVs from the highest precedence level
+    /// will be used.
     #[prost(message, repeated, tag = "3")]
     pub added_tlvs: ::prost::alloc::vec::Vec<TlvEntry>,
 }
@@ -3201,6 +3253,7 @@ pub mod api_config_source {
     pub enum ApiType {
         /// Ideally this would be 'reserved 0' but one can't reserve the default
         /// value. Instead we throw an exception if this is ever used.
+        #[deprecated]
         DeprecatedAndUnavailableDoNotUse = 0,
         /// REST-JSON v2 API. The `canonical JSON encoding  <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_> for
         /// the v2 protos is used.
@@ -3227,6 +3280,7 @@ pub mod api_config_source {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
+                #[allow(deprecated)]
                 Self::DeprecatedAndUnavailableDoNotUse => {
                     "DEPRECATED_AND_UNAVAILABLE_DO_NOT_USE"
                 }
@@ -3241,7 +3295,7 @@ pub mod api_config_source {
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
                 "DEPRECATED_AND_UNAVAILABLE_DO_NOT_USE" => {
-                    Some(Self::DeprecatedAndUnavailableDoNotUse)
+                    Some(#[allow(deprecated)] Self::DeprecatedAndUnavailableDoNotUse)
                 }
                 "REST" => Some(Self::Rest),
                 "GRPC" => Some(Self::Grpc),
@@ -3413,6 +3467,7 @@ pub mod config_source {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ConfigSourceSpecifier {
         /// Deprecated in favor of `path_config_source`. Use that field instead.
+        #[deprecated]
         #[prost(string, tag = "1")]
         Path(::prost::alloc::string::String),
         /// Local filesystem path configuration source.
@@ -3503,6 +3558,7 @@ pub enum ApiVersion {
     /// When not specified, we assume v3; it is the only supported version.
     Auto = 0,
     /// Use xDS v2 API. This is no longer supported.
+    #[deprecated]
     V2 = 1,
     /// Use xDS v3 API.
     V3 = 2,
@@ -3515,6 +3571,7 @@ impl ApiVersion {
     pub fn as_str_name(&self) -> &'static str {
         match self {
             Self::Auto => "AUTO",
+            #[allow(deprecated)]
             Self::V2 => "V2",
             Self::V3 => "V3",
         }
@@ -3523,7 +3580,7 @@ impl ApiVersion {
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "AUTO" => Some(Self::Auto),
-            "V2" => Some(Self::V2),
+            "V2" => Some(#[allow(deprecated)] Self::V2),
             "V3" => Some(Self::V3),
             _ => None,
         }
@@ -3581,7 +3638,7 @@ impl ::prost::Name for QuicKeepAliveSettings {
     }
 }
 /// QUIC protocol options which apply to both downstream and upstream connections.
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 12\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct QuicProtocolOptions {
     /// Maximum number of streams that the client can negotiate per connection. `100`
@@ -3653,6 +3710,94 @@ pub struct QuicProtocolOptions {
     pub max_packet_length: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt64Value,
     >,
+    /// A customized UDP socket and a QUIC packet writer using the socket for
+    /// client connections. i.e. Mobile uses its own implementation to interact
+    /// with platform socket APIs.
+    /// If not present, the default platform-independent socket and writer will be used.
+    /// \[\#extension-category: envoy.quic.client_packet_writer\]
+    #[prost(message, optional, tag = "10")]
+    pub client_packet_writer: ::core::option::Option<TypedExtensionConfig>,
+    /// Enable QUIC `connection migration  <<https://datatracker.ietf.org/doc/html/rfc9000#name-connection-migration>`>
+    /// to a different network interface when the current network is degrading or
+    /// has become bad.
+    /// In order to use a different network interface other than the platform's default one,
+    /// a customized :ref:`client_packet_writer <envoy_v3_api_field_config.core.v3.QuicProtocolOptions.client_packet_writer>` needs to be configured to
+    /// create UDP sockets on non-default networks.
+    /// Only takes effect when runtime key `envoy.reloadable_features.use_migration_in_quiche` is true.
+    /// If absent, the feature will be disabled.
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "11")]
+    pub connection_migration: ::core::option::Option<
+        quic_protocol_options::ConnectionMigrationSettings,
+    >,
+}
+/// Nested message and enum types in `QuicProtocolOptions`.
+pub mod quic_protocol_options {
+    /// Config for QUIC connection migration across network interfaces, i.e. cellular to WIFI, upon
+    /// network change events from the platform, i.e. the current network gets
+    /// disconnected, or upon the QUIC detecting a bad connection. After migration, the
+    /// connection may be on a different network other than the default network
+    /// picked by the platform. Both iOS and Android will use a default network to interact with the internet, usually prefer unmetered network (WIFI)
+    /// over metered ones (cellular). And users can specify which network to be used as the default. A connection on non-default network is only allowed to
+    /// serve new requests for a certain period of time before being drained, and
+    /// meanwhile, QUIC will try to migrate to the default network if possible.
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct ConnectionMigrationSettings {
+        /// Config whether and how to migrate idle connections.
+        /// If absent, idle connections will not be migrated but be closed upon
+        /// migration signals.
+        #[prost(message, optional, tag = "1")]
+        pub migrate_idle_connections: ::core::option::Option<
+            connection_migration_settings::MigrateIdleConnectionSettings,
+        >,
+        /// After migrating to a non-default network interface, the connection will
+        /// only be allowed to stay on that network for up to this period of time before
+        /// being drained unless it migrates to the default network or that network
+        /// gets picked as the default by the device by then.
+        /// Default to 128s.
+        #[prost(message, optional, tag = "2")]
+        pub max_time_on_non_default_network: ::core::option::Option<
+            super::super::super::super::super::google::protobuf::Duration,
+        >,
+    }
+    /// Nested message and enum types in `ConnectionMigrationSettings`.
+    pub mod connection_migration_settings {
+        /// Config for options to migrate idle connections which aren't serving any requests.
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+        pub struct MigrateIdleConnectionSettings {
+            /// If idle connections are allowed to be migrated, only migrate the connection
+            /// if it hasn't been idle for longer than this idle period. Otherwise, the
+            /// connection will be closed instead.
+            /// Default to 30s.
+            #[prost(message, optional, tag = "1")]
+            pub max_idle_time_before_migration: ::core::option::Option<
+                super::super::super::super::super::super::google::protobuf::Duration,
+            >,
+        }
+        impl ::prost::Name for MigrateIdleConnectionSettings {
+            const NAME: &'static str = "MigrateIdleConnectionSettings";
+            const PACKAGE: &'static str = "envoy.config.core.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.core.v3.QuicProtocolOptions.ConnectionMigrationSettings.MigrateIdleConnectionSettings"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.core.v3.QuicProtocolOptions.ConnectionMigrationSettings.MigrateIdleConnectionSettings"
+                    .into()
+            }
+        }
+    }
+    impl ::prost::Name for ConnectionMigrationSettings {
+        const NAME: &'static str = "ConnectionMigrationSettings";
+        const PACKAGE: &'static str = "envoy.config.core.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.core.v3.QuicProtocolOptions.ConnectionMigrationSettings".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.core.v3.QuicProtocolOptions.ConnectionMigrationSettings"
+                .into()
+        }
+    }
 }
 impl ::prost::Name for QuicProtocolOptions {
     const NAME: &'static str = "QuicProtocolOptions";

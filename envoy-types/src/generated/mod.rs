@@ -138,6 +138,11 @@ pub mod envoy {
     }
     pub mod extensions {
         pub mod access_loggers {
+            pub mod dynamic_modules {
+                pub mod v3 {
+                    include!("envoy.extensions.access_loggers.dynamic_modules.v3.rs");
+                }
+            }
             pub mod file {
                 pub mod v3 {
                     include!("envoy.extensions.access_loggers.file.v3.rs");
@@ -187,6 +192,11 @@ pub mod envoy {
             }
         }
         pub mod bootstrap {
+            pub mod dynamic_modules {
+                pub mod v3 {
+                    include!("envoy.extensions.bootstrap.dynamic_modules.v3.rs");
+                }
+            }
             pub mod internal_listener {
                 pub mod v3 {
                     include!("envoy.extensions.bootstrap.internal_listener.v3.rs");
@@ -216,6 +226,11 @@ pub mod envoy {
                     pub mod v3 {
                         include!("envoy.extensions.clusters.common.dns.v3.rs");
                     }
+                }
+            }
+            pub mod composite {
+                pub mod v3 {
+                    include!("envoy.extensions.clusters.composite.v3.rs");
                 }
             }
             pub mod dns {
@@ -889,6 +904,11 @@ pub mod envoy {
                         include!("envoy.extensions.filters.udp.dns_filter.v3.rs");
                     }
                 }
+                pub mod dynamic_modules {
+                    pub mod v3 {
+                        include!("envoy.extensions.filters.udp.dynamic_modules.v3.rs");
+                    }
+                }
                 pub mod udp_proxy {
                     pub mod session {
                         pub mod dynamic_forward_proxy {
@@ -1205,6 +1225,11 @@ pub mod envoy {
                     include!("envoy.extensions.load_balancing_policies.random.v3.rs");
                 }
             }
+            pub mod random_subsetting {
+                pub mod v3 {
+                    include!("envoy.extensions.load_balancing_policies.random_subsetting.v3.rs");
+                }
+            }
             pub mod ring_hash {
                 pub mod v3 {
                     include!("envoy.extensions.load_balancing_policies.ring_hash.v3.rs");
@@ -1337,6 +1362,11 @@ pub mod envoy {
             }
         }
         pub mod quic {
+            pub mod client_writer_factory {
+                pub mod v3 {
+                    include!("envoy.extensions.quic.client_writer_factory.v3.rs");
+                }
+            }
             pub mod connection_debug_visitor {
                 pub mod quic_stats {
                     pub mod v3 {
@@ -1578,6 +1608,11 @@ pub mod envoy {
             }
             pub mod tls {
                 pub mod cert_mappers {
+                    pub mod filter_state_override {
+                        pub mod v3 {
+                            include!("envoy.extensions.transport_sockets.tls.cert_mappers.filter_state_override.v3.rs");
+                        }
+                    }
                     pub mod sni {
                         pub mod v3 {
                             include!("envoy.extensions.transport_sockets.tls.cert_mappers.sni.v3.rs");

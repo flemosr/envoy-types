@@ -489,6 +489,7 @@ pub enum ProtocolType {
     /// The Thrift proxy will use the Thrift compact protocol.
     Compact = 3,
     /// The Thrift proxy will use the Thrift "Twitter" protocol implemented by the finagle library.
+    #[deprecated]
     Twitter = 4,
 }
 impl ProtocolType {
@@ -502,6 +503,7 @@ impl ProtocolType {
             Self::Binary => "BINARY",
             Self::LaxBinary => "LAX_BINARY",
             Self::Compact => "COMPACT",
+            #[allow(deprecated)]
             Self::Twitter => "TWITTER",
         }
     }
@@ -512,7 +514,7 @@ impl ProtocolType {
             "BINARY" => Some(Self::Binary),
             "LAX_BINARY" => Some(Self::LaxBinary),
             "COMPACT" => Some(Self::Compact),
-            "TWITTER" => Some(Self::Twitter),
+            "TWITTER" => Some(#[allow(deprecated)] Self::Twitter),
             _ => None,
         }
     }

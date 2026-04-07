@@ -2,30 +2,49 @@
 /// \[\#next-free-field: 7\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ProcessingMode {
-    /// How to handle the request header. Default is "SEND".
-    /// Note this field is ignored in :ref:`mode_override  <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`, since mode
-    /// overrides can only affect messages exchanged after the request header is processed.
+    /// How to handle the request header.
+    ///
+    /// .. note::
+    ///
+    /// ```text
+    /// This field is ignored in
+    /// :ref:`mode_override <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`,
+    /// since mode overrides can only affect messages exchanged after the request header is
+    /// processed.
+    /// ```
+    ///
+    /// Defaults to `SEND`.
     #[prost(enumeration = "processing_mode::HeaderSendMode", tag = "1")]
     pub request_header_mode: i32,
-    /// How to handle the response header. Default is "SEND".
+    /// How to handle the response header.
+    ///
+    /// Defaults to `SEND`.
     #[prost(enumeration = "processing_mode::HeaderSendMode", tag = "2")]
     pub response_header_mode: i32,
-    /// How to handle the request body. Default is "NONE".
+    /// How to handle the request body.
+    ///
+    /// Defaults to `NONE`.
     #[prost(enumeration = "processing_mode::BodySendMode", tag = "3")]
     pub request_body_mode: i32,
-    /// How do handle the response body. Default is "NONE".
+    /// How to handle the response body.
+    ///
+    /// Defaults to `NONE`.
     #[prost(enumeration = "processing_mode::BodySendMode", tag = "4")]
     pub response_body_mode: i32,
-    /// How to handle the request trailers. Default is "SKIP".
+    /// How to handle the request trailers.
+    ///
+    /// Defaults to `SKIP`.
     #[prost(enumeration = "processing_mode::HeaderSendMode", tag = "5")]
     pub request_trailer_mode: i32,
-    /// How to handle the response trailers. Default is "SKIP".
+    /// How to handle the response trailers.
+    ///
+    /// Defaults to `SKIP`.
     #[prost(enumeration = "processing_mode::HeaderSendMode", tag = "6")]
     pub response_trailer_mode: i32,
 }
 /// Nested message and enum types in `ProcessingMode`.
 pub mod processing_mode {
-    /// Control how headers and trailers are handled
+    /// Control how headers and trailers are handled.
     #[derive(
         Clone,
         Copy,
@@ -39,15 +58,19 @@ pub mod processing_mode {
     )]
     #[repr(i32)]
     pub enum HeaderSendMode {
-        /// When used to configure the ext_proc filter :ref:`processing_mode  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`,
-        /// the default HeaderSendMode depends on which part of the message is being processed. By
-        /// default, request and response headers are sent, while trailers are skipped.
         ///
+        /// When used to configure the ext_proc filter
+        /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`,
+        ///   the default `HeaderSendMode` depends on which part of the message is being processed. By
+        ///   default, request and response headers are sent, while trailers are skipped.
         ///
-        /// When used in :ref:`mode_override  <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>` or
-        /// : ref:`allowed_override_modes  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.allowed_override_modes>`,
-        ///   a value of DEFAULT indicates that there is no change from the behavior that is configured for
-        ///   the filter in :ref:`processing_mode  <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`.
+        /// When used in
+        /// : ref:`mode_override <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.mode_override>`
+        ///   or
+        /// : ref:`allowed_override_modes <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.allowed_override_modes>`,
+        ///   a value of `DEFAULT` indicates that there is no change from the behavior that is configured
+        ///   for the filter in
+        /// : ref:`processing_mode <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.processing_mode>`.
         Default = 0,
         /// Send the header or trailer.
         Send = 1,
@@ -76,25 +99,26 @@ pub mod processing_mode {
             }
         }
     }
-    /// Control how the request and response bodies are handled
-    /// When body mutation by external processor is enabled, ext_proc filter will always remove
-    /// the content length header in four cases below because content length can not be guaranteed
+    /// Control how the request and response bodies are handled.
+    ///
+    /// When body mutation by external processor is enabled, ext_proc filter will always remove the
+    /// content length header in the following four cases because content length cannot be guaranteed
     /// to be set correctly:
     ///
-    /// 1. STREAMED BodySendMode: header processing completes before body mutation comes back.
-    /// 1. BUFFERED_PARTIAL BodySendMode: body is buffered and could be injected in different phases.
-    /// 1. BUFFERED BodySendMode + SKIP HeaderSendMode: header processing (e.g., update content-length) is skipped.
-    /// 1. FULL_DUPLEX_STREAMED BodySendMode: header processing completes before body mutation comes back.
+    /// 1. `STREAMED` BodySendMode: header processing completes before body mutation comes back.
+    /// 1. `BUFFERED_PARTIAL` BodySendMode: body is buffered and could be injected in different phases.
+    /// 1. `BUFFERED` BodySendMode + `SKIP` HeaderSendMode: header processing (e.g., update content-length) is skipped.
+    /// 1. `FULL_DUPLEX_STREAMED` BodySendMode: header processing completes before body mutation comes back.
     ///
-    /// In Envoy's http1 codec implementation, removing content length will enable chunked transfer
-    /// encoding whenever feasible. The recipient (either client or server) must be able
-    /// to parse and decode the chunked transfer coding.
+    /// In Envoy's HTTP/1 codec implementation, removing content length will enable chunked transfer
+    /// encoding whenever feasible. The recipient (either client or server) must be able to parse and
+    /// decode the chunked transfer coding
     /// (see `details in RFC9112 <<https://tools.ietf.org/html/rfc9112#section-7.1>`\_>).
     ///
-    /// In BUFFERED BodySendMode + SEND HeaderSendMode, content length header is allowed but it is
-    /// external processor's responsibility to set the content length correctly matched to the length
-    /// of mutated body. If they don't match, the corresponding body mutation will be rejected and
-    /// local reply will be sent with an error message.
+    /// In `BUFFERED` BodySendMode + `SEND` HeaderSendMode, content length header is allowed but it
+    /// is the external processor's responsibility to set the content length correctly matched to the
+    /// length of the mutated body. If they don't match, the corresponding body mutation will be
+    /// rejected and a local reply will be sent with an error message.
     #[derive(
         Clone,
         Copy,
@@ -120,23 +144,61 @@ pub mod processing_mode {
         /// chunk. If the body exceeds the configured buffer limit, then the body contents
         /// up to the buffer limit will be sent.
         BufferedPartial = 3,
+        /// The ext_proc client (the data plane) streams the body to the server in pieces as they arrive.
+        ///
+        /// 1.
+        ///    The server may choose to buffer any number of chunks of data before processing them.
+        ///    After it finishes buffering, the server processes the buffered data. Then it splits the
+        ///    processed data into any number of chunks, and streams them back to the ext_proc client one
+        ///    by one. The server may continuously do so until the complete body is processed. The
+        ///    individual response chunk size is recommended to be no greater than 64K bytes, or
+        ///    : ref:`max_receive_message_length <envoy_v3_api_field_config.core.v3.GrpcService.EnvoyGrpc.max_receive_message_length>`
+        ///      if EnvoyGrpc is used.
+        ///
+        ///
+        /// 1. The server may also choose to buffer the entire message, including the headers (if header
+        ///    mode is `SEND`), the entire body, and the trailers (if present), before sending back any
+        ///    response. The server response has to maintain the headers-body-trailers ordering.
+        ///
+        /// 1. Note that the server might also choose not to buffer data. That is, upon receiving a body
+        ///    request, it could process the data and send back a body response immediately.
+        ///
+        /// In this body mode:
+        ///
+        /// * The corresponding trailer mode has to be set to `SEND`.
+        /// *
+        ///   The client will send body and trailers (if present) to the server as they arrive. Sending
+        ///   the trailers (if present) is to inform the server that the complete body has arrived. In
+        ///   case there are no trailers, then the client will set
+        ///   : ref:`end_of_stream <envoy_v3_api_field_service.ext_proc.v3.HttpBody.end_of_stream>`
+        ///     to `true` as part of the last body chunk request to notify the server that no other data
+        ///     is to be sent.
+        ///
+        ///
+        /// *
+        ///   The server needs to send
+        ///   : ref:`StreamedBodyResponse <envoy_v3_api_msg_service.ext_proc.v3.StreamedBodyResponse>`
+        ///     to the client in the body response.
+        ///
+        ///
+        /// * The client will stream the body chunks in the responses from the server to the
+        ///   upstream/downstream as they arrive.
         FullDuplexStreamed = 4,
         ///
         /// \[\#not-implemented-hide:\]
-        /// A mode for gRPC traffic. This is similar to `FULL_DUPLEX_STREAMED`,
-        /// except that instead of sending raw chunks of the HTTP/2 DATA frames,
-        /// the ext_proc client will de-frame the individual gRPC messages inside
-        /// the HTTP/2 DATA frames, and as each message is de-framed, it will be
-        /// sent to the ext_proc server as a :ref:`request_body  <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.request_body>`
-        /// or :ref:`response_body  <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.response_body>`.
-        /// The ext_proc server will stream back individual gRPC messages in the
+        /// A mode for gRPC traffic. This is similar to `FULL_DUPLEX_STREAMED`, except that instead of
+        /// sending raw chunks of the HTTP/2 DATA frames, the ext_proc client will de-frame the
+        /// individual gRPC messages inside the HTTP/2 DATA frames, and as each message is de-framed, it
+        /// will be sent to the ext_proc server as a
+        /// : ref:`request_body <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.request_body>`
+        ///   or
+        /// : ref:`response_body <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.response_body>`.
+        ///   The ext_proc server will stream back individual gRPC messages in the
         /// : ref:`StreamedBodyResponse <envoy_v3_api_msg_service.ext_proc.v3.StreamedBodyResponse>`
-        ///   field, but the number of messages sent by the ext_proc server
-        ///   does not need to equal the number of messages sent by the data
-        ///   plane. This allows the ext_proc server to change the number of
-        ///   messages sent on the stream.
-        ///   In this mode, the client will send body and trailers to the server as
-        ///   they arrive.
+        ///   field, but the number of messages sent by the ext_proc server does not need to equal the
+        ///   number of messages sent by the data plane. This allows the ext_proc server to change the
+        ///   number of messages sent on the stream. In this mode, the client will send body and trailers
+        ///   to the server as they arrive.
         Grpc = 5,
     }
     impl BodySendMode {

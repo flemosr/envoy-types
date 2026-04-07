@@ -34,12 +34,14 @@ pub mod cel_expression {
         ///
         /// Deprecated -- use `cel_expr_parsed` field instead.
         /// If `cel_expr_parsed` or `cel_expr_checked` is set, this field is not used.
+        #[deprecated]
         #[prost(message, tag = "1")]
         ParsedExpr(super::super::super::super::google::api::expr::v1alpha1::ParsedExpr),
         /// Parsed expression in abstract syntax tree (AST) form that has been successfully type checked.
         ///
         /// Deprecated -- use `cel_expr_checked` field instead.
         /// If `cel_expr_parsed` or `cel_expr_checked` is set, this field is not used.
+        #[deprecated]
         #[prost(message, tag = "2")]
         CheckedExpr(
             super::super::super::super::google::api::expr::v1alpha1::CheckedExpr,

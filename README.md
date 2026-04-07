@@ -20,7 +20,7 @@ Among other use cases, this crate can be used to implement an
 
 ### Rust Version
 
-This project's MSRV is `1.75`.
+This project's MSRV is `1.82`.
 
 ### Dependencies
 

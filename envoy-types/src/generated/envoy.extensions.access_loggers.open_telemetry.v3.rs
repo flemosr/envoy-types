@@ -5,13 +5,38 @@
 ///   populate `opentelemetry.proto.collector.v1.logs.ExportLogsServiceRequest.resource_logs <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/collector/logs/v1/logs_service.proto>`\_.>
 ///   In addition, the request start time is set in the dedicated field.
 ///   \[\#extension: envoy.access_loggers.open_telemetry\]
-///   \[\#next-free-field: 8\]
+///   \[\#next-free-field: 15\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryAccessLogConfig {
     /// \[\#comment:TODO(itamarkam): add 'filter_state_objects_to_log' to logs.\]
+    /// Deprecated. Use `grpc_service` or `http_service` instead.
+    #[deprecated]
     #[prost(message, optional, tag = "1")]
     pub common_config: ::core::option::Option<
         super::super::grpc::v3::CommonGrpcAccessLogConfig,
+    >,
+    /// The upstream HTTP cluster that will receive OTLP logs via
+    /// `OTLP/HTTP <<https://opentelemetry.io/docs/specs/otlp/#otlphttp>`\_.>
+    /// Note: Only one of `common_config`, `grpc_service`, or `http_service` may be used.
+    ///
+    /// .. note::
+    ///
+    ///
+    /// The `request_headers_to_add` property in the OTLP HTTP exporter service
+    /// does not support the :ref:`format specifier <config_access_log_format>` as used for
+    /// : ref:`HTTP access logging <config_access_log>`.
+    ///   The values configured are added as HTTP headers on the OTLP export request
+    ///   without any formatting applied.
+    #[prost(message, optional, tag = "8")]
+    pub http_service: ::core::option::Option<
+        super::super::super::super::config::core::v3::HttpService,
+    >,
+    /// The upstream gRPC cluster that will receive OTLP logs.
+    /// Note: Only one of `common_config`, `grpc_service`, or `http_service` may be used.
+    /// This field is preferred over `common_config.grpc_service`.
+    #[prost(message, optional, tag = "9")]
+    pub grpc_service: ::core::option::Option<
+        super::super::super::super::config::core::v3::GrpcService,
     >,
     /// If specified, Envoy will not generate built-in resource labels
     /// like `log_name`, `zone_name`, `cluster_name`, `node_name`.
@@ -50,6 +75,29 @@ pub struct OpenTelemetryAccessLogConfig {
     #[prost(message, repeated, tag = "7")]
     pub formatters: ::prost::alloc::vec::Vec<
         super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
+    #[prost(string, tag = "10")]
+    pub log_name: ::prost::alloc::string::String,
+    /// The interval for flushing access logs to the transport. Default: 1 second.
+    #[prost(message, optional, tag = "11")]
+    pub buffer_flush_interval: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Duration,
+    >,
+    /// Soft size limit in bytes for the access log buffer. When the buffer exceeds
+    /// this limit, logs will be flushed. Default: 16KB.
+    #[prost(message, optional, tag = "12")]
+    pub buffer_size_bytes: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Additional filter state objects to log as attributes.
+    #[prost(string, repeated, tag = "13")]
+    pub filter_state_objects_to_log: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
+    >,
+    /// Custom tags to include as log attributes.
+    #[prost(message, repeated, tag = "14")]
+    pub custom_tags: ::prost::alloc::vec::Vec<
+        super::super::super::super::r#type::tracing::v3::CustomTag,
     >,
 }
 impl ::prost::Name for OpenTelemetryAccessLogConfig {

@@ -77,7 +77,7 @@ impl ::prost::Name for Validation {
 /// Configuration for the reverse tunnel network filter.
 /// This filter handles reverse tunnel connection acceptance and rejection by processing
 /// HTTP requests where required identification values are provided via HTTP headers.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ReverseTunnel {
     /// Ping interval for health checks on established reverse tunnel connections.
@@ -111,6 +111,12 @@ pub struct ReverseTunnel {
     /// using format strings. Requests that fail validation are rejected with HTTP `403 Forbidden`.
     #[prost(message, optional, tag = "5")]
     pub validation: ::core::option::Option<Validation>,
+    /// Required cluster name for validating reverse tunnel connection initiations.
+    /// When set, the filter validates that the upstream cluster of the initiator envoy matches this name
+    /// via `x-envoy-reverse-tunnel-upstream-cluster-name` header. Connections with mismatched or missing
+    /// cluster names are rejected with HTTP `400 Bad Request`. When empty, no cluster name validation is performed.
+    #[prost(string, tag = "6")]
+    pub required_cluster_name: ::prost::alloc::string::String,
 }
 impl ::prost::Name for ReverseTunnel {
     const NAME: &'static str = "ReverseTunnel";

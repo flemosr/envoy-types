@@ -382,6 +382,7 @@ pub mod permission {
         ///
         /// Metadata that describes additional information about the action. This field is deprecated; please use
         /// : ref:`sourced_metadata<envoy_v3_api_field_config.rbac.v3.Permission.sourced_metadata>` instead.
+        #[deprecated]
         #[prost(message, tag = "7")]
         Metadata(super::super::super::super::r#type::matcher::v3::MetadataMatcher),
         /// Negates matching the provided permission. For instance, if the value of
@@ -520,6 +521,7 @@ pub mod principal {
         /// This field is deprecated; either use :ref:`remote_ip  <envoy_v3_api_field_config.rbac.v3.Principal.remote_ip>` for the same
         /// behavior, or use
         /// : ref:`direct_remote_ip <envoy_v3_api_field_config.rbac.v3.Principal.direct_remote_ip>`.
+        #[deprecated]
         #[prost(message, tag = "5")]
         SourceIp(super::super::super::core::v3::CidrRange),
         /// A CIDR block that describes the downstream remote/origin address.
@@ -555,6 +557,7 @@ pub mod principal {
         ///
         /// Metadata that describes additional information about the principal. This field is deprecated; please use
         /// : ref:`sourced_metadata<envoy_v3_api_field_config.rbac.v3.Principal.sourced_metadata>` instead.
+        #[deprecated]
         #[prost(message, tag = "7")]
         Metadata(super::super::super::super::r#type::matcher::v3::MetadataMatcher),
         /// Identifies the principal using a filter state object.
