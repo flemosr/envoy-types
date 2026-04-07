@@ -37,7 +37,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
-        toolchain: [stable, beta, nightly]    
+        toolchain: [stable, beta, nightly]
     steps:
       - uses: actions/checkout@v4
       - uses: hecrj/setup-rust-action@v2
@@ -45,6 +45,9 @@ jobs:
           rust-version: ${{ matrix.toolchain }}
       - uses: taiki-e/install-action@protoc
       - uses: Swatinem/rust-cache@v2
+      - run: cargo update
+        env:
+          CARGO_RESOLVER_INCOMPATIBLE_RUST_VERSIONS: fallback
       - run: cargo test --all-features
       - uses: taiki-e/install-action@cargo-no-dev-deps
       - run: cargo no-dev-deps --no-private check --all-features
