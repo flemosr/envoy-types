@@ -155,7 +155,7 @@ pub struct TcpProxy {
     /// buffered and forwarded once the upstream connection is ready. When the buffer exceeds
     /// this limit, the downstream connection is read-disabled to prevent excessive memory usage.
     ///
-    /// This field is required when `upstream_connect_mode` is `ON_DOWNSTREAM_DATA`.
+    /// This field is required when `upstream_connect_mode` is not `IMMEDIATE`.
     ///
     /// .. note::
     /// Use this carefully with server-first protocols. The upstream may send data before
@@ -274,7 +274,7 @@ pub mod tcp_proxy {
         ///
         /// The path used with the POST method. The default path is `/`. If this field is specified and
         /// : ref:`use_post field <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.TunnelingConfig.use_post>`
-        ///   is not set to true, the configuration will be rejected.
+        ///   is not set to `true`, the configuration will be rejected.
         #[prost(string, tag = "5")]
         pub post_path: ::prost::alloc::string::String,
         /// Save response trailers to the downstream connection's filter state for consumption
@@ -371,10 +371,13 @@ pub mod tcp_proxy {
         pub access_log_flush_interval: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
-        /// If set to true, the access log is flushed when the TCP proxy successfully establishes a
+        /// If set to `true`, the access log is flushed when the TCP proxy successfully establishes a
         /// connection with the upstream. If the connection fails, the access log is not flushed.
         #[prost(bool, tag = "2")]
         pub flush_access_log_on_connected: bool,
+        /// If set to `true`, the access log is flushed when the TCP proxy accepts a connection.
+        #[prost(bool, tag = "3")]
+        pub flush_access_log_on_start: bool,
     }
     impl ::prost::Name for TcpAccessLogOptions {
         const NAME: &'static str = "TcpAccessLogOptions";
@@ -431,6 +434,8 @@ pub enum UpstreamConnectMode {
     /// This allows access to the full TLS connection information, including client certificates
     /// and negotiated parameters, which can be used for routing decisions or passed as metadata
     /// to the upstream.
+    ///
+    /// This mode requires `max_early_data_bytes` to be set (can be zero to disable buffering).
     ///
     /// .. note::
     /// This mode is only effective when the downstream connection uses TLS. For non-TLS

@@ -3,39 +3,49 @@
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Gzip {
     /// Value from 1 to 9 that controls the amount of internal memory used by zlib. Higher values
-    /// use more memory, but are faster and produce better compression results. The default value is 5.
+    /// use more memory, but are faster and produce better compression results.
+    ///
+    /// Defaults to `5`.
     #[prost(message, optional, tag = "1")]
     pub memory_level: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
     /// A value used for selecting the zlib compression level. This setting will affect speed and
-    /// amount of compression applied to the content. "BEST_COMPRESSION" provides higher compression
-    /// at the cost of higher latency and is equal to "COMPRESSION_LEVEL_9". "BEST_SPEED" provides
-    /// lower compression with minimum impact on response time, the same as "COMPRESSION_LEVEL_1".
-    /// "DEFAULT_COMPRESSION" provides an optimal result between speed and compression. According
-    /// to zlib's manual this level gives the same result as "COMPRESSION_LEVEL_6".
-    /// This field will be set to "DEFAULT_COMPRESSION" if not specified.
+    /// amount of compression applied to the content. `BEST_COMPRESSION` provides higher compression
+    /// at the cost of higher latency and is equal to `COMPRESSION_LEVEL_9`. `BEST_SPEED` provides
+    /// lower compression with minimum impact on response time, the same as `COMPRESSION_LEVEL_1`.
+    /// `DEFAULT_COMPRESSION` provides an optimal result between speed and compression. According
+    /// to zlib's manual, this level gives the same result as `COMPRESSION_LEVEL_6`.
+    ///
+    /// Defaults to `DEFAULT_COMPRESSION`.
     #[prost(enumeration = "gzip::CompressionLevel", tag = "2")]
     pub compression_level: i32,
     /// A value used for selecting the zlib compression strategy which is directly related to the
-    /// characteristics of the content. Most of the time "DEFAULT_STRATEGY" will be the best choice,
-    /// which is also the default value for the parameter, though there are situations when
-    /// changing this parameter might produce better results. For example, run-length encoding (RLE)
-    /// is typically used when the content is known for having sequences which same data occurs many
-    /// consecutive times. For more information about each strategy, please refer to zlib manual.
+    /// characteristics of the content. Most of the time `DEFAULT_STRATEGY` will be the best choice,
+    /// though there are situations when changing this parameter might produce better results. For
+    /// example, run-length encoding (RLE) is typically used when the content is known for having
+    /// sequences in which the same data occurs many consecutive times. For more information about
+    /// each strategy, please refer to the `zlib manual <<https://www.zlib.net/manual.html>`\_.>
+    ///
+    /// Defaults to `DEFAULT_STRATEGY`.
     #[prost(enumeration = "gzip::CompressionStrategy", tag = "3")]
     pub compression_strategy: i32,
     /// Value from 9 to 15 that represents the base two logarithmic of the compressor's window size.
-    /// Larger window results in better compression at the expense of memory usage. The default is 12
-    /// which will produce a 4096 bytes window. For more details about this parameter, please refer to
-    /// zlib manual > deflateInit2.
+    /// Larger window results in better compression at the expense of memory usage. For more details
+    /// about this parameter, please refer to the
+    /// `zlib manual <<https://www.zlib.net/manual.html>`\_> for `deflateInit2`.
+    ///
+    /// Defaults to `12`, which will produce a 4096 bytes window.
     #[prost(message, optional, tag = "4")]
     pub window_bits: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Value for Zlib's next output buffer. If not set, defaults to 4096.
-    /// See <https://www.zlib.net/manual.html> for more details. Also see
-    /// <https://github.com/envoyproxy/envoy/issues/8448> for context on this filter's performance.
+    /// Value for zlib's next output buffer. See the
+    /// `zlib manual <<https://www.zlib.net/manual.html>`\_> for more details. Also see
+    /// `envoy#8448 <<https://github.com/envoyproxy/envoy/issues/8448>`\_> for context on this filter's
+    /// performance.
+    ///
+    /// Defaults to `4096`.
     #[prost(message, optional, tag = "5")]
     pub chunk_size: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::UInt32Value,
@@ -44,7 +54,8 @@ pub struct Gzip {
 /// Nested message and enum types in `Gzip`.
 pub mod gzip {
     /// All the values of this enumeration translate directly to zlib's compression strategies.
-    /// For more information about each strategy, please refer to zlib manual.
+    /// For more information about each strategy, please refer to the
+    /// `zlib manual <<https://www.zlib.net/manual.html>`\_.>
     #[derive(
         Clone,
         Copy,
@@ -58,10 +69,15 @@ pub mod gzip {
     )]
     #[repr(i32)]
     pub enum CompressionStrategy {
+        /// Default compression strategy.
         DefaultStrategy = 0,
+        /// Filtered compression strategy, designed for data produced by a filter or predictor.
         Filtered = 1,
+        /// Huffman-only compression strategy, which uses Huffman encoding only.
         HuffmanOnly = 2,
+        /// Run-length encoding (RLE) compression strategy, designed for image data.
         Rle = 3,
+        /// Fixed compression strategy, which prevents the use of dynamic Huffman codes.
         Fixed = 4,
     }
     impl CompressionStrategy {
@@ -90,6 +106,8 @@ pub mod gzip {
             }
         }
     }
+    /// Compression level values for zlib. Higher levels provide better compression at the cost of
+    /// increased latency and CPU usage.
     #[derive(
         Clone,
         Copy,
@@ -103,15 +121,25 @@ pub mod gzip {
     )]
     #[repr(i32)]
     pub enum CompressionLevel {
+        /// Default compression level, equivalent to `COMPRESSION_LEVEL_6`.
         DefaultCompression = 0,
+        /// Fastest compression with minimal compression ratio, equivalent to `COMPRESSION_LEVEL_1`.
         BestSpeed = 1,
+        /// Compression level 2.
         CompressionLevel2 = 2,
+        /// Compression level 3.
         CompressionLevel3 = 3,
+        /// Compression level 4.
         CompressionLevel4 = 4,
+        /// Compression level 5.
         CompressionLevel5 = 5,
+        /// Compression level 6.
         CompressionLevel6 = 6,
+        /// Compression level 7.
         CompressionLevel7 = 7,
+        /// Compression level 8.
         CompressionLevel8 = 8,
+        /// Compression level 9 (best compression).
         CompressionLevel9 = 9,
     }
     impl CompressionLevel {

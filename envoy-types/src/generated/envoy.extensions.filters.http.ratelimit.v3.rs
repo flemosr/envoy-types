@@ -23,7 +23,7 @@ pub struct RateLimit {
     #[prost(string, tag = "3")]
     pub request_type: ::prost::alloc::string::String,
     /// The timeout in milliseconds for the rate limit service RPC. If not
-    /// set, this defaults to 20ms.
+    /// set, this defaults to 20ms. A value of 0 disables the timeout (infinite).
     #[prost(message, optional, tag = "4")]
     pub timeout: ::core::option::Option<
         super::super::super::super::super::super::google::protobuf::Duration,

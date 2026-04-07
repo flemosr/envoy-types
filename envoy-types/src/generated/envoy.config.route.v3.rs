@@ -678,7 +678,7 @@ impl ::prost::Name for ClusterSpecifierPlugin {
         "type.googleapis.com/envoy.config.route.v3.ClusterSpecifierPlugin".into()
     }
 }
-/// \[\#next-free-field: 17\]
+/// \[\#next-free-field: 18\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteMatch {
     /// Indicates that prefix/path matching should be case-sensitive. The default
@@ -733,6 +733,11 @@ pub struct RouteMatch {
     /// ```
     #[prost(message, repeated, tag = "7")]
     pub query_parameters: ::prost::alloc::vec::Vec<QueryParameterMatcher>,
+    /// Specifies a set of cookies on which the route should match. The router parses the `Cookie`
+    /// header and evaluates the named cookie against each matcher. If the number of specified cookie
+    /// matchers is nonzero, they all must match for the route to be selected.
+    #[prost(message, repeated, tag = "17")]
+    pub cookies: ::prost::alloc::vec::Vec<CookieMatcher>,
     /// If specified, only gRPC requests will be matched. The router will check
     /// that the `Content-Type` header has `application/grpc` or one of the various
     /// `application/grpc+` values.
@@ -2737,7 +2742,7 @@ impl ::prost::Name for VirtualCluster {
 }
 /// Global rate limiting :ref:`architecture overview <arch_overview_global_rate_limit>`.
 /// Also applies to Local rate limiting :ref:`using descriptors <config_http_filters_local_rate_limit_descriptors>`.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateLimit {
     /// Refers to the stage set in the filter. The rate limit configuration only
@@ -2811,6 +2816,9 @@ pub struct RateLimit {
     /// Currently, this is only supported by the HTTP global rate filter.
     #[prost(bool, tag = "6")]
     pub apply_on_stream_done: bool,
+    /// Descriptor level X-RateLimit headers options which may override the filter level setting.
+    #[prost(enumeration = "rate_limit::XRateLimitOption", tag = "7")]
+    pub x_ratelimit_option: i32,
 }
 /// Nested message and enum types in `RateLimit`.
 pub mod rate_limit {
@@ -3508,6 +3516,58 @@ pub mod rate_limit {
             "type.googleapis.com/envoy.config.route.v3.RateLimit.HitsAddend".into()
         }
     }
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum XRateLimitOption {
+        /// X-RateLimit headers is not specified. When this enum is used at descriptor level,
+        /// the behavior is to inherit the setting from the filter.
+        Unspecified = 0,
+        /// X-RateLimit headers disabled.
+        Off = 1,
+        /// Use `draft RFC Version 03 <<https://tools.ietf.org/id/draft-polli-ratelimit-headers-03.html>`\_>
+        /// where 3 headers will be added:
+        ///
+        /// * `X-RateLimit-Limit` - indicates the request-quota associated to the
+        ///   client in the current time-window followed by the description of the
+        ///   quota policy. The value is returned by the maximum tokens of the token bucket.
+        /// * `X-RateLimit-Remaining` - indicates the remaining requests in the
+        ///   current time-window. The value is returned by the remaining tokens in the token bucket.
+        /// * `X-RateLimit-Reset` - indicates the number of seconds until reset of
+        ///   the current time-window. The value is returned by the remaining fill interval of the token bucket.
+        DraftVersion03 = 2,
+    }
+    impl XRateLimitOption {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Self::Unspecified => "UNSPECIFIED",
+                Self::Off => "OFF",
+                Self::DraftVersion03 => "DRAFT_VERSION_03",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "UNSPECIFIED" => Some(Self::Unspecified),
+                "OFF" => Some(Self::Off),
+                "DRAFT_VERSION_03" => Some(Self::DraftVersion03),
+                _ => None,
+            }
+        }
+    }
 }
 impl ::prost::Name for RateLimit {
     const NAME: &'static str = "RateLimit";
@@ -3747,6 +3807,32 @@ impl ::prost::Name for QueryParameterMatcher {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "type.googleapis.com/envoy.config.route.v3.QueryParameterMatcher".into()
+    }
+}
+/// Cookie matching inspects individual name/value pairs parsed from the `Cookie` header.
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct CookieMatcher {
+    /// Specifies the cookie name to evaluate.
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+    /// Match the cookie value using :ref:`StringMatcher  <envoy_v3_api_msg_type.matcher.v3.StringMatcher>` semantics.
+    #[prost(message, optional, tag = "2")]
+    pub string_match: ::core::option::Option<
+        super::super::super::r#type::matcher::v3::StringMatcher,
+    >,
+    /// Invert the match result. If the cookie is not present, the match result is false, so
+    /// `invert_match` will cause the matcher to succeed when the cookie is absent.
+    #[prost(bool, tag = "3")]
+    pub invert_match: bool,
+}
+impl ::prost::Name for CookieMatcher {
+    const NAME: &'static str = "CookieMatcher";
+    const PACKAGE: &'static str = "envoy.config.route.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.route.v3.CookieMatcher".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.route.v3.CookieMatcher".into()
     }
 }
 /// HTTP Internal Redirect :ref:`architecture overview <arch_overview_internal_redirects>`.

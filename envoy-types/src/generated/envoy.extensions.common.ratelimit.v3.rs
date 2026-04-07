@@ -137,6 +137,9 @@ pub struct LocalRateLimitDescriptor {
     pub token_bucket: ::core::option::Option<
         super::super::super::super::r#type::v3::TokenBucket,
     >,
+    /// Mark the descriptor as shadow. When the values is true, envoy allow requests to the backend.
+    #[prost(bool, tag = "3")]
+    pub shadow_mode: bool,
 }
 impl ::prost::Name for LocalRateLimitDescriptor {
     const NAME: &'static str = "LocalRateLimitDescriptor";

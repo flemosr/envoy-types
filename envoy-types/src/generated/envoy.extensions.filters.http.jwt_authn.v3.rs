@@ -642,10 +642,10 @@ impl ::prost::Name for ProviderWithAudiences {
 /// - allow_missing: {}
 /// - provider_name: provider-B
 ///
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtRequirement {
-    #[prost(oneof = "jwt_requirement::RequiresType", tags = "1, 2, 3, 4, 5, 6")]
+    #[prost(oneof = "jwt_requirement::RequiresType", tags = "1, 2, 3, 4, 5, 6, 7")]
     pub requires_type: ::core::option::Option<jwt_requirement::RequiresType>,
 }
 /// Nested message and enum types in `JwtRequirement`.
@@ -682,6 +682,36 @@ pub mod jwt_requirement {
         AllowMissing(
             super::super::super::super::super::super::super::google::protobuf::Empty,
         ),
+        /// Extract JWT claims without performing signature validation.
+        /// This mode will decode the JWT, extract claims, and forward them as
+        /// configured (via claim_to_headers, forward_payload_header, etc.) but
+        /// will NOT verify the JWT signature against JWKS.
+        ///
+        /// .. warning::
+        ///
+        /// ```text
+        /// This mode does not verify JWT authenticity. Use only in scenarios where:
+        ///
+        /// - JWTs come from a trusted source (e.g., internal service mesh)
+        /// - Signature verification is performed elsewhere in the request path
+        /// - You are in a testing period and the token issuer doesn't support JWKS yet
+        /// ```
+        ///
+        /// This mode will:
+        ///
+        /// * Decode the JWT header and payload
+        /// * Extract claims and forward them as headers
+        /// * Always return success (Status::Ok) regardless of JWT validity
+        /// * Log when extraction occurs
+        ///
+        /// This mode will NOT:
+        ///
+        /// * Verify the JWT signature
+        /// * Validate the (issuer) claim
+        /// * Validate the (audience) claim
+        /// * Check not-before time (nbf claim)
+        #[prost(message, tag = "7")]
+        ExtractOnlyWithoutValidation(super::ExtractOnlyWithoutValidation),
     }
 }
 impl ::prost::Name for JwtRequirement {
@@ -692,6 +722,20 @@ impl ::prost::Name for JwtRequirement {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtRequirement"
+            .into()
+    }
+}
+/// Reserved for future extensions (e.g., claim filtering, logging options)
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ExtractOnlyWithoutValidation {}
+impl ::prost::Name for ExtractOnlyWithoutValidation {
+    const NAME: &'static str = "ExtractOnlyWithoutValidation";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.jwt_authn.v3.ExtractOnlyWithoutValidation".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.ExtractOnlyWithoutValidation"
             .into()
     }
 }

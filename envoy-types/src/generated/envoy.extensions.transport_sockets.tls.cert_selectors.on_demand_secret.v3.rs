@@ -15,8 +15,10 @@ pub struct Config {
         super::super::super::super::super::super::config::core::v3::ConfigSource,
     >,
     /// Extension point to specify a function to compute the secret name. The extension is called
-    /// during the TLS handshake after receiving the "CLIENT HELLO" message from the client.
-    /// \[\#extension-category: envoy.tls.certificate_mappers\]
+    /// during the TLS handshake after receiving the *CLIENT HELLO* message from the client for the
+    /// downstream certificate selector, and using the transport socket options and *SERVER HELLO* for
+    /// the upstream certificate selector.
+    /// \[\#extension-category: envoy.tls.certificate_mappers,envoy.tls.upstream_certificate_mappers\]
     #[prost(message, optional, tag = "2")]
     pub certificate_mapper: ::core::option::Option<
         super::super::super::super::super::super::config::core::v3::TypedExtensionConfig,

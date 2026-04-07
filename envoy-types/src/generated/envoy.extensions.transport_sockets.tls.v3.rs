@@ -1191,10 +1191,13 @@ pub struct CommonTlsContext {
     >,
     /// Custom TLS certificate selector.
     ///
-    /// Select TLS certificate based on TLS client hello.
-    /// If empty, defaults to native TLS certificate selection behavior:
-    /// DNS SANs or Subject Common Name in TLS certificates is extracted as server name pattern to match SNI.
-    /// \[\#extension-category: envoy.tls.certificate_selectors\]
+    /// For the downstream TLS socket, select a TLS certificate based on TLS client hello. If empty,
+    /// defaults to native TLS certificate selection behavior: DNS SANs or Subject Common Name in TLS
+    /// certificates is extracted as server name pattern to match SNI.
+    ///
+    /// For the upstream TLS socket, select a TLS certificate based on TLS server hello and the
+    /// transport socket options.
+    /// \[\#extension-category: envoy.tls.certificate_selectors,envoy.tls.upstream_certificate_selectors\]
     #[prost(message, optional, tag = "16")]
     pub custom_tls_certificate_selector: ::core::option::Option<
         super::super::super::super::config::core::v3::TypedExtensionConfig,
