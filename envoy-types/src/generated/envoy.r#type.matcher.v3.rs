@@ -57,6 +57,7 @@ pub mod regex_matcher {
     #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum EngineType {
         /// Google's RE2 regex engine.
+        #[deprecated]
         #[prost(message, tag = "1")]
         GoogleRe2(GoogleRe2),
     }

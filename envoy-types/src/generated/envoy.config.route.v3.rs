@@ -3394,6 +3394,7 @@ pub mod rate_limit {
             ///
             /// .. attention::
             /// This field has been deprecated in favor of the :ref:`metadata <envoy_v3_api_field_config.route.v3.RateLimit.Action.metadata>` field
+            #[deprecated]
             #[prost(message, tag = "7")]
             DynamicMetadata(DynamicMetaData),
             /// Rate limit on metadata.
@@ -3681,6 +3682,7 @@ pub mod header_matcher {
         /// .. attention::
         ///
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
+        #[deprecated]
         #[prost(string, tag = "4")]
         ExactMatch(::prost::alloc::string::String),
         /// If specified, this regex string is a regular expression rule which implies the entire request
@@ -3690,6 +3692,7 @@ pub mod header_matcher {
         /// .. attention::
         ///
         /// This field is deprecated. Please use :ref:`string_match <envoy_v3_api_field_config.route.v3.HeaderMatcher.string_match>`.
+        #[deprecated]
         #[prost(message, tag = "11")]
         SafeRegexMatch(super::super::super::super::r#type::matcher::v3::RegexMatcher),
         /// If specified, header match will be performed based on range.
@@ -3722,6 +3725,7 @@ pub mod header_matcher {
         /// Examples:
         ///
         /// * The prefix `abcd` matches the value `abcdxyz`, but not for `abcxyz`.
+        #[deprecated]
         #[prost(string, tag = "9")]
         PrefixMatch(::prost::alloc::string::String),
         /// If specified, header match will be performed based on the suffix of the header value.
@@ -3737,6 +3741,7 @@ pub mod header_matcher {
         /// Examples:
         ///
         /// * The suffix `abcd` matches the value `xyzabcd`, but not for `xyzbcd`.
+        #[deprecated]
         #[prost(string, tag = "10")]
         SuffixMatch(::prost::alloc::string::String),
         /// If specified, header match will be performed based on whether the header value contains
@@ -3753,6 +3758,7 @@ pub mod header_matcher {
         /// Examples:
         ///
         /// * The value `abcd` matches the value `xyzabcdpqr`, but not for `xyzbcdpqr`.
+        #[deprecated]
         #[prost(string, tag = "12")]
         ContainsMatch(::prost::alloc::string::String),
         /// If specified, header match will be performed based on the string match of the header value.

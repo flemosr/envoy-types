@@ -582,6 +582,7 @@ pub mod zipkin_config {
         /// Hence the motivation of adding HTTP_JSON_V1 as the default is to avoid a breaking change when
         /// user upgrading Envoy with this change. Furthermore, we also immediately deprecate this field,
         /// since in Zipkin realm this v1 version is considered to be not preferable anymore.\]
+        #[deprecated]
         DeprecatedAndUnavailableDoNotUse = 0,
         /// Zipkin API v2, JSON over HTTP.
         HttpJson = 1,
@@ -597,6 +598,7 @@ pub mod zipkin_config {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
+                #[allow(deprecated)]
                 Self::DeprecatedAndUnavailableDoNotUse => {
                     "DEPRECATED_AND_UNAVAILABLE_DO_NOT_USE"
                 }
@@ -609,7 +611,7 @@ pub mod zipkin_config {
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
                 "DEPRECATED_AND_UNAVAILABLE_DO_NOT_USE" => {
-                    Some(Self::DeprecatedAndUnavailableDoNotUse)
+                    Some(#[allow(deprecated)] Self::DeprecatedAndUnavailableDoNotUse)
                 }
                 "HTTP_JSON" => Some(Self::HttpJson),
                 "HTTP_PROTO" => Some(Self::HttpProto),

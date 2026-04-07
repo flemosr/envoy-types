@@ -1403,10 +1403,12 @@ pub mod common_tls_context {
         CombinedValidationContext(CombinedCertificateValidationContext),
         /// Certificate provider for fetching validation context.
         /// \[\#not-implemented-hide:\]
+        #[deprecated]
         #[prost(message, tag = "10")]
         ValidationContextCertificateProvider(CertificateProvider),
         /// Certificate provider instance for fetching validation context.
         /// \[\#not-implemented-hide:\]
+        #[deprecated]
         #[prost(message, tag = "12")]
         ValidationContextCertificateProviderInstance(CertificateProviderInstance),
     }

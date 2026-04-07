@@ -289,6 +289,7 @@ pub mod locality_lb_endpoints {
     pub enum LbConfig {
         /// \[\#not-implemented-hide:\]
         /// Not implemented and deprecated.
+        #[deprecated]
         #[prost(message, tag = "7")]
         LoadBalancerEndpoints(LbEndpointList),
         /// LEDS Configuration for the current locality.

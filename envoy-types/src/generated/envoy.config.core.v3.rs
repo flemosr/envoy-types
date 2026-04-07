@@ -2361,6 +2361,7 @@ pub mod substitution_format_string {
         /// upstream connect error:503:path=/foo
         ///
         /// Deprecated in favor of :ref:`text_format_source <envoy_v3_api_field_config.core.v3.SubstitutionFormatString.text_format_source>`. To migrate text format strings, use the :ref:`inline_string <envoy_v3_api_field_config.core.v3.DataSource.inline_string>` field.
+        #[deprecated]
         #[prost(string, tag = "1")]
         TextFormat(::prost::alloc::string::String),
         /// Specify a format with command operators to form a JSON string.
@@ -3252,6 +3253,7 @@ pub mod api_config_source {
     pub enum ApiType {
         /// Ideally this would be 'reserved 0' but one can't reserve the default
         /// value. Instead we throw an exception if this is ever used.
+        #[deprecated]
         DeprecatedAndUnavailableDoNotUse = 0,
         /// REST-JSON v2 API. The `canonical JSON encoding  <<https://developers.google.com/protocol-buffers/docs/proto3#json>`\_> for
         /// the v2 protos is used.
@@ -3278,6 +3280,7 @@ pub mod api_config_source {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
+                #[allow(deprecated)]
                 Self::DeprecatedAndUnavailableDoNotUse => {
                     "DEPRECATED_AND_UNAVAILABLE_DO_NOT_USE"
                 }
@@ -3292,7 +3295,7 @@ pub mod api_config_source {
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
                 "DEPRECATED_AND_UNAVAILABLE_DO_NOT_USE" => {
-                    Some(Self::DeprecatedAndUnavailableDoNotUse)
+                    Some(#[allow(deprecated)] Self::DeprecatedAndUnavailableDoNotUse)
                 }
                 "REST" => Some(Self::Rest),
                 "GRPC" => Some(Self::Grpc),
@@ -3464,6 +3467,7 @@ pub mod config_source {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum ConfigSourceSpecifier {
         /// Deprecated in favor of `path_config_source`. Use that field instead.
+        #[deprecated]
         #[prost(string, tag = "1")]
         Path(::prost::alloc::string::String),
         /// Local filesystem path configuration source.
@@ -3554,6 +3558,7 @@ pub enum ApiVersion {
     /// When not specified, we assume v3; it is the only supported version.
     Auto = 0,
     /// Use xDS v2 API. This is no longer supported.
+    #[deprecated]
     V2 = 1,
     /// Use xDS v3 API.
     V3 = 2,
@@ -3566,6 +3571,7 @@ impl ApiVersion {
     pub fn as_str_name(&self) -> &'static str {
         match self {
             Self::Auto => "AUTO",
+            #[allow(deprecated)]
             Self::V2 => "V2",
             Self::V3 => "V3",
         }
@@ -3574,7 +3580,7 @@ impl ApiVersion {
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "AUTO" => Some(Self::Auto),
-            "V2" => Some(Self::V2),
+            "V2" => Some(#[allow(deprecated)] Self::V2),
             "V3" => Some(Self::V3),
             _ => None,
         }

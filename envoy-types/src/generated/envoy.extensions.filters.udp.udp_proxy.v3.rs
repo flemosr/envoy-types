@@ -364,6 +364,7 @@ pub mod udp_proxy_config {
         /// The upstream cluster to connect to.
         /// This field is deprecated in favor of
         /// : ref:`matcher <envoy_v3_api_field_extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.matcher>`.
+        #[deprecated]
         #[prost(string, tag = "2")]
         Cluster(::prost::alloc::string::String),
         /// The match tree to use when resolving route actions for incoming requests.

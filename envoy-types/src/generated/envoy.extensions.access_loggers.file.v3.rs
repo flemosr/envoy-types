@@ -21,12 +21,14 @@ pub mod file_access_log {
         /// : ref:`default format <config_access_log_default_format>`.
         ///   This field is deprecated.
         ///   Please use :ref:`log_format <envoy_v3_api_field_extensions.access_loggers.file.v3.FileAccessLog.log_format>`.
+        #[deprecated]
         #[prost(string, tag = "2")]
         Format(::prost::alloc::string::String),
         /// Access log :ref:`format dictionary<config_access_log_format_dictionaries>`. All values
         /// are rendered as strings.
         /// This field is deprecated.
         /// Please use :ref:`log_format <envoy_v3_api_field_extensions.access_loggers.file.v3.FileAccessLog.log_format>`.
+        #[deprecated]
         #[prost(message, tag = "3")]
         JsonFormat(super::super::super::super::super::super::google::protobuf::Struct),
         /// Access log :ref:`format dictionary<config_access_log_format_dictionaries>`. Values are
@@ -35,6 +37,7 @@ pub mod file_access_log {
         /// documentation for a specific command operator for details.
         /// This field is deprecated.
         /// Please use :ref:`log_format <envoy_v3_api_field_extensions.access_loggers.file.v3.FileAccessLog.log_format>`.
+        #[deprecated]
         #[prost(message, tag = "4")]
         TypedJsonFormat(
             super::super::super::super::super::super::google::protobuf::Struct,
