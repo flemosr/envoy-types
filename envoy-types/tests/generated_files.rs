@@ -9,13 +9,7 @@ fn generated_protos_are_current() {
 
     let proto_collect_status = Command::new("cargo")
         .current_dir(workspace_dir)
-        .args([
-            "run",
-            "--bin",
-            "proto-collect",
-            "--",
-            "--check",
-        ])
+        .args(["run", "--bin", "proto-collect", "--", "--check"])
         .status()
         .unwrap();
 
@@ -23,13 +17,7 @@ fn generated_protos_are_current() {
 
     let proto_codegen_status = Command::new("cargo")
         .current_dir(workspace_dir)
-        .args([
-            "run",
-            "--bin",
-            "proto-codegen",
-            "--",
-            "--check",
-        ])
+        .args(["run", "--bin", "proto-codegen", "--", "--check"])
         .status()
         .unwrap();
 
