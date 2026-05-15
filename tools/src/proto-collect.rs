@@ -37,7 +37,7 @@ fn collect(tools_dir: &Path, envoy_types_dir: &Path) -> Result<(), Box<dyn Error
     }
     fs::create_dir_all(&out_dir)?;
 
-    println!("Collecting protos to {:?}...", out_dir);
+    println!("Collecting protos to {out_dir:?}...");
 
     let envoy_license = apache_v2(2025, "Envoy Project Authors");
     collect_protos(
@@ -142,7 +142,7 @@ fn collect_protos(
     let repo_dir = tools_dir.join("submodules").join(repo);
 
     if !repo_dir.is_dir() {
-        return Err(format!("submodule repo `{}` not found at {:?}", repo, repo_dir).into());
+        return Err(format!("submodule repo `{repo}` not found at {repo_dir:?}").into());
     }
 
     let mut source_protos: Vec<PathBuf> = Vec::new();
