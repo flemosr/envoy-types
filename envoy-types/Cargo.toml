@@ -1,6 +1,6 @@
 [package]
 name = "envoy-types"
-authors = ["Rafael Lemos <contact@flemosr.com"]
+authors = ["Rafael Lemos <contact@flemosr.com>"]
 categories = ["web-programming", "network-programming"]
 description = """
 Collection of protobuf types and other assets to work with the Envoy Proxy
