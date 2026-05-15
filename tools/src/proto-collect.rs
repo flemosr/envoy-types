@@ -167,7 +167,7 @@ fn collect_protos(
 
         if let Some(license) = add_license {
             let mut target = File::create(&target_name)?;
-            let mut source = File::open(&proto)?;
+            let mut source = File::open(proto)?;
             target.write_all(license.as_bytes())?;
             io::copy(&mut source, &mut target)?;
         } else {
