@@ -1,6 +1,6 @@
 [package]
 name = "envoy-types"
-authors = ["Rafael Lemos <contact@flemosr.com"]
+authors = ["Rafael Lemos <contact@flemosr.com>"]
 categories = ["web-programming", "network-programming"]
 description = """
 Collection of protobuf types and other assets to work with the Envoy Proxy
@@ -23,8 +23,3 @@ tonic = { version = "0.14", default-features = false, features = [
     "transport",
 ] }
 tonic-prost = "0.14"
-
-[dev-dependencies]
-glob = "0.3"
-prost-build = "0.14.3"
-tonic-prost-build = "0.14"

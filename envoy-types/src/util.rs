@@ -2,7 +2,7 @@ use prost::{Message, Name};
 
 use crate::pb::google::protobuf::Any;
 
-/// Packs a protobuf message into a [`google.protobuf.Any`]
+/// Packs a protobuf message into a protobuf [`Any`].
 ///
 /// # Examples
 ///
