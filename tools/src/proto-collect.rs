@@ -205,7 +205,7 @@ fn check_protos(envoy_types_dir: &Path) -> Result<(), Box<dyn Error>> {
 /// Generate an Apache-2.0 declaration, in the form of a Protocol Buffer
 /// comment, from the copyright `year` and the `name` of the copyright owner.
 ///
-/// Text source: https://www.apache.org/licenses/LICENSE-2.0
+/// Text source: <https://www.apache.org/licenses/LICENSE-2.0>
 fn apache_v2(year: u32, owner: &str) -> String {
     format!(
         "// Copyright {year} {owner}\
