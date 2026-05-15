@@ -1,7 +1,9 @@
-# Envoy Proto Collect
+# envoy-types tools
 
-This crate is a tool used to collect selected proto files from the repos contained in the
-`submodules` directory, adding said files to the repo's `envoy-types/proto` directory.
+This crate contains maintainer tools for the repo.
+
+The `proto-collect` binary collects selected proto files from the repos contained in the
+`submodules` directory, adding those files to the repo's `envoy-types/proto` directory.
 
 Besides that, `Apache-2.0` declarations are added to the top of the proto files lacking them.
 
@@ -13,7 +15,7 @@ protos that were just collected are present in the directory by the end of the p
 Then, run the tool:
 
 ```bash
-$ cargo run --bin collect-protos
+$ cargo run --bin proto-collect
 ```
 
 The compilation of the protos can be achieved by running the `bootstrap` test of the `envoy-types`

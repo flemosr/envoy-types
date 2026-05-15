@@ -1,5 +1,5 @@
 [workspace]
-members = ["envoy-proto-collect", "envoy-types", "examples"]
+members = ["envoy-types", "examples", "tools"]
 resolver = "2"
 
 [workspace.package]

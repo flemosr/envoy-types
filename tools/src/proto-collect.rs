@@ -86,7 +86,7 @@ fn main() {
     let manifest_dir = std::env!("CARGO_MANIFEST_DIR");
     let out_dir = Path::new(manifest_dir)
         .parent()
-        .expect("envoy-proto-collect is inside a workspace")
+        .expect("tools is inside a workspace")
         .join("envoy-types")
         .join("proto");
 
