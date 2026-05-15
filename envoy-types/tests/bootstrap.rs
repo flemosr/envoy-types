@@ -19,9 +19,16 @@ const INCLUDE_PATHS: &[&str] = &[
     "proto/xds",
 ];
 
+const GENERATED_DIR: &str = "src/generated";
+const GENERATED_TMP_DIR: &str = "src/generated_tmp";
+
 #[test]
 fn bootstrap() {
-    let out_dir = PathBuf::from("src/generated");
+    let out_dir = PathBuf::from(GENERATED_TMP_DIR);
+    if out_dir.exists() {
+        fs::remove_dir_all(&out_dir).unwrap();
+    }
+    fs::create_dir_all(&out_dir).unwrap();
 
     let mut protos: Vec<PathBuf> = Vec::new();
 
@@ -86,11 +93,17 @@ fn bootstrap() {
         .compile_with_config(config, &protos, &include_paths)
         .unwrap();
 
+    let generated_dir = PathBuf::from(GENERATED_DIR);
+    if generated_dir.exists() {
+        fs::remove_dir_all(&generated_dir).unwrap();
+    }
+    fs::rename(&out_dir, &generated_dir).unwrap();
+
     let status = Command::new("git")
         .arg("diff")
         .arg("--exit-code")
         .arg("--")
-        .arg(&out_dir)
+        .arg(&generated_dir)
         .status()
         .unwrap();
 
