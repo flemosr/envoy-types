@@ -30,9 +30,9 @@ envoy-types = "<envoy-types-version>"
 ```
 
 The protobuf types made available are already pre-compiled, so the latest stable Protocol Buffer
-Compiler (`protoc`) is only needed to run the crate's tests. Generated code may vary across `protoc`
-versions, and the use of the latest stable version is enforced by CI. Installation instructions can
-be found [here](https://grpc.io/docs/protoc-installation/).
+Compiler (`protoc`) is only needed to regenerate or check the committed generated files. Generated
+code may vary across compiler versions, and the use of the latest stable version is enforced by CI.
+See the [`protoc` installation instructions](https://grpc.io/docs/protoc-installation/).
 
 ## Examples
 
