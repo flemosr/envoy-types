@@ -3,4 +3,4 @@ members = ["envoy-types", "examples", "tools"]
 resolver = "2"
 
 [workspace.package]
-rust-version = "1.82"
+rust-version = "1.88"
