@@ -129,16 +129,21 @@ fn regenerate(envoy_types_dir: &Path) -> Result<(), Box<dyn Error>> {
 }
 
 fn check_generated(envoy_types_dir: &Path) -> Result<(), Box<dyn Error>> {
-    let status = Command::new("git")
+    let output = Command::new("git")
         .arg("-C")
         .arg(envoy_types_dir)
-        .arg("diff")
-        .arg("--exit-code")
+        .arg("status")
+        .arg("--porcelain")
+        .arg("--untracked-files=all")
         .arg("--")
         .arg(GENERATED_DIR)
-        .status()?;
+        .output()?;
 
-    if status.success() {
+    if !output.status.success() {
+        return Err("failed to check generated files with `git status`".into());
+    }
+
+    if output.stdout.is_empty() {
         Ok(())
     } else {
         Err(format!("generated files in `{GENERATED_DIR}` must be committed").into())

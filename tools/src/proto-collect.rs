@@ -181,16 +181,21 @@ fn collect_protos(
 }
 
 fn check_protos(envoy_types_dir: &Path) -> Result<(), Box<dyn Error>> {
-    let status = Command::new("git")
+    let output = Command::new("git")
         .arg("-C")
         .arg(envoy_types_dir)
-        .arg("diff")
-        .arg("--exit-code")
+        .arg("status")
+        .arg("--porcelain")
+        .arg("--untracked-files=all")
         .arg("--")
         .arg(PROTO_DIR)
-        .status()?;
+        .output()?;
 
-    if status.success() {
+    if !output.status.success() {
+        return Err("failed to check proto files with `git status`".into());
+    }
+
+    if output.stdout.is_empty() {
         Ok(())
     } else {
         Err(format!("proto files in `{PROTO_DIR}` must be committed").into())
