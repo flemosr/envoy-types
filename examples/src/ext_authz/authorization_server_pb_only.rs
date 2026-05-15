@@ -66,7 +66,7 @@ impl Authorization for MyServer {
         &self,
         request: Request<CheckRequest>,
     ) -> Result<Response<CheckResponse>, Status> {
-        println!("{:?}", request);
+        println!("{request:?}");
 
         let request = request.into_inner();
 
@@ -149,7 +149,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = format!("0.0.0.0:{server_port}").parse().unwrap();
     let server = MyServer;
 
-    println!("AuthorizationServer listening on {}", addr);
+    println!("AuthorizationServer listening on {addr}");
 
     Server::builder()
         .add_service(AuthorizationServer::new(server))
