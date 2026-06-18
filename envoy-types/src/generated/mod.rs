@@ -1862,6 +1862,22 @@ pub mod opentelemetry {
         }
     }
 }
+pub mod ratelimit {
+    pub mod config {
+        pub mod ratelimit {
+            pub mod v3 {
+                include!("ratelimit.config.ratelimit.v3.rs");
+            }
+        }
+    }
+    pub mod service {
+        pub mod ratelimit {
+            pub mod v3 {
+                include!("ratelimit.service.ratelimit.v3.rs");
+            }
+        }
+    }
+}
 pub mod udpa {
     pub mod annotations {
         include!("udpa.annotations.rs");
