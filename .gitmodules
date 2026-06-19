@@ -1,24 +1,24 @@
 [submodule "submodules/data-plane-api"]
-    path = tools/submodules/data-plane-api
-    url = https://github.com/envoyproxy/data-plane-api
+	path = tools/submodules/data-plane-api
+	url = https://github.com/envoyproxy/data-plane-api
 [submodule "submodules/xds"]
-    path = tools/submodules/xds
-    url = https://github.com/cncf/xds
+	path = tools/submodules/xds
+	url = https://github.com/cncf/xds
 [submodule "submodules/protoc-gen-validate"]
-    path = tools/submodules/protoc-gen-validate
-    url = https://github.com/bufbuild/protoc-gen-validate
+	path = tools/submodules/protoc-gen-validate
+	url = https://github.com/bufbuild/protoc-gen-validate
 [submodule "submodules/googleapis"]
-    path = tools/submodules/googleapis
-    url = https://github.com/googleapis/googleapis
+	path = tools/submodules/googleapis
+	url = https://github.com/googleapis/googleapis
 [submodule "submodules/opentelemetry-proto"]
-    path = tools/submodules/opentelemetry-proto
-    url = https://github.com/open-telemetry/opentelemetry-proto
+	path = tools/submodules/opentelemetry-proto
+	url = https://github.com/open-telemetry/opentelemetry-proto
 [submodule "submodules/client_model"]
-    path = tools/submodules/client_model
-    url = https://github.com/prometheus/client_model
+	path = tools/submodules/client_model
+	url = https://github.com/prometheus/client_model
 [submodule "submodules/cel-spec"]
-    path = tools/submodules/cel-spec
-    url = https://github.com/google/cel-spec
+	path = tools/submodules/cel-spec
+	url = https://github.com/google/cel-spec
 [submodule "submodules/ratelimit"]
-    path = tools/submodules/ratelimit
-    url = https://github.com/envoyproxy/ratelimit
+	path = tools/submodules/ratelimit
+	url = https://github.com/envoyproxy/ratelimit
