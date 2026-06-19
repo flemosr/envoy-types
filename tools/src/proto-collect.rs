@@ -135,7 +135,7 @@ fn collect(tools_dir: &Path, envoy_types_dir: &Path) -> Result<(), Box<dyn Error
         &out_dir,
         "ratelimit",
         &["api/ratelimit/**/ratelimit/v3/*.proto"],
-        Some(&ratelimit_license)
+        Some(&ratelimit_license),
     )?;
 
     Ok(())
