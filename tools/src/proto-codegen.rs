@@ -14,6 +14,7 @@ const GLOB_PATTERNS: &[&str] = &[
     // Add protos not included in the envoy proto's import tree (optional)
     "proto/data-plane-api/envoy/type/http_status.proto",
     "proto/googleapis/google/rpc/code.proto",
+    "proto/ratelimit/api/ratelimit/**/ratelimit/v3/*.proto",
 ];
 
 const INCLUDE_PATHS: &[&str] = &[
@@ -25,6 +26,7 @@ const INCLUDE_PATHS: &[&str] = &[
     "proto/opentelemetry-proto",
     "proto/protoc-gen-validate",
     "proto/xds",
+    "proto/ratelimit",
 ];
 
 const GENERATED_DIR: &str = "src/generated";

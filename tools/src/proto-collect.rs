@@ -129,6 +129,15 @@ fn collect(tools_dir: &Path, envoy_types_dir: &Path) -> Result<(), Box<dyn Error
         None,
     )?;
 
+    let ratelimit_license = apache_v2(2026, "Envoy Project Authors");
+    collect_protos(
+        tools_dir,
+        &out_dir,
+        "ratelimit",
+        &["api/ratelimit/**/ratelimit/v3/*.proto"],
+        Some(&ratelimit_license),
+    )?;
+
     Ok(())
 }
 

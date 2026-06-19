@@ -19,3 +19,6 @@
 [submodule "submodules/cel-spec"]
 	path = tools/submodules/cel-spec
 	url = https://github.com/google/cel-spec
+[submodule "submodules/ratelimit"]
+	path = tools/submodules/ratelimit
+	url = https://github.com/envoyproxy/ratelimit
