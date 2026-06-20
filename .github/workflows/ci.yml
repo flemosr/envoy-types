@@ -3,9 +3,17 @@ name: CI
 on:
   push:
     branches: ["main"]
-  pull_request: {}
+  pull_request:
+    types: [opened, synchronize, reopened]
   merge_group:
-    branches: ["main"]
+    types: [checks_requested]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   CARGO_TERM_COLOR: always
@@ -61,6 +69,7 @@ jobs:
     needs: proto_codegen
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         toolchain: [stable, beta, nightly]
