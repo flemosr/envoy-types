@@ -1,7 +1,15 @@
 .DS_Store
-.vscode
-.idea
 
+.idea/
+.vscode/
+.zed/
+
+.agents/
+.claude/
+.codex/
+.opencode/
+/opencode.*
+.pi/
 .workcell/
 
 target/

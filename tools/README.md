@@ -9,7 +9,14 @@ The `proto-collect` binary collects selected proto files from the repos containe
 
 Besides that, `Apache-2.0` declarations are added to the top of the proto files lacking them.
 
-Run the tool from the repo root. It refreshes `envoy-types/proto` from a clean directory:
+The `submodules` directory is kept as git submodules and is empty after a fresh clone. It must
+be populated first from the repo root:
+
+```bash
+$ git submodule update --init --recursive tools/submodules
+```
+
+Then the tool can be run. It refreshes `envoy-types/proto` from a clean directory:
 
 ```bash
 $ cargo run --bin proto-collect
