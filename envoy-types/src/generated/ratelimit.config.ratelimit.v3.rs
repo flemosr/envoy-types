@@ -47,6 +47,12 @@ pub struct RateLimitDescriptor {
     /// requests until all quota descriptors are over the limit.
     #[prost(bool, tag = "7")]
     pub quota_mode: bool,
+    /// Optional metadata associated with the descriptor. When a rate limit match occurs,
+    /// this metadata is included in the rate limit response's DynamicMetadata field.
+    #[prost(message, optional, tag = "8")]
+    pub metadata: ::core::option::Option<
+        super::super::super::super::google::protobuf::Struct,
+    >,
 }
 impl ::prost::Name for RateLimitDescriptor {
     const NAME: &'static str = "RateLimitDescriptor";
