@@ -349,7 +349,7 @@ pub struct SocketAddress {
     /// network namespace.
     ///
     /// .. note::
-    /// Setting this parameter requires Envoy to run with the `CAP_NET_ADMIN` capability.
+    /// Setting this parameter requires Envoy to run with the `CAP_SYS_ADMIN` capability.
     ///
     /// .. attention::
     /// Network namespaces are only configurable on Linux. Otherwise, this field has no effect.
@@ -477,7 +477,7 @@ impl ::prost::Name for ExtraSourceAddress {
         "type.googleapis.com/envoy.config.core.v3.ExtraSourceAddress".into()
     }
 }
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BindConfig {
     /// The address to bind to when creating a socket.
@@ -514,6 +514,23 @@ pub struct BindConfig {
     ///   \[\#extension-category: envoy.upstream.local_address_selector\]
     #[prost(message, optional, tag = "6")]
     pub local_address_selector: ::core::option::Option<TypedExtensionConfig>,
+    /// If set to true, the :ref:`network_namespace_filepath  <envoy_v3_api_field_config.core.v3.SocketAddress.network_namespace_filepath>` of every source
+    /// address in this bind config is validated when the configuration is loaded, and the
+    /// configuration is rejected if a referenced network namespace cannot be opened.
+    ///
+    /// By default no such validation is performed: a network namespace that does not exist when the
+    /// configuration is loaded may be created later, before connections are actually established, so
+    /// eager validation would wrongly reject such configurations. If a namespace is unavailable when
+    /// a connection is created, the connection attempt fails gracefully.
+    ///
+    /// Listener addresses do not need an equivalent option: a listener creates and binds its socket
+    /// in the configured network namespace when the listener configuration is loaded, so an
+    /// unavailable namespace always rejects the listener configuration.
+    ///
+    /// .. attention::
+    /// Network namespaces are only configurable on Linux. Otherwise, this field has no effect.
+    #[prost(bool, tag = "7")]
+    pub validate_network_namespaces: bool,
 }
 impl ::prost::Name for BindConfig {
     const NAME: &'static str = "BindConfig";
@@ -530,11 +547,13 @@ impl ::prost::Name for BindConfig {
 /// management servers.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Address {
+    /// \[\#comment: Keep this list of address types in sync with UpstreamConnectionOptions.FirstAddressFamilyVersion in api/envoy/config/cluster/v3/cluster.proto.\]
     #[prost(oneof = "address::Address", tags = "1, 2, 3")]
     pub address: ::core::option::Option<address::Address>,
 }
 /// Nested message and enum types in `Address`.
 pub mod address {
+    /// \[\#comment: Keep this list of address types in sync with UpstreamConnectionOptions.FirstAddressFamilyVersion in api/envoy/config/cluster/v3/cluster.proto.\]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
     pub enum Address {
         #[prost(message, tag = "1")]
@@ -930,6 +949,26 @@ impl ::prost::Name for RuntimeUInt32 {
         "type.googleapis.com/envoy.config.core.v3.RuntimeUInt32".into()
     }
 }
+/// Runtime derived uint64 with a default when not specified.
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct RuntimeUInt64 {
+    /// Default value if runtime value is not available.
+    #[prost(uint64, tag = "2")]
+    pub default_value: u64,
+    /// Runtime key to get value for comparison. This value is used if defined.
+    #[prost(string, tag = "3")]
+    pub runtime_key: ::prost::alloc::string::String,
+}
+impl ::prost::Name for RuntimeUInt64 {
+    const NAME: &'static str = "RuntimeUInt64";
+    const PACKAGE: &'static str = "envoy.config.core.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.core.v3.RuntimeUInt64".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.core.v3.RuntimeUInt64".into()
+    }
+}
 /// Runtime derived percentage with a default when not specified.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RuntimePercent {
@@ -1232,6 +1271,10 @@ pub struct HeaderValueOption {
     pub append_action: i32,
     /// Is the header value allowed to be empty? If false (default), custom headers with empty values are dropped,
     /// otherwise they are added.
+    ///
+    /// .. note::
+    /// In any context other than the router filter, we always act as if keep_empty_value is true,
+    /// regardless of the setting of this field.
     #[prost(bool, tag = "4")]
     pub keep_empty_value: bool,
 }
@@ -1328,6 +1371,14 @@ pub struct WatchedDirectory {
     /// Directory path to watch.
     #[prost(string, tag = "1")]
     pub path: ::prost::alloc::string::String,
+    /// If set to true, the watcher will also subscribe to file modification events
+    /// (`IN_MODIFY` on Linux) in addition to move events (`IN_MOVED_TO`). This allows
+    /// in-place file writes to trigger reload callbacks. Use this when the writing process
+    /// cannot use atomic rename (e.g. certain secret managers that write certificate files
+    /// directly). By default, only move/rename events are watched, which is the safe choice
+    /// for atomic updates (e.g. Kubernetes ConfigMap symlink swaps).
+    #[prost(bool, tag = "2")]
+    pub watch_modify: bool,
 }
 impl ::prost::Name for WatchedDirectory {
     const NAME: &'static str = "WatchedDirectory";
@@ -2307,12 +2358,11 @@ pub struct SubstitutionFormatString {
     ///
     /// * for `text_format`, the output of the empty operator is changed from `-` to an
     ///   empty string, so that empty values are omitted entirely.
-    /// * for `json_format` the keys with null values are omitted in the output structure.
+    /// * for `json_format`, the keys with null values are omitted in the output structure. Nested
+    ///   objects whose values are all omitted are removed as well, while empty arrays are preserved.
+    ///   The root object is always emitted, so a fully empty structure is rendered as `{}`.
     ///
-    /// .. note::
-    /// This option does not work perfectly with `json_format` as keys with `null` values
-    /// will still be included in the output. See <https://github.com/envoyproxy/envoy/issues/37941>
-    /// for more details.
+    /// Defaults to false.
     #[prost(bool, tag = "3")]
     pub omit_empty_values: bool,
     /// Specify a `content_type` field.
@@ -2617,7 +2667,8 @@ impl ::prost::Name for ProxyProtocolConfig {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PerHostConfig {
-    /// Enables per-host configuration for Proxy Protocol.
+    /// Enables per-host configuration for Proxy Protocol. Only the static `value` of each
+    /// `TlvEntry` is applied to host-level TLVs. The `format_string` field is not evaluated here.
     #[prost(message, repeated, tag = "1")]
     pub added_tlvs: ::prost::alloc::vec::Vec<TlvEntry>,
 }
@@ -3383,9 +3434,12 @@ impl ::prost::Name for RateLimitSettings {
 /// Local filesystem path configuration source.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PathConfigSource {
-    /// Path on the filesystem to source and watch for configuration updates.
-    /// When sourcing configuration for a :ref:`secret <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.Secret>`,
-    /// the certificate and key files are also watched for updates.
+    ///
+    /// Path on the filesystem from which to source configuration updates.
+    /// When sourcing configuration for a
+    /// : ref:`secret <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.Secret>`, file-based secret
+    ///   data supported for SDS rotation is also monitored for updates.
+    ///
     ///
     /// .. note::
     ///
@@ -3393,12 +3447,15 @@ pub struct PathConfigSource {
     ///
     /// .. note::
     ///
-    /// If `watched_directory` is *not* configured, Envoy will watch the file path for *moves*.
-    /// This is because in general only moves are atomic. The same method of swapping files as is
-    /// demonstrated in the :ref:`runtime documentation <config_runtime_symbolic_link_swap>` can be
-    /// used here also. If `watched_directory` is configured, no watch will be placed directly on
-    /// this path. Instead, the configured `watched_directory` will be used to trigger reloads of
-    /// this path. This is required in certain deployment scenarios. See below for more information.
+    ///
+    /// If neither `poll_interval` nor `watched_directory` is configured, Envoy will watch the
+    /// file path for *moves*. This is because in general only moves are atomic. The same method of
+    /// swapping files as is demonstrated in the
+    /// : ref:`runtime documentation <config_runtime_symbolic_link_swap>` can be used here also.
+    ///   One of `poll_interval` and `watched_directory` can also be configured; the configuration
+    ///   is rejected if both are set. With `poll_interval`, the same path is reloaded periodically.
+    ///   With `watched_directory`, no watch is placed directly on this path; events in the
+    ///   configured directory trigger this path to be reloaded.
     #[prost(string, tag = "1")]
     pub path: ::prost::alloc::string::String,
     /// If configured, this directory will be watched for *moves*. When an entry in this directory is
@@ -3415,8 +3472,29 @@ pub struct PathConfigSource {
     ///
     /// The above configuration will ensure that Envoy watches the owning directory for moves which is
     /// required due to how Kubernetes manages ConfigMap symbolic links during atomic updates.
+    ///
+    /// This field cannot be used together with `poll_interval`.
     #[prost(message, optional, tag = "2")]
     pub watched_directory: ::core::option::Option<WatchedDirectory>,
+    /// If configured, the `path` will be polled at this interval instead of watched for filesystem
+    /// events on either the file or `watched_directory`. This is useful when the underlying
+    /// filesystem does not reliably provide change notifications, or when a custom deployment model
+    /// does not generate the move or modification events handled by watching the path or directory.
+    /// The file is read on every poll, but an update is delivered only when its parsed contents
+    /// change.
+    ///
+    ///
+    /// When this configuration source provides a
+    /// : ref:`Secret <envoy_v3_api_msg_extensions.transport_sockets.tls.v3.Secret>`, the same secret
+    ///   files that are watched in event-based mode are polled at this interval. The last successfully
+    ///   loaded configuration or secret remains active when a poll fails.
+    ///
+    ///
+    /// This field cannot be used together with `watched_directory` and must be at least 1ms.
+    #[prost(message, optional, tag = "3")]
+    pub poll_interval: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
 }
 impl ::prost::Name for PathConfigSource {
     const NAME: &'static str = "PathConfigSource";
@@ -3638,7 +3716,7 @@ impl ::prost::Name for QuicKeepAliveSettings {
     }
 }
 /// QUIC protocol options which apply to both downstream and upstream connections.
-/// \[\#next-free-field: 12\]
+/// \[\#next-free-field: 14\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct QuicProtocolOptions {
     /// Maximum number of streams that the client can negotiate per connection. `100`
@@ -3729,6 +3807,20 @@ pub struct QuicProtocolOptions {
     #[prost(message, optional, tag = "11")]
     pub connection_migration: ::core::option::Option<
         quic_protocol_options::ConnectionMigrationSettings,
+    >,
+    /// Timeout for a QUIC connection to schedule memory reduction callback when the network has been idle for a while.
+    /// This value should be smaller than the idle timeout to take effect.
+    /// If not specified, memory reduction is set to infinite by QUIC connection (disabled).
+    #[prost(message, optional, tag = "12")]
+    pub memory_reduction_timeout: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
+    /// If true, the QUIC connection will signal support for `SCONE <<https://datatracker.ietf.org/doc/draft-ietf-scone-protocol/>`\_> (Standard
+    /// Communication with Network Elements) and process SCONE packets.
+    /// If not present, the QUICHE default behavior will be used.
+    #[prost(message, optional, tag = "13")]
+    pub enable_scone: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
     >,
 }
 /// Nested message and enum types in `QuicProtocolOptions`.
@@ -3946,8 +4038,8 @@ impl ::prost::Name for AlternateProtocolsCacheOptions {
         "type.googleapis.com/envoy.config.core.v3.AlternateProtocolsCacheOptions".into()
     }
 }
-/// \[\#next-free-field: 8\]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+/// \[\#next-free-field: 9\]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct HttpProtocolOptions {
     ///
     /// The idle timeout for connections. The idle timeout is defined as the
@@ -3983,6 +4075,24 @@ pub struct HttpProtocolOptions {
     pub max_connection_duration: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+    /// Percentage-based jitter for `max_connection_duration`. If set, the actual connection duration
+    /// limit is extended by a random duration up to `max_connection_duration * jitter / 100`.
+    /// This staggers connection teardowns across time and prevents a thundering-herd of reconnects
+    /// when many connections are established at roughly the same time.
+    /// This field is ignored if `max_connection_duration` is not set. If not set, no jitter is added.
+    ///
+    /// .. note::
+    /// This field is currently only honored for downstream connections by the HTTP connection
+    /// manager. It is not yet supported for upstream cluster connections.
+    ///
+    ///
+    /// This is analogous to
+    /// : ref:`max_downstream_connection_duration_jitter_percentage  <envoy_v3_api_field_extensions.filters.network.tcp_proxy.v3.TcpProxy.max_downstream_connection_duration_jitter_percentage>`
+    ///   in the TCP proxy filter.
+    #[prost(message, optional, tag = "8")]
+    pub max_connection_duration_jitter: ::core::option::Option<
+        super::super::super::r#type::v3::Percent,
+    >,
     /// The maximum number of headers (request headers if configured on HttpConnectionManager,
     /// response headers when configured on a cluster).
     /// If unconfigured, the default maximum number of headers allowed is `100`.
@@ -4009,8 +4119,9 @@ pub struct HttpProtocolOptions {
     ///
     /// Currently some protocol codecs impose limits on the maximum size of a single header.
     ///
-    /// * HTTP/2 (when using `nghttp2`) limits a single header to around `100kb`.
-    /// * HTTP/3 limits a single header to around `1024kb`.
+    /// * HTTP/2 (when using nghttp2) limits a single header to around 100 KB by default. This can be
+    ///   adjusted via :ref:`max_header_field_size_kb <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.max_header_field_size_kb>`.
+    /// * HTTP/3 limits a single header to around 1024 KB.
     #[prost(message, optional, tag = "7")]
     pub max_response_headers_kb: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -4132,8 +4243,8 @@ pub struct Http1ProtocolOptions {
     /// This is a no-op if `accept_http_10` is not true.
     #[prost(string, tag = "3")]
     pub default_host_for_http_10: ::prost::alloc::string::String,
-    /// Describes how the keys for response headers should be formatted. By default, all header keys
-    /// are lower cased.
+    /// Describes how the keys for headers encoded by the HTTP/1 codec should be formatted. By
+    /// default, all header keys are lower cased.
     #[prost(message, optional, tag = "4")]
     pub header_key_format: ::core::option::Option<
         http1_protocol_options::HeaderKeyFormat,
@@ -4327,7 +4438,7 @@ impl ::prost::Name for KeepaliveSettings {
         "type.googleapis.com/envoy.config.core.v3.KeepaliveSettings".into()
     }
 }
-/// \[\#next-free-field: 19\]
+/// \[\#next-free-field: 23\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Http2ProtocolOptions {
     /// `Maximum table size <<https://httpwg.org/specs/rfc7541.html#rfc.section.4.2>`\_>
@@ -4437,7 +4548,7 @@ pub struct Http2ProtocolOptions {
     /// the connection is terminated. For downstream connections the `opened_streams` is incremented when
     /// Envoy receives complete response headers from the upstream server. For upstream connections the
     /// `opened_streams` is incremented when Envoy sends the `HEADERS` frame for a new stream. The
-    /// `http2.inbound_priority_frames_flood` stat tracks the number of connections terminated due to
+    /// `http2.inbound_window_update_frames_flood` stat tracks the number of connections terminated due to
     /// flood mitigation. The default `max_inbound_window_update_frames_per_data_frame_sent` value is `10`.
     /// Setting this to `1` should be enough to support HTTP/2 implementations with basic flow control,
     /// but more complex implementations that try to estimate available bandwidth require at least `2`.
@@ -4524,6 +4635,75 @@ pub struct Http2ProtocolOptions {
     pub enable_huffman_encoding: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// Configures the maximum wire-encoded size in KB of an individual header field (name or value)
+    /// that the `nghttp2` HPACK inflater will accept. This limit applies to the HPACK-compressed
+    /// length on the wire, not the decoded length. If not specified, defaults to `64` KB
+    /// which is the `nghttp2` default.
+    ///
+    /// This limit applies to headers received by the codec. When configured on the downstream
+    /// HTTP Connection Manager, it limits individual request header fields. When configured on an
+    /// upstream cluster, it limits individual response header fields.
+    ///
+    /// Due to Huffman encoding, the decoded header size that passes a given wire limit depends
+    /// on the compression ratio of the content. For example, at the default `64` KB wire
+    /// limit, highly compressible header values can be approximately `100` KB when decoded.
+    /// Increasing this limit allows accepting larger individual headers at the cost of increased
+    /// memory usage during HPACK decompression.
+    ///
+    ///
+    /// This option only applies when using `nghttp2`. It is a no-op for `oghttp2`. The configured
+    /// value of this field sets the per-header field size limit, which must not exceed the
+    /// applicable aggregate total header size limit. Since a single header field cannot be larger
+    /// than the total size allowed for all headers combined, this value is validated against
+    /// : ref:`max_request_headers_kb <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.max_request_headers_kb>`
+    ///   when configured on the downstream HTTP Connection Manager, and against
+    /// : ref:`max_response_headers_kb <envoy_v3_api_field_config.core.v3.HttpProtocolOptions.max_response_headers_kb>`
+    ///   when configured on an upstream cluster.
+    ///
+    ///
+    /// Since `Http2ProtocolOptions` is configured independently for downstream and upstream,
+    /// different per-header field limits can be set for each direction without requiring separate
+    /// request and response fields.
+    ///
+    /// .. note::
+    ///
+    /// When increasing this limit, ensure that upstream services and other proxies in the request
+    /// path can also handle the larger individual header sizes. Mismatched limits may result in
+    /// request failures.
+    #[prost(message, optional, tag = "19")]
+    pub max_header_field_size_kb: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Whether to disallow obsolete text for oghttp2 in header field values.
+    /// If not set, it defaults to false.
+    /// From RFC 9110, <https://www.rfc-editor.org/rfc/rfc9110.html#section-5.5:>
+    /// obs-text = %x80-FF
+    #[prost(message, optional, tag = "20")]
+    pub disallow_obs_text: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Configures the initial token count for the RST_STREAM rate limiter used by the `nghttp2`
+    /// server-side connection. This uses a token-bucket algorithm where each received RST_STREAM
+    /// frame consumes one token, and tokens are replenished at :ref:`stream_reset_rate  <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.stream_reset_rate>` per second.
+    /// When no tokens remain, `nghttp2` sends GOAWAY with `INTERNAL_ERROR` to close the
+    /// connection, protecting against CVE-2023-44487 (HTTP/2 Rapid Reset). Defaults to `1000`.
+    ///
+    /// This option only applies when using `nghttp2` as a server. It has no effect on `oghttp2`
+    /// or on client-side connections.
+    #[prost(message, optional, tag = "21")]
+    pub stream_reset_burst: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt64Value,
+    >,
+    /// Configures the token replenishment rate (tokens per second) for the RST_STREAM rate limiter
+    /// used by the `nghttp2` server-side connection. See :ref:`stream_reset_burst  <envoy_v3_api_field_config.core.v3.Http2ProtocolOptions.stream_reset_burst>` for details.
+    /// Defaults to `33`.
+    ///
+    /// This option only applies when using `nghttp2` as a server. It has no effect on `oghttp2`
+    /// or on client-side connections.
+    #[prost(message, optional, tag = "22")]
+    pub stream_reset_rate: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt64Value,
+    >,
 }
 /// Nested message and enum types in `Http2ProtocolOptions`.
 pub mod http2_protocol_options {
@@ -4581,7 +4761,7 @@ impl ::prost::Name for GrpcProtocolOptions {
     }
 }
 /// A message which allows using HTTP/3.
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Http3ProtocolOptions {
     #[prost(message, optional, tag = "1")]
@@ -4624,6 +4804,14 @@ pub struct Http3ProtocolOptions {
     /// but originate from different end-clients, so that each stream can make progress independently at non-front-line proxies.
     #[prost(bool, tag = "8")]
     pub disable_connection_flow_control_for_streams: bool,
+    /// Whether to disallow obsolete text in header field values.
+    /// If not set, it defaults to true for alignment with current behavior.
+    /// As defined in RFC 9110, <https://www.rfc-editor.org/rfc/rfc9110.html#section-5.5:>
+    /// an obs-text character is a character in the range %x80-FF
+    #[prost(message, optional, tag = "9")]
+    pub disallow_obs_text: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
 }
 impl ::prost::Name for Http3ProtocolOptions {
     const NAME: &'static str = "Http3ProtocolOptions";
@@ -4883,9 +5071,15 @@ pub struct HttpService {
     #[prost(message, optional, tag = "1")]
     pub http_uri: ::core::option::Option<HttpUri>,
     /// Specifies a list of HTTP headers that should be added to each request
-    /// handled by this virtual host.
+    /// handled by this virtual host. Substitution formatters are supported.
     #[prost(message, repeated, tag = "2")]
     pub request_headers_to_add: ::prost::alloc::vec::Vec<HeaderValueOption>,
+    /// Specifies a collection of Formatter plugins that can be used in substitution formatters
+    /// in `request_headers_to_add`.
+    /// See the formatters extensions documentation for details.
+    /// \[\#extension-category: envoy.formatter\]
+    #[prost(message, repeated, tag = "3")]
+    pub formatters: ::prost::alloc::vec::Vec<TypedExtensionConfig>,
 }
 impl ::prost::Name for HttpService {
     const NAME: &'static str = "HttpService";

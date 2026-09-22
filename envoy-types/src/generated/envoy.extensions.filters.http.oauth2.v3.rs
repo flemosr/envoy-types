@@ -127,6 +127,23 @@ pub struct OAuth2Credentials {
     #[prost(string, tag = "1")]
     pub client_id: ::prost::alloc::string::String,
     /// The secret used to retrieve the access token. This value will be URL encoded when sent to the OAuth server.
+    /// This field is required unless :ref:`auth_type <envoy_v3_api_field_extensions.filters.http.oauth2.v3.OAuth2Config.auth_type>`
+    /// is set to `TLS_CLIENT_AUTH`, in which case authentication is done via the client certificate.
+    /// When `auth_type` is `PRIVATE_KEY_JWT`, this field must contain the PEM-encoded private key
+    /// used to sign the JWT client assertion. The key may be supplied in either of two forms:
+    ///
+    /// * As a single-value generic secret holding the PEM-encoded private key. No `kid` header
+    ///   parameter is included in the client assertion.
+    /// * As a multi-entry generic secret with a `private_key` entry holding the PEM-encoded private
+    ///   key and an optional `key_id` entry. When present, the `key_id` value is set as the
+    ///   `kid` header parameter of the client assertion, per
+    ///   `RFC 7515 Section 4.1.4 <<https://datatracker.ietf.org/doc/html/rfc7515#section-4.1.4>`\_.>
+    ///   Identity providers use it to select the correct verification key when more than one key is
+    ///   registered for the client. Distributing both in one secret means the key ID is always
+    ///   rotated together with the key it identifies.
+    ///
+    /// The multi-entry form is only read when `auth_type` is `PRIVATE_KEY_JWT`. The other auth
+    /// types read the single-value form only.
     #[prost(message, optional, tag = "2")]
     pub token_secret: ::core::option::Option<
         super::super::super::super::transport_sockets::tls::v3::SdsSecretConfig,
@@ -206,9 +223,163 @@ impl ::prost::Name for OAuth2Credentials {
             .into()
     }
 }
+/// Configuration for `PRIVATE_KEY_JWT` client authentication (RFC 7523).
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PrivateKeyJwtConfig {
+    /// The signing algorithm to use for the JWT assertion.
+    /// The private key provided in `token_secret` must match the algorithm family: an RSA key for
+    /// the `RS*` algorithms, or an EC key for the `ES*` algorithms.
+    /// Default: `RS256`.
+    #[prost(enumeration = "private_key_jwt_config::SigningAlgorithm", tag = "1")]
+    pub signing_algorithm: i32,
+    /// The lifetime of the JWT assertion. After this duration, the assertion expires.
+    /// The value is truncated to whole seconds, so it must be at least `1s` when set.
+    /// Default: `60s`.
+    #[prost(message, optional, tag = "2")]
+    pub assertion_lifetime: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
+    /// The value to use as the `aud` (audience) claim in the JWT client assertion.
+    ///
+    /// `RFC 7523 Section 3 <<https://datatracker.ietf.org/doc/html/rfc7523#section-3>`\_> requires the
+    /// `aud` claim to identify the authorization server, and allows the token endpoint URL to be
+    /// used for this purpose.
+    /// `RFC 9126 Section 2.1 <<https://datatracker.ietf.org/doc/html/rfc9126#section-2.1>`\_> recommends
+    /// the authorization server's issuer identifier instead, and
+    /// `FAPI 2.0 <<https://openid.net/specs/fapi-security-profile-2_0-final.html>`\_> requires it, as a
+    /// single canonical value identifies the server regardless of which endpoint receives the
+    /// assertion.
+    ///
+    /// If not set, defaults to the configured `token_endpoint` URI.
+    #[prost(string, tag = "3")]
+    pub assertion_audience: ::prost::alloc::string::String,
+}
+/// Nested message and enum types in `PrivateKeyJwtConfig`.
+pub mod private_key_jwt_config {
+    /// Supported JWT signing algorithms for the client assertion.
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum SigningAlgorithm {
+        /// `RSASSA-PKCS1-v1_5` using SHA-256.
+        Rs256 = 0,
+        /// `RSASSA-PKCS1-v1_5` using SHA-384.
+        Rs384 = 1,
+        /// `RSASSA-PKCS1-v1_5` using SHA-512.
+        Rs512 = 2,
+        /// ECDSA using P-256 and SHA-256.
+        Es256 = 3,
+        /// ECDSA using P-384 and SHA-384.
+        Es384 = 4,
+        /// ECDSA using P-521 and SHA-512.
+        Es512 = 5,
+    }
+    impl SigningAlgorithm {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Self::Rs256 => "RS256",
+                Self::Rs384 => "RS384",
+                Self::Rs512 => "RS512",
+                Self::Es256 => "ES256",
+                Self::Es384 => "ES384",
+                Self::Es512 => "ES512",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "RS256" => Some(Self::Rs256),
+                "RS384" => Some(Self::Rs384),
+                "RS512" => Some(Self::Rs512),
+                "ES256" => Some(Self::Es256),
+                "ES384" => Some(Self::Es384),
+                "ES512" => Some(Self::Es512),
+                _ => None,
+            }
+        }
+    }
+}
+impl ::prost::Name for PrivateKeyJwtConfig {
+    const NAME: &'static str = "PrivateKeyJwtConfig";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.PrivateKeyJwtConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.PrivateKeyJwtConfig"
+            .into()
+    }
+}
+/// Defines how an OAuth token is forwarded upstream.
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct OAuth2TokenForwarding {
+    /// The upstream request header that will carry the token.
+    /// Pseudo-headers (names starting with `:`) and the `Host` header are not allowed.
+    #[prost(string, tag = "1")]
+    pub header: ::prost::alloc::string::String,
+}
+impl ::prost::Name for OAuth2TokenForwarding {
+    const NAME: &'static str = "OAuth2TokenForwarding";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.OAuth2TokenForwarding".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.OAuth2TokenForwarding"
+            .into()
+    }
+}
+/// Configuration for the `post_logout_redirect_uri` parameter used in OpenID Connect
+/// `RP-Initiated Logout requests <<https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`\_.>
+/// This configuration is ignored if `end_session_endpoint` is not set.
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PostLogoutRedirectUri {
+    #[prost(oneof = "post_logout_redirect_uri::Config", tags = "1, 2")]
+    pub config: ::core::option::Option<post_logout_redirect_uri::Config>,
+}
+/// Nested message and enum types in `PostLogoutRedirectUri`.
+pub mod post_logout_redirect_uri {
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    pub enum Config {
+        /// Do not include the `post_logout_redirect_uri` parameter in requests to the
+        /// configured `end_session_endpoint`.
+        #[prost(bool, tag = "1")]
+        Disabled(bool),
+        /// URI to send as the `post_logout_redirect_uri` parameter. Supports header formatting
+        /// tokens, and will be percent-encoded automatically when building the logout URL.
+        ///
+        /// The URI should be registered with the authorization server.
+        #[prost(string, tag = "2")]
+        Uri(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for PostLogoutRedirectUri {
+    const NAME: &'static str = "PostLogoutRedirectUri";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.PostLogoutRedirectUri".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.PostLogoutRedirectUri"
+            .into()
+    }
+}
 /// OAuth config
 ///
-/// \[\#next-free-field: 27\]
+/// \[\#next-free-field: 34\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2Config {
     /// Endpoint on the authorization server to retrieve the access token from.
@@ -232,6 +403,15 @@ pub struct OAuth2Config {
     /// If configured, the OAuth2 filter will redirect users to this endpoint when they access the signout_path.
     #[prost(string, tag = "23")]
     pub end_session_endpoint: ::prost::alloc::string::String,
+    /// Optional control for the `post_logout_redirect_uri` parameter sent to the `end_session_endpoint` when a user
+    /// accesses the `signout_path`.
+    /// This field should be set only if `openid` is in the `auth_scopes`, the `end_session_endpoint` is configured,
+    /// and the authorization server supports the OpenID Connect RP-Initiated Logout specification.
+    ///
+    /// If unset, Envoy preserves the historical behavior and sends `<scheme>://<host>/`, constructed from the inbound
+    /// request, as `post_logout_redirect_uri`.
+    #[prost(message, optional, tag = "33")]
+    pub post_logout_redirect_uri: ::core::option::Option<PostLogoutRedirectUri>,
     /// Credentials used for OAuth.
     #[prost(message, optional, tag = "3")]
     pub credentials: ::core::option::Option<OAuth2Credentials>,
@@ -255,6 +435,17 @@ pub struct OAuth2Config {
     /// Forward the OAuth token as a Bearer to upstream web service.
     #[prost(bool, tag = "7")]
     pub forward_bearer_token: bool,
+    /// Forward the OIDC ID token to the upstream.
+    ///
+    /// If the configured header is `Authorization`, Envoy forwards the ID token using the
+    /// `Bearer` prefix. For any other header, Envoy forwards the raw token value.
+    /// If not specified, the ID token will not be forwarded.
+    ///
+    /// This can not be configured with :ref:`forward_bearer_token  <envoy_v3_api_field_extensions.filters.http.oauth2.v3.OAuth2Config.forward_bearer_token>`
+    /// or :ref:`preserve_authorization_header  <envoy_v3_api_field_extensions.filters.http.oauth2.v3.OAuth2Config.preserve_authorization_header>`
+    /// when the header is `Authorization`.
+    #[prost(message, optional, tag = "31")]
+    pub forward_id_token: ::core::option::Option<OAuth2TokenForwarding>,
     /// If set to true, preserve the existing authorization header.
     /// By default the client strips the existing authorization header before forwarding upstream.
     /// Can not be set to true if forward_bearer_token is already set to true.
@@ -355,6 +546,76 @@ pub struct OAuth2Config {
     /// Default is false (tokens are encrypted).
     #[prost(bool, tag = "26")]
     pub disable_token_encryption: bool,
+    /// Any request that matches any of the provided matchers will be allowed to continue to upstream
+    /// even if OAuth validation fails (missing, invalid, or expired credentials).
+    /// This is useful for services that can handle both authenticated and unauthenticated requests,
+    /// enabling graceful degradation patterns.
+    ///
+    /// When triggered, all OAuth cookies are stripped from the request and the request proceeds as unauthenticated.
+    /// Context headers `x-envoy-oauth-status: failed` and `x-envoy-oauth-failure-reason` are added to inform upstream.
+    ///
+    /// Note: If a request matches pass_through_matcher, it bypasses OAuth validation and this matcher won't be evaluated.
+    /// This matcher takes precedence over deny_redirect_matcher.
+    #[prost(message, repeated, tag = "27")]
+    pub allow_failed_matcher: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::route::v3::HeaderMatcher,
+    >,
+    /// Optional base URI (scheme + host, e.g. `<https://app.example.com`>) used to build the
+    /// original request URI that is encoded into the OAuth2 `state` parameter.
+    /// This URI will be used later to redirect users on a successful OAuth.
+    ///
+    /// This is useful when Envoy sits behind a gateway or load balancer that terminates the
+    /// user-facing hostname: In that case, the post-authentication redirect derived from `state` would
+    /// send the user to an internal host they didn't request.
+    ///
+    /// Supports request header formatting tokens.
+    ///
+    /// Example:
+    ///
+    /// ```text
+    /// original_request_uri: "%REQ(x-forwarded-proto?:scheme)%://%REQ(x-forwarded-host?:authority)%"
+    /// ```
+    ///
+    /// If not set, defaults to `<:scheme>://<:authority>` of the incoming request.
+    #[prost(string, tag = "28")]
+    pub original_request_uri: ::prost::alloc::string::String,
+    /// Optional list of domains that are allowed as
+    ///
+    /// 1. redirect_uri: which is what the IdP calls after OAuth
+    /// 1. original_request_uri: the one extracted from the state of an OAuth callback (where should the request go after OAuth)
+    ///
+    /// This mitigates:
+    ///
+    /// * injecting a malicious x-forwarded-host or any header that is used to template the redirect urls
+    /// * open redirect attacks where an attacker crafts a `state` value pointing to an untrusted host.
+    ///
+    /// Each entry is matched against the host (with any port stripped) extracted from the
+    /// formatted `redirect_uri`, the formatted `original_request_uri`, and the URL decoded from
+    /// the `state` parameter on callback. Matching is case-insensitive and supports two forms:
+    ///
+    /// * Exact match, e.g. `example.com` matches only `example.com`.
+    /// * Wildcard subdomain match using a leading `*.`, e.g. `*.example.com` matches
+    ///   `foo.example.com` and `bar.baz.example.com` but not `example.com` itself.
+    ///
+    /// IPv6 literals must be configured without surrounding brackets (e.g. `::1`, not `\[::1\]`).
+    ///
+    /// If this list is empty (the default), all hosts are allowed and no validation is performed.
+    #[prost(string, repeated, tag = "29")]
+    pub allowed_redirect_domains: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
+    >,
+    /// If set to true, the expiration time for the ID token cookie will always be derived from the
+    /// `expires_in` field of the access token response rather than from the `exp` claim in the
+    /// ID token JWT. This is useful when the access token response advertises a longer lifetime than
+    /// the ID token and you want the ID token cookie to remain valid for that full duration.
+    /// Default is false (use the ID token's own `exp` claim when available).
+    #[prost(bool, tag = "30")]
+    pub use_access_token_expiry_for_id_token_cookie: bool,
+    /// Configuration for `PRIVATE_KEY_JWT` client authentication.
+    /// Only used when :ref:`auth_type <envoy_v3_api_field_extensions.filters.http.oauth2.v3.OAuth2Config.auth_type>`
+    /// is set to `PRIVATE_KEY_JWT`.
+    #[prost(message, optional, tag = "32")]
+    pub private_key_jwt_config: ::core::option::Option<PrivateKeyJwtConfig>,
 }
 /// Nested message and enum types in `OAuth2Config`.
 pub mod o_auth2_config {
@@ -376,6 +637,18 @@ pub mod o_auth2_config {
         UrlEncodedBody = 0,
         /// The `client_id` and `client_secret` will be sent using HTTP Basic authentication scheme.
         BasicAuth = 1,
+        /// The client will be authenticated using mutual TLS (mTLS) with a client certificate.
+        /// The `client_secret` is not required and will not be sent in the request to the
+        /// authorization server.
+        /// The client certificate must be configured in the cluster used by `token_endpoint` via
+        /// transport socket configuration.
+        /// This implements OAuth 2.0 Mutual-TLS Client Authentication as defined in RFC 8705.
+        TlsClientAuth = 2,
+        /// The client authenticates using a signed JWT assertion (RFC 7523).
+        /// The `token_secret` in credentials must contain the PEM-encoded private key used to sign the assertion.
+        /// The JWT assertion is sent as `client_assertion` in the token request body along with
+        /// `client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
+        PrivateKeyJwt = 3,
     }
     impl AuthType {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -386,6 +659,8 @@ pub mod o_auth2_config {
             match self {
                 Self::UrlEncodedBody => "URL_ENCODED_BODY",
                 Self::BasicAuth => "BASIC_AUTH",
+                Self::TlsClientAuth => "TLS_CLIENT_AUTH",
+                Self::PrivateKeyJwt => "PRIVATE_KEY_JWT",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -393,6 +668,8 @@ pub mod o_auth2_config {
             match value {
                 "URL_ENCODED_BODY" => Some(Self::UrlEncodedBody),
                 "BASIC_AUTH" => Some(Self::BasicAuth),
+                "TLS_CLIENT_AUTH" => Some(Self::TlsClientAuth),
+                "PRIVATE_KEY_JWT" => Some(Self::PrivateKeyJwt),
                 _ => None,
             }
         }
@@ -408,10 +685,32 @@ impl ::prost::Name for OAuth2Config {
         "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.OAuth2Config".into()
     }
 }
+/// Per-route OAuth2 config.
+///
+/// This message supplies an OAuth2Config for the matched route.
+/// It overrides the filter-level config for requests matching the route.
+/// If neither the global config nor a per-route config is specified, OAuth2 is disabled for the route.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct OAuth2PerRoute {
+    /// Full OAuth2 config for this route.
+    #[prost(message, optional, tag = "1")]
+    pub config: ::core::option::Option<OAuth2Config>,
+}
+impl ::prost::Name for OAuth2PerRoute {
+    const NAME: &'static str = "OAuth2PerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.oauth2.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.oauth2.v3.OAuth2PerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.oauth2.v3.OAuth2PerRoute"
+            .into()
+    }
+}
 /// Filter config.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2 {
-    /// Leave this empty to disable OAuth2 for a specific route, using per filter config.
+    /// The OAuth2 filter config.
     #[prost(message, optional, tag = "1")]
     pub config: ::core::option::Option<OAuth2Config>,
 }

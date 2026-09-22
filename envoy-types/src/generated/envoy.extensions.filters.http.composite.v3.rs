@@ -23,6 +23,19 @@ pub struct Composite {
         ::prost::alloc::string::String,
         FilterChainConfiguration,
     >,
+    ///
+    /// The match tree that will be used to select an action to execute. The action type should be
+    /// : ref:`ExecuteFilterAction  <envoy_v3_api_msg_extensions.filters.http.composite.v3.ExecuteFilterAction>`.
+    ///
+    ///
+    /// .. warning::
+    /// This should only be set when using the Composite filter as in the :ref:`http_filters    <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.http_filters>`.
+    /// Never set this field when using the Composite filter with the :ref:`ExtensionWithMatcher    <envoy_v3_api_msg_extensions.common.matching.v3.ExtensionWithMatcher>` which will result in
+    /// undefined behavior.
+    #[prost(message, optional, tag = "2")]
+    pub matcher: ::core::option::Option<
+        super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
+    >,
 }
 impl ::prost::Name for Composite {
     const NAME: &'static str = "Composite";
@@ -32,6 +45,31 @@ impl ::prost::Name for Composite {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "type.googleapis.com/envoy.extensions.filters.http.composite.v3.Composite".into()
+    }
+}
+/// Per-route configuration for the Composite filter.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CompositePerRoute {
+    /// Override of the match tree for this route.
+    ///
+    /// .. warning::
+    /// This should only be set when using the Composite filter as in the :ref:`http_filters    <envoy_v3_api_field_extensions.filters.network.http_connection_manager.v3.HttpConnectionManager.http_filters>`.
+    /// Never set this field when using the Composite filter with the :ref:`ExtensionWithMatcher    <envoy_v3_api_msg_extensions.common.matching.v3.ExtensionWithMatcher>` which will result in
+    /// undefined behavior.
+    #[prost(message, optional, tag = "1")]
+    pub matcher: ::core::option::Option<
+        super::super::super::super::super::super::xds::r#type::matcher::v3::Matcher,
+    >,
+}
+impl ::prost::Name for CompositePerRoute {
+    const NAME: &'static str = "CompositePerRoute";
+    const PACKAGE: &'static str = "envoy.extensions.filters.http.composite.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.filters.http.composite.v3.CompositePerRoute".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.filters.http.composite.v3.CompositePerRoute"
+            .into()
     }
 }
 /// A list of filter configurations to be called in order. Note that this can be used as the type

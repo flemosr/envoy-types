@@ -272,3 +272,42 @@ impl ::prost::Name for ConsistentHashingLbConfig {
             .into()
     }
 }
+///
+/// Connection overrides for the ORCA out-of-band (OOB) reporting stream, used by
+/// load balancing policies that consume ORCA load reports (e.g.
+/// : ref:`client_side_weighted_round_robin  <envoy_v3_api_msg_extensions.load_balancing_policies.client_side_weighted_round_robin.v3.ClientSideWeightedRoundRobin>`).
+///   Whether and when OOB reporting runs is controlled by the embedding policy.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct OrcaOobReportingConfig {
+    /// Optional alternative port for the OOB reporting connection, for example an
+    /// ORCA reporting sidecar listening on a dedicated port. If 0 or unset, the
+    /// port of the host's ORCA reporting address is used. Ignored for non-IP
+    /// (pipe/UDS) host addresses.
+    #[prost(uint32, tag = "1")]
+    pub port_value: u32,
+    /// Value of the `:authority` header on the OOB gRPC stream. If empty, the
+    /// endpoint hostname is used, then the dialed address, then the cluster name.
+    #[prost(string, tag = "2")]
+    pub authority: ::prost::alloc::string::String,
+    /// Optional key/value pairs used to select a transport socket from the
+    /// cluster's :ref:`transport_socket_matches  <envoy_v3_api_field_config.cluster.v3.Cluster.transport_socket_matches>`
+    /// for the OOB connection. If unset, or if no match is found, the cluster's
+    /// default transport socket is used. ALPN `h2` is always forced on the OOB
+    /// connection regardless of this setting.
+    #[prost(message, optional, tag = "3")]
+    pub transport_socket_match_criteria: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Struct,
+    >,
+}
+impl ::prost::Name for OrcaOobReportingConfig {
+    const NAME: &'static str = "OrcaOobReportingConfig";
+    const PACKAGE: &'static str = "envoy.extensions.load_balancing_policies.common.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.load_balancing_policies.common.v3.OrcaOobReportingConfig"
+            .into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.load_balancing_policies.common.v3.OrcaOobReportingConfig"
+            .into()
+    }
+}

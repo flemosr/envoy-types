@@ -11,7 +11,7 @@
 /// * Inspect, modify, or inject data into the downstream connection.
 /// * Access connection-level information such as addresses and TLS status.
 /// * Control connection lifecycle (e.g., close the connection).
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleNetworkFilter {
     /// Specifies the shared-object level configuration.
     #[prost(message, optional, tag = "1")]
@@ -37,7 +37,8 @@ pub struct DynamicModuleNetworkFilter {
     /// limiting, `filter_name` is used to choose either echo or rate limiting. The
     /// `filter_config` can be used to configure the echo behavior or the rate limiting parameters.
     ///
-    /// `google.protobuf.Struct` is serialized as JSON before passing it to the module.
+    /// `google.protobuf.Struct` and the `value` field of `xds.type.v3.TypedStruct` are
+    /// serialized as JSON before passing them to the module.
     /// `google.protobuf.BytesValue` and `google.protobuf.StringValue` are passed directly
     /// without the wrapper.
     ///

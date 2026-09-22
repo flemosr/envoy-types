@@ -4,7 +4,7 @@
 /// host header. This allows a single listener to service multiple top level domain path trees. Once
 /// a virtual host is selected based on the domain, the routes are processed in order to see which
 /// upstream cluster to route to or whether to perform a redirect.
-/// \[\#next-free-field: 26\]
+/// \[\#next-free-field: 27\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VirtualHost {
     /// The logical name of the virtual host. This is used when emitting certain
@@ -211,6 +211,31 @@ pub struct VirtualHost {
     /// the filter name should be specified as `envoy.filters.http.router`.
     #[prost(message, optional, tag = "24")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
+    /// After the route matching has resolved a route for incoming request, the route specifiers
+    /// are applied to the route to customize or monitor it and the output of the specifiers will be
+    /// used as the final route by Envoy for the request. The specifiers here will not modify/affect
+    /// the request attributes (e.g., headers, path) directly.
+    ///
+    ///
+    /// Specifiers are executed in order, and the output of each is the input of the next. The
+    /// specifiers here will run after the `route_specifiers` of
+    /// : ref:`route configuration <envoy_v3_api_field_config.route.v3.RouteConfiguration.route_specifiers>`
+    ///   and before the `route_specifiers` of the resolved
+    /// : ref:`route <envoy_v3_api_field_config.route.v3.Route.route_specifiers>`.
+    ///
+    ///
+    /// .. note::
+    /// If the route matching resolves no route, the route specifiers at the route configuration
+    /// and the virtual host levels will still be applied to null. This allows route specifiers to
+    /// optionally generate a valid route even when no route is resolved for the request.
+    /// Similarly, if the route matching resolves a valid route, the route specifiers may drop it
+    /// and return no route. Then Envoy will treat it as route not found and result in 404 response.
+    ///
+    /// See :ref:`route specifiers <config_http_conn_man_route_specifiers>` for more details.
+    #[prost(message, repeated, tag = "26")]
+    pub route_specifiers: ::prost::alloc::vec::Vec<
+        super::super::core::v3::TypedExtensionConfig,
+    >,
 }
 /// Nested message and enum types in `VirtualHost`.
 pub mod virtual_host {
@@ -311,7 +336,7 @@ impl ::prost::Name for RouteList {
 /// .. attention::
 ///
 /// Envoy supports routing on HTTP method via :ref:`header matching    <envoy_v3_api_msg_config.route.v3.HeaderMatcher>`.
-/// \[\#next-free-field: 21\]
+/// \[\#next-free-field: 22\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Route {
     /// Name for the route.
@@ -430,6 +455,31 @@ pub struct Route {
     #[prost(message, optional, tag = "20")]
     pub request_body_buffer_limit: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt64Value,
+    >,
+    /// After the route matching has resolved this route for incoming request, the route specifiers
+    /// are applied to the route to customize or monitor it and the output of the specifiers will be
+    /// used as the final route by Envoy for the request. The specifiers here will not modify/affect
+    /// the request attributes (e.g., headers, path) directly.
+    ///
+    ///
+    /// Specifiers are executed in order, and the output of each is the input of the next. The
+    /// specifiers here will run last, after the `route_specifiers` of
+    /// : ref:`route configuration <envoy_v3_api_field_config.route.v3.RouteConfiguration.route_specifiers>`
+    ///   and :ref:`virtual host <envoy_v3_api_field_config.route.v3.VirtualHost.route_specifiers>`, so
+    ///   the route that comes out of the last specifier here is the final route used by Envoy.
+    ///
+    ///
+    /// .. note::
+    /// If the route matching resolves no route, the route specifiers at the route configuration
+    /// and the virtual host levels will still be applied to null. This allows route specifiers to
+    /// optionally generate a valid route even when no route is resolved for the request.
+    /// Similarly, if the route matching resolves a valid route, the route specifiers may drop it
+    /// and return no route. Then Envoy will treat it as route not found and result in 404 response.
+    ///
+    /// See :ref:`route specifiers <config_http_conn_man_route_specifiers>` for more details.
+    #[prost(message, repeated, tag = "21")]
+    pub route_specifiers: ::prost::alloc::vec::Vec<
+        super::super::core::v3::TypedExtensionConfig,
     >,
     #[prost(oneof = "route::Action", tags = "2, 3, 7, 17, 18")]
     pub action: ::core::option::Option<route::Action>,
@@ -1978,7 +2028,7 @@ impl ::prost::Name for RouteAction {
     }
 }
 /// HTTP retry :ref:`architecture overview <arch_overview_http_routing_retry>`.
-/// \[\#next-free-field: 14\]
+/// \[\#next-free-field: 15\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RetryPolicy {
     ///
@@ -2089,6 +2139,18 @@ pub struct RetryPolicy {
     /// HTTP headers which must be present in the request for retries to be attempted.
     #[prost(message, repeated, tag = "10")]
     pub retriable_request_headers: ::prost::alloc::vec::Vec<HeaderMatcher>,
+    /// By default, the target upstream cluster of a retry request is the same as the original request,
+    /// and Envoy will not try to refresh it when retrying.
+    /// If this field is set to true, Envoy will try to refresh the target upstream cluster when
+    /// retrying a request. This is useful when users want to try different upstream cluster for
+    /// each retry attempt.
+    ///
+    /// .. note::
+    /// This currently works when the route cluster specifier support the dynamic refresh,
+    /// e.g. :ref:`matcher cluster specifier    <envoy_v3_api_msg_extensions.router.cluster_specifiers.matcher.v3.MatcherClusterSpecifier>`
+    /// and :ref:`dynamic modules cluster specifier    <envoy_v3_api_msg_extensions.router.cluster_specifiers.dynamic_modules.v3.DynamicModuleClusterSpecifier>`.
+    #[prost(bool, tag = "14")]
+    pub refresh_cluster_on_retry: bool,
 }
 /// Nested message and enum types in `RetryPolicy`.
 pub mod retry_policy {
@@ -2369,7 +2431,7 @@ impl ::prost::Name for HedgePolicy {
         "type.googleapis.com/envoy.config.route.v3.HedgePolicy".into()
     }
 }
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RedirectAction {
     /// The host portion of the URL will be swapped with this value.
@@ -2396,7 +2458,7 @@ pub struct RedirectAction {
     pub scheme_rewrite_specifier: ::core::option::Option<
         redirect_action::SchemeRewriteSpecifier,
     >,
-    #[prost(oneof = "redirect_action::PathRewriteSpecifier", tags = "2, 5, 9")]
+    #[prost(oneof = "redirect_action::PathRewriteSpecifier", tags = "2, 5, 9, 10")]
     pub path_rewrite_specifier: ::core::option::Option<
         redirect_action::PathRewriteSpecifier,
     >,
@@ -2526,6 +2588,23 @@ pub mod redirect_action {
         RegexRewrite(
             super::super::super::super::r#type::matcher::v3::RegexMatchAndSubstitute,
         ),
+        ///
+        /// The path portion of the URL will be set to this value and supports
+        /// : ref:`substitution format specifiers <config_access_log_format>` and CEL
+        ///   expressions.
+        ///
+        ///
+        /// For example, with the following config:
+        ///
+        /// .. code-block:: yaml
+        ///
+        /// path_rewrite: "/new/%REQ(x-version)%"
+        ///
+        /// Would redirect to `/new/v2` given a request header `x-version: v2`.
+        /// If the substitution produces an empty string the path redirect is ignored
+        /// and the original path is preserved.
+        #[prost(string, tag = "10")]
+        PathRewrite(::prost::alloc::string::String),
     }
 }
 impl ::prost::Name for RedirectAction {
@@ -2782,11 +2861,12 @@ pub struct RateLimit {
     /// rate limit configuration. If the override value is invalid or cannot be resolved
     /// from metadata, no override is provided. See :ref:`rate limit override  <config_http_filters_rate_limit_rate_limit_override>` for more information.
     ///
-    ///
     /// .. note::
-    /// This is not supported if the rate limit action is configured in the `typed_per_filter_config` like
-    /// : ref:`VirtualHost.typed_per_filter_config<envoy_v3_api_field_config.route.v3.VirtualHost.typed_per_filter_config>` or
-    /// : ref:`Route.typed_per_filter_config<envoy_v3_api_field_config.route.v3.Route.typed_per_filter_config>`, etc.
+    /// For the global HTTP :ref:`rate limit filter    <config_http_filters_rate_limit>`, this is supported both at the route/virtual host
+    /// level and when the rate limit configuration is supplied via the filter's
+    /// `rate_limits` field or the `typed_per_filter_config`
+    /// (:ref:`RateLimitPerRoute <envoy_v3_api_msg_extensions.filters.http.ratelimit.v3.RateLimitPerRoute>`).
+    /// This is not supported by the :ref:`local rate limit filter    <config_http_filters_local_rate_limit>`.
     #[prost(message, optional, tag = "4")]
     pub limit: ::core::option::Option<rate_limit::Override>,
     /// An optional hits addend to be appended to the descriptor produced by this rate limit
@@ -2822,12 +2902,12 @@ pub struct RateLimit {
 }
 /// Nested message and enum types in `RateLimit`.
 pub mod rate_limit {
-    /// \[\#next-free-field: 13\]
+    /// \[\#next-free-field: 14\]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Action {
         #[prost(
             oneof = "action::ActionSpecifier",
-            tags = "1, 2, 3, 12, 4, 5, 6, 7, 8, 9, 10, 11"
+            tags = "1, 2, 3, 12, 4, 5, 6, 7, 8, 9, 10, 11, 13"
         )]
         pub action_specifier: ::core::option::Option<action::ActionSpecifier>,
     }
@@ -3256,6 +3336,15 @@ pub mod rate_limit {
                 Dynamic = 0,
                 /// Query :ref:`route entry metadata <envoy_v3_api_field_config.route.v3.Route.metadata>`
                 RouteEntry = 1,
+                /// Query :ref:`cluster metadata <envoy_v3_api_field_config.cluster.v3.Cluster.metadata>`
+                ClusterEntry = 2,
+                ///
+                /// Query :ref:`cluster locality metadata <envoy_v3_api_field_config.endpoint.v3.LbEndpoint.metadata>`
+                /// Cluster locality metadata is available after upstream host selection only. To populate descriptors
+                /// with cluster locality metadata it needs to be have the
+                /// : ref:`apply_on_stream_done field <envoy_v3_api_field_config.route.v3.RateLimit.apply_on_stream_done>`
+                ///   set to `true` or host selection completed before the rate limit filter is executed.
+                ClusterLocalityEntry = 3,
             }
             impl Source {
                 /// String value of the enum field names used in the ProtoBuf definition.
@@ -3266,6 +3355,8 @@ pub mod rate_limit {
                     match self {
                         Self::Dynamic => "DYNAMIC",
                         Self::RouteEntry => "ROUTE_ENTRY",
+                        Self::ClusterEntry => "CLUSTER_ENTRY",
+                        Self::ClusterLocalityEntry => "CLUSTER_LOCALITY_ENTRY",
                     }
                 }
                 /// Creates an enum from field names used in the ProtoBuf definition.
@@ -3273,6 +3364,8 @@ pub mod rate_limit {
                     match value {
                         "DYNAMIC" => Some(Self::Dynamic),
                         "ROUTE_ENTRY" => Some(Self::RouteEntry),
+                        "CLUSTER_ENTRY" => Some(Self::ClusterEntry),
+                        "CLUSTER_LOCALITY_ENTRY" => Some(Self::ClusterLocalityEntry),
                         _ => None,
                     }
                 }
@@ -3367,6 +3460,68 @@ pub mod rate_limit {
                     .into()
             }
         }
+        /// The following descriptor entry is appended to the descriptor:
+        ///
+        /// .. code-block:: cpp
+        ///
+        /// ("remote_address_match", "\<descriptor_value>")
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct RemoteAddressMatch {
+            /// Descriptor value of entry.
+            ///
+            ///
+            /// The same :ref:`format specifier <config_access_log_format>` as used for
+            /// : ref:`HTTP access logging <config_access_log>` applies here, however
+            ///   unknown specifier values are replaced with the empty string instead of `-`.
+            ///
+            ///
+            /// .. note::
+            ///
+            /// The format string can contain multiple valid substitution fields. If multiple
+            /// substitution fields are present, their results will be concatenated to form the
+            /// final descriptor value. If it contains no substitution fields, the value will be
+            /// used as is. All substitution fields will be evaluated and their results concatenated.
+            /// If the final concatenated result is empty and `default_value` is set, the
+            /// `default_value` will be used. If `default_value` is not set and the result is
+            /// empty, this descriptor will be skipped and not included in the rate limit call.
+            ///
+            /// For example, `static_value` will be used as is since there are no substitution fields.
+            /// `%REQ(:method)%` will be replaced with the HTTP method, and
+            /// `%REQ(:method)%%REQ(:path)%` will be replaced with the concatenation of the HTTP method and path.
+            /// `%CEL(request.headers\['user-id'\])%` will use CEL to extract the user ID from request headers.
+            #[prost(string, tag = "1")]
+            pub descriptor_value: ::prost::alloc::string::String,
+            /// The key to use in the descriptor entry.
+            ///
+            /// Defaults to `remote_address_match`.
+            #[prost(string, tag = "2")]
+            pub descriptor_key: ::prost::alloc::string::String,
+            /// An optional value to use if the final concatenated `descriptor_value` result is empty.
+            #[prost(string, tag = "3")]
+            pub default_value: ::prost::alloc::string::String,
+            ///
+            /// Specifies an address matcher that controls whether the rate limit action is applied.
+            /// The matcher checks the remote address (trusted address from
+            /// : ref:`x-forwarded-for <config_http_conn_man_headers_x-forwarded-for>`)
+            ///   against the specified CIDR ranges. The rate limit action will be applied if
+            ///   the remote address matches any of the CIDR ranges (or does not match any if
+            ///   `invert_match` is set to true in the address matcher).
+            #[prost(message, optional, tag = "4")]
+            pub address_matcher: ::core::option::Option<
+                super::super::super::super::super::r#type::matcher::v3::AddressMatcher,
+            >,
+        }
+        impl ::prost::Name for RemoteAddressMatch {
+            const NAME: &'static str = "RemoteAddressMatch";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Action.RemoteAddressMatch".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Action.RemoteAddressMatch"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum ActionSpecifier {
             /// Rate limit on source cluster.
@@ -3417,6 +3572,9 @@ pub mod rate_limit {
             /// Rate limit on the existence of query parameters.
             #[prost(message, tag = "11")]
             QueryParameterValueMatch(QueryParameterValueMatch),
+            /// Rate limit on remote address match.
+            #[prost(message, tag = "13")]
+            RemoteAddressMatch(RemoteAddressMatch),
         }
     }
     impl ::prost::Name for Action {
@@ -3431,7 +3589,7 @@ pub mod rate_limit {
     }
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Override {
-        #[prost(oneof = "r#override::OverrideSpecifier", tags = "1")]
+        #[prost(oneof = "r#override::OverrideSpecifier", tags = "1, 2")]
         pub override_specifier: ::core::option::Option<r#override::OverrideSpecifier>,
     }
     /// Nested message and enum types in `Override`.
@@ -3458,11 +3616,38 @@ pub mod rate_limit {
                     .into()
             }
         }
+        /// Rate limit to apply to this descriptor.
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+        pub struct RateLimitOverride {
+            /// The number of requests per unit of time.
+            #[prost(uint32, tag = "1")]
+            pub requests_per_unit: u32,
+            /// The unit of time.
+            #[prost(
+                enumeration = "super::super::super::super::super::r#type::v3::RateLimitUnit",
+                tag = "2"
+            )]
+            pub unit: i32,
+        }
+        impl ::prost::Name for RateLimitOverride {
+            const NAME: &'static str = "RateLimitOverride";
+            const PACKAGE: &'static str = "envoy.config.route.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.route.v3.RateLimit.Override.RateLimitOverride".into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.route.v3.RateLimit.Override.RateLimitOverride"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum OverrideSpecifier {
             /// Limit override from dynamic metadata.
             #[prost(message, tag = "1")]
             DynamicMetadata(DynamicMetadata),
+            /// Static limit override.
+            #[prost(message, tag = "2")]
+            RateLimit(RateLimitOverride),
         }
     }
     impl ::prost::Name for Override {
@@ -3506,6 +3691,11 @@ pub mod rate_limit {
         /// One of the `number` or `format` fields should be set but not both.
         #[prost(string, tag = "2")]
         pub format: ::prost::alloc::string::String,
+        /// If true, the hits addend value will be treated as negative, effectively adding to
+        /// the rate limit budget instead of consuming from it. This can be used to refill previously consumed
+        /// rate limit tokens.
+        #[prost(bool, tag = "3")]
+        pub is_negative_hits: bool,
     }
     impl ::prost::Name for HitsAddend {
         const NAME: &'static str = "HitsAddend";
@@ -3935,7 +4125,7 @@ impl ::prost::Name for FilterConfig {
         "type.googleapis.com/envoy.config.route.v3.FilterConfig".into()
     }
 }
-/// \[\#next-free-field: 19\]
+/// \[\#next-free-field: 20\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RouteConfiguration {
     ///
@@ -4079,6 +4269,43 @@ pub struct RouteConfiguration {
     /// the filter name should be specified as `envoy.filters.http.router`.
     #[prost(message, optional, tag = "17")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
+    /// After the route matching has resolved a route for incoming request, the route specifiers
+    /// are applied to the route to customize or monitor it and the output of the specifiers will be
+    /// used as the final route by Envoy for the request. The specifiers here will not modify/affect
+    /// the request attributes (e.g., headers, path) directly.
+    ///
+    /// Specifiers are executed in order, and the output of each is the input of the next. The route
+    /// that comes out of the last one is the route Envoy uses for the request.
+    ///
+    /// Specifiers are configured at three levels. Specifiers in three levels will run in this order:
+    ///
+    /// 1.
+    ///    The `route_specifiers` of
+    ///    : ref:`route configuration <envoy_v3_api_msg_config.route.v3.RouteConfiguration>`
+    ///
+    ///
+    /// 1.
+    ///    The `route_specifiers` of resolved
+    ///    : ref:`virtual host <envoy_v3_api_msg_config.route.v3.VirtualHost>`
+    ///
+    ///
+    /// 1.
+    ///    The `route_specifiers` of resolved
+    ///    : ref:`route <envoy_v3_api_msg_config.route.v3.Route>`.
+    ///
+    ///
+    /// .. note::
+    /// If the route matching resolves no route, the route specifiers at the route configuration
+    /// and the virtual host levels will still be applied to null. This allows route specifiers to
+    /// optionally generate a valid route even when no route is resolved for the request.
+    /// Similarly, if the route matching resolves a valid route, the route specifiers may drop it
+    /// and return no route. Then Envoy will treat it as route not found and result in 404 response.
+    ///
+    /// See :ref:`route specifiers <config_http_conn_man_route_specifiers>` for more details.
+    #[prost(message, repeated, tag = "19")]
+    pub route_specifiers: ::prost::alloc::vec::Vec<
+        super::super::core::v3::TypedExtensionConfig,
+    >,
 }
 impl ::prost::Name for RouteConfiguration {
     const NAME: &'static str = "RouteConfiguration";

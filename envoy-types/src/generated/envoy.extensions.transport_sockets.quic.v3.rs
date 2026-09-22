@@ -6,10 +6,29 @@ pub struct QuicDownstreamTransport {
     pub downstream_tls_context: ::core::option::Option<
         super::super::tls::v3::DownstreamTlsContext,
     >,
-    /// If false, QUIC will tell TLS to reject any early data and to stop issuing 0-RTT credentials with resumption session tickets. This will prevent clients from sending 0-RTT requests.
-    /// Default to true.
+    ///
+    /// If false, QUIC will tell TLS to reject any early data and to stop issuing 0-RTT credentials
+    /// with resumption session tickets. This will prevent clients from sending 0-RTT requests.
+    /// Defaults to true, except when a client certificate validation context is configured, in which
+    /// case it defaults to false. Early data requires resumption, so it cannot be enabled unless
+    /// : ref:`enable_resumption  <envoy_v3_api_field_extensions.transport_sockets.quic.v3.QuicDownstreamTransport.enable_resumption>`
+    ///   is also true.
     #[prost(message, optional, tag = "2")]
     pub enable_early_data: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::BoolValue,
+    >,
+    ///
+    /// If false, TLS session tickets are not issued and accepted by QUIC.
+    /// Defaults to true, except when a client certificate validation context is configured, in which
+    /// case it defaults to false. QUIC does not re-validate the client certificate when a session is
+    /// resumed. A resumed connection reuses the certificate verdict of the original handshake until the
+    /// ticket expires, so certificate revocation or expiry and validation context changes are not
+    /// rechecked. Setting this to true on a filter chain that validates a client certificate opts into
+    /// that trade-off in exchange for cheaper handshakes. Resumption also requires
+    /// : ref:`disable_stateless_session_resumption  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.DownstreamTlsContext.disable_stateless_session_resumption>`
+    ///   to be false, because that field controls the underlying TLS session tickets.
+    #[prost(message, optional, tag = "3")]
+    pub enable_resumption: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }

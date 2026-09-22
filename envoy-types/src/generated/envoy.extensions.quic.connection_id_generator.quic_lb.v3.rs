@@ -7,12 +7,6 @@
 ///
 /// See <https://datatracker.ietf.org/doc/html/draft-ietf-quic-load-balancers> for details.
 ///
-/// .. warning::
-///
-/// ```text
-/// This is still a work in progress. Interoperability testing has not yet been performed.
-/// ```
-///
 /// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {

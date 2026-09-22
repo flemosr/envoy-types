@@ -7,13 +7,13 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OAuth2 {
     /// Endpoint on the authorization server to retrieve the access token from.
-    /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-3.2>) for details.
+    /// Refer to `RFC 6749: The OAuth 2.0 Authorization Framework <<https://www.rfc-editor.org/rfc/rfc6749#section-3.2>`\_\_> for details.
     #[prost(message, optional, tag = "1")]
     pub token_endpoint: ::core::option::Option<
         super::super::super::super::super::config::core::v3::HttpUri,
     >,
     /// Optional list of OAuth scopes to be claimed in the authorization request.
-    /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-4.4.2>) for details.
+    /// Refer to `RFC 6749: The OAuth 2.0 Authorization Framework <<https://www.rfc-editor.org/rfc/rfc6749#section-4.4.2>`\_\_> for details.
     #[prost(string, repeated, tag = "2")]
     pub scopes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// The interval between two successive retries to fetch token from Identity Provider. Default is 2 secs.
@@ -32,21 +32,21 @@ pub struct OAuth2 {
 /// Nested message and enum types in `OAuth2`.
 pub mod o_auth2 {
     /// Credentials to authenticate client to the authorization server.
-    /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-2.3>) for details.
+    /// Refer to `RFC 6749: The OAuth 2.0 Authorization Framework <<https://www.rfc-editor.org/rfc/rfc6749#section-2.3>`\_\_> for details.
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ClientCredentials {
         /// Client ID.
-        /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-2.3.1>) for details.
+        /// Refer to `RFC 6749: The OAuth 2.0 Authorization Framework <<https://www.rfc-editor.org/rfc/rfc6749#section-2.3.1>`\_\_> for details.
         #[prost(string, tag = "1")]
         pub client_id: ::prost::alloc::string::String,
         /// Client secret.
-        /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-2.3.1>) for details.
+        /// Refer to `RFC 6749: The OAuth 2.0 Authorization Framework <<https://www.rfc-editor.org/rfc/rfc6749#section-2.3.1>`\_\_> for details.
         #[prost(message, optional, tag = "2")]
         pub client_secret: ::core::option::Option<
             super::super::super::super::super::transport_sockets::tls::v3::SdsSecretConfig,
         >,
         /// The method to use when sending credentials to the authorization server.
-        /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-2.3.1>) for details.
+        /// Refer to `RFC 6749: The OAuth 2.0 Authorization Framework <<https://www.rfc-editor.org/rfc/rfc6749#section-2.3.1>`\_\_> for details.
         #[prost(enumeration = "AuthType", tag = "3")]
         pub auth_type: i32,
     }
@@ -128,7 +128,7 @@ pub mod o_auth2 {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum FlowType {
         /// Client Credentials Grant.
-        /// Refer to [RFC 6749: The OAuth 2.0 Authorization Framework](<https://www.rfc-editor.org/rfc/rfc6749#section-4.4>) for details.
+        /// Refer to `RFC 6749: The OAuth 2.0 Authorization Framework <<https://www.rfc-editor.org/rfc/rfc6749#section-4.4>`\_\_> for details.
         #[prost(message, tag = "3")]
         ClientCredentials(ClientCredentials),
     }

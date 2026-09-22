@@ -363,7 +363,7 @@ impl ::prost::Name for HostStatus {
     }
 }
 /// Health status for a host.
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HostHealthStatus {
     /// The host is currently failing active health checks.
@@ -389,6 +389,9 @@ pub struct HostHealthStatus {
     /// The host failed active health check due to timeout.
     #[prost(bool, tag = "8")]
     pub active_hc_timeout: bool,
+    /// The host is currently being marked as degraded through outlier detection.
+    #[prost(bool, tag = "9")]
+    pub failed_degraded_outlier_detection: bool,
     /// Health status as reported by EDS.
     ///
     /// .. note::
@@ -1368,7 +1371,7 @@ impl ::prost::Name for ListenerStatus {
 }
 /// Proto representation of the internal memory consumption of an Envoy instance. These represent
 /// values extracted from an internal TCMalloc instance. For more information, see the section of the
-/// docs entitled ["Generic Tcmalloc Status"](<https://gperftools.github.io/gperftools/tcmalloc.html>).
+/// docs entitled `"Generic Tcmalloc Status" <<https://gperftools.github.io/gperftools/tcmalloc.html>`\_.>
 /// \[\#next-free-field: 7\]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Memory {
@@ -1411,11 +1414,11 @@ impl ::prost::Name for Memory {
 }
 /// Proto representation of the statistics collected upon absl::Mutex contention, if Envoy is run
 /// under :option:`--enable-mutex-tracing`. For more information, see the `absl::Mutex`
-/// [docs](<https://abseil.io/about/design/mutex#extra-features>).
+/// `docs <<https://abseil.io/about/design/mutex#extra-features>`\_\_.>
 ///
 /// *NB*: The wait cycles below are measured by `absl::base_internal::CycleClock`, and may not
 /// correspond to core clock frequency. For more information, see the `CycleClock`
-/// [docs](<https://github.com/abseil/abseil-cpp/blob/master/absl/base/internal/cycleclock.h>).
+/// `docs <<https://github.com/abseil/abseil-cpp/blob/master/absl/base/internal/cycleclock.h>`\_\_.>
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MutexStats {
     /// The number of individual mutex contentions which have occurred since startup.
@@ -1440,7 +1443,7 @@ impl ::prost::Name for MutexStats {
 }
 /// Proto representation of the value returned by /server_info, containing
 /// server version/server status information.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ServerInfo {
     /// Server version.
@@ -1468,6 +1471,9 @@ pub struct ServerInfo {
     /// Populated node identity of this server.
     #[prost(message, optional, tag = "7")]
     pub node: ::core::option::Option<super::super::config::core::v3::Node>,
+    /// Whether the server is currently initializing during a hot restart.
+    #[prost(bool, tag = "8")]
+    pub hot_restart_initializing: bool,
 }
 /// Nested message and enum types in `ServerInfo`.
 pub mod server_info {
@@ -1528,7 +1534,7 @@ impl ::prost::Name for ServerInfo {
         "type.googleapis.com/envoy.admin.v3.ServerInfo".into()
     }
 }
-/// \[\#next-free-field: 43\]
+/// \[\#next-free-field: 44\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CommandLineOptions {
     /// See :option:`--base-id` for details.
@@ -1639,6 +1645,9 @@ pub struct CommandLineOptions {
     /// See :option:`--enable-fine-grain-logging` for details.
     #[prost(bool, tag = "34")]
     pub enable_fine_grain_logging: bool,
+    /// See :option:`--log-stacktrace-single-entry` for details.
+    #[prost(bool, tag = "43")]
+    pub log_stacktrace_single_entry: bool,
     /// See :option:`--socket-path` for details.
     #[prost(string, tag = "35")]
     pub socket_path: ::prost::alloc::string::String,

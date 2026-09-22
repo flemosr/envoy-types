@@ -15,12 +15,21 @@
 /// Set `typed_filter_metadata` in :ref:`LbEndpoint.Metadata <envoy_v3_api_field_config.endpoint.v3.lbendpoint.metadata>` or :ref:`LocalityLbEndpoints.Metadata <envoy_v3_api_field_config.endpoint.v3.LocalityLbEndpoints.metadata>`.
 /// using the key `envoy.http11_proxy_transport_socket.proxy_address` and the
 /// proxy address in `config::core::v3::Address` format.
+///
+/// If the `default_proxy_address` is set and proxy address is not found in
+/// `typed_filter_metadata`, the default proxy address is used.
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Http11ProxyUpstreamTransport {
     /// The underlying transport socket being wrapped. Defaults to plaintext (raw_buffer) if unset.
     #[prost(message, optional, tag = "1")]
     pub transport_socket: ::core::option::Option<
         super::super::super::super::config::core::v3::TransportSocket,
+    >,
+    /// Specifies the default proxy address to use if the proxy address is not present in the
+    /// `typed_filter_metadata` of the endpoint.
+    #[prost(message, optional, tag = "2")]
+    pub default_proxy_address: ::core::option::Option<
+        super::super::super::super::config::core::v3::Address,
     >,
 }
 impl ::prost::Name for Http11ProxyUpstreamTransport {

@@ -156,9 +156,6 @@ pub mod http_protocol_options {
             Http2ProtocolOptions(
                 super::super::super::super::super::super::config::core::v3::Http2ProtocolOptions,
             ),
-            /// .. warning::
-            /// QUIC upstream support is currently not ready for internet use.
-            /// Please see :ref:`here <arch_overview_http3>` for details.
             #[prost(message, tag = "3")]
             Http3ProtocolOptions(
                 super::super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
@@ -192,9 +189,6 @@ pub mod http_protocol_options {
         pub http2_protocol_options: ::core::option::Option<
             super::super::super::super::super::config::core::v3::Http2ProtocolOptions,
         >,
-        /// .. warning::
-        /// QUIC upstream support is currently not ready for internet use.
-        /// Please see :ref:`here <arch_overview_http3>` for details.
         #[prost(message, optional, tag = "3")]
         pub http3_protocol_options: ::core::option::Option<
             super::super::super::super::super::config::core::v3::Http3ProtocolOptions,
@@ -232,14 +226,10 @@ pub mod http_protocol_options {
             super::super::super::super::super::config::core::v3::Http2ProtocolOptions,
         >,
         /// Unlike HTTP/1 and HTTP/2, HTTP/3 will not be configured unless it is
-        /// present, and (soon) only if there is an indication of server side
+        /// present, and only if there is an indication of server side
         /// support.
         /// See :ref:`here <arch_overview_http3_upstream>` for more information on
         /// when HTTP/3 will be used, and when Envoy will fail over to TCP.
-        ///
-        /// .. warning::
-        /// QUIC upstream support is currently not ready for internet use.
-        /// Please see :ref:`here <arch_overview_http3>` for details.
         #[prost(message, optional, tag = "3")]
         pub http3_protocol_options: ::core::option::Option<
             super::super::super::super::super::config::core::v3::Http3ProtocolOptions,

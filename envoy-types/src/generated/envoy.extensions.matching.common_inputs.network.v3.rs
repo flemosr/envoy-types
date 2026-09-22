@@ -173,12 +173,37 @@ impl ::prost::Name for ApplicationProtocolInput {
     }
 }
 /// Input that matches by a specific filter state key.
-/// The value of the provided filter state key will be the raw string representation of the filter state object
+/// The value of the provided filter state key will be the raw string representation of the filter state object.
+///
+/// When `field` is specified and the filter state object supports field access
+/// (i.e. `hasFieldSupport()` returns true), the value of the specified field will be returned
+/// instead of the serialized representation of the entire object. This enables direct matching
+/// on individual fields within composite filter state objects, such as proxy protocol TLV values
+/// stored in the shared `envoy.network.proxy_protocol.tlv` object.
+///
+/// Example configuration with field access:
+///
+/// .. code-block:: yaml
+///
+/// ```text
+/// input:
+///   name: filter_state
+///   typed_config:
+///     "@type": type.googleapis.com/envoy.extensions.matching.common_inputs.network.v3.FilterStateInput
+///     key: "envoy.network.proxy_protocol.tlv"
+///     field: "aws_vpce_id"
+/// ```
+///
 /// \[\#extension: envoy.matching.inputs.filter_state\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FilterStateInput {
     #[prost(string, tag = "1")]
     pub key: ::prost::alloc::string::String,
+    /// Optional field name to retrieve from the filter state object.
+    /// When set and the filter state object supports field access, the value of this specific
+    /// field is returned instead of the serialized string representation of the whole object.
+    #[prost(string, tag = "2")]
+    pub field: ::prost::alloc::string::String,
 }
 impl ::prost::Name for FilterStateInput {
     const NAME: &'static str = "FilterStateInput";

@@ -74,6 +74,16 @@ impl ::prost::Name for FieldExtractions {
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RequestFieldValueDisposition {
+    /// The key that the extracted value is written to within the dynamic metadata.
+    /// If empty, the field path (the key of `request_field_extractions`) is used.
+    ///
+    /// This is useful for normalizing the metadata written by different gRPC methods whose
+    /// request messages name the same logical field differently.
+    ///
+    /// Within a single gRPC method, two field extractions must not resolve to the same
+    /// metadata key, otherwise the configuration is rejected.
+    #[prost(string, tag = "2")]
+    pub metadata_key: ::prost::alloc::string::String,
     #[prost(oneof = "request_field_value_disposition::Disposition", tags = "1")]
     pub disposition: ::core::option::Option<
         request_field_value_disposition::Disposition,

@@ -120,9 +120,6 @@ impl ::prost::Name for SemanticVersion {
 pub enum CodecClientType {
     Http1 = 0,
     Http2 = 1,
-    /// \[\#not-implemented-hide:\] QUIC implementation is not production ready yet. Use this enum with
-    /// caution to prevent accidental execution of QUIC code. I.e. `!= HTTP2` is no longer sufficient
-    /// to distinguish HTTP1 and HTTP2 traffic.
     Http3 = 2,
 }
 impl CodecClientType {
@@ -259,11 +256,59 @@ impl RateLimitUnit {
         }
     }
 }
+/// Stats scope configuration.
+/// This configuration can be used to create a singleton scope that is shared
+/// across multiple instances within the process.
+/// \[\#next-free-field: 7\]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct Scope {
+    /// Max number of counters allowed in this scope.
+    #[prost(message, optional, tag = "1")]
+    pub max_counters: ::core::option::Option<
+        super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Max number of gauges allowed in this scope.
+    #[prost(message, optional, tag = "2")]
+    pub max_gauges: ::core::option::Option<
+        super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Max number of histograms allowed in this scope.
+    #[prost(message, optional, tag = "3")]
+    pub max_histograms: ::core::option::Option<
+        super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Whether the scope and its stats can be evicted from the store caches.
+    /// The eviction policy is a mark-and-sweep approach where stats are evicted
+    /// if they are not updated or accessed between two successive eviction sweeps.
+    /// The eviction will happen only if the :ref:`stats_eviction_interval <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.stats_eviction_interval>` is configured in
+    /// the bootstrap.
+    #[prost(bool, tag = "4")]
+    pub enable_eviction: bool,
+    /// The stats scope prefix.
+    #[prost(string, tag = "5")]
+    pub prefix: ::prost::alloc::string::String,
+    /// The sharing name of the scope. If non-empty, the scope is shared across
+    /// multiple instances with the same sharing_name if all fields in this message
+    /// have the same values.
+    #[prost(string, tag = "6")]
+    pub sharing_name: ::prost::alloc::string::String,
+}
+impl ::prost::Name for Scope {
+    const NAME: &'static str = "Scope";
+    const PACKAGE: &'static str = "envoy.type.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.type.v3.Scope".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.type.v3.Scope".into()
+    }
+}
 /// Configures a token bucket, typically used for rate limiting.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TokenBucket {
     /// The maximum tokens that the bucket can hold. This is also the number of tokens that the bucket
-    /// initially contains.
+    /// initially contains. A value of 0 means the bucket will always be empty and all requests will
+    /// be rate limited (i.e., always reject).
     #[prost(uint32, tag = "1")]
     pub max_tokens: u32,
     /// The number of tokens added to the bucket during each fill interval. If not specified, defaults

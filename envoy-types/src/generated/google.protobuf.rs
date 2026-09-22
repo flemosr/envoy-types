@@ -1708,6 +1708,12 @@ pub struct FeatureSet {
         tag = "8"
     )]
     pub default_symbol_visibility: ::core::option::Option<i32>,
+    #[prost(
+        enumeration = "feature_set::proto_limits_feature::EnforceProtoLimits",
+        optional,
+        tag = "9"
+    )]
+    pub enforce_proto_limits: ::core::option::Option<i32>,
 }
 /// Nested message and enum types in `FeatureSet`.
 pub mod feature_set {
@@ -1775,6 +1781,66 @@ pub mod feature_set {
         }
         fn type_url() -> ::prost::alloc::string::String {
             "type.googleapis.com/google.protobuf.FeatureSet.VisibilityFeature".into()
+        }
+    }
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct ProtoLimitsFeature {}
+    /// Nested message and enum types in `ProtoLimitsFeature`.
+    pub mod proto_limits_feature {
+        #[derive(
+            Clone,
+            Copy,
+            Debug,
+            PartialEq,
+            Eq,
+            Hash,
+            PartialOrd,
+            Ord,
+            ::prost::Enumeration
+        )]
+        #[repr(i32)]
+        pub enum EnforceProtoLimits {
+            ProtoLimitsUnknown = 0,
+            /// Default pre-EDITION_2026: there are no limit enforcement at the protoc
+            /// level. Practical limits still exist, but they will tend to fail while
+            /// compiling protoc-generated code, and these limits tend to be language
+            /// or toolchain specific.
+            LegacyNoExplicitLimits = 1,
+            /// A set of limits enforced by Edition 2026 by default. For a detailed
+            /// list of all the limits please consult the Edition 2026 documentation.
+            ProtoLimits2026 = 2,
+        }
+        impl EnforceProtoLimits {
+            /// String value of the enum field names used in the ProtoBuf definition.
+            ///
+            /// The values are not transformed in any way and thus are considered stable
+            /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+            pub fn as_str_name(&self) -> &'static str {
+                match self {
+                    Self::ProtoLimitsUnknown => "PROTO_LIMITS_UNKNOWN",
+                    Self::LegacyNoExplicitLimits => "LEGACY_NO_EXPLICIT_LIMITS",
+                    Self::ProtoLimits2026 => "PROTO_LIMITS2026",
+                }
+            }
+            /// Creates an enum from field names used in the ProtoBuf definition.
+            pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+                match value {
+                    "PROTO_LIMITS_UNKNOWN" => Some(Self::ProtoLimitsUnknown),
+                    "LEGACY_NO_EXPLICIT_LIMITS" => Some(Self::LegacyNoExplicitLimits),
+                    "PROTO_LIMITS2026" => Some(Self::ProtoLimits2026),
+                    _ => None,
+                }
+            }
+        }
+    }
+    impl ::prost::Name for ProtoLimitsFeature {
+        const NAME: &'static str = "ProtoLimitsFeature";
+        const PACKAGE: &'static str = "google.protobuf";
+        fn full_name() -> ::prost::alloc::string::String {
+            "google.protobuf.FeatureSet.ProtoLimitsFeature".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/google.protobuf.FeatureSet.ProtoLimitsFeature".into()
         }
     }
     #[derive(
@@ -2203,6 +2269,23 @@ pub mod source_code_info {
         /// \[ 4, 3, 2, 7 \]
         /// this path refers to the whole field declaration (from the beginning
         /// of the label to the terminating semicolon).
+        ///
+        /// For options, the path refers to the interpreted option in the descriptor.
+        /// E.g., for a custom option `(my_opt) = "foo"` on a message using extension
+        /// number 10101, the path is:
+        /// \[ 4, 3, 7, 10101 \]
+        /// refers to:
+        /// file.message_type(3)     // 4, 3
+        /// .options()           // 7
+        /// .my_opt()            // 10101
+        ///
+        /// Sub-locations corresponding to the interpreted option's corresponding
+        /// `UninterpretedOption` are also appended to the interpreted option, which
+        /// deviates from the actual FileDescriptorProto path. E.g.:
+        /// \[ 4, 3, 7, 10101, 2 \]
+        /// refers to the option name `(my_opt)`, and:
+        /// \[ 4, 3, 7, 10101, 7 \]
+        /// refers to the "foo" string value of the option.
         #[prost(int32, repeated, tag = "1")]
         pub path: ::prost::alloc::vec::Vec<i32>,
         /// Always has exactly three or four elements: start line, start column,
@@ -2970,9 +3053,9 @@ impl ::prost::Name for ListValue {
 /// the null value for the `Value` type union.
 ///
 /// A field of type `NullValue` with any value other than `0` is considered
-/// invalid. Most ProtoJSON serializers will emit a Value with a `null_value` set
-/// as a JSON `null` regardless of the integer value, and so will round trip to
-/// a `0` value.
+/// invalid. Most ProtoJSON serializers will emit a `Value` with a `null_value`
+/// set as a JSON `null` regardless of the integer value, and so will round trip
+/// to a `0` value.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum NullValue {

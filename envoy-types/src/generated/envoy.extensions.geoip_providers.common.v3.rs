@@ -20,7 +20,7 @@ pub struct CommonGeoipProviderConfig {
 pub mod common_geoip_provider_config {
     /// The set of geolocation headers to add to request. If any of the configured headers is present
     /// in the incoming request, it will be overridden by the :ref:`HTTP GeoIP filter <config_http_filters_geoip>`.
-    /// \[\#next-free-field: 13\]
+    /// \[\#next-free-field: 14\]
     ///
     /// .. attention::
     /// This field is deprecated in favor of :ref:`geo_field_keys    <envoy_v3_api_field_extensions.geoip_providers.common.v3.CommonGeoipProviderConfig.geo_field_keys>`.
@@ -37,8 +37,13 @@ pub mod common_geoip_provider_config {
         #[prost(string, tag = "3")]
         pub region: ::prost::alloc::string::String,
         /// If set, the header will be used to populate the ASN associated with the IP address.
+        /// Note: If both ISP and ASN databases are configured, only the ASN database is used for lookup.
         #[prost(string, tag = "4")]
         pub asn: ::prost::alloc::string::String,
+        /// If set, the header will be used to populate the autonomous system organization associated with the IP address.
+        /// Note: If both ISP and ASN databases are configured, only the ASN database is used for lookup.
+        #[prost(string, tag = "13")]
+        pub asn_org: ::prost::alloc::string::String,
         /// This field is deprecated; use `anon` instead.
         #[deprecated]
         #[prost(string, tag = "5")]
@@ -91,7 +96,7 @@ pub mod common_geoip_provider_config {
     /// * The :ref:`Network GeoIP filter <config_network_filters_geoip>` stores results in the
     ///   connection's filter state under the well-known key `envoy.geoip`.
     ///
-    /// \[\#next-free-field: 12\]
+    /// \[\#next-free-field: 13\]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct GeolocationFieldKeys {
         /// If set, the key will be used to populate the country ISO code associated with the IP address.
@@ -107,6 +112,9 @@ pub mod common_geoip_provider_config {
         /// If set, the key will be used to populate the ASN associated with the IP address.
         #[prost(string, tag = "4")]
         pub asn: ::prost::alloc::string::String,
+        /// If set, the key will be used to populate the autonomous system organization associated with the IP address.
+        #[prost(string, tag = "12")]
+        pub asn_org: ::prost::alloc::string::String,
         /// If set, the IP address will be checked if it belongs to any type of anonymization network
         /// (e.g., VPN, public proxy). The result will be stored with this key. Value will be set to
         /// either `true` or `false` depending on the check result.

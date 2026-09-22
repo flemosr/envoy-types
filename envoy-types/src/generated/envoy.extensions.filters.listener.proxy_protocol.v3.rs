@@ -74,6 +74,67 @@ pub mod proxy_protocol {
         /// The key to use within the namespace.
         #[prost(string, tag = "2")]
         pub key: ::prost::alloc::string::String,
+        /// The value encoding scheme that is used to encode the TLV value before it is stored in
+        /// dynamic metadata or filter state. If not set, defaults to `SANITIZED_UTF8`, which
+        /// sanitizes the TLV value to a valid UTF-8 string.
+        ///
+        /// .. note::
+        ///
+        /// This option only applies to the legacy untyped dynamic metadata and filter state.
+        /// For the new typed dynamic metadata, the raw TLV value bytes are stored as is and
+        /// no encoding is applied.
+        #[prost(enumeration = "key_value_pair::ValueStringEncoding", tag = "3")]
+        pub value_string_encoding: i32,
+    }
+    /// Nested message and enum types in `KeyValuePair`.
+    pub mod key_value_pair {
+        /// Specifies the encoding scheme that is used to encode the TLV value before it is
+        /// stored in dynamic metadata or filter state.
+        #[derive(
+            Clone,
+            Copy,
+            Debug,
+            PartialEq,
+            Eq,
+            Hash,
+            PartialOrd,
+            Ord,
+            ::prost::Enumeration
+        )]
+        #[repr(i32)]
+        pub enum ValueStringEncoding {
+            /// Unspecified encoding scheme. Defaults to `SANITIZED_UTF8`.
+            Unspecified = 0,
+            /// The TLV value will be sanitized to a valid UTF-8 string before being stored:
+            /// any invalid UTF-8 sequences will be replaced with the `!` character.
+            SanitizedUtf8 = 1,
+            /// The raw TLV value will be encoded as a `Base64 <<https://datatracker.ietf.org/doc/html/rfc4648#section-4>`\_>
+            /// string (with padding) before being stored. This is useful for binary TLV values that
+            /// are not valid UTF-8 strings.
+            Base64 = 2,
+        }
+        impl ValueStringEncoding {
+            /// String value of the enum field names used in the ProtoBuf definition.
+            ///
+            /// The values are not transformed in any way and thus are considered stable
+            /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+            pub fn as_str_name(&self) -> &'static str {
+                match self {
+                    Self::Unspecified => "UNSPECIFIED",
+                    Self::SanitizedUtf8 => "SANITIZED_UTF8",
+                    Self::Base64 => "BASE64",
+                }
+            }
+            /// Creates an enum from field names used in the ProtoBuf definition.
+            pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+                match value {
+                    "UNSPECIFIED" => Some(Self::Unspecified),
+                    "SANITIZED_UTF8" => Some(Self::SanitizedUtf8),
+                    "BASE64" => Some(Self::Base64),
+                    _ => None,
+                }
+            }
+        }
     }
     impl ::prost::Name for KeyValuePair {
         const NAME: &'static str = "KeyValuePair";

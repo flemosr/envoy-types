@@ -43,7 +43,7 @@ impl ::prost::Name for ProtocolConfiguration {
 }
 /// This represents the different types of messages that the data plane can send
 /// to an external processing server.
-/// \[\#next-free-field: 12\]
+/// \[\#next-free-field: 14\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingRequest {
     /// Dynamic metadata associated with the request.
@@ -79,6 +79,34 @@ pub struct ProcessingRequest {
     /// `protocol_config` is only encoded in the first `ProcessingRequest` message from the client to the server.
     #[prost(message, optional, tag = "11")]
     pub protocol_config: ::core::option::Option<ProtocolConfiguration>,
+    /// Flow control initialization for `FULL_DUPLEX_STREAMED` and
+    /// `GRPC` body send modes.
+    ///
+    /// Must be set in the initial message on the stream. Not used in
+    /// subsequent messages.
+    ///
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "12")]
+    pub flow_control_init: ::core::option::Option<processing_request::FlowControlInit>,
+    /// Flow control updates for `FULL_DUPLEX_STREAMED` and `GRPC` body
+    /// send modes.
+    ///
+    /// This message may be included in a request message that also
+    /// populates one of the fields in the `request` oneof above, or it
+    /// may be sent in a request message that does not set the
+    /// `request` oneof.
+    ///
+    /// In `FULL_DUPLEX_STREAMED` body send mode, for backward
+    /// compatibility with data planes that do not yet support flow control,
+    /// the data plane must not send a message containing only this field
+    /// (i.e., not setting the `request` oneof) unless the ext_proc server
+    /// has sent a window update, thus indicating that it supports flow control.
+    ///
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "13")]
+    pub client_window_update: ::core::option::Option<
+        processing_request::ClientWindowUpdate,
+    >,
     /// Each request message will include one of the following sub-messages. Which
     /// ones are set for a particular HTTP request/response depend on the
     /// processing mode.
@@ -87,6 +115,88 @@ pub struct ProcessingRequest {
 }
 /// Nested message and enum types in `ProcessingRequest`.
 pub mod processing_request {
+    /// Initial flow control window sizes for `FULL_DUPLEX_STREAMED` and
+    /// `GRPC` body send modes.
+    ///
+    /// A sender starts with this amount of flow control window. Whenever
+    /// it sends body data, it must decrement its flow control window by
+    /// the number of bytes that it has sent. When its flow control
+    /// window is less than or equal to the amount of body data it wishes
+    /// to send, it may not send until it receives a window update causing
+    /// its flow control window to be large enough.
+    ///
+    /// However, note that in `GRPC` body send mode, whenever the flow
+    /// control window is greater than zero, a sender may send a single
+    /// message, even if the size of that message exceeds the available flow
+    /// control window. At that point, the flow control window will be negative
+    /// and the sender must not send the next message until it becomes positive.
+    ///
+    /// Note that the initial size for the to-sidestream windows are set by
+    /// the sender, not the receiver. This is because each sidestream may be
+    /// routed to a different ext_proc server instance, but there is no
+    /// connection-level handshake to set a default for that server
+    /// instance, so the only alternative here would be to have the
+    /// ext_proc server instance set this on a per-stream basis, which
+    /// would require an additional round-trip and therefore hurt latency.
+    /// This unfortunately means that the ext_proc server instance has a
+    /// bit less control: as soon as it receives these initial values, it can
+    /// immediately send a window update that reduces the window, but it
+    /// must be prepared to handle any data that the sender has already sent.
+    /// The initial sizes for the to-sidestream windows are generally
+    /// expected to be in the range of 32K to 64K.
+    ///
+    /// \[\#not-implemented-hide:\]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct FlowControlInit {
+        /// Downstream-to-sidestream initial window size.
+        #[prost(int64, tag = "1")]
+        pub initial_window_downstream_to_sidestream: i64,
+        /// Sidestream-to-upstream initial window size.
+        #[prost(int64, tag = "2")]
+        pub initial_window_sidestream_to_upstream: i64,
+        /// Upstream-to-sidestream initial window size.
+        #[prost(int64, tag = "3")]
+        pub initial_window_upstream_to_sidestream: i64,
+        /// Sidestream-to-downstream initial window size.
+        #[prost(int64, tag = "4")]
+        pub initial_window_sidestream_to_downstream: i64,
+    }
+    impl ::prost::Name for FlowControlInit {
+        const NAME: &'static str = "FlowControlInit";
+        const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.ext_proc.v3.ProcessingRequest.FlowControlInit".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.ext_proc.v3.ProcessingRequest.FlowControlInit"
+                .into()
+        }
+    }
+    /// Flow control window update. Values may be positive or negative. The
+    /// sender must immediately add these values to its flow control window,
+    /// which governs how much data can be sent.
+    ///
+    /// \[\#not-implemented-hide:\]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct ClientWindowUpdate {
+        /// Window update for sidestream-to-upstream.
+        #[prost(int64, tag = "1")]
+        pub window_increment_sidestream_to_upstream: i64,
+        /// Window update for sidestream-to-downstream.
+        #[prost(int64, tag = "2")]
+        pub window_increment_sidestream_to_downstream: i64,
+    }
+    impl ::prost::Name for ClientWindowUpdate {
+        const NAME: &'static str = "ClientWindowUpdate";
+        const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.ext_proc.v3.ProcessingRequest.ClientWindowUpdate".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.ext_proc.v3.ProcessingRequest.ClientWindowUpdate"
+                .into()
+        }
+    }
     /// Each request message will include one of the following sub-messages. Which
     /// ones are set for a particular HTTP request/response depend on the
     /// processing mode.
@@ -148,7 +258,7 @@ impl ::prost::Name for ProcessingRequest {
 ///
 /// * If it is set to `FULL_DUPLEX_STREAMED`, the server must follow the API defined
 ///   for this mode to send the `ProcessingResponse` messages.
-///   \[\#next-free-field: 13\]
+///   \[\#next-free-field: 17\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingResponse {
     /// Optional metadata that will be emitted as dynamic metadata to be consumed by
@@ -158,35 +268,164 @@ pub struct ProcessingResponse {
     pub dynamic_metadata: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
     >,
+    /// Optional typed metadata that will be emitted as dynamic metadata to be consumed by
+    /// following filters. This metadata will be placed in the namespace(s) specified by the
+    /// keys of the map.
+    ///
+    /// Typed dynamic metadata should be preferred over untyped dynamic metadata (`dynamic_metadata`)
+    /// because it is more efficient and more type-safe.
+    #[prost(map = "string, message", tag = "13")]
+    pub typed_dynamic_metadata: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        super::super::super::super::google::protobuf::Any,
+    >,
     /// Override how parts of the HTTP request and response are processed for the duration of this
     /// particular request/response only. Servers may use this to intelligently control how requests
     /// are processed based on the headers and other metadata that they see.
     ///
     ///
-    /// This field is only applicable when servers are responding to the header requests. If it is set
-    /// in the response to the body or trailer requests, it will be ignored by the data plane.
+    /// If set in a response to body or trailer requests, it will be ignored by the data plane.
     /// It is also ignored by the data plane when the ext_proc filter config
     /// : ref:`allow_mode_override <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.allow_mode_override>`
     ///   is set to `false`, or
     /// : ref:`send_body_without_waiting_for_header_response <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.send_body_without_waiting_for_header_response>`
     ///   is set to `true`.
+    ///
+    ///
+    /// `mode_override` can be sent in the following scenarios:
+    ///
+    /// 1. Included in a header response:
+    ///    The server can set this field when responding to request or response headers, i.e.,
+    ///    alongside a `request_headers` or `response_headers` response.
+    ///
+    /// 1. Standalone `mode_override` response:
+    ///    After receiving a `ProcessingRequest` for request headers, the server can send a
+    ///    standalone `mode_override` response (i.e., a `ProcessingResponse` with only
+    ///    `mode_override` populated and no `response` case set) before sending the
+    ///    `request_headers` response. Subsequent messages will adhere to this new mode.
+    ///
+    ///    .. note::
+    ///    Processing mode changes in a standalone `mode_override` have the following constraints:
+    ///
+    ///    * For request path: Only supports transitioning the request body processing mode from
+    ///      `NONE` or `STREAMED` to `FULL_DUPLEX_STREAMED`. Additionally, the request
+    ///      trailer mode must be set to `SEND`, which is required by `FULL_DUPLEX_STREAMED`
+    ///      mode. Responses that do not meet these constraints are treated as spurious and rejected.
+    ///    * For Response path: There are no restrictions on processing mode changes.
     #[prost(message, optional, tag = "9")]
     pub mode_override: ::core::option::Option<
         super::super::super::extensions::filters::http::ext_proc::v3::ProcessingMode,
     >,
     /// \[\#not-implemented-hide:\]
-    /// Used only in `FULL_DUPLEX_STREAMED` and `GRPC` body send modes.
-    /// Instructs the data plane to stop sending body data and to send a
-    /// half-close on the ext_proc stream. The ext_proc server should then echo
-    /// back all subsequent body contents as-is until it sees the client's
-    /// half-close, at which point the ext_proc server can terminate the stream
-    /// with an OK status. This provides a safe way for the ext_proc server
-    /// to indicate that it does not need to see the rest of the stream;
-    /// without this, the ext_proc server could not terminate the stream
-    /// early, because it would wind up dropping any body contents that the
-    /// client had already sent before it saw the ext_proc stream termination.
+    /// Deprecated and not implemented. This field has been replaced with
+    /// the request_drain_requests and request_drain_responses fields.
+    #[deprecated]
     #[prost(bool, tag = "12")]
     pub request_drain: bool,
+    /// \[\#not-implemented-hide:\]
+    /// Initiates a drain of request body data. Used only in
+    /// `FULL_DUPLEX_STREAMED` and `GRPC` body send modes.
+    ///
+    /// The expected sequence for a drain is as follows:
+    ///
+    /// 1. The ext_proc server sends a message to the data plane with this
+    ///    field set to true.
+    /// 1. The data plane pauses reading from the downstream client, applying
+    ///    any necessary flow control push-back.
+    /// 1.
+    ///    The data plane sends a
+    ///    : ref:`request_body <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.request_body>`
+    ///      with the
+    ///       : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.HttpBody.drain_complete>`
+    ///      field set to true.
+    ///
+    ///
+    /// 1.
+    ///    The ext_proc server continues processing all subsequent request body
+    ///    chunks until it sees the body chunk with the
+    ///    : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.HttpBody.drain_complete>`
+    ///      field set to true. When sending back its response to that last body
+    ///      chunk, the ext_proc server will set the
+    ///       : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.StreamedBodyResponse.drain_complete>`
+    ///      field to true to let the data plane know that it has finished draining.
+    ///
+    ///
+    /// 1.
+    ///    When the data plane sees the response with the
+    ///    : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.StreamedBodyResponse.drain_complete>`
+    ///      field set to true, it will resume reading from the downstream
+    ///      client, passing all data directly to the upstream server,
+    ///      without going through the ext_proc sidestream.
+    ///
+    ///
+    /// This procedure provides a safe way for the ext_proc server to indicate
+    /// that it does not need to see the rest of the request body.
+    ///
+    /// Note that if the data plane is sending request body data and the
+    /// ext_proc server wants to terminate the stream with an OK status, it
+    /// must perform this drain before doing so.
+    ///
+    ///
+    /// Note that the data plane may have either sent a body chunk with
+    /// : ref:`end_of_stream <envoy_v3_api_field_service.ext_proc.v3.StreamedBodyResponse.end_of_stream>`
+    ///   set to true or may have sent trailers before it received the drain
+    ///   request from the ext_proc server. In these cases, the data plane will
+    ///   ignore the drain request, and the ext_proc will consider the drain
+    ///   complete when it sees the end-of-stream or trailers.
+    #[prost(bool, tag = "15")]
+    pub request_drain_requests: bool,
+    /// \[\#not-implemented-hide:\]
+    /// Initiates a drain of response body data. Used only in
+    /// `FULL_DUPLEX_STREAMED` and `GRPC` body send modes.
+    ///
+    /// The expected sequence for a drain is as follows:
+    ///
+    /// 1. The ext_proc server sends a message to the data plane with this
+    ///    field set to true.
+    /// 1. The data plane pauses reading from the upstream server, applying
+    ///    any necessary flow control push-back.
+    /// 1.
+    ///    The data plane sends a
+    ///    : ref:`response_body <envoy_v3_api_field_service.ext_proc.v3.ProcessingRequest.response_body>`
+    ///      with the
+    ///       : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.HttpBody.drain_complete>`
+    ///      field set to true.
+    ///
+    ///
+    /// 1.
+    ///    The ext_proc server continues processing all subsequent response body
+    ///    chunks until it sees the body chunk with the
+    ///    : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.HttpBody.drain_complete>`
+    ///      field set to true. When sending back its response to that last body
+    ///      chunk, the ext_proc server will set the
+    ///       : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.StreamedBodyResponse.drain_complete>`
+    ///      field to true to let the data plane know that it has finished draining.
+    ///
+    ///
+    /// 1.
+    ///    When the data plane sees the response with the
+    ///    : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.StreamedBodyResponse.drain_complete>`
+    ///      field set to true, it will resume reading from the upstream
+    ///      server, passing all data directly to the downstream client,
+    ///      without going through the ext_proc sidestream.
+    ///
+    ///
+    /// This procedure provides a safe way for the ext_proc server to indicate
+    /// that it does not need to see the rest of the response body.
+    ///
+    /// Note that if the data plane is sending response body data and the
+    /// ext_proc server wants to terminate the stream with an OK status, it
+    /// must perform this drain before doing so.
+    ///
+    ///
+    /// Note that the data plane may have either sent a body chunk with
+    /// : ref:`end_of_stream <envoy_v3_api_field_service.ext_proc.v3.StreamedBodyResponse.end_of_stream>`
+    ///   set to true or may have sent trailers before it received the drain
+    ///   request from the ext_proc server. In these cases, the data plane will
+    ///   ignore the drain request, and the ext_proc will consider the drain
+    ///   complete when it sees the end-of-stream or trailers.
+    #[prost(bool, tag = "16")]
+    pub request_drain_responses: bool,
     ///
     /// When the ext_proc server receives a request message and needs more time to process it, it
     /// sends back a `ProcessingResponse` message with a new timeout value. When the data plane
@@ -204,12 +443,62 @@ pub struct ProcessingResponse {
     pub override_message_timeout: ::core::option::Option<
         super::super::super::super::google::protobuf::Duration,
     >,
+    /// Flow control updates for `FULL_DUPLEX_STREAMED` and `GRPC` body
+    /// send modes.
+    ///
+    /// This message may be included in a response message that also
+    /// populates one of the fields in the `response` oneof above, or it
+    /// may be sent in a response message that does not set the
+    /// `response` oneof.
+    ///
+    /// In `FULL_DUPLEX_STREAMED` body send mode, for backward
+    /// compatibility with data planes that do not yet support flow control,
+    /// the ext_proc server must not set this field unless the data plane
+    /// sent initial window sizes in its initial message on the stream.
+    /// Conversely, if the data plane did send initial window sizes in its
+    /// initial message on the stream, the ext_proc server must send a
+    /// window update immediately to let the data plane know that it also
+    /// supports flow control. If the ext_proc server is sending a message
+    /// immediately anyway (e.g., for a header or body chunk), it can include
+    /// this field in that same message; otherwise, the ext_proc server must
+    /// send a message containing only this field.
+    ///
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "14")]
+    pub server_window_update: ::core::option::Option<
+        processing_response::ServerWindowUpdate,
+    >,
     /// The response type that is sent by the server.
     #[prost(oneof = "processing_response::Response", tags = "1, 2, 3, 4, 5, 6, 7, 11")]
     pub response: ::core::option::Option<processing_response::Response>,
 }
 /// Nested message and enum types in `ProcessingResponse`.
 pub mod processing_response {
+    /// Flow control window update. Values may be positive or negative. The
+    /// sender must immediately add these values to its flow control window,
+    /// which governs how much data can be sent.
+    ///
+    /// \[\#not-implemented-hide:\]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct ServerWindowUpdate {
+        /// Window update for downstream-to-sidestream.
+        #[prost(int64, tag = "1")]
+        pub window_increment_downstream_to_sidestream: i64,
+        /// Window update for upstream-to-sidestream.
+        #[prost(int64, tag = "2")]
+        pub window_increment_upstream_to_sidestream: i64,
+    }
+    impl ::prost::Name for ServerWindowUpdate {
+        const NAME: &'static str = "ServerWindowUpdate";
+        const PACKAGE: &'static str = "envoy.service.ext_proc.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.service.ext_proc.v3.ProcessingResponse.ServerWindowUpdate".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.service.ext_proc.v3.ProcessingResponse.ServerWindowUpdate"
+                .into()
+        }
+    }
     /// The response type that is sent by the server.
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
@@ -312,6 +601,7 @@ impl ::prost::Name for HttpHeaders {
 }
 /// This message is sent to the external server when the HTTP request and response bodies are
 /// received.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HttpBody {
     /// The contents of the body in the HTTP request/response. Note that in streaming mode multiple
@@ -325,17 +615,33 @@ pub struct HttpBody {
     /// will be sent for the current request/response.
     #[prost(bool, tag = "2")]
     pub end_of_stream: bool,
-    /// This field is used in `GRPC` body send mode when `end_of_stream` is `true` and `body`
-    /// is empty. Those values would normally indicate an empty message on the stream with the
-    /// end-of-stream bit set. However, if the half-close happens after the last message on the stream
-    /// was already sent, then this field will be `true` to indicate an end-of-stream with *no*
-    /// message (as opposed to an empty message).
+    /// This field is used only in `GRPC` body send mode. It is not used in any other body send
+    /// mode.
+    ///
+    /// This field is used only when `end_of_stream` is true and `body` is empty.
+    /// Normally, in `GRPC` body send mode, an empty `body` field indicates an empty message on
+    /// the gRPC stream. However, it is possible that the gRPC client sends a half-close without
+    /// actually sending a message on the stream, so we need a way to differentiate between
+    /// an empty message being sent and no message being sent. If this field is true, then it
+    /// indicates that no message has been sent; if it is false, then it indicates that an empty
+    /// message has been sent.
+    /// \[\#not-implemented-hide:\]
     #[prost(bool, tag = "3")]
     pub end_of_stream_without_message: bool,
     /// This field is used in `GRPC` body send mode to indicate whether the message is compressed.
     /// This will never be set to `true` by gRPC but may be set to `true` by a proxy like Envoy.
     #[prost(bool, tag = "4")]
     pub grpc_message_compressed: bool,
+    ///
+    /// \[\#not-implemented-hide:\]
+    /// In `FULL_DUPLEX_STREAMED` or `GRPC` body send modes, if the
+    /// data plane has seen the
+    /// : ref:`request_drain_requests <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.request_drain_requests>`
+    ///   or :ref:`request_drain_responses <envoy_v3_api_field_service.ext_proc.v3.ProcessingResponse.request_drain_responses>`
+    ///   field, it will populate this field to indicate that it has finished
+    ///   sending data to the ext_proc server.
+    #[prost(bool, tag = "5")]
+    pub drain_complete: bool,
 }
 impl ::prost::Name for HttpBody {
     const NAME: &'static str = "HttpBody";
@@ -631,6 +937,10 @@ pub struct HeaderMutation {
     /// `:authority`, `:scheme`, or `host` headers will be ignored.
     /// The header value is encoded in the
     /// : ref:`raw_value <envoy_v3_api_field_config.core.v3.HeaderValue.raw_value>` field.
+    ///   Note that the :ref:`append field in HeaderValueOption <envoy_v3_api_field_config.core.v3.HeaderValueOption.append>`
+    ///   defaults to false when used in this message.
+    ///   The :ref:`keep_empty_value field in HeaderValueOption <envoy_v3_api_field_config.core.v3.HeaderValueOption.keep_empty_value>`
+    ///   is not supported.
     #[prost(message, repeated, tag = "1")]
     pub set_headers: ::prost::alloc::vec::Vec<
         super::super::super::config::core::v3::HeaderValueOption,
@@ -651,6 +961,7 @@ impl ::prost::Name for HeaderMutation {
     }
 }
 /// The body response message corresponding to `FULL_DUPLEX_STREAMED` or `GRPC` body modes.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamedBodyResponse {
     /// In `FULL_DUPLEX_STREAMED` body send mode, contains the body response chunk that will be
@@ -669,17 +980,38 @@ pub struct StreamedBodyResponse {
     /// messages sent by the client application.
     #[prost(bool, tag = "2")]
     pub end_of_stream: bool,
-    /// This field is used in `GRPC` body send mode when `end_of_stream` is `true` and `body`
-    /// is empty. Those values would normally indicate an empty message on the stream with the
-    /// end-of-stream bit set. However, if the half-close happens after the last message on the stream
-    /// was already sent, then this field will be `true` to indicate an end-of-stream with *no*
-    /// message (as opposed to an empty message).
+    /// This field is used only in `GRPC` body send mode. It is not used in any other body send
+    /// mode.
+    ///
+    /// This field is used only when `end_of_stream` is true and `body` is empty.
+    /// Normally, in `GRPC` body send mode, an empty `body` field indicates an empty message on
+    /// the gRPC stream. However, it is possible that the gRPC client sends a half-close without
+    /// actually sending a message on the stream, so we need a way to differentiate between
+    /// an empty message being sent and no message being sent. If this field is true, then it
+    /// indicates that no message has been sent; if it is false, then it indicates that an empty
+    /// message has been sent.
+    /// \[\#not-implemented-hide:\]
     #[prost(bool, tag = "3")]
     pub end_of_stream_without_message: bool,
     /// This field is used in `GRPC` body send mode to indicate whether the message is compressed.
     /// This will never be set to `true` by gRPC but may be set to `true` by a proxy like Envoy.
     #[prost(bool, tag = "4")]
     pub grpc_message_compressed: bool,
+    ///
+    /// \[\#not-implemented-hide:\]
+    /// In `FULL_DUPLEX_STREAMED` or `GRPC` body send modes, if the
+    /// ext_proc server has seen the
+    /// : ref:`drain_complete <envoy_v3_api_field_service.ext_proc.v3.HttpBody.drain_complete>`
+    ///   field, it will populate this field to indicate that it has finished
+    ///   sending data back to the data plane.
+    ///
+    ///
+    /// If the data plane receives a message with this field set to true
+    /// before it has sent a drain-complete message to the ext_proc server,
+    /// the data plane will treat that as if the ext_proc stream has failed
+    /// with a non-OK status.
+    #[prost(bool, tag = "5")]
+    pub drain_complete: bool,
 }
 impl ::prost::Name for StreamedBodyResponse {
     const NAME: &'static str = "StreamedBodyResponse";

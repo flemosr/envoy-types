@@ -154,6 +154,11 @@ pub enum OutlierEjectionType {
     /// Runs over aggregated success rate statistics for local origin failures from every host in
     /// cluster and selects hosts for which ratio of failed replies is above configured value.
     FailurePercentageLocalOrigin = 6,
+    /// Host is detected as degraded via passive health checking (outlier detection).
+    /// The host returns responses with the x-envoy-degraded header, indicating it is under stress
+    /// but still able to serve traffic. Degraded hosts are deprioritized in load balancing but not
+    /// fully ejected.
+    Degraded = 7,
 }
 impl OutlierEjectionType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -169,6 +174,7 @@ impl OutlierEjectionType {
             Self::SuccessRateLocalOrigin => "SUCCESS_RATE_LOCAL_ORIGIN",
             Self::FailurePercentage => "FAILURE_PERCENTAGE",
             Self::FailurePercentageLocalOrigin => "FAILURE_PERCENTAGE_LOCAL_ORIGIN",
+            Self::Degraded => "DEGRADED",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -183,6 +189,7 @@ impl OutlierEjectionType {
             "SUCCESS_RATE_LOCAL_ORIGIN" => Some(Self::SuccessRateLocalOrigin),
             "FAILURE_PERCENTAGE" => Some(Self::FailurePercentage),
             "FAILURE_PERCENTAGE_LOCAL_ORIGIN" => Some(Self::FailurePercentageLocalOrigin),
+            "DEGRADED" => Some(Self::Degraded),
             _ => None,
         }
     }

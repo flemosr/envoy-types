@@ -2,10 +2,21 @@
 /// The fixed heap resource monitor reports the Envoy process memory pressure, computed as a
 /// fraction of currently reserved heap memory divided by a statically configured maximum
 /// specified in the FixedHeapConfig.
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FixedHeapConfig {
+    /// Static value for max heap size in bytes set at startup.
+    /// Exactly one of max_heap_size_bytes or max_heap_size_bytes_runtime must be set.
+    /// If set, the expected value must be greater than `0`, otherwise validation will fail.
     #[prost(uint64, tag = "1")]
     pub max_heap_size_bytes: u64,
+    /// Runtime overlay for max heap size in bytes. When set, the value can be overridden
+    /// at runtime during startup or later without restart.
+    /// Exactly one of max_heap_size_bytes or max_heap_size_bytes_runtime must be set.
+    /// If set, the expected value must be greater than `0`, otherwise validation will fail.
+    #[prost(message, optional, tag = "2")]
+    pub max_heap_size_bytes_runtime: ::core::option::Option<
+        super::super::super::super::config::core::v3::RuntimeUInt64,
+    >,
 }
 impl ::prost::Name for FixedHeapConfig {
     const NAME: &'static str = "FixedHeapConfig";

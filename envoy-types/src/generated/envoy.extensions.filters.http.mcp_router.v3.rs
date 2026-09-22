@@ -156,6 +156,13 @@ pub struct McpRouter {
     /// If not set, sessions are created without identity binding.
     #[prost(message, optional, tag = "2")]
     pub session_identity: ::core::option::Option<SessionIdentity>,
+    /// If true, backend initialization is deferred until the first request that targets each backend.
+    /// The `initialize` response is returned immediately with gateway capabilities and an empty
+    /// backend session map. Each backend is initialized on-demand when a request first routes to it.
+    /// This avoids blocking the client `initialize` on slow or misbehaving backends.
+    /// Default is false (eager initialization of all backends during `initialize`).
+    #[prost(bool, tag = "3")]
+    pub lazy_initialization: bool,
 }
 /// Nested message and enum types in `McpRouter`.
 pub mod mcp_router {

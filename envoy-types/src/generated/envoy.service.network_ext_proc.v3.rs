@@ -23,7 +23,7 @@ impl ::prost::Name for Data {
 }
 /// ProcessingRequest contains data sent from Envoy to the external processing server.
 /// Each request contains either read data (from client) or write data (to client)
-/// along with optional metadata.
+/// along with optional metadata and attributes.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingRequest {
     /// ReadData contains the network data intercepted in the request path (client to server).
@@ -46,6 +46,14 @@ pub struct ProcessingRequest {
     pub metadata: ::core::option::Option<
         super::super::super::config::core::v3::Metadata,
     >,
+    /// The values of properties selected by the `connection_attributes`
+    /// list in the configuration. Each entry in the list is populated
+    /// from the standard :ref:`attributes <arch_overview_attributes>` supported in the data plane.
+    #[prost(map = "string, message", tag = "4")]
+    pub attributes: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        super::super::super::super::google::protobuf::Struct,
+    >,
 }
 impl ::prost::Name for ProcessingRequest {
     const NAME: &'static str = "ProcessingRequest";
@@ -60,7 +68,7 @@ impl ::prost::Name for ProcessingRequest {
 /// ProcessingResponse contains the response from the external processing server to Envoy.
 /// Each response corresponds to a ProcessingRequest and indicates how the network
 /// traffic should be handled.
-/// \[\#next-free-field: 6\]
+/// \[\#next-free-field: 7\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProcessingResponse {
     /// The processed ReadData containing potentially modified data for the request path.
@@ -94,6 +102,23 @@ pub struct ProcessingResponse {
     pub dynamic_metadata: ::core::option::Option<
         super::super::super::super::google::protobuf::Struct,
     >,
+    /// If set to true, Envoy will close the gRPC stream to the external processor
+    /// after applying this response. Subsequent data will bypass the ext_proc filter
+    /// as if it were configured in SKIP mode.
+    ///
+    /// .. note::
+    /// This should only be used when there is a strong protocol guarantee
+    /// that no additional data chunks are in-flight on the wire. Because Envoy
+    /// immediately drains its local buffer when forwarding bytes to the external
+    /// processor, if Envoy has already dispatched subsequent data chunks before this
+    /// stream is closed, those in-flight bytes will be permanently lost and not
+    /// injected back into the filter chain.
+    ///
+    /// This feature is primarily designed for tightly-coupled synchronous protocols,
+    /// such as reading the ClientHello during a TLS handshake, where the sender
+    /// naturally halts transmission while awaiting the receiver's response.
+    #[prost(bool, tag = "6")]
+    pub close_stream_to_ext_proc_server: bool,
 }
 /// Nested message and enum types in `ProcessingResponse`.
 pub mod processing_response {

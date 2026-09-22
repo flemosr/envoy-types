@@ -13,3 +13,17 @@ impl ::prost::Name for StatFullNameMatchInput {
             .into()
     }
 }
+/// Specifies the way to match stat tags with value.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StatTagValueInput {}
+impl ::prost::Name for StatTagValueInput {
+    const NAME: &'static str = "StatTagValueInput";
+    const PACKAGE: &'static str = "envoy.extensions.matching.common_inputs.stats.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.extensions.matching.common_inputs.stats.v3.StatTagValueInput".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.extensions.matching.common_inputs.stats.v3.StatTagValueInput"
+            .into()
+    }
+}

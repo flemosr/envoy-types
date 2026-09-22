@@ -2,7 +2,8 @@
 /// Configuration for the downstream reverse connection socket interface.
 /// This interface initiates reverse connections to upstream Envoys and provides
 /// them as socket connections for downstream requests.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+/// \[\#next-free-field: 7\]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownstreamReverseConnectionSocketInterface {
     /// Stat prefix to be used for downstream reverse connection socket interface stats.
     #[prost(string, tag = "1")]
@@ -18,16 +19,57 @@ pub struct DownstreamReverseConnectionSocketInterface {
     pub http_handshake: ::core::option::Option<
         downstream_reverse_connection_socket_interface::HttpHandshakeConfig,
     >,
+    /// Access log configuration for reverse tunnel initiator lifecycle events.
+    /// Logs are emitted on handshake success, handshake failure, and connection close.
+    /// Reverse tunnel metadata (`node_id`, `cluster_id`, `tenant_id`, upstream cluster, etc.)
+    /// is available via `%DYNAMIC_METADATA(envoy.reverse_tunnel.initiator:*)%` substitutions.
+    #[prost(message, repeated, tag = "4")]
+    pub access_log: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::config::accesslog::v3::AccessLog,
+    >,
+    /// Upper bound on the per-host reconnect backoff. The initiator retries a failed handshake on a
+    /// deterministic exponential schedule (1s, 2s, 4s, ...) with small upward jitter; this value caps
+    /// that schedule.
+    #[prost(message, optional, tag = "5")]
+    pub max_reconnect_backoff: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
+    /// How often the initiator re-checks each host and dials any missing reverse tunnels.
+    /// Defaults to 10s. The re-check is jittered upward so agents that start together do not
+    /// redial in lockstep. The minimum value is 100ms.
+    #[prost(message, optional, tag = "6")]
+    pub maintain_interval: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::Duration,
+    >,
 }
 /// Nested message and enum types in `DownstreamReverseConnectionSocketInterface`.
 pub mod downstream_reverse_connection_socket_interface {
     /// HTTP handshake settings for initiator envoy initiated reverse tunnels.
-    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct HttpHandshakeConfig {
         /// Request path used when issuing the HTTP reverse-connection handshake. Defaults to
         /// "/reverse_connections/request".
         #[prost(string, tag = "1")]
         pub request_path: ::prost::alloc::string::String,
+        /// Additional headers to include in the HTTP handshake request.
+        #[prost(message, repeated, tag = "2")]
+        pub additional_headers: ::prost::alloc::vec::Vec<
+            super::super::super::super::super::super::config::core::v3::HeaderValueOption,
+        >,
+        /// Perform the handshake as an HTTP/1.1 `Upgrade` exchange (`Upgrade: reverse-tunnel`,
+        /// success on `101`) so HTTP proxies can route the handshake and splice the tunnel
+        /// afterward. The responder must set this flag to the same value.
+        /// Defaults to `false`.
+        #[prost(bool, tag = "3")]
+        pub use_http_upgrade: bool,
+        /// Formatter extensions usable in `additional_headers` substitution. See the formatter
+        /// extensions documentation for details. When set, `additional_headers` values are evaluated
+        /// as substitution format strings; when empty, the values are sent literally.
+        /// \[\#extension-category: envoy.formatter\]
+        #[prost(message, repeated, tag = "4")]
+        pub formatters: ::prost::alloc::vec::Vec<
+            super::super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+        >,
     }
     impl ::prost::Name for HttpHandshakeConfig {
         const NAME: &'static str = "HttpHandshakeConfig";

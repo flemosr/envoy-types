@@ -113,6 +113,27 @@ pub mod circuit_breakers {
             pub budget_percent: ::core::option::Option<
                 super::super::super::super::super::r#type::v3::Percent,
             >,
+            /// An optional duration in which requests will be considered when calculating
+            /// the budget for retries. This parameter alters the way in which the retry budget
+            /// is calculated, overriding the default behavior when specified.
+            ///
+            /// By default, when budget_interval is set to 0ms, only presently active
+            /// and pending requests are considered when calculating the retry budget.
+            ///
+            /// When a non-zero budget_interval is specified, new requests are
+            /// considered for the duration of budget_interval when calculating
+            /// the retry budget.
+            ///
+            /// For example, if 10 requests start at the same time, with a specified budget_interval
+            /// of 100ms, all 10 requests will be considered when calculating the retry
+            /// budget for the next 100ms, regardless of if they have completed.
+            /// All 10 requests will expire after the budget_interval duration.
+            ///
+            /// This parameter is optional. Defaults to 0ms.
+            #[prost(message, optional, tag = "3")]
+            pub budget_interval: ::core::option::Option<
+                super::super::super::super::super::super::google::protobuf::Duration,
+            >,
             /// Specifies the minimum retry concurrency allowed for the retry budget. The limit on the
             /// number of active retries may never go below this number.
             ///
@@ -190,12 +211,14 @@ impl ::prost::Name for Filter {
 }
 /// See the :ref:`architecture overview <arch_overview_outlier_detection>` for
 /// more information on outlier detection.
-/// \[\#next-free-field: 26\]
+/// \[\#next-free-field: 27\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OutlierDetection {
     /// The number of consecutive server-side error responses (for HTTP traffic,
     /// 5xx responses; for TCP traffic, connection failures; for Redis, failure to
     /// respond PONG; etc.) before a consecutive 5xx ejection occurs. Defaults to 5.
+    ///
+    /// If set to 0 explicitly, consecutive 5xx ejection will be disabled.
     #[prost(message, optional, tag = "1")]
     pub consecutive_5xx: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -265,6 +288,8 @@ pub struct OutlierDetection {
     >,
     /// The number of consecutive gateway failures (502, 503, 504 status codes)
     /// before a consecutive gateway failure ejection occurs. Defaults to 5.
+    ///
+    /// If set to 0 explicitly, consecutive gateway failure ejection will be disabled.
     #[prost(message, optional, tag = "10")]
     pub consecutive_gateway_failure: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -291,6 +316,9 @@ pub struct OutlierDetection {
     /// occurs. Defaults to 5. Parameter takes effect only when
     /// : ref:`split_external_local_origin_errors<envoy_v3_api_field_config.cluster.v3.OutlierDetection.split_external_local_origin_errors>`
     ///   is set to true.
+    ///
+    ///
+    /// If set to 0 explicitly, consecutive locally originated failure ejection will be disabled.
     #[prost(message, optional, tag = "13")]
     pub consecutive_local_origin_failure: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
@@ -390,6 +418,17 @@ pub struct OutlierDetection {
     pub always_eject_one_host: ::core::option::Option<
         super::super::super::super::google::protobuf::BoolValue,
     >,
+    /// If set to true, outlier detection will mark hosts as degraded when they return
+    /// the `x-envoy-degraded` header.
+    /// Degraded hosts are deprioritized in load balancing but are not ejected from the cluster.
+    /// The degraded state is cleared using the same backoff algorithm as ejection, with the degradation
+    /// period calculated as `base_ejection_time` multiplied by the number of times the host
+    /// has been marked as degraded, capped by `max_ejection_time`.
+    /// Defaults to false.
+    #[prost(message, optional, tag = "26")]
+    pub detect_degraded_hosts: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
 }
 impl ::prost::Name for OutlierDetection {
     const NAME: &'static str = "OutlierDetection";
@@ -421,7 +460,7 @@ impl ::prost::Name for ClusterCollection {
     }
 }
 /// Configuration for a single upstream cluster.
-/// \[\#next-free-field: 60\]
+/// \[\#next-free-field: 63\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Cluster {
     ///
@@ -542,6 +581,11 @@ pub struct Cluster {
     /// : ref:`Router Filter Header <config_http_filters_router_x-envoy-upstream-alt-stat-name>`.
     #[prost(string, tag = "28")]
     pub alt_stat_name: ::prost::alloc::string::String,
+    /// Optional stats matcher that can be used to configure which stats are instantiated for this
+    /// cluster. If configured, this overrides the bootstrap :ref:`stats_config  <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.stats_config>` stats matcher configuration
+    /// for this cluster.
+    #[prost(message, optional, tag = "61")]
+    pub stats_matcher: ::core::option::Option<super::super::metrics::v3::StatsMatcher>,
     /// Configuration to use for EDS updates for the Cluster.
     #[prost(message, optional, tag = "3")]
     pub eds_cluster_config: ::core::option::Option<cluster::EdsClusterConfig>,
@@ -556,6 +600,13 @@ pub struct Cluster {
     #[prost(message, optional, tag = "5")]
     pub per_connection_buffer_limit_bytes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Optional timeout that controls how long an upstream connection is allowed to stay above the
+    /// configured buffer high watermark before it is closed. If this timeout is not specified, or
+    /// explicitly set to 0, connections will not be closed due to buffer high watermark usage.
+    #[prost(message, optional, tag = "60")]
+    pub per_connection_buffer_high_watermark_timeout: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
     >,
     /// The :ref:`load balancer type <arch_overview_load_balancing_types>` to use
     /// when picking a host in the cluster.
@@ -984,6 +1035,9 @@ pub struct Cluster {
     /// connection pool for every downstream connection
     #[prost(bool, tag = "51")]
     pub connection_pool_per_downstream_connection: bool,
+    /// Queueing policies for the cluster (e.g. the queue policy for cluster pending requests).
+    #[prost(message, optional, tag = "62")]
+    pub queuing_policies: ::core::option::Option<cluster::QueuingPolicies>,
     #[prost(oneof = "cluster::ClusterDiscoveryType", tags = "2, 38")]
     pub cluster_discovery_type: ::core::option::Option<cluster::ClusterDiscoveryType>,
     ///
@@ -1895,7 +1949,7 @@ pub mod cluster {
             "type.googleapis.com/envoy.config.cluster.v3.Cluster.RefreshRate".into()
         }
     }
-    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct PreconnectPolicy {
         /// Indicates how many streams (rounded up) can be anticipated per-upstream for each
         /// incoming stream. This is useful for high-QPS or latency-sensitive services. Preconnecting
@@ -1954,6 +2008,13 @@ pub mod cluster {
         pub predictive_preconnect_ratio: ::core::option::Option<
             super::super::super::super::super::google::protobuf::DoubleValue,
         >,
+        /// Restricts anticipatory connections to hosts whose endpoint metadata matches this matcher.
+        /// Non-matching hosts are never preconnected, and instead get connections only on demand, as they
+        /// serve real requests. If unset, all healthy hosts are eligible.
+        #[prost(message, optional, tag = "3")]
+        pub preconnect_enabled_metadata: ::core::option::Option<
+            super::super::super::super::r#type::matcher::v3::MetadataMatcher,
+        >,
     }
     impl ::prost::Name for PreconnectPolicy {
         const NAME: &'static str = "PreconnectPolicy";
@@ -1963,6 +2024,26 @@ pub mod cluster {
         }
         fn type_url() -> ::prost::alloc::string::String {
             "type.googleapis.com/envoy.config.cluster.v3.Cluster.PreconnectPolicy".into()
+        }
+    }
+    /// Queueing policies for the cluster.
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct QueuingPolicies {
+        /// Queue policy for cluster pending requests. If unset, Envoy uses the FIFO queue policy.
+        /// \[\#extension-category: envoy.queue_policy\]
+        #[prost(message, optional, tag = "1")]
+        pub pending_rq_policy: ::core::option::Option<
+            super::super::super::core::v3::TypedExtensionConfig,
+        >,
+    }
+    impl ::prost::Name for QueuingPolicies {
+        const NAME: &'static str = "QueuingPolicies";
+        const PACKAGE: &'static str = "envoy.config.cluster.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.config.cluster.v3.Cluster.QueuingPolicies".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.config.cluster.v3.Cluster.QueuingPolicies".into()
         }
     }
     /// Refer to :ref:`service discovery type <arch_overview_service_discovery_types>`
@@ -2350,6 +2431,7 @@ pub mod upstream_connection_options {
                 .into()
         }
     }
+    /// \[\#comment: Keep this list of address types in sync with api/config/core/v3/address.proto.\]
     #[derive(
         Clone,
         Copy,
@@ -2363,11 +2445,12 @@ pub mod upstream_connection_options {
     )]
     #[repr(i32)]
     pub enum FirstAddressFamilyVersion {
-        /// respect the native ranking of destination ip addresses returned from dns
-        /// resolution
+        /// Use the first address family encountered in the address list.
         Default = 0,
         V4 = 1,
         V6 = 2,
+        Pipe = 3,
+        Internal = 4,
     }
     impl FirstAddressFamilyVersion {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -2379,6 +2462,8 @@ pub mod upstream_connection_options {
                 Self::Default => "DEFAULT",
                 Self::V4 => "V4",
                 Self::V6 => "V6",
+                Self::Pipe => "PIPE",
+                Self::Internal => "INTERNAL",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -2387,6 +2472,8 @@ pub mod upstream_connection_options {
                 "DEFAULT" => Some(Self::Default),
                 "V4" => Some(Self::V4),
                 "V6" => Some(Self::V6),
+                "PIPE" => Some(Self::Pipe),
+                "INTERNAL" => Some(Self::Internal),
                 _ => None,
             }
         }

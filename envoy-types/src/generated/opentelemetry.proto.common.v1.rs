@@ -39,6 +39,8 @@ pub mod any_value {
         /// empty, ignoring its semantic content for the non-Profiling signal.
         ///
         /// Status: \[Alpha\]
+        ///
+        /// \[Since v1.10.0\]
         #[prost(int32, tag = "8")]
         StringValueStrindex(i32),
     }
@@ -119,6 +121,8 @@ pub struct KeyValue {
     /// empty, ignoring its semantic content for the non-Profiling signal.
     ///
     /// Status: \[Alpha\]
+    ///
+    /// \[Since v1.10.0\]
     #[prost(int32, tag = "3")]
     pub key_strindex: i32,
 }
@@ -170,6 +174,8 @@ impl ::prost::Name for InstrumentationScope {
 /// Entity represents an object of interest associated with produced telemetry: e.g spans, metrics, profiles, or logs.
 ///
 /// Status: \[Development\]
+///
+/// \[Since v1.6.0\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EntityRef {
     /// The Schema URL, if known. This is the identifier of the Schema that the entity data

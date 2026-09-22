@@ -27,13 +27,14 @@ pub struct TapConfig {
     /// a tap will occur and the data will be written to the configured output.
     #[prost(message, optional, tag = "2")]
     pub output_config: ::core::option::Option<OutputConfig>,
-    /// \[\#not-implemented-hide:\] Specify if Tap matching is enabled. The % of requests\connections for
-    /// which the tap matching is enabled. When not enabled, the request\connection will not be
-    /// recorded.
-    ///
-    /// .. note::
-    ///
-    /// This field defaults to 100/:ref:`HUNDRED    <envoy_v3_api_enum_type.v3.FractionalPercent.DenominatorType>`.
+    /// Specifies the fraction of requests (HTTP tap filter) or connections (transport
+    /// socket tap) for which the tap match predicate is evaluated. When unset, every
+    /// request/connection proceeds to match evaluation (equivalent to sampling at 100%),
+    /// the runtime layer is not consulted, and `configured_sample_rate` is not set on
+    /// emitted traces. When set, only the configured fraction is matched; the remainder
+    /// is not tapped. The value can be overridden at runtime via :ref:`runtime_key  <envoy_v3_api_field_config.core.v3.RuntimeFractionalPercent.runtime_key>`. The
+    /// configured sampling rate is recorded on the :ref:`configured_sample_rate  <envoy_v3_api_field_data.tap.v3.TraceWrapper.configured_sample_rate>` of the
+    /// first segment of each emitted trace.
     #[prost(message, optional, tag = "3")]
     pub tap_enabled: ::core::option::Option<
         super::super::core::v3::RuntimeFractionalPercent,
