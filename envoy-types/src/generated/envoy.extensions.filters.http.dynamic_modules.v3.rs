@@ -10,7 +10,7 @@
 /// : ref:`terminal_filter  <envoy_v3_api_field_extensions.filters.http.dynamic_modules.v3.DynamicModuleFilter.terminal_filter>`
 ///   to `true`. A terminal dynamic module can use `send_` ABI methods to send response headers,
 ///   body, and trailers to the downstream.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleFilter {
     /// Specifies the shared-object level configuration.
     #[prost(message, optional, tag = "1")]
@@ -37,7 +37,8 @@ pub struct DynamicModuleFilter {
     /// `filter_config` can be used to configure the logging level or the header manipulation
     /// behavior.
     ///
-    /// `google.protobuf.Struct` is serialized as JSON before passing it to the plugin.
+    /// `google.protobuf.Struct` and the `value` field of `xds.type.v3.TypedStruct` are
+    /// serialized as JSON before passing them to the plugin.
     /// `google.protobuf.BytesValue` and `google.protobuf.StringValue` are passed directly without
     /// the wrapper.
     ///
@@ -78,7 +79,7 @@ impl ::prost::Name for DynamicModuleFilter {
     }
 }
 /// Configuration of the HTTP per-route filter for dynamic modules.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleFilterPerRoute {
     /// Specifies the shared-object level configuration.
     #[prost(message, optional, tag = "1")]
@@ -92,20 +93,36 @@ pub struct DynamicModuleFilterPerRoute {
     /// receives this configuration, it passes the `per_route_config_name` to the dynamic module's
     /// HTTP per-route filter config init function together with the `filter_config`. That way a
     /// module can decide which in-module filter implementation to use based on the name at load time.
+    ///
+    /// .. note::
+    /// This is deprecated in favor of `filter_name`. Please use `filter_name` instead of
+    /// `per_route_config_name` to specify the name for the filter implementation.
+    /// If both `per_route_config_name` and `filter_name` are specified, Envoy uses
+    /// `filter_name` and ignores `per_route_config_name`.
+    #[deprecated]
     #[prost(string, tag = "2")]
     pub per_route_config_name: ::prost::alloc::string::String,
-    /// The configuration for the filter chosen by `per_route_config_name`.
+    /// The name for this filter configuration.
+    ///
+    /// This can be used to distinguish between different filter implementations inside a dynamic
+    /// module. For example, a module can have completely different filter implementations. When Envoy
+    /// receives this configuration, it passes the `filter_name` to the dynamic module's
+    /// HTTP per-route filter config init function together with the `filter_config`. That way a
+    /// module can decide which in-module filter implementation to use based on the name at load time.
+    #[prost(string, tag = "4")]
+    pub filter_name: ::prost::alloc::string::String,
+    /// The configuration for the filter chosen by `filter_name`.
     ///
     /// This is passed to the module's HTTP per-route filter initialization function. Together with
-    /// the `per_route_config_name`, the module can decide which in-module filter implementation to
-    /// use and fine-tune the behavior of the filter on a specific route.
+    /// the `filter_name`, the module can decide which in-module filter implementation to use and fine-tune the behavior of the filter on a specific route.
     ///
     /// For example, if a module has two filter implementations, one for logging and one for header
-    /// manipulation, `per_route_config_name` is used to choose either logging or header
+    /// manipulation, `filter_name` is used to choose either logging or header
     /// manipulation. The `filter_config` can be used to configure the logging level or the header
     /// manipulation behavior.
     ///
-    /// `google.protobuf.Struct` is serialized as JSON before passing it to the plugin.
+    /// `google.protobuf.Struct` and the `value` field of `xds.type.v3.TypedStruct` are
+    /// serialized as JSON before passing them to the plugin.
     /// `google.protobuf.BytesValue` and `google.protobuf.StringValue` are passed directly without
     /// the wrapper.
     ///

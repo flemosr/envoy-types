@@ -673,7 +673,7 @@ impl ::prost::Name for ListenerCollection {
         "type.googleapis.com/envoy.config.listener.v3.ListenerCollection".into()
     }
 }
-/// \[\#next-free-field: 38\]
+/// \[\#next-free-field: 40\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Listener {
     /// The unique name by which this listener is known. If no name is provided,
@@ -704,6 +704,11 @@ pub struct Listener {
     /// `listener.<stat_prefix>.`.
     #[prost(string, tag = "28")]
     pub stat_prefix: ::prost::alloc::string::String,
+    /// Optional stats matcher that can be used to configure which stats are instantiated for this
+    /// listener. If configured, this overrides the bootstrap :ref:`stats_config  <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.stats_config>` stats matcher configuration
+    /// for this listener.
+    #[prost(message, optional, tag = "39")]
+    pub stats_matcher: ::core::option::Option<super::super::metrics::v3::StatsMatcher>,
     ///
     /// A list of filter chains to consider for this listener. The
     /// : ref:`FilterChain <envoy_v3_api_msg_config.listener.v3.FilterChain>` with the most specific
@@ -759,7 +764,21 @@ pub struct Listener {
     pub per_connection_buffer_limit_bytes: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
     >,
+    /// Optional timeout that controls how long a connection is allowed to stay above the configured
+    /// buffer high watermark before it is closed. If this timeout is not specified, or explicitly set
+    /// to 0, connections will not be closed due to buffer high watermark usage.
+    #[prost(message, optional, tag = "38")]
+    pub per_connection_buffer_high_watermark_timeout: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
     /// Listener metadata.
+    ///
+    /// The following pre-defined metadata could be used by Envoy to manipulate the listener behavior:
+    ///
+    /// * `envoy.stats_matcher`: this metadata could be used to customize the stats emitted by the
+    ///   listener. See :ref:`well-known metadata <well_known_metadata_envoy_stats_matcher>` for more details.
+    ///   If :ref:`stats_matcher <envoy_v3_api_field_config.listener.v3.Listener.stats_matcher>` is configured, this metadata
+    ///   is ignored. The `stats_matcher` field should be preferred.
     #[prost(message, optional, tag = "6")]
     pub metadata: ::core::option::Option<super::super::core::v3::Metadata>,
     /// \[\#not-implemented-hide:\]
@@ -1009,7 +1028,7 @@ pub mod listener {
     /// Configuration for listener connection balancing.
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct ConnectionBalanceConfig {
-        #[prost(oneof = "connection_balance_config::BalanceType", tags = "1, 2")]
+        #[prost(oneof = "connection_balance_config::BalanceType", tags = "1, 2, 3")]
         pub balance_type: ::core::option::Option<connection_balance_config::BalanceType>,
     }
     /// Nested message and enum types in `ConnectionBalanceConfig`.
@@ -1034,6 +1053,37 @@ pub mod listener {
                     .into()
             }
         }
+        /// A connection balancer that steers each new TCP connection to the worker thread pinned to the
+        /// CPU that received the connection, using a kernel `SO_REUSEPORT` BPF program. This removes
+        /// the lock that the :ref:`exact balancer  <envoy_v3_api_msg_config.listener.v3.Listener.ConnectionBalanceConfig.ExactBalance>` takes on
+        /// every accept and keeps each connection on a single worker for cache and `NUMA` locality. To
+        /// realize locality the operator should align `NIC` receive steering so connections arrive on
+        /// the worker CPUs, for example with receive side scaling or `IRQ` affinity.
+        ///
+        /// It is available on Linux only and requires :ref:`enable_worker_cpu_affinity  <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.enable_worker_cpu_affinity>` so worker `i`
+        /// is pinned to the CPU the program steers to it, :ref:`enable_reuse_port  <envoy_v3_api_field_config.listener.v3.Listener.enable_reuse_port>`, a kernel that supports
+        /// reuse port BPF steering, and a worker count no greater than the number of CPUs in the process
+        /// affinity mask. When any of these is not met, or if the kernel rejects the steering program at
+        /// runtime, the listener keeps serving with the kernel default reuse port hashing and without CPU
+        /// locality.
+        ///
+        /// Worker affinity is fixed when the worker threads start, so a listener added dynamically via LDS
+        /// steers with the same mapping. During a hot restart new connections may be steered to the
+        /// draining parent process until it exits.
+        #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+        pub struct CpuLocalityBalance {}
+        impl ::prost::Name for CpuLocalityBalance {
+            const NAME: &'static str = "CpuLocalityBalance";
+            const PACKAGE: &'static str = "envoy.config.listener.v3";
+            fn full_name() -> ::prost::alloc::string::String {
+                "envoy.config.listener.v3.Listener.ConnectionBalanceConfig.CpuLocalityBalance"
+                    .into()
+            }
+            fn type_url() -> ::prost::alloc::string::String {
+                "type.googleapis.com/envoy.config.listener.v3.Listener.ConnectionBalanceConfig.CpuLocalityBalance"
+                    .into()
+            }
+        }
         #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
         pub enum BalanceType {
             /// If specified, the listener will use the exact connection balancer.
@@ -1041,9 +1091,14 @@ pub mod listener {
             ExactBalance(ExactBalance),
             /// The listener will use the connection balancer according to `type_url`. If `type_url` is invalid,
             /// Envoy will not attempt to balance active connections between worker threads.
-            /// \[\#extension-category: envoy.network.connection_balance\]
+            /// The `envoy.network.connection_balance` extension category is currently empty.
             #[prost(message, tag = "2")]
             ExtendBalance(super::super::super::super::core::v3::TypedExtensionConfig),
+            /// If specified, the listener will steer new connections to worker threads using a kernel
+            /// `SO_REUSEPORT` BPF program. See :ref:`CpuLocalityBalance  <envoy_v3_api_msg_config.listener.v3.Listener.ConnectionBalanceConfig.CpuLocalityBalance>`
+            /// for the requirements and fallback behavior.
+            #[prost(message, tag = "3")]
+            CpuLocalityBalance(CpuLocalityBalance),
         }
     }
     impl ::prost::Name for ConnectionBalanceConfig {
@@ -1168,50 +1223,5 @@ impl ::prost::Name for Listener {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "type.googleapis.com/envoy.config.listener.v3.Listener".into()
-    }
-}
-/// A placeholder proto so that users can explicitly configure the standard
-/// Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
-/// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListenerManager {}
-impl ::prost::Name for ListenerManager {
-    const NAME: &'static str = "ListenerManager";
-    const PACKAGE: &'static str = "envoy.config.listener.v3";
-    fn full_name() -> ::prost::alloc::string::String {
-        "envoy.config.listener.v3.ListenerManager".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "type.googleapis.com/envoy.config.listener.v3.ListenerManager".into()
-    }
-}
-/// A placeholder proto so that users can explicitly configure the standard
-/// Validation Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
-/// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ValidationListenerManager {}
-impl ::prost::Name for ValidationListenerManager {
-    const NAME: &'static str = "ValidationListenerManager";
-    const PACKAGE: &'static str = "envoy.config.listener.v3";
-    fn full_name() -> ::prost::alloc::string::String {
-        "envoy.config.listener.v3.ValidationListenerManager".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "type.googleapis.com/envoy.config.listener.v3.ValidationListenerManager".into()
-    }
-}
-/// A placeholder proto so that users can explicitly configure the API
-/// Listener Manager via the bootstrap's :ref:`listener_manager <envoy_v3_api_field_config.bootstrap.v3.Bootstrap.listener_manager>`.
-/// \[\#not-implemented-hide:\]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ApiListenerManager {}
-impl ::prost::Name for ApiListenerManager {
-    const NAME: &'static str = "ApiListenerManager";
-    const PACKAGE: &'static str = "envoy.config.listener.v3";
-    fn full_name() -> ::prost::alloc::string::String {
-        "envoy.config.listener.v3.ApiListenerManager".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "type.googleapis.com/envoy.config.listener.v3.ApiListenerManager".into()
     }
 }

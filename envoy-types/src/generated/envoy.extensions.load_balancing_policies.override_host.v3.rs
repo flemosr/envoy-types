@@ -19,15 +19,32 @@
 ///
 /// ```text
 /// override_host_sources:
-///   - header: "x-gateway-destination-endpoint"
-///   - metadata:
-///       key: "envoy.lb"
-///       path:
-///       - key: "x-gateway-destination-endpoint"
+/// - header: "x-gateway-destination-endpoint"
+/// - metadata:
+///     key: "envoy.lb"
+///     path:
+///     - key: "x-gateway-destination-endpoint"
 /// ```
 ///
 /// If no valid host in the override host list, then the specified fallback load balancing policy is used. This allows load
 /// balancing to degrade to a a built in policy (i.e. Round Robin) in case external endpoint picker fails.
+///
+/// In addition to specifying `override_host_sources`, the policy can be configured to inform downstream filters
+/// of the selected endpoint through dynamic metadata or response headers through `selected_endpoint_key`:
+///
+/// .. code-block:: yaml
+///
+/// ```text
+/// override_host_sources:
+/// - metadata:
+///     key: "envoy.lb"
+///     path:
+///     - key: "x-gateway-destination-endpoint"
+/// selected_host_key:
+///   key: "envoy.lb"
+///   path:
+///   - key: "x-gateway-destination-endpoint-served"
+/// ```
 ///
 /// See the :ref:`load balancing architecture  overview<arch_overview_load_balancing_types>` for more information.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -41,6 +58,12 @@ pub struct OverrideHost {
     #[prost(message, repeated, tag = "1")]
     pub override_host_sources: ::prost::alloc::vec::Vec<
         override_host::OverrideHostSource,
+    >,
+    /// The metadata key to populate with the selected host address. This is optional and
+    /// may be used to inform downstream filters of the host address selected by load balancing policy.
+    #[prost(message, optional, tag = "2")]
+    pub selected_host_key: ::core::option::Option<
+        super::super::super::super::r#type::metadata::v3::MetadataKey,
     >,
     /// The child LB policy to use in case neither header nor metadata with selected
     /// hosts is present.

@@ -7,7 +7,7 @@
 ///
 /// The access logger receives completed request information including request/response headers,
 /// stream info (timing, upstream info, response codes), and the log context type.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleAccessLog {
     /// Specifies the shared-object level configuration. This field is required.
     #[prost(message, optional, tag = "1")]
@@ -36,7 +36,8 @@ pub struct DynamicModuleAccessLog {
     /// The `logger_config` can be used to configure file paths, service endpoints, batching
     /// parameters, format strings, etc.
     ///
-    /// `google.protobuf.Struct` is serialized as JSON before passing it to the module.
+    /// `google.protobuf.Struct` and the `value` field of `xds.type.v3.TypedStruct` are
+    /// serialized as JSON before passing them to the module.
     /// `google.protobuf.BytesValue` and `google.protobuf.StringValue` are passed directly
     /// without the wrapper.
     ///

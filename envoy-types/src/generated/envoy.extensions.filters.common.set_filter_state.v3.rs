@@ -17,8 +17,8 @@ pub struct FilterStateValue {
     /// If not specified, defaults to the value of `object_key`.
     #[prost(string, tag = "6")]
     pub factory_key: ::prost::alloc::string::String,
-    /// If marked as read-only, the filter state key value is locked, and cannot
-    /// be overridden by any filter, including this filter.
+    /// This field is deprecated and its value has no effect.
+    #[deprecated]
     #[prost(bool, tag = "3")]
     pub read_only: bool,
     /// Configures the object to be shared with the upstream internal connections. See :ref:`internal upstream  transport <config_internal_upstream_transport>` for more details on the filter state sharing with

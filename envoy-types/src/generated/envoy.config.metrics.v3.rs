@@ -38,6 +38,7 @@ impl ::prost::Name for StatsSink {
     }
 }
 /// Statistics configuration such as tagging.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatsConfig {
     ///
@@ -101,6 +102,19 @@ pub struct StatsConfig {
     /// ```
     #[prost(message, repeated, tag = "4")]
     pub histogram_bucket_settings: ::prost::alloc::vec::Vec<HistogramBucketSettings>,
+    /// When set to `true`, tag extractors specified in :ref:`stats_tags  <envoy_v3_api_field_config.metrics.v3.StatsConfig.stats_tags>` take precedence over the built-in
+    /// default tag extractors that share the same `tag_name`, instead of the default taking
+    /// precedence. This allows overriding individual default Envoy tags (for example
+    /// `envoy.cluster_name`) while keeping :ref:`use_all_default_tags  <envoy_v3_api_field_config.metrics.v3.StatsConfig.use_all_default_tags>` enabled, so it is not
+    /// necessary to disable all defaults and re-declare every extractor.
+    ///
+    /// Has no effect when `use_all_default_tags` is `false` (no default extractors are added in
+    /// that case). If not provided, the value is assumed to be false, preserving existing behavior
+    /// where the default extractor takes precedence over custom extractors with the same `tag_name`.
+    #[prost(message, optional, tag = "5")]
+    pub allow_default_tag_overrides: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
 }
 impl ::prost::Name for StatsConfig {
     const NAME: &'static str = "StatsConfig";

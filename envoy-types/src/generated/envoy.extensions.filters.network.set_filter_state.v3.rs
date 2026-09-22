@@ -16,6 +16,12 @@ pub struct Config {
     pub on_downstream_tls_handshake: ::prost::alloc::vec::Vec<
         super::super::super::common::set_filter_state::v3::FilterStateValue,
     >,
+    /// A sequence of the filter state values to apply in the specified order
+    /// when data is first received from the downstream connection.
+    #[prost(message, repeated, tag = "3")]
+    pub on_downstream_data: ::prost::alloc::vec::Vec<
+        super::super::super::common::set_filter_state::v3::FilterStateValue,
+    >,
 }
 impl ::prost::Name for Config {
     const NAME: &'static str = "Config";

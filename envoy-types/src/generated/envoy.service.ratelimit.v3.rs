@@ -66,7 +66,9 @@ pub struct RateLimitResponse {
     /// filter. This metadata lives in a namespace specified by the canonical name of extension filter
     /// that requires it:
     ///
-    /// * :ref:`envoy.filters.http.ratelimit <config_http_filters_ratelimit_dynamic_metadata>` for HTTP filter.
+    /// * :ref:`envoy.filters.http.ratelimit <config_http_filters_ratelimit_dynamic_metadata>` for HTTP filter. The default namespace can
+    ///   be modified by setting the :ref:`metadata_namespace <envoy_v3_api_field_extensions.filters.http.ratelimit.v3.RateLimit.metadata_namespace>`
+    ///   in the filter configuration.
     /// * :ref:`envoy.filters.network.ratelimit <config_network_filters_ratelimit_dynamic_metadata>` for network filter.
     /// * :ref:`envoy.filters.thrift.rate_limit <config_thrift_filters_rate_limit_dynamic_metadata>` for Thrift filter.
     #[prost(message, optional, tag = "6")]

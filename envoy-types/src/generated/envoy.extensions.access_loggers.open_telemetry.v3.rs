@@ -5,7 +5,7 @@
 ///   populate `opentelemetry.proto.collector.v1.logs.ExportLogsServiceRequest.resource_logs <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/collector/logs/v1/logs_service.proto>`\_.>
 ///   In addition, the request start time is set in the dedicated field.
 ///   \[\#extension: envoy.access_loggers.open_telemetry\]
-///   \[\#next-free-field: 15\]
+///   \[\#next-free-field: 16\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryAccessLogConfig {
     /// \[\#comment:TODO(itamarkam): add 'filter_state_objects_to_log' to logs.\]
@@ -21,12 +21,9 @@ pub struct OpenTelemetryAccessLogConfig {
     ///
     /// .. note::
     ///
-    ///
-    /// The `request_headers_to_add` property in the OTLP HTTP exporter service
-    /// does not support the :ref:`format specifier <config_access_log_format>` as used for
-    /// : ref:`HTTP access logging <config_access_log>`.
-    ///   The values configured are added as HTTP headers on the OTLP export request
-    ///   without any formatting applied.
+    /// The `request_headers_to_add` property in the OTLP HTTP exporter service supports
+    /// substitution formatters. The formatters cannot access any HTTP or connection properties, but
+    /// can load content such as environment variables or files or secrets.
     #[prost(message, optional, tag = "8")]
     pub http_service: ::core::option::Option<
         super::super::super::super::config::core::v3::HttpService,
@@ -40,14 +37,34 @@ pub struct OpenTelemetryAccessLogConfig {
     >,
     /// If specified, Envoy will not generate built-in resource labels
     /// like `log_name`, `zone_name`, `cluster_name`, `node_name`.
+    ///
+    ///
+    /// Built-in labels have the lowest precedence and can be overridden by matching keys in
+    /// : ref:`resource_detectors <envoy_v3_api_field_extensions.access_loggers.open_telemetry.v3.OpenTelemetryAccessLogConfig.resource_detectors>`
+    ///   or :ref:`resource_attributes <envoy_v3_api_field_extensions.access_loggers.open_telemetry.v3.OpenTelemetryAccessLogConfig.resource_attributes>`.
     #[prost(bool, tag = "5")]
     pub disable_builtin_labels: bool,
     /// OpenTelemetry `Resource <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/logs/v1/logs.proto#L51>`\_>
     /// attributes are filled with Envoy node info.
     /// Example: `resource_attributes { values { key: "region" value { string_value: "cn-north-7" } } }`.
+    ///
+    /// Attributes configured here take highest precedence (`resource_attributes` > `resource_detectors` > built-in labels)
+    /// and will override any matching keys.
     #[prost(message, optional, tag = "4")]
     pub resource_attributes: ::core::option::Option<
         super::super::super::super::super::opentelemetry::proto::common::v1::KeyValueList,
+    >,
+    /// An ordered list of resource detectors to detect OpenTelemetry resource information such as
+    /// attributes and schema URL.
+    ///
+    ///
+    /// Attributes detected here override built-in labels with matching keys, but are overridden by
+    /// : ref:`resource_attributes <envoy_v3_api_field_extensions.access_loggers.open_telemetry.v3.OpenTelemetryAccessLogConfig.resource_attributes>`
+    ///   (precedence: `resource_attributes` > `resource_detectors` > built-in labels).
+    ///   \[\#extension-category: envoy.tracers.opentelemetry.resource_detectors\]
+    #[prost(message, repeated, tag = "15")]
+    pub resource_detectors: ::prost::alloc::vec::Vec<
+        super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
     /// OpenTelemetry `LogResource <<https://github.com/open-telemetry/opentelemetry-proto/blob/main/opentelemetry/proto/logs/v1/logs.proto>`\_>
     /// fields, following `Envoy access logging formatting <<https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage>`\_.>

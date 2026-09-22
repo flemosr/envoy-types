@@ -232,29 +232,33 @@ impl ::prost::Name for LightstepConfig {
 }
 /// Configuration for the OpenTelemetry tracer.
 /// \[\#extension: envoy.tracers.opentelemetry\]
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 11\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenTelemetryConfig {
     /// The upstream gRPC cluster that will receive OTLP traces.
     /// Note that the tracer drops traces if the server does not read data fast enough.
     /// This field can be left empty to disable reporting traces to the gRPC service.
-    /// Only one of `grpc_service`, `http_service` may be used.
+    /// Only one of `grpc_service`, `http_service`, `exporter` may be used.
     #[prost(message, optional, tag = "1")]
     pub grpc_service: ::core::option::Option<super::super::core::v3::GrpcService>,
     /// The upstream HTTP cluster that will receive OTLP traces.
     /// This field can be left empty to disable reporting traces to the HTTP service.
-    /// Only one of `grpc_service`, `http_service` may be used.
+    /// Only one of `grpc_service`, `http_service`, `exporter` may be used.
     ///
     /// .. note::
     ///
-    ///
-    /// Note: The `request_headers_to_add` property in the OTLP HTTP exporter service
-    /// does not support the :ref:`format specifier <config_access_log_format>` as used for
-    /// : ref:`HTTP access logging <config_access_log>`.
-    ///   The values configured are added as HTTP headers on the OTLP export request
-    ///   without any formatting applied.
+    /// The `request_headers_to_add` property in the OTLP HTTP exporter service supports
+    /// substitution formatters. The formatters cannot access any HTTP or connection properties, but
+    /// can load content such as environment variables or files or secrets.
     #[prost(message, optional, tag = "3")]
     pub http_service: ::core::option::Option<super::super::core::v3::HttpService>,
+    /// Specifies the custom exporter to be used by the OpenTelemetry tracer.
+    /// Only one of `grpc_service`, `http_service`, `exporter` may be used.
+    ///
+    /// \[\#extension-category: envoy.tracers.opentelemetry.exporters\]
+    /// \[\#not-implemented-hide:\]
+    #[prost(message, optional, tag = "10")]
+    pub exporter: ::core::option::Option<super::super::core::v3::TypedExtensionConfig>,
     /// The name for the service. This will be populated in the ResourceSpan Resource attributes.
     /// If it is not provided, it will default to "unknown_service:envoy".
     #[prost(string, tag = "2")]
@@ -279,6 +283,30 @@ pub struct OpenTelemetryConfig {
     #[prost(message, optional, tag = "6")]
     pub max_cache_size: ::core::option::Option<
         super::super::super::super::google::protobuf::UInt32Value,
+    >,
+    /// Specifies whether to set the telemetry SDK resource attributes.
+    /// The following attributes will be set:
+    ///
+    /// * telemetry.sdk.language
+    /// * telemetry.sdk.name
+    /// * telemetry.sdk.version
+    ///
+    /// If not specified, the default is to set these attributes.
+    #[prost(message, optional, tag = "7")]
+    pub set_telemetry_sdk_resource_attributes: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Specifies whether to set the `service.name` resource attribute.
+    /// If not specified, the default is to set this attribute.
+    #[prost(message, optional, tag = "8")]
+    pub set_service_name_resource_attribute: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
+    >,
+    /// Specifies whether to set the instrumentation scope name ("envoy") and version on emitted traces.
+    /// If not specified, the default is to set the instrumentation scope name and version.
+    #[prost(message, optional, tag = "9")]
+    pub set_instrumentation_scope: ::core::option::Option<
+        super::super::super::super::google::protobuf::BoolValue,
     >,
 }
 impl ::prost::Name for OpenTelemetryConfig {
@@ -392,7 +420,7 @@ impl ::prost::Name for ClientConfig {
 }
 /// Configuration for the Zipkin tracer.
 /// \[\#extension: envoy.tracers.zipkin\]
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ZipkinConfig {
     /// The cluster manager cluster that hosts the Zipkin collectors.
@@ -515,6 +543,12 @@ pub struct ZipkinConfig {
     ///   * Path: `/api/v2/spans`
     #[prost(message, optional, tag = "9")]
     pub collector_service: ::core::option::Option<super::super::core::v3::HttpService>,
+    /// Determines whether trace IDs will include a timestamp in the first 4 bytes.
+    /// When enabled, trace IDs are generated with the format: \[32-bit epoch seconds\]\[32-bit random\].
+    /// The default value is false, which results in fully random trace IDs.
+    /// For 128-bit trace IDs, the timestamp is encoded in the high 32 bits of the high 64-bit word.
+    #[prost(bool, tag = "10")]
+    pub timestamp_trace_ids: bool,
 }
 /// Nested message and enum types in `ZipkinConfig`.
 pub mod zipkin_config {

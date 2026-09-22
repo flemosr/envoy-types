@@ -10,7 +10,7 @@
 /// * Perform initialization tasks when the server is initialized.
 /// * Perform per-worker thread initialization when worker threads start.
 /// * Access server-level resources like the cluster manager and dispatcher.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleBootstrapExtension {
     /// Specifies the shared-object level configuration.
     #[prost(message, optional, tag = "1")]
@@ -38,7 +38,8 @@ pub struct DynamicModuleBootstrapExtension {
     /// one for metric initialization, `extension_name` is used to choose the implementation. The
     /// `extension_config` can be used to configure the specific behavior of each implementation.
     ///
-    /// `google.protobuf.Struct` is serialized as JSON before passing it to the module.
+    /// `google.protobuf.Struct` and the `value` field of `xds.type.v3.TypedStruct` are
+    /// serialized as JSON before passing them to the module.
     /// `google.protobuf.BytesValue` and `google.protobuf.StringValue` are passed directly
     /// without the wrapper.
     ///

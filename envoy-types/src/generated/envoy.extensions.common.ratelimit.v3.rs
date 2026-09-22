@@ -58,6 +58,11 @@ pub struct RateLimitDescriptor {
     pub hits_addend: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt64Value,
     >,
+    /// If true, the hits_addend value will be treated as negative, effectively adding to
+    /// the rate limit budget instead of consuming from it. This can be used to refill previously consumed
+    /// rate limit tokens.
+    #[prost(bool, tag = "4")]
+    pub is_negative_hits: bool,
 }
 /// Nested message and enum types in `RateLimitDescriptor`.
 pub mod rate_limit_descriptor {

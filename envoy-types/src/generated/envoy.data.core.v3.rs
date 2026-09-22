@@ -68,6 +68,12 @@ pub struct HealthCheckEjectUnhealthy {
     /// The type of failure that caused this ejection.
     #[prost(enumeration = "HealthCheckFailureType", tag = "1")]
     pub failure_type: i32,
+    /// HTTP status code observed on the response associated with the failure.
+    /// Only set when the health checker type is HTTP and the failure type is `ACTIVE`.
+    /// A value of `0` indicates that no HTTP status code was recorded (e.g., network-level failures
+    /// or non-HTTP health checkers).
+    #[prost(uint32, tag = "2")]
+    pub http_status_code: u32,
 }
 impl ::prost::Name for HealthCheckEjectUnhealthy {
     const NAME: &'static str = "HealthCheckEjectUnhealthy";
@@ -117,6 +123,12 @@ pub struct HealthCheckFailure {
     /// Whether this event is the result of the first ever health check on a host.
     #[prost(bool, tag = "2")]
     pub first_check: bool,
+    /// HTTP status code observed on the response associated with the failure.
+    /// Only set when the health checker type is HTTP and the failure type is `ACTIVE`.
+    /// A value of `0` indicates that no HTTP status code was recorded (e.g., network-level failures
+    /// or non-HTTP health checkers).
+    #[prost(uint32, tag = "3")]
+    pub http_status_code: u32,
 }
 impl ::prost::Name for HealthCheckFailure {
     const NAME: &'static str = "HealthCheckFailure";
@@ -192,6 +204,7 @@ pub enum HealthCheckerType {
     Grpc = 2,
     Redis = 3,
     Thrift = 4,
+    DynamicModule = 5,
 }
 impl HealthCheckerType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -205,6 +218,7 @@ impl HealthCheckerType {
             Self::Grpc => "GRPC",
             Self::Redis => "REDIS",
             Self::Thrift => "THRIFT",
+            Self::DynamicModule => "DYNAMIC_MODULE",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -215,6 +229,7 @@ impl HealthCheckerType {
             "GRPC" => Some(Self::Grpc),
             "REDIS" => Some(Self::Redis),
             "THRIFT" => Some(Self::Thrift),
+            "DYNAMIC_MODULE" => Some(Self::DynamicModule),
             _ => None,
         }
     }

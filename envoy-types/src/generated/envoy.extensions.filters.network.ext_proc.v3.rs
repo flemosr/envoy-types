@@ -11,7 +11,7 @@
 ///
 /// By using the filter's processing mode, you can selectively choose which data
 /// directions to process (read, write or both), allowing for efficient processing.
-/// \[\#next-free-field: 7\]
+/// \[\#next-free-field: 8\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NetworkExternalProcessor {
     /// The gRPC service that will process network traffic.
@@ -44,6 +44,15 @@ pub struct NetworkExternalProcessor {
     /// Options related to the sending and receiving of dynamic metadata.
     #[prost(message, optional, tag = "6")]
     pub metadata_options: ::core::option::Option<MetadataOptions>,
+    ///
+    /// The data plane provides a number of :ref:`attributes <arch_overview_attributes>`
+    /// for expressive policies. Each attribute name provided in this field will be
+    /// evaluated against the connection and filter state and populated in the
+    /// : ref:`ProcessingRequest.attributes <envoy_v3_api_field_service.network_ext_proc.v3.ProcessingRequest.attributes>` field.
+    ///   See the :ref:`attribute documentation <arch_overview_attributes>`
+    ///   for the list of supported attributes and their types.
+    #[prost(string, repeated, tag = "7")]
+    pub connection_attributes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 impl ::prost::Name for NetworkExternalProcessor {
     const NAME: &'static str = "NetworkExternalProcessor";
@@ -130,6 +139,17 @@ pub struct MetadataOptions {
     /// the external processing server.
     #[prost(message, optional, tag = "1")]
     pub forwarding_namespaces: ::core::option::Option<
+        metadata_options::MetadataNamespaces,
+    >,
+    /// Describes which typed or untyped dynamic metadata namespaces to receive
+    /// from the external processing server.
+    /// Since the server returns untyped dynamic metadata, this configuration acts
+    /// as a allowlist. Only metadata namespaces explicitly listed here will be
+    /// ingested by Envoy from the server's response.
+    /// Receiving of typed metadata is not supported.
+    /// Set to empty or leave unset to disallow writing any received dynamic metadata.
+    #[prost(message, optional, tag = "2")]
+    pub receiving_namespaces: ::core::option::Option<
         metadata_options::MetadataNamespaces,
     >,
 }

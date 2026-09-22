@@ -7,6 +7,11 @@ pub struct Config {
     pub on_request_headers: ::prost::alloc::vec::Vec<
         super::super::super::common::set_filter_state::v3::FilterStateValue,
     >,
+    /// Clear the route cache for the current client request. This is necessary
+    /// if the route configuration may depend on the filter state values set by
+    /// this filter.
+    #[prost(bool, tag = "2")]
+    pub clear_route_cache: bool,
 }
 impl ::prost::Name for Config {
     const NAME: &'static str = "Config";

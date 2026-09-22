@@ -9,6 +9,8 @@
 /// inline_string: |-
 /// user1:{SHA}hashed_user1_password
 /// user2:{SHA}hashed_user2_password
+///
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BasicAuth {
     /// Username-password pairs used to verify user credentials in the "Authorization" header.
@@ -29,6 +31,29 @@ pub struct BasicAuth {
     /// If it is not specified, the filter loads the credential from  the "Authorization" header.
     #[prost(string, tag = "3")]
     pub authentication_header: ::prost::alloc::string::String,
+    /// If set to true, requests without Basic credentials (missing `Authorization` header, or
+    /// `Authorization` header with a non-`Basic` scheme such as `Bearer`) are allowed to pass through
+    /// without authentication. Requests that present `Basic` credentials are still fully validated.
+    ///
+    /// This is useful when combining BasicAuth with other authentication methods (e.g. JWT) to
+    /// achieve OR semantics: a request is accepted if any one configured auth method succeeds.
+    /// When `allow_missing` is `true` on all auth filters, pair it with an RBAC filter that checks
+    /// the dynamic metadata emitted by this filter (see `emit_dynamic_metadata`) to ensure at
+    /// least one method authenticated the request. Requires `emit_dynamic_metadata` to be set to
+    /// `true`.
+    #[prost(bool, tag = "4")]
+    pub allow_missing: bool,
+    /// If set to `true`, the filter emits dynamic metadata on successful authentication with key
+    /// `username` set to the authenticated username. The metadata is emitted under the namespace
+    /// corresponding to the name of this basic_auth filter as configured in the `http_filters`
+    /// chain (e.g. if the filter is configured with name `envoy.filters.http.basic_auth`, that is
+    /// the namespace that will be used).
+    ///
+    /// This is typically enabled together with `allow_missing` when combining BasicAuth with
+    /// other authentication methods (e.g. JWT) and using a downstream RBAC filter to enforce
+    /// OR semantics.
+    #[prost(bool, tag = "5")]
+    pub emit_dynamic_metadata: bool,
 }
 impl ::prost::Name for BasicAuth {
     const NAME: &'static str = "BasicAuth";

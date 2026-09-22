@@ -88,6 +88,21 @@ pub struct EndpointHealth {
         tag = "2"
     )]
     pub health_status: i32,
+    /// Optional metadata about the health check result, populated by the active
+    /// health checker and forwarded to the management server for richer health
+    /// state interpretation.
+    ///
+    /// Well-known keys:
+    ///
+    /// `http_status_code` (number)
+    /// Set by the HTTP health checker. Contains the HTTP response status code
+    /// returned by the upstream endpoint during the most recent health check,
+    /// e.g. `200`, `503`. Only present when the health check received a
+    /// complete HTTP response; absent on connection failures or timeouts.
+    #[prost(message, optional, tag = "3")]
+    pub health_metadata: ::core::option::Option<
+        super::super::super::super::google::protobuf::Struct,
+    >,
 }
 impl ::prost::Name for EndpointHealth {
     const NAME: &'static str = "EndpointHealth";

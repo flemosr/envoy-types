@@ -65,7 +65,7 @@ impl ::prost::Name for SanitizationConfig {
     }
 }
 /// Configuration for a Wasm VM.
-/// \[\#next-free-field: 8\]
+/// \[\#next-free-field: 9\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VmConfig {
     /// An ID which will be used along with a hash of the wasm code (or the name of the registered Null
@@ -137,6 +137,14 @@ pub struct VmConfig {
     /// Envoy rejects the configuration if there's conflict of key space.
     #[prost(message, optional, tag = "7")]
     pub environment_variables: ::core::option::Option<EnvironmentVariables>,
+    /// Configuration for restricting Proxy-Wasm capabilities available to modules.
+    ///
+    /// The restrictions are applied when the VM is created and are shared by every plugin running in
+    /// that VM, so they are a property of the VM rather than of an individual plugin.
+    #[prost(message, optional, tag = "8")]
+    pub capability_restriction_config: ::core::option::Option<
+        CapabilityRestrictionConfig,
+    >,
 }
 impl ::prost::Name for VmConfig {
     const NAME: &'static str = "VmConfig";
@@ -213,6 +221,12 @@ pub struct PluginConfig {
     #[prost(message, optional, tag = "8")]
     pub reload_config: ::core::option::Option<ReloadConfig>,
     /// Configuration for restricting Proxy-Wasm capabilities available to modules.
+    ///
+    /// This field is deprecated in favor of the :ref:`vm_config.capability_restriction_config  <envoy_v3_api_field_extensions.wasm.v3.VmConfig.capability_restriction_config>` field, because
+    /// the restrictions are applied to the Wasm VM and are therefore shared by every plugin running in
+    /// it. If this field is set and `vm_config.capability_restriction_config` is not, this field is
+    /// used to populate it.
+    #[deprecated]
     #[prost(message, optional, tag = "6")]
     pub capability_restriction_config: ::core::option::Option<
         CapabilityRestrictionConfig,

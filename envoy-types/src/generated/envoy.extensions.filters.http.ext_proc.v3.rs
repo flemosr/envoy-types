@@ -101,9 +101,12 @@ pub mod processing_mode {
     }
     /// Control how the request and response bodies are handled.
     ///
-    /// When body mutation by external processor is enabled, ext_proc filter will always remove the
-    /// content length header in the following four cases because content length cannot be guaranteed
-    /// to be set correctly:
+    ///
+    /// When body mutation by the external processor is enabled, the ext_proc filter will always remove the
+    /// content length header in the following four cases, unless
+    /// : ref:`allow_content_length_header <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.allow_content_length_header>`
+    ///   is enabled. This is because the content length cannot be guaranteed to be set correctly:
+    ///
     ///
     /// 1. `STREAMED` BodySendMode: header processing completes before body mutation comes back.
     /// 1. `BUFFERED_PARTIAL` BodySendMode: body is buffered and could be injected in different phases.
@@ -306,7 +309,7 @@ impl ::prost::Name for ProcessingMode {
 /// Stats about each gRPC call are recorded in a :ref:`dynamic filter state  <arch_overview_advanced_filter_state_sharing>` object in a namespace matching the filter
 /// name.
 ///
-/// \[\#next-free-field: 26\]
+/// \[\#next-free-field: 28\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExternalProcessor {
     /// Configuration for the gRPC service that the filter will communicate with.
@@ -475,16 +478,6 @@ pub struct ExternalProcessor {
     ///    restriction doesn't apply to this mode.
     ///
     /// 1. External processor may still close the stream to indicate that no more messages are needed.
-    ///
-    /// .. warning::
-    ///
-    /// ```text
-    /// Flow control is a necessary mechanism to prevent the fast sender (either downstream client or upstream server)
-    /// from overwhelming the external processor when its processing speed is slower.
-    /// This protective measure is being explored and developed but has not been ready yet, so please use your own
-    /// discretion when enabling this feature.
-    /// This work is currently tracked under <https://github.com/envoyproxy/envoy/issues/33319.>
-    /// ```
     #[prost(bool, tag = "17")]
     pub observability_mode: bool,
     ///
@@ -500,6 +493,18 @@ pub struct ExternalProcessor {
     /// received in response to request headers. It is recommended to set this field rather than set
     /// : ref:`disable_clear_route_cache <envoy_v3_api_field_extensions.filters.http.ext_proc.v3.ExternalProcessor.disable_clear_route_cache>`.
     ///   Only one of `disable_clear_route_cache` or `route_cache_action` can be set.
+    ///
+    ///
+    /// .. attention::
+    ///
+    /// Clearing the route cache can cause Envoy to recompute route matching after earlier HTTP
+    /// filters have already processed the request. This can be security-sensitive when filters
+    /// that make route-dependent authorization decisions, such as the RBAC filter, run before
+    /// ext_proc and ext_proc mutates route-matching inputs.
+    ///
+    /// Operators should only enable route cache clearing for trusted external processors, should
+    /// carefully order route-dependent authorization filters, and should use mutation_rules to
+    /// restrict sensitive mutations when appropriate.
     #[prost(enumeration = "external_processor::RouteCacheAction", tag = "18")]
     pub route_cache_action: i32,
     /// Specifies the deferred closure timeout for gRPC stream that connects to external processor. Currently, the deferred stream closure
@@ -567,6 +572,32 @@ pub struct ExternalProcessor {
     #[prost(message, optional, tag = "24")]
     pub status_on_error: ::core::option::Option<
         super::super::super::super::super::r#type::v3::HttpStatus,
+    >,
+    ///
+    /// If true, the filter will not remove the `content-length` header from the request/response after external processing.
+    /// It is typically used in
+    /// : ref:`FULL_DUPLEX_STREAMED <envoy_v3_api_enum_value_extensions.filters.http.ext_proc.v3.ProcessingMode.BodySendMode.FULL_DUPLEX_STREAMED>`
+    ///   mode. If the original body has been modified, the external processing server needs to set the correct content-length header in HeaderMutation
+    ///   that matches the modified body length.
+    ///
+    ///
+    /// .. warning::
+    ///
+    /// ```text
+    /// This configuration should only be used if you are sure that the content length matches
+    /// the body length after external processing. Otherwise, it may cause vulnerability issues such as
+    /// request smuggling. Thus, please use your own discretion when enabling this feature.
+    /// ```
+    #[prost(bool, tag = "26")]
+    pub allow_content_length_header: bool,
+    /// Whether to emit client-side spans for external processing requests.
+    /// When set to false, client-side egress spans will not be emitted/exported to trace collectors,
+    /// but trace context (e.g. `traceparent`) will still be propagated to the external processor.
+    ///
+    /// If unset, defaults to `true`.
+    #[prost(message, optional, tag = "27")]
+    pub emit_client_span: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
 /// Nested message and enum types in `ExternalProcessor`.
@@ -668,7 +699,7 @@ pub struct MetadataOptions {
     >,
     /// Describes which typed or untyped filter dynamic metadata namespaces to accept from
     /// the external processing server. Set to empty or leave unset to disallow writing
-    /// any received dynamic metadata. Receiving of typed metadata is not supported.
+    /// any received dynamic metadata.
     #[prost(message, optional, tag = "2")]
     pub receiving_namespaces: ::core::option::Option<
         metadata_options::MetadataNamespaces,
@@ -794,7 +825,7 @@ impl ::prost::Name for ExtProcPerRoute {
     }
 }
 /// Overrides that may be set on a per-route basis
-/// \[\#next-free-field: 10\]
+/// \[\#next-free-field: 11\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtProcOverrides {
     /// Set a different processing mode for this route than the default.
@@ -852,6 +883,11 @@ pub struct ExtProcOverrides {
     #[prost(message, optional, tag = "9")]
     pub processing_request_modifier: ::core::option::Option<
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
+    >,
+    /// Overrides the filter-level `emit_client_span` setting for this route.
+    #[prost(message, optional, tag = "10")]
+    pub emit_client_span: ::core::option::Option<
+        super::super::super::super::super::super::google::protobuf::BoolValue,
     >,
 }
 impl ::prost::Name for ExtProcOverrides {

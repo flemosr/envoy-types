@@ -2,10 +2,17 @@
 /// Configuration for the CEL formatter.
 ///
 /// .. warning::
-/// This extension is treated as built-in extension and will be enabled by default now.
-/// It is unnecessary to configure this extension.
+/// This extension is treated as a built-in extension and is enabled by default.
+/// It is unnecessary to configure this extension unless overriding the CEL expression runtime
+/// via `cel_config`.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct Cel {}
+pub struct Cel {
+    /// Configuration for the CEL expression runtime used by this formatter.
+    #[prost(message, optional, tag = "1")]
+    pub cel_config: ::core::option::Option<
+        super::super::super::super::config::core::v3::CelExpressionConfig,
+    >,
+}
 impl ::prost::Name for Cel {
     const NAME: &'static str = "Cel";
     const PACKAGE: &'static str = "envoy.extensions.formatter.cel.v3";

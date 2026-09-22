@@ -10,12 +10,13 @@
 /// Notably, if the file path and the content of the file are the same, the shared object will be
 /// reused.
 ///
-/// A module must be compatible with the ABI specified in :repo:`abi.h  <source/extensions/dynamic_modules/abi.h>`. Currently, compatibility is only guaranteed by an
+/// A module must be compatible with the ABI specified in :repo:`abi.h  <source/extensions/dynamic_modules/abi/abi.h>`. Currently, compatibility is only guaranteed by an
 /// exact version match between the Envoy codebase and the dynamic module SDKs. In the future, after
 /// the ABI is stabilized, this restriction will be revisited. Until then, Envoy checks the hash of
 /// the ABI header files to ensure that the dynamic modules are built against the same version of the
 /// ABI.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+/// \[\#next-free-field: 8\]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleConfig {
     /// The name of the dynamic module.
     ///
@@ -26,6 +27,9 @@ pub struct DynamicModuleConfig {
     /// used as the search path. After Envoy fails to find the module in the search path, it will also
     /// try to find the module from a standard system library path (e.g., `/usr/lib`) following the
     /// platform's default behavior for `dlopen`.
+    ///
+    /// This field is optional if the `module` field is set. When both `name` and `module` are
+    /// specified, the `module` field takes precedence.
     ///
     /// .. note::
     /// There is some remaining work to make the search path configurable via command line options.
@@ -40,7 +44,7 @@ pub struct DynamicModuleConfig {
     /// Defaults to `false`.
     #[prost(bool, tag = "3")]
     pub do_not_close: bool,
-    /// If true, the dynamic module is loaded with the `RTLD_GLOBAL` flag.
+    /// If `true`, the dynamic module is loaded with the `RTLD_GLOBAL` flag.
     ///
     /// The dynamic module is loaded with the `RTLD_LOCAL` flag by default to avoid symbol conflicts
     /// when multiple modules are loaded. Set this to `true` to load the module with the
@@ -56,6 +60,46 @@ pub struct DynamicModuleConfig {
     /// Defaults to `false`.
     #[prost(bool, tag = "4")]
     pub load_globally: bool,
+    /// The namespace prefix for metrics emitted by this dynamic module.
+    ///
+    /// This allows users to customize the prefix used for all metrics created by the dynamic module.
+    /// The prefix is prepended to all metric names. In prometheus output, metrics will appear with
+    /// the standard `envoy_` prefix followed by this namespace. For example, if this is set to
+    /// `myapp`, a counter `requests` would appear as `envoy_myapp_requests_total`.
+    ///
+    /// Defaults to `dynamicmodulescustom`.
+    #[prost(string, tag = "5")]
+    pub metrics_namespace: ::prost::alloc::string::String,
+    /// The dynamic module binary to load. Supports local file paths via `local.filename`
+    /// and remote HTTP sources via `remote`.
+    ///
+    /// When using `remote`, the module is fetched asynchronously during listener initialization.
+    /// If the fetch fails (network error, SHA256 mismatch, invalid binary, etc.), the filter
+    /// is **not installed** and requests pass through unfiltered (fail-open).
+    ///
+    /// When both `name` and `module` are set, `module` takes precedence.
+    #[prost(message, optional, tag = "6")]
+    pub module: ::core::option::Option<
+        super::super::super::config::core::v3::AsyncDataSource,
+    >,
+    /// Controls how a cache miss for a remote module is handled.
+    ///
+    /// When true (NACK mode), a cache miss causes an immediate NACK of the xDS config update.
+    /// A background fetch is started and the module will be available on the next config push if
+    /// the fetch succeeds.
+    ///
+    /// When false (default, warming mode), the server blocks during initialization until the fetch
+    /// completes or exhausts retries. This mode requires an init manager and is not available in
+    /// ECDS or per-route configurations.
+    ///
+    /// When using `module.remote` with ECDS or per-route configurations, this must be set to
+    /// `true`.
+    ///
+    /// Only applies when `module.remote` is set.
+    ///
+    /// Defaults to `false`.
+    #[prost(bool, tag = "7")]
+    pub nack_on_cache_miss: bool,
 }
 impl ::prost::Name for DynamicModuleConfig {
     const NAME: &'static str = "DynamicModuleConfig";

@@ -14,7 +14,7 @@
 /// * Modify connection addresses (original destination restoration).
 /// * Set dynamic metadata and filter state for downstream filters.
 /// * Rate limit incoming connections.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DynamicModuleListenerFilter {
     /// Specifies the shared-object level configuration.
     #[prost(message, optional, tag = "1")]
@@ -37,7 +37,8 @@ pub struct DynamicModuleListenerFilter {
     /// rate limiting, `filter_name` is used to choose either TLS or rate limiting. The `filter_config`
     /// can be used to configure the TLS inspection options or the rate limiting parameters.
     ///
-    /// `google.protobuf.Struct` is serialized as JSON before passing it to the module.
+    /// `google.protobuf.Struct` and the `value` field of `xds.type.v3.TypedStruct` are
+    /// serialized as JSON before passing them to the module.
     /// `google.protobuf.BytesValue` and `google.protobuf.StringValue` are passed directly
     /// without the wrapper.
     ///

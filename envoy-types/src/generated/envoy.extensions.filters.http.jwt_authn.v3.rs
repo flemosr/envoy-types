@@ -41,12 +41,13 @@ pub struct JwtProvider {
     /// otherwise the JWT `iss` field is not checked.
     ///
     /// .. note::
-    /// `JwtRequirement` :ref:`allow_missing <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtRequirement.allow_missing>`
-    /// and :ref:`allow_missing_or_failed <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtRequirement.allow_missing_or_failed>`
-    /// are implemented differently than other `JwtRequirements`. Hence the usage of this field
-    /// is different as follows if `allow_missing` or `allow_missing_or_failed` is used:
     ///
     /// ```text
+    /// ``JwtRequirement`` :ref:`allow_missing <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtRequirement.allow_missing>`
+    /// and :ref:`allow_missing_or_failed <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtRequirement.allow_missing_or_failed>`
+    /// are implemented differently than other ``JwtRequirements``. Hence the usage of this field
+    /// is different as follows if ``allow_missing`` or ``allow_missing_or_failed`` is used:
+    ///
     /// * If a JWT has ``iss`` field, it needs to be specified by this field in one of ``JwtProviders``.
     /// * If a JWT doesn't have ``iss`` field, one of ``JwtProviders`` should fill this field empty.
     /// * Multiple ``JwtProviders`` should not have same value in this field.
@@ -259,10 +260,13 @@ pub struct JwtProvider {
     /// alg: PS256
     ///
     /// .. warning::
+    ///
+    /// ```text
     /// Using the same key name for :ref:`header_in_metadata <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtProvider.payload_in_metadata>`
     /// and :ref:`payload_in_metadata <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtProvider.payload_in_metadata>`
     /// is not suggested due to potential override of existing entry, while it is not enforced during
     /// config validation.
+    /// ```
     #[prost(string, tag = "14")]
     pub header_in_metadata: ::prost::alloc::string::String,
     /// If non empty, the failure status `::google::jwt_verify::Status` for a non verified JWT will be written to StreamInfo DynamicMetadata
@@ -290,11 +294,12 @@ pub struct JwtProvider {
     pub jwt_cache_config: ::core::option::Option<JwtCacheConfig>,
     /// Add JWT claim to HTTP Header
     /// Specify the claim name you want to copy in which HTTP header. For examples, following config:
-    /// The claim must be of type; string, int, double, bool. Array type claims are not supported
+    /// Claims of type string, int, double and bool are copied verbatim. Claims of type array or
+    /// object are serialized to JSON and copied base64-encoded.
     ///
     /// .. literalinclude:: /\_configs/repo/jwt_authn.yaml
     /// :language: yaml
-    /// :lines: 44-48
+    /// :lines: 44-51
     /// :linenos:
     /// :lineno-start: 44
     /// :caption: :download:`jwt_authn.yaml </_configs/repo/jwt_authn.yaml>`
@@ -682,34 +687,27 @@ pub mod jwt_requirement {
         AllowMissing(
             super::super::super::super::super::super::super::google::protobuf::Empty,
         ),
-        /// Extract JWT claims without performing signature validation.
-        /// This mode will decode the JWT, extract claims, and forward them as
-        /// configured (via claim_to_headers, forward_payload_header, etc.) but
-        /// will NOT verify the JWT signature against JWKS.
+        /// \[\#next-major-version: consider removing or gating behind explicit opt-in\]
         ///
         /// .. warning::
         ///
         /// ```text
-        /// This mode does not verify JWT authenticity. Use only in scenarios where:
+        /// SECURITY WARNING: This mode does NOT verify JWT signatures. Any party
+        /// can forge a JWT with arbitrary claims, and those claims will be extracted
+        /// and forwarded as HTTP headers. Headers set by this mode are
+        /// INDISTINGUISHABLE from headers set by fully validated JWTs unless the
+        /// ``verification_status_header`` is checked by downstream filters
+        /// (set to ``false`` by default on all extract-only requests).
         ///
-        /// - JWTs come from a trusted source (e.g., internal service mesh)
-        /// - Signature verification is performed elsewhere in the request path
-        /// - You are in a testing period and the token issuer doesn't support JWKS yet
+        /// DO NOT use this mode if:
+        ///   - RBAC policies match on JWT-derived headers
+        ///   - ext_authz services trust JWT-derived headers
+        ///   - Backend services use JWT-derived headers for authorization
+        ///   - The JWT source is not cryptographically authenticated by other means
+        ///
+        /// Use only when signature verification is PROVABLY performed elsewhere
+        /// in the request path (e.g., by an upstream mTLS-authenticated service).
         /// ```
-        ///
-        /// This mode will:
-        ///
-        /// * Decode the JWT header and payload
-        /// * Extract claims and forward them as headers
-        /// * Always return success (Status::Ok) regardless of JWT validity
-        /// * Log when extraction occurs
-        ///
-        /// This mode will NOT:
-        ///
-        /// * Verify the JWT signature
-        /// * Validate the (issuer) claim
-        /// * Validate the (audience) claim
-        /// * Check not-before time (nbf claim)
         #[prost(message, tag = "7")]
         ExtractOnlyWithoutValidation(super::ExtractOnlyWithoutValidation),
     }
@@ -725,9 +723,49 @@ impl ::prost::Name for JwtRequirement {
             .into()
     }
 }
-/// Reserved for future extensions (e.g., claim filtering, logging options)
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ExtractOnlyWithoutValidation {}
+/// Configuration for extract-only mode without JWT signature validation.
+///
+/// When this mode is active and a JWT is present in the request but fails
+/// signature verification, a verification status header is set on the request
+/// to signal to downstream filters (RBAC, ext_authz) that the JWT claims were
+/// NOT cryptographically verified. The header is not set when the JWT is valid
+/// or when no JWT is present.
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ExtractOnlyWithoutValidation {
+    /// Name of the HTTP header set to "false" when a JWT is present but fails
+    /// signature verification. The header is NOT set when:
+    ///
+    /// * The JWT is valid (verification succeeded), or
+    /// * No JWT is present in the request.
+    ///
+    /// This means the header's presence is a meaningful signal to downstream
+    /// filters: if set, the JWT was present but could not be verified, and any
+    /// extracted claim headers should not be trusted for authorization.
+    ///
+    /// Downstream filters (RBAC, ext_authz) SHOULD check for the absence of this
+    /// header (or its non-"false" value) before trusting JWT-derived claim headers
+    /// for authorization decisions.
+    ///
+    /// Default (unset or empty): `x-jwt-signature-verified`.
+    ///
+    /// Custom value: uses the specified header name.
+    ///
+    /// The header-setting behavior is guarded by the
+    /// `envoy.reloadable_features.jwt_authn_add_verification_status_header`
+    /// runtime flag (default on). If removal is needed downstream, use header
+    /// mutation in a subsequent filter.
+    ///
+    /// Example: when a JWT is present in the request but fails signature
+    /// verification, the request will carry:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// ```text
+    /// x-jwt-signature-verified: false
+    /// ```
+    #[prost(string, tag = "1")]
+    pub verification_status_header: ::prost::alloc::string::String,
+}
 impl ::prost::Name for ExtractOnlyWithoutValidation {
     const NAME: &'static str = "ExtractOnlyWithoutValidation";
     const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
@@ -1072,17 +1110,81 @@ impl ::prost::Name for PerRouteConfig {
     }
 }
 /// This message specifies a combination of header name and claim name.
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JwtClaimToHeader {
     /// The HTTP header name to copy the claim to.
-    /// The header name will be sanitized and replaced.
+    /// The header name is sanitized from the request for every provider configured on the filter
+    /// (including on paths that bypass JWT verification) and then replaced with the claim value when
+    /// verification succeeds.
     #[prost(string, tag = "1")]
     pub header_name: ::prost::alloc::string::String,
-    /// The field name for the JWT Claim : it can be a nested claim of type (eg. "claim.nested.key", "sub")
-    /// String separated with "." in case of nested claims. The nested claim name must use dot "." to separate
-    /// the JSON name path.
+    /// The name of the claim to copy, split on "." to address nested claims: `sub` selects the
+    /// top-level `sub` claim, and `nested.claim.key` selects `key` inside `claim` inside
+    /// `nested`.
+    ///
+    ///
+    /// Because the name is always split, a claim whose own name contains a dot -- a URL-namespaced
+    /// claim such as `<http://example.org/parent_token`> -- is not addressable this way. Use
+    /// : ref:`claim_path  <envoy_v3_api_field_extensions.filters.http.jwt_authn.v3.JwtClaimToHeader.claim_path>` for
+    ///   those.
+    ///
+    ///
+    /// Exactly one of `claim_name` and `claim_path` must be set.
     #[prost(string, tag = "2")]
     pub claim_name: ::prost::alloc::string::String,
+    /// The path to the claim to copy, given as an explicit list of segments. Each segment is matched
+    /// in full against a key of the enclosing JSON object, so claim names containing dots are
+    /// addressable. For the payload `{"a.b": {"c.d": "x.y.z"}}`, the value `x.y.z` is selected
+    /// by:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// claim_to_headers:
+    ///
+    /// * header_name: x-jwt-claim
+    ///   claim_path:
+    ///   * key: a.b
+    ///   * key: c.d
+    ///
+    /// and a URL-namespaced top-level claim by:
+    ///
+    /// .. code-block:: yaml
+    ///
+    /// claim_to_headers:
+    ///
+    /// * header_name: x-jwt-claim
+    ///   claim_path:
+    ///   * key: <http://example.org/parent_token>
+    ///
+    /// Exactly one of `claim_name` and `claim_path` must be set.
+    ///
+    /// \[\#comment: A `min_items` PGV rule cannot express this: a repeated field has no presence, so
+    /// `min_items: 1` would make `claim_path` mandatory and reject every `claim_name` config.\]
+    #[prost(message, repeated, tag = "3")]
+    pub claim_path: ::prost::alloc::vec::Vec<jwt_claim_to_header::PathSegment>,
+}
+/// Nested message and enum types in `JwtClaimToHeader`.
+pub mod jwt_claim_to_header {
+    /// Specifies a segment in a path for retrieving a claim from the JWT payload.
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct PathSegment {
+        /// The key to retrieve the value with in the enclosing JSON object. The key is matched in
+        /// full, so it may itself contain dots.
+        #[prost(string, tag = "1")]
+        pub key: ::prost::alloc::string::String,
+    }
+    impl ::prost::Name for PathSegment {
+        const NAME: &'static str = "PathSegment";
+        const PACKAGE: &'static str = "envoy.extensions.filters.http.jwt_authn.v3";
+        fn full_name() -> ::prost::alloc::string::String {
+            "envoy.extensions.filters.http.jwt_authn.v3.JwtClaimToHeader.PathSegment"
+                .into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtClaimToHeader.PathSegment"
+                .into()
+        }
+    }
 }
 impl ::prost::Name for JwtClaimToHeader {
     const NAME: &'static str = "JwtClaimToHeader";

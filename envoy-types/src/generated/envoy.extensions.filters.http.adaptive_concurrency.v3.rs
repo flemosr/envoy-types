@@ -32,6 +32,15 @@ pub mod gradient_controller_config {
         pub concurrency_update_interval: ::core::option::Option<
             super::super::super::super::super::super::super::google::protobuf::Duration,
         >,
+        ///
+        /// The allowed lower-bound on the calculated concurrency limit. If unset, this defaults to
+        /// : ref:`min_concurrency  <envoy_v3_api_field_extensions.filters.http.adaptive_concurrency.v3.GradientControllerConfig.MinimumRTTCalculationParams.min_concurrency>`
+        ///   to preserve the existing behavior where the same value controls both the minimum calculated
+        ///   limit and the limit used while measuring minRTT.
+        #[prost(message, optional, tag = "4")]
+        pub min_concurrency_limit: ::core::option::Option<
+            super::super::super::super::super::super::super::google::protobuf::UInt32Value,
+        >,
     }
     impl ::prost::Name for ConcurrencyLimitCalculationParams {
         const NAME: &'static str = "ConcurrencyLimitCalculationParams";

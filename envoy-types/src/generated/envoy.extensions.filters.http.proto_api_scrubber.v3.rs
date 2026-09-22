@@ -10,6 +10,9 @@ pub struct ProtoApiScrubberConfig {
     /// Specifies the filtering mode of this filter.
     #[prost(enumeration = "proto_api_scrubber_config::FilteringMode", tag = "3")]
     pub filtering_mode: i32,
+    /// If true, the filter will scrub unknown fields from the protobuf messages.
+    #[prost(bool, tag = "4")]
+    pub scrub_unknown_fields: bool,
 }
 /// Nested message and enum types in `ProtoApiScrubberConfig`.
 pub mod proto_api_scrubber_config {

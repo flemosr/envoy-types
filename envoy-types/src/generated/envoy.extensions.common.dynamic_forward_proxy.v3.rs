@@ -21,7 +21,7 @@ impl ::prost::Name for DnsCacheCircuitBreakers {
     }
 }
 /// Configuration for the dynamic forward proxy DNS cache. See the :ref:`architecture overview  <arch_overview_http_dynamic_forward_proxy>` for more information.
-/// \[\#next-free-field: 16\]
+/// \[\#next-free-field: 17\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DnsCacheConfig {
     /// The name of the cache. Multiple named caches allow independent dynamic forward proxy
@@ -157,6 +157,16 @@ pub struct DnsCacheConfig {
     #[prost(message, optional, tag = "13")]
     pub key_value_config: ::core::option::Option<
         super::super::super::super::config::common::key_value::v3::KeyValueStoreConfig,
+    >,
+    /// Optional matcher to filter out DNS resolution results that match specific IP address ranges.
+    /// If a DNS response contains addresses matching this matcher, those addresses will be
+    /// removed from the response. If all addresses are removed, the resolution is treated
+    /// as a failure and the host will retain any previously resolved address.
+    /// This can be used as an SSRF protection mechanism to prevent DNS rebinding attacks
+    /// that resolve to internal/private IP addresses.
+    #[prost(message, optional, tag = "16")]
+    pub resolved_address_filter: ::core::option::Option<
+        super::super::super::super::r#type::matcher::v3::AddressMatcher,
     >,
 }
 impl ::prost::Name for DnsCacheConfig {

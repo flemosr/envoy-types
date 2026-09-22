@@ -229,10 +229,42 @@ impl ::prost::Name for ScaleTimersOverloadActionConfig {
             .into()
     }
 }
+/// Typed configuration for the "envoy.overload_actions.shrink_heap" action.
+/// See :ref:`the docs <config_overload_manager_shrink_heap>` for an example of how to configure
+/// this action.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ShrinkHeapConfig {
+    /// The interval at which shrink heap action checks if memory should be released.
+    /// If not specified, defaults to 10 seconds.
+    #[prost(message, optional, tag = "1")]
+    pub timer_interval: ::core::option::Option<
+        super::super::super::super::google::protobuf::Duration,
+    >,
+    /// Maximum amount of unfreed memory in bytes to keep before releasing memory
+    /// back to the system. This is used as the threshold passed to
+    /// tcmalloc::MallocExtension::ReleaseMemoryToSystem().
+    /// If not specified, defaults to 104857600 (100MB).
+    #[prost(message, optional, tag = "2")]
+    pub max_unfreed_memory_bytes: ::core::option::Option<
+        super::super::super::super::google::protobuf::UInt64Value,
+    >,
+}
+impl ::prost::Name for ShrinkHeapConfig {
+    const NAME: &'static str = "ShrinkHeapConfig";
+    const PACKAGE: &'static str = "envoy.config.overload.v3";
+    fn full_name() -> ::prost::alloc::string::String {
+        "envoy.config.overload.v3.ShrinkHeapConfig".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "type.googleapis.com/envoy.config.overload.v3.ShrinkHeapConfig".into()
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OverloadAction {
-    /// The name of the overload action. This is just a well-known string that
-    /// listeners can use for registering callbacks.
+    /// The action name. Most actions use a well-known string for listener callback registration.
+    /// `ScaleTimersOverloadActionConfig` actions may use unique custom names for independently
+    /// triggered `reduce_timeouts` instances. Custom names must not use the reserved
+    /// `envoy.overload_actions.` prefix. No action name may duplicate a `LoadShedPoint` name.
     /// Valid known overload actions include:
     ///
     /// * envoy.overload_actions.stop_accepting_requests
@@ -252,7 +284,10 @@ pub struct OverloadAction {
     /// in this list.
     #[prost(message, repeated, tag = "2")]
     pub triggers: ::prost::alloc::vec::Vec<Trigger>,
-    /// Configuration for the action being instantiated if applicable.
+    /// Optional implementation configuration. Well-known names identify the action directly; for a
+    /// custom name, this configuration's type identifies it. Currently only
+    /// `ScaleTimersOverloadActionConfig` supports custom names, identifying a `reduce_timeouts`
+    /// instance.
     #[prost(message, optional, tag = "3")]
     pub typed_config: ::core::option::Option<
         super::super::super::super::google::protobuf::Any,

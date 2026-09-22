@@ -201,9 +201,43 @@ pub mod tls_parameters {
         ///
         /// .. attention::
         ///
-        /// Please refer to `BoringSSL policies <<https://boringssl.googlesource.com/boringssl/+/refs/tags/0.20240913.0/include/openssl/ssl.h#5608>`\_>
+        /// Please refer to the `BoringSSL FIPS_202205 compliance policy <<https://boringssl.googlesource.com/boringssl/+/refs/tags/0.20240913.0/include/openssl/ssl.h#5608>`\_>
         /// for details.
         Fips202205 = 0,
+        /// CNSA2_202603 configures a TLS connection to use:
+        ///
+        /// * Only TLS 1.3, with AES-256-GCM.
+        /// * Only ML-KEM-1024 for key agreement.
+        /// * For handshake signatures, only ECDSA with P-384 and SHA-384, or RSA
+        ///   with SHA-384.
+        ///
+        /// Note: this setting aids with compliance with CNSA requirements but does not
+        /// guarantee it. Careful reading of `draft-becker-cnsa2-tls-profile` is
+        /// recommended.
+        ///
+        /// .. attention::
+        ///
+        /// Please refer to the `BoringSSL CNSA2_202603 compliance policy <<https://boringssl.googlesource.com/boringssl/+/refs/tags/0.20260413.0/include/openssl/ssl.h#6293>`\_>
+        /// for details.
+        Cnsa2202603 = 1,
+        /// CNSA1_202603 configures a TLS connection to use:
+        ///
+        /// * TLS 1.2 or TLS 1.3.
+        /// * For TLS 1.2, only TLS_ECDHE\_\[ECDSA|RSA\]\_WITH_AES_256_GCM_SHA384.
+        /// * For TLS 1.3, only AES-256-GCM.
+        /// * ML-KEM-1024 or P-384 for key agreement, preferring ML-KEM-1024 if the
+        ///   client supports it.
+        /// * For handshake signatures, only ECDSA with P-384 and SHA-384, or RSA
+        ///   with SHA-384.
+        ///
+        /// Note: this setting aids with compliance with CNSA requirements but does not
+        /// guarantee it. Careful reading of RFC 9151 is recommended.
+        ///
+        /// .. attention::
+        ///
+        /// Please refer to the `BoringSSL CNSA1_202603 compliance policy <<https://boringssl.googlesource.com/boringssl/+/refs/tags/0.20260413.0/include/openssl/ssl.h#6280>`\_>
+        /// for details.
+        Cnsa1202603 = 2,
     }
     impl CompliancePolicy {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -213,12 +247,16 @@ pub mod tls_parameters {
         pub fn as_str_name(&self) -> &'static str {
             match self {
                 Self::Fips202205 => "FIPS_202205",
+                Self::Cnsa2202603 => "CNSA2_202603",
+                Self::Cnsa1202603 => "CNSA1_202603",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
                 "FIPS_202205" => Some(Self::Fips202205),
+                "CNSA2_202603" => Some(Self::Cnsa2202603),
+                "CNSA1_202603" => Some(Self::Cnsa1202603),
                 _ => None,
             }
         }
@@ -273,7 +311,7 @@ impl ::prost::Name for PrivateKeyProvider {
             .into()
     }
 }
-/// \[\#next-free-field: 9\]
+/// \[\#next-free-field: 10\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TlsCertificate {
     /// The TLS certificate chain.
@@ -352,6 +390,28 @@ pub struct TlsCertificate {
     pub signed_certificate_timestamp: ::prost::alloc::vec::Vec<
         super::super::super::super::config::core::v3::DataSource,
     >,
+    ///
+    /// Optional per-certificate TLS parameters. When set on a server certificate, any specified
+    /// fields override the corresponding context-level
+    /// : ref:`tls_params <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CommonTlsContext.tls_params>`
+    ///   for that certificate during the TLS handshake; unset fields continue to use the context-level
+    ///   values. This allows different cipher suites, ECDH curves, protocol versions, signature
+    ///   algorithms, or compliance policies per certificate.
+    ///
+    ///
+    /// These parameters do not affect certificate selection, which continues to be based only on SNI,
+    /// the client's ECDSA capability, and OCSP capability. They are applied after a certificate has
+    /// been selected. For a multi-certificate configuration this means each certificate's parameters
+    /// must be compatible with the clients that select it: if the selected certificate's parameters
+    /// leave nothing in common with the client, the handshake fails and no other certificate is tried.
+    ///
+    /// Note: because these are overrides rather than constraints, a certificate-level
+    /// `tls_minimum_protocol_version` can lower the floor set by the context-level
+    /// `tls_params`, weakening the listener's overall TLS security policy.
+    /// Setting this on a client certificate is not supported and is ignored.
+    /// This field has no effect on QUIC/HTTP3 downstream connections.
+    #[prost(message, optional, tag = "9")]
+    pub tls_params: ::core::option::Option<TlsParameters>,
 }
 impl ::prost::Name for TlsCertificate {
     const NAME: &'static str = "TlsCertificate";
@@ -538,7 +598,7 @@ impl ::prost::Name for SubjectAltNameMatcher {
             .into()
     }
 }
-/// \[\#next-free-field: 18\]
+/// \[\#next-free-field: 19\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CertificateValidationContext {
     ///
@@ -760,6 +820,29 @@ pub struct CertificateValidationContext {
     pub max_verify_depth: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
+    /// If true, the server does not include the trusted-CA distinguished names in the
+    /// TLS `CertificateRequest` message. CAs from :ref:`trusted_ca  <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.trusted_ca>`
+    /// are still used to validate presented client certificates; only the wire
+    /// advertisement changes.
+    ///
+    /// This is useful when the configured CA set is large enough that the
+    /// `CertificateRequest` would exceed client-side TLS record limits, or when
+    /// clients mishandle the CA set in some way.
+    ///
+    /// .. attention::
+    ///
+    /// When enabled, clients that rely on the advertised CA list to select among
+    /// multiple client certificates may now send no certificate or the wrong one;
+    /// validation will then fail with the standard TLS alert.
+    ///
+    /// This option only affects downstream (server) TLS connections where Envoy sends a
+    /// `CertificateRequest` to clients. It has no effect on upstream connections.
+    ///
+    /// Honored by the built-in validator and the SPIFFE validator. Validators that do
+    /// not set a client CA list themselves (e.g., the dynamic-modules validator) are
+    /// unaffected. Defaults to false.
+    #[prost(bool, tag = "18")]
+    pub suppress_client_ca_list: bool,
 }
 /// Nested message and enum types in `CertificateValidationContext`.
 pub mod certificate_validation_context {
@@ -964,14 +1047,14 @@ pub struct UpstreamTlsContext {
     pub max_session_keys: ::core::option::Option<
         super::super::super::super::super::google::protobuf::UInt32Value,
     >,
-    /// Controls enforcement of the `keyUsage` extension in peer certificates. If set to `true`, the handshake will fail if
-    /// the `keyUsage` is incompatible with TLS usage.
+    /// Controls enforcement of the `keyUsage` extension in peer certificates. If set to `true`,
+    /// the handshake will fail if the `keyUsage` is incompatible with TLS usage.
     ///
-    /// .. note::
-    /// The default value is `false` (i.e., enforcement off). It is expected to change to `true` in a future release.
+    /// .. attention::
     ///
-    /// The `ssl.was_key_usage_invalid` in :ref:`listener metrics <config_listener_stats>` metric will be incremented
-    /// for configurations that would fail if this option were enabled.
+    /// This field is deprecated and ignored. Envoy now always enforces the `keyUsage` extension
+    /// in peer certificates, making this option unconfigurable.
+    #[deprecated]
     #[prost(message, optional, tag = "5")]
     pub enforce_rsa_key_usage: ::core::option::Option<
         super::super::super::super::super::google::protobuf::BoolValue,
@@ -1161,7 +1244,8 @@ pub struct CommonTlsContext {
     #[prost(message, optional, tag = "1")]
     pub tls_params: ::core::option::Option<TlsParameters>,
     ///
-    /// Only a single TLS certificate is supported in client contexts. In server contexts,
+    /// Only a single TLS certificate is supported in client contexts unless
+    /// `custom_tls_certificate_selector` is explicitly defined with `max_session_keys` set to 0. In server contexts,
     /// : ref:`Multiple TLS certificates <arch_overview_ssl_cert_select>` can be associated with the
     ///   same context to allow both RSA and ECDSA certificates and support SNI-based selection.
     ///
@@ -1454,6 +1538,11 @@ impl ::prost::Name for CommonTlsContext {
 ///
 /// * :ref:`allow_expired_certificate <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.allow_expired_certificate>` to allow expired certificates.
 /// * :ref:`match_typed_subject_alt_names <envoy_v3_api_field_extensions.transport_sockets.tls.v3.CertificateValidationContext.match_typed_subject_alt_names>` to match **URI** SAN of certificates. Unlike the default validator, SPIFFE validator only matches **URI** SAN (which equals to SVID in SPIFFE terminology) and ignore other SAN types.
+///
+/// To support multi-tenant use cases, a filter state object `envoy.tls.cert_validator.spiffe.workload_trust_domain`
+/// should be used to define the per-connection workload trust domain. When matching a peer trust domain, both the
+/// workload and the peer trust domains are used in selecting the validation certificate. The filter state object
+/// should be shared with the upstream to be used in the upstream TLS context SPIFFE validation context.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SpiffeCertValidatorConfig {
     /// This field specifies trust domains used for validating incoming X.509-SVID(s).
@@ -1484,6 +1573,11 @@ pub mod spiffe_cert_validator_config {
         pub trust_bundle: ::core::option::Option<
             super::super::super::super::super::config::core::v3::DataSource,
         >,
+        /// Optional workload trust domain selection condition. The filter object
+        /// `envoy.tls.cert_validator.spiffe.workload_trust_domain` must match exactly the value of this field.
+        /// If not specified, the filter state object must be absent or be empty to match this trust domain.
+        #[prost(string, tag = "3")]
+        pub workload_trust_domain: ::prost::alloc::string::String,
     }
     impl ::prost::Name for TrustDomain {
         const NAME: &'static str = "TrustDomain";

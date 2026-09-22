@@ -3,8 +3,9 @@
 /// External Authorization filter calls out to an external service over the
 /// gRPC Authorization API defined by
 /// : ref:`CheckRequest <envoy_v3_api_msg_service.auth.v3.CheckRequest>`.
-///   A failed check will cause this filter to close the TCP connection.
-///   \[\#next-free-field: 12\]
+///   A failed check will cause this filter to close the TCP connection, unless `shadow_mode` is
+///   enabled.
+///   \[\#next-free-field: 13\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExtAuthz {
     /// The prefix to use when emitting statistics.
@@ -91,6 +92,15 @@ pub struct ExtAuthz {
     pub typed_metadata_context_namespaces: ::prost::alloc::vec::Vec<
         ::prost::alloc::string::String,
     >,
+    /// When set to `true`, the filter operates in shadow mode. The filter still calls the external
+    /// authorization service but never closes the connection. The authorization decision is instead
+    /// recorded in the connection's :ref:`FilterState <arch_overview_data_sharing_between_filters>`
+    /// under the key `envoy.filters.network.ext_authz` so that a subsequent filter can read and
+    /// optionally enforce it.
+    ///
+    /// Defaults to `false`.
+    #[prost(bool, tag = "12")]
+    pub shadow_mode: bool,
 }
 impl ::prost::Name for ExtAuthz {
     const NAME: &'static str = "ExtAuthz";

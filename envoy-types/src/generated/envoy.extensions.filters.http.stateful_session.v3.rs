@@ -10,9 +10,11 @@ pub struct StatefulSession {
         super::super::super::super::super::config::core::v3::TypedExtensionConfig,
     >,
     /// Determines whether the HTTP request must be strictly routed to the requested destination. When set to `true`,
-    /// if the requested destination is unavailable, Envoy will return a 503 status code. The default value is `false`,
-    /// which allows Envoy to fall back to its load balancing mechanism. In this case, if the requested destination is not
-    /// found, the request will be routed according to the load balancing algorithm.
+    /// if the requested destination is not found in the set of available endpoints, Envoy will return a status code
+    /// determined by `status_on_strict_destination_not_found`. If the destination exists but is unhealthy, Envoy will
+    /// always return `503` regardless of `status_on_strict_destination_not_found`. The default value is `false`,
+    /// which allows Envoy to fall back to its load balancing mechanism and route the request according to the load
+    /// balancing algorithm.
     #[prost(bool, tag = "2")]
     pub strict: bool,
     /// Optional stat prefix. If specified, the filter will emit statistics in the
@@ -24,6 +26,12 @@ pub struct StatefulSession {
     /// in the per-route config.
     #[prost(string, tag = "3")]
     pub stat_prefix: ::prost::alloc::string::String,
+    /// The HTTP status code to return when `strict` mode is enabled and the requested destination
+    /// is not found in the set of available endpoints. This does not apply when the destination exists
+    /// but is unhealthy. This field has no effect when `strict` is set to `false` and will be
+    /// ignored. Defaults to `503` (Service Unavailable) if not specified or set to `0`.
+    #[prost(uint32, tag = "4")]
+    pub status_on_strict_destination_not_found: u32,
 }
 impl ::prost::Name for StatefulSession {
     const NAME: &'static str = "StatefulSession";

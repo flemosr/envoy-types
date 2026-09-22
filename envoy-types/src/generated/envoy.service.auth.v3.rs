@@ -294,6 +294,8 @@ pub struct DeniedHttpResponse {
     /// This field allows the authorization service to send HTTP response headers
     /// to the downstream client. Note that the :ref:`append field in HeaderValueOption <envoy_v3_api_field_config.core.v3.HeaderValueOption.append>` defaults to
     /// false when used in this message.
+    /// The :ref:`keep_empty_value field in HeaderValueOption <envoy_v3_api_field_config.core.v3.HeaderValueOption.keep_empty_value>`
+    /// is not supported.
     #[prost(message, repeated, tag = "2")]
     pub headers: ::prost::alloc::vec::Vec<
         super::super::super::config::core::v3::HeaderValueOption,
@@ -324,6 +326,8 @@ pub struct OkHttpResponse {
     /// the filter will append the correspondent header value to the matched request header.
     /// By leaving `append` as false, the filter will either add a new header, or override an existing
     /// one if there is a match.
+    /// The :ref:`keep_empty_value field in HeaderValueOption <envoy_v3_api_field_config.core.v3.HeaderValueOption.keep_empty_value>`
+    /// is not supported.
     #[prost(message, repeated, tag = "2")]
     pub headers: ::prost::alloc::vec::Vec<
         super::super::super::config::core::v3::HeaderValueOption,
@@ -355,6 +359,8 @@ pub struct OkHttpResponse {
     /// This field allows the authorization service to send HTTP response headers
     /// to the downstream client on success. Note that the :ref:`append field in HeaderValueOption <envoy_v3_api_field_config.core.v3.HeaderValueOption.append>`
     /// defaults to false when used in this message.
+    /// The :ref:`keep_empty_value field in HeaderValueOption <envoy_v3_api_field_config.core.v3.HeaderValueOption.keep_empty_value>`
+    /// is not supported.
     #[prost(message, repeated, tag = "6")]
     pub response_headers_to_add: ::prost::alloc::vec::Vec<
         super::super::super::config::core::v3::HeaderValueOption,

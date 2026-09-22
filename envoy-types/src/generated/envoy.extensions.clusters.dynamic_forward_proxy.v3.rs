@@ -67,7 +67,9 @@ impl ::prost::Name for ClusterConfig {
             .into()
     }
 }
-/// Configuration for sub clusters. Hard code STRICT_DNS cluster type now.
+/// Configuration for sub clusters. Sub clusters default to the `STRICT_DNS` discovery type, or
+/// use the `DnsCluster` extension when `dns_cluster_config` is set.
+/// \[\#next-free-field: 6\]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SubClustersConfig {
     /// The :ref:`load balancer type <arch_overview_load_balancing_types>` to use
@@ -95,6 +97,15 @@ pub struct SubClustersConfig {
     pub preresolve_clusters: ::prost::alloc::vec::Vec<
         super::super::super::super::config::core::v3::SocketAddress,
     >,
+    /// Optional DNS configuration for dynamically created sub clusters. When set, sub clusters
+    /// are created using the :ref:`DnsCluster <envoy_v3_api_msg_extensions.clusters.dns.v3.DnsCluster>`
+    /// extension (`envoy.cluster.dns`) rather than the legacy `STRICT_DNS` discovery type,
+    /// enabling full DNS configuration including refresh rates, failure backoff, TTL respect,
+    /// lookup family, and resolver selection.
+    ///
+    /// When not set, sub clusters inherit DNS settings from the parent cluster configuration.
+    #[prost(message, optional, tag = "5")]
+    pub dns_cluster_config: ::core::option::Option<super::super::dns::v3::DnsCluster>,
 }
 impl ::prost::Name for SubClustersConfig {
     const NAME: &'static str = "SubClustersConfig";
